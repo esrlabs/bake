@@ -1,0 +1,86 @@
+#!/usr/bin/env ruby
+
+$timeStart = Time.now
+
+$:.unshift(File.dirname(__FILE__)+"/../lib")
+require 'bake/version'
+
+$:.unshift(File.dirname(__FILE__)+"/../../cxxproject_master.git/lib")
+
+require "cxxproject/version"
+
+STDOUT.sync = true
+STDERR.sync = true
+
+puts "-- bake #{Cxxproject::Version.bake}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
+
+require 'tocxx'
+require 'bake/options'
+require 'socket'
+
+module Cxxproject
+
+  def self.isNewer(oldVersion, newVersion)
+    oldSplitted = oldVersion.split(".")
+    newSplitted = newVersion.split(".")
+    if oldSplitted.length >= 3 and newSplitted.length >= 3
+      3.times do |i|
+        return true if newSplitted[i].to_i > oldSplitted[i].to_i
+        return false if newSplitted[i].to_i < oldSplitted[i].to_i
+      end
+    end
+    return false;
+  end
+
+  earlyExit = nil
+  begin
+    options = Options.new(ARGV)
+    options.parse_options
+
+    tocxx = Cxxproject::ToCxx.new(options)
+
+    tocxx.connect()
+    
+    if tocxx.doit()
+      tocxx.start()
+    end
+    tocxx.disconnect()
+    
+  rescue SystemExit => e
+    earlyExit = e
+    begin
+      tocxx.disconnect()
+    rescue Exception => e2
+    end
+  end
+  
+
+  timeEnd = Time.now
+  timeDiff = timeEnd - $timeStart
+  Printer.printInfo "\nTime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60]
+  
+  # update check
+  #begin
+  #  versionWarningString = ""
+  #  require 'net/http'
+  #  vtext = Net::HTTP.get('10.40.38.84', '/bake/versions.txt')
+  #  vtextSplitted = vtext.split(" ")
+  #  if vtextSplitted.length > 0
+  #    if isNewer(Cxxproject::Version.bake, vtextSplitted[0])
+  #      versionWarningString = versionWarningString + "\nNewer version of bake gem available: #{vtextSplitted[0]} - please update!"
+  #    end 
+  #  end
+  #  if vtextSplitted.length > 1
+  #    if isNewer(options.eclipse_version, vtextSplitted[1])
+  #      versionWarningString = versionWarningString + "\nNewer version of bake Eclipse plugin available: #{vtextSplitted[1]} - please update!"
+  #    end 
+  #  end
+  #  if versionWarningString != ""
+  #    Printer.printWarning versionWarningString
+  #  end
+  #rescue Exception => e
+  #end  
+
+  
+  raise earlyExit if earlyExit
+end

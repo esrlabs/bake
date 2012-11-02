@@ -1,0 +1,234 @@
+#!/usr/bin/env ruby
+
+$timeStart = Time.now
+
+$:.unshift(File.dirname(__FILE__)+"/../lib")
+require 'bake/version'
+
+$:.unshift(File.dirname(__FILE__)+"/../../cxxproject_master.git/lib")
+
+require "cxxproject/version"
+
+puts "-- bakery #{Cxxproject::Version.bake}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
+
+STDOUT.sync = true
+STDERR.sync = true
+
+require 'cxxproject/utils/printer'
+require 'tocxx'
+require "bakery/loader"
+require "bakery/options"
+require 'cxxproject/ext/stdout'
+require 'cxxproject/utils/cleanup'
+
+module Cxxproject
+
+  class BuildPattern
+    attr_reader :proj, :conf, :coll_p
+    def initialize(proj, conf, coll_p)
+      @proj = proj
+      @conf = conf
+      @coll_p = coll_p
+    end
+    def getId
+      proj + "*******" + conf
+    end
+    def hash
+      getId.hash
+    end
+    def eql?(comparee)
+      self == comparee
+    end
+    def ==(comparee)
+      self.getId == comparee.getId
+    end
+  end
+  
+  @options = BakeryOptions.new(ARGV)
+  @options.parse_options
+
+  env = nil
+  begin
+    loader = BakeryLoader.new(@options) 
+    env = loader.load(@options.collection_dir+"/Collection.meta")
+  rescue Exception => e
+    ExitHelper.exit(1)
+  end 
+
+  
+  if @options.collection_name.nil?
+    puts "Please specify a collection name (with -b). Possible values are:"      
+    env.find(:class => BakeryModel::Collection).each { |e|
+      puts "* " + e.name
+    }
+    ExitHelper.exit(0)
+  end
+
+  cols = env.find(:class => BakeryModel::Collection, :name => @options.collection_name)
+  if (cols.length == 0)
+    Printer.printError "Collection #{@options.collection_name} not found in #{@options.collection_dir+"/Collection.meta"}"
+    ExitHelper.exit(1)
+  elsif (cols.length > 1)
+    Printer.printError "Collection #{@options.collection_name} found more than once in #{@options.collection_dir+"/Collection.meta"}"
+    ExitHelper.exit(1)
+  end
+
+  col = cols[0]
+  
+  col.project.each do |p|
+    if p.name == ""
+      Printer.printError "Error in #{@options.collection_dir+"/Collection.meta"} (line #{p.line_number}): Project name empty"
+      ExitHelper.exit(1)
+    end
+    if p.config == ""
+      Printer.printError "Error in #{@options.collection_dir+"/Collection.meta"} (line #{p.line_number}): Config name empty"
+      ExitHelper.exit(1)
+    end
+  end
+  
+  toBuildPattern = []
+  @options.roots.each do |r|
+    col.project.each do |p|
+      projs = Dir.glob(r+"/"+p.name+"/Project.meta")
+      if projs.length == 0
+        toBuildPattern << BuildPattern.new(nil, nil, p) # remember it for sorted info printout
+      end
+      projs.each do |f|
+        toBuildPattern << BuildPattern.new(f, "^"+p.config.gsub("*","(\\w*)")+"$", p)
+      end
+    end
+  end
+
+  toBuild = []
+  toBuildPattern.each do |bp|
+    next unless bp.proj
+    contents = File.open(bp.proj, "r") {|io| io.read }
+    contents.split("\n").each do |c|
+      res = c.match("\\s*(Library|Executable|Custom){1}Config\\s*(\\w*)")
+      if res
+        if res[2].match(bp.conf) != nil
+          toBuild << BuildPattern.new(bp.proj, res[2], nil)
+          bp.coll_p.found
+        end
+      end
+    end
+  end
+
+  toBuildPattern.each do |bp|
+    Printer.printInfo "Info in #{@options.collection_dir+"/Collection.meta"} (line #{bp.coll_p.line_number}): No match for project #{bp.coll_p.name} with config #{bp.coll_p.config}" unless bp.coll_p.isFound
+  end
+  
+  col.exclude.each do |p|
+    p.name = "/"+p.name.gsub("*","(\\w*)")+"/Project.meta"
+    p.config = "^"+p.config.gsub("*","(\\w*)")+"$"
+  end
+  
+  toBuild.delete_if do |bp|
+    exclude = false
+    col.exclude.each do |p|
+      exclude = true if (bp.proj.match(p.name) != nil and bp.conf.match(p.config) != nil)
+    end
+    exclude
+  end
+  
+  toBuild.uniq!
+  
+  maxRuns = toBuild.length
+  currentRun = 0
+  failedRuns = 0
+  
+  passedParams = []
+  excludeParam = false
+  ARGV.each do |x|
+    if (x=="-b" or x=="-m" or x=="-p" or x=="-e" or x=="--socket")
+      excludeParam = true
+      next
+    end
+    if excludeParam 
+      excludeParam = false
+      next
+    end
+    passedParams << x
+  end  
+  
+  if @options.socket != 0
+    Rake.application.idei.connect(@options.socket)
+  end
+
+  msg1 = "* bakery "
+
+  ExitHelper.enable_exit_test
+  
+  exitValue = 0
+  abort = false
+  toBuild.each do |bp|
+    currentRun += 1
+    p = File.dirname(bp.proj)
+    cmd = (["-m #{p} -b #{bp.conf}"] + passedParams).join(" ")
+    cmdWithNum = "* bakery #{currentRun} of #{maxRuns}: bake " + cmd + " *"
+    print "\n"; cmdWithNum.length.times { print "*" }; print "\n";
+    Printer.printInfo cmdWithNum
+    cmdWithNum.length.times { print "*" }; print "\n";
+    
+    runOk = true
+    begin
+      bakeOptions = Options.new(cmd.split(" "))
+      bakeOptions.parse_options
+      tocxx = ToCxx.new(bakeOptions)
+      if tocxx.doit()
+        runOk = tocxx.start()
+      else
+        runOk = false
+      end
+    rescue
+      runOk = false
+    end
+    
+    Utils.cleanup_rake
+    ExitHelper.reset_exit_code
+      
+    if runOk == false
+      exitValue = 1
+      failedRuns += 1
+      if @options.error
+        msg1 << "aborted, "
+        abort = true
+        break
+      end
+    end
+  end
+  
+  print "\n"
+
+  if not abort
+    if failedRuns > 0
+      msg1 << "summary: #{failedRuns} of #{maxRuns} builds failed, "
+    else
+      msg1 << "summary: #{maxRuns-failedRuns} of #{maxRuns} builds ok, "
+    end
+  else
+  end
+
+  timeEnd = Time.now
+  timeDiff = timeEnd - $timeStart
+  msg1 << "time: %02d:%02d minutes *" % [timeDiff/60, timeDiff%60]
+  
+  stars = ""
+  msg1.length.times { stars << "*" }
+
+  if failedRuns == 0
+    Printer.printSuccess stars
+    Printer.printSuccess msg1
+    Printer.printSuccess stars
+  else
+    Printer.printError stars
+    Printer.printError msg1
+    Printer.printError stars
+  end
+  
+  Rake.application.idei.disconnect()
+
+  ExitHelper.disable_exit_test
+  ExitHelper.exit(exitValue)
+end
+

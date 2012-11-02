@@ -1,0 +1,12 @@
+Project {
+
+  Responsible {
+    Person "TBD", email: "TBD@TBD.com"
+  }
+
+  LibraryConfig test {
+    Files "**/*.cpp"
+    IncludeDir "include"
+  }
+
+}

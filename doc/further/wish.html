@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documentation of the bake-tookit</title>
+</head>
+<body>
+<h1>Wishes and planned features</h1>
+
+Features listed on this page are open for discussion.
+<ul>
+<li>Project configurations are placed in Project.meta. If more than one meta file would be supported, different applications may edit different meta files.
+<ul>
+	<li>Applications can change e.g. compiler flags without breaking another application.
+    <li>However, if e.g. a new include path is needed, all meta-files have to be adapted.
+</ul>
+<li>bakery: Collections shall be able to reference Collections
+<li>Another way to define IncludeDirs, etc. which avoids repeating the work IncludeDir for every include dir (rtext change?)
+<li>meta files: "{" not only at the end of a line, should be possible to place anywhere
+<li>New lines in problems view are shown as a square sign. These signs should be somehow removed without breaking the annotations in the source files.
+<li>Maybe a project property page can be introduced as Project.meta-Viewer/Editor - this could be a feature for a later version.
+<li>Global bake config (e.g. for -v or -a black)
+<li>Optional show full filenames in compiler output
+<li>Support toolchain settings for files with wildcards. Clarify how to proceed with ambiguous declarations.
+<li>Word wrap in colored console in Eclipse (seems a bit tricky)
+<li>Build order of files currently the same as in Eclipse makefiles. Should that be changed to reflect order of "Files" tags in Project.meta?
+<li>bakery shall call bake with relative pathnames, which results in nicer outputs in nightly builds
+<li>Introduce background ruby process for Eclipse to workaround the require bug in ruby 1.9.x for Windows.<br>
+Reason: require statements take round about two seconds before the build can be started. Two seconds is very much when building a single file.
+<li>Exporter: add some more logic for exclude build directories to reduce useless definitions in Project.meta files
+<li>Additional redirect from errors and warnings in a log file.
+<li>Variables in main Project.meta which are usable in subprojects.
+</ul>
+
+</body>
+
+</html>

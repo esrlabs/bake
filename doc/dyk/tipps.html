@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documentation of the bake-tookit</title>
+<style type="text/css">
+#rundrum {
+  border-width:1px;
+  border-style:dashed;
+  border-color:blue;
+  padding:0.2cm;
+  text-align:justify; }
+}
+</style>
+</head>
+<body>
+<h1>Tipps and Tricks</h1>
+
+<h3>Syntax highlighting</h3>
+To enable syntax highlighting for the Project.meta files in Eclipse, install the "rtext_eclipse_plugin" (Help->Install New Software...) and associate ".meta" files with the rtext editor (Window->Preferences, File Associations page).<br>
+An update site for Eclipse (needed for installation) will be provided soon. For now, you can download it manually at github.
+
+<h3>Key bindings</h3>
+It is possible to bind the bake commands to keys.<p>
+<img src="keys.png"/><br>
+
+<h3>Unnecessary includes</h3>
+If a library or executable is successfully build with "-v", unnecessary includes are printed out:
+<pre id="rundrum"><code>Info: Include to ../sub1/include/ seems to be unnecessary
+Info: Include to ../sub2/include/ seems to be unnecessary</code></pre>
+
+This features depends on the compiler dependency files. For projects with assembler files, the list might be incorrect.<br>
+However, remove the IncludeDir statements from the Project.meta and check it out.
+
+<h3>Symlinks and junctions</h3>
+It is possible to use symlinks (Linux) or junctions (Windows) when working with git. Best practice:
+<ul>
+	<li>Link all used projects into <i>one</i> directory (e.g. from application repository and basis software repository).
+	<li>Use this directory when working with bake, Eclipse, etc.
+	<li>Specify "-w <i>absolute_path_to_working_dir</i>.
+    <li>To sync/commit from/to svn, use the original directories created by git.
+</ul>
+
+<h3>Single file</h3>
+If you want to build a single file, you have to specify it like that:
+<pre id="rundrum"><code>bake -b Debug -f src/abc/MyFile.cpp</pre></code>
+No need to type so much! If it's not ambiguous, it's enough to specify parts of the filename like this:
+<pre id="rundrum"><code>bake -b Debug -f abc/MyFile.cpp
+bake -b Debug -f MyFile.cpp</code></pre>
+</body>
+
+</html>

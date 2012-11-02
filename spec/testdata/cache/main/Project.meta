@@ -1,0 +1,43 @@
+Project {
+
+  Responsible {
+    Person "TBD", email: "TBD@TBD.com"
+  }
+
+  ExecutableConfig test {
+    Files "**/*.cpp"
+    IncludeDir "include"
+    IncludeDir "lib1/include"
+    Dependency lib1, config: subtest
+    PreSteps {
+      CommandLine "echo PREMAIN"
+      Makefile "makefile/makefile", lib: "makefile/dummy.a"
+      CommandLine "echo PRELIB1"
+      CommandLine "echo MainConfigName_main $(MainConfigName)", default: off, filter: var
+      CommandLine "echo MainProjectName_main $(MainProjectName)", default: off, filter: var
+      CommandLine "echo ConfigName_main $(ConfigName)", default: off, filter: var
+      CommandLine "echo ProjectName_main $(ProjectName)", default: off, filter: var
+      CommandLine "echo OutputDir_main $(OutputDir)", default: off, filter: var
+      CommandLine "echo ArtifactName_main $(ArtifactName)", default: off, filter: var
+      CommandLine "echo ArtifactNameBase_main $(ArtifactNameBase)", default: off, filter: var
+      CommandLine "echo Time_main $(Time)", default: off, filter: var
+      CommandLine "echo Hostname_main $(Hostname)", default: off, filter: var
+      CommandLine "echo Path_main $(Path)", default: off, filter: var
+    }
+    PostSteps {
+      CommandLine "echo POSTMAIN"
+    }
+    DefaultToolchain GCC
+  }
+
+
+  ExecutableConfig test2 {
+    PreSteps {
+      CommandLine "echo ArtifactName_main $(ArtifactName)", default: off, filter: var
+      CommandLine "echo ArtifactNameBase_main $(ArtifactNameBase)", default: off, filter: var
+    }
+    ArtifactName "abc.def"
+    DefaultToolchain GCC
+  }
+
+}

@@ -1,0 +1,28 @@
+Project {
+
+  Responsible {
+    Person "TBD", email: "TBD@TBD.com"
+  }
+
+  LibraryConfig subtest {
+    Files "**/*.cpp"
+    IncludeDir "include"
+    PreSteps {
+      CommandLine "echo PRELIB1"
+      CommandLine "echo MainConfigName_lib1 $(MainConfigName)", default: off, filter: var
+      CommandLine "echo MainProjectName_lib1 $(MainProjectName)", default: off, filter: var
+      CommandLine "echo ConfigName_lib1 $(ConfigName)", default: off, filter: var
+      CommandLine "echo ProjectName_lib1 $(ProjectName)", default: off, filter: var
+      CommandLine "echo OutputDir_lib1 $(OutputDir)", default: off, filter: var
+      CommandLine "echo ArtifactName_lib1 $(ArtifactName)", default: off, filter: var
+      CommandLine "echo ArtifactNameBase_lib1 $(ArtifactNameBase)", default: off, filter: var
+      CommandLine "echo Time_lib1 $(Time)", default: off, filter: var
+      CommandLine "echo Hostname_lib1 $(Hostname)", default: off, filter: var
+      CommandLine "echo Path_lib1 $(Path)", default: off, filter: var
+    }
+    PostSteps {
+      CommandLine "echo POSTLIB1"
+    }
+  }
+
+}

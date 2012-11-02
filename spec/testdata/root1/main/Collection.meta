@@ -1,0 +1,25 @@
+Collection gaga {
+  Project "lib*", config: "*"
+  Project main, config: test
+  Exclude lib1, config: "*"
+}
+
+Collection gugu {
+}
+
+Collection gigi {
+  Exclude lib2, config: "*"
+}
+
+Collection double {
+}
+Collection double {
+}
+
+Collection wrong {
+  Project "main", config: "wrong*"
+}
+
+Collection error {
+  Project "main", config: "error*"
+}

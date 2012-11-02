@@ -1,0 +1,11 @@
+Project {
+
+LibraryConfig Debug {
+  Files "src/x.cpp"
+}
+
+LibraryConfig DebugWrong {
+  Files "src/x.cpp"
+}
+
+}

@@ -1,0 +1,27 @@
+Project {
+
+  Responsible {
+    Person "TBD", email: "TBD@TBD.com"
+  }
+
+  ExecutableConfig test {
+    UserLibrary "u"
+    Dependency p2, config: test
+    ExternalLibrary "x1/x2"
+    PostSteps {
+      Makefile "makefile", lib: "make2"
+    }
+    ExternalLibrary "a"
+    ExternalLibrarySearchPath "p2/sp2"
+    ExternalLibrarySearchPath "p3/sp3"
+    ExternalLibrary "y1/y2", search: false
+    Dependency p3, config: test
+    ExternalLibrary "b"
+    PreSteps {
+      Makefile "makefile", lib: "make1"
+    }
+    UserLibrary "u1/u2"
+    DefaultToolchain GCC
+  }
+
+}

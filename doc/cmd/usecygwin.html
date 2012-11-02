@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documentation of the bake-tookit</title>
+<style type="text/css">
+#rundrum {
+  border-width:1px;
+  border-style:dashed;
+  border-color:blue;
+  padding:0.2cm;
+  text-align:justify; }
+}
+</style>
+</head>
+<body>
+<h1>How to use bake in Cygwin</h1>
+
+Why using Cygwin on Windows instead of the built-in command shell? There is one major reason: Cygwin supports <b>colored output</b> via ansi escape sequences.
+<br>
+Note, that these steps differ depending on the Cygwin version, installed packages and configuration.
+
+<h2>Get rid of the cygdrive prefix</h2>
+<img src="mount.png"/><br>
+As you see, "c:" is now "/c" and not "/cygdrive/c" anymore.
+<br>
+<b>In newer Cygwin versions, this is not permanent.</b> To make it permanent, add the following line to <b>/etc/fstab</b> (can be found in your Cygwin installation directory):
+
+<pre id="rundrum"><code>none / cygdrive binary,posix=0,user 0 0</code></pre>
+
+<h2>Get rid of the Cygwin ruby</h2>
+<img src="ruby.png"/><br>
+Easiest way is to rename the Cygwin ruby, which makes the original ruby visible. This is only necessary if you have ruby installed in our Cygwin environment.
+
+<h2>Add tty to CYGWIN option</h2>
+<img src="tty.png"/><br> 
+"tty" must be added to the CYGWIN system variable.
+
+<h2>Start the build</h2>
+
+Use the parameter "-a black" or "-a white" depending on the background color of your shell.
+<p>
+Depending on your Cygwin installation, you have to call "bake.bat" instead of "bake". To avoid this, create an alias, e.g:
+
+<pre id="rundrum"><code>alias bake=/c/Programme/_dev/Ruby192/bin/bake.bat</code></pre>
+
+
+</body>
+
+</html>

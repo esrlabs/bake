@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documentation of the bake-tookit</title>
+</head>
+<body>
+<h1>The main project</h1>
+The concept of the main project is different to many other build systems like Eclipse CDT.<br>
+In these build systems everything which is needed for a project is configured in the project itself.<br>
+In bake the main project can predefine stuff for all subprojects.
+<p>
+The main project can have a DefaultToolchain definition, which is valid for all projects and files referenced by the main project. Subprojects can overwrite or adjust these definitions.
+<p>
+Projects are always built in context of the main project.
+<p>
+To build a project, you have to specify
+<ul>
+    <li>the main project
+    <li>the config of the main project which references the project to build
+    <li>the (sub)project to build if applicable
+</ul>
+<h2>Advantages</h2>
+<ul>
+    <li>Reducing the number of build configurations (toolchain settings like debug or release flags can be set outside of the project)
+    <li>Most projects do not have any compiler definitions anymore
+    <li>Only flags which must be used or flags which must not be used have to be specified in the projects
+    <li>Changing compiler definitions for all projects can be done easily in the main project build configuration
+</ul>
+<h2>Example</h2>
+<table border="1">
+  <tr>
+    <th bgcolor="#CCCCCC">Project.meta of Main (Debug and Release) </th>
+    <th bgcolor="#CCCCCC">Project.meta of Sub (only one build config!) </th>
+  </tr>
+  <tr>
+    <td><pre><code>Project {
+
+  ExecutableConfig Debug {
+    Dependency Sub, config: Lib
+    Files "**/*.cpp"
+    IncludeDir "include"
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Flags "... whatever -debug_info"
+        Define "DEBUG"
+      }
+    }
+  }
+
+  ExecutableConfig Release {
+    Dependency Sub, config: Lib
+    Files "**/*.cpp"
+    IncludeDir "include"
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Flags "... whatever -optimize"
+        Define "NDEBUG"
+      }
+    }
+  }
+
+}</code></pre></td>
+    <td><pre><code>Project {
+
+  LibraryConfig Lib {
+    Files "**/*.cpp"
+    IncludeDir "include"
+  }
+
+}</code></pre></td>
+  </tr>
+</table>
+
+A main project must have a DefaultToolchain - but it's allowed to leave that definition empty.
+
+<h2>Output directory</h2>
+
+A project in a specific build configuration can be build in different contexts. That's why the output directory of a project cannot be simply the build configuration name of the project to avoid inconsistencies.
+Therefore the output directory names are:
+<ul>
+    <li>Main project: $(MainConfigName) like in regular Eclipse CDT builds
+    <li>Subprojects: $(MainConfigName)_$(MainProjectName) instead of the config name of the subproject
+</ul>
+
+</body>
+
+</html>

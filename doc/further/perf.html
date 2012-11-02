@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documentation of the bake-tookit</title>
+</head>
+<body>
+<h1>Performance Analysis</h1>
+
+<h2>Eclipse vs. bake</h2>
+
+Test system: Intel Xeon W3520 (4x 2.67 GHz), 4GB Ram, Windows XP, HDD Raid<br>
+Real test application with ~ 200 projects<br>
+<b>ruby 1.9.2</b><p>
+
+<table border="1">
+  <tr><th bgcolor="#CCCCCC"></th><th bgcolor="#CCCCCC">Eclipse 3.6.1, CDT 6</th><th bgcolor="#CCCCCC">bake</th></tr>
+  <tr><td>Build whole workspace</td><td bgcolor="#FFCCCC">13:01 min</td><td bgcolor="#CCFFCC">7:19 min</td></tr>
+  <tr><td>Build again without clean</td><td bgcolor="#FFCCCC">3:05 min</td><td bgcolor="#CCFFCC">0:50 min</td></tr>
+  <tr><td>Clean whole workspace</td><td bgcolor="#FFCCCC">0:41 min</td><td bgcolor="#CCFFCC">0:08 min</td></tr>
+  <tr><td>Clean the cleaned workspace again</td><td bgcolor="#FFCCCC">0:35 min</td><td bgcolor="#CCFFCC">0:02 min</td></tr>
+  <tr><td>Memory consumption of build environment<br>(exclusive compiler, etc.)</td><td bgcolor="#FFCCCC">Eclipse needs additional<br>300MB, stays in memory</td><td bgcolor="#CCFFCC">35MB peak,freed after build<br></td></tr>
+</table>
+
+  	
+
+<h2>ruby vs. ruby</h2>
+
+Test system: Intel Xeon W3520 (4x 2.67 GHz), 4GB Ram, Windows XP, HDD Raid<br>
+Real test application with ~ 200 projects<br>
+Results averaged out of 30 runs<p>
+
+<table border="1">
+  <tr><th bgcolor="#CCCCCC"></th><th bgcolor="#CCCCCC">ruby 1.8.6p398</th><th bgcolor="#CCCCCC">ruby 1.8.7p352</th><th bgcolor="#CCCCCC">ruby 1.9.2p180</th><th bgcolor="#CCCCCC">ruby 1.9.3p0</th></tr>
+  <tr><td>Build whole workspace</td><td bgcolor="#FFCCCC">13:58 min</td><td bgcolor="#FFFFCC">8:07 min</td><td bgcolor="#CCFFCC">7:19 min</td><td bgcolor="#CCFFCC">7:28 min</td></tr>
+  <tr><td>Build single file</td><td bgcolor="#CCFFCC">1,20 sec</td><td bgcolor="#FFFFCC">1,87 sec</td><td bgcolor="#FFCCCC">2,38 sec</td><td bgcolor="#CCFFCC">1,29 sec</td></tr>
+</table>
+<br>
+ruby 1.8.6 uses only ONE native thread for multiple ruby threads.<br>
+ruby 1.9.2 for Windows needs very long to startup for complex applications, which is fixed in 1.9.3 
+
+</body>
+
+</html>

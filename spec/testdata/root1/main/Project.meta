@@ -1,0 +1,32 @@
+Project {
+
+  Responsible {
+    Person "TBD", email: "TBD@TBD.com"
+  }
+
+  ExecutableConfig test {
+    Files "**/*.cpp"
+    IncludeDir "include"
+    IncludeDir "lib1/include"
+    IncludeDir "lib2/include"
+    Dependency lib1, config: test
+    Dependency lib2, config: test
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig wrongConfig {
+    Files "**/*.cpp"
+    IncludeDir "include"
+    IncludeDir "lib1/include"
+    IncludeDir "lib2/include"
+    Dependency lib1, config: test
+    Dependency lib2, config: test
+  }  
+
+  ExecutableConfig errorConfig {
+    Files "**/*.cpp"
+    DefaultToolchain GCC
+  }  
+
+
+}

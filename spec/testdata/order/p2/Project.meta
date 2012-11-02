@@ -1,0 +1,15 @@
+Project {
+
+  Responsible {
+    Person "TBD", email: "TBD@TBD.com"
+  }
+
+  LibraryConfig test {
+    PreSteps {
+      Makefile "makefile", lib: "makeIn2"
+    }
+    ExternalLibrarySearchPath "sp2"
+    ExternalLibrary "c"
+  }
+
+}

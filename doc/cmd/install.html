@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documentation of the bake-tookit</title>
+<style type="text/css">
+#rundrum {
+  border-width:1px;
+  border-style:dashed;
+  border-color:blue;
+  padding:0.2cm;
+  text-align:justify; }
+}
+</style>
+</head>
+<body>
+<h1>How to install bake command line tool</h1>
+
+bake is a ruby gem. It runs with ruby 1.8.6 and above. However, it is <b>highly recommended</b>, that you use <b>ruby 1.9.x</b>, because of a <b>significant speed improvement</b>.
+<p>
+bake and its depedencies can be found on rubygems, which is configured as ruby source per default. Type "gem sources" if you wish to check that.<br>
+Installing bake is very easy:
+<pre id="rundrum"><code>gem install bake-toolkit</code></pre>
+<p>
+
+This is how the installation could look like:
+
+
+<pre id="rundrum"><code>>>> gem install bake-toolkit
+Fetching: highline-1.6.15.gem (100%)
+Fetching: colored-1.2.gem (100%)
+Fetching: progressbar-0.11.0.gem (100%)
+Fetching: cxxproject-0.5.59.gem (100%)
+Fetching: rgen-0.6.0.gem (100%)
+Fetching: rtext-0.2.0.gem (100%)
+Fetching: bake-toolkit-1.0.2.gem (100%)
+Successfully installed highline-1.6.15
+Successfully installed colored-1.2
+Successfully installed progressbar-0.11.0
+Successfully installed cxxproject-0.5.59
+Successfully installed rgen-0.6.0
+Successfully installed rtext-0.2.0
+Successfully installed bake-toolkit-1.0.2
+7 gems installed
+Installing ri documentation for highline-1.6.15...
+Installing ri documentation for colored-1.2...
+Installing ri documentation for progressbar-0.11.0...
+Installing ri documentation for cxxproject-0.5.59...
+Installing ri documentation for rgen-0.6.0...
+Installing ri documentation for rtext-0.2.0...
+Installing ri documentation for bake-toolkit-1.0.2...
+Installing RDoc documentation for highline-1.6.15...
+Installing RDoc documentation for colored-1.2...
+Installing RDoc documentation for progressbar-0.11.0...
+Installing RDoc documentation for cxxproject-0.5.59...
+Installing RDoc documentation for rgen-0.6.0...
+Installing RDoc documentation for rtext-0.2.0...
+Installing RDoc documentation for bake-toolkit-1.0.2...</code></pre>
+
+<h2>Problems</h2>
+<ul>
+    <li>If the installation does not start, it might be a problem of a password protected internet proxy. Unlock the proxy by opening an external webpage e.g. google.
+
+    <li>Note, that the error parsers in bake assume English language. It depends on the system and compiler how to switch the language. One possibility is to set the environment variable LC_ALL:
+
+    <pre id="rundrum"><code>LC_ALL=en_US</code></pre>
+
+    <li>Don't worry if you get an error like this:
+
+<pre id="rundrum"><code>ERROR:  While generating documentation for ...
+... MESSAGE:   Error while evaluating ...
+   undefined method `gsub' for nil:NilClass ...</code></pre>
+It's a ruby bug. However, the gems were installed correctly. You can avoid building the documentation by installing bake like this:
+
+<pre id="rundrum"><code> gem install bake-toolkit --no-rdoc --no-ri</code></pre>
+</ul>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documentation of the bake-tookit</title>
+<style type="text/css">
+#rundrum {
+  border-width:1px;
+  border-style:dashed;
+  border-color:blue;
+  padding:0.2cm;
+  text-align:justify; }
+}
+</style>
+</head>
+<body>
+<h1>The configuration file Project.meta</h1>
+<ul>
+<li>Every project has a Project.meta file in the project root directory.
+<li>A Project.meta file contains one or more build configurations.
+<li>A build configuration consists of toolchain settings, files to build, custom steps, etc.
+</ul>
+<h2>Example</h2>
+
+<table border="1">
+  <tr>
+    <th bgcolor="#CCCCCC">Project.meta of Main</th>
+    <th bgcolor="#CCCCCC">Project.meta of Sub</th>
+  </tr>
+  <tr>
+    <td><pre><code>Project {
+  ExecutableConfig Debug {
+    Dependency Sub, config: Debug
+    Files "**/*.cpp"
+    IncludeDir "include"
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Flags "-Wall"
+      }
+    }
+    PostSteps {
+      CommandLine "echo $(ArtifactName) built."
+    }
+  }
+}</code></pre></td>
+    <td><pre><code>Project {
+  LibraryConfig Debug {
+    Files "**/*.cpp"
+    IncludeDir "include"
+    IncludeDir "Main/include"
+    ExternalLibrarySearchPath "lib"
+    ExternalLibrary "a"
+    ExternalLibrary "b"
+    Toolchain {
+      Compiler CPP {
+        Flags add: "-g3"
+      }
+    }
+  }
+}</code></pre></td>
+  </tr>
+</table>
+<br>
+Let's assume that Main and Sub are located in the same workspace root. To build the executable, bake can be called from the Main directory:
+
+<pre id="rundrum"><code>bake -b Debug</code></pre>
+
+What happens now?
+
+<ol>
+	<li>Reading Project.meta of Main
+	<li>Reading Project.meta of dependencies (Sub)
+	<li>Compiling sources of Sub, e.g.:
+
+    <pre id="rundrum"><code>g++ -c -Wall -g3 -Iinclude -I../Main/include -o Debug_Main/src/xy.o src/xy.cpp</code></pre>
+	<ul>
+		<li>-Wall is taken from the DefaultToolchain and -g3 is added by the toolchain of the Sub project.
+        <li>The include path to Main is automatically adjusted.
+        <li>The order of includes is the same as in Project.meta.
+        <li>g++, -c and -I are used, because GCC was specified in the DefaultToolchain.
+	</ul>		
+	
+    <li>Archiving the library, e.g.:
+
+    <pre id="rundrum"><code>ar -rc Debug_Main/libSub.a Debug_Main/src/xy.o</code></pre>
+
+    <li>Compiling sources of Main, e.g.:
+
+    <pre id="rundrum"><code>g++ -c -Wall -Iinclude -o Debug/src/main.o src/main.cpp</code></pre>
+
+    <li>Linking executable, e.g.:
+
+    <pre id="rundrum"><code>g++ -o Debug/Main.exe Debug/src/main.o ../Sub/Debug_Main/libSub.a -L../Sub/lib -la -lb</code></pre>
+
+        The library search paths and libraries are added in the specified order.
+    <li>Executing the post step
+
+    <pre id="rundrum"><code>echo Main.exe built.</code></pre>
+        The variable was automatically substituted.
+
+</body>
+
+</html>

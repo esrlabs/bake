@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documentation of the bake-tookit</title>
+<style type="text/css">
+#rundrum {
+  border-width:1px;
+  border-style:dashed;
+  border-color:blue;
+  padding:0.2cm;
+  text-align:justify; }
+}
+</style>
+</head>
+<body>
+<h1>Variable substitution in Project.meta</h1>
+
+<h3>Substituted variables</h3>
+
+<table border="1">
+  <tr><th bgcolor="#CCCCCC">Variable</th><th bgcolor="#CCCCCC">Example</th></tr>
+  <tr><td>$(MainConfigName)</td> <td>Debug</td></tr>
+  <tr><td>$(MainProjectName)</td> <td>bootloader</td></tr>
+  <tr><td>$(ConfigName)</td> <td>lib</td></tr>
+  <tr><td>$(ProjectName)</td> <td>canDriver</td></tr>
+  <tr><td>$(OutputDir)</td> <td>Debug_bootloader</td></tr>
+  <tr><td>$(ArtifactName)</td> <td>bootloader_1.0.elf</td></tr>
+  <tr><td>$(ArtifactNameBase)</td> <td>bootloader_1.0</td></tr>
+  <tr><td>$(Time)</td> <td>2012-12-24 20:00:00 +0200</td></tr>
+  <tr><td>$(Hostname)</td> <td>MY_COMPUTER</td></tr>
+</table>
+<p>
+Otherwise:
+<p>
+<table border="1">
+  <tr><th bgcolor="#CCCCCC">Variable</th><th bgcolor="#CCCCCC">Example</th></tr>
+  <tr><td>$(environment variable)</td> <td>whatever</td></tr>
+</table>
+<p>
+An error will be generated if the environment variable does not exist, except
+<p>
+<table border="1">
+  <tr><th bgcolor="#CCCCCC">Variable</th><th bgcolor="#CCCCCC">Example</th></tr>
+  <tr><td>$(PATH_TO_CYGWIN)</td> <td>c:/tool/cygwin</td></tr>
+</table>
+<p>
+will be substituted to an empty string if not set.
+
+<h3>Equal variables</h3>
+
+<h4>In main project</h4>
+<table border="1">
+  <tr><th bgcolor="#CCCCCC">Variable</th><th bgcolor="#CCCCCC">is equal to</th></tr>
+  <tr><td>$(MainConfigName)</td> <td>$(ConfigName)</td></tr>
+  <tr><td>$(MainProjectName)</td> <td>$(ProjectName)</td></tr>
+  <tr><td>$(OutputDir)</td> <td>$(MainConfigName)</td></tr>
+</table>
+
+<h4>In subproject</h4>
+<table border="1">
+  <tr><th bgcolor="#CCCCCC">Variable</th><th bgcolor="#CCCCCC">is equal to</th></tr>
+  <tr><td>$(OutputDir)</td> <td>$(MainConfigName)_$(MainProjectName)</td></tr>
+</table>
+
+<h3>Auto-adjustment of paths to existing projects</h3>
+
+If paths to other projects are needed, e.g. to "bootloaderUpdater", don't write a hard coded relative path like this:<br>
+<font color="red">CommandLine "../bootloaderUpdater/tools/PrimaryBootloader2Include.exe</font><br>
+bootloaderUpdater might be checked out into a different workspace root. If you write<br>
+<font color="green">CommandLine "bootloaderUpdater/tools/PrimaryBootloader2Include.exe</font><br>
+bake recognizes that the first part of the path is a valid project name and calculates the relative path to the project automatically.<br>
+
+<h4>Special case:</h4>
+If you have a directory in the current project, which has the same name as a valid project and you need to reference the directory, write<br>
+<font color="green">IncludeDir "myProjectName/bootloaderUpdater/whatever"</font><br>
+which will then adjusted to<br>
+<font color="green">-I"bootloaderUpdater/whatever"</font><br>
+instead of<br>
+<font color="red">-I"../bootloaderUpdater/whatever" (depending of the location of the project bootloaderUpdater).</font>
+
+<h4>Supported elements for auto-adjustment:</h4>
+<ul>
+    <li>IncludeDir
+    <li>ExternalLibrary
+    <li>ExternalLibrarySearchPath
+    <li>UserLibrary
+    <li>CommandLine
+</ul>
+<h3>Examples</h3>
+<pre id="rundrum"><code>CommandLine "ddump -Ruv -y 0xFFFFF -o$(OutputDir)/$(ArtifactNameBase).bin $(OutputDir)/$(ArtifactName)"
+ExternalLibrarySearchPath "$(PATH_TO_CYGWIN)/usr/local/lib"
+IncludeDir "bspDma/include"</code></pre>
+
+
+
+</body>
+
+</html>

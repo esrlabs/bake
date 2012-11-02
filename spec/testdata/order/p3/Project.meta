@@ -1,0 +1,12 @@
+Project {
+
+  Responsible {
+    Person "TBD", email: "TBD@TBD.com"
+  }
+
+  CustomConfig test {
+    Makefile "makefile", lib: "makeIn3"
+    ExternalLibrarySearchPath "sp3"
+  }
+
+}
