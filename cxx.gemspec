@@ -30,5 +30,5 @@ Gem::Specification.new do |s|
   s.add_dependency("cxxproject", "=0.5.59")
   s.add_dependency("rtext", "=0.2.0")
   s.add_dependency("rgen", "=0.6.0")
-  s.executables = ["bake", "bakery"]
+  s.executables = ["bake", "bakery", "createVSProjects"]
 end
