@@ -671,13 +671,19 @@ module Cxxproject
               if not File.exists?(@startupFilename)
                 Dir.chdir(startBB.project_dir) do
                   theFile = Dir.glob("**/#{@startupFilename}")
+                  theFile.map! {|tf| startBB.project_dir + "/" + tf}
                 end
                 if theFile.length == 0
                   Printer.printError "Error: #{@startupFilename} not found in project #{@options.project}"
                   ExitHelper.exit(1)
                 end
               else
-                theFile << @startupFilename
+                if File.is_absolute?(@startupFilename)
+                  theFile << @startupFilename
+                else
+                  theFile << startBB.project_dir + "/" + @startupFilename
+                end
+                  
               end
               
               exclude_files = []
@@ -692,7 +698,7 @@ module Cxxproject
               
               source_files = c.sources.dup
               c.source_patterns.each do |p|
-                Dir.glob(p).each {|f| source_files << f}
+                Dir.glob(p).each {|f| source_files << (startBB.project_dir + "/" + f)} 
               end
               
               theFile.delete_if { |f| source_files.all? {|e| e!=f} }
