@@ -1,6 +1,7 @@
 *.gem
 .bake/
 test_main/
+test_p1/
 wrongConfig_main/
 test/
 Debug*/

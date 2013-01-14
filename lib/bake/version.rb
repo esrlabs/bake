@@ -1,7 +1,7 @@
 module Cxxproject
   class Version
     def self.bake
-      "1.0.3"
+      "1.0.4"
     end
   end
     

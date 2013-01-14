@@ -66,6 +66,16 @@ module Cxxproject
                 end
               end
             end
+            
+            if cache != nil
+              cache.project2config.each do |pname,config|
+                if not File.exists?(config.file_name)
+                  Printer.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
+                  cache = nil
+                  @options.set_nocache # abs dir may wrong 
+                end
+              end  
+            end
               
             if cache != nil
               cache.files.each do |c|

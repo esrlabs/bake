@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'bake/version'
+
 require 'tocxx'
 require 'bake/options'
 require 'bake/util'
