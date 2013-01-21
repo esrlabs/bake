@@ -14,16 +14,16 @@ module Cxxproject
             
       add_option(Option.new("--version",true)           { |x| set_version(x)            })
       add_option(Option.new("--rewrite_solution",false) {     set_rewrite_solution      })
-	  add_option(Option.new("-w",true)                  { |x| set_root(x)               })
+	    add_option(Option.new("-w",true)                  { |x| set_root(x)               })
       add_option(Option.new("-h",false)                 {     usage; ExitHelper.exit(0) })
     end
     
     def usage
       puts "\nUsage: createVSProjects [options]"
       puts " -w <root>           Add a workspace root. Default is current directory."
-	  puts "                     This Options can be used at multiple times."
-	  puts "                     Solution files will be created in the first root directory."
-	  puts " --version <year>    Visual Studio version. Currently supported: 2010 and 2012 (default)."
+	    puts "                     This option can be used at multiple times."
+	    puts "                     Solution files will be created in the first root directory."
+	    puts " --version <year>    Visual Studio version. Currently supported: 2010 and 2012 (default)."
       puts " --rewrite_solution  Rewrites existing solution files instead of appending new projects."
       puts " -h                  Print this help."
     end
@@ -46,9 +46,9 @@ module Cxxproject
     
     def set_version(v)
 	  if v != "2010" and v != "2012"
-	    puts "Error: version mut be '2010' or '2012'"
-	  end
+	    puts "Error: version must be '2010' or '2012'"
       ExitHelper.exit(1)
+	  end
       @version = v
     end
     

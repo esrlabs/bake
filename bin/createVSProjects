@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
-puts "Initializing..."
-
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 
 require "securerandom"
 require "vs/options"
+require 'bake/version'
+
+puts "-- bake #{Cxxproject::Version.bake}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
 
 module Cxxproject
 
@@ -28,15 +29,13 @@ end
 @options = VsOptions.new(ARGV)
 @options.parse_options
 
-version = "error" 
-toolset = "error"
+version = "12.00" 
+toolset = "v110"
 if @options.version == "2010"
   version = "11.00" 
   toolset = "v100"
-elsif @options.version == "2012"
-  version = "12.00" 
-  toolset = "v110"
 end
+
 	
 slnFilename = @options.roots[0] + "/" + File.basename(@options.roots[0]) + ".sln"
 appendProjects = (File.exist?(slnFilename) and @options.rewriteSolution)
@@ -141,10 +140,14 @@ projects.each do |k,v|
     f.puts "    <ConfigurationType>Makefile</ConfigurationType>"
     f.puts "    <PlatformToolset>" +  toolset + "</PlatformToolset>"
     f.puts "  </PropertyGroup>"
+    f.puts "  <PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='bake|Win32'\">"
+    f.puts "    <ExecutablePath>$(PATH)</ExecutablePath>"
+    f.puts "  </PropertyGroup>"
     f.puts "  <Import Project=\"$(VCTargetsPath)\\Microsoft.Cpp.props\" />"
     f.puts "  <ImportGroup Label=\"PropertySheets\" Condition=\"'$(Configuration)|$(Platform)'=='bake|Win32'\">"
     f.puts "    <Import Project=\"$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props\" Condition=\"exists('$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props')\" Label=\"LocalAppDataPlatform\" />"
     f.puts "  </ImportGroup>"
+	
 	
     f.puts "  <ItemGroup>"
 	Dir.chdir(v[PATH]) do
