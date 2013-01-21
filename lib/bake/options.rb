@@ -49,7 +49,7 @@ module Cxxproject
       add_option(Option.new("--rebuild",false)             {     set_rebuild                })
       add_option(Option.new("--prepro",false)              {     set_prepro                 })
       add_option(Option.new("--link_only",false)           {     set_linkOnly               })
-      add_option(Option.new("--print_less",false)           {    set_printLess              })
+      add_option(Option.new("--print_less",false)          {    set_printLess               })
       add_option(Option.new("--ignore_cache",false)        {     set_nocache                })
       add_option(Option.new("--threads",true)              { |x| set_threads(x)             })
       add_option(Option.new("--socket",true)               { |x| set_socket(x)              })
@@ -58,6 +58,7 @@ module Cxxproject
       add_option(Option.new("--include_filter",true)       { |x| set_include_filter(x)      })
       add_option(Option.new("--exclude_filter",true)       { |x| set_exclude_filter(x)      })
       add_option(Option.new("--show_abs_paths",false)      {     set_show_fullnames         })
+      add_option(Option.new("--visualStudio",false)        {     set_visualStudio           })
       add_option(Option.new("-h",false)                    {     usage; ExitHelper.exit(0)  })
       add_option(Option.new("--help",false)                {     usage; ExitHelper.exit(0)  })
       add_option(Option.new("--show_include_paths",false)  {     set_show_inc               })
@@ -213,6 +214,10 @@ module Cxxproject
       Rake::application.consoleOutput_fullnames = true
     end    
 
+    def set_visualStudio
+      Rake::application.consoleOutput_visualStudio = true
+    end
+        
     def set_root(dir)
       check_valid_dir(dir)
       r = File.expand_path(dir.gsub(/[\\]/,'/'))
