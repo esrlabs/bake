@@ -38,6 +38,17 @@ Results averaged out of 30 runs<p>
 ruby 1.8.6 uses only ONE native thread for multiple ruby threads.<br>
 ruby 1.9.2 for Windows needs very long to startup for complex applications, which is fixed in 1.9.3 
 
+<h2>CMake with Unix makefiles vs. bake</h2>
+
+Test system: Intel Xeon W3520 (4x 2.67 GHz), 4GB Ram, Windows XP, HDD Raid<br>
+Real test application with ~ 100 projects<p>
+
+<li> Build whole workspace: bake is ~10% faster
+<li> Build again without clean: bake is ~50% faster 
+<li> Clean whole workspace: bake is ~80% faster
+<p>
+More details will follow.
+
 </body>
 
 </html>
