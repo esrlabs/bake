@@ -63,6 +63,12 @@ module Cxxproject
             substStr << @@artifactName
           elsif var == "ArtifactNameBase"
             substStr << @@artifactName.chomp(File.extname(@@artifactName))
+          elsif var == "/"
+            if Cxxproject::OS.windows?
+              substStr << "\\"
+            else
+              substStr << "/"
+            end
           elsif ENV[var]
             substStr << ENV[var]
           elsif var == "PATH_TO_CYGWIN" # allowed to be not set

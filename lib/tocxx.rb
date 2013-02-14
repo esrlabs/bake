@@ -512,16 +512,6 @@ module Cxxproject
           bbModule.contents.each do |c|
             if Cxxproject::CommandLine === c
               cmdLine = convPath(c.get_command_line, config, bbModule.main_content)
-              if Cxxproject::OS.windows? # CommandLine "tool/abc.exe gaga" does not work --> / must be \\ 
-                maxPos = cmdLine.index(" ")
-                indexQuote = cmdLine.index("\"")
-                if indexQuote != nil and (maxPos == nil or indexQuote < maxPos)
-                  maxPos = indexQuote 
-                end
-                if maxPos != nil
-                  cmdLine = cmdLine[0..maxPos-1].gsub("/","\\") + cmdLine[maxPos..-1]
-                end
-              end
               c.set_command_line(cmdLine)
             end
           end 
