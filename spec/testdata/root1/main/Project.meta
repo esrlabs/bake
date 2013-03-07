@@ -11,6 +11,7 @@ Project {
     IncludeDir "lib2/include"
     Dependency lib1, config: test
     Dependency lib2, config: test
+    LinkerScript "lib2/ls/linkerscript.dld"
     DefaultToolchain GCC
   }
   

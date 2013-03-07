@@ -369,7 +369,7 @@ module Cxxproject
             x = @options.build_config + "/" + config.artifactName.name
             bbModule.main_content.set_executable_name(x)
           end 
-          bbModule.main_content.set_linker_script(config.linkerScript.name) unless config.linkerScript.nil?
+          bbModule.main_content.set_linker_script(convPath(config.linkerScript, config)) unless config.linkerScript.nil?
         else # CUSTOM
           if config.step
             if config.step.filter != ""
