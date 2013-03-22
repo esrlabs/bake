@@ -61,10 +61,10 @@ describe "bake" do
   end  
 
   it 'collection parse params' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b gaga -w spec/testdata/root1 -w spec/testdata/root2 -v -a black --ignore_cache -r -c`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b gaga -w spec/testdata/root1 -w spec/testdata/root2 -v2 -a black --ignore_cache -r -c`
     str.include?(" -r").should == true
     str.include?(" -a black").should == true
-    str.include?(" -v").should == true
+    str.include?(" -v2").should == true
     str.include?(" --ignore_cache").should == true
     str.include?(" -r").should == true
     str.include?(" -c").should == true

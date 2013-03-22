@@ -44,12 +44,15 @@ module Cxxproject
       add_option(Option.new("-c",false)                    {     set_clean                  })
       add_option(Option.new("-a",true)                     { |x| set_color(x)               })
       add_option(Option.new("-w",true)                     { |x| set_root(x)                })
-      add_option(Option.new("-v",false)                    {     set_verbose                })
       add_option(Option.new("-r",false)                    {     set_error                  })
       add_option(Option.new("--rebuild",false)             {     set_rebuild                })
       add_option(Option.new("--prepro",false)              {     set_prepro                 })
       add_option(Option.new("--link_only",false)           {     set_linkOnly               })
-      add_option(Option.new("--print_less",false)          {    set_printLess               })
+      
+      add_option(Option.new("-v0",false)                   {     set_v(0)                   })
+      add_option(Option.new("-v1",false)                   {     set_v(1)                   })
+      add_option(Option.new("-v2",false)                   {     set_v(2)                   })
+        
       add_option(Option.new("--ignore_cache",false)        {     set_nocache                })
       add_option(Option.new("--threads",true)              { |x| set_threads(x)             })
       add_option(Option.new("--socket",true)               { |x| set_socket(x)              })
@@ -77,7 +80,7 @@ module Cxxproject
       puts " -f <name>                Build/Clean this file only."
       puts " -c                       Clean the file/project."
       puts " -a <scheme>              Use ansi color sequences (console must support it). Possible values are 'white' and 'black'."
-      puts " -v                       Verbose output."
+      puts " -v<level>                Verbose level from 0 to 2, whereas -v0 is less, -v1 is normal (default) and -v2 is more verbose."
       puts " -r                       Stop on first error."
       puts " -w <root>                Add a workspace root (can be used multiple times)."
       puts "                          If no root is specified, the parent directory of the main project is added automatically."
@@ -168,9 +171,6 @@ module Cxxproject
       @clean = true
       @rebuild = true
     end
-    def set_verbose()
-      @verbose = true
-    end
     def set_nocache()
       @nocache = true
     end
@@ -184,9 +184,28 @@ module Cxxproject
       @linkOnly = true
       set_single()
     end
+
+    def set_v(num)
+      if num == 0
+        @printLess = true
+        @verbose = false
+      elsif num == 1
+        @printLess = false
+        @verbose = false
+      elsif num == 2
+        @printLess = false
+        @verbose = true
+      end
+    end
+        
     def set_printLess()
       @printLess = true
     end    
+    def set_verbose()
+      @verbose = true
+    end
+    
+    
     def set_color(x)
       if (x != "black" and x != "white")
         Printer.printError "Error: color scheme must be 'black' or 'white'"

@@ -41,7 +41,7 @@ describe "Building" do
   it 'workspace' do
     File.exists?("spec/testdata/cache/main/test/main.exe").should == false
     
-    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-v"])
+    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-v2"])
     options.parse_options()
     tocxx = Cxxproject::ToCxx.new(options)
     tocxx.doit()

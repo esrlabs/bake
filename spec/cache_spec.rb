@@ -38,7 +38,7 @@ describe "Caching" do
     # no cache files  
     SpecHelper.clean_testdata_build("cache","main","test")
     Utils.cleanup_rake
-    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-v"])
+    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-v2"])
     options.parse_options()
     tocxx = Cxxproject::ToCxx.new(options)
     tocxx.doit()
@@ -65,7 +65,7 @@ describe "Caching" do
     $mystring.split("Loading cached").length.should == 3
     
     # force re read meta files
-    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "--ignore_cache", "-v"])
+    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "--ignore_cache", "-v2"])
     options.parse_options()
     Utils.cleanup_rake
     tocxx = Cxxproject::ToCxx.new(options)

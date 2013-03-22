@@ -31,7 +31,7 @@ describe "Deps" do
   end
 
   it 'custom deps exe' do
-    options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "Debug", "--rebuild", "-v"])
+    options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "Debug", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Cxxproject::ToCxx.new(options)
     tocxx.doit()
@@ -49,7 +49,7 @@ describe "Deps" do
   end
   
   it 'exe deps exe' do
-    options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "Debug2", "--rebuild", "-v"])
+    options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "Debug2", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Cxxproject::ToCxx.new(options)
     tocxx.doit()
