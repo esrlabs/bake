@@ -21,10 +21,15 @@ class Parser
   def initialize(argv)
     @options = {}
     @argv = argv
+    @default = nil
   end
   
   def add_option(opt)
     @options[opt.param] = opt
+  end
+  
+  def add_default(opt)
+    @default = opt
   end
   
   def parse_internal(ignoreInvalid = true)
@@ -32,22 +37,25 @@ class Parser
     begin
       while pos < @argv.length do
         if not @options.include?@argv[pos]
-          if ignoreInvalid
-            pos = pos + 1
-            next
-          end
-          raise "Option #{@argv[pos]} unknown"
-        end
-        option = @options[@argv[pos]]
-        if option.arg
-          if pos+1 < @argv.length and @argv[pos+1][0] != "-"
-            option.block.call(@argv[pos+1])
-            pos = pos + 1
-          else
-            raise "Argument for option #{@argv[pos]} missing" 
+          if @default
+            if not @default.call(@argv[pos])
+              raise "Option #{@argv[pos]} unknown"
+            end
+          elsif not ignoreInvalid 
+            raise "Option #{@argv[pos]} unknown"
           end
         else
-          option.block.call()
+          option = @options[@argv[pos]]
+          if option.arg
+            if pos+1 < @argv.length and @argv[pos+1][0] != "-"
+              option.block.call(@argv[pos+1])
+              pos = pos + 1
+            else
+              raise "Argument for option #{@argv[pos]} missing" 
+            end
+          else
+            option.block.call()
+          end
         end
         pos = pos + 1
       end

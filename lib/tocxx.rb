@@ -81,7 +81,7 @@ module Cxxproject
     end
 
     # PRE and POST CONDITIONS
-    def addSteps(steps, bbModule, projDir, globalFilterStr = nil)
+    def addSteps(steps, bbModule, projDir, globalFilterStr, tcs)
       if steps
         array = (Metamodel::Step === steps ? [steps] : steps.step)
         array.reverse.each do |m|
@@ -131,7 +131,8 @@ module Cxxproject
               bb.set_path_to(pathHash)
               bb.pre_step = true if globalFilterStr
             end 
-            bb.set_flags(m.flags)
+            bb.set_flags(adjustFlags(tcs[:MAKE][:FLAGS],m.flags)) if m.flags
+            
             @lib_elements[m.line_number] = [HasLibraries::LIB_WITH_PATH, m.lib] if m.lib != ""
           elsif Cxxproject::Metamodel::CommandLine === m
             nameOfBB = m.name
@@ -154,6 +155,8 @@ module Cxxproject
       projDir = config.parent.get_project_dir
     
       d = dir.respond_to?("name") ? dir.name : dir
+      return d if @options.no_autodir
+      
       inc = d.split("/")
       if (inc[0] == projName)
         res = inc[1..-1].join("/") # within self
@@ -178,7 +181,7 @@ module Cxxproject
             end
           end
         else
-          Printer.printInfo "Info: #{projName} uses \"..\" in path name #{d}"
+          Printer.printInfo "Info: #{projName} uses \"..\" in path name #{d}" if @options.verbose
         end
         
         res = d # relative from self as last resort
@@ -358,7 +361,15 @@ module Cxxproject
         bbModule = ModuleBuildingBlock.new("Project "+projName)
         bbModule.contents = []
         
-        addSteps(config.postSteps, bbModule, projDir, "POST") if not @options.linkOnly
+        tcs = nil
+        if not Metamodel::CustomConfig === config
+          tcs = Utils.deep_copy(@defaultToolchain)
+          integrateToolchain(tcs, config.toolchain)
+        else
+          tcs = Utils.deep_copy(Cxxproject::Toolchain::Provider.default)
+        end          
+          
+        addSteps(config.postSteps, bbModule, projDir, "POST", tcs) if not @options.linkOnly
 
         # LIB, EXE
         if Metamodel::LibraryConfig === config
@@ -380,7 +391,7 @@ module Cxxproject
               Printer.printError "Error: #{config.file_name}(#{config.step.line_number}): attribute default not allowed here"
               ExitHelper.exit(1)
             end
-            addSteps(config.step, bbModule, projDir)
+            addSteps(config.step, bbModule, projDir, nil, tcs)
           end 
           bbModule.main_content = BinaryLibrary.new(projName, false)
         end
@@ -389,17 +400,7 @@ module Cxxproject
         bbModule.contents << bbModule.main_content
         
         # PRE CONDITIONS
-        addSteps(config.preSteps, bbModule, projDir, "PRE") if not @options.linkOnly       
-        
-        
-        tcs = nil
-        if not Metamodel::CustomConfig === config
-          tcs = Utils.deep_copy(@defaultToolchain)
-          integrateToolchain(tcs, config.toolchain)
-        else
-          tcs = Utils.deep_copy(Cxxproject::Toolchain::Provider.default)
-        end
-        
+        addSteps(config.preSteps, bbModule, projDir, "PRE", tcs) if not @options.linkOnly       
         
         ([bbModule] + bbModule.contents).each do |c|
           c.set_tcs(tcs)

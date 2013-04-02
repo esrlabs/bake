@@ -1,7 +1,11 @@
 *.gem
+*.stackdump
 .bake/
 test_main/
 test_p1/
 wrongConfig_main/
 test/
+test1/
+test2/
+test3/
 Debug*/

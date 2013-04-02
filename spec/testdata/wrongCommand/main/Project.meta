@@ -1,0 +1,10 @@
+Project {
+
+  ExecutableConfig test {
+    Files "**/*.cpp"
+    DefaultToolchain GCC {
+	  Compiler CPP, command: GAGA
+	}
+  }
+
+}

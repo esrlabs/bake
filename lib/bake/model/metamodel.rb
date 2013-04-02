@@ -121,7 +121,7 @@ module Cxxproject
         has_attr 'lib', String, :defaultValueLiteral => ""
         has_attr 'target', String, :defaultValueLiteral => ""
         has_attr 'pathTo', String, :defaultValueLiteral => ""
-        has_attr 'flags', String, :defaultValueLiteral => ""
+        contains_many 'flags', Flags, 'parent'
       end
 
       class CommandLine < Step

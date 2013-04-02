@@ -1,0 +1,8 @@
+Project {
+
+  CustomConfig test {
+    Makefile "makefile/makefile"
+    DefaultToolchain GCC
+  }
+
+}

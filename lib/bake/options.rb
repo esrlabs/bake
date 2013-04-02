@@ -8,7 +8,7 @@ module Cxxproject
   class Options < Parser
     attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version, :alias_filename # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :clean, :rebuild, :single, :verbose, :nocache, :color, :show_includes, :linkOnly, :check_uninc, :printLess # Boolean
+    attr_reader :clean, :rebuild, :single, :verbose, :nocache, :color, :show_includes, :linkOnly, :check_uninc, :printLess, :no_autodir # Boolean
     attr_reader :threads, :socket # Fixnum
 
     def initialize(argv)
@@ -28,6 +28,7 @@ module Cxxproject
       @show_includes = false
       @linkOnly = false
       @printLess = false
+      @no_autodir = false
       @threads = 8
       @roots = []
       @socket = 0
@@ -36,6 +37,8 @@ module Cxxproject
       @def_root = nil
       @eclipse_version = ""
       @alias_filename = ""
+      
+      add_default(Proc.new{ |x| set_build_config_default(x) })
       
       add_option(Option.new("-m",true)                     { |x| set_main_dir(x)            })
       add_option(Option.new("-b",true)                     { |x| set_build_config(x)        })
@@ -48,6 +51,7 @@ module Cxxproject
       add_option(Option.new("--rebuild",false)             {     set_rebuild                })
       add_option(Option.new("--prepro",false)              {     set_prepro                 })
       add_option(Option.new("--link_only",false)           {     set_linkOnly               })
+      add_option(Option.new("--no_autodir",false)          {     set_no_autodir             })
       
       add_option(Option.new("-v0",false)                   {     set_v(0)                   })
       add_option(Option.new("-v1",false)                   {     set_v(1)                   })
@@ -57,7 +61,7 @@ module Cxxproject
       add_option(Option.new("--threads",true)              { |x| set_threads(x)             })
       add_option(Option.new("--socket",true)               { |x| set_socket(x)              })
       add_option(Option.new("--toolchain_info",true)       { |x| print_toolchain(x)         })
-      add_option(Option.new("--available_toolchain",false) {     print_toolchains           })
+      add_option(Option.new("--toolchain_names",false)     {     print_toolchains           })
       add_option(Option.new("--include_filter",true)       { |x| set_include_filter(x)      })
       add_option(Option.new("--exclude_filter",true)       { |x| set_exclude_filter(x)      })
       add_option(Option.new("--show_abs_paths",false)      {     set_show_fullnames         })
@@ -74,8 +78,8 @@ module Cxxproject
 
     def usage
       puts "\nUsage: bake [options]"
+      puts " [-b] <name>              Config name of main project"
       puts " -m <dir>                 Directory of main project (default is current directory)."
-      puts " -b <name>                Config name of main project"
       puts " -p <dir>                 Project to build/clean (default is main project)"
       puts " -f <name>                Build/Clean this file only."
       puts " -c                       Clean the file/project."
@@ -99,6 +103,7 @@ module Cxxproject
       puts " --exclude_filter <name>  Excludes steps with this filter name (can be used multiple times)."
       puts "                          'PRE' or 'POST' excludes all PreSteps respectively PostSteps."
       puts " --show_abs_paths         Compiler prints absolute filename paths instead of relative paths."
+      puts " --no_autodir             Disable auto completion of paths like in IncludeDir"
       puts ""
       puts " -h, --help               Print this help."
       puts " --show_license           Print the license."      
@@ -143,7 +148,18 @@ module Cxxproject
       @exclude_filter << x
     end
     
+    def set_build_config_default(config)
+      index = config.index('-')
+      return false if (index != nil and index == 0) 
+      set_build_config(config)
+      return true
+    end
+
     def set_build_config(config)
+      if not @build_config.empty?
+        Printer.printError "Error: Cannot set build config '#{config}', because build config is already set to '#{@build_config}'"
+        ExitHelper.exit(1)
+      end
       @build_config = config
     end
     
@@ -184,6 +200,10 @@ module Cxxproject
       @linkOnly = true
       set_single()
     end
+    
+    def set_no_autodir()
+      @no_autodir = true
+    end    
 
     def set_v(num)
       if num == 0
@@ -198,14 +218,6 @@ module Cxxproject
       end
     end
         
-    def set_printLess()
-      @printLess = true
-    end    
-    def set_verbose()
-      @verbose = true
-    end
-    
-    
     def set_color(x)
       if (x != "black" and x != "white")
         Printer.printError "Error: color scheme must be 'black' or 'white'"

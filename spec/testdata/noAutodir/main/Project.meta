@@ -1,0 +1,10 @@
+Project {
+
+  ExecutableConfig test {
+    Dependency sub, config: nix
+    Files "**/*.cpp"
+	IncludeDir "sub/include"
+	DefaultToolchain GCC
+  }
+  
+}

@@ -1,0 +1,8 @@
+Project {
+
+  LibraryConfig Debug {
+    Files "**/*.cpp"
+	DefaultToolchain GCC
+  }
+
+}

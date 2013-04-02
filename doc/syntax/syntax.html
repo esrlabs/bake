@@ -90,9 +90,10 @@ z-index: 100;
                                           <span class="help" onMouseover="showMakefileLib()" onMouseout="notip()">lib</span>: &#60;lib&#62;,
 										  <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
 										  <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
-										  <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">flags</span>: &#60;flags&#62;,
 										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
-										  <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;<br>
+										  <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62; {<br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>										  
+&nbsp; &nbsp; &nbsp; }<br>										  
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCommandLine()" onMouseout="notip()">CommandLine</span> &#60;line&#62;,
 										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
 										  <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;<br>
@@ -157,8 +158,9 @@ z-index: 100;
                             <span style="background-color:#DDDDDD;" id="makefile_part" class="showInline"> &#60;name&#62;,
                                           <span class="help" onMouseover="showMakefileLib()" onMouseout="notip()">lib</span>: &#60;lib&#62;,
 										  <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
-										  <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
-										  <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">flags</span>: &#60;flags&#62;						
+										  <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62; {<br>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>										  
+&nbsp; &nbsp; }<br>										  										  						
 							</span>
                             <span style="background-color:#DDDDDD;" id="commandline_part"  class="hide">&#60;line&#62;</span>
 &nbsp; &nbsp; <br></span><br></span>
@@ -327,9 +329,8 @@ function showMakefilePathTo() {
   ddrivetip("pathTo", "No","-","-",str)
 }
 
-function showMakefileFlags() {   
-  str = 'Additional flags for the makefile, e.g. "-j".'
-  ddrivetip("flags", "No","-","-",str)
+function showMakefileFlags() {  
+	  ddrivetip("Flags", "No","0..n","-j","Additional makefile flags.")  
 }
 
 function getCommandLineDesc() {

@@ -35,7 +35,7 @@ describe "Option Parser" do
   end
 
   it 'should provide an available toolchains flag' do
-    options = Options.new(["--available_toolchain"])
+    options = Options.new(["--toolchain_names"])
     lambda { options.parse_options() }.should raise_error(ExitHelperException)
     $mystring.include?("Available toolchains:").should == true
     $mystring.include?("Diab").should == true

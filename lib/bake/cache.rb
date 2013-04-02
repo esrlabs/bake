@@ -15,6 +15,7 @@ module Cxxproject
     attr_accessor :exclude_filter
     attr_accessor :defaultToolchain
     attr_accessor :defaultToolchainTime
+    attr_accessor :no_autodir
   end
   
   class CacheAccess
@@ -107,6 +108,13 @@ module Cxxproject
               end
             end 
             
+            if cache != nil
+              if (not @options.no_autodir.eql?(cache.no_autodir))
+                cache = nil
+                Printer.printInfo "Info: no_autodir option differs in cache, reloading meta information"
+              end
+            end             
+            
           else
             Printer.printInfo("Info: cache not found, reloading meta information")
           end
@@ -133,6 +141,7 @@ module Cxxproject
         cache.cache_file = @cacheFilename
         cache.version = Version.bake
         cache.include_filter = @options.include_filter
+        cache.no_autodir = @options.no_autodir
         cache.exclude_filter = @options.exclude_filter
         cache.workspace_roots = @options.roots
         cache.defaultToolchain = defaultToolchain
