@@ -24,10 +24,14 @@ module Cxxproject
       has_attr 'name', String, :defaultValueLiteral => ""
       has_attr 'config', String, :defaultValueLiteral => ""
     end
+    class CollectionRef < ModelElement
+      has_attr 'name', String, :defaultValueLiteral => ""
+    end
     class Collection < ModelElement
       has_attr 'name', String, :defaultValueLiteral => ""
       contains_many 'project', Project, 'collection'
       contains_many 'exclude', Exclude, 'collection'
+      contains_many 'collections', CollectionRef, 'collection'
     end
 
     module Project::ClassModule

@@ -1,13 +1,10 @@
 Project {
 
-  Responsible {
-    Person "TBD", email: "TBD@TBD.com"
-  }
-
   LibraryConfig test {
     Files "**/*.cpp"
     IncludeDir "include"
-    DefaultToolchain GCC
+    IncludeDir "lib1/include"
+    IncludeDir "lib2/include"
   }
-
+  
 }

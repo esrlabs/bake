@@ -23,3 +23,33 @@ Collection wrong {
 Collection error {
   Project "main", config: "error*"
 }
+
+Collection Part1 {
+  Project main, config: test
+  Exclude lib1, config: "*"
+}
+
+Collection Part2 {
+  Project "lib2", config: "*"
+}
+
+Collection Part3 {
+  Exclude "lib2", config: "*"
+  CollectionRef Part2
+  CollectionRef Part1
+}
+
+Collection Combined {
+  Project "lib1", config: "*"
+  Exclude main, config: test
+  CollectionRef Part2
+  CollectionRef Part3
+}
+
+Collection InvalidRef {
+  CollectionRef Wrong
+}
+
+Collection Nothing {
+  CollectionRef Nothing
+}

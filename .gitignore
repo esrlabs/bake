@@ -5,6 +5,7 @@ test_main/
 test_p1/
 wrongConfig_main/
 test/
+rel_test*
 test1/
 test2/
 test3/

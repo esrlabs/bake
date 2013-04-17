@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+$:.unshift(File.dirname(__FILE__)+"/../../cxxproject.git/lib")
+
 require 'bake/version'
 
 require 'tocxx'
@@ -49,12 +51,12 @@ describe "Building" do
 
     File.exists?("spec/testdata/cache/main/test/main.exe").should == true
     
-    $mystring.split("PREMAIN").length.should == 2
-    $mystring.split("POSTMAIN").length.should == 2
+    $mystring.split("PREMAIN").length.should == 3
+    $mystring.split("POSTMAIN").length.should == 3
     
     $mystring.include?("../lib1/test_main/liblib1.a makefile/dummy.a").should == true # makefile lib shall be put to the end of the lib string
   end
-  
+
   it 'single lib' do
     File.exists?("spec/testdata/cache/main/test/main.exe").should == false
     
@@ -67,8 +69,8 @@ describe "Building" do
     File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a").should == true
     File.exists?("spec/testdata/cache/main/test/main.exe").should == false
     
-    $mystring.split("PRELIB1").length.should == 2
-    $mystring.split("POSTLIB1").length.should == 2    
+    $mystring.split("PRELIB1").length.should == 3
+    $mystring.split("POSTLIB1").length.should == 3    
   end  
 
   it 'single exe should fail' do
@@ -90,12 +92,12 @@ describe "Building" do
     File.exists?("spec/testdata/cache/main/test/src/main.o").should == true
     File.exists?("spec/testdata/cache/main/test/main.exe").should == false
     
-    $mystring.split("PREMAIN").length.should == 2
+    $mystring.split("PREMAIN").length.should == 3
     $mystring.split("POSTMAIN").length.should == 1 # means not executed cause exe build failed
     
     ExitHelper.exit_code.should > 0
   end  
-  
+
   it 'single file' do
     File.exists?("spec/testdata/cache/main/test/src/main.o").should == false
     File.exists?("spec/testdata/cache/main/test/main.exe").should == false
@@ -194,6 +196,50 @@ describe "Building" do
     ExitHelper.exit_code.should == 0
   end  
   
+  it 'clobber' do
+    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test"])
+    options.parse_options()
+    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx.doit()
+    tocxx.start()
+
+    File.exists?("spec/testdata/cache/main/.bake").should == true
+    File.exists?("spec/testdata/cache/lib1/.bake").should == true
+
+    Utils.cleanup_rake
+
+    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "--clobber"])
+    options.parse_options()
+    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx.doit()
+    tocxx.start()
+
+    File.exists?("spec/testdata/cache/main/.bake").should == false
+    File.exists?("spec/testdata/cache/lib1/.bake").should == false
+  end    
+  
+  it 'clobber project only' do
+    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-p", "lib1"])
+    options.parse_options()
+    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx.doit()
+    tocxx.start()
+
+    File.exists?("spec/testdata/cache/main/.bake").should == true
+    File.exists?("spec/testdata/cache/lib1/.bake").should == true
+
+    Utils.cleanup_rake
+
+    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-p", "lib1", "--clobber"])
+    options.parse_options()
+    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx.doit()
+    tocxx.start()
+
+    File.exists?("spec/testdata/cache/main/.bake").should == false
+    File.exists?("spec/testdata/cache/lib1/.bake").should == false
+  end    
+
 end
 
 end

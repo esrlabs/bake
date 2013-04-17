@@ -18,32 +18,14 @@ require 'cxxproject/utils/printer'
 require 'tocxx'
 require "bakery/loader"
 require "bakery/options"
+require "bakery/toBake"
+require "bakery/buildPattern"
 require 'cxxproject/ext/stdout'
 require 'cxxproject/utils/cleanup'
 
 module Cxxproject
 
-  class BuildPattern
-    attr_reader :proj, :conf, :coll_p
-    def initialize(proj, conf, coll_p)
-      @proj = proj
-      @conf = conf
-      @coll_p = coll_p
-    end
-    def getId
-      proj + "*******" + conf
-    end
-    def hash
-      getId.hash
-    end
-    def eql?(comparee)
-      self == comparee
-    end
-    def ==(comparee)
-      self.getId == comparee.getId
-    end
-  end
-  
+ 
   @options = BakeryOptions.new(ARGV)
   @options.parse_options
 
@@ -56,7 +38,7 @@ module Cxxproject
   end 
 
   
-  if @options.collection_name.nil?
+  if @options.collection_name.empty? 
     puts "Please specify a collection name (with -b). Possible values are:"      
     env.find(:class => BakeryModel::Collection).each { |e|
       puts "* " + e.name
@@ -64,76 +46,25 @@ module Cxxproject
     ExitHelper.exit(0)
   end
 
-  cols = env.find(:class => BakeryModel::Collection, :name => @options.collection_name)
-  if (cols.length == 0)
-    Printer.printError "Collection #{@options.collection_name} not found in #{@options.collection_dir+"/Collection.meta"}"
-    ExitHelper.exit(1)
-  elsif (cols.length > 1)
-    Printer.printError "Collection #{@options.collection_name} found more than once in #{@options.collection_dir+"/Collection.meta"}"
-    ExitHelper.exit(1)
-  end
 
-  col = cols[0]
-  
-  col.project.each do |p|
-    if p.name == ""
-      Printer.printError "Error in #{@options.collection_dir+"/Collection.meta"} (line #{p.line_number}): Project name empty"
-      ExitHelper.exit(1)
-    end
-    if p.config == ""
-      Printer.printError "Error in #{@options.collection_dir+"/Collection.meta"} (line #{p.line_number}): Config name empty"
-      ExitHelper.exit(1)
-    end
-  end
-  
-  toBuildPattern = []
-  @options.roots.each do |r|
-    col.project.each do |p|
-      projs = Dir.glob(r+"/"+p.name+"/Project.meta")
-      if projs.length == 0
-        toBuildPattern << BuildPattern.new(nil, nil, p) # remember it for sorted info printout
+  def self.getCollections(env, name)
+    cols = env.find(:class => BakeryModel::Collection, :name => name)
+    @toBuild |= getBuildPattern(cols, name)
+    @colsAll |= cols
+    cols[0].collections.each do |cRef|
+      alreadyProcessed = false
+      @colsAll.each do |ca|
+        alreadyProcessed = true if ca.name == cRef.name 
       end
-      projs.each do |f|
-        toBuildPattern << BuildPattern.new(f, "^"+p.config.gsub("*","(\\w*)")+"$", p)
-      end
+      getCollections(env, cRef.name) unless alreadyProcessed
     end
-  end
-
-  toBuild = []
-  toBuildPattern.each do |bp|
-    next unless bp.proj
-    contents = File.open(bp.proj, "r") {|io| io.read }
-    contents.split("\n").each do |c|
-      res = c.match("\\s*(Library|Executable|Custom){1}Config\\s*(\\w*)")
-      if res
-        if res[2].match(bp.conf) != nil
-          toBuild << BuildPattern.new(bp.proj, res[2], nil)
-          bp.coll_p.found
-        end
-      end
-    end
-  end
-
-  toBuildPattern.each do |bp|
-    Printer.printInfo "Info in #{@options.collection_dir+"/Collection.meta"} (line #{bp.coll_p.line_number}): No match for project #{bp.coll_p.name} with config #{bp.coll_p.config}" unless bp.coll_p.isFound
-  end
+  end  
   
-  col.exclude.each do |p|
-    p.name = "/"+p.name.gsub("*","(\\w*)")+"/Project.meta"
-    p.config = "^"+p.config.gsub("*","(\\w*)")+"$"
-  end
+  @toBuild = []
+  @colsAll = []
+  getCollections(env, @options.collection_name)
   
-  toBuild.delete_if do |bp|
-    exclude = false
-    col.exclude.each do |p|
-      exclude = true if (bp.proj.match(p.name) != nil and bp.conf.match(p.config) != nil)
-    end
-    exclude
-  end
-  
-  toBuild.uniq!
-  
-  maxRuns = toBuild.length
+  maxRuns = @toBuild.length
   currentRun = 0
   failedRuns = 0
   
@@ -144,7 +75,7 @@ module Cxxproject
       excludeParam = true
       next
     end
-    if excludeParam 
+    if excludeParam or x == @options.collection_name
       excludeParam = false
       next
     end
@@ -161,7 +92,7 @@ module Cxxproject
   
   exitValue = 0
   abort = false
-  toBuild.each do |bp|
+  @toBuild.each do |bp|
     currentRun += 1
     p = File.dirname(bp.proj)
     cmd = (["-m #{p} -b #{bp.conf}"] + passedParams).join(" ")

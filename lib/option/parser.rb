@@ -38,11 +38,10 @@ class Parser
       while pos < @argv.length do
         if not @options.include?@argv[pos]
           if @default
-            if not @default.call(@argv[pos])
+            res = @default.call(@argv[pos])
+            if (not res and not ignoreInvalid)
               raise "Option #{@argv[pos]} unknown"
             end
-          elsif not ignoreInvalid 
-            raise "Option #{@argv[pos]} unknown"
           end
         else
           option = @options[@argv[pos]]

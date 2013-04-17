@@ -812,18 +812,24 @@ module Cxxproject
             FileUtils.rm @parseBB.get_dep_file(object), :force => true
           end 
         else
-          cleanTask = Rake.application["clean"]
+          if @options.clobber
+            cleanTask = Rake.application[:clobber]
+            cleanType = "Clobber"
+          else
+            cleanTask = Rake.application[:clean]
+            cleanType = "Clean"
+          end
           cleanTask.invoke
         end
         
         if Rake.application.idei and Rake.application.idei.get_abort
-          Printer.printError "\nClean aborted."
+          Printer.printError "\#{cleanType} aborted."
           return false          
         elsif cleanTask != nil and cleanTask.failure
-          Printer.printError "\nClean failed."
+          Printer.printError "\n#{cleanType} failed."
           return false
         elsif not @options.rebuild
-          Printer.printSuccess "\nClean done."
+          Printer.printSuccess "\n#{cleanType} done."
           return true          
         end
           

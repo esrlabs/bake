@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+$:.unshift(File.dirname(__FILE__)+"/../../cxxproject.git/lib")
+
 require 'bake/version'
 
 require 'tocxx'

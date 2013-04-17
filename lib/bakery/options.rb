@@ -13,7 +13,7 @@ module Cxxproject
     def initialize(argv)
       super(argv)
       
-      @collection_name = nil
+      @collection_name = ""
       @collection_dir = nil      
       @color = nil
       @error = false
@@ -21,7 +21,9 @@ module Cxxproject
       @socket = 0
       @def_root = nil
             
-      add_option(Option.new("-b",true)        { |x| set_collection_name(x)    })
+      add_default(Proc.new{ |x| set_collection_name_default(x) })
+      
+      add_option(Option.new("-b",true)        { |x| set_collection_name(x)     })
       add_option(Option.new("-m",true)        { |x| set_collection_dir(x)     })
       add_option(Option.new("-r",false)       {     set_error                 })
       add_option(Option.new("-a",true)        { |x| set_color(x)              })
@@ -31,8 +33,8 @@ module Cxxproject
     end
     
     def usage
-      puts "\nUsage: bake [options]"
-      puts " -b <name>         Name of the collection to build."
+      puts "\nUsage: bake <name> [options]"
+      puts " [-b] <name>       Name of the collection to build."
       puts " -m <dir>          Directory containing the collection file (default is current directory)."
       puts " -r                Stop on first error."
       puts " -a <scheme>       Use ansi color sequences (console must support it). Possible values are 'white' and 'black'."
@@ -60,7 +62,18 @@ module Cxxproject
       end      
     end    
     
+    def set_collection_name_default(collection_name)
+      index = collection_name.index('-')
+      return false if (index != nil and index == 0) 
+      set_collection_name(collection_name)
+      return true
+    end    
+    
     def set_collection_name(collection_name)
+      if not @collection_name.empty?
+        Printer.printError "Error: Cannot set collection name '#{collection_name}', because collection name is already set to '#{@collection_name}'"
+        ExitHelper.exit(1)
+      end      
       @collection_name = collection_name
     end
     

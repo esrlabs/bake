@@ -25,6 +25,9 @@ module Cxxproject
   
       def initialize(pm_filename, config_name, options)
         @cacheFilename = File.dirname(pm_filename)+"/.bake/"+File.basename(pm_filename)+"."+sanitize_filename(config_name)+".cache"
+        
+        CLOBBER.include(File.dirname(pm_filename)+"/.bake")
+          
         FileUtils.mkdir_p(File.dirname(@cacheFilename))
         @options = options
         @defaultToolchain = nil
@@ -128,6 +131,11 @@ module Cxxproject
         
         if cache != nil
           Printer.printInfo "Info: cache is up-to-date, loading cached meta information" if @options.verbose
+          
+          cache.files.each do |c|
+            CLOBBER.include(File.dirname(c)+"/.bake")
+          end          
+          
           return cache.project2config
         end
         return nil
@@ -152,6 +160,11 @@ module Cxxproject
         rescue
         end
         File.open(@cacheFilename, 'wb') {|file| file.write(bbdump) }
+          
+        project_files.each do |f|
+          CLOBBER.include(File.dirname(f)+"/.bake")
+        end
+
       end
       
   end

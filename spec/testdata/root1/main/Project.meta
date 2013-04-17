@@ -29,5 +29,10 @@ Project {
     DefaultToolchain GCC
   }  
 
+  ExecutableConfig rel_test {
+    Files "**/*.c"
+    Dependency lib3, config: test
+    DefaultToolchain GCC
+  }
 
 }

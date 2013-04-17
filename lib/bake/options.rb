@@ -8,7 +8,7 @@ module Cxxproject
   class Options < Parser
     attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version, :alias_filename # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :clean, :rebuild, :single, :verbose, :nocache, :color, :show_includes, :linkOnly, :check_uninc, :printLess, :no_autodir # Boolean
+    attr_reader :clean, :rebuild, :single, :verbose, :nocache, :color, :show_includes, :linkOnly, :check_uninc, :printLess, :no_autodir, :clobber # Boolean
     attr_reader :threads, :socket # Fixnum
 
     def initialize(argv)
@@ -20,6 +20,7 @@ module Cxxproject
       @filename = nil
       @single = false
       @clean = false
+      @clobber = false
       @rebuild = false
       @verbose = false
       @nocache = false
@@ -57,6 +58,7 @@ module Cxxproject
       add_option(Option.new("-v1",false)                   {     set_v(1)                   })
       add_option(Option.new("-v2",false)                   {     set_v(2)                   })
         
+      add_option(Option.new("--clobber",false)             {     set_clobber                })
       add_option(Option.new("--ignore_cache",false)        {     set_nocache                })
       add_option(Option.new("--threads",true)              { |x| set_threads(x)             })
       add_option(Option.new("--socket",true)               { |x| set_socket(x)              })
@@ -89,9 +91,9 @@ module Cxxproject
       puts " -w <root>                Add a workspace root (can be used multiple times)."
       puts "                          If no root is specified, the parent directory of the main project is added automatically."
       puts " --rebuild                Clean before build."
+      puts " --clobber                Clean the file/project (same as option -c) AND the bake cache files."
       puts " --prepro                 Stop after preprocessor."
       puts " --link_only              Only link executable - doesn't update objects and archives or start PreSteps and PostSteps"
-      puts " --print_less             Some progression logs will be suppressed"
       puts " --ignore_cache           Rereads the original meta files - usefull if workspace structure has been changed."
       puts " --check_uninc            Checks for unnecessary includes (only done for successful project builds)."
       puts " --threads <num>          Set NUMBER of parallel compiled files (default is 8)."
@@ -183,6 +185,10 @@ module Cxxproject
     def set_clean()
       @clean = true
     end
+    def set_clobber()
+      @clobber = true
+      set_clean
+    end
     def set_rebuild()
       @clean = true
       @rebuild = true
@@ -209,10 +215,13 @@ module Cxxproject
       if num == 0
         @printLess = true
         @verbose = false
+        Rake::application.options.silent = true
       elsif num == 1
+        Rake::application.options.silent = false
         @printLess = false
         @verbose = false
       elsif num == 2
+        Rake::application.options.silent = false
         @printLess = false
         @verbose = true
       end
