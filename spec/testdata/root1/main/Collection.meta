@@ -35,21 +35,21 @@ Collection Part2 {
 
 Collection Part3 {
   Exclude "lib2", config: "*"
-  CollectionRef Part2
-  CollectionRef Part1
+  SubCollection Part2
+  SubCollection Part1
 }
 
 Collection Combined {
   Project "lib1", config: "*"
   Exclude main, config: test
-  CollectionRef Part2
-  CollectionRef Part3
+  SubCollection Part2
+  SubCollection Part3
 }
 
 Collection InvalidRef {
-  CollectionRef Wrong
+  SubCollection Wrong
 }
 
 Collection Nothing {
-  CollectionRef Nothing
+  SubCollection Nothing
 }
