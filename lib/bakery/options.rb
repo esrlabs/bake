@@ -21,8 +21,6 @@ module Cxxproject
       @socket = 0
       @def_root = nil
             
-      add_default(Proc.new{ |x| set_collection_name_default(x) })
-      
       add_option(Option.new("-b",true)        { |x| set_collection_name(x)     })
       add_option(Option.new("-m",true)        { |x| set_collection_dir(x)     })
       add_option(Option.new("-r",false)       {     set_error                 })
@@ -34,7 +32,7 @@ module Cxxproject
     
     def usage
       puts "\nUsage: bake <name> [options]"
-      puts " [-b] <name>       Name of the collection to build."
+      puts " -b <name>         Name of the collection to build."
       puts " -m <dir>          Directory containing the collection file (default is current directory)."
       puts " -r                Stop on first error."
       puts " -a <scheme>       Use ansi color sequences (console must support it). Possible values are 'white' and 'black'."
@@ -60,13 +58,6 @@ module Cxxproject
         Printer.printError "Error: #{dir} is not a directory"
         ExitHelper.exit(1)
       end      
-    end    
-    
-    def set_collection_name_default(collection_name)
-      index = collection_name.index('-')
-      return false if (index != nil and index == 0) 
-      set_collection_name(collection_name)
-      return true
     end    
     
     def set_collection_name(collection_name)
