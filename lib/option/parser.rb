@@ -61,7 +61,7 @@ class Parser
     rescue SystemExit => e
       raise
     rescue Exception => e
-      Printer.printError e.message
+      Printer.printError unless e.message.include?("Cxxproject::ExitHelperException")
       ExitHelper.exit(1)
     end
     

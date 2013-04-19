@@ -5,9 +5,10 @@ $timeStart = Time.now
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 require 'bake/version'
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject_master.git/lib")
+$:.unshift(File.dirname(__FILE__)+"/../../cxxproject.git/lib")
 
 require "cxxproject/version"
+require 'cxxproject/utils/utils'
 
 puts "-- bakery #{Cxxproject::Version.bake}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
 
@@ -95,15 +96,15 @@ module Cxxproject
   @toBuild.each do |bp|
     currentRun += 1
     p = File.dirname(bp.proj)
-    cmd = (["-m #{p} -b #{bp.conf}"] + passedParams).join(" ")
-    cmdWithNum = "* bakery #{currentRun} of #{maxRuns}: bake " + cmd + " *"
+    cmd = (["-m", p, "-b", bp.conf] + passedParams)
+    cmdWithNum = "* bakery #{currentRun} of #{maxRuns}: bake " + cmd.join(" ") + " *"
     print "\n"; cmdWithNum.length.times { print "*" }; print "\n";
     Printer.printInfo cmdWithNum
     cmdWithNum.length.times { print "*" }; print "\n";
     
     runOk = true
     begin
-      bakeOptions = Options.new(cmd.split(" "))
+      bakeOptions = Options.new(cmd)
       bakeOptions.parse_options
       tocxx = ToCxx.new(bakeOptions)
       if tocxx.doit()
@@ -111,7 +112,8 @@ module Cxxproject
       else
         runOk = false
       end
-    rescue
+    rescue Exception => e
+      puts e.message
       runOk = false
     end
     
