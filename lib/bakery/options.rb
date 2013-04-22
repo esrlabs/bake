@@ -46,7 +46,10 @@ module Cxxproject
     def parse_options()
       parse_internal(true)
       set_collection_dir(Dir.pwd) if @collection_dir.nil?
-      @roots << @def_root if @roots.length == 0
+      if @roots.length == 0
+        @roots << @def_root 
+        @roots << @collection_dir if @def_root != @collection_dir
+      end
     end
     
     def check_valid_dir(dir)

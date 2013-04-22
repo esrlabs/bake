@@ -76,7 +76,7 @@ module Cxxproject
       excludeParam = true
       next
     end
-    if excludeParam or x == @options.collection_name
+    if excludeParam
       excludeParam = false
       next
     end
@@ -113,7 +113,7 @@ module Cxxproject
         runOk = false
       end
     rescue Exception => e
-      puts e.message
+      puts e.message if e.message != "Cxxproject::ExitHelperException"
       runOk = false
     end
     

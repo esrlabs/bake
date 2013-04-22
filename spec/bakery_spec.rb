@@ -87,9 +87,9 @@ describe "bake" do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b error -w spec/testdata/root1 -w spec/testdata/root2`
     str.include?("1 of 1 builds failed").should == true
   end
-  
+
   it 'collection ref' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main Combined -w spec/testdata/root1 -w spec/testdata/root2 -r`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r`
     str.include?("3 of 3 builds ok").should == true
     str.include?("root1/lib1 -b test").should == true
     str.include?("root2/lib2 -b test").should == true
@@ -97,16 +97,16 @@ describe "bake" do
   end    
 
   it 'collection only ref to itself' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main Nothing -w spec/testdata/root1 -w spec/testdata/root2 -r`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Nothing -w spec/testdata/root1 -w spec/testdata/root2 -r`
     str.include?("0 of 0 builds ok").should == true
   end    
   
   it 'collection invalid ref' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main InvalidRef -w spec/testdata/root1 -w spec/testdata/root2 -r`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b InvalidRef -w spec/testdata/root1 -w spec/testdata/root2 -r`
     str.include?("Collection Wrong not found").should == true
     $?.success? == false
   end    
-   
+
 end
 
 end
