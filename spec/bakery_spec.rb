@@ -104,7 +104,6 @@ describe "bake" do
   it 'collection invalid ref' do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b InvalidRef -w spec/testdata/root1 -w spec/testdata/root2 -r`
     str.include?("Collection Wrong not found").should == true
-    $?.success? == false
   end    
 
 end
