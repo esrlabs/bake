@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.email = "alexander.schaal@esrlabs.com"
   s.homepage = "http://www.esrlabs.com"
   s.rdoc_options = ["-x", "doc"]
-  s.add_dependency("cxxproject", "=0.5.66")
+  s.add_dependency("cxxproject", "=0.5.67")
   s.add_dependency("rtext", "=0.2.0")
   s.add_dependency("rgen", "=0.6.0")
   s.executables = ["bake", "bakery", "createVSProjects"]

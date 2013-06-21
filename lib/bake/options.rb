@@ -73,6 +73,7 @@ module Cxxproject
       add_option(Option.new("--show_include_paths",false)  {     set_show_inc               })
       add_option(Option.new("--eclipse_version",true)      { |x| set_eclipse_version(x)     })
       add_option(Option.new("--show_license",false)        {     show_license               })
+      add_option(Option.new("--version",false)             {     ExitHelper.exit(0)         })
       add_option(Option.new("--check_uninc",false)         {     set_check_uninc            })
       add_option(Option.new("--alias",true)                { |x| set_alias_filename(x)      })
 
@@ -107,6 +108,7 @@ module Cxxproject
       puts " --show_abs_paths         Compiler prints absolute filename paths instead of relative paths."
       puts " --no_autodir             Disable auto completion of paths like in IncludeDir"
       puts ""
+      puts " --version                Print version."
       puts " -h, --help               Print this help."
       puts " --show_license           Print the license."      
           

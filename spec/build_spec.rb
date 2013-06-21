@@ -122,7 +122,7 @@ describe "Building" do
     tocxx.start()
     
     File.exists?("spec/testdata/cache/main/test/src/main.o").should == true
-    File.exists?("spec/testdata/cache/main/test/src/main.o.d").should == true
+    File.exists?("spec/testdata/cache/main/test/src/main.d").should == true
     File.exists?("spec/testdata/cache/main/test/main.exe").should == true
 
     Utils.cleanup_rake
@@ -134,7 +134,7 @@ describe "Building" do
     tocxx.start()
     
     File.exists?("spec/testdata/cache/main/test/src/main.o").should == false
-    File.exists?("spec/testdata/cache/main/test/src/main.o.d").should == false
+    File.exists?("spec/testdata/cache/main/test/src/main.d").should == false
     File.exists?("spec/testdata/cache/main/test/main.exe").should == true
     
     ExitHelper.exit_code.should == 0
