@@ -19,7 +19,7 @@ module Cxxproject
       @error = false
       @roots = []
       @socket = 0
-      @def_root = nil
+      @def_root = []
             
       add_option(Option.new("-b",true)        { |x| set_collection_name(x)     })
       add_option(Option.new("-m",true)        { |x| set_collection_dir(x)     })
@@ -47,8 +47,8 @@ module Cxxproject
       parse_internal(true)
       set_collection_dir(Dir.pwd) if @collection_dir.nil?
       if @roots.length == 0
-        @roots << @def_root 
-        @roots << @collection_dir if @def_root != @collection_dir
+        @roots = @def_root 
+        @roots << @collection_dir unless @def_root.include?@collection_dir
       end
     end
     
@@ -74,7 +74,7 @@ module Cxxproject
     def set_collection_dir(dir)
       check_valid_dir(dir)
       @collection_dir = File.expand_path(dir.gsub(/[\\]/,'/'))
-      @def_root = File.dirname(@collection_dir)
+      @def_roots = calc_def_roots(@collection_dir)
     end
     
     def set_color(x)

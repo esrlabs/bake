@@ -44,7 +44,7 @@ puts "Scanning for bake projects...."
 
 projects = {}
 @options.roots.each do |r|
-  Dir.glob(r + "/*/Project.meta").each do |m|
+  Dir.glob(r + "/**/Project.meta").each do |m|
     projects[File.basename(File.dirname(m))] = [File.dirname(m), SecureRandom.uuid.upcase]
   end
 end  

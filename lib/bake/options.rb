@@ -35,7 +35,7 @@ module Cxxproject
       @socket = 0
       @include_filter = []
       @exclude_filter = []
-      @def_root = nil
+      @def_roots = []
       @eclipse_version = ""
       @alias_filename = ""
       
@@ -118,7 +118,7 @@ module Cxxproject
       parse_internal(false)
       set_main_dir(Dir.pwd) if @main_dir.nil?
       set_project(File.basename(@main_dir)) if @project.nil?
-      @roots << @def_root if @roots.length == 0
+      @roots = @def_roots if @roots.length == 0
       Rake::application.max_parallel_tasks = @threads
       
       if @linkOnly
@@ -170,7 +170,7 @@ module Cxxproject
     def set_main_dir(dir)
       check_valid_dir(dir)
       @main_dir = File.expand_path(dir.gsub(/[\\]/,'/'))
-      @def_root = File.dirname(@main_dir)
+      @def_roots = calc_def_roots(@main_dir)
     end
     
     def set_project(name)

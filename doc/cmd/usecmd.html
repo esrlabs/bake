@@ -38,6 +38,19 @@ Code has been checked out into two roots, the console supports ansi colors, you 
 <pre id="rundrum"><code>bake -b Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc</code></pre>
 
 To clean the project(s), just add "-c". 
+
+<h2>roots.bake</h2>
+
+Workspace roots can be defined in a file called "roots.bake", which will be searched from main project directory to root folder. Example:
+
+<pre id="rundrum"><code>../..
+C:/another/root
+something/else</code></pre>
+
+If -w and roots.bake are not specified, the default workspace root is the parent directory of the main project.
+
+
+
 </body>
 
 </html>

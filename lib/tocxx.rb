@@ -190,7 +190,6 @@ module Cxxproject
     end
 
     def loadProjMeta(loader, filename, configname)
-      
       @project_files << filename
       f = loader.load(filename)
 
@@ -236,19 +235,25 @@ module Cxxproject
       project2config_pending = {}
       project2config_pending[@mainProjectName] = @options.build_config
       
+      potentialProjs = []
+      @options.roots.each do |r|
+        potentialProjs.concat(Dir.glob(r+"/**/Project.meta"))
+      end
+      
+      potentialProjs.uniq!
+            
       while project2config_pending.length > 0
       
         pname_toload = project2config_pending.keys[0]
         cname_toload = project2config_pending[pname_toload]
         project2config_pending.delete(pname_toload)
         
-        
         # check if file is in more than one root
         pmeta_filenames = []
-        @options.roots.each do |r|
-          f = r + "/" + pname_toload + "/Project.meta"
-          if File.exists?(f)
-            pmeta_filenames  << f
+
+        potentialProjs.each do |pp|
+          if pp.include?(pname_toload + "/Project.meta")
+            pmeta_filenames << pp
           end
         end
 

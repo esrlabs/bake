@@ -77,14 +77,23 @@ describe "Multiple root" do
   it 'wrong root' do
     File.exists?("spec/testdata/root1/main/test/main.exe").should == false
     
-    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2/lib2"])
-    options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
-    lambda { tocxx.doit() }.should raise_error(ExitHelperException)
+    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2/lib3"])
+    lambda { options.parse_options() }.should raise_error(ExitHelperException)
     
-    $mystring.split("Error: lib2/Project.meta not found").length.should == 2
+    $mystring.split("lib3 does not exist").length.should == 2
   end  
   
+  it 'forgotten root' do
+    File.exists?("spec/testdata/root1/main/test/main.exe").should == false
+    
+    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "test", "-w", "spec/testdata/root1"])
+    options.parse_options()
+    tocxx = Cxxproject::ToCxx.new(options)
+  lambda { tocxx.doit() }.should raise_error(ExitHelperException)
+    
+    $mystring.split("Error: lib2/Project.meta not found").length.should == 2
+  end   
+ 
   it 'invalid root' do
     File.exists?("spec/testdata/root1/main/test/main.exe").should == false
     

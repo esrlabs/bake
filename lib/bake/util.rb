@@ -96,3 +96,30 @@ def sanitize_filename(filename)
   end
 end
 
+def searchRootsFile(dir)
+  rootsFile = dir+"/roots.bake"
+  return rootsFile if File.exist?(rootsFile)
+  
+  parent = File.dirname(dir)
+  return searchRootsFile(parent) if parent != dir
+
+  return nil
+end
+
+def calc_def_roots(dir)
+  def_roots = []
+  rootsFile = searchRootsFile(dir)
+  if (rootsFile)
+    File.open(rootsFile).each do |line|
+      line.gsub!(/[\\]/,'/')
+      if File.is_absolute?(line)
+        def_roots << line
+      else
+        def_roots << File.dirname(rootsFile) + "/" + line
+      end
+    end
+  else
+    def_roots << File.dirname(dir)
+  end
+  def_roots
+end
