@@ -237,11 +237,11 @@ module Cxxproject
       
       potentialProjs = []
       @options.roots.each do |r|
-        potentialProjs.concat(Dir.glob(r+"/**/Project.meta"))
+        potentialProjs.concat(Dir.glob(r+"/**{,/*/**}/Project.meta"))
       end
       
       potentialProjs.uniq!
-            
+      
       while project2config_pending.length > 0
       
         pname_toload = project2config_pending.keys[0]
