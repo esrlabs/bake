@@ -240,7 +240,7 @@ module Cxxproject
         potentialProjs.concat(Dir.glob(r+"/**{,/*/**}/Project.meta"))
       end
       
-      potentialProjs.uniq!
+      potentialProjs.uniq!.sort!
       
       while project2config_pending.length > 0
       
@@ -252,7 +252,7 @@ module Cxxproject
         pmeta_filenames = []
 
         potentialProjs.each do |pp|
-          if pp.include?(pname_toload + "/Project.meta")
+          if pp.include?("/" + pname_toload + "/Project.meta") or pp == pname_toload + "/Project.meta" 
             pmeta_filenames << pp
           end
         end
