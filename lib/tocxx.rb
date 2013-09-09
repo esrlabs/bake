@@ -240,7 +240,7 @@ module Cxxproject
         potentialProjs.concat(Dir.glob(r+"/**{,/*/**}/Project.meta"))
       end
       
-      potentialProjs.uniq!.sort!
+      potentialProjs = potentialProjs.uniq.sort unless potentialProjs.empty?
       
       while project2config_pending.length > 0
       

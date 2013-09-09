@@ -6,15 +6,15 @@ require 'cxxproject/utils/exit_helper'
 require 'cxxproject/utils/utils'
 
 def adjustFlags(orgStr, flags)
-  orgSplitted = Cxxproject::Utils::flagSplit(orgStr)
+  orgSplitted = Cxxproject::Utils::flagSplit(orgStr, false)
 
   flags.each do |f|
     if f.overwrite != ""
-      orgSplitted = Cxxproject::Utils::flagSplit(f.overwrite)
+      orgSplitted = Cxxproject::Utils::flagSplit(f.overwrite, false)
     end
     
     if f.remove != ""
-      rmSplitted = Cxxproject::Utils::flagSplit(f.remove)
+      rmSplitted = Cxxproject::Utils::flagSplit(f.remove, false)
       orgSplitted.delete_if {|o| rmSplitted.any? { |r|
         begin
           o.match("\\A"+r+"\\Z")
@@ -26,7 +26,7 @@ def adjustFlags(orgStr, flags)
     end
     
     if f.add != ""
-      Cxxproject::Utils::flagSplit(f.add).each do |a|
+      Cxxproject::Utils::flagSplit(f.add, false).each do |a|
         orgSplitted << a unless orgSplitted.any? { |o| o==a }
       end
     end
