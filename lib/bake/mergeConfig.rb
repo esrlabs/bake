@@ -35,9 +35,9 @@ module Cxxproject
       manipulateLineNumbers(@parent.exLibSearchPath)
       manipulateLineNumbers(@parent.userLibrary)
 
-      @child.setExLib           (@parent.exLib           + @child.exLib)
-      @child.setExLibSearchPath (@parent.exLibSearchPath + @child.exLibSearchPath)
-      @child.setUserLibrary     (@parent.userLibrary     + @child.userLibrary)
+      @child.setExLib(@parent.exLib           + @child.exLib)
+      @child.setExLibSearchPath(@parent.exLibSearchPath + @child.exLibSearchPath)
+      @child.setUserLibrary(@parent.userLibrary     + @child.userLibrary)
       
       if not @parent.preSteps.nil?
         if (@child.preSteps.nil?)
@@ -76,9 +76,9 @@ module Cxxproject
       
       if ((Metamodel::LibraryConfig === @child || Metamodel::ExecutableConfig === @child) && (Metamodel::LibraryConfig === @parent || Metamodel::ExecutableConfig === @parent))
         
-        @child.setFiles       (@parent.files        + @child.files)
+        @child.setFiles(@parent.files        + @child.files)
         @child.setExcludeFiles(@parent.excludeFiles + @child.excludeFiles)
-        @child.setIncludeDir  (@parent.includeDir   + @child.includeDir)
+        @child.setIncludeDir(@parent.includeDir   + @child.includeDir)
         
         pt = @parent.toolchain
         ct = @child.toolchain
@@ -98,7 +98,7 @@ module Cxxproject
       if (Metamodel::ExecutableConfig === @child && Metamodel::ExecutableConfig === @parent)
         @child.setLinkerScript(@parent.linkerScript) if @child.linkerScript.nil? and not @parent.linkerScript.nil?
         @child.setArtifactName(@parent.artifactName) if @child.artifactName.nil? and not @parent.artifactName.nil?
-        @child.setMapFile     (@parent.mapFile)      if @child.mapFile.nil?      and not @parent.mapFile.nil?
+        @child.setMapFile(@parent.mapFile)      if @child.mapFile.nil?      and not @parent.mapFile.nil?
       end
     
     end
