@@ -9,6 +9,7 @@ require 'bake/model/metamodel_ext'
 require 'bake/util'
 require 'bake/cache'
 require 'bake/subst'
+require 'bake/mergeConfig'
 require 'cxxproject/buildingblocks/module'
 require 'cxxproject/buildingblocks/makefile'
 require 'cxxproject/buildingblocks/executable'
@@ -189,6 +190,33 @@ module Cxxproject
       res
     end
 
+    
+    def getFullProject(configs, configname, filename)
+      config = nil
+      configs.each do |c|
+        if c.name == configname
+          if config
+            Printer.printError "Error: Config '#{configname}' found more than once in '#{filename}'"
+            ExitHelper.exit(1)
+          end
+          config = c
+        end
+      end 
+      
+      if not config
+        Printer.printError "Error: Config '#{configname}' not found in '#{filename}'"
+        ExitHelper.exit(1)
+      end
+      
+      if config.extends != ""
+        parent = getFullProject(configs, config.extends, filename)
+        MergeConfig.new(config, parent).merge()
+      end
+      
+      config
+    end
+    
+    
     def loadProjMeta(loader, filename, configname)
       @project_files << filename
       f = loader.load(filename)
@@ -202,14 +230,10 @@ module Cxxproject
       
       f.root_elements.each do |e|
         x = e.getConfig
+        config = getFullProject(x,configname,filename)
+        
         x.each do |y|
-          if y.name == configname
-            if config
-              Printer.printError "Error: Config '#{configname}' found more than once in '#{filename}'"
-              ExitHelper.exit(1)
-            end
-            config = y
-          else
+          if y != config
             e.removeGeneric("Config", y)
           end
         end
@@ -237,7 +261,11 @@ module Cxxproject
       
       potentialProjs = []
       @options.roots.each do |r|
-        potentialProjs.concat(Dir.glob(r+"/**{,/*/**}/Project.meta"))
+        if (r.length == 3 && r.include?(":/"))
+          r = r + @mainProjectName # glob would not work otherwise on windows (ruby bug?)
+        end
+        r = r+"/**{,/*/**}/Project.meta"  
+        potentialProjs.concat(Dir.glob(r))
       end
       
       potentialProjs = potentialProjs.uniq.sort unless potentialProjs.empty?
@@ -355,9 +383,8 @@ module Cxxproject
       integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)      
       
     end
-
-    def convert2bb
     
+    def convert2bb
       @project2config.each do |projName, config|
 
         projDir = config.parent.get_project_dir
@@ -481,7 +508,7 @@ module Cxxproject
           
           bbModule.main_content.set_source_patterns(srcs)
           bbModule.main_content.set_exclude_sources(ex_srcs)
-
+          
           tcsMapConverted = {}
           srcs = config.files.each do |f|
             if (f.define.length > 0 or f.flags.length > 0)
@@ -637,7 +664,7 @@ module Cxxproject
       
       substVars
       convert2bb
-
+      
       #################################################
 
       startBBName = "Project "+@options.project

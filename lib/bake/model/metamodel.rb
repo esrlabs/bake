@@ -153,6 +153,7 @@ module Cxxproject
 
       class BaseConfig_INTERNAL < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
+        has_attr 'extends', String, :defaultValueLiteral => ""
         contains_one 'preSteps', PreSteps, 'parent'
         contains_one 'postSteps', PostSteps, 'parent'
         contains_many 'userLibrary', UserLibrary, 'parent'

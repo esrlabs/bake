@@ -1,0 +1,268 @@
+Project {
+
+  ExecutableConfig E1 {
+	Files "src/main.cpp"
+    Files "**/*L1*"
+    ExcludeFiles "**/*L1ex*"
+	IncludeDir "Inc1_1"
+	IncludeDir "Inc1_2"
+
+	PreSteps {
+      CommandLine "echo **$(ArtifactName)**"
+	}
+	
+    DefaultToolchain GCC
+    Toolchain {
+	  Compiler CPP {
+	    Define "def1"
+	  }
+	  Linker {
+	    Flags "-O3"
+	  }
+	}
+	LinkerScript "ls/linkerscript1.dld"
+	ArtifactName "E1.exe"
+	MapFile "$(ConfigName)/E1.map"
+  }
+  
+  ExecutableConfig E2, extends: E1 {
+	Files "src/main.cpp"
+    Files "**/*L2*"
+    ExcludeFiles "**/*L2ex*"
+	IncludeDir "Inc2_1"
+	IncludeDir "Inc2_2"
+
+    DefaultToolchain GCC
+    Toolchain {
+	  Compiler CPP {
+	    Define "def2"
+	  }
+	  Compiler ASM {
+	    Define "def2"
+	  }
+	  Archiver {
+	    Flags ""
+	  }
+    }
+	LinkerScript "ls/linkerscript2.dld"
+	ArtifactName "E2.exe"
+	MapFile "E2/E2.map"
+  }
+
+
+  ExecutableConfig E3, extends: E2 {
+	Files "src/main.cpp"
+    Files "**/*L3*"
+    ExcludeFiles "**/*L3ex*"
+	IncludeDir "Inc3_1"
+	IncludeDir "Inc3_2"
+	
+    Toolchain
+    DefaultToolchain GCC
+	LinkerScript "ls/linkerscript3.dld"
+	ArtifactName "E3.exe"
+	MapFile "E3/E3.map"
+  }
+
+  ExecutableConfig E4 {
+  }  
+
+  ExecutableConfig E5, extends: E4 {
+	Files "src/main.cpp"
+    Files "**/*L5*"
+  	IncludeDir "Inc5_1"
+	IncludeDir "Inc5_2"
+
+	DefaultToolchain GCC
+    Toolchain {
+	  Compiler CPP {
+	    Define "def5"
+	  }
+	}
+	LinkerScript "ls/linkerscript5.dld"
+	ArtifactName "E5.exe"
+	MapFile "E5/E5.map"
+  }  
+
+  ExecutableConfig E6, extends: E1 {
+  }  
+  
+  
+
+
+
+
+  LibraryConfig L1 {
+    Dependency depL1_1, config: lib
+    Dependency depL1_2, config: lib
+    Files "**/*L1*"
+    ExcludeFiles "**/*L1ex*"
+    PreSteps {
+      CommandLine "echo Pre1_1"
+      CommandLine "echo Pre1_2"
+    }
+    PostSteps {
+      CommandLine "echo Post1_1"
+      CommandLine "echo Post1_2"
+    }
+
+	ExternalLibrary "lib/L1_1"
+	ExternalLibrarySearchPath blah1
+	ExternalLibrary "lib/libL1_2.a", search: false
+  
+    DefaultToolchain GCC {
+	  Compiler CPP {
+	    Define "def1"
+	  }
+	  Linker {
+	    Flags "-O3"
+	  }
+	}
+  }
+  
+  LibraryConfig L2, extends: L1 {
+    Dependency depL2_1, config: lib
+    Dependency depL2_2, config: lib
+    Files "**/*L2*"
+    ExcludeFiles "**/*L2ex*"
+    PreSteps {
+      CommandLine "echo Pre2_1"
+      CommandLine "echo Pre2_2"
+    }
+    PostSteps {
+      CommandLine "echo Post2_1"
+      CommandLine "echo Post2_2"
+    }
+
+	UserLibrary "lib/libL2_1.a"
+	ExternalLibrarySearchPath blah2
+	UserLibrary "lib/libL2_2.a"
+	
+    DefaultToolchain GCC {
+	  Compiler CPP {
+	    Define "def2"
+	  }
+	  Compiler ASM {
+	    Define "def2"
+	  }
+	  Archiver {
+	    Flags ""
+	  }
+    }
+  }
+
+
+  LibraryConfig L3, extends: L2 {
+    Dependency depL3_1, config: lib
+    Dependency depL3_2, config: lib
+    Files "**/*L3*"
+    ExcludeFiles "**/*L3ex*"
+    PreSteps {
+      CommandLine "echo Pre3_1"
+      CommandLine "echo Pre3_2"
+    }
+    PostSteps {
+      CommandLine "echo Post3_1"
+      CommandLine "echo Post3_2"
+    }
+
+  
+	ExternalLibrary "lib/L3_1"
+	ExternalLibrarySearchPath blah3
+	ExternalLibrary "lib/libL3_2.a", search: false  
+  
+    DefaultToolchain GCC {
+	}
+
+  }
+  
+
+  LibraryConfig L4 {
+  }  
+
+  LibraryConfig L5, extends: L4 {
+    Dependency depL5_1, config: lib
+    Dependency depL5_2, config: lib
+    Files "**/*L5*"
+    ExcludeFiles "**/*L5ex*"
+    PreSteps {
+      CommandLine "echo Pre5_1"
+      CommandLine "echo Pre5_2"
+    }
+    PostSteps {
+      CommandLine "echo Post5_1"
+      CommandLine "echo Post5_2"
+    }
+
+  
+	ExternalLibrary "lib/L5_1"
+	ExternalLibrarySearchPath blah5
+	ExternalLibrary "lib/libL5_2.a", search: false  
+  
+    DefaultToolchain GCC {
+	  Compiler CPP {
+	    Define "def5"
+	  }
+	}
+
+  }  
+
+  LibraryConfig L6, extends: L1 {
+  }  
+
+  ExecutableConfig L3E, extends: L3 {
+	Files "src/main.cpp"
+  }
+  ExecutableConfig L5E, extends: L5 {
+	Files "src/main.cpp"
+  }
+  ExecutableConfig L6E, extends: L6 {
+	Files "src/main.cpp"
+  }
+  
+  
+  CustomConfig C1 {
+	CommandLine "echo C1"
+  }
+  
+  CustomConfig C2, extends: C1 {
+	CommandLine "echo C2"
+	DefaultToolchain GCC
+  }
+  
+  CustomConfig C3, extends: C2 {
+	CommandLine "echo C3"
+	DefaultToolchain GCC
+  }
+  
+  CustomConfig C4
+
+  CustomConfig C5, extends: C4 {
+	CommandLine "echo C5"
+	DefaultToolchain GCC
+  }
+
+  CustomConfig C6, extends: C1 {
+	DefaultToolchain GCC
+  }
+  
+  ExecutableConfig C5E, extends: C5 {
+	DefaultToolchain GCC
+  }  
+  
+  CustomConfig C7, extends: L1 {
+	CommandLine "echo C7"
+	DefaultToolchain GCC
+  }  
+  
+  CustomConfig ParentKaputt, extends: dasGibtsDochGarNicht {
+	DefaultToolchain GCC
+  }  
+  
+}
+
+
+
+
+
+
