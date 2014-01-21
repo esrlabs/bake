@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documentation of the bake-tookit</title>
+<style type="text/css">
+#rundrum {
+  border-width:1px;
+  border-style:dashed;
+  border-color:blue;
+  padding:0.2cm;
+  text-align:justify; }
+}
+</style>
+</head>
+<body>
+<h1>Derive configs</h1>
+
+A config can be derived from another config in Project.meta like this:
+<pre id="rundrum"><code>ExecutableConfig A<br>LibraryConfig    B, extends: A<br>CustomConfig     C, extends: B<br>ExecutableConfig D, extends: C</code></pre>
+
+The config type of the parent config does not matter, but only settings which are valid in BOTH configs will be inherited.<br>
+In the example above D gets the dependencies from A, because "Dependency" is valid in all configs, but D does not get the "Files" from A, because "Files" is not valid in CustomConfig.
+<p>
+The following listing shows HOW settings will be derived:
+
+<table border="1">
+  <tr><th bgcolor="#CCCCCC">Setting</th><th bgcolor="#CCCCCC">Derived</th></tr>
+  <tr><td>Dependency</td> <td>parent + child</td></tr>
+  <tr><td>ExternalLibrary<br>ExternalLibrarySearchPath<br>UserLibrary</td> <td>parent + child (ordered by line number!)</td></tr>
+  <tr><td>PreSteps</td> <td>parent + child</td></tr>
+  <tr><td>PostSteps</td> <td>parent + child</td></tr>
+  <tr><td>Toolchain<br>DefaultToolchain</td> <td>Compiler, Archiver and Linker settings used from parent<br>if not existing in child - see below</td></tr>
+  <tr><td>Makefile/CommandLine<br>(in CustomConfig)</td> <td>used from parent if not in child</td></tr>
+  <tr><td>Files</td> <td>parent + child</td></tr>
+  <tr><td>ExcludeFiles</td> <td>parent + child</td></tr>
+  <tr><td>IncludeDir</td> <td>parent + child</td></tr>
+  <tr><td>LinkerScript</td> <td>used from parent if not in child</td></tr>
+  <tr><td>ArtifactName</td> <td>used from parent if not in child</td></tr>
+  <tr><td>MapFile</td> <td>used from parent if not in child</td></tr>
+</table>
+<br>
+Example for deriving toolchains:
+
+<pre id="rundrum"><code>ExecutableConfig A {
+  Toolchain {
+    Compiler CPP {
+      Define "DefA"
+    }
+    Linker {
+      Flags "-O3"
+    }
+  }
+}
+
+ExecutableConfig B, extends: A {
+  Toolchain {
+    Compiler CPP {
+      Define "DefB1"
+    }
+    Compiler ASM {
+      Define "DefB2"
+    }
+    Archiver {
+      Flags "-B"
+    }
+  }
+}</code></pre>	
+
+B derives from A, but B redefines Compiler CPP, therefore "DefA" will not be defined in B. But the toolchain of B does not include a Linker tag, therefore the Linker will be inherited.<br>
+The toolchain of B is treated like this:
+
+<pre id="rundrum"><code>Toolchain {
+  Compiler CPP {
+    Define "DefB1"
+  }
+  Compiler ASM {
+    Define "DefB2"
+  }
+  Archiver {
+    Flags "-B"
+  }
+  Linker {
+    Flags "-O3"
+  }
+}</code></pre>
+
+</body>
+
+</html>
