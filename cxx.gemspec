@@ -5,12 +5,14 @@ require "lib/bake/version"
 
 include FileUtils
 
-YAML::ENGINE.yamler = 'syck'
+#YAML::ENGINE.yamler = 'syck'
 
 PKG_VERSION = Cxxproject::Version.bake
 PKG_FILES = FileList[
   "lib/**/*.rb",
   "Rakefile.rb",
+  "doc/*/*",
+  "doc/index.html",
   "license.txt"
 ]
 
@@ -30,5 +32,6 @@ Gem::Specification.new do |s|
   s.add_dependency("cxxproject", "=0.5.70")
   s.add_dependency("rtext", "=0.2.0")
   s.add_dependency("rgen", "=0.6.0")
-  s.executables = ["bake", "bakery", "createVSProjects"]
+  s.executables = ["bake", "bakery", "createVSProjects", "bake-doc"]
+  s.licenses    = ['MIT']
 end
