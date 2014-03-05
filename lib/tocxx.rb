@@ -259,6 +259,11 @@ module Cxxproject
       project2config_pending = {}
       project2config_pending[@mainProjectName] = @options.build_config
       
+      if not File.exist?(@options.main_dir+"/Project.meta")
+        Printer.printError "Error: #{@options.main_dir}/Project.meta not found"
+        ExitHelper.exit(1)
+      end
+        
       potentialProjs = []
       @options.roots.each do |r|
         if (r.length == 3 && r.include?(":/"))
