@@ -63,6 +63,8 @@ module Cxxproject
             substStr << @@artifactName
           elsif var == "ArtifactNameBase"
             substStr << @@artifactName.chomp(File.extname(@@artifactName))
+          elsif var == "Roots"
+            substStr << "___ROOTS___"
           elsif var == "/"
             if Cxxproject::OS.windows?
               substStr << "\\"
@@ -71,11 +73,11 @@ module Cxxproject
             end
           elsif ENV[var]
             substStr << ENV[var]
-          elsif var == "PATH_TO_CYGWIN" # allowed to be not set
-            substStr << ""
           else
-            Printer.printError "Error: #{elem.file_name}(#{elem.line_number}): unknown substitution variable '$(#{var})'"
-            ExitHelper.exit(1)
+            if @@options.verbose
+              Printer.printInfo "Info: #{elem.file_name}(#{elem.line_number}): substitute variable '$(#{var})' with empty string"
+            end
+            substStr << ""
           end
         
           posSubst = posEnd + 1

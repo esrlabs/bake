@@ -501,9 +501,10 @@ module Cxxproject
           end
           ex_srcs = config.excludeFiles.map {|f| f.name}        
         
-          bbModule.main_content.set_local_includes( config.includeDir.map do |dir|
-            convPath(dir, config)
-          end
+          bbModule.main_content.set_local_includes(
+            config.includeDir.map do |dir|
+              (dir.name == "___ROOTS___") ? (@options.roots.map { |r| File.rel_from_to_project(projDir,r,false) }) : convPath(dir, config)
+            end.flatten
           )
           
           bbModule.main_content.set_source_patterns(srcs)

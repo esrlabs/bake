@@ -34,6 +34,11 @@
   <tr><th bgcolor="#CCCCCC">Variable</th><th bgcolor="#CCCCCC">Windows</th><th bgcolor="#CCCCCC">Other</th></tr>
   <tr><td>$(/)</td> <td>\</td><td>/</td></tr>
 </table>
+<br>
+<table border="1">
+  <tr><th bgcolor="#CCCCCC">Expression</th><th bgcolor="#CCCCCC">Description</th></tr>
+  <tr><td>IncludeDir "$(Roots)"</td> <td>Will be replaced by one or more<br>IncludeDir statements for all workspace roots.</td></tr>
+</table>
 <p>
 Otherwise:
 <p>
@@ -42,14 +47,7 @@ Otherwise:
   <tr><td>$(environment variable)</td> <td>whatever</td></tr>
 </table>
 <p>
-An error will be generated if the environment variable does not exist, except
-<p>
-<table border="1">
-  <tr><th bgcolor="#CCCCCC">Variable</th><th bgcolor="#CCCCCC">Example</th></tr>
-  <tr><td>$(PATH_TO_CYGWIN)</td> <td>c:/tool/cygwin</td></tr>
-</table>
-<p>
-will be substituted to an empty string if not set.
+If the environment variable does not exist, it will be substituted by an empty string.
 
 <h3>Equal variables</h3>
 
