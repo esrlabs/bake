@@ -95,6 +95,7 @@ module Cxxproject
               if cache.workspace_roots.length == @options.roots.length
                 cache.workspace_roots.each do |r|
                   if not @options.roots.include?r
+                    cache = nil
                     break
                   end
                 end  
