@@ -49,6 +49,7 @@ module Cxxproject
       add_option(Option.new("-a",true)                     { |x| set_color(x)               })
       add_option(Option.new("-w",true)                     { |x| set_root(x)                })
       add_option(Option.new("-r",false)                    {     set_error                  })
+      add_option(Option.new("--depfileInfo",false)         {     set_depfileInfo            })
       add_option(Option.new("--rebuild",false)             {     set_rebuild                })
       add_option(Option.new("--prepro",false)              {     set_prepro                 })
       add_option(Option.new("--link_only",false)           {     set_linkOnly               })
@@ -243,10 +244,15 @@ module Cxxproject
         puts e.backtrace if @verbose
         ExitHelper.exit(1)
       end
-    end    
+    end
+        
     def set_error()
       Rake::Task.bail_on_first_error = true
     end
+    
+    def set_depfileInfo()
+      Cxxproject::HasSources.print_additional_depfile_info = true
+    end    
     
     def set_show_inc
       @show_includes = true
