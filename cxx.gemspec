@@ -11,7 +11,7 @@ PKG_VERSION = Cxxproject::Version.bake
 PKG_FILES = FileList[
   "lib/**/*.rb",
   "Rakefile.rb",
-  "doc/*/*",
+  "doc/**/*",
   "doc/index.html",
   "license.txt"
 ]
