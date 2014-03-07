@@ -7,6 +7,16 @@
 <body>
 <h1>Changelog</h1>
 
+March 5, 2014 - bake-toolkit 1.0.26<br>
+<ul>
+<li><b>Bugfix: in rare cases invalid characters from compiler output were not handled correctly</b>
+<li><b>Bugfix: changing workspace roots on command line now always regenerates build tree</b>
+<li><b>Added: Variable $(Roots) for IncludeDir directives</b>
+<li><b>Changed: dependency files for all compilers will be generated inclusive system headers</b>
+<li><b>Changed: abort earlier if main directory has no Project.meta</b>
+<li><b>Changed: every environment variable is expanded to an empty string if not defined</b>
+</ul>
+
 January 21, 2014 - bake-toolkit 1.0.25<br>
 <ul>
 <li><b>Added: configs can now be inherited</b>

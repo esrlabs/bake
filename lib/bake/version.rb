@@ -1,11 +1,11 @@
 module Cxxproject
   class Version
     def self.bake
-      "1.0.25"
+      "1.0.26"
     end
   end
     
-  expectedCxx = "0.5.70"
+  expectedCxx = "0.5.71"
   expectedRGen = "0.6.0"
   expectedRText = "0.2.0"
   
