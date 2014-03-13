@@ -5,6 +5,7 @@ module Cxxproject
     def self.itute(config, projName, options)
     
       @@configName = config.name
+      @@projDir = config.parent.get_project_dir
       @@projName = projName
       @@options = options
       @@mainProjectName = File::basename(options.main_dir)
@@ -49,6 +50,8 @@ module Cxxproject
            substStr << @@configName
           elsif var == "ProjectName"
             substStr << @@projName
+          elsif var == "ProjectDir"
+            substStr << @@projDir
           elsif var == "OutputDir"
             if @@projName == @@mainProjectName 
               substStr << @@options.build_config
