@@ -8,8 +8,8 @@ module Cxxproject
   class Options < Parser
     attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version, :alias_filename # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :clean, :rebuild, :single, :verbose, :nocache, :color, :show_includes, :linkOnly, :check_uninc, :printLess, :no_autodir, :clobber # Boolean
-    attr_reader :threads, :socket # Fixnum
+    attr_reader :clean, :rebuild, :single, :verbose, :nocache, :color, :show_includes, :linkOnly, :check_uninc, :printLess, :no_autodir, :clobber, :lint, :debug # Boolean
+    attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
 
     def initialize(argv)
       super(argv)
@@ -21,6 +21,8 @@ module Cxxproject
       @single = false
       @clean = false
       @clobber = false
+      @lint = false
+      @debug = false
       @rebuild = false
       @verbose = false
       @nocache = false
@@ -31,6 +33,8 @@ module Cxxproject
       @printLess = false
       @no_autodir = false
       @threads = 8
+      @lint_min = -1
+      @lint_max = -1
       @roots = []
       @socket = 0
       @include_filter = []
@@ -54,10 +58,15 @@ module Cxxproject
       add_option(Option.new("--prepro",false)              {     set_prepro                 })
       add_option(Option.new("--link_only",false)           {     set_linkOnly               })
       add_option(Option.new("--no_autodir",false)          {     set_no_autodir             })
+      add_option(Option.new("--lint",false)                {     set_lint                   })
+      add_option(Option.new("--lint_min",true)             { |x| set_lint_min(x)            })
+      add_option(Option.new("--lint_max",true)             { |x| set_lint_max(x)            })
       
       add_option(Option.new("-v0",false)                   {     set_v(0)                   })
       add_option(Option.new("-v1",false)                   {     set_v(1)                   })
       add_option(Option.new("-v2",false)                   {     set_v(2)                   })
+        
+      add_option(Option.new("--debug",false)               {     set_debug                  })
         
       add_option(Option.new("--clobber",false)             {     set_clobber                })
       add_option(Option.new("--ignore_cache",false)        {     set_nocache                })
@@ -95,7 +104,12 @@ module Cxxproject
       puts " --rebuild                Clean before build."
       puts " --clobber                Clean the file/project (same as option -c) AND the bake cache files."
       puts " --prepro                 Stop after preprocessor."
-      puts " --link_only              Only link executable - doesn't update objects and archives or start PreSteps and PostSteps"
+      puts " --link_only              Only link executable - doesn't update objects and archives or start PreSteps and PostSteps."
+      puts " --lint                   Performs Lint checks instead of compiling sources. Works currently only with"
+      puts "                          GCC toolchain in project and file scope."
+      puts " --lint_min <num>         If number of files in a project is too large for lint to handle, it is possible"
+      puts "                          to specify only a part of the file list to lint (default -1)."
+      puts " --lint_max <num>         See above (default -1)."
       puts " --ignore_cache           Rereads the original meta files - usefull if workspace structure has been changed."
       puts " --check_uninc            Checks for unnecessary includes (only done for successful project builds)."
       puts " --threads <num>          Set NUMBER of parallel compiled files (default is 8)."
@@ -121,6 +135,7 @@ module Cxxproject
       set_project(File.basename(@main_dir)) if @project.nil?
       @roots = @def_roots if @roots.length == 0
       Rake::application.max_parallel_tasks = @threads
+      Rake::application.debug = @debug
       
       if @linkOnly
         if @rebuild
@@ -132,6 +147,22 @@ module Cxxproject
           ExitHelper.exit(1)
         end
       end
+      
+      if @lint and not @single
+        Printer.printError "Error: --lint must be used together with -p and optional with -f" 
+        ExitHelper.exit(1)
+      end
+
+      if @lint and @clean
+        Printer.printError "Error: --lint and -c not allowed (yet)" 
+        ExitHelper.exit(1)
+      end
+      
+      if @lint_max >= 0 and @lint_min >= 0 and @lint_max < @lint_min
+        Printer.printError "Error: lint_max must be greater than lint_min" 
+        ExitHelper.exit(1)
+      end
+            
     end
     
     def check_valid_dir(dir)
@@ -214,6 +245,14 @@ module Cxxproject
       @no_autodir = true
     end    
 
+    def set_lint()
+      @lint = true
+    end
+        
+    def set_debug()
+      @debug = true
+    end
+    
     def set_v(num)
       if num == 0
         @printLess = true
@@ -279,10 +318,19 @@ module Cxxproject
         ExitHelper.exit(1)
       end
     end
+    
     def set_socket(num)
       @socket = String === num ? num.to_i : num
     end
 
+    def set_lint_min(num)
+      @lint_min = String === num ? num.to_i : num
+    end
+    
+    def set_lint_max(num)
+      @lint_max = String === num ? num.to_i : num
+    end
+    
     def printHash(x, level)
       x.each do |k,v|
         if Hash === v

@@ -13,7 +13,7 @@ require 'bake/mergeConfig'
 require 'cxxproject/buildingblocks/module'
 require 'cxxproject/buildingblocks/makefile'
 require 'cxxproject/buildingblocks/executable'
-require 'cxxproject/buildingblocks/source_library'
+require 'cxxproject/buildingblocks/lint'
 require 'cxxproject/buildingblocks/binary_library'
 require 'cxxproject/buildingblocks/custom_building_block'
 require 'cxxproject/buildingblocks/command_line'
@@ -316,9 +316,11 @@ module Cxxproject
             Printer.printError "Error: Main project configuration must contain DefaultToolchain"
             ExitHelper.exit(1)
           else
-            basedOnToolchain = Cxxproject::Toolchain::Provider[config.defaultToolchain.basedOn]
+            basedOn = config.defaultToolchain.basedOn
+            basedOn = "GCC_Lint" if @options.lint
+            basedOnToolchain = Cxxproject::Toolchain::Provider[basedOn]
             if basedOnToolchain == nil
-              Printer.printError "Error: DefaultToolchain based on unknown compiler '#{config.defaultToolchain.basedOn}'"
+              Printer.printError "Error: DefaultToolchain based on unknown compiler '#{basedOn}'"
               ExitHelper.exit(1)
             end
             @defaultToolchain = Utils.deep_copy(basedOnToolchain)
@@ -334,7 +336,8 @@ module Cxxproject
                 @defaultToolchain[:COMPILER][:C][:FLAGS]              == @defaultToolchainCached[:COMPILER][:C][:FLAGS] and
                 @defaultToolchain[:COMPILER][:C][:DEFINES].join("")   == @defaultToolchainCached[:COMPILER][:C][:DEFINES].join("") and
                 @defaultToolchain[:COMPILER][:ASM][:FLAGS]            == @defaultToolchainCached[:COMPILER][:ASM][:FLAGS] and
-                @defaultToolchain[:COMPILER][:ASM][:DEFINES].join("") == @defaultToolchainCached[:COMPILER][:ASM][:DEFINES].join("")
+                @defaultToolchain[:COMPILER][:ASM][:DEFINES].join("") == @defaultToolchainCached[:COMPILER][:ASM][:DEFINES].join("") and
+                @defaultToolchain[:LINT_POLICY].join("")              == @defaultToolchainCached[:LINT_POLICY].join("")
                 @defaultToolchainTime = @mainMetaTime
               end
             end
@@ -383,10 +386,12 @@ module Cxxproject
       
       @mainConfig = @project2config[@mainProjectName]
       
-      basedOnToolchain = Cxxproject::Toolchain::Provider[@mainConfig.defaultToolchain.basedOn]
+      basedOn = @mainConfig.defaultToolchain.basedOn
+      basedOn = "GCC_Lint" if @options.lint
+
+      basedOnToolchain = Cxxproject::Toolchain::Provider[basedOn]
       @defaultToolchain = Utils.deep_copy(basedOnToolchain)
       integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)      
-      
     end
     
     def convert2bb
@@ -408,17 +413,7 @@ module Cxxproject
           
         addSteps(config.postSteps, bbModule, projDir, "POST", tcs) if not @options.linkOnly
 
-        # LIB, EXE
-        if Metamodel::LibraryConfig === config
-          bbModule.main_content = SourceLibrary.new(projName)
-        elsif Metamodel::ExecutableConfig === config
-          bbModule.main_content = Executable.new(projName)
-          if not config.artifactName.nil?
-            x = @options.build_config + "/" + config.artifactName.name
-            bbModule.main_content.set_executable_name(x)
-          end 
-          bbModule.main_content.set_linker_script(convPath(config.linkerScript, config)) unless config.linkerScript.nil?
-        else # CUSTOM
+        if Metamodel::CustomConfig === config
           if config.step
             if config.step.filter != ""
               Printer.printError "Error: #{config.file_name}(#{config.step.line_number}): attribute filter not allowed here"
@@ -431,6 +426,18 @@ module Cxxproject
             addSteps(config.step, bbModule, projDir, nil, tcs)
           end 
           bbModule.main_content = BinaryLibrary.new(projName, false)
+        elsif @options.lint
+          bbModule.main_content = Lint.new(projName)
+          bbModule.main_content.set_lint_min(@options.lint_min).set_lint_max(@options.lint_max)
+        elsif Metamodel::LibraryConfig === config
+          bbModule.main_content = SourceLibrary.new(projName)
+        elsif Metamodel::ExecutableConfig === config
+          bbModule.main_content = Executable.new(projName)
+          if not config.artifactName.nil?
+            x = @options.build_config + "/" + config.artifactName.name
+            bbModule.main_content.set_executable_name(x)
+          end 
+          bbModule.main_content.set_linker_script(convPath(config.linkerScript, config)) unless config.linkerScript.nil?
         end
         bbModule.last_content.dependencies << bbModule.main_content.name
         bbModule.last_content = bbModule.main_content
@@ -536,7 +543,7 @@ module Cxxproject
         end
 
         # special exe stuff
-        if Metamodel::ExecutableConfig === config
+        if Metamodel::ExecutableConfig === config and not @options.lint
           if not config.mapFile.nil?
             if config.mapFile.name == ""
               exeName = bbModule.main_content.get_executable_name
@@ -548,18 +555,19 @@ module Cxxproject
             bbModule.main_content.set_mapfile(mapfileName)
           end
         end
-          bbModule.contents.each do |c|
-            if Cxxproject::CommandLine === c
-              cmdLine = convPath(c.get_command_line, config, bbModule.main_content)
-              c.set_command_line(cmdLine)
-            end
-          end 
+        
+        bbModule.contents.each do |c|
+          if Cxxproject::CommandLine === c
+            cmdLine = convPath(c.get_command_line, config, bbModule.main_content)
+            c.set_command_line(cmdLine)
+          end
+        end 
 
-          # DEPS
-          projDeps = config.dependency.map { |dd| "Project "+dd.name }
-          projDeps.concat(bbModule.main_content.dependencies)
-          bbModule.main_content.set_dependencies(projDeps)
-          config.dependency.each { |dd| @lib_elements[dd.line_number] = [HasLibraries::DEPENDENCY, dd.name] } 
+        # DEPS
+        projDeps = config.dependency.map { |dd| "Project "+dd.name }
+        projDeps.concat(bbModule.main_content.dependencies)
+        bbModule.main_content.set_dependencies(projDeps)
+        config.dependency.each { |dd| @lib_elements[dd.line_number] = [HasLibraries::DEPENDENCY, dd.name] } 
         
 
         @lib_elements.sort.each do |x|
@@ -745,7 +753,7 @@ module Cxxproject
             c.set_sources([@startupFilename])
             c.set_source_patterns([])
             c.set_exclude_sources([])
-            c.extend(SingleSourceModule)
+            c.extend(SingleSourceModule) unless @options.lint
             break
           else
             def c.needed?

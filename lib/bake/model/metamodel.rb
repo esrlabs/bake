@@ -66,17 +66,23 @@ module Cxxproject
         contains_many 'flags', Flags, 'parent'
       end
 
+      class LintPolicy < ModelElement
+        has_attr 'name', String, :defaultValueLiteral => ""
+      end      
+      
       class DefaultToolchain < ModelElement
         has_attr 'basedOn', String, :defaultValueLiteral => ""
         contains_many 'compiler', Compiler, 'parent'
         contains_one 'archiver', Archiver, 'parent'
         contains_one 'linker', Linker, 'parent'
+        contains_many 'lintPolicy', LintPolicy, 'parent'
       end
 
       class Toolchain < ModelElement
         contains_many 'compiler', Compiler, 'parent'
         contains_one 'archiver', Archiver, 'parent'
         contains_one 'linker', Linker, 'parent'
+        contains_many 'lintPolicy', LintPolicy, 'parent'
       end
       
       class Person < ModelElement

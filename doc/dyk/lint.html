@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documentation of the bake-tookit</title>
+<style type="text/css">
+#rundrum {
+  border-width:1px;
+  border-style:dashed;
+  border-color:blue;
+  padding:0.2cm;
+  text-align:justify; }
+}
+</style>
+</head>
+<body>
+<h1>Lint</h1>
+
+<h3>General</h3>
+bake can be easily used to lint source files:
+<ul>
+	<li>"lint-nt.exe" must be in the path
+	<li>add "--lint" on the command line
+</ul>
+Example:
+<pre id="rundrum"><code>bake Debug -p MyLibraryProject --lint</code></pre>
+
+<h3>How does it work</h3>
+You can lint LibraryConfigs, ExecutableConfigs and single files, but not the complete workspace. The CPP Toolchain settings
+of the project are used regardless of the file type and file specific options.
+
+It is possible to specify lnt-files with LintPolicy, but you can add every other lint command line option as well.<br>
+A possible approach is to add global Lint policies in the DefaultToolchain like this:
+<pre id="rundrum"><code>DefaultToolchain GCC {
+  ...
+  LintPolicy "$(ProjectDir)/lint/misra.lnt"
+  LintPolicy "$(ProjectDir)/lint/suppressions.lnt"
+}</code></pre>
+
+<h3>Notes</h3>
+In rare cases lint has problems if it has to open too many (include) files. If that is the case, use --lint_min and --lint_max command line option of bake. Example:
+<pre id="rundrum"><code>bake Debug -p MyLibraryProject --lint --lint_max 50                (lints the first 51 files)
+bake Debug -p MyLibraryProject --lint --lint_min 51 --lint_max 100 (lints the next 50 files)
+bake Debug -p MyLibraryProject --lint --lint_min 101               (lints the rest of the files)</code></pre>
+<p>
+Lint in bake uses GCC includes to check system include stuff. Therefore it is required to have a working GCC installation.<br>
+But you don't have to use a config with GCC toolchain. Every other toolchain is also valid.
+
+</body>
+
+</html>

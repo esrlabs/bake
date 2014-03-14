@@ -44,8 +44,14 @@ def integrateToolchain(tcs, toolchain)
   toolchain.compiler.each do |c| 
     integrateCompiler(tcs, c, c.ctype)
   end
+  integrateLintPolicy(tcs, toolchain.lintPolicy)
 end  
 
+def integrateLintPolicy(tcs, policies)
+  policies.each do |d|
+    tcs[:LINT_POLICY] << d.name
+  end
+end
 
 def integrateLinker(tcs, linker)
   return tcs unless linker
