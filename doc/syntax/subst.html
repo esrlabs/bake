@@ -16,7 +16,15 @@
 <h1>Variable substitution in Project.meta</h1>
 
 <h3>Substituted variables</h3>
-
+A variable can be defined with the Set keyword in Project.meta (see syntax documentation):
+<p>
+<table border="1">
+  <tr><th bgcolor="#CCCCCC">Example</th><th bgcolor="#CCCCCC">Output</th></tr>
+  <tr><td>Set WORLD, value: "world!"<br>CommandLine "echo hello $(WORLD)"</td> <td>hello world!</td></tr>
+</table>
+<p>
+bake includes also some standard variables: 
+<p>
 <table border="1">
   <tr><th bgcolor="#CCCCCC">Variable</th><th bgcolor="#CCCCCC">Example</th></tr>
   <tr><td>$(MainConfigName)</td> <td>Debug</td></tr>

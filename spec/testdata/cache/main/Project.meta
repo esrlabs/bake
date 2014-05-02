@@ -24,8 +24,13 @@ Project {
       CommandLine "echo Hostname_main $(Hostname)", default: off, filter: var
       CommandLine "echo Path_main $(Path)", default: off, filter: var
     }
+    Set var1, value: V0main
+    Set var2, value: V2main
+    Set var1, value: V1main
     PostSteps {
       CommandLine "echo POSTMAIN"
+      CommandLine "echo MAIN$(var1)"
+      CommandLine "echo MAIN$(var2)"
     }
     DefaultToolchain GCC
   }

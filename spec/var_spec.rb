@@ -77,9 +77,18 @@ describe "VarSubst" do
     ($mystring.include?"Path_lib1 \n").should == false
     ($mystring.include?"Path_main \n").should == false
 
+    ($mystring.include?"MAINV1main").should == true
+    ($mystring.include?"MAINV2main").should == true
+    
+    ($mystring.include?"LIBV1lib").should == true
+    ($mystring.include?"LIBV2main").should == true
+    ($mystring.include?"LIBV3lib").should == true
+  
+    ($mystring.include?"LIBV1main").should == false
+    ($mystring.include?"LIBV3main").should == false
   end
 
-  it 'aritfactname' do
+  it 'artifactname' do
 
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test2", "--include_filter", "var"])
     options.parse_options()

@@ -79,6 +79,7 @@ z-index: 100;
 			  
 			  <span><span style="background-color:#EEEEEE;" class="show">
 &nbsp; &nbsp; <span class="mycomment"># Valid for all config types</span><br><br>
+&nbsp; &nbsp; <span class="help" onMouseover="showSet()" onMouseout="notip()">Set</span> &#60;variable&#62;, value: &#60;value&#62;<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showDependency()" onMouseout="notip()">Dependency</span> &#60;project&#62;,
               <span class="help" onMouseover="showDependencyConfig()" onMouseout="notip()">config</span>: &#60;name&#62;<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showExternalLibrary()" onMouseout="notip()">ExternalLibrary</span> &#60;lib&#62;,
@@ -380,6 +381,11 @@ function showIncludeDir() {
 	'<i> &nbsp; &nbsp; IncludeDir "include"</i><br>'+
     '<i> &nbsp; &nbsp; IncludeDir "generated/include"</i><br>'
   ddrivetip("IncludeDir", "No","0..n","-",str)  
+}
+
+function showSet() {   
+  str = 'Sets a variable for this and all dependent projects.'
+	ddrivetip("Set", "No","0..n","-",str)  
 }
 
 function showDependency() {   

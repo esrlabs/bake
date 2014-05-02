@@ -22,7 +22,12 @@ Project {
     }
     PostSteps {
       CommandLine "echo POSTLIB1"
+      CommandLine "echo LIB$(var1)"
+      CommandLine "echo LIB$(var2)"      
+      CommandLine "echo LIB$(var3)"      
     }
+    Set var1, value: V1lib
+    Set var3, value: V3lib
   }
 
 }

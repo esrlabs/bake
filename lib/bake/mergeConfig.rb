@@ -31,6 +31,8 @@ module Cxxproject
 
       @child.setDependency(@parent.dependency + @child.dependency)
 
+      @child.setSet(@parent.set + @child.set)
+
       manipulateLineNumbers(@parent.exLib)
       manipulateLineNumbers(@parent.exLibSearchPath)
       manipulateLineNumbers(@parent.userLibrary)

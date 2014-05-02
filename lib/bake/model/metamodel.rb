@@ -155,7 +155,12 @@ module Cxxproject
       
       class ArtifactName < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
-      end      
+      end 
+      
+      class Set < ModelElement
+        has_attr 'name', String, :defaultValueLiteral => ""
+        has_attr 'value', String, :defaultValueLiteral => ""
+      end  
 
       class BaseConfig_INTERNAL < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
@@ -166,6 +171,7 @@ module Cxxproject
         contains_many 'exLib', ExternalLibrary, 'parent'
         contains_many 'exLibSearchPath', ExternalLibrarySearchPath, 'parent'
         contains_one 'defaultToolchain', DefaultToolchain, 'parent'
+        contains_many 'set', Set, 'parent'
         
         module ClassModule
       	  def ident

@@ -2,7 +2,7 @@ module Cxxproject
 
   class Subst
   
-    def self.itute(config, projName, options)
+    def self.itute(config, projName, options, isMainProj)
     
       @@configName = config.name
       @@projDir = config.parent.get_project_dir
@@ -22,7 +22,10 @@ module Cxxproject
         end
       end
       
-      subst(config)    
+      @@userVarMap = {} if isMainProj
+      config.set.each { |s| @@userVarMap[s.name] = s.value }
+        
+      subst(config)
     end
     
     def self.subst(elem)
@@ -42,7 +45,9 @@ module Cxxproject
         
           var = str[posStart+2..posEnd-1]
         
-          if var == "MainConfigName"
+          if @@userVarMap.has_key?(var)
+            substStr << @@userVarMap[var]       
+          elsif var == "MainConfigName"
             substStr << @@options.build_config
           elsif var == "MainProjectName"
             substStr << @@mainProjectName 
@@ -88,7 +93,7 @@ module Cxxproject
         substStr << str[posSubst..-1]
       
         elem.setGeneric(a.name, substStr)
-      end    
+      end
     
       childsRefs = elem.class.ecore.eAllReferences.select{|r| r.containment}
       childsRefs.each do |c|

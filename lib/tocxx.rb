@@ -380,11 +380,12 @@ module Cxxproject
 
 
     def substVars
-      @project2config.each do |projName, config|
-        Subst.itute(config, projName, @options)
-      end
-      
       @mainConfig = @project2config[@mainProjectName]
+
+        Subst.itute(@mainConfig, @mainProjectName, @options, true)
+      @project2config.each do |projName, config|
+        Subst.itute(config, projName, @options, false) if projName != @mainProjectName  
+      end
       
       basedOn = @mainConfig.defaultToolchain.basedOn
       basedOn = "GCC_Lint" if @options.lint
