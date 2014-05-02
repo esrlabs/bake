@@ -136,6 +136,7 @@ module Cxxproject
       @roots = @def_roots if @roots.length == 0
       Rake::application.max_parallel_tasks = @threads
       Rake::application.debug = @debug
+      Rake::application.lint = @lint
       
       if @linkOnly
         if @rebuild
