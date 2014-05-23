@@ -44,6 +44,8 @@ module Cxxproject
     end
     class Define < ModelElement
       has_attr 'str', String, :defaultValueLiteral => ""
+      has_attr 'default', String, :defaultValueLiteral => "on"
+      has_attr 'filter', String, :defaultValueLiteral => ""
     end
 
 

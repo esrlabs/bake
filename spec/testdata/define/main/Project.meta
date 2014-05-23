@@ -1,0 +1,21 @@
+Project {
+
+  ExecutableConfig Main {
+    Files "src/main.cpp"
+    DefaultToolchain GCC {
+	  Compiler CPP {
+	    Define "GAGA", default: off, filter: gaga
+	  }
+	}
+	Toolchain {
+      Compiler CPP {
+	    Define "GUGU", default: on, filter: gugu
+	    Define "GOGO", filter: gogo
+	  }
+	}
+	PostSteps {
+		CommandLine "Main/main.exe"
+	}
+  }
+
+}
