@@ -23,75 +23,81 @@ module Cxxproject
       end
       
       @@userVarMap = {} if isMainProj
-      config.set.each { |s| @@userVarMap[s.name] = s.value }
+      config.set.each do |s|
+        @@userVarMap[s.name] = substString(s.value)
+      end
         
       subst(config)
     end
     
+    def self.substString(str)
+      substStr = ""
+      posSubst = 0
+      while (true)
+        posStart = str.index("$(", posSubst)
+        break if posStart.nil?
+        posEnd = str.index(")", posStart)
+        break if posEnd.nil?
+        substStr << str[posSubst..posStart-1] if posStart>0
+      
+        var = str[posStart+2..posEnd-1]
+      
+        if @@userVarMap.has_key?(var)
+          substStr << @@userVarMap[var]       
+        elsif var == "MainConfigName"
+          substStr << @@options.build_config
+        elsif var == "MainProjectName"
+          substStr << @@mainProjectName
+        elsif var == "MainProjectDir"
+          substStr << @@options.main_dir
+        elsif var == "ConfigName"
+         substStr << @@configName
+        elsif var == "ProjectName"
+          substStr << @@projName
+        elsif var == "ProjectDir"
+          substStr << @@projDir
+        elsif var == "OutputDir"
+          if @@projName == @@mainProjectName 
+            substStr << @@options.build_config
+          else
+            substStr << (@@options.build_config + "_" + @@mainProjectName)
+          end
+        elsif var == "Time"
+          substStr << Time.now.to_s
+        elsif var == "Hostname"
+          substStr << Socket.gethostname
+        elsif var == "ArtifactName"
+          substStr << @@artifactName
+        elsif var == "ArtifactNameBase"
+          substStr << @@artifactName.chomp(File.extname(@@artifactName))
+        elsif var == "Roots"
+          substStr << "___ROOTS___"
+        elsif var == "/"
+          if Cxxproject::OS.windows?
+            substStr << "\\"
+          else
+            substStr << "/"
+          end
+        elsif ENV[var]
+          substStr << ENV[var]
+        else
+          if @@options.verbose
+            Printer.printInfo "Info: #{elem.file_name}(#{elem.line_number}): substitute variable '$(#{var})' with empty string"
+          end
+          substStr << ""
+        end
+      
+        posSubst = posEnd + 1
+      end
+      substStr << str[posSubst..-1]
+      substStr
+    end
+
     def self.subst(elem)
       elem.class.ecore.eAllAttributes_derived.each do |a|
         next if a.name == "file_name" or a.name == "line_number"
         next if a.eType.name != "EString" 
-        str = elem.getGeneric(a.name)
-      
-        posSubst = 0
-        substStr = ""
-        while (true)
-          posStart = str.index("$(", posSubst)
-          break if posStart.nil?
-          posEnd = str.index(")", posStart)
-          break if posEnd.nil?
-          substStr << str[posSubst..posStart-1] if posStart>0
-        
-          var = str[posStart+2..posEnd-1]
-        
-          if @@userVarMap.has_key?(var)
-            substStr << @@userVarMap[var]       
-          elsif var == "MainConfigName"
-            substStr << @@options.build_config
-          elsif var == "MainProjectName"
-            substStr << @@mainProjectName 
-          elsif var == "ConfigName"
-           substStr << @@configName
-          elsif var == "ProjectName"
-            substStr << @@projName
-          elsif var == "ProjectDir"
-            substStr << @@projDir
-          elsif var == "OutputDir"
-            if @@projName == @@mainProjectName 
-              substStr << @@options.build_config
-            else
-              substStr << (@@options.build_config + "_" + @@mainProjectName)
-            end
-          elsif var == "Time"
-            substStr << Time.now.to_s
-          elsif var == "Hostname"
-            substStr << Socket.gethostname
-          elsif var == "ArtifactName"
-            substStr << @@artifactName
-          elsif var == "ArtifactNameBase"
-            substStr << @@artifactName.chomp(File.extname(@@artifactName))
-          elsif var == "Roots"
-            substStr << "___ROOTS___"
-          elsif var == "/"
-            if Cxxproject::OS.windows?
-              substStr << "\\"
-            else
-              substStr << "/"
-            end
-          elsif ENV[var]
-            substStr << ENV[var]
-          else
-            if @@options.verbose
-              Printer.printInfo "Info: #{elem.file_name}(#{elem.line_number}): substitute variable '$(#{var})' with empty string"
-            end
-            substStr << ""
-          end
-        
-          posSubst = posEnd + 1
-        end
-        substStr << str[posSubst..-1]
-      
+        substStr = substString(elem.getGeneric(a.name))
         elem.setGeneric(a.name, substStr)
       end
     
