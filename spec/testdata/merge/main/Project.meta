@@ -154,6 +154,7 @@ Project {
 
   LibraryConfig L3, extends: L2 {
     Dependency depL3_1, config: lib
+    Dependency depL2_2, config: new
     Dependency depL3_2, config: lib
     Files "**/*L3*"
     ExcludeFiles "**/*L3ex*"

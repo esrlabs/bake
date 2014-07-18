@@ -160,18 +160,20 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
 
-    posdep11 = $mystring.index("depL1_1")
-    posdep12 = $mystring.index("depL1_2")
-    posdep21 = $mystring.index("depL2_1")
-    posdep22 = $mystring.index("depL2_2")
-    posdep31 = $mystring.index("depL3_1")
-    posdep32 = $mystring.index("depL3_2")
+    posdep11 = $mystring.index("depL1_1 (lib)")
+    posdep12 = $mystring.index("depL1_2 (lib)")
+    posdep21 = $mystring.index("depL2_1 (lib)")
+    posdep22 = $mystring.index("depL2_2 (new)")
+    posdep31 = $mystring.index("depL3_1 (lib)")
+    posdep32 = $mystring.index("depL3_2 (lib)")
     
     (posdep11 < posdep12).should == true
     (posdep12 < posdep21).should == true
     (posdep21 < posdep22).should == true
     (posdep22 < posdep31).should == true
     (posdep31 < posdep32).should == true
+    
+    $mystring.include?("depL2_2 (lib)").should == false
   end    
 
   it 'deps (child)' do

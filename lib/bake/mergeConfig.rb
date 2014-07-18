@@ -29,8 +29,20 @@ module Cxxproject
     
       # Valid for all config types
 
-      @child.setDependency(@parent.dependency + @child.dependency)
-
+      deps = @parent.dependency
+      @child.dependency.each do |cd|
+        overwrite = false        
+        deps.each do |pd|
+          if pd.name == cd.name
+            pd.config = cd.config
+            overwrite = true
+            break
+          end
+        end
+        deps << cd if not overwrite 
+      end
+      @child.setDependency(deps)
+      
       @child.setSet(@parent.set + @child.set)
 
       manipulateLineNumbers(@parent.exLib)

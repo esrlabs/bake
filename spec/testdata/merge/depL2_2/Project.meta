@@ -1,3 +1,4 @@
 Project {
   CustomConfig lib
+  CustomConfig new
 }
