@@ -74,14 +74,6 @@ def integrateCompiler(tcs, compiler, type)
   end
   tcs[:COMPILER][type][:FLAGS] = adjustFlags(tcs[:COMPILER][type][:FLAGS], compiler.flags)
   compiler.define.each do |d|
-    checkDefault = true
-    if d.filter != ""
-      next if @options.exclude_filter.include?d.filter
-      checkDefault = false if @options.include_filter.include?d.filter
-    end
-    if checkDefault
-      next if d.default == "off"
-    end
     tcs[:COMPILER][type][:DEFINES] << d.str
   end
 end

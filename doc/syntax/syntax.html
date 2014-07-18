@@ -106,9 +106,7 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C,
                                           <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultDefine()" onMouseout="notip()">Define</span> &#60;define&#62;,
-						    <span class="help" onMouseover="showDefineDefault()" onMouseout="notip()">default</span>: on|off,
-						    <span class="help" onMouseover="showDefineFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultArchiver()" onMouseout="notip()">Archiver</span>
                                           <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
@@ -135,9 +133,7 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C, 
                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br> 
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefine()" onMouseout="notip()">Define</span> &#60;define&#62;,
-						    <span class="help" onMouseover="showDefineDefault()" onMouseout="notip()">default</span>: on|off,
-						    <span class="help" onMouseover="showDefineFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showArchiver()" onMouseout="notip()">Archiver</span>
                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br> 
@@ -299,18 +295,6 @@ function showStepDefault() {
 
 function showStepFilter() {   
   str = 'A step can be switched on or off explicitly regardless of the "default" attribute with the command line options<br>'+
-	'<i> &nbsp; &nbsp; --include_filter &#60;filter name&#62;</i><br>'+
-	'<i> &nbsp; &nbsp; --exclude_filter &#60;filter name&#62;</i><br>'
-  ddrivetip("filter", "No","-","-",str)
-}
-
-function showDefineDefault() {   
-  str = 'Specifies if a define shall be added to compiler command by default.'
-  ddrivetip("default", "No","-","on",str)
-}
-
-function showDefineFilter() {   
-  str = 'A define argument for the compiler can be switched on or off explicitly regardless of the "default" attribute with the command line options<br>'+
 	'<i> &nbsp; &nbsp; --include_filter &#60;filter name&#62;</i><br>'+
 	'<i> &nbsp; &nbsp; --exclude_filter &#60;filter name&#62;</i><br>'
   ddrivetip("filter", "No","-","-",str)
