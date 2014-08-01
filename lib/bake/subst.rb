@@ -24,7 +24,36 @@ module Cxxproject
       
       @@userVarMap = {} if isMainProj
       config.set.each do |s|
+
         @@userVarMap[s.name] = substString(s.value)
+
+#        if (s.value != "" and s.cmd != "")
+#          Printer.printError "Error: #{config.file_name}(#{s.line_number}): value and cmd attributes must be used exclusively"
+#          ExitHelper.exit(1)
+#        end
+#        
+#        if (s.value != "")
+#          @@userVarMap[s.name] = substString(s.value)
+#        else
+#          cmd_result = false
+#          begin
+#            rd, wr = IO.pipe
+#            cmd = [s.cmd]
+#            cmd << {
+#             :err=>wr,
+#             :out=>wr
+#            }
+#            cmd_result, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
+#          @@userVarMap[s.name] = consoleOutput.chomp
+#          rescue
+#          end
+#          if (cmd_result == false)
+#            Printer.printWarning "Warning: #{config.file_name}(#{s.line_number}): command not successful, variable #{s.name} wil be set to \"\""
+#            @@userVarMap[s.name] = ""
+#          end          
+#        end
+        
+        
       end
         
       subst(config)

@@ -378,6 +378,9 @@ module Cxxproject
 
     end
 
+    def writeCMake
+      Printer.printError "Error: --cmake not supported by this version."
+    end
 
     def substVars
       @mainConfig = @project2config[@mainProjectName]
@@ -678,6 +681,12 @@ module Cxxproject
       end
       
       substVars
+      
+      if (@options.cmake)
+        writeCMake
+        ExitHelper.exit(0)
+      end
+      
       convert2bb
       
       #################################################

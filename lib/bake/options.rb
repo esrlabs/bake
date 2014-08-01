@@ -8,7 +8,7 @@ module Cxxproject
   class Options < Parser
     attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version, :alias_filename # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :clean, :rebuild, :single, :verbose, :nocache, :color, :show_includes, :linkOnly, :check_uninc, :printLess, :no_autodir, :clobber, :lint, :debug # Boolean
+    attr_reader :clean, :rebuild, :single, :verbose, :nocache, :color, :show_includes, :linkOnly, :check_uninc, :printLess, :no_autodir, :clobber, :lint, :debug, :cmake # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
 
     def initialize(argv)
@@ -32,6 +32,7 @@ module Cxxproject
       @linkOnly = false
       @printLess = false
       @no_autodir = false
+      @cmake = false
       @threads = 8
       @lint_min = -1
       @lint_max = -1
@@ -85,6 +86,7 @@ module Cxxproject
       add_option(Option.new("--show_license",false)        {     show_license               })
       add_option(Option.new("--version",false)             {     ExitHelper.exit(0)         })
       add_option(Option.new("--check_uninc",false)         {     set_check_uninc            })
+      add_option(Option.new("--cmake",false)               {     set_cmake                  })
       add_option(Option.new("--alias",true)                { |x| set_alias_filename(x)      })
 
     end
@@ -126,6 +128,8 @@ module Cxxproject
       puts " --version                Print version."
       puts " -h, --help               Print this help."
       puts " --show_license           Print the license."      
+      puts ""
+      puts " --cmake                  Temporary switch for BSW."      
           
     end
     
@@ -233,6 +237,9 @@ module Cxxproject
     end
     def set_check_uninc()
       @check_uninc = true
+    end
+    def set_cmake()
+      @cmake = true
     end
     def set_prepro()
       Rake::application.preproFlags = true

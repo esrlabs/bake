@@ -160,6 +160,7 @@ module Cxxproject
       class Set < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'value', String, :defaultValueLiteral => ""
+        has_attr 'cmd', String, :defaultValueLiteral => ""
       end  
 
       class BaseConfig_INTERNAL < ModelElement
