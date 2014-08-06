@@ -617,6 +617,8 @@ module Cxxproject
     end
 
     def doit()
+      CLEAN.clear
+      CLOBBER.clear
       parsingOk = false
       ex = nil
       begin

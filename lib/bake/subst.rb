@@ -23,8 +23,9 @@ module Cxxproject
       end
       
       @@userVarMap = {} if isMainProj
+      
       config.set.each do |s|
-
+     
         if (s.value != "" and s.cmd != "")
           Printer.printError "Error: #{config.file_name}(#{s.line_number}): value and cmd attributes must be used exclusively"
           ExitHelper.exit(1)
@@ -41,20 +42,36 @@ module Cxxproject
              :err=>wr,
              :out=>wr
             }
-            cmd_result, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
+            consoleOutput = ""
+            Dir.chdir(@@projDir) do
+              cmd_result, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
+            end
           @@userVarMap[s.name] = consoleOutput.chomp
           rescue
           end
           if (cmd_result == false)
-            Printer.printWarning "Warning: #{config.file_name}(#{s.line_number}): command not successful, variable #{s.name} wil be set to \"\""
+            Printer.printWarning "Warning: #{config.file_name}(#{s.line_number}): command not successful, variable #{s.name} wil be set to \"\"  (#{consoleOutput.chomp})."
             @@userVarMap[s.name] = ""
           end          
         end
         
-        
       end
-        
-      subst(config)
+     
+      @@resolvedVars = 0
+      3.times {subst(config)}
+      
+      @@resolvedVars = 0
+      lastFoundInVar = -1 
+      100.times do
+        subst(config)
+        break if @@resolvedVars == 0 or (@@resolvedVars >= lastFoundInVar and lastFoundInVar >= 0)
+        lastFoundInVar = @@resolvedVars 
+      end      
+      if (@@resolvedVars > 0)
+        Printer.printError "Error: #{config.file_name}: cyclic variable substitution detected"
+        ExitHelper.exit(1)
+      end
+      
     end
     
     def self.substString(str)
@@ -67,6 +84,7 @@ module Cxxproject
         break if posEnd.nil?
         substStr << str[posSubst..posStart-1] if posStart>0
       
+        @@resolvedVars += 1
         var = str[posStart+2..posEnd-1]
       
         if @@userVarMap.has_key?(var)

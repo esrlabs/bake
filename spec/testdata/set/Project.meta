@@ -1,0 +1,68 @@
+Project {
+
+ExecutableConfig value {
+  Set VAR1, value: "GUGU"
+  PreSteps {
+    CommandLine "echo *$(VAR1)*"
+  }
+  DefaultToolchain GCC {
+    Linker command: "echo"
+  }
+}
+
+ExecutableConfig cmd {
+  Set VAR1, cmd: "@echo GAGA"
+  PreSteps {
+    CommandLine "echo *$(VAR1)*"
+  }
+  DefaultToolchain GCC {
+    Linker command: "echo"
+  }
+}
+
+ExecutableConfig cat {
+  Set VAR1, cmd: "cat test.txt"
+  PreSteps {
+    CommandLine "echo *$(VAR1)*"
+  }
+  DefaultToolchain GCC {
+    Linker command: "echo"
+  }
+}
+
+ExecutableConfig arti {
+  Set VAR1, cmd: "@echo GAGA"
+  ArtifactName "*$(VAR1)*"
+  DefaultToolchain GCC {
+    Linker command: "echo"
+  }
+}
+
+ExecutableConfig triple {
+  Set VAR1, cmd: "@echo GAGA"
+  Set VAR2, value: "GUGU"
+  Set VAR3, value: "HUHU"
+  PreSteps {
+    CommandLine "echo *$(VAR1)$(VAR2)$(VAR3)*"
+  }
+  DefaultToolchain GCC {
+    Linker command: "echo"
+  }
+}
+
+ExecutableConfig recursive {
+  Set VAR1, value: "GUGU"
+  Set VAR2, cmd: "@echo *$(VAR1)*"
+  Set VAR3, value: "HUHU $(VAR2)"
+  Set VAR4, value: "$(ArtifactName)"
+  PreSteps {
+    CommandLine "echo *$(VAR2)-$(VAR4)*"
+  }
+  ArtifactName "$(VAR3).elf"
+  DefaultToolchain GCC {
+    Linker command: "echo"
+  }
+}
+
+
+}
