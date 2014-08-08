@@ -9,6 +9,7 @@ module Cxxproject
       @@projName = projName
       @@options = options
       @@mainProjectName = File::basename(options.main_dir)
+      @@resolvedVars = 0
       
       @@artifactName = ""
       if Metamodel::ExecutableConfig === config
@@ -57,7 +58,6 @@ module Cxxproject
         
       end
      
-      @@resolvedVars = 0
       3.times {subst(config)}
       
       @@resolvedVars = 0
