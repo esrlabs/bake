@@ -90,6 +90,10 @@ module Cxxproject
         has_attr 'email', String, :defaultValueLiteral => ""
       end
 
+      class Description < ModelElement
+        has_attr 'text', String, :defaultValueLiteral => ""
+      end
+
       class Responsible < ModelElement
         contains_many "person", Person, 'parent'
       end
@@ -212,9 +216,7 @@ module Cxxproject
       end
 
       class Project < ModelElement
-        #has_attr 'name', String  do
-        #  annotation :details => {'internal' => 'true'}
-        #end
+        contains_one 'description', Description, 'parent'
         contains_one 'responsible', Responsible, 'parent'
         contains_many 'config', BaseConfig_INTERNAL, 'parent'
         

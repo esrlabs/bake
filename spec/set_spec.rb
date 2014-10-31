@@ -88,8 +88,41 @@ describe "Set" do
     ($mystring.include?"**GUGU*-HUHU *GUGU*.elf*").should == true
     ($mystring.include?"recursive/HUHU *GUGU*.elf").should == true
   end
+  
+  it 'no cmd' do
+    options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test"])
+    options.parse_options()
+    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx.doit()
+    tocxx.start()
+    ($mystring.include?"Project A TestA   A").should == true
+    ($mystring.include?"Project B TestA TestB  B").should == true
+    ($mystring.include?"Project C TestA  TestC C").should == true
+  end
 
-    
+  it 'cmd A' do
+    options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test", "--set", "a=X"])
+    options.parse_options()
+    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx.doit()
+    tocxx.start()
+    ($mystring.include?"Project A X   A").should == true
+    ($mystring.include?"Project B X TestB  B").should == true
+    ($mystring.include?"Project C X  TestC C").should == true
+  end
+  
+  it 'cmd B' do
+    options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test", "--set", "b=X"])
+    options.parse_options()
+    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx.doit()
+    tocxx.start()
+    ($mystring.include?"Project A TestA X  A").should == true
+    ($mystring.include?"Project B TestA X  B").should == true
+    ($mystring.include?"Project C TestA X TestC C").should == true
+  end
+  
+      
 end
 
 end

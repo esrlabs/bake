@@ -1,5 +1,7 @@
 Project {
 
+  Description "bla"
+
   Responsible {
     Person "TBD", email: "TBD@TBD.com"
   }

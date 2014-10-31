@@ -23,7 +23,11 @@ module Cxxproject
         end
       end
       
-      @@userVarMap = {} if isMainProj
+      if isMainProj
+        @@userVarMap = {}
+      else
+        @@userVarMap = @@userVarMapMain.clone
+      end
       
       config.set.each do |s|
      
@@ -57,6 +61,8 @@ module Cxxproject
         end
         
       end
+      
+      @@userVarMapMain = @@userVarMap.clone if isMainProj
      
       3.times {subst(config)}
       
@@ -86,8 +92,10 @@ module Cxxproject
       
         @@resolvedVars += 1
         var = str[posStart+2..posEnd-1]
-      
-        if @@userVarMap.has_key?(var)
+
+        if @@options.vars.has_key?(var)
+          substStr << @@options.vars[var]  
+        elsif @@userVarMap.has_key?(var)
           substStr << @@userVarMap[var]       
         elsif var == "MainConfigName"
           substStr << @@options.build_config

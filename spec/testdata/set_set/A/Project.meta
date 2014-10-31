@@ -1,0 +1,11 @@
+Project {
+
+  CustomConfig test {
+    Set a, value: "TestA"
+    Dependency B, config: test
+	Dependency C, config: test
+	CommandLine "echo Project A $(a) $(b) $(c) A"
+	DefaultToolchain GCC
+  }
+
+}

@@ -10,10 +10,12 @@ module Cxxproject
     attr_reader :roots, :include_filter, :exclude_filter # String List
     attr_reader :clean, :rebuild, :single, :verbose, :nocache, :color, :show_includes, :linkOnly, :check_uninc, :printLess, :no_autodir, :clobber, :lint, :debug, :cmake # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
+    attr_reader :vars # map
 
     def initialize(argv)
       super(argv)
 
+      @vars = {}
       @build_config = ""
       @main_dir = nil
       @project = nil      
@@ -68,6 +70,7 @@ module Cxxproject
       add_option(Option.new("-v2",false)                   {     set_v(2)                   })
         
       add_option(Option.new("--debug",false)               {     set_debug                  })
+      add_option(Option.new("--set",true)                  { |x| set_set(x)                 })
         
       add_option(Option.new("--clobber",false)             {     set_clobber                })
       add_option(Option.new("--ignore_cache",false)        {     set_nocache                })
@@ -124,6 +127,7 @@ module Cxxproject
       puts "                          'PRE' or 'POST' excludes all PreSteps respectively PostSteps."
       puts " --show_abs_paths         Compiler prints absolute filename paths instead of relative paths."
       puts " --no_autodir             Disable auto completion of paths like in IncludeDir"
+      puts " --set <key>=<value>      Sets a variable. Overwrites variables defined in Project.metas (can be used multiple times)."
       puts ""
       puts " --version                Print version."
       puts " -h, --help               Print this help."
@@ -331,6 +335,15 @@ module Cxxproject
       @socket = String === num ? num.to_i : num
     end
 
+    def set_set(str)
+      ar = str.split("=")
+      if not str.include?"=" or ar[0].length == 0
+        Printer.printError "Error: --set must be followed by key=value"
+        ExitHelper.exit(1)
+      end
+      @vars[ar[0]] = ar[1..-1].join("=")
+    end
+    
     def set_lint_min(num)
       @lint_min = String === num ? num.to_i : num
     end

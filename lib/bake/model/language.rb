@@ -33,6 +33,8 @@ module Cxxproject
         ["lib"]
       elsif c.name == "DefaultToolchain"
         ["basedOn"]
+      elsif c.name == "Description"
+        ["text"]
       else
         ["name"]
       end

@@ -67,6 +67,8 @@ z-index: 100;
 <span class="help" onMouseover="showProject()" onMouseout="notip()">Project</span> {<br>
 &nbsp; <br>
 
+&nbsp; <span class="help" onMouseover="showDescription()" onMouseout="notip()">Description</span>  &#60;text&#62;<br><br>
+
 &nbsp; <span class="help" onMouseover="showResponsible()" onMouseout="notip()">Responsible</span>  {<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showPerson()" onMouseout="notip()">Person</span> &#60;name&#62;,
               <span class="help" onMouseover="showPersonEmail()" onMouseout="notip()">email</span>: &#60;adr&#62;<br>
@@ -189,17 +191,23 @@ function showProject() {
 
 function showResponsible() {
   str = "Specify all responsible persons of the project."
-  ddrivetip("Responsible", "Not yet, but in future,", "0..1", "-",str)
+  ddrivetip("Responsible", "No,", "0..1", "-",str)
 }
+
+function showDescription() {
+  str = 'Description of the project.'
+  ddrivetip("Description", "No", "0..1", "-",str)
+}
+
 
 function showPerson() {
   str = 'Person who is responsible for the project.'
-  ddrivetip("Person", "Not yet, but in future", "0..1", "-",str)
+  ddrivetip("Person", "No", "0..1", "-",str)
 }
 
 function showPersonEmail() {
   str = 'Use always double quotes (") for the email address.'
-  ddrivetip("email", "Not yet, but in future", "-", "-",str)
+  ddrivetip("email", "No", "-", "-",str)
 }
 
 function showExecutableConfig() {

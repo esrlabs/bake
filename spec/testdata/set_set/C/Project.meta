@@ -1,0 +1,8 @@
+Project {
+
+  CustomConfig test {
+    Set c, value: "TestC"
+	CommandLine "echo Project C $(a) $(b) $(c) C"
+  }
+
+}
