@@ -104,7 +104,7 @@ z-index: 100;
 &nbsp; &nbsp; <span class="help" onMouseover="showPostSteps()" onMouseout="notip()">PostSteps</span> {<br>
 &nbsp; &nbsp; &nbsp; <span class="mycomment"># Same as for PreSteps</span><br>
 &nbsp; &nbsp; }<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showDefaultToolchain()" onMouseout="notip()">DefaultToolchain</span> &#60;basedOn&#62; {<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showDefaultToolchain()" onMouseout="notip()">DefaultToolchain</span> &#60;basedOn&#62; <span class="help" onMouseover="showOutputDir()" onMouseout="notip()">outputDir</span>: &#60;dir&#62; {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C,
                                           <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
@@ -131,7 +131,7 @@ z-index: 100;
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showExcludeFiles()" onMouseout="notip()">ExcludeFiles</span> &#60;pattern&#62;<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showToolchainProject()" onMouseout="notip()">Toolchain</span> {<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showToolchainProject()" onMouseout="notip()">Toolchain</span> <span class="help" onMouseover="showOutputDir()" onMouseout="notip()">outputDir</span>: &#60;dir&#62; {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C, 
                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br> 
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
@@ -352,6 +352,16 @@ function getCommandLineDesc() {
 
 function showCommandLine() {   
   ddrivetip("CommandLine", "No","0..n","-",getCommandLineDesc())  
+}
+
+function showOutputDir() {   
+  str = 'Specifies the output folder.<p>'+
+    'Use always relative paths, not absolute paths due to portability.<p>'+
+    'Use always "/" and not "\\".<p>'+
+    'If the first part of the path is equal to a project name, it is used as a shortcut to this project root. <br>'+
+    'To avoid this magic, use something like this: <br>'+
+    '<i> &nbsp; &nbsp; IncludeDir "./abc/include"</i><br>'
+  ddrivetip("outputdir", "No","0..1","-",str)  
 }
 
 function showExtends() {

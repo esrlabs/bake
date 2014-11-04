@@ -72,6 +72,7 @@ module Cxxproject
       
       class DefaultToolchain < ModelElement
         has_attr 'basedOn', String, :defaultValueLiteral => ""
+        has_attr 'outputDir', String, :defaultValueLiteral => ""
         contains_many 'compiler', Compiler, 'parent'
         contains_one 'archiver', Archiver, 'parent'
         contains_one 'linker', Linker, 'parent'
@@ -79,6 +80,7 @@ module Cxxproject
       end
 
       class Toolchain < ModelElement
+        has_attr 'outputDir', String, :defaultValueLiteral => ""
         contains_many 'compiler', Compiler, 'parent'
         contains_one 'archiver', Archiver, 'parent'
         contains_one 'linker', Linker, 'parent'

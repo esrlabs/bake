@@ -2,7 +2,7 @@ module Cxxproject
 
   class Subst
   
-    def self.itute(config, projName, options, isMainProj)
+    def self.itute(config, projName, options, isMainProj, toolchain)
     
       @@configName = config.name
       @@projDir = config.parent.get_project_dir
@@ -64,7 +64,10 @@ module Cxxproject
       
       @@userVarMapMain = @@userVarMap.clone if isMainProj
      
-      3.times {subst(config)}
+      3.times {
+        subst(config);
+        substToolchain(toolchain)
+      }
       
       @@resolvedVars = 0
       lastFoundInVar = -1 
@@ -146,9 +149,21 @@ module Cxxproject
       substStr
     end
 
+    def self.substToolchain(elem)
+      elem.each do |k, e|
+        if Hash === e or Array === e
+          substToolchain(e) 
+        elsif String === e
+          elem[k] = substString(e)
+        end  
+      end
+    end
+
+    
     def self.subst(elem)
       elem.class.ecore.eAllAttributes_derived.each do |a|
         next if a.name == "file_name" or a.name == "line_number"
+        #next if Metamodel::DefaultToolchain === elem
         next if a.eType.name != "EString" 
         substStr = substString(elem.getGeneric(a.name))
         elem.setGeneric(a.name, substStr)

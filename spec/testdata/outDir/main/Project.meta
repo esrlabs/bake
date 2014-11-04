@@ -1,0 +1,67 @@
+Project {
+
+  ExecutableConfig testTcRel {
+    Files "**/*.cpp"
+    Dependency lib1, config: testTcRel
+	Dependency lib2, config: testTcRel
+	DefaultToolchain GCC
+    Toolchain outputDir: "testOut1"
+  }
+
+  ExecutableConfig testDtcTcRel {
+    Files "**/*.cpp"
+    Dependency lib1, config: testTcRel
+	Dependency lib2, config: testTcRel
+	DefaultToolchain GCC, outputDir: "testOutX"
+    Toolchain outputDir: "testOut1"
+  }
+
+  ExecutableConfig testDtcRel {
+    Files "**/*.cpp"
+    Dependency lib1, config: testRel
+	Dependency lib2, config: testRel
+	DefaultToolchain GCC, outputDir: "testOutY"
+  }
+
+  ExecutableConfig testDtcRelProj {
+    Files "**/*.cpp"
+    Dependency lib1, config: testRel
+	Dependency lib2, config: testRel
+	DefaultToolchain GCC, outputDir: "main/testOutProj"
+  }
+
+  ExecutableConfig testDtcRelVar {
+    Files "**/*.cpp"
+    Dependency lib1, config: testRel
+	Dependency lib2, config: testRel
+	DefaultToolchain GCC, outputDir: "testVar/$(MainProjectName)/$(ProjectName)/testOutVar"
+  }
+  
+  ExecutableConfig testTcAbs {
+    Files "**/*.cpp"
+	Set AbsMain, cmd: "ruby getAbs.rb MAIN"
+    Dependency lib1, config: testTcAbs
+	Dependency lib2, config: testTcAbs
+	DefaultToolchain GCC
+	Toolchain outputDir: "$(AbsMain)"
+  }  
+
+  ExecutableConfig testDtcAbs {
+    Files "**/*.cpp"
+	Set AbsAll, cmd: "ruby getAbs.rb ALL"
+    Dependency lib1, config: testRel
+	Dependency lib2, config: testRel
+	DefaultToolchain GCC, outputDir: "$(AbsAll)"
+  }  
+  
+  ExecutableConfig testDtcAbsDD {
+    Files "**/*.cpp"
+    Dependency lib1, config: testRel
+	Dependency lib2, config: testRel
+	DefaultToolchain GCC, outputDir: "T:/testOutDirE"
+  }  
+  
+  
+
+  
+}

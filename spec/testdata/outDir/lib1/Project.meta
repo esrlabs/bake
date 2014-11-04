@@ -1,0 +1,18 @@
+Project {
+
+  LibraryConfig testTcRel {
+    Files "**/*.cpp"
+	Toolchain outputDir: "../testOut2"
+  }
+  
+  LibraryConfig testTcAbs {
+    Files "**/*.cpp"
+	Set AbsLib1, cmd: "ruby ../main/getAbs.rb LIB1"
+	Toolchain outputDir: "$(AbsLib1)"
+  }  
+
+  LibraryConfig testRel {
+    Files "**/*.cpp"
+  }
+ 
+}

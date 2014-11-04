@@ -38,6 +38,7 @@ module Cxxproject
 
     def initialize(options)
       @options = options
+      @configTcMap = {}
 
       RakeFileUtils.verbose_flag = @options.verbose
     end
@@ -382,20 +383,31 @@ module Cxxproject
       Printer.printError "Error: --cmake not supported by this version."
     end
 
+    def getTc(config)
+      tcs = nil
+      if not Metamodel::CustomConfig === config
+        tcs = Utils.deep_copy(@defaultToolchain)
+        integrateToolchain(tcs, config.toolchain)
+      else
+        tcs = Utils.deep_copy(Cxxproject::Toolchain::Provider.default)
+      end    
+      @configTcMap[config] = tcs
+    end
+    
     def substVars
       @mainConfig = @project2config[@mainProjectName]
 
-        Subst.itute(@mainConfig, @mainProjectName, @options, true)
-      @project2config.each do |projName, config|
-        Subst.itute(config, projName, @options, false) if projName != @mainProjectName  
-      end
-      
       basedOn = @mainConfig.defaultToolchain.basedOn
       basedOn = "GCC_Lint" if @options.lint
 
       basedOnToolchain = Cxxproject::Toolchain::Provider[basedOn]
       @defaultToolchain = Utils.deep_copy(basedOnToolchain)
       integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)      
+
+      Subst.itute(@mainConfig, @mainProjectName, @options, true, getTc(@mainConfig))
+      @project2config.each do |projName, config|
+        Subst.itute(config, projName, @options, false, getTc(config)) if projName != @mainProjectName  
+      end
     end
     
     def convert2bb
@@ -407,13 +419,7 @@ module Cxxproject
         bbModule = ModuleBuildingBlock.new("Project "+projName)
         bbModule.contents = []
         
-        tcs = nil
-        if not Metamodel::CustomConfig === config
-          tcs = Utils.deep_copy(@defaultToolchain)
-          integrateToolchain(tcs, config.toolchain)
-        else
-          tcs = Utils.deep_copy(Cxxproject::Toolchain::Provider.default)
-        end          
+        tcs = @configTcMap[config]       
           
         addSteps(config.postSteps, bbModule, projDir, "POST", tcs) if not @options.linkOnly
 
@@ -469,7 +475,10 @@ module Cxxproject
           end
           c.set_project_dir(projDir)
           
-          if projName == @mainProjectName
+          if tcs[:OUTPUT_DIR] != nil
+            p = convPath(tcs[:OUTPUT_DIR], config)
+            c.set_output_dir(p)
+          elsif projName == @mainProjectName
             c.set_output_dir(@options.build_config)
           else
             c.set_output_dir(@options.build_config + "_" + @mainProjectName)
@@ -841,13 +850,6 @@ module Cxxproject
       if @startupFilename
         @runTask.prerequisites.clear
       end
-
-
-#RubyProf.start      
-#result = RubyProf.stop
-#printer = RubyProf::FlatPrinter.new(result)
-#printer.print(STDOUT)
-
 
       return true
     end

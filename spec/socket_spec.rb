@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject.git/lib")
+$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
 
 require 'bake/version'
 

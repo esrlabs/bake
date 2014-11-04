@@ -39,6 +39,7 @@ end
 def integrateToolchain(tcs, toolchain)
   return tcs unless toolchain
   
+  tcs[:OUTPUT_DIR] = toolchain.outputDir if toolchain.outputDir != ""
   integrateLinker(tcs, toolchain.linker) if toolchain.respond_to?"linker"
   integrateArchiver(tcs, toolchain.archiver)
   toolchain.compiler.each do |c| 

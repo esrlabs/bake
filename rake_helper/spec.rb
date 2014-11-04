@@ -1,6 +1,6 @@
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 require 'bake/version'
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject.git/lib")
+$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
 
 
 SPEC_PATTERN ='spec/**/*_spec.rb'

@@ -5,7 +5,7 @@ module Cxxproject
     end
   end
     
-  expectedCxx = "0.5.74"
+  expectedCxx = "0.5.75"
   expectedRGen = "0.6.0"
   expectedRText = "0.2.0"
   
