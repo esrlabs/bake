@@ -10,6 +10,7 @@ module Cxxproject
       @@options = options
       @@mainProjectName = File::basename(options.main_dir)
       @@resolvedVars = 0
+      @@configFilename = config.file_name
       
       @@artifactName = ""
       if Metamodel::ExecutableConfig === config
@@ -138,7 +139,7 @@ module Cxxproject
           substStr << ENV[var]
         else
           if @@options.verbose
-       #     Printer.printInfo "Info: #{elem.file_name}(#{elem.line_number}): substitute variable '$(#{var})' with empty string"
+            Printer.printInfo "Info: #{@@configFilename}: substitute variable '$(#{var})' with empty string"
           end
           substStr << ""
         end
