@@ -130,3 +130,8 @@ def calc_def_roots(dir)
   end
   def_roots
 end
+
+def add_line_if_no_comment(array, str)
+  s = str.split("#")[0].strip
+  array << s unless s.empty?
+end

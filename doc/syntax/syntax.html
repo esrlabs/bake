@@ -109,6 +109,7 @@ z-index: 100;
                                           <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showInternalDefines()" onMouseout="notip()">InternalDefines</span> &#60;file&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultArchiver()" onMouseout="notip()">Archiver</span>
                                           <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
@@ -120,6 +121,7 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPrefixFlags()" onMouseout="notip()">LibPrefixFlags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPostfixFlags()" onMouseout="notip()">LibPostfixFlags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showInternalIncludes()" onMouseout="notip()">InternalIncludes</span> &#60;file&#62;<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultLintPolicy()" onMouseout="notip()">LintPolicy</span> &#60;policy&#62;<br>
 &nbsp; &nbsp; }<br></span><br></span>
 
@@ -523,6 +525,14 @@ function showDefaultFlags() {
 
 function showDefaultDefine() {  
   ddrivetip("Define", "No","0..n","-","Defines which are valid for all files.")  
+}
+
+function showInternalDefines() {  
+  ddrivetip("InternalDefines", "No","0..1","-","File with list of compiler internal defines.<br>One define per line.<br>Empty lines and comments with # are allowed.")  
+}
+
+function showInternalIncludes() {  
+  ddrivetip("InternalIncludes", "No","0..1","-","File with list of compiler internal include folders.<br>One folder per line.<br>Empty lines and comments with # are allowed.")  
 }
 
 function showDefaultCompiler() {  

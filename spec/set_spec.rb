@@ -57,7 +57,6 @@ describe "Set" do
     tocxx = Cxxproject::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    STDERR.puts $mystring
     ($mystring.include?"*MYTEST ABC*").should == true
   end  
 

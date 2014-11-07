@@ -1,0 +1,18 @@
+Project {
+
+  ExecutableConfig test {
+    Dependency sub, config: test1
+    IncludeDir "A/include"
+	IncludeDir "sub/include"
+	IncludeDir "subst$(BUH)"
+	DefaultToolchain GCC {
+	  InternalIncludes "sub/inc.txt"
+	  Compiler C {
+	    Define "A=1"
+		Define "UNITTEST"
+		InternalDefines "cdef.txt"
+	  }
+	}
+  }
+
+}

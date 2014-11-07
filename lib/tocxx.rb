@@ -346,6 +346,15 @@ module Cxxproject
           end
         end
         
+        if config.respond_to?("toolchain") and config.toolchain
+          config.toolchain.compiler.each do |c|
+            if not c.internalDefines.nil? and c.internalDefines != ""
+              Printer.printError "Error: #{c.file_name}(#{c.internalDefines.line_number}): InternalDefines only allowed in DefaultToolchain'"
+              ExitHelper.exit(1)
+            end
+          end
+        end
+        
         config.dependency.each do |d|
           pname = d.name
           cname = d.config
@@ -816,7 +825,52 @@ module Cxxproject
             print "\n"
           end
         end
-        exit(0)
+        ExitHelper.exit(0)
+      end
+      
+      if @options.show_includes_and_defines
+        
+        intIncs = []
+        intDefs = {:CPP => [], :C => [], :ASM => []}
+        Dir.chdir(@options.main_dir) do
+        
+          iname = convPath(@mainConfig.defaultToolchain.internalIncludes.name, @mainConfig)
+          if iname != ""
+            if not File.exists?(iname)
+              Printer.printError "Error: InternalIncludes file #{iname} does not exist"
+              ExitHelper.exit(1)
+            end
+            IO.foreach(iname) {|x| add_line_if_no_comment(intIncs,x) }
+          end
+          
+          @mainConfig.defaultToolchain.compiler.each do |c|
+            dname = convPath(c.internalDefines.name, @mainConfig)
+            if dname != ""
+              if not File.exists?(dname)
+                Printer.printError "Error: InternalDefines file #{dname} does not exist"
+                ExitHelper.exit(1)
+              end
+              IO.foreach(dname) {|x| add_line_if_no_comment(intDefs[c.ctype],x)  }
+            end
+          end
+          
+        end
+        
+        
+        @bbs.each do |bb|
+          if HasIncludes === bb
+            puts bb.name
+            
+            puts " includes"
+            (bb.local_includes + intIncs).each { |i| puts "  #{i}" }
+
+            [:CPP, :C, :ASM].each do |type|
+              puts " #{type} defines"
+              (bb.tcs[:COMPILER][type][:DEFINES] + intDefs[type]).each { |d| puts "  #{d}" }
+            end
+          end
+        end
+        ExitHelper.exit(0)
       end
       
       theExeBB = nil

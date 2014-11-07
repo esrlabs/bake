@@ -46,7 +46,14 @@ module Cxxproject
       has_attr 'str', String, :defaultValueLiteral => ""
     end
 
-
+      class InternalIncludes < ModelElement
+        has_attr 'name', String, :defaultValueLiteral => ""
+      end
+      
+      class InternalDefines < ModelElement
+        has_attr 'name', String, :defaultValueLiteral => ""
+      end
+  
       class Archiver < ModelElement
         has_attr 'command', String, :defaultValueLiteral => ""
         contains_many 'flags', Flags, 'parent'
@@ -64,6 +71,7 @@ module Cxxproject
         has_attr 'command', String, :defaultValueLiteral => ""
         contains_many 'define', Define, 'parent'
         contains_many 'flags', Flags, 'parent'
+        contains_one 'internalDefines', InternalDefines, 'parent'
       end
 
       class LintPolicy < ModelElement
@@ -77,6 +85,7 @@ module Cxxproject
         contains_one 'archiver', Archiver, 'parent'
         contains_one 'linker', Linker, 'parent'
         contains_many 'lintPolicy', LintPolicy, 'parent'
+        contains_one 'internalIncludes', InternalIncludes, 'parent'
       end
 
       class Toolchain < ModelElement

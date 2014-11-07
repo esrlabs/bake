@@ -8,7 +8,7 @@ module Cxxproject
   class Options < Parser
     attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version, :alias_filename # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :clean, :rebuild, :single, :verbose, :nocache, :color, :show_includes, :linkOnly, :check_uninc, :printLess, :no_autodir, :clobber, :lint, :debug, :cmake # Boolean
+    attr_reader :clean, :rebuild, :single, :verbose, :nocache, :color, :show_includes, :show_includes_and_defines, :linkOnly, :check_uninc, :printLess, :no_autodir, :clobber, :lint, :debug, :cmake # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
 
@@ -31,6 +31,7 @@ module Cxxproject
       @check_uninc = false
       @color = false
       @show_includes = false
+      @show_includes_and_defines = false
       @linkOnly = false
       @printLess = false
       @no_autodir = false
@@ -85,6 +86,7 @@ module Cxxproject
       add_option(Option.new("-h",false)                    {     usage; ExitHelper.exit(0)  })
       add_option(Option.new("--help",false)                {     usage; ExitHelper.exit(0)  })
       add_option(Option.new("--show_include_paths",false)  {     set_show_inc               })
+      add_option(Option.new("--show_incs_and_defs",false)  {     set_show_inc_def           })
       add_option(Option.new("--eclipse_version",true)      { |x| set_eclipse_version(x)     })
       add_option(Option.new("--show_license",false)        {     show_license               })
       add_option(Option.new("--version",false)             {     ExitHelper.exit(0)         })
@@ -282,14 +284,19 @@ module Cxxproject
     end
         
     def set_color(x)
-      if (x != "black" and x != "white")
+      if (x != "black" and x != "white" and x != "none")
         Printer.printError "Error: color scheme must be 'black' or 'white'"
         ExitHelper.exit(1)
       end
-      begin      
-        ColorizingFormatter::setColorScheme(x.to_sym)
-        @color = true
-        ColorizingFormatter.enabled = true
+      begin
+        if (x == "none")
+          @color = false
+          ColorizingFormatter.enabled = false
+        else
+          ColorizingFormatter::setColorScheme(x.to_sym)
+          @color = true
+          ColorizingFormatter.enabled = true
+        end
       rescue Exception => e
         Printer.printError "Error: colored gem not installed (#{e.message})"
         puts e.backtrace if @verbose
@@ -308,7 +315,11 @@ module Cxxproject
     def set_show_inc
       @show_includes = true
     end
-    
+
+    def set_show_inc_def
+      @show_includes_and_defines = true
+    end    
+        
     def set_show_fullnames
       Rake::application.consoleOutput_fullnames = true
     end    

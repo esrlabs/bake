@@ -1,0 +1,20 @@
+Project {
+
+  LibraryConfig test1 {
+    IncludeDir include
+	Toolchain {
+	  Compiler C {
+	    Define "HOSSA"
+	  }
+	  Compiler CPP {
+	    Define "GAGA"
+	  }
+	}
+  }
+  
+  LibraryConfig test2 {
+    IncludeDir "B/include"
+	DefaultToolchain GCC
+  }
+
+}
