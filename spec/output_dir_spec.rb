@@ -42,10 +42,10 @@ describe "OutputDir" do
 
   before(:each) do
     Utils.cleanup_rake
-    SpecHelper.clean_testdata_build("outdir","main","test*")
-    SpecHelper.clean_testdata_build("outdir","lib1","test*")
-    SpecHelper.clean_testdata_build("outdir","lib2","test*")
-    SpecHelper.clean_testdata_build("outdir",".","test*")
+    SpecHelper.clean_testdata_build("outDir","main","test*")
+    SpecHelper.clean_testdata_build("outDir","lib1","test*")
+    SpecHelper.clean_testdata_build("outDir","lib2","test*")
+    SpecHelper.clean_testdata_build("outDir",".","test*")
 
     if Utils::OS.windows?
       r = Dir.glob("C:/temp/testOutDir*")
@@ -67,62 +67,62 @@ describe "OutputDir" do
   end
 
   it 'Toolchain Relative Output Dir' do
-    Cxxproject::doesExist("spec/testdata/outdir", "main/testOut1", "testOut2", "lib1/testOut3", false)
-    opt = ["-m", "spec/testdata/outdir/main", "-b", "testTcRel"]
+    Cxxproject::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
+    opt = ["-m", "spec/testdata/outDir/main", "-b", "testTcRel"]
     Cxxproject::start(opt)
-    Cxxproject::doesExist("spec/testdata/outdir", "main/testOut1", "testOut2", "lib1/testOut3", true)
+    Cxxproject::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", true)
     
     Utils.cleanup_rake
     opt << "-c"
     Cxxproject::start(opt)
-    Cxxproject::doesExist("spec/testdata/outdir", "main/testOut1", "testOut2", "lib1/testOut3", false)
+    Cxxproject::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
   end
   
   it 'DefaultToolchain and Toolchain Relative Output Dir' do
-    Cxxproject::doesExist("spec/testdata/outdir", "main/testOut1", "testOut2", "lib1/testOut3", false)
-    opt = ["-m", "spec/testdata/outdir/main", "-b", "testDtcTcRel"]
+    Cxxproject::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
+    opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcTcRel"]
     Cxxproject::start(opt)
-    Cxxproject::doesExist("spec/testdata/outdir", "main/testOut1", "testOut2", "lib1/testOut3", true)
+    Cxxproject::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", true)
     
     Utils.cleanup_rake
     opt << "-c"
     Cxxproject::start(opt)
-    Cxxproject::doesExist("spec/testdata/outdir", "main/testOut1", "testOut2", "lib1/testOut3", false)
+    Cxxproject::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
   end  
  
   it 'DefaultToolchain Relative Output Dir' do
-    Cxxproject::doesExist("spec/testdata/outdir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", false)
-    opt = ["-m", "spec/testdata/outdir/main", "-b", "testDtcRel"]
+    Cxxproject::doesExist("spec/testdata/outDir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", false)
+    opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcRel"]
     Cxxproject::start(opt)
-    Cxxproject::doesExist("spec/testdata/outdir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", true)
+    Cxxproject::doesExist("spec/testdata/outDir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", true)
     
     Utils.cleanup_rake
     opt << "-c"
     Cxxproject::start(opt)
-    Cxxproject::doesExist("spec/testdata/outdir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", false)
+    Cxxproject::doesExist("spec/testdata/outDir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", false)
   end 
   
   it 'DefaultToolchain Relative Output Dir Proj' do
-    Cxxproject::doesExist("spec/testdata/outdir/main/testOutProj", ".", ".", ".", false)
-    opt = ["-m", "spec/testdata/outdir/main", "-b", "testDtcRelProj"]
+    Cxxproject::doesExist("spec/testdata/outDir/main/testOutProj", ".", ".", ".", false)
+    opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcRelProj"]
     Cxxproject::start(opt)
-    Cxxproject::doesExist("spec/testdata/outdir/main/testOutProj", ".", ".", ".", true)
+    Cxxproject::doesExist("spec/testdata/outDir/main/testOutProj", ".", ".", ".", true)
     
     Utils.cleanup_rake
     opt << "-c"
     Cxxproject::start(opt)
-    Cxxproject::doesExist("spec/testdata/outdir/main/testOutProj", ".", ".", ".", false)
+    Cxxproject::doesExist("spec/testdata/outDir/main/testOutProj", ".", ".", ".", false)
   end   
   
   it 'DefaultToolchain Relative Output Dir Var' do
-    Cxxproject::doesExist("spec/testdata/outdir",
+    Cxxproject::doesExist("spec/testdata/outDir",
       "main/testVar/main/main/testOutVar",
       "lib1/testVar/main/lib1/testOutVar",
       "lib2/testVar/main/lib2/testOutVar", false)
 
-    opt = ["-m", "spec/testdata/outdir/main", "-b", "testDtcRelVar"]
+    opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcRelVar"]
     Cxxproject::start(opt)
-    Cxxproject::doesExist("spec/testdata/outdir",
+    Cxxproject::doesExist("spec/testdata/outDir",
       "main/testVar/main/main/testOutVar",
       "lib1/testVar/main/lib1/testOutVar",
       "lib2/testVar/main/lib2/testOutVar", true)
@@ -130,7 +130,7 @@ describe "OutputDir" do
     Utils.cleanup_rake
     opt << "-c"
     Cxxproject::start(opt)
-    Cxxproject::doesExist("spec/testdata/outdir",
+    Cxxproject::doesExist("spec/testdata/outDir",
       "main/testVar/main/main/testOutVar",
       "lib1/testVar/main/lib1/testOutVar",
       "lib2/testVar/main/lib2/testOutVar", false)
@@ -139,7 +139,7 @@ describe "OutputDir" do
   
   it 'Toolchain Absolute Output Dir' do
     Cxxproject::doesExist(Utils::OS.windows? ? "C:/temp" : "/tmp", "testOutDirA", "testOutDirB", "testOutDirC", false)
-    opt = ["-m", "spec/testdata/outdir/main", "-b", "testTcAbs"]
+    opt = ["-m", "spec/testdata/outDir/main", "-b", "testTcAbs"]
     Cxxproject::start(opt)
     Cxxproject::doesExist(Utils::OS.windows? ? "C:/temp" : "/tmp", "testOutDirA", "testOutDirB", "testOutDirC", true)
     
@@ -151,7 +151,7 @@ describe "OutputDir" do
   
   it 'DefaultToolchain Absolute Output Dir' do
     Cxxproject::doesExist(Utils::OS.windows? ? "C:/temp/testOutDirD" : "/tmp/testOutDirD", ".", ".", ".", false)
-    opt = ["-m", "spec/testdata/outdir/main", "-b", "testDtcAbs"]
+    opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcAbs"]
     Cxxproject::start(opt)
     Cxxproject::doesExist(Utils::OS.windows? ? "C:/temp/testOutDirD" : "/tmp/testOutDirD", ".", ".", ".", true)
     
@@ -167,7 +167,7 @@ describe "OutputDir" do
       `subst t: C:/temp` 
           
       Cxxproject::doesExist("T:/testOutDirE", ".", ".", ".", false)
-      opt = ["-m", "spec/testdata/outdir/main", "-b", "testDtcAbsDD"]
+      opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcAbsDD"]
       Cxxproject::start(opt)
       Cxxproject::doesExist("T:/testOutDirE", ".", ".", ".", true)
 

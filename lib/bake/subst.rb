@@ -42,7 +42,7 @@ module Cxxproject
           cmd_result = false
           begin
             rd, wr = IO.pipe
-            cmd = [s.cmd]
+            cmd = [substString(s.cmd)]
             cmd << {
              :err=>wr,
              :out=>wr
@@ -138,7 +138,7 @@ module Cxxproject
           substStr << ENV[var]
         else
           if @@options.verbose
-            Printer.printInfo "Info: #{elem.file_name}(#{elem.line_number}): substitute variable '$(#{var})' with empty string"
+       #     Printer.printInfo "Info: #{elem.file_name}(#{elem.line_number}): substitute variable '$(#{var})' with empty string"
           end
           substStr << ""
         end
@@ -178,3 +178,4 @@ module Cxxproject
   end
   
 end
+

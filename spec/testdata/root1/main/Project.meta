@@ -12,7 +12,11 @@ Project {
     Dependency lib1, config: test
     Dependency lib2, config: test
     LinkerScript "lib2/ls/linkerscript.dld"
-    DefaultToolchain GCC
+    DefaultToolchain GCC {
+      Linker {
+        Flags "-nostdlib"
+      }
+    }
   }
   
   ExecutableConfig wrongConfig {

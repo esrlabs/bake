@@ -17,7 +17,7 @@ Project {
 	    Define "def1"
 	  }
 	  Linker {
-	    Flags "-O3"
+	    Flags "-O3 -nostdlib"
 	  }
 	}
 	LinkerScript "ls/linkerscript1.dld"
@@ -78,6 +78,9 @@ Project {
 	  Compiler CPP {
 	    Define "def5"
 	  }
+          Linker {
+            Flags "-nostdlib"
+          }
 	}
 	LinkerScript "ls/linkerscript5.dld"
 	ArtifactName "E5.exe"
@@ -115,7 +118,7 @@ Project {
 	    Define "def1"
 	  }
 	  Linker {
-	    Flags "-O3"
+	    Flags "-O3 -nostdlib"
 	  }
 	}
   }

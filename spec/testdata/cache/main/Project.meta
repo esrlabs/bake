@@ -24,7 +24,7 @@ Project {
       CommandLine "echo ArtifactNameBase_main $(ArtifactNameBase)", default: off, filter: var
       CommandLine "echo Time_main $(Time)", default: off, filter: var
       CommandLine "echo Hostname_main $(Hostname)", default: off, filter: var
-      CommandLine "echo Path_main $(Path)", default: off, filter: var
+      CommandLine "echo Path_main $(Path)$(HOME)", default: off, filter: var
     }
     Set var1, value: V0main
     Set var2, value: V2main

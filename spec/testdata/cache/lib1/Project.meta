@@ -18,7 +18,7 @@ Project {
       CommandLine "echo ArtifactNameBase_lib1 $(ArtifactNameBase)", default: off, filter: var
       CommandLine "echo Time_lib1 $(Time)", default: off, filter: var
       CommandLine "echo Hostname_lib1 $(Hostname)", default: off, filter: var
-      CommandLine "echo Path_lib1 $(Path)", default: off, filter: var
+      CommandLine "echo Path_lib1 $(Path)$(HOME)", default: off, filter: var
     }
     PostSteps {
       CommandLine "echo POSTLIB1"

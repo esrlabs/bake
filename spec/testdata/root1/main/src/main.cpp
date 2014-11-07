@@ -8,6 +8,6 @@ int main()
 {
 	A a;
 	B b;
-    SHOW("%d %d",a.a, b.b);
+   // SHOW("%d %d",a.a, b.b);
 	return 0;
 }

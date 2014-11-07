@@ -11,7 +11,7 @@ ExecutableConfig value {
 }
 
 ExecutableConfig cmd {
-  Set VAR1, cmd: "@echo GAGA"
+  Set VAR1, cmd: "echo GAGA"
   PreSteps {
     CommandLine "echo *$(VAR1)*"
   }
@@ -31,7 +31,7 @@ ExecutableConfig cat {
 }
 
 ExecutableConfig arti {
-  Set VAR1, cmd: "@echo GAGA"
+  Set VAR1, cmd: "echo GAGA"
   ArtifactName "*$(VAR1)*"
   DefaultToolchain GCC {
     Linker command: "echo"
@@ -39,7 +39,7 @@ ExecutableConfig arti {
 }
 
 ExecutableConfig triple {
-  Set VAR1, cmd: "@echo GAGA"
+  Set VAR1, cmd: "echo GAGA"
   Set VAR2, value: "GUGU"
   Set VAR3, value: "HUHU"
   PreSteps {
@@ -52,7 +52,7 @@ ExecutableConfig triple {
 
 ExecutableConfig recursive {
   Set VAR1, value: "GUGU"
-  Set VAR2, cmd: "@echo *$(VAR1)*"
+  Set VAR2, cmd: "echo *$(VAR1)*"
   Set VAR3, value: "HUHU $(VAR2)"
   Set VAR4, value: "$(ArtifactName)"
   PreSteps {
