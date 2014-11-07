@@ -12,9 +12,10 @@ Project {
     Dependency lib1, config: test
     Dependency lib2, config: test
     LinkerScript "lib2/ls/linkerscript.dld"
+    Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
     DefaultToolchain GCC {
       Linker {
-        Flags "-nostdlib"
+        Flags "$(NOSTDLIB)"
       }
     }
   }

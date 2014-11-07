@@ -6,7 +6,8 @@ Project {
     ExcludeFiles "**/*L1ex*"
 	IncludeDir "Inc1_1"
 	IncludeDir "Inc1_2"
-
+    Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
+    
 	PreSteps {
       CommandLine "echo **$(ArtifactName)**"
 	}
@@ -17,7 +18,7 @@ Project {
 	    Define "def1"
 	  }
 	  Linker {
-	    Flags "-O3 -nostdlib"
+	    Flags "-O3 $(NOSTDLIB)"
 	  }
 	}
 	LinkerScript "ls/linkerscript1.dld"
@@ -72,14 +73,15 @@ Project {
     Files "**/*L5*"
   	IncludeDir "Inc5_1"
 	IncludeDir "Inc5_2"
-
+    Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
+    
 	DefaultToolchain GCC
     Toolchain {
 	  Compiler CPP {
 	    Define "def5"
 	  }
           Linker {
-            Flags "-nostdlib"
+            Flags "$(NOSTDLIB)"
           }
 	}
 	LinkerScript "ls/linkerscript5.dld"
@@ -113,12 +115,13 @@ Project {
 	ExternalLibrarySearchPath blah1
 	ExternalLibrary "lib/libL1_2.a", search: false
   
+    Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
     DefaultToolchain GCC {
 	  Compiler CPP {
 	    Define "def1"
 	  }
 	  Linker {
-	    Flags "-O3 -nostdlib"
+	    Flags "-O3 $(NOSTDLIB)"
 	  }
 	}
   }
