@@ -40,7 +40,7 @@ describe "Export" do
 
   it 'With file rebuild' do
     FileUtils.rm_rf("spec/testdata/root1/lib3/src/x.cpp")
-    `echo int i = 2; > spec/testdata/root1/lib3/src/x.cpp`
+    File.open("spec/testdata/root1/lib3/src/x.cpp", 'w') { |file| file.write("int i = 2;\n") }
     
     options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "--rebuild"])
     options.parse_options()
@@ -147,7 +147,7 @@ describe "Export" do
   it 'With file again build' do
     
     FileUtils.rm_rf("spec/testdata/root1/lib3/src/x.cpp")
-    `echo int i = 2; > spec/testdata/root1/lib3/src/x.cpp`
+    File.open("spec/testdata/root1/lib3/src/x.cpp", 'w') { |file| file.write("int i = 2;\n") }
     
     options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
     options.parse_options()
