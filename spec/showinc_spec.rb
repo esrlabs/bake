@@ -61,6 +61,7 @@ describe "ShowInc" do
         "  blah\n"+
         "  toll\n"+
         " ASM defines\n"+
+        " done\n"+
         "sub\n"+
         " includes\n"+
         "  include\n"+
@@ -75,8 +76,9 @@ describe "ShowInc" do
         "  X=Y\n"+
         "  blah\n"+
         "  toll\n"+
-        " ASM defines"
-        
+        " ASM defines\n"+
+        " done"
+
     ($mystring.include?s).should == true
 
   end

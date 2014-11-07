@@ -816,62 +816,77 @@ module Cxxproject
         @num_modules = calc_needed_bbs(startBBName, @bbs)
       end
 
-      if @options.show_includes
-        @bbs.each do |bb|
-          if HasIncludes === bb
-            print bb.name
-            li = bb.local_includes
-            li.each { |i| print "##{i}" }
-            print "\n"
-          end
-        end
-        ExitHelper.exit(0)
-      end
-      
-      if @options.show_includes_and_defines
-        
-        intIncs = []
-        intDefs = {:CPP => [], :C => [], :ASM => []}
-        Dir.chdir(@options.main_dir) do
-        
-          iname = convPath(@mainConfig.defaultToolchain.internalIncludes.name, @mainConfig)
-          if iname != ""
-            if not File.exists?(iname)
-              Printer.printError "Error: InternalIncludes file #{iname} does not exist"
-              ExitHelper.exit(1)
+      begin # show incs and stuff
+        if @options.show_includes
+          @bbs.each do |bb|
+            if HasIncludes === bb
+              print bb.name
+              li = bb.local_includes
+              li.each { |i| print "##{i}" }
+              print "\n"
             end
-            IO.foreach(iname) {|x| add_line_if_no_comment(intIncs,x) }
           end
+          ExitHelper.exit(0)
+        end
+        
+        if @options.show_includes_and_defines
+          intIncs = []
+          intDefs = {:CPP => [], :C => [], :ASM => []}
+          Dir.chdir(@options.main_dir) do
           
-          @mainConfig.defaultToolchain.compiler.each do |c|
-            dname = convPath(c.internalDefines.name, @mainConfig)
-            if dname != ""
-              if not File.exists?(dname)
-                Printer.printError "Error: InternalDefines file #{dname} does not exist"
-                ExitHelper.exit(1)
+            if (@mainConfig.defaultToolchain.internalIncludes)
+              iname = convPath(@mainConfig.defaultToolchain.internalIncludes.name, @mainConfig)
+              if iname != ""
+                if not File.exists?(iname)
+                  Printer.printError "Error: InternalIncludes file #{iname} does not exist"
+                  ExitHelper.exit(1)
+                end
+                IO.foreach(iname) {|x| add_line_if_no_comment(intIncs,x) }
               end
-              IO.foreach(dname) {|x| add_line_if_no_comment(intDefs[c.ctype],x)  }
             end
+            
+            @mainConfig.defaultToolchain.compiler.each do |c|
+              if (c.internalDefines)
+                dname = convPath(c.internalDefines.name, @mainConfig)
+                if dname != ""
+                  if not File.exists?(dname)
+                    Printer.printError "Error: InternalDefines file #{dname} does not exist"
+                    ExitHelper.exit(1)
+                  end
+                  IO.foreach(dname) {|x| add_line_if_no_comment(intDefs[c.ctype],x)  }
+                end
+              end
+            end
+            
           end
           
-        end
-        
-        
-        @bbs.each do |bb|
-          if HasIncludes === bb
-            puts bb.name
-            
-            puts " includes"
-            (bb.local_includes + intIncs).each { |i| puts "  #{i}" }
-
-            [:CPP, :C, :ASM].each do |type|
-              puts " #{type} defines"
-              (bb.tcs[:COMPILER][type][:DEFINES] + intDefs[type]).each { |d| puts "  #{d}" }
+          
+          @bbs.each do |bb|
+            if HasIncludes === bb
+              puts bb.name
+              
+              puts " includes"
+              (bb.local_includes + intIncs).each { |i| puts "  #{i}" }
+  
+              [:CPP, :C, :ASM].each do |type|
+                puts " #{type} defines"
+                (bb.tcs[:COMPILER][type][:DEFINES] + intDefs[type]).each { |d| puts "  #{d}" }
+              end
+              puts " done"
             end
           end
+          ExitHelper.exit(0)
         end
-        ExitHelper.exit(0)
-      end
+      rescue Exception => e
+        if (not SystemExit === e)
+          puts e
+          puts e.backtrace
+          ExitHelper.exit(1)
+        else
+          raise e
+        end
+      end      
+      
       
       theExeBB = nil
       @bbs.each do |bb|
