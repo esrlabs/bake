@@ -41,51 +41,51 @@ describe "VarSubst" do
     tocxx.doit()
     tocxx.start()
   
-    ($mystring.include?"MainConfigName_lib1 test").should == true
-    ($mystring.include?"MainConfigName_main test").should == true
+    expect(($mystring.include?"MainConfigName_lib1 test")).to be == true
+    expect(($mystring.include?"MainConfigName_main test")).to be == true
     
-    ($mystring.include?"MainProjectName_lib1 main").should == true
-    ($mystring.include?"MainProjectName_main main").should == true
+    expect(($mystring.include?"MainProjectName_lib1 main")).to be == true
+    expect(($mystring.include?"MainProjectName_main main")).to be == true
 
-    ($mystring.include?"ProjectName_lib1 lib1").should == true
-    ($mystring.include?"ProjectName_main main").should == true
+    expect(($mystring.include?"ProjectName_lib1 lib1")).to be == true
+    expect(($mystring.include?"ProjectName_main main")).to be == true
 
-    ($mystring.include?"ConfigName_lib1 subtest").should == true
-    ($mystring.include?"ConfigName_main test").should == true
+    expect(($mystring.include?"ConfigName_lib1 subtest")).to be == true
+    expect(($mystring.include?"ConfigName_main test")).to be == true
 
-    ($mystring.include?"OutputDir_lib1 test_main").should == true
-    ($mystring.include?"OutputDir_main test").should == true
+    expect(($mystring.include?"OutputDir_lib1 test_main")).to be == true
+    expect(($mystring.include?"OutputDir_main test")).to be == true
 
-    ($mystring.include?"ArtifactName_lib1 \n").should == true
-    ($mystring.include?"ArtifactName_main main.exe").should == true
+    expect(($mystring.include?"ArtifactName_lib1 \n")).to be == true
+    expect(($mystring.include?"ArtifactName_main main.exe")).to be == true
 
-    ($mystring.include?"ArtifactNameBase_lib1 \n").should == true
-    ($mystring.include?"ArtifactNameBase_main main").should == true
+    expect(($mystring.include?"ArtifactNameBase_lib1 \n")).to be == true
+    expect(($mystring.include?"ArtifactNameBase_main main")).to be == true
 
     if RUBY_VERSION[0..2] == "1.9" 
-      ($mystring.include?"Time_lib1").should == true
-      ($mystring.include?"Time_main").should == true
+      expect(($mystring.include?"Time_lib1")).to be == true
+      expect(($mystring.include?"Time_main")).to be == true
     end
     
-    ($mystring.include?"Hostname_lib1 ").should == true
-    ($mystring.include?"Hostname_main ").should == true
-    ($mystring.include?"Hostname_lib1 \n").should == false
-    ($mystring.include?"Hostname_main \n").should == false
+    expect(($mystring.include?"Hostname_lib1 ")).to be == true
+    expect(($mystring.include?"Hostname_main ")).to be == true
+    expect(($mystring.include?"Hostname_lib1 \n")).to be == false
+    expect(($mystring.include?"Hostname_main \n")).to be == false
 
-    ($mystring.include?"Path_lib1 ").should == true
-    ($mystring.include?"Path_main ").should == true
-    ($mystring.include?"Path_lib1 \n").should == false
-    ($mystring.include?"Path_main \n").should == false
+    expect(($mystring.include?"Path_lib1 ")).to be == true
+    expect(($mystring.include?"Path_main ")).to be == true
+    expect(($mystring.include?"Path_lib1 \n")).to be == false
+    expect(($mystring.include?"Path_main \n")).to be == false
 
-    ($mystring.include?"MAINV1main").should == true
-    ($mystring.include?"MAINV2main").should == true
+    expect(($mystring.include?"MAINV1main")).to be == true
+    expect(($mystring.include?"MAINV2main")).to be == true
     
-    ($mystring.include?"LIBV1lib").should == true
-    ($mystring.include?"LIBV2main").should == true
-    ($mystring.include?"LIBV3lib").should == true
+    expect(($mystring.include?"LIBV1lib")).to be == true
+    expect(($mystring.include?"LIBV2main")).to be == true
+    expect(($mystring.include?"LIBV3lib")).to be == true
   
-    ($mystring.include?"LIBV1main").should == false
-    ($mystring.include?"LIBV3main").should == false
+    expect(($mystring.include?"LIBV1main")).to be == false
+    expect(($mystring.include?"LIBV3main")).to be == false
   end
 
   it 'artifactname' do
@@ -96,8 +96,8 @@ describe "VarSubst" do
     tocxx.doit()
     tocxx.start()
   
-    ($mystring.include?"ArtifactName_main abc.def").should == true
-    ($mystring.include?"ArtifactNameBase_main abc").should == true
+    expect(($mystring.include?"ArtifactName_main abc.def")).to be == true
+    expect(($mystring.include?"ArtifactNameBase_main abc")).to be == true
   end  
 
   

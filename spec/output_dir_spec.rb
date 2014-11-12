@@ -15,14 +15,7 @@ module Bake
 
 ExitHelper.enable_exit_test
 
-def self.doesExist(prefix, main, lib1, lib2, should)
-  File.exists?(prefix+"/"+main+"/main.exe").should == should
-  File.exists?(prefix+"/"+main+"/src/a.o").should == should
-  File.exists?(prefix+"/"+lib1+"/liblib1.a").should == should
-  File.exists?(prefix+"/"+lib1+"/src/b.o").should == should
-  File.exists?(prefix+"/"+lib2+"/liblib2.a").should == should
-  File.exists?(prefix+"/"+lib2+"/src/c.o").should == should
-end
+
 
 def self.start(opt)
   options = Options.new(opt)
@@ -33,6 +26,15 @@ def self.start(opt)
 end
 
 describe "OutputDir" do
+  
+  def doesExist(prefix, main, lib1, lib2, should)
+    expect(File.exists?(prefix+"/"+main+"/main.exe")).to be == should
+    expect(File.exists?(prefix+"/"+main+"/src/a.o")).to be == should
+    expect(File.exists?(prefix+"/"+lib1+"/liblib1.a")).to be == should
+    expect(File.exists?(prefix+"/"+lib1+"/src/b.o")).to be == should
+    expect(File.exists?(prefix+"/"+lib2+"/liblib2.a")).to be == should
+    expect(File.exists?(prefix+"/"+lib2+"/src/c.o")).to be == should
+  end
   
   before(:all) do
   end
@@ -67,62 +69,62 @@ describe "OutputDir" do
   end
 
   it 'Toolchain Relative Output Dir' do
-    Bake::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
+    doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
     opt = ["-m", "spec/testdata/outDir/main", "-b", "testTcRel"]
     Bake::start(opt)
-    Bake::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", true)
+    doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", true)
     
     Utils.cleanup_rake
     opt << "-c"
     Bake::start(opt)
-    Bake::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
+    doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
   end
   
   it 'DefaultToolchain and Toolchain Relative Output Dir' do
-    Bake::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
+    doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
     opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcTcRel"]
     Bake::start(opt)
-    Bake::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", true)
+    doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", true)
     
     Utils.cleanup_rake
     opt << "-c"
     Bake::start(opt)
-    Bake::doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
+    doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
   end  
  
   it 'DefaultToolchain Relative Output Dir' do
-    Bake::doesExist("spec/testdata/outDir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", false)
+    doesExist("spec/testdata/outDir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", false)
     opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcRel"]
     Bake::start(opt)
-    Bake::doesExist("spec/testdata/outDir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", true)
+    doesExist("spec/testdata/outDir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", true)
     
     Utils.cleanup_rake
     opt << "-c"
     Bake::start(opt)
-    Bake::doesExist("spec/testdata/outDir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", false)
+    doesExist("spec/testdata/outDir", "main/testOutY", "lib1/testOutY", "lib2/testOutY", false)
   end 
   
   it 'DefaultToolchain Relative Output Dir Proj' do
-    Bake::doesExist("spec/testdata/outDir/main/testOutProj", ".", ".", ".", false)
+    doesExist("spec/testdata/outDir/main/testOutProj", ".", ".", ".", false)
     opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcRelProj"]
     Bake::start(opt)
-    Bake::doesExist("spec/testdata/outDir/main/testOutProj", ".", ".", ".", true)
+    doesExist("spec/testdata/outDir/main/testOutProj", ".", ".", ".", true)
     
     Utils.cleanup_rake
     opt << "-c"
     Bake::start(opt)
-    Bake::doesExist("spec/testdata/outDir/main/testOutProj", ".", ".", ".", false)
+    doesExist("spec/testdata/outDir/main/testOutProj", ".", ".", ".", false)
   end   
   
   it 'DefaultToolchain Relative Output Dir Var' do
-    Bake::doesExist("spec/testdata/outDir",
+    doesExist("spec/testdata/outDir",
       "main/testVar/main/main/testOutVar",
       "lib1/testVar/main/lib1/testOutVar",
       "lib2/testVar/main/lib2/testOutVar", false)
 
     opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcRelVar"]
     Bake::start(opt)
-    Bake::doesExist("spec/testdata/outDir",
+    doesExist("spec/testdata/outDir",
       "main/testVar/main/main/testOutVar",
       "lib1/testVar/main/lib1/testOutVar",
       "lib2/testVar/main/lib2/testOutVar", true)
@@ -130,7 +132,7 @@ describe "OutputDir" do
     Utils.cleanup_rake
     opt << "-c"
     Bake::start(opt)
-    Bake::doesExist("spec/testdata/outDir",
+    doesExist("spec/testdata/outDir",
       "main/testVar/main/main/testOutVar",
       "lib1/testVar/main/lib1/testOutVar",
       "lib2/testVar/main/lib2/testOutVar", false)
@@ -138,27 +140,27 @@ describe "OutputDir" do
   
   
   it 'Toolchain Absolute Output Dir' do
-    Bake::doesExist(Utils::OS.windows? ? "C:/temp" : "/tmp", "testOutDirA", "testOutDirB", "testOutDirC", false)
+    doesExist(Utils::OS.windows? ? "C:/temp" : "/tmp", "testOutDirA", "testOutDirB", "testOutDirC", false)
     opt = ["-m", "spec/testdata/outDir/main", "-b", "testTcAbs"]
     Bake::start(opt)
-    Bake::doesExist(Utils::OS.windows? ? "C:/temp" : "/tmp", "testOutDirA", "testOutDirB", "testOutDirC", true)
+    doesExist(Utils::OS.windows? ? "C:/temp" : "/tmp", "testOutDirA", "testOutDirB", "testOutDirC", true)
     
     Utils.cleanup_rake
     opt << "-c"
     Bake::start(opt)
-    Bake::doesExist(Utils::OS.windows? ? "C:/temp" : "/tmp", "testOutDirA", "testOutDirB", "testOutDirC", false)
+    doesExist(Utils::OS.windows? ? "C:/temp" : "/tmp", "testOutDirA", "testOutDirB", "testOutDirC", false)
   end  
   
   it 'DefaultToolchain Absolute Output Dir' do
-    Bake::doesExist(Utils::OS.windows? ? "C:/temp/testOutDirD" : "/tmp/testOutDirD", ".", ".", ".", false)
+    doesExist(Utils::OS.windows? ? "C:/temp/testOutDirD" : "/tmp/testOutDirD", ".", ".", ".", false)
     opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcAbs"]
     Bake::start(opt)
-    Bake::doesExist(Utils::OS.windows? ? "C:/temp/testOutDirD" : "/tmp/testOutDirD", ".", ".", ".", true)
+    doesExist(Utils::OS.windows? ? "C:/temp/testOutDirD" : "/tmp/testOutDirD", ".", ".", ".", true)
     
     Utils.cleanup_rake
     opt << "-c"
     Bake::start(opt)
-    Bake::doesExist(Utils::OS.windows? ? "C:/temp/testOutDirD" : "/tmp/testOutDirD", ".", ".", ".", false)
+    doesExist(Utils::OS.windows? ? "C:/temp/testOutDirD" : "/tmp/testOutDirD", ".", ".", ".", false)
   end    
 
   it 'DefaultToolchain Absolute Output Dir Different Drive' do
@@ -166,15 +168,15 @@ describe "OutputDir" do
     if Utils::OS.windows?
       `subst t: C:/temp` 
           
-      Bake::doesExist("T:/testOutDirE", ".", ".", ".", false)
+      doesExist("T:/testOutDirE", ".", ".", ".", false)
       opt = ["-m", "spec/testdata/outDir/main", "-b", "testDtcAbsDD"]
       Bake::start(opt)
-      Bake::doesExist("T:/testOutDirE", ".", ".", ".", true)
+      doesExist("T:/testOutDirE", ".", ".", ".", true)
 
       Utils.cleanup_rake
       opt << "-c"
       Bake::start(opt)
-      Bake::doesExist("T:/testOutDirE", ".", ".", ".", false)
+      doesExist("T:/testOutDirE", ".", ".", ".", false)
             
       `subst t: /D`
     end

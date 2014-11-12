@@ -39,14 +39,14 @@ describe "..in ex lib" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.split("Rebuild done.").length).should == 2
+    expect(($mystring.split("Rebuild done.").length)).to be == 2
 	
     options = Options.new(["-m", "spec/testdata/exLibBug/main", "-b", "test1", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.split("Rebuild done.").length).should == 3
+    expect(($mystring.split("Rebuild done.").length)).to be == 3
   end
 
   it 'with search=false' do
@@ -55,14 +55,14 @@ describe "..in ex lib" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.split("Rebuild done.").length).should == 2
+    expect(($mystring.split("Rebuild done.").length)).to be == 2
 	
     options = Options.new(["-m", "spec/testdata/exLibBug/main", "-b", "test2", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.split("Rebuild done.").length).should == 3
+    expect(($mystring.split("Rebuild done.").length)).to be == 3
   end
   
   it 'with searchPath' do
@@ -71,14 +71,14 @@ describe "..in ex lib" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.split("Rebuild done.").length).should == 2
+    expect(($mystring.split("Rebuild done.").length)).to be == 2
 	
     options = Options.new(["-m", "spec/testdata/exLibBug/main", "-b", "test3", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.split("Rebuild done.").length).should == 3
+    expect(($mystring.split("Rebuild done.").length)).to be == 3
   end  
 
   

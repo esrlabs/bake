@@ -66,9 +66,9 @@ describe "Merging Configs" do
   end
 
   it 'build base (all)' do
-    File.exists?("spec/testdata/merge/main/L1/libmain.a").should == false
-    File.exists?("spec/testdata/merge/main/L2/libmain.a").should == false
-    File.exists?("spec/testdata/merge/main/L3/libmain.a").should == false
+    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == false
 
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L1", "--rebuild"])
     options.parse_options()
@@ -76,15 +76,15 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/merge/main/L1/libmain.a").should == true
-    File.exists?("spec/testdata/merge/main/L2/libmain.a").should == false
-    File.exists?("spec/testdata/merge/main/L3/libmain.a").should == false
+    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == false
   end  
 
   it 'build child (all)' do
-    File.exists?("spec/testdata/merge/main/L1/libmain.a").should == false
-    File.exists?("spec/testdata/merge/main/L2/libmain.a").should == false
-    File.exists?("spec/testdata/merge/main/L3/libmain.a").should == false
+    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == false
 
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L2", "--rebuild"])
     options.parse_options()
@@ -92,15 +92,15 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/merge/main/L1/libmain.a").should == false
-    File.exists?("spec/testdata/merge/main/L2/libmain.a").should == true
-    File.exists?("spec/testdata/merge/main/L3/libmain.a").should == false
+    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == false
   end  
     
   it 'build grandchild (all)' do
-    File.exists?("spec/testdata/merge/main/L1/libmain.a").should == false
-    File.exists?("spec/testdata/merge/main/L2/libmain.a").should == false
-    File.exists?("spec/testdata/merge/main/L3/libmain.a").should == false
+    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == false
 
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3", "--rebuild"])
     options.parse_options()
@@ -108,9 +108,9 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/merge/main/L1/libmain.a").should == false
-    File.exists?("spec/testdata/merge/main/L2/libmain.a").should == false
-    File.exists?("spec/testdata/merge/main/L3/libmain.a").should == true
+    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == true
   end  
   
   it 'file and exclude file (all)' do
@@ -120,14 +120,14 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
 
-    $mystring.include?("testL1.cpp").should == true
-    $mystring.include?("testL2.cpp").should == true
-    $mystring.include?("testL3.cpp").should == true
-    $mystring.include?("ex.cpp").should == false
+    expect($mystring.include?("testL1.cpp")).to be == true
+    expect($mystring.include?("testL2.cpp")).to be == true
+    expect($mystring.include?("testL3.cpp")).to be == true
+    expect($mystring.include?("ex.cpp")).to be == false
   end    
   
   it 'file and exclude file (child)' do
-    File.exists?("spec/testdata/merge/main/L5/libmain.a").should == false
+    expect(File.exists?("spec/testdata/merge/main/L5/libmain.a")).to be == false
         
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L5", "--rebuild"])
     options.parse_options()
@@ -135,12 +135,12 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
 
-    $mystring.include?("testL5.cpp").should == true
-    File.exists?("spec/testdata/merge/main/L5/libmain.a").should == true    
+    expect($mystring.include?("testL5.cpp")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/L5/libmain.a")).to be == true    
   end    
 
   it 'file and exclude file (parent)' do
-    File.exists?("spec/testdata/merge/main/L6/libmain.a").should == false
+    expect(File.exists?("spec/testdata/merge/main/L6/libmain.a")).to be == false
         
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L6", "--rebuild"])
     options.parse_options()
@@ -148,8 +148,8 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
 
-    $mystring.include?("testL1.cpp").should == true
-    File.exists?("spec/testdata/merge/main/L6/libmain.a").should == true    
+    expect($mystring.include?("testL1.cpp")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/L6/libmain.a")).to be == true    
   end    
   
   
@@ -167,13 +167,13 @@ describe "Merging Configs" do
     posdep31 = $mystring.index("depL3_1 (lib)")
     posdep32 = $mystring.index("depL3_2 (lib)")
     
-    (posdep11 < posdep12).should == true
-    (posdep12 < posdep21).should == true
-    (posdep21 < posdep22).should == true
-    (posdep22 < posdep31).should == true
-    (posdep31 < posdep32).should == true
+    expect((posdep11 < posdep12)).to be == true
+    expect((posdep12 < posdep21)).to be == true
+    expect((posdep21 < posdep22)).to be == true
+    expect((posdep22 < posdep31)).to be == true
+    expect((posdep31 < posdep32)).to be == true
     
-    $mystring.include?("depL2_2 (lib)").should == false
+    expect($mystring.include?("depL2_2 (lib)")).to be == false
   end    
 
   it 'deps (child)' do
@@ -186,7 +186,7 @@ describe "Merging Configs" do
     posdep51 = $mystring.index("depL5_1")
     posdep52 = $mystring.index("depL5_2")
     
-    (posdep51 < posdep52).should == true
+    expect((posdep51 < posdep52)).to be == true
   end    
 
   it 'deps (parent)' do
@@ -199,7 +199,7 @@ describe "Merging Configs" do
     posdep11 = $mystring.index("depL1_1")
     posdep12 = $mystring.index("depL1_2")
     
-    (posdep11 < posdep12).should == true
+    expect((posdep11 < posdep12)).to be == true
   end    
   
   it 'libs (all)' do
@@ -221,15 +221,15 @@ describe "Merging Configs" do
     pos9  = $mystring.index("blah3",posExe)
     pos10 = $mystring.index("L3_2",posExe)
     
-    (pos1 < pos2).should == true
-    (pos2 < pos3).should == true
-    (pos3 < pos4).should == true
-    (pos4 < pos5).should == true
-    (pos5 < pos6).should == true
-    (pos6 < pos7).should == true
-    (pos7 < pos8).should == true
-    (pos8 < pos9).should == true
-    (pos9 < pos10).should == true
+    expect((pos1 < pos2)).to be == true
+    expect((pos2 < pos3)).to be == true
+    expect((pos3 < pos4)).to be == true
+    expect((pos4 < pos5)).to be == true
+    expect((pos5 < pos6)).to be == true
+    expect((pos6 < pos7)).to be == true
+    expect((pos7 < pos8)).to be == true
+    expect((pos8 < pos9)).to be == true
+    expect((pos9 < pos10)).to be == true
 
   end     
   
@@ -246,9 +246,9 @@ describe "Merging Configs" do
     pos3  = $mystring.index("blah5",posExe)
     pos4  = $mystring.index("L5_2",posExe)
     
-    (pos1 < pos2).should == true
-    (pos2 < pos3).should == true
-    (pos3 < pos4).should == true
+    expect((pos1 < pos2)).to be == true
+    expect((pos2 < pos3)).to be == true
+    expect((pos3 < pos4)).to be == true
   end   
 
   it 'libs (parent)' do
@@ -264,9 +264,9 @@ describe "Merging Configs" do
     pos3  = $mystring.index("blah1",posExe)
     pos4  = $mystring.index("L1_2",posExe)
     
-    (pos1 < pos2).should == true
-    (pos2 < pos3).should == true
-    (pos3 < pos4).should == true
+    expect((pos1 < pos2)).to be == true
+    expect((pos2 < pos3)).to be == true
+    expect((pos3 < pos4)).to be == true
   end 
   
   
@@ -290,17 +290,17 @@ describe "Merging Configs" do
     posPst3_1  = $mystring.index("Post3_1")
     posPst3_2  = $mystring.index("Post3_2")
     
-    (posPre1_1 < posPre1_2).should == true
-    (posPre1_2 < posPre2_1).should == true
-    (posPre2_1 < posPre2_2).should == true
-    (posPre2_2 < posPre3_1).should == true
-    (posPre3_1 < posPre3_2).should == true
-    (posPre3_2 < posPst1_1).should == true
-    (posPst1_1 < posPst1_2).should == true
-    (posPst1_2 < posPst2_1).should == true
-    (posPst2_1 < posPst2_2).should == true
-    (posPst2_2 < posPst3_1).should == true
-    (posPst3_1 < posPst3_2).should == true
+    expect((posPre1_1 < posPre1_2)).to be == true
+    expect((posPre1_2 < posPre2_1)).to be == true
+    expect((posPre2_1 < posPre2_2)).to be == true
+    expect((posPre2_2 < posPre3_1)).to be == true
+    expect((posPre3_1 < posPre3_2)).to be == true
+    expect((posPre3_2 < posPst1_1)).to be == true
+    expect((posPst1_1 < posPst1_2)).to be == true
+    expect((posPst1_2 < posPst2_1)).to be == true
+    expect((posPst2_1 < posPst2_2)).to be == true
+    expect((posPst2_2 < posPst3_1)).to be == true
+    expect((posPst3_1 < posPst3_2)).to be == true
   end  
   
   
@@ -316,9 +316,9 @@ describe "Merging Configs" do
     posPst5_1  = $mystring.index("Post5_1")
     posPst5_2  = $mystring.index("Post5_2")
     
-    (posPre5_1 < posPre5_2).should == true
-    (posPre5_2 < posPst5_1).should == true
-    (posPst5_1 < posPst5_2).should == true
+    expect((posPre5_1 < posPre5_2)).to be == true
+    expect((posPre5_2 < posPst5_1)).to be == true
+    expect((posPst5_1 < posPst5_2)).to be == true
   end  
   
   it 'steps (parent)' do
@@ -333,9 +333,9 @@ describe "Merging Configs" do
     posPst1_1  = $mystring.index("Post1_1")
     posPst1_2  = $mystring.index("Post1_2")
     
-    (posPre1_1 < posPre1_2).should == true
-    (posPre1_2 < posPst1_1).should == true
-    (posPst1_1 < posPst1_2).should == true
+    expect((posPre1_1 < posPre1_2)).to be == true
+    expect((posPre1_2 < posPst1_1)).to be == true
+    expect((posPst1_1 < posPst1_2)).to be == true
   end    
   
   
@@ -346,9 +346,9 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("def1").should == false
-    $mystring.include?("def2").should == true
-    $mystring.include?("-O3").should == true
+    expect($mystring.include?("def1")).to be == false
+    expect($mystring.include?("def2")).to be == true
+    expect($mystring.include?("-O3")).to be == true
   end    
   
   it 'defaulttoolchain (child)' do
@@ -358,9 +358,9 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("def1").should == false
-    $mystring.include?("def5").should == true
-    $mystring.include?("-O3").should == false
+    expect($mystring.include?("def1")).to be == false
+    expect($mystring.include?("def5")).to be == true
+    expect($mystring.include?("-O3")).to be == false
   end    
   
   it 'defaulttoolchain (parent)' do
@@ -370,8 +370,8 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("def1").should == true
-    $mystring.include?("-O3").should == true
+    expect($mystring.include?("def1")).to be == true
+    expect($mystring.include?("-O3")).to be == true
   end    
   
   # Valid for custom config
@@ -383,9 +383,9 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("C1").should == false
-    $mystring.include?("C2").should == false
-    $mystring.include?("C3").should == true
+    expect($mystring.include?("C1")).to be == false
+    expect($mystring.include?("C2")).to be == false
+    expect($mystring.include?("C3")).to be == true
   end    
 
   it 'step (child)' do
@@ -395,7 +395,7 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("C5").should == true
+    expect($mystring.include?("C5")).to be == true
   end      
 
   it 'step (parent)' do
@@ -405,7 +405,7 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("C1").should == true
+    expect($mystring.include?("C1")).to be == true
   end      
 
   it 'step (exe extends custom)' do
@@ -415,7 +415,7 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("C5").should == true
+    expect($mystring.include?("C5")).to be == true
   end      
   
   it 'step (custom extends exe)' do
@@ -425,7 +425,7 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("C7").should == true
+    expect($mystring.include?("C7")).to be == true
   end      
     
             
@@ -445,11 +445,11 @@ describe "Merging Configs" do
     posinc31 = $mystring.index("Inc3_1")
     posinc32 = $mystring.index("Inc3_2")
     
-    (posinc11 < posinc12).should == true
-    (posinc12 < posinc21).should == true
-    (posinc21 < posinc22).should == true
-    (posinc22 < posinc31).should == true
-    (posinc31 < posinc32).should == true
+    expect((posinc11 < posinc12)).to be == true
+    expect((posinc12 < posinc21)).to be == true
+    expect((posinc21 < posinc22)).to be == true
+    expect((posinc22 < posinc31)).to be == true
+    expect((posinc31 < posinc32)).to be == true
   end    
   
   it 'includedir (child)' do
@@ -462,7 +462,7 @@ describe "Merging Configs" do
     posinc51 = $mystring.index("Inc5_1")
     posinc52 = $mystring.index("Inc5_2")
     
-    (posinc51 < posinc52).should == true
+    expect((posinc51 < posinc52)).to be == true
 
   end    
   
@@ -476,7 +476,7 @@ describe "Merging Configs" do
     posinc11 = $mystring.index("Inc1_1")
     posinc12 = $mystring.index("Inc1_2")
     
-    (posinc11 < posinc12).should == true
+    expect((posinc11 < posinc12)).to be == true
   end   
 
   it 'toolchain (all)' do
@@ -486,9 +486,9 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("def1").should == false
-    $mystring.include?("def2").should == true
-    $mystring.include?("-O3").should == true
+    expect($mystring.include?("def1")).to be == false
+    expect($mystring.include?("def2")).to be == true
+    expect($mystring.include?("-O3")).to be == true
   end    
   
   it 'toolchain (child)' do
@@ -498,9 +498,9 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("def1").should == false
-    $mystring.include?("def5").should == true
-    $mystring.include?("-O3").should == false
+    expect($mystring.include?("def1")).to be == false
+    expect($mystring.include?("def5")).to be == true
+    expect($mystring.include?("-O3")).to be == false
   end    
   
   it 'toolchain (parent)' do
@@ -510,76 +510,76 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("def1").should == true
-    $mystring.include?("-O3").should == true
+    expect($mystring.include?("def1")).to be == true
+    expect($mystring.include?("-O3")).to be == true
   end   
           
   # Valid for exe config
   
   it 'linkerscript, artifact, map (all)' do
-    File.exists?("spec/testdata/merge/main/E3/E3.map").should == false
-    File.exists?("spec/testdata/merge/main/E3/E3.exe").should == false
+    expect(File.exists?("spec/testdata/merge/main/E3/E3.map")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/E3/E3.exe")).to be == false
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E3", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("linkerscript3").should == true
-    File.exists?("spec/testdata/merge/main/E3/E3.exe").should == true
-    File.exists?("spec/testdata/merge/main/E3/E3.map").should == true
+    expect($mystring.include?("linkerscript3")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/E3/E3.exe")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/E3/E3.map")).to be == true
   end    
   
   it 'linkerscript, artifact, map (child)' do
-    File.exists?("spec/testdata/merge/main/E5/E5.map").should == false
-    File.exists?("spec/testdata/merge/main/E5/E5.exe").should == false
+    expect(File.exists?("spec/testdata/merge/main/E5/E5.map")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/E5/E5.exe")).to be == false
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E5", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("linkerscript5").should == true
-    File.exists?("spec/testdata/merge/main/E5/E5.exe").should == true
-    File.exists?("spec/testdata/merge/main/E5/E5.map").should == true
+    expect($mystring.include?("linkerscript5")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/E5/E5.exe")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/E5/E5.map")).to be == true
   end    
   
   it 'linkerscript, artifact, map (parent)' do
-    File.exists?("spec/testdata/merge/main/E6/E1.exe").should == false
-    File.exists?("spec/testdata/merge/main/E6/E1.map").should == false
+    expect(File.exists?("spec/testdata/merge/main/E6/E1.exe")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/E6/E1.map")).to be == false
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E6", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("linkerscript1").should == true
-    File.exists?("spec/testdata/merge/main/E6/E1.exe").should == true
-    File.exists?("spec/testdata/merge/main/E6/E1.map").should == true
+    expect($mystring.include?("linkerscript1")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/E6/E1.exe")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/E6/E1.map")).to be == true
   end   
     
   it 'parent broken' do
     
-    File.exists?("spec/testdata/merge/main/E6/E6.exe").should == false
+    expect(File.exists?("spec/testdata/merge/main/E6/E6.exe")).to be == false
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "ParentKaputt", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     
     expect { tocxx.doit() }.to raise_error(ExitHelperException)
     
-    $mystring.include?("Error: Config 'dasGibtsDochGarNicht' not found").should == true
+    expect($mystring.include?("Error: Config 'dasGibtsDochGarNicht' not found")).to be == true
   end   
 
   it 'var subst' do
-    File.exists?("spec/testdata/merge/main/E6/E1.map").should == false
+    expect(File.exists?("spec/testdata/merge/main/E6/E1.map")).to be == false
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E6", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("**E1.exe**").should == true # subst
-    File.exists?("spec/testdata/merge/main/E6/E1.map").should == true # subst
+    expect($mystring.include?("**E1.exe**")).to be == true # subst
+    expect(File.exists?("spec/testdata/merge/main/E6/E1.map")).to be == true # subst
   end   
   
 end

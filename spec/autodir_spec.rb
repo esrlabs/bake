@@ -39,7 +39,7 @@ describe "autodir" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.split("Rebuild failed.").length).should == 2
+    expect($mystring.split("Rebuild failed.").length).to be == 2
   end
 
   it 'with no_autodir' do
@@ -48,7 +48,7 @@ describe "autodir" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.split("Rebuild done.").length).should == 2
+    expect($mystring.split("Rebuild done.").length).to be == 2
   end
   
 end

@@ -37,23 +37,23 @@ describe "Socket Handler" do
   it 'should recv/send to a port on localhost' do
     ExitHelper.reset_exit_code
     options = Options.new(["--socket"])
-    lambda { options.parse_options() }.should raise_error(ExitHelperException)
-    $mystring.include?("Argument for option --socket missing").should == true
+    expect { options.parse_options() }.to raise_error(ExitHelperException)
+    expect($mystring.include?("Argument for option --socket missing")).to be == true
 
     ExitHelper.reset_exit_code
     options = Options.new(["--socket", "10000"])
     options.parse_options()
-    options.socket.should == 10000
+    expect(options.socket).to be == 10000
     
     tocxx = Bake::ToCxx.new(options)
-    lambda { tocxx.connect() }.should raise_error(ExitHelperException)
+    expect { tocxx.connect() }.to raise_error(ExitHelperException)
 
     serverSocket = TCPServer.new('localhost', 10000)
 
     tocxx = Bake::ToCxx.new(options)
     tocxx.connect()
     clientSocket = serverSocket.accept
-    clientSocket.nil?.should == false
+    expect(clientSocket.nil?).to be == false
     
     res = ErrorDesc.new
     res.file_name = "File"
@@ -65,14 +65,14 @@ describe "Socket Handler" do
     
     sleep 0.1
     xx = clientSocket.recv_nonblock(1000)
-    xx.should == "\x01\x17\x00\x00\x00\x04\x00\x00\x00\x46\x69\x6c\x65\x7b\x00\x00\x00\x02\x74\x6f\x6f\x20\x62\x61\x64\x2e\x2e\x2e"
+    expect(xx).to be == "\x01\x17\x00\x00\x00\x04\x00\x00\x00\x46\x69\x6c\x65\x7b\x00\x00\x00\x02\x74\x6f\x6f\x20\x62\x61\x64\x2e\x2e\x2e"
     
-    Rake.application.idei.get_abort.should == false
+    expect(Rake.application.idei.get_abort).to be == false
     
     clientSocket.send("X",0) # triggers abort
     sleep 1.1
     
-    Rake.application.idei.get_abort.should == true
+    expect(Rake.application.idei.get_abort).to be == true
     
     tocxx.disconnect()
   end

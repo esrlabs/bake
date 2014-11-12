@@ -44,7 +44,7 @@ describe "ShowInc" do
     options = Options.new(["-m", "spec/testdata/showinc/main", "-b", "test" , "--show_incs_and_defs"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
-    lambda { tocxx.doit() }.should raise_error(ExitHelperException)
+    expect { tocxx.doit() }.to raise_error(ExitHelperException)
     
     s = "main\n"+
         " includes\n"+
@@ -79,7 +79,7 @@ describe "ShowInc" do
         " ASM defines\n"+
         " done"
 
-    ($mystring.include?s).should == true
+    expect(($mystring.include?s)).to be == true
 
   end
   

@@ -39,8 +39,8 @@ describe "Makefile" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    $mystring.include?("make all -j").should == true
-    $mystring.include?("Build done.").should == true
+    expect($mystring.include?("make all -j")).to be == true
+    expect($mystring.include?("Build done.")).to be == true
   end
   
   it 'cleans' do
@@ -49,7 +49,7 @@ describe "Makefile" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    $mystring.include?("Clean done.").should == true
+    expect($mystring.include?("Clean done.")).to be == true
   end
   
 end

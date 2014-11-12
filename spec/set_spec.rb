@@ -39,7 +39,7 @@ describe "Set" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.include?"*GUGU*").should == true
+    expect(($mystring.include?"*GUGU*")).to be == true
   end
 
   it 'cmd' do
@@ -48,7 +48,7 @@ describe "Set" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.include?"*GAGA*").should == true
+    expect(($mystring.include?"*GAGA*")).to be == true
   end
   
   it 'cat' do
@@ -57,7 +57,7 @@ describe "Set" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.include?"*MYTEST ABC*").should == true
+    expect(($mystring.include?"*MYTEST ABC*")).to be == true
   end  
 
   it 'arti' do
@@ -66,7 +66,7 @@ describe "Set" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.include?"arti/*GAGA*").should == true
+    expect(($mystring.include?"arti/*GAGA*")).to be == true
   end
   
   it 'triple' do
@@ -75,7 +75,7 @@ describe "Set" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.include?"*GAGAGUGUHUHU*").should == true
+    expect(($mystring.include?"*GAGAGUGUHUHU*")).to be == true
   end
   
   it 'recursive' do
@@ -84,8 +84,8 @@ describe "Set" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.include?"**GUGU*-HUHU *GUGU*.elf*").should == true
-    ($mystring.include?"recursive/HUHU *GUGU*.elf").should == true
+    expect(($mystring.include?"**GUGU*-HUHU *GUGU*.elf*")).to be == true
+    expect(($mystring.include?"recursive/HUHU *GUGU*.elf")).to be == true
   end
   
   it 'no cmd' do
@@ -94,9 +94,9 @@ describe "Set" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.include?"Project A TestA   A").should == true
-    ($mystring.include?"Project B TestA TestB  B").should == true
-    ($mystring.include?"Project C TestA  TestC C").should == true
+    expect(($mystring.include?"Project A TestA   A")).to be == true
+    expect(($mystring.include?"Project B TestA TestB  B")).to be == true
+    expect(($mystring.include?"Project C TestA  TestC C")).to be == true
   end
 
   it 'cmd A' do
@@ -105,9 +105,9 @@ describe "Set" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.include?"Project A X   A").should == true
-    ($mystring.include?"Project B X TestB  B").should == true
-    ($mystring.include?"Project C X  TestC C").should == true
+    expect(($mystring.include?"Project A X   A")).to be == true
+    expect(($mystring.include?"Project B X TestB  B")).to be == true
+    expect(($mystring.include?"Project C X  TestC C")).to be == true
   end
   
   it 'cmd B' do
@@ -116,9 +116,9 @@ describe "Set" do
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
-    ($mystring.include?"Project A TestA X  A").should == true
-    ($mystring.include?"Project B TestA X  B").should == true
-    ($mystring.include?"Project C TestA X TestC C").should == true
+    expect(($mystring.include?"Project A TestA X  A")).to be == true
+    expect(($mystring.include?"Project B TestA X  B")).to be == true
+    expect(($mystring.include?"Project C TestA X TestC C")).to be == true
   end
   
       

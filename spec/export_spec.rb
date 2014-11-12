@@ -48,10 +48,10 @@ describe "Export" do
     tocxx.doit()
     tocxx.start()    
     
-    $mystring.include?("Compiling src/x.cpp").should == true
-    $mystring.include?("Creating rel_test_main/liblib3.a").should == true
-    $mystring.include?("Linking rel_test/main.exe").should == true
-    $mystring.include?("Rebuild done.").should == true
+    expect($mystring.include?("Compiling src/x.cpp")).to be == true
+    expect($mystring.include?("Creating rel_test_main/liblib3.a")).to be == true
+    expect($mystring.include?("Linking rel_test/main.exe")).to be == true
+    expect($mystring.include?("Rebuild done.")).to be == true
   end
   
   it 'With file build' do
@@ -61,10 +61,10 @@ describe "Export" do
     tocxx.doit()
     tocxx.start()    
     
-    $mystring.include?("Compiling src/x.cpp").should == false
-    $mystring.include?("liblib3.a").should == false
-    $mystring.include?("Linking rel_test/main.exe").should == false
-    $mystring.include?("Build done.").should == true
+    expect($mystring.include?("Compiling src/x.cpp")).to be == false
+    expect($mystring.include?("liblib3.a")).to be == false
+    expect($mystring.include?("Linking rel_test/main.exe")).to be == false
+    expect($mystring.include?("Build done.")).to be == true
   end  
   
   it 'Without file rebuild' do
@@ -77,10 +77,10 @@ describe "Export" do
     tocxx.doit()
     tocxx.start()    
     
-    $mystring.include?("Compiling src/x.cpp").should == false
-    $mystring.include?("liblib3.a").should == false
-    $mystring.include?("Linking rel_test/main.exe").should == true
-    $mystring.include?("Rebuild done.").should == true
+    expect($mystring.include?("Compiling src/x.cpp")).to be == false
+    expect($mystring.include?("liblib3.a")).to be == false
+    expect($mystring.include?("Linking rel_test/main.exe")).to be == true
+    expect($mystring.include?("Rebuild done.")).to be == true
   end
   it 'Without file clean' do
     
@@ -90,7 +90,7 @@ describe "Export" do
     tocxx.doit()
     tocxx.start()   
     
-    $mystring.include?("Clean done.").should == true
+    expect($mystring.include?("Clean done.")).to be == true
   end
   it 'Without file build' do
     
@@ -100,10 +100,10 @@ describe "Export" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("Compiling src/x.cpp").should == false
-    $mystring.include?("liblib3.a").should == false
-    $mystring.include?("Linking rel_test/main.exe").should == true
-    $mystring.include?("Build done.").should == true
+    expect($mystring.include?("Compiling src/x.cpp")).to be == false
+    expect($mystring.include?("liblib3.a")).to be == false
+    expect($mystring.include?("Linking rel_test/main.exe")).to be == true
+    expect($mystring.include?("Build done.")).to be == true
   end
   it 'Without file lib' do
     
@@ -113,10 +113,10 @@ describe "Export" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("Compiling src/x.cpp").should == false
-    $mystring.include?("liblib3.a").should == false
-    $mystring.include?("Linking rel_test/main.exe").should == false
-    $mystring.include?("Build done.").should == true
+    expect($mystring.include?("Compiling src/x.cpp")).to be == false
+    expect($mystring.include?("liblib3.a")).to be == false
+    expect($mystring.include?("Linking rel_test/main.exe")).to be == false
+    expect($mystring.include?("Build done.")).to be == true
   end
   it 'Without file lib rebuild' do
     
@@ -126,10 +126,10 @@ describe "Export" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("Compiling src/x.cpp").should == false
-    $mystring.include?("liblib3.a").should == false
-    $mystring.include?("Linking rel_test/main.exe").should == false
-    $mystring.include?("Rebuild done.").should == true
+    expect($mystring.include?("Compiling src/x.cpp")).to be == false
+    expect($mystring.include?("liblib3.a")).to be == false
+    expect($mystring.include?("Linking rel_test/main.exe")).to be == false
+    expect($mystring.include?("Rebuild done.")).to be == true
   end
   it 'Without file main rebuild' do
     
@@ -139,10 +139,10 @@ describe "Export" do
     tocxx.doit()
     tocxx.start()
 
-    $mystring.include?("Compiling src/x.cpp").should == false
-    $mystring.include?("liblib3.a").should == false
-    $mystring.include?("Linking rel_test/main.exe").should == true
-    $mystring.include?("Rebuild done.").should == true    
+    expect($mystring.include?("Compiling src/x.cpp")).to be == false
+    expect($mystring.include?("liblib3.a")).to be == false
+    expect($mystring.include?("Linking rel_test/main.exe")).to be == true
+    expect($mystring.include?("Rebuild done.")).to be == true    
   end
   it 'With file again build' do
     
@@ -155,10 +155,10 @@ describe "Export" do
     tocxx.doit()
     tocxx.start()
     
-    $mystring.include?("Compiling src/x.cpp").should == true
-    $mystring.include?("Creating rel_test_main/liblib3.a").should == true
-    $mystring.include?("Linking rel_test/main.exe").should == true
-    $mystring.include?("Build done.").should == true    
+    expect($mystring.include?("Compiling src/x.cpp")).to be == true
+    expect($mystring.include?("Creating rel_test_main/liblib3.a")).to be == true
+    expect($mystring.include?("Linking rel_test/main.exe")).to be == true
+    expect($mystring.include?("Build done.")).to be == true    
   end
 
 # todo: clobber test

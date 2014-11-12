@@ -41,7 +41,7 @@ describe "Building" do
   end
 
   it 'workspace' do
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == false
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-v2"])
     options.parse_options()
@@ -49,16 +49,16 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == true
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
     
-    $mystring.split("PREMAIN").length.should == 3
-    $mystring.split("POSTMAIN").length.should == 3
+    expect($mystring.split("PREMAIN").length).to be == 3
+    expect($mystring.split("POSTMAIN").length).to be == 3
     
-    $mystring.include?("../lib1/test_main/liblib1.a makefile/dummy.a").should == true # makefile lib shall be put to the end of the lib string
+    expect($mystring.include?("../lib1/test_main/liblib1.a makefile/dummy.a")).to be == true # makefile lib shall be put to the end of the lib string
   end
 
   it 'single lib' do
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == false
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
     options = Options.new(["-p", "lib1", "-m", "spec/testdata/cache/main", "-b", "test"])
     options.parse_options()
@@ -66,19 +66,19 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a").should == true
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == false
+    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
-    $mystring.split("PRELIB1").length.should == 3
-    $mystring.split("POSTLIB1").length.should == 3    
+    expect($mystring.split("PRELIB1").length).to be == 3
+    expect($mystring.split("POSTLIB1").length).to be == 3    
   end  
 
   it 'single exe should fail' do
-    File.exists?("spec/testdata/cache/lib1/test_main/src/lib1.o").should == false
-    File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a").should == false
+    expect(File.exists?("spec/testdata/cache/lib1/test_main/src/lib1.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == false
 
-    File.exists?("spec/testdata/cache/main/test/src/main.o").should == false
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == false
+    expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-p", "main"])
     options.parse_options()
@@ -86,21 +86,21 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/lib1/test_main/src/lib1.o").should == false
-    File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a").should == false
+    expect(File.exists?("spec/testdata/cache/lib1/test_main/src/lib1.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == false
 
-    File.exists?("spec/testdata/cache/main/test/src/main.o").should == true
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == false
+    expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
-    $mystring.split("PREMAIN").length.should == 3
-    $mystring.split("POSTMAIN").length.should == 1 # means not executed cause exe build failed
+    expect($mystring.split("PREMAIN").length).to be == 3
+    expect($mystring.split("POSTMAIN").length).to be == 1 # means not executed cause exe build failed
     
-    ExitHelper.exit_code.should > 0
+    expect(ExitHelper.exit_code).to be > 0
   end  
 
   it 'single file' do
-    File.exists?("spec/testdata/cache/main/test/src/main.o").should == false
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == false
+    expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
 
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-f", "src/main.cpp"])
     options.parse_options()
@@ -108,10 +108,10 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/main/test/src/main.o").should == true
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == false
+    expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
-    ExitHelper.exit_code.should == 0
+    expect(ExitHelper.exit_code).to be == 0
   end  
 
   it 'clean single file' do
@@ -121,9 +121,9 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
     
-    File.exists?("spec/testdata/cache/main/test/src/main.o").should == true
-    File.exists?("spec/testdata/cache/main/test/src/main.d").should == true
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == true
+    expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/test/src/main.d")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
 
     Utils.cleanup_rake
 
@@ -133,11 +133,11 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
     
-    File.exists?("spec/testdata/cache/main/test/src/main.o").should == false
-    File.exists?("spec/testdata/cache/main/test/src/main.d").should == false
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == true
+    expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/test/src/main.d")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
     
-    ExitHelper.exit_code.should == 0
+    expect(ExitHelper.exit_code).to be == 0
   end  
 
   it 'clean single lib' do
@@ -147,10 +147,10 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/main/test").should == true
-    File.exists?("spec/testdata/cache/lib1/test_main").should == true
-    File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a").should == true
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == true
+    expect(File.exists?("spec/testdata/cache/main/test")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/test_main")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
 
     Utils.cleanup_rake
 
@@ -160,12 +160,12 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/main/test").should == true
-    File.exists?("spec/testdata/cache/lib1/test_main").should == false
-    File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a").should == false
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == true
+    expect(File.exists?("spec/testdata/cache/main/test")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/test_main")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
     
-    ExitHelper.exit_code.should == 0
+    expect(ExitHelper.exit_code).to be == 0
   end
     
   it 'clean single lib' do
@@ -175,10 +175,10 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/main/test").should == true
-    File.exists?("spec/testdata/cache/lib1/test_main").should == true
-    File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a").should == true
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == true
+    expect(File.exists?("spec/testdata/cache/main/test")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/test_main")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
 
     Utils.cleanup_rake
 
@@ -188,12 +188,12 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/main/test").should == false
-    File.exists?("spec/testdata/cache/lib1/test_main").should == true
-    File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a").should == true
-    File.exists?("spec/testdata/cache/main/test/main.exe").should == false
+    expect(File.exists?("spec/testdata/cache/main/test")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/test_main")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
-    ExitHelper.exit_code.should == 0
+    expect(ExitHelper.exit_code).to be == 0
   end  
   
   it 'clobber' do
@@ -203,8 +203,8 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/main/.bake").should == true
-    File.exists?("spec/testdata/cache/lib1/.bake").should == true
+    expect(File.exists?("spec/testdata/cache/main/.bake")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == true
 
     Utils.cleanup_rake
 
@@ -214,8 +214,8 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/main/.bake").should == false
-    File.exists?("spec/testdata/cache/lib1/.bake").should == false
+    expect(File.exists?("spec/testdata/cache/main/.bake")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == false
   end    
   
   it 'clobber project only' do
@@ -225,8 +225,8 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/main/.bake").should == true
-    File.exists?("spec/testdata/cache/lib1/.bake").should == true
+    expect(File.exists?("spec/testdata/cache/main/.bake")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == true
 
     Utils.cleanup_rake
 
@@ -236,8 +236,8 @@ describe "Building" do
     tocxx.doit()
     tocxx.start()
 
-    File.exists?("spec/testdata/cache/main/.bake").should == false
-    File.exists?("spec/testdata/cache/lib1/.bake").should == false
+    expect(File.exists?("spec/testdata/cache/main/.bake")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == false
   end    
 
 end
