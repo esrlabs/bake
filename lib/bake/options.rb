@@ -1,9 +1,9 @@
-require 'cxxproject/ext/rake'
-require 'cxxproject/utils/printer'
-require "cxxproject/toolchain/colorizing_formatter"
-require "option/parser"
+require 'imported/ext/rake'
+require 'imported/utils/printer'
+require 'imported/toolchain/colorizing_formatter'
+require 'option/parser'
 
-module Cxxproject
+module Bake
 
   class Options < Parser
     attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version, :alias_filename # String
@@ -309,7 +309,7 @@ module Cxxproject
     end
     
     def set_depfileInfo()
-      Cxxproject::HasSources.print_additional_depfile_info = true
+      Bake::HasSources.print_additional_depfile_info = true
     end    
     
     def set_show_inc
@@ -381,7 +381,7 @@ module Cxxproject
     end
 
     def print_toolchain(x)
-      tcs = Cxxproject::Toolchain::Provider[x]
+      tcs = Bake::Toolchain::Provider[x]
       if tcs.nil?
         puts "Toolchain not available"
       else
@@ -392,7 +392,7 @@ module Cxxproject
     
     def print_toolchains()
       puts "Available toolchains:"
-      Cxxproject::Toolchain::Provider.list.keys.each { |c| puts "* #{c}" }
+      Bake::Toolchain::Provider.list.keys.each { |c| puts "* #{c}" }
       ExitHelper.exit(0)
     end
     

@@ -1,18 +1,18 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+
 
 require 'bake/version'
 
 require 'tocxx'
 require 'bake/options'
-require 'cxxproject/utils/exit_helper'
+require 'imported/utils/exit_helper'
 require 'socket'
-require 'cxxproject/utils/cleanup'
+require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 
-module Cxxproject
+module Bake
 
 ExitHelper.enable_exit_test
 
@@ -36,14 +36,14 @@ describe "..in ex lib" do
   it 'with search=true' do
     options = Options.new(["-m", "spec/testdata/exLibBug/sub", "-b", "Debug", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.split("Rebuild done.").length).should == 2
 	
     options = Options.new(["-m", "spec/testdata/exLibBug/main", "-b", "test1", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.split("Rebuild done.").length).should == 3
@@ -52,14 +52,14 @@ describe "..in ex lib" do
   it 'with search=false' do
     options = Options.new(["-m", "spec/testdata/exLibBug/sub", "-b", "Debug", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.split("Rebuild done.").length).should == 2
 	
     options = Options.new(["-m", "spec/testdata/exLibBug/main", "-b", "test2", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.split("Rebuild done.").length).should == 3
@@ -68,14 +68,14 @@ describe "..in ex lib" do
   it 'with searchPath' do
     options = Options.new(["-m", "spec/testdata/exLibBug/sub", "-b", "Debug", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.split("Rebuild done.").length).should == 2
 	
     options = Options.new(["-m", "spec/testdata/exLibBug/main", "-b", "test3", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.split("Rebuild done.").length).should == 3

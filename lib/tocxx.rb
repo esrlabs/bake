@@ -10,29 +10,29 @@ require 'bake/util'
 require 'bake/cache'
 require 'bake/subst'
 require 'bake/mergeConfig'
-require 'cxxproject/buildingblocks/module'
-require 'cxxproject/buildingblocks/makefile'
-require 'cxxproject/buildingblocks/executable'
-require 'cxxproject/buildingblocks/lint'
-require 'cxxproject/buildingblocks/binary_library'
-require 'cxxproject/buildingblocks/custom_building_block'
-require 'cxxproject/buildingblocks/command_line'
-require 'cxxproject/buildingblocks/single_source'
-require 'cxxproject/utils/exit_helper'
-require 'cxxproject/ide_interface'
-require 'cxxproject/ext/file'
-require 'cxxproject/toolchain/provider'
-require 'cxxproject/ext/stdout'
-require 'cxxproject/ext/rake'
-require 'cxxproject/utils/utils'
-require 'cxxproject/utils/printer'
+require 'imported/buildingblocks/module'
+require 'imported/buildingblocks/makefile'
+require 'imported/buildingblocks/executable'
+require 'imported/buildingblocks/lint'
+require 'imported/buildingblocks/binary_library'
+require 'imported/buildingblocks/custom_building_block'
+require 'imported/buildingblocks/command_line'
+require 'imported/buildingblocks/single_source'
+require 'imported/utils/exit_helper'
+require 'imported/ide_interface'
+require 'imported/ext/file'
+require 'imported/toolchain/provider'
+require 'imported/ext/stdout'
+require 'imported/ext/rake'
+require 'imported/utils/utils'
+require 'imported/utils/printer'
 
 require 'set'
 require 'socket'
 
 #require 'ruby-prof'
 
-module Cxxproject
+module Bake
 
   class ToCxx
 
@@ -105,7 +105,7 @@ module Cxxproject
             next if m.default == "off"
           end
         
-          if Cxxproject::Metamodel::Makefile === m
+          if Bake::Metamodel::Makefile === m
             nameOfBB = m.name+"_"+m.target
             bb = Makefile.new(m.name, m.target)
             if m.pathTo != ""
@@ -136,7 +136,7 @@ module Cxxproject
             bb.set_flags(adjustFlags(tcs[:MAKE][:FLAGS],m.flags)) if m.flags
             
             @lib_elements[m.line_number] = [HasLibraries::LIB_WITH_PATH, m.lib] if m.lib != ""
-          elsif Cxxproject::Metamodel::CommandLine === m
+          elsif Bake::Metamodel::CommandLine === m
             nameOfBB = m.name
             bb = CommandLine.new(nameOfBB)
             bb.set_defined_in_file(m.file_name.to_s)
@@ -319,7 +319,7 @@ module Cxxproject
           else
             basedOn = config.defaultToolchain.basedOn
             basedOn = "GCC_Lint" if @options.lint
-            basedOnToolchain = Cxxproject::Toolchain::Provider[basedOn]
+            basedOnToolchain = Bake::Toolchain::Provider[basedOn]
             if basedOnToolchain == nil
               Printer.printError "Error: DefaultToolchain based on unknown compiler '#{basedOn}'"
               ExitHelper.exit(1)
@@ -398,7 +398,7 @@ module Cxxproject
         tcs = Utils.deep_copy(@defaultToolchain)
         integrateToolchain(tcs, config.toolchain)
       else
-        tcs = Utils.deep_copy(Cxxproject::Toolchain::Provider.default)
+        tcs = Utils.deep_copy(Bake::Toolchain::Provider.default)
       end    
       @configTcMap[config] = tcs
     end
@@ -409,7 +409,7 @@ module Cxxproject
       basedOn = @mainConfig.defaultToolchain.basedOn
       basedOn = "GCC_Lint" if @options.lint
 
-      basedOnToolchain = Cxxproject::Toolchain::Provider[basedOn]
+      basedOnToolchain = Bake::Toolchain::Provider[basedOn]
       @defaultToolchain = Utils.deep_copy(basedOnToolchain)
       integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)      
 
@@ -579,7 +579,7 @@ module Cxxproject
         end
         
         bbModule.contents.each do |c|
-          if Cxxproject::CommandLine === c
+          if Bake::CommandLine === c
             cmdLine = convPath(c.get_command_line, config, bbModule.main_content)
             c.set_command_line(cmdLine)
           end

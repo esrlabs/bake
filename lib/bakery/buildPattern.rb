@@ -1,4 +1,4 @@
-module Cxxproject
+module Bake
 
   class BuildPattern
     attr_reader :proj, :conf, :coll_p

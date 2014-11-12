@@ -5,26 +5,23 @@ $timeStart = Time.now
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 require 'bake/version'
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+require 'imported/utils/utils'
 
-require "cxxproject/version"
-require 'cxxproject/utils/utils'
-
-puts "-- bakery #{Cxxproject::Version.bake}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
+puts "-- bakery #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
 
 STDOUT.sync = true
 STDERR.sync = true
 
-require 'cxxproject/utils/printer'
+require 'imported/utils/printer'
 require 'tocxx'
 require "bakery/loader"
 require "bakery/options"
 require "bakery/toBake"
 require "bakery/buildPattern"
-require 'cxxproject/ext/stdout'
-require 'cxxproject/utils/cleanup'
+require 'imported/ext/stdout'
+require 'imported/utils/cleanup'
 
-module Cxxproject
+module Bake
 
  
   @options = BakeryOptions.new(ARGV)
@@ -113,7 +110,7 @@ module Cxxproject
         runOk = false
       end
     rescue Exception => e
-      puts e.message if e.message != "Cxxproject::ExitHelperException"
+      puts e.message if e.message != "Bake::ExitHelperException"
       runOk = false
     end
     

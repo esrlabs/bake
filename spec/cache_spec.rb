@@ -1,18 +1,18 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+
 
 require 'bake/version'
 
 require 'tocxx'
 require 'bake/options'
-require 'cxxproject/utils/exit_helper'
+require 'imported/utils/exit_helper'
 require 'socket'
-require 'cxxproject/utils/cleanup'
+require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 
-module Cxxproject
+module Bake
 
 ExitHelper.enable_exit_test
 
@@ -42,7 +42,7 @@ describe "Caching" do
     Utils.cleanup_rake
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     $mystring.split("Loading and caching").length.should == 3
@@ -51,7 +51,7 @@ describe "Caching" do
     # project meta cache file exists    
     File.delete("spec/testdata/cache/main/.bake/Project.meta.test.cache")
     Utils.cleanup_rake
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     $mystring.split("Loading and caching").length.should == 3
@@ -60,7 +60,7 @@ describe "Caching" do
     # build meta cache file exists
     File.delete("spec/testdata/cache/main/.bake/Project.meta.cache")
     Utils.cleanup_rake
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     $mystring.split("Loading and caching").length.should == 3
@@ -70,7 +70,7 @@ describe "Caching" do
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "--ignore_cache", "-v2"])
     options.parse_options()
     Utils.cleanup_rake
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     $mystring.split("Loading and caching").length.should == 5

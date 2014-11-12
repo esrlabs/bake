@@ -1,4 +1,4 @@
-module Cxxproject
+module Bake
 
   class Subst
   
@@ -17,7 +17,7 @@ module Cxxproject
         if not config.artifactName.nil?
           @@artifactName = config.artifactName.name
         elsif config.defaultToolchain != nil
-          basedOnToolchain = Cxxproject::Toolchain::Provider[config.defaultToolchain.basedOn]
+          basedOnToolchain = Bake::Toolchain::Provider[config.defaultToolchain.basedOn]
           if basedOnToolchain != nil
             @@artifactName = projName+basedOnToolchain[:LINKER][:OUTPUT_ENDING]
           end
@@ -130,7 +130,7 @@ module Cxxproject
         elsif var == "Roots"
           substStr << "___ROOTS___"
         elsif var == "/"
-          if Cxxproject::OS.windows?
+          if Bake::OS.windows?
             substStr << "\\"
           else
             substStr << "/"

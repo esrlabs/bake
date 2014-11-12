@@ -4,7 +4,7 @@ require 'rtext/language'
 
 
 
-module Cxxproject
+module Bake
 
   class Idp
     def call(e,unused)

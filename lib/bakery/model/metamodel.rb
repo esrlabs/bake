@@ -1,7 +1,7 @@
 require 'rgen/metamodel_builder'
 require 'rgen/metamodel_builder/data_types'
 
-module Cxxproject
+module Bake
 
   module BakeryModel
     extend RGen::MetamodelBuilder::ModuleExtension

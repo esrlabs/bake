@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 $:.unshift(File.dirname(__FILE__)+"/../lib")
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject_master.git/lib")
 
 require 'rgen/lib/rtext/default_service_provider'
 require 'rgen/lib/rtext/service'
@@ -20,11 +19,11 @@ require 'logger'
 model = RGen::Fragment::FragmentedModel.new(:env => @env)
 
 loader = RText::DefaultLoader.new(
-    Cxxproject::Language,
+    Bake::Language,
     model,
     :file_provider => proc { Dir.glob("*/**/*.meta") })
 
-x = RText::DefaultServiceProvider.new(Cxxproject::Language,model,loader)
-y = RText::Service.new(Cxxproject::Language, x, :timeout => 60, :logger => Logger.new(STDOUT)) # , :logger => logger
+x = RText::DefaultServiceProvider.new(Bake::Language,model,loader)
+y = RText::Service.new(Bake::Language, x, :timeout => 60, :logger => Logger.new(STDOUT)) # , :logger => logger
 
 y.run()

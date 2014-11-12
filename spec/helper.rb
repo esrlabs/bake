@@ -1,4 +1,4 @@
-module Cxxproject
+module Bake
 
 class SpecHelper
 

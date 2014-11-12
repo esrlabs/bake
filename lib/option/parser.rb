@@ -1,7 +1,7 @@
-require 'cxxproject/utils/printer'
-require 'cxxproject/utils/exit_helper'
+require 'imported/utils/printer'
+require 'imported/utils/exit_helper'
 
-module Cxxproject
+module Bake
 
 
 class Option
@@ -61,7 +61,7 @@ class Parser
     rescue SystemExit => e
       raise
     rescue Exception => e
-      Printer.printError e.message unless e.message.include?("Cxxproject::ExitHelperException")
+      Printer.printError e.message unless e.message.include?("Bake::ExitHelperException")
       ExitHelper.exit(1)
     end
     

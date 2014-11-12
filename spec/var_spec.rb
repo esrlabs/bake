@@ -1,18 +1,18 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+
 
 require 'bake/version'
 
 require 'tocxx'
 require 'bake/options'
-require 'cxxproject/utils/exit_helper'
+require 'imported/utils/exit_helper'
 require 'socket'
-require 'cxxproject/utils/cleanup'
+require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 
-module Cxxproject
+module Bake
 
 ExitHelper.enable_exit_test
 
@@ -37,7 +37,7 @@ describe "VarSubst" do
   
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "--include_filter", "var"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
   
@@ -92,7 +92,7 @@ describe "VarSubst" do
 
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test2", "--include_filter", "var"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
   

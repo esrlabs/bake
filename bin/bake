@@ -5,20 +5,16 @@ $timeStart = Time.now
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 require 'bake/version'
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
-
-require "cxxproject/version"
-
 STDOUT.sync = true
 STDERR.sync = true
 
-puts "-- bake #{Cxxproject::Version.bake}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
+puts "-- bake #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
 
 require 'tocxx'
 require 'bake/options'
 require 'socket'
 
-module Cxxproject
+module Bake
 
   def self.isNewer(oldVersion, newVersion)
     oldSplitted = oldVersion.split(".")
@@ -37,7 +33,7 @@ module Cxxproject
     options = Options.new(ARGV)
     options.parse_options
 
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
 
     tocxx.connect()
     
@@ -66,7 +62,7 @@ module Cxxproject
   #  vtext = Net::HTTP.get('10.40.38.84', '/bake/versions.txt')
   #  vtextSplitted = vtext.split(" ")
   #  if vtextSplitted.length > 0
-  #    if isNewer(Cxxproject::Version.bake, vtextSplitted[0])
+  #    if isNewer(Bake::Version.bake, vtextSplitted[0])
   #      versionWarningString = versionWarningString + "\nNewer version of bake gem available: #{vtextSplitted[0]} - please update!"
   #    end 
   #  end

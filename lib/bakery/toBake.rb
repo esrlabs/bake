@@ -1,6 +1,6 @@
 require "bakery/buildPattern"
 
-module Cxxproject
+module Bake
 
   def self.getBuildPattern(cols, name)
 

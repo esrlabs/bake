@@ -9,11 +9,11 @@ require 'rgen/util/file_cache_map'
 
 require 'rtext/default_loader'
 
-require 'cxxproject/utils/exit_helper'
-require 'cxxproject/utils/printer'
+require 'imported/utils/exit_helper'
+require 'imported/utils/printer'
 require 'bake/options'
 
-module Cxxproject
+module Bake
 
 class Loader
 
@@ -24,7 +24,7 @@ def initialize(options)
   @options = options
 
   fcm = RGen::Util::FileCacheMap.new(".bake", ".cache")
-  fcm.version_info = Version.bake
+  fcm.version_info = Version.number
   @DumpFileCache = RGen::Fragment::DumpFileCache.new(fcm)
   if @options.nocache
     def @DumpFileCache.load(fragment)
@@ -46,7 +46,7 @@ def load(filename)
   end
 
   loader = RText::DefaultLoader.new(
-    Cxxproject::Language,
+    Bake::Language,
     @model,
     :file_provider => proc { [filename] },
     :cache => @DumpFileCache)

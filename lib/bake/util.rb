@@ -1,32 +1,32 @@
 require 'bake/model/metamodel_ext'
 require 'bake/model/metamodel'
 require 'set'
-require 'cxxproject/utils/printer'
-require 'cxxproject/utils/exit_helper'
-require 'cxxproject/utils/utils'
+require 'imported/utils/printer'
+require 'imported/utils/exit_helper'
+require 'imported/utils/utils'
 
 def adjustFlags(orgStr, flags)
-  orgSplitted = Cxxproject::Utils::flagSplit(orgStr, false)
+  orgSplitted = Bake::Utils::flagSplit(orgStr, false)
 
   flags.each do |f|
     if f.overwrite != ""
-      orgSplitted = Cxxproject::Utils::flagSplit(f.overwrite, false)
+      orgSplitted = Bake::Utils::flagSplit(f.overwrite, false)
     end
     
     if f.remove != ""
-      rmSplitted = Cxxproject::Utils::flagSplit(f.remove, false)
+      rmSplitted = Bake::Utils::flagSplit(f.remove, false)
       orgSplitted.delete_if {|o| rmSplitted.any? { |r|
         begin
           o.match("\\A"+r+"\\Z")
         rescue Exception => e
-          Cxxproject::Printer.printError "Error: #{f.file_name}(#{f.line_number}): " + e.message
-          Cxxproject::ExitHelper.exit(1)
+          Bake::Printer.printError "Error: #{f.file_name}(#{f.line_number}): " + e.message
+          Bake::ExitHelper.exit(1)
         end
       }}
     end
     
     if f.add != ""
-      Cxxproject::Utils::flagSplit(f.add, false).each do |a|
+      Bake::Utils::flagSplit(f.add, false).each do |a|
         orgSplitted << a unless orgSplitted.any? { |o| o==a }
       end
     end

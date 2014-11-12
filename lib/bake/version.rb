@@ -1,20 +1,13 @@
-module Cxxproject
+module Bake
   class Version
-    def self.bake
-      "1.8.0.1"
+    def self.number
+      "2.0.0"
     end
   end
     
-  expectedCxx = "0.5.76"
   expectedRGen = "0.6.0"
   expectedRText = "0.2.0"
   
-  begin
-    gem "cxxproject", "=#{expectedCxx}"
-  rescue Exception => e
-    puts "Warning: Failed to load cxxproject #{expectedCxx}, using latest version"
-  end    
-
   begin
     gem "rgen", "=#{expectedRGen}"
   rescue Exception => e

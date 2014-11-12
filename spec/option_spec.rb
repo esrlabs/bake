@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+
 
 require 'bake/version'
 
 require 'tocxx'
 require 'bake/options'
-require 'cxxproject/utils/exit_helper'
+require 'imported/utils/exit_helper'
 
-module Cxxproject
+module Bake
 
 ExitHelper.enable_exit_test
 

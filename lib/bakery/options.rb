@@ -1,8 +1,8 @@
-require 'cxxproject/utils/printer'
-require "cxxproject/toolchain/colorizing_formatter"
-require "option/parser"
+require 'imported/utils/printer'
+require 'imported/toolchain/colorizing_formatter'
+require 'option/parser'
 
-module Cxxproject
+module Bake
 
   class BakeryOptions < Parser
     attr_reader :collection_name, :collection_dir # String

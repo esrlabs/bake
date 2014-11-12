@@ -1,16 +1,16 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+
 
 require 'bake/version'
 
 require 'tocxx'
 require 'bake/options'
-require 'cxxproject/utils/exit_helper'
+require 'imported/utils/exit_helper'
 require 'socket'
-require 'cxxproject/utils/cleanup'
+require 'imported/utils/cleanup'
 
-module Cxxproject
+module Bake
 
 ExitHelper.enable_exit_test
 
@@ -45,12 +45,12 @@ describe "Socket Handler" do
     options.parse_options()
     options.socket.should == 10000
     
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     lambda { tocxx.connect() }.should raise_error(ExitHelperException)
 
     serverSocket = TCPServer.new('localhost', 10000)
 
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.connect()
     clientSocket = serverSocket.accept
     clientSocket.nil?.should == false

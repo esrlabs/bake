@@ -1,18 +1,18 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+
 
 require 'bake/version'
 
 require 'tocxx'
 require 'bake/options'
-require 'cxxproject/utils/exit_helper'
+require 'imported/utils/exit_helper'
 require 'socket'
-require 'cxxproject/utils/cleanup'
+require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 
-module Cxxproject
+module Bake
 
 ExitHelper.enable_exit_test
 
@@ -36,7 +36,7 @@ describe "Set" do
   it 'value' do
     options = Options.new(["-m", "spec/testdata/set", "-b", "value"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.include?"*GUGU*").should == true
@@ -45,7 +45,7 @@ describe "Set" do
   it 'cmd' do
     options = Options.new(["-m", "spec/testdata/set", "-b", "cmd"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.include?"*GAGA*").should == true
@@ -54,7 +54,7 @@ describe "Set" do
   it 'cat' do
     options = Options.new(["-m", "spec/testdata/set", "-b", "cat"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.include?"*MYTEST ABC*").should == true
@@ -63,7 +63,7 @@ describe "Set" do
   it 'arti' do
     options = Options.new(["-m", "spec/testdata/set", "-b", "arti"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.include?"arti/*GAGA*").should == true
@@ -72,7 +72,7 @@ describe "Set" do
   it 'triple' do
     options = Options.new(["-m", "spec/testdata/set", "-b", "triple"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.include?"*GAGAGUGUHUHU*").should == true
@@ -81,7 +81,7 @@ describe "Set" do
   it 'recursive' do
     options = Options.new(["-m", "spec/testdata/set", "-b", "recursive"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.include?"**GUGU*-HUHU *GUGU*.elf*").should == true
@@ -91,7 +91,7 @@ describe "Set" do
   it 'no cmd' do
     options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.include?"Project A TestA   A").should == true
@@ -102,7 +102,7 @@ describe "Set" do
   it 'cmd A' do
     options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test", "--set", "a=X"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.include?"Project A X   A").should == true
@@ -113,7 +113,7 @@ describe "Set" do
   it 'cmd B' do
     options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test", "--set", "b=X"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     ($mystring.include?"Project A TestA X  A").should == true

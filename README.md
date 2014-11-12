@@ -1,4 +1,4 @@
 bake
 ====
 
-Fast and easy build tool based on cxxproject
+Fast and easy build tool.

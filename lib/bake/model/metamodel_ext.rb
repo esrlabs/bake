@@ -1,7 +1,7 @@
 require 'bake/model/metamodel'
-require 'cxxproject/ext/file'
+require 'imported/ext/file'
 
-module Cxxproject
+module Bake
   module Metamodel
 
       module Project::ClassModule

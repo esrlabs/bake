@@ -5,9 +5,9 @@ require "securerandom"
 require "vs/options"
 require 'bake/version'
 
-puts "-- bake #{Cxxproject::Version.bake}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
+puts "-- bake #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
 
-module Cxxproject
+module Bake
 
 PATH = 0
 UUID = 1

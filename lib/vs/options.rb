@@ -1,6 +1,6 @@
 require "option/parser"
 
-module Cxxproject
+module Bake
 
   class VsOptions < Parser
     attr_accessor :version, :roots, :rewriteSolution

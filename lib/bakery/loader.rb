@@ -7,10 +7,10 @@ require 'rgen/fragment/fragmented_model'
 
 require 'rtext/default_loader'
 
-require 'cxxproject/utils/exit_helper'
-require 'cxxproject/utils/printer'
+require 'imported/utils/exit_helper'
+require 'imported/utils/printer'
 
-module Cxxproject
+module Bake
 
 class BakeryLoader
 
@@ -32,7 +32,7 @@ def load(filename)
   end
 
   loader = RText::DefaultLoader.new(
-    Cxxproject::BakeryLanguage,
+    Bake::BakeryLanguage,
     @model,
     :file_provider => proc { [filename] },
     :cache => @DumpFileCache)

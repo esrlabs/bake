@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+
 
 require 'bake/version'
 
 require 'tocxx'
 require 'bake/options'
-require 'cxxproject/utils/exit_helper'
-require 'cxxproject/utils/cleanup'
+require 'imported/utils/exit_helper'
+require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 
-module Cxxproject
+module Bake
 
 ExitHelper.enable_exit_test
 
@@ -45,7 +45,7 @@ describe "Building" do
     
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -62,7 +62,7 @@ describe "Building" do
     
     options = Options.new(["-p", "lib1", "-m", "spec/testdata/cache/main", "-b", "test"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -82,7 +82,7 @@ describe "Building" do
     
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-p", "main"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -104,7 +104,7 @@ describe "Building" do
 
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-f", "src/main.cpp"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -117,7 +117,7 @@ describe "Building" do
   it 'clean single file' do
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -129,7 +129,7 @@ describe "Building" do
 
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-f", "src/main.cpp", "-c"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -143,7 +143,7 @@ describe "Building" do
   it 'clean single lib' do
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -156,7 +156,7 @@ describe "Building" do
 
     options = Options.new(["-m", "spec/testdata/cache/main", "-p", "lib1", "-b", "test", "-c"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -171,7 +171,7 @@ describe "Building" do
   it 'clean single lib' do
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -184,7 +184,7 @@ describe "Building" do
 
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-p", "main", "-c"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -199,7 +199,7 @@ describe "Building" do
   it 'clobber' do
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -210,7 +210,7 @@ describe "Building" do
 
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "--clobber"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -221,7 +221,7 @@ describe "Building" do
   it 'clobber project only' do
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-p", "lib1"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -232,7 +232,7 @@ describe "Building" do
 
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-p", "lib1", "--clobber"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 

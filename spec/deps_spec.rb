@@ -1,19 +1,19 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+
 
 require 'bake/version'
 
 require 'tocxx'
 require 'bake/options'
 require 'bake/util'
-require 'cxxproject/utils/exit_helper'
+require 'imported/utils/exit_helper'
 require 'socket'
-require 'cxxproject/utils/cleanup'
+require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 
-module Cxxproject
+module Bake
 
 ExitHelper.enable_exit_test
 
@@ -35,7 +35,7 @@ describe "Deps" do
   it 'custom deps exe' do
     options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "Debug", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     $mystring.include?("Building 1 of 6: p3 (Debug)").should == true
@@ -53,7 +53,7 @@ describe "Deps" do
   it 'exe deps exe' do
     options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "Debug2", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     $mystring.include?("Building 1 of 6: p3 (Debug)").should == true
@@ -70,7 +70,7 @@ describe "Deps" do
   it 'different config of same proj' do
     options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "DebugWrong"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     lambda { tocxx.doit() }.should raise_error(ExitHelperException)
     $mystring.include?("Error: dependency to config 'DebugWrong' of project 'p3' found (line 11), but config Debug was requested earlier").should == true
   end  
@@ -78,7 +78,7 @@ describe "Deps" do
   it 'circ deps' do
     options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "DebugCirc"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     $mystring.include?("Circular dependency detected").should == true

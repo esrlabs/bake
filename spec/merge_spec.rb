@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+
 
 require 'bake/version'
 
 require 'tocxx'
 require 'bake/options'
-require 'cxxproject/utils/exit_helper'
-require 'cxxproject/utils/cleanup'
+require 'imported/utils/exit_helper'
+require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 
-module Cxxproject
+module Bake
 
 ExitHelper.enable_exit_test
 
@@ -50,7 +50,7 @@ describe "Merging Configs" do
 
   before(:each) do
     Utils.cleanup_rake
-    Cxxproject::cleanMergeOutput()
+    Bake::cleanMergeOutput()
 
     $mystring=""
     $sstring=StringIO.open($mystring,"w+")
@@ -61,7 +61,7 @@ describe "Merging Configs" do
   after(:each) do
     $stdout=$stdoutbackup
 
-    Cxxproject::cleanMergeOutput()
+    Bake::cleanMergeOutput()
     ExitHelper.reset_exit_code
   end
 
@@ -72,7 +72,7 @@ describe "Merging Configs" do
 
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L1", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -88,7 +88,7 @@ describe "Merging Configs" do
 
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L2", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -104,7 +104,7 @@ describe "Merging Configs" do
 
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -116,7 +116,7 @@ describe "Merging Configs" do
   it 'file and exclude file (all)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -131,7 +131,7 @@ describe "Merging Configs" do
         
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L5", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -144,7 +144,7 @@ describe "Merging Configs" do
         
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L6", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -156,7 +156,7 @@ describe "Merging Configs" do
   it 'deps (all)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -179,7 +179,7 @@ describe "Merging Configs" do
   it 'deps (child)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L5", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -192,7 +192,7 @@ describe "Merging Configs" do
   it 'deps (parent)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L6", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -205,7 +205,7 @@ describe "Merging Configs" do
   it 'libs (all)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3E", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -236,7 +236,7 @@ describe "Merging Configs" do
   it 'libs (child)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L5E", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -254,7 +254,7 @@ describe "Merging Configs" do
   it 'libs (parent)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L6E", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -273,7 +273,7 @@ describe "Merging Configs" do
   it 'steps (all)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -307,7 +307,7 @@ describe "Merging Configs" do
   it 'steps (child)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L5", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -324,7 +324,7 @@ describe "Merging Configs" do
   it 'steps (parent)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L6", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -342,7 +342,7 @@ describe "Merging Configs" do
   it 'defaulttoolchain (all)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3E", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -354,7 +354,7 @@ describe "Merging Configs" do
   it 'defaulttoolchain (child)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L5E", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -366,7 +366,7 @@ describe "Merging Configs" do
   it 'defaulttoolchain (parent)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L6E", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -379,7 +379,7 @@ describe "Merging Configs" do
   it 'step (all)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "C3", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -391,7 +391,7 @@ describe "Merging Configs" do
   it 'step (child)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "C5", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -401,7 +401,7 @@ describe "Merging Configs" do
   it 'step (parent)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "C6", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -411,7 +411,7 @@ describe "Merging Configs" do
   it 'step (exe extends custom)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "C5E", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -421,7 +421,7 @@ describe "Merging Configs" do
   it 'step (custom extends exe)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "C7", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -434,7 +434,7 @@ describe "Merging Configs" do
   it 'includedir (all)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E3", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -455,7 +455,7 @@ describe "Merging Configs" do
   it 'includedir (child)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E5", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -469,7 +469,7 @@ describe "Merging Configs" do
   it 'includedir (parent)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E6", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -482,7 +482,7 @@ describe "Merging Configs" do
   it 'toolchain (all)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E3", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -494,7 +494,7 @@ describe "Merging Configs" do
   it 'toolchain (child)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E5", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -506,7 +506,7 @@ describe "Merging Configs" do
   it 'toolchain (parent)' do
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E6", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -521,7 +521,7 @@ describe "Merging Configs" do
     File.exists?("spec/testdata/merge/main/E3/E3.exe").should == false
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E3", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -535,7 +535,7 @@ describe "Merging Configs" do
     File.exists?("spec/testdata/merge/main/E5/E5.exe").should == false
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E5", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -549,7 +549,7 @@ describe "Merging Configs" do
     File.exists?("spec/testdata/merge/main/E6/E1.map").should == false
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E6", "--rebuild", "-v2"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -563,7 +563,7 @@ describe "Merging Configs" do
     File.exists?("spec/testdata/merge/main/E6/E6.exe").should == false
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "ParentKaputt", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     
     expect { tocxx.doit() }.to raise_error(ExitHelperException)
     
@@ -574,7 +574,7 @@ describe "Merging Configs" do
     File.exists?("spec/testdata/merge/main/E6/E1.map").should == false
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E6", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     

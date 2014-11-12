@@ -1,7 +1,7 @@
 require 'bake/model/metamodel'
 require 'rtext/language'
 
-module Cxxproject
+module Bake
 
   AliasLanguage =
   RText::Language.new(AliasModel.ecore,

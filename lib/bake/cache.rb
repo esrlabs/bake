@@ -1,9 +1,9 @@
-require 'cxxproject/utils/exit_helper'
-require 'cxxproject/utils/printer'
+require 'imported/utils/exit_helper'
+require 'imported/utils/printer'
 require 'bake/version'
 require 'bake/options'
 
-module Cxxproject
+module Bake
 
   class Cache
     attr_accessor :project2config
@@ -43,8 +43,8 @@ module Cxxproject
             contents = File.open(@cacheFilename, "rb") {|io| io.read }
             cache = Marshal.load(contents)
             
-            if cache.version != Version.bake
-              Printer.printInfo("Info: cache version ("+cache.version+") does not match to bake version ("+Version.bake+"), reloading meta information")
+            if cache.version != Version.number
+              Printer.printInfo("Info: cache version ("+cache.version+") does not match to bake version ("+Version.number+"), reloading meta information")
               cache = nil
               @options.set_nocache # complete re-read 
             else
@@ -148,7 +148,7 @@ module Cxxproject
         cache.project2config = project2config
         cache.files = project_files
         cache.cache_file = @cacheFilename
-        cache.version = Version.bake
+        cache.version = Version.number
         cache.include_filter = @options.include_filter
         cache.no_autodir = @options.no_autodir
         cache.exclude_filter = @options.exclude_filter

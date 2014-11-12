@@ -1,19 +1,19 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+
 
 require 'bake/version'
 
 require 'tocxx'
 require 'bake/options'
 require 'bake/util'
-require 'cxxproject/utils/exit_helper'
+require 'imported/utils/exit_helper'
 require 'socket'
-require 'cxxproject/utils/cleanup'
+require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 
-module Cxxproject
+module Bake
 
 ExitHelper.enable_exit_test
 
@@ -36,7 +36,7 @@ describe "Makefile" do
   it 'builds' do
     options = Options.new(["-m", "spec/testdata/make/main", "test"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     $mystring.include?("make all -j").should == true
@@ -46,7 +46,7 @@ describe "Makefile" do
   it 'cleans' do
     options = Options.new(["-m", "spec/testdata/make/main", "test", "-c"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     $mystring.include?("Clean done.").should == true

@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 
-$:.unshift(File.dirname(__FILE__)+"/../../cxxproject/lib")
+
 
 require 'bake/version'
 
 require 'tocxx'
 require 'bake/options'
-require 'cxxproject/utils/exit_helper'
-require 'cxxproject/utils/cleanup'
+require 'imported/utils/exit_helper'
+require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 
-module Cxxproject
+module Bake
 
 ExitHelper.enable_exit_test
 
@@ -44,7 +44,7 @@ describe "Export" do
     
     options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()    
     
@@ -57,7 +57,7 @@ describe "Export" do
   it 'With file build' do
     options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()    
     
@@ -73,7 +73,7 @@ describe "Export" do
     
     options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()    
     
@@ -86,7 +86,7 @@ describe "Export" do
     
     options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-c"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()   
     
@@ -96,7 +96,7 @@ describe "Export" do
     
     options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -109,7 +109,7 @@ describe "Export" do
     
     options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "lib3"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -122,7 +122,7 @@ describe "Export" do
     
     options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "lib3", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
@@ -135,7 +135,7 @@ describe "Export" do
     
     options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "main", "--rebuild"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
@@ -151,7 +151,7 @@ describe "Export" do
     
     options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
     options.parse_options()
-    tocxx = Cxxproject::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
