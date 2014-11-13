@@ -11,91 +11,58 @@ require 'helper'
 
 module Bake
 
-def self.cleanMergeOutput()
-  SpecHelper.clean_testdata_build("merge","main","L1")
-  SpecHelper.clean_testdata_build("merge","main","L2")
-  SpecHelper.clean_testdata_build("merge","main","L3")
-  SpecHelper.clean_testdata_build("merge","main","L4")
-  SpecHelper.clean_testdata_build("merge","main","L5")
-  SpecHelper.clean_testdata_build("merge","main","L6")
-  SpecHelper.clean_testdata_build("merge","main","E1")
-  SpecHelper.clean_testdata_build("merge","main","E2")
-  SpecHelper.clean_testdata_build("merge","main","E3")
-  SpecHelper.clean_testdata_build("merge","main","E4")
-  SpecHelper.clean_testdata_build("merge","main","E5")
-  SpecHelper.clean_testdata_build("merge","main","E6")
-  SpecHelper.clean_testdata_build("merge","main","C1")
-  SpecHelper.clean_testdata_build("merge","main","C2")
-  SpecHelper.clean_testdata_build("merge","main","C3")
-  SpecHelper.clean_testdata_build("merge","main","C4")
-  SpecHelper.clean_testdata_build("merge","main","C5")
-  SpecHelper.clean_testdata_build("merge","main","C6")
-  SpecHelper.clean_testdata_build("merge","main","C5E")
-  SpecHelper.clean_testdata_build("merge","main","L3E")
-  SpecHelper.clean_testdata_build("merge","main","L5E")
-  SpecHelper.clean_testdata_build("merge","main","L6E")  
-end
-
 describe "Merging Configs" do
   
-  before(:each) do
-    Bake::cleanMergeOutput()
-  end
-  
-  after(:each) do
-    Bake::cleanMergeOutput()
-  end
-
   it 'build base (all)' do
-    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == false
 
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L1", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL1", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
-    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == false
   end  
 
   it 'build child (all)' do
-    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == false
 
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L2", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL2", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
-    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == false
   end  
     
   it 'build grandchild (all)' do
-    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == false
 
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL3", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
-    expect(File.exists?("spec/testdata/merge/main/L1/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/L2/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/L3/libmain.a")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == true
   end  
   
   it 'file and exclude file (all)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL3", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -108,34 +75,34 @@ describe "Merging Configs" do
   end    
   
   it 'file and exclude file (child)' do
-    expect(File.exists?("spec/testdata/merge/main/L5/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL5/libmain.a")).to be == false
         
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L5", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL5", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
     expect($mystring.include?("stestL5.cpp")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/L5/libmain.a")).to be == true    
+    expect(File.exists?("spec/testdata/merge/main/testL5/libmain.a")).to be == true    
   end    
 
   it 'file and exclude file (parent)' do
-    expect(File.exists?("spec/testdata/merge/main/L6/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testL6/libmain.a")).to be == false
         
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L6", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL6", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
 
     expect($mystring.include?("stestL1.cpp")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/L6/libmain.a")).to be == true    
+    expect(File.exists?("spec/testdata/merge/main/testL6/libmain.a")).to be == true    
   end    
   
   
   it 'deps (all)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL3", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -158,7 +125,7 @@ describe "Merging Configs" do
   end    
 
   it 'deps (child)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L5", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL5", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -171,7 +138,7 @@ describe "Merging Configs" do
   end    
 
   it 'deps (parent)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L6", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL6", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -184,7 +151,7 @@ describe "Merging Configs" do
   end    
   
   it 'libs (all)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3E", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL3E", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -215,7 +182,7 @@ describe "Merging Configs" do
   end     
   
   it 'libs (child)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L5E", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL5E", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -233,7 +200,7 @@ describe "Merging Configs" do
   end   
 
   it 'libs (parent)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L6E", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL6E", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -252,7 +219,7 @@ describe "Merging Configs" do
   
   
   it 'steps (all)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL3", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -286,7 +253,7 @@ describe "Merging Configs" do
   
   
   it 'steps (child)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L5", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL5", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -303,7 +270,7 @@ describe "Merging Configs" do
   end  
   
   it 'steps (parent)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L6", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL6", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -321,7 +288,7 @@ describe "Merging Configs" do
   
   
   it 'defaulttoolchain (all)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L3E", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL3E", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -333,7 +300,7 @@ describe "Merging Configs" do
   end    
   
   it 'defaulttoolchain (child)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L5E", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL5E", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -345,7 +312,7 @@ describe "Merging Configs" do
   end    
   
   it 'defaulttoolchain (parent)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "L6E", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testL6E", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -358,7 +325,7 @@ describe "Merging Configs" do
   # Valid for custom config
   
   it 'step (all)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "C3", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testC3", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -370,7 +337,7 @@ describe "Merging Configs" do
   end    
 
   it 'step (child)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "C5", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testC5", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -380,7 +347,7 @@ describe "Merging Configs" do
   end      
 
   it 'step (parent)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "C6", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testC6", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -390,7 +357,7 @@ describe "Merging Configs" do
   end      
 
   it 'step (exe extends custom)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "C5E", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testC5E", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -400,7 +367,7 @@ describe "Merging Configs" do
   end      
   
   it 'step (custom extends exe)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "C7", "--rebuild"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testC7", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -413,7 +380,7 @@ describe "Merging Configs" do
   # Valid for library and exe config
         
   it 'includedir (all)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E3", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testE3", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -434,7 +401,7 @@ describe "Merging Configs" do
   end    
   
   it 'includedir (child)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E5", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testE5", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -448,7 +415,7 @@ describe "Merging Configs" do
   end    
   
   it 'includedir (parent)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E6", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testE6", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -461,7 +428,7 @@ describe "Merging Configs" do
   end   
 
   it 'toolchain (all)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E3", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testE3", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -473,7 +440,7 @@ describe "Merging Configs" do
   end    
   
   it 'toolchain (child)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E5", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testE5", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -485,7 +452,7 @@ describe "Merging Configs" do
   end    
   
   it 'toolchain (parent)' do
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E6", "--rebuild", "-v2"])
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testE6", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
@@ -498,50 +465,50 @@ describe "Merging Configs" do
   # Valid for exe config
   
   it 'linkerscript, artifact, map (all)' do
-    expect(File.exists?("spec/testdata/merge/main/E3/E3.map")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/E3/E3.exe")).to be == false
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E3", "--rebuild", "-v2"])
+    expect(File.exists?("spec/testdata/merge/main/testE3/testE3.map")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testE3/testE3.exe")).to be == false
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testE3", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
     expect($mystring.include?("linkerscript3")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/E3/E3.exe")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/E3/E3.map")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/testE3/testE3.exe")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/testE3/testE3.map")).to be == true
   end    
   
   it 'linkerscript, artifact, map (child)' do
-    expect(File.exists?("spec/testdata/merge/main/E5/E5.map")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/E5/E5.exe")).to be == false
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E5", "--rebuild", "-v2"])
+    expect(File.exists?("spec/testdata/merge/main/testE5/testE5.map")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testE5/testE5.exe")).to be == false
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testE5", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
     expect($mystring.include?("linkerscript5")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/E5/E5.exe")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/E5/E5.map")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/testE5/testE5.exe")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/testE5/testE5.map")).to be == true
   end    
   
   it 'linkerscript, artifact, map (parent)' do
-    expect(File.exists?("spec/testdata/merge/main/E6/E1.exe")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/E6/E1.map")).to be == false
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E6", "--rebuild", "-v2"])
+    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.exe")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.map")).to be == false
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testE6", "--rebuild", "-v2"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
     expect($mystring.include?("linkerscript1")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/E6/E1.exe")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/E6/E1.map")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.exe")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.map")).to be == true
   end   
     
   it 'parent broken' do
     
-    expect(File.exists?("spec/testdata/merge/main/E6/E6.exe")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/testE6/testE6.exe")).to be == false
     options = Options.new(["-m", "spec/testdata/merge/main", "-b", "ParentKaputt", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
@@ -552,15 +519,15 @@ describe "Merging Configs" do
   end   
 
   it 'var subst' do
-    expect(File.exists?("spec/testdata/merge/main/E6/E1.map")).to be == false
-    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "E6", "--rebuild"])
+    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.map")).to be == false
+    options = Options.new(["-m", "spec/testdata/merge/main", "-b", "testE6", "--rebuild"])
     options.parse_options()
     tocxx = Bake::ToCxx.new(options)
     tocxx.doit()
     tocxx.start()
     
-    expect($mystring.include?("**E1.exe**")).to be == true # subst
-    expect(File.exists?("spec/testdata/merge/main/E6/E1.map")).to be == true # subst
+    expect($mystring.include?("**testE1.exe**")).to be == true # subst
+    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.map")).to be == true # subst
   end   
   
 end

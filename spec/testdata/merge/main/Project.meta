@@ -1,6 +1,6 @@
 Project {
 
-  ExecutableConfig E1 {
+  ExecutableConfig testE1 {
 	Files "src/main.cpp"
     Files "**/*L1*"
     ExcludeFiles "**/*L1ex*"
@@ -22,11 +22,11 @@ Project {
 	  }
 	}
 	LinkerScript "ls/linkerscript1.dld"
-	ArtifactName "E1.exe"
-	MapFile "$(ConfigName)/E1.map"
+	ArtifactName "testE1.exe"
+	MapFile "$(ConfigName)/testE1.map"
   }
   
-  ExecutableConfig E2, extends: E1 {
+  ExecutableConfig testE2, extends: testE1 {
 	Files "src/main.cpp"
     Files "**/*L2*"
     ExcludeFiles "**/*L2ex*"
@@ -46,12 +46,12 @@ Project {
 	  }
     }
 	LinkerScript "ls/linkerscript2.dld"
-	ArtifactName "E2.exe"
-	MapFile "E2/E2.map"
+	ArtifactName "testE2.exe"
+	MapFile "testE2/testE2.map"
   }
 
 
-  ExecutableConfig E3, extends: E2 {
+  ExecutableConfig testE3, extends: testE2 {
 	Files "src/main.cpp"
     Files "**/*L3*"
     ExcludeFiles "**/*L3ex*"
@@ -61,14 +61,14 @@ Project {
     Toolchain
     DefaultToolchain GCC
 	LinkerScript "ls/linkerscript3.dld"
-	ArtifactName "E3.exe"
-	MapFile "E3/E3.map"
+	ArtifactName "testE3.exe"
+	MapFile "testE3/testE3.map"
   }
 
-  ExecutableConfig E4 {
+  ExecutableConfig testE4 {
   }  
 
-  ExecutableConfig E5, extends: E4 {
+  ExecutableConfig testE5, extends: testE4 {
 	Files "src/main.cpp"
     Files "**/*L5*"
   	IncludeDir "Inc5_1"
@@ -85,11 +85,11 @@ Project {
           }
 	}
 	LinkerScript "ls/linkerscript5.dld"
-	ArtifactName "E5.exe"
-	MapFile "E5/E5.map"
+	ArtifactName "testE5.exe"
+	MapFile "testE5/testE5.map"
   }  
 
-  ExecutableConfig E6, extends: E1 {
+  ExecutableConfig testE6, extends: testE1 {
   }  
   
   
@@ -97,7 +97,7 @@ Project {
 
 
 
-  LibraryConfig L1 {
+  LibraryConfig testL1 {
     Dependency depL1_1, config: lib
     Dependency depL1_2, config: lib
     Files "**/*L1*"
@@ -126,7 +126,7 @@ Project {
 	}
   }
   
-  LibraryConfig L2, extends: L1 {
+  LibraryConfig testL2, extends: testL1 {
     Dependency depL2_1, config: lib
     Dependency depL2_2, config: lib
     Files "**/*L2*"
@@ -158,7 +158,7 @@ Project {
   }
 
 
-  LibraryConfig L3, extends: L2 {
+  LibraryConfig testL3, extends: testL2 {
     Dependency depL3_1, config: lib
     Dependency depL2_2, config: new
     Dependency depL3_2, config: lib
@@ -184,10 +184,10 @@ Project {
   }
   
 
-  LibraryConfig L4 {
+  LibraryConfig testL4 {
   }  
 
-  LibraryConfig L5, extends: L4 {
+  LibraryConfig testL5, extends: testL4 {
     Dependency depL5_1, config: lib
     Dependency depL5_2, config: lib
     Files "**/*L5*"
@@ -214,51 +214,51 @@ Project {
 
   }  
 
-  LibraryConfig L6, extends: L1 {
+  LibraryConfig testL6, extends: testL1 {
   }  
 
-  ExecutableConfig L3E, extends: L3 {
+  ExecutableConfig testL3E, extends: testL3 {
 	Files "src/main.cpp"
   }
-  ExecutableConfig L5E, extends: L5 {
+  ExecutableConfig testL5E, extends: testL5 {
 	Files "src/main.cpp"
   }
-  ExecutableConfig L6E, extends: L6 {
+  ExecutableConfig testL6E, extends: testL6 {
 	Files "src/main.cpp"
   }
   
   
-  CustomConfig C1 {
+  CustomConfig testC1 {
 	CommandLine "echo C1"
   }
   
-  CustomConfig C2, extends: C1 {
+  CustomConfig testC2, extends: testC1 {
 	CommandLine "echo C2"
 	DefaultToolchain GCC
   }
   
-  CustomConfig C3, extends: C2 {
+  CustomConfig testC3, extends: testC2 {
 	CommandLine "echo C3"
 	DefaultToolchain GCC
   }
   
-  CustomConfig C4
+  CustomConfig testC4
 
-  CustomConfig C5, extends: C4 {
+  CustomConfig testC5, extends: testC4 {
 	CommandLine "echo C5"
 	DefaultToolchain GCC
   }
 
-  CustomConfig C6, extends: C1 {
+  CustomConfig testC6, extends: testC1 {
 	DefaultToolchain GCC
   }
   
-  ExecutableConfig C5E, extends: C5 {
+  ExecutableConfig testC5E, extends: testC5 {
 	DefaultToolchain GCC
   }  
   
-  CustomConfig C7, extends: L1 {
-	CommandLine "echo C7"
+  CustomConfig testC7, extends: testL1 {
+	CommandLine "echo testC7"
 	DefaultToolchain GCC
   }  
   

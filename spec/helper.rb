@@ -1,32 +1,26 @@
 require 'tempfile'
 
-
 module Bake
 
-class SpecHelper
-
-  def self.clean_testdata_build(name,main,setup)
-    r = Dir.glob("spec/testdata/#{name}/#{main}/#{setup}")
+  def self.clean_testdata()
+    r = Dir.glob("spec/testdata/**/test*")
     r.each { |f| FileUtils.rm_rf(f) }
-    r = Dir.glob("spec/testdata/#{name}/**/.bake")
+    r = Dir.glob("spec/testdata/**/.bake")
     r.each { |f| FileUtils.rm_rf(f) }
   end
 
-end
-
   RSpec.configure do |config|
-  
-    #your other config
-  
+
     config.before(:each) do
       Utils.cleanup_rake
+      Bake::clean_testdata
       
       @backup_stdout = STDOUT.dup
       @backup_stderr = STDERR.dup
-      @f1 = Tempfile.open("captured_stdout")
-      @f2 = Tempfile.open("captured_stderr")
-      STDOUT.reopen(@f1)
-      STDERR.reopen(@f2)
+      @fstdout = Tempfile.open("captured_stdout")
+      @fstderr = Tempfile.open("captured_stderr")
+      STDOUT.reopen(@fstdout)
+      STDERR.reopen(@fstderr)
       
       $mystring=""
       $sstring=StringIO.open($mystring,"w+")
@@ -36,25 +30,18 @@ end
       ExitHelper.enable_exit_test
     end
     
-    
-    
     config.after(:each) do
       $stdout=$stdoutbackup
       
-      @f1.rewind
-      @f2.rewind
-      @f1.read    
-      @f2.read    
-      @f1.close
-      @f2.close
+      @fstdout.rewind; @fstdout.read; @fstdout.close
+      @fstderr.rewind; @fstderr.read; @fstderr.close
       STDOUT.reopen @backup_stdout
       STDERR.reopen @backup_stderr
       
       ExitHelper.reset_exit_code
+      Bake::clean_testdata      
     end
 
-    
   end
-
 
 end

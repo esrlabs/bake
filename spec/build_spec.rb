@@ -13,11 +13,6 @@ module Bake
 
 describe "Building" do
   
-  before(:each) do
-    SpecHelper.clean_testdata_build("cache","main","test")
-    SpecHelper.clean_testdata_build("cache","lib1","test_main")
-  end
-  
   it 'workspace' do
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     

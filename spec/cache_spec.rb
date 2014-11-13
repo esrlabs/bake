@@ -16,7 +16,6 @@ describe "Caching" do
   
   it 'meta files should be cached' do
     # no cache files  
-    SpecHelper.clean_testdata_build("cache","main","test")
     Utils.cleanup_rake
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-v2"])
     options.parse_options()
@@ -56,7 +55,7 @@ describe "Caching" do
     expect($mystring.split("Info: cache is up-to-date, loading cached meta information").length).to be == 2
     
     # force re read meta files creates all files if necessary
-    SpecHelper.clean_testdata_build("cache","main","test")
+    FileUtils.rm_rf("spec/testdata/cache/main/.bake")
     Utils.cleanup_rake
     tocxx.doit()
     tocxx.start()

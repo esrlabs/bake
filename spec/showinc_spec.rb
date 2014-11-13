@@ -13,11 +13,6 @@ module Bake
 
 describe "ShowInc" do
 
-  before(:each) do
-    SpecHelper.clean_testdata_build("showinc","main","test*")
-    SpecHelper.clean_testdata_build("outdir","sub","test*")
-  end
-
   it 'RelativePath' do
     options = Options.new(["-m", "spec/testdata/showinc/main", "-b", "test" , "--show_incs_and_defs"])
     options.parse_options()

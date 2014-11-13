@@ -17,12 +17,6 @@ ExitHelper.enable_exit_test
 
 describe "bake" do
 
-  before(:each) do
-    SpecHelper.clean_testdata_build("root1","main","test")
-    SpecHelper.clean_testdata_build("root1","lib1","test_main")
-    SpecHelper.clean_testdata_build("root2","lib2","test_main")
-  end
-
   it 'collection double' do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b double`
     expect(str.include?("found more than once")).to be == true

@@ -32,18 +32,12 @@ describe "OutputDir" do
   
 
   before(:each) do
-    SpecHelper.clean_testdata_build("outDir","main","test*")
-    SpecHelper.clean_testdata_build("outDir","lib1","test*")
-    SpecHelper.clean_testdata_build("outDir","lib2","test*")
-    SpecHelper.clean_testdata_build("outDir",".","test*")
-
     if Utils::OS.windows?
       r = Dir.glob("C:/temp/testOutDir*")
     else
       r = Dir.glob("/tmp/testOutDir*")
     end
     r.each { |f| FileUtils.rm_rf(f) }
-    
   end
   
   it 'Toolchain Relative Output Dir' do

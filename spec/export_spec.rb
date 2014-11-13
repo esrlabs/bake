@@ -18,7 +18,7 @@ ExitHelper.enable_exit_test
 describe "Export" do
   
   before(:each) do
-    sleep 1
+    sleep 1 # needed for timestamp tests
   end
   
   it 'With file rebuild' do

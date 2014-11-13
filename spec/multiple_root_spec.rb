@@ -13,12 +13,6 @@ module Bake
 
 describe "Multiple root" do
   
-  before(:each) do
-    SpecHelper.clean_testdata_build("root1","main","test")
-    SpecHelper.clean_testdata_build("root1","lib1","test_main")
-    SpecHelper.clean_testdata_build("root2","lib2","test_main")
-  end
-  
   it 'single root' do
     expect(File.exists?("spec/testdata/root1/main/test/main.exe")).to be == false
     
