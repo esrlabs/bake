@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-
-
 require 'bake/version'
 
 require 'tocxx'
@@ -13,28 +11,8 @@ require 'helper'
 
 module Bake
 
-ExitHelper.enable_exit_test
-
 describe "Order" do
   
-  before(:all) do
-  end
-
-  after(:all) do
-  end
-
-  before(:each) do
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
-  end
-  
-  after(:each) do
-    $stdout=$stdoutbackup
-    ExitHelper.reset_exit_code
-  end
-
   it 'order of libs' do
     options = Options.new(["-m", "spec/testdata/order/p1", "-b", "test"])
     options.parse_options()

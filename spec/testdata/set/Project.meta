@@ -21,7 +21,7 @@ ExecutableConfig cmd {
 }
 
 ExecutableConfig cat {
-  Set VAR1, cmd: "cat test.txt"
+  Set VAR1, cmd: "cat ctest.txt"
   PreSteps {
     CommandLine "echo *$(VAR1)*"
   }

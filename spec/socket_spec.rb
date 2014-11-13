@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-
-
 require 'bake/version'
 
 require 'tocxx'
@@ -12,28 +10,8 @@ require 'imported/utils/cleanup'
 
 module Bake
 
-ExitHelper.enable_exit_test
-
 describe "Socket Handler" do
   
-  before(:all) do
-    Utils.cleanup_rake
-  end
-
-  after(:all) do
-    ExitHelper.reset_exit_code
-  end
-
-  before(:each) do
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
-  end
-  after(:each) do
-    $stdout=$stdoutbackup
-  end
-
   it 'should recv/send to a port on localhost' do
     ExitHelper.reset_exit_code
     options = Options.new(["--socket"])

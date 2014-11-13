@@ -10,7 +10,7 @@ Project {
     Files "**/*.cpp"
     IncludeDir "include"
     IncludeDir "lib1/include"
-    Dependency lib1, config: subtest
+    Dependency lib1, config: testsub
     PreSteps {
       CommandLine "echo PREMAIN"
       Makefile "makefile/makefile", lib: "makefile/dummy.a"

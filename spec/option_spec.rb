@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-
-
 require 'bake/version'
 
 require 'tocxx'
@@ -10,19 +8,7 @@ require 'imported/utils/exit_helper'
 
 module Bake
 
-ExitHelper.enable_exit_test
-
 describe "Option Parser" do
-
-  before(:each) do
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
-  end
-  after(:each) do
-    $stdout=$stdoutbackup
-  end
 
   it 'should provide a help flag' do
     ExitHelper.reset_exit_code

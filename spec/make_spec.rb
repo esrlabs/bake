@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-
-
 require 'bake/version'
 
 require 'tocxx'
@@ -13,25 +11,11 @@ require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 
+require 'imported/ext/stdout'
+
 module Bake
 
-ExitHelper.enable_exit_test
-
 describe "Makefile" do
-
-  before(:each) do
-    Utils.cleanup_rake
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
-  end
-  
-  after(:each) do
-    $stdout=$stdoutbackup
-    ExitHelper.reset_exit_code
-    Utils.cleanup_rake
-  end
 
   it 'builds' do
     options = Options.new(["-m", "spec/testdata/make/main", "test"])

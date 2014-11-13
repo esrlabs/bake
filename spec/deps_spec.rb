@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-
-
 require 'bake/version'
 
 require 'tocxx'
@@ -15,22 +13,7 @@ require 'helper'
 
 module Bake
 
-ExitHelper.enable_exit_test
-
 describe "Deps" do
-
-  before(:each) do
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
-  end
-  
-  after(:each) do
-    $stdout=$stdoutbackup
-    ExitHelper.reset_exit_code
-    Utils.cleanup_rake
-  end
 
   it 'custom deps exe' do
     options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "Debug", "--rebuild", "-v2"])

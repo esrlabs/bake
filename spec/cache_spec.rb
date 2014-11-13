@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-
-
 require 'bake/version'
 
 require 'tocxx'
@@ -14,28 +12,8 @@ require 'helper'
 
 module Bake
 
-ExitHelper.enable_exit_test
-
 describe "Caching" do
   
-  before(:all) do
-    Utils.cleanup_rake
-  end
-
-  after(:all) do
-    ExitHelper.reset_exit_code
-  end
-
-  before(:each) do
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
-  end
-  after(:each) do
-    $stdout=$stdoutbackup
-  end
-
   it 'meta files should be cached' do
     # no cache files  
     SpecHelper.clean_testdata_build("cache","main","test")

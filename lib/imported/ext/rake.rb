@@ -273,7 +273,7 @@ module Rake
       @ignore = false
       @failure = false
       @output_after_execute = true
-      @immediate_output = false
+      @immediate_output = true
     end
 
     define_method(:invoke) do |*args|

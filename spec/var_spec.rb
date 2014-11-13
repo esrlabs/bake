@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-
-
 require 'bake/version'
 
 require 'tocxx'
@@ -14,25 +12,8 @@ require 'helper'
 
 module Bake
 
-ExitHelper.enable_exit_test
-
 describe "VarSubst" do
   
-  after(:all) do
-    ExitHelper.reset_exit_code
-  end
-
-  before(:each) do
-    Utils.cleanup_rake
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
-  end
-  after(:each) do
-    $stdout=$stdoutbackup
-  end
-
   it 'vars should be substed' do
   
     options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "--include_filter", "var"])
@@ -50,7 +31,7 @@ describe "VarSubst" do
     expect(($mystring.include?"ProjectName_lib1 lib1")).to be == true
     expect(($mystring.include?"ProjectName_main main")).to be == true
 
-    expect(($mystring.include?"ConfigName_lib1 subtest")).to be == true
+    expect(($mystring.include?"ConfigName_lib1 testsub")).to be == true
     expect(($mystring.include?"ConfigName_main test")).to be == true
 
     expect(($mystring.include?"OutputDir_lib1 test_main")).to be == true

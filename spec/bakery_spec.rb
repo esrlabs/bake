@@ -17,28 +17,10 @@ ExitHelper.enable_exit_test
 
 describe "bake" do
 
-  before(:all) do
-  end
-
-  after(:all) do
-  end
-
   before(:each) do
-    Utils.cleanup_rake
     SpecHelper.clean_testdata_build("root1","main","test")
     SpecHelper.clean_testdata_build("root1","lib1","test_main")
     SpecHelper.clean_testdata_build("root2","lib2","test_main")
-
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
-  end
-  
-  after(:each) do
-    $stdout=$stdoutbackup
-
-    ExitHelper.reset_exit_code
   end
 
   it 'collection double' do

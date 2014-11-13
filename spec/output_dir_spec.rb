@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-
-
 require 'bake/version'
 
 require 'tocxx'
@@ -12,10 +10,6 @@ require 'fileutils'
 require 'helper'
 
 module Bake
-
-ExitHelper.enable_exit_test
-
-
 
 def self.start(opt)
   options = Options.new(opt)
@@ -36,14 +30,8 @@ describe "OutputDir" do
     expect(File.exists?(prefix+"/"+lib2+"/src/c.o")).to be == should
   end
   
-  before(:all) do
-  end
-
-  after(:all) do
-  end
 
   before(:each) do
-    Utils.cleanup_rake
     SpecHelper.clean_testdata_build("outDir","main","test*")
     SpecHelper.clean_testdata_build("outDir","lib1","test*")
     SpecHelper.clean_testdata_build("outDir","lib2","test*")
@@ -56,18 +44,8 @@ describe "OutputDir" do
     end
     r.each { |f| FileUtils.rm_rf(f) }
     
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
   end
   
-  after(:each) do
-    $stdout=$stdoutbackup
-
-    ExitHelper.reset_exit_code
-  end
-
   it 'Toolchain Relative Output Dir' do
     doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
     opt = ["-m", "spec/testdata/outDir/main", "-b", "testTcRel"]

@@ -3,6 +3,7 @@ require 'bake/version'
 
 
 
+
 SPEC_PATTERN ='spec/**/*_spec.rb'
 
 def new_rspec

@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-
-
 require 'bake/version'
 
 require 'tocxx'
@@ -12,8 +10,6 @@ require 'fileutils'
 require 'helper'
 
 module Bake
-
-ExitHelper.enable_exit_test
 
 def self.cleanMergeOutput()
   SpecHelper.clean_testdata_build("merge","main","L1")
@@ -42,27 +38,12 @@ end
 
 describe "Merging Configs" do
   
-  before(:all) do
-  end
-
-  after(:all) do
-  end
-
   before(:each) do
-    Utils.cleanup_rake
     Bake::cleanMergeOutput()
-
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
   end
   
   after(:each) do
-    $stdout=$stdoutbackup
-
     Bake::cleanMergeOutput()
-    ExitHelper.reset_exit_code
   end
 
   it 'build base (all)' do
@@ -120,9 +101,9 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
 
-    expect($mystring.include?("testL1.cpp")).to be == true
-    expect($mystring.include?("testL2.cpp")).to be == true
-    expect($mystring.include?("testL3.cpp")).to be == true
+    expect($mystring.include?("stestL1.cpp")).to be == true
+    expect($mystring.include?("stestL2.cpp")).to be == true
+    expect($mystring.include?("stestL3.cpp")).to be == true
     expect($mystring.include?("ex.cpp")).to be == false
   end    
   
@@ -135,7 +116,7 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
 
-    expect($mystring.include?("testL5.cpp")).to be == true
+    expect($mystring.include?("stestL5.cpp")).to be == true
     expect(File.exists?("spec/testdata/merge/main/L5/libmain.a")).to be == true    
   end    
 
@@ -148,7 +129,7 @@ describe "Merging Configs" do
     tocxx.doit()
     tocxx.start()
 
-    expect($mystring.include?("testL1.cpp")).to be == true
+    expect($mystring.include?("stestL1.cpp")).to be == true
     expect(File.exists?("spec/testdata/merge/main/L6/libmain.a")).to be == true    
   end    
   

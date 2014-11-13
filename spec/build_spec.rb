@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-
-
 require 'bake/version'
 
 require 'tocxx'
@@ -13,33 +11,13 @@ require 'helper'
 
 module Bake
 
-ExitHelper.enable_exit_test
-
 describe "Building" do
   
-  before(:all) do
-  end
-
-  after(:all) do
-  end
-
   before(:each) do
-    Utils.cleanup_rake
     SpecHelper.clean_testdata_build("cache","main","test")
     SpecHelper.clean_testdata_build("cache","lib1","test_main")
-
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
   end
   
-  after(:each) do
-    $stdout=$stdoutbackup
-
-    ExitHelper.reset_exit_code
-  end
-
   it 'workspace' do
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     

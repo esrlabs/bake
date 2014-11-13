@@ -4,7 +4,7 @@ Project {
     Person "TBD", email: "TBD@TBD.com"
   }
 
-  LibraryConfig subtest {
+  LibraryConfig testsub {
     Files "**/*.cpp"
     IncludeDir "include"
     PreSteps {

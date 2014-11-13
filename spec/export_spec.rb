@@ -17,27 +17,10 @@ ExitHelper.enable_exit_test
 
 describe "Export" do
   
-  before(:all) do
-  end
-
-  after(:all) do
-  end
-
   before(:each) do
-    Utils.cleanup_rake
     sleep 1
-    
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
   end
   
-  after(:each) do
-    $stdout=$stdoutbackup
-    ExitHelper.reset_exit_code
-  end
-
   it 'With file rebuild' do
     FileUtils.rm_rf("spec/testdata/root1/lib3/src/x.cpp")
     File.open("spec/testdata/root1/lib3/src/x.cpp", 'w') { |file| file.write("int i = 2;\n") }

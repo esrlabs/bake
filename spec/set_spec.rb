@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-
-
 require 'bake/version'
 
 require 'tocxx'
@@ -14,25 +12,8 @@ require 'helper'
 
 module Bake
 
-ExitHelper.enable_exit_test
-
 describe "Set" do
   
-  after(:all) do
-    ExitHelper.reset_exit_code
-  end
-
-  before(:each) do
-    Utils.cleanup_rake
-    $mystring=""
-    $sstring=StringIO.open($mystring,"w+")
-    $stdoutbackup=$stdout
-    $stdout=$sstring
-  end
-  after(:each) do
-    $stdout=$stdoutbackup
-  end
-
   it 'value' do
     options = Options.new(["-m", "spec/testdata/set", "-b", "value"])
     options.parse_options()
