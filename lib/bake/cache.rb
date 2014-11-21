@@ -1,5 +1,5 @@
 require 'imported/utils/exit_helper'
-require 'imported/toolchain/colorizing_formatter'
+require 'bake/toolchain/colorizing_formatter'
 require 'common/options/parser'
 require 'common/version'
 

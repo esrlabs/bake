@@ -12,7 +12,7 @@ puts "-- bakery #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}
 STDOUT.sync = true
 STDERR.sync = true
 
-require 'imported/toolchain/colorizing_formatter'
+require 'bake/toolchain/colorizing_formatter'
 require 'tocxx'
 require "bakery/model/loader"
 require "bakery/options/options"

@@ -1,7 +1,7 @@
 require 'yaml'
 require 'imported/utils/process'
 require 'imported/utils/utils'
-require 'imported/toolchain/colorizing_formatter'
+require 'bake/toolchain/colorizing_formatter'
 
 module Bake
   module HasSources

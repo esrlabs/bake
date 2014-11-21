@@ -1,4 +1,4 @@
-require 'imported/toolchain/colorizing_formatter'
+require 'bake/toolchain/colorizing_formatter'
 require 'imported/utils/exit_helper'
 
 module Bake

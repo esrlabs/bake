@@ -1,4 +1,4 @@
-require 'imported/toolchain/colorizing_formatter'
+require 'bake/toolchain/colorizing_formatter'
 require 'common/options/parser'
 
 module Bake

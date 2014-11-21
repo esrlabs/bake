@@ -1,6 +1,6 @@
 require 'imported/buildingblocks/building_block'
 require 'imported/buildingblocks/has_libraries_mixin'
-require 'imported/toolchain/colorizing_formatter'
+require 'bake/toolchain/colorizing_formatter'
 require 'imported/utils/process'
 
 module Bake

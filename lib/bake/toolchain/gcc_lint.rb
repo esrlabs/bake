@@ -1,7 +1,7 @@
 require 'imported/utils/utils'
-require 'imported/toolchain/provider'
-require 'imported/errorparser/error_parser'
-require 'imported/errorparser/gcc_lint_error_parser'
+require 'bake/toolchain/provider'
+require 'bake/toolchain/errorparser/error_parser'
+require 'bake/toolchain/errorparser/gcc_lint_error_parser'
 
 module Bake
   module Toolchain

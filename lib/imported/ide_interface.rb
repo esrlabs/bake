@@ -1,5 +1,5 @@
-require 'imported/errorparser/error_parser'
-require 'imported/toolchain/colorizing_formatter'
+require 'bake/toolchain/errorparser/error_parser'
+require 'bake/toolchain/colorizing_formatter'
 require 'thread'
 
 module Bake

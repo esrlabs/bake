@@ -1,5 +1,5 @@
 require 'imported/ext/rake'
-require 'imported/toolchain/colorizing_formatter'
+require 'bake/toolchain/colorizing_formatter'
 require 'common/options/parser'
 require 'bake/options/showToolchains'
 require 'bake/options/showConfigNames'

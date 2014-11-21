@@ -1,4 +1,4 @@
-require 'imported/errorparser/error_parser'
+require 'bake/toolchain/errorparser/error_parser'
 
 module Bake
   class GCCLinkerErrorParser < ErrorParser

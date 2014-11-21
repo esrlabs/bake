@@ -1,10 +1,10 @@
-require 'imported/errorparser/error_parser'
+require 'bake/toolchain/errorparser/error_parser'
 
 module Bake
-  class TICompilerErrorParser < ErrorParser
+  class GCCCompilerErrorParser < ErrorParser
 
     def initialize()
-      @error_expression = /\"([^,^\"]+)\", line ([0-9]+)[:0-9]* (catastrophic |fatal )*([A-Za-z]+): (.+)/
+      @error_expression = /([^:]+):([0-9]+)[:0-9]* (catastrophic |fatal )*([A-Za-z\._]+): (.+)/
     end
 
     def scan_lines(consoleOutput, proj_dir)
@@ -17,7 +17,12 @@ module Bake
           d.file_name = File.expand_path(scan_res[0][0])
           d.line_number = scan_res[0][1].to_i
           d.message = scan_res[0][4]
-          d.severity = get_severity(scan_res[0][3])
+          if (scan_res[0][3].include?".")
+            d.severity = SEVERITY_ERROR
+            d.message = scan_res[0][3] + ": " + d.message
+          else
+            d.severity = get_severity(scan_res[0][3])
+          end
           l.gsub!(scan_res[0][0],d.file_name)
         end
         res << d

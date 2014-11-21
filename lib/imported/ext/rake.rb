@@ -1,13 +1,13 @@
 require 'imported/ext/stdout'
 require 'imported/utils/exit_helper'
-require 'imported/errorparser/error_parser'
+require 'bake/toolchain/errorparser/error_parser'
 
 
 require 'rake'
 require 'stringio'
 require 'thread'
 
-require 'imported/toolchain/colorizing_formatter'
+require 'bake/toolchain/colorizing_formatter'
 
 module Bake
   class SystemCommandFailed < Exception

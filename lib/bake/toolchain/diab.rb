@@ -1,7 +1,7 @@
-require 'imported/toolchain/provider'
+require 'bake/toolchain/provider'
 require 'imported/utils/utils'
-require 'imported/errorparser/diab_compiler_error_parser'
-require 'imported/errorparser/diab_linker_error_parser'
+require 'bake/toolchain/errorparser/diab_compiler_error_parser'
+require 'bake/toolchain/errorparser/diab_linker_error_parser'
 
 module Bake
   module Toolchain

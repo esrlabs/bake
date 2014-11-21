@@ -130,10 +130,10 @@ module Bake
   end
 end
 
-require 'imported/toolchain/diab'
-require 'imported/toolchain/gcc'
-require 'imported/toolchain/gcc_lint'
-require 'imported/toolchain/clang'
-require 'imported/toolchain/ti'
-require 'imported/toolchain/greenhills'
-require 'imported/toolchain/keil'
+require 'bake/toolchain/diab'
+require 'bake/toolchain/gcc'
+require 'bake/toolchain/gcc_lint'
+require 'bake/toolchain/clang'
+require 'bake/toolchain/ti'
+require 'bake/toolchain/greenhills'
+require 'bake/toolchain/keil'

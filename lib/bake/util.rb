@@ -1,7 +1,7 @@
 require 'bake/model/metamodel_ext'
 require 'bake/model/metamodel'
 require 'set'
-require 'imported/toolchain/colorizing_formatter'
+require 'bake/toolchain/colorizing_formatter'
 require 'imported/utils/exit_helper'
 require 'imported/utils/utils'
 

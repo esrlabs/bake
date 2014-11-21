@@ -1,12 +1,10 @@
-require 'imported/errorparser/error_parser'
+require 'bake/toolchain/errorparser/error_parser'
 
 module Bake
-  class GreenHillsCompilerErrorParser < ErrorParser
+  class TICompilerErrorParser < ErrorParser
 
     def initialize()
-      # example:
-      # "test.c", line 1: warning #123-D: blah blub
-      @error_expression = /"([^"]+)", line ([0-9]+)[:0-9]* (catastrophic |fatal )*([A-Za-z\._]+) (.+)/
+      @error_expression = /\"([^,^\"]+)\", line ([0-9]+)[:0-9]* (catastrophic |fatal )*([A-Za-z]+): (.+)/
     end
 
     def scan_lines(consoleOutput, proj_dir)

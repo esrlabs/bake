@@ -3,7 +3,7 @@ require 'imported/utils/exit_helper'
 require 'imported/ext/rake'
 require 'imported/ext/file'
 require 'imported/ide_interface'
-require 'imported/toolchain/colorizing_formatter'
+require 'bake/toolchain/colorizing_formatter'
 
 # no deprecated warning for rake >= 0.9.x
 include Rake::DSL if defined?(Rake::DSL)
