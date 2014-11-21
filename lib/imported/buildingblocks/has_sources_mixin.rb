@@ -1,7 +1,7 @@
 require 'yaml'
 require 'imported/utils/process'
 require 'imported/utils/utils'
-require 'imported/utils/printer'
+require 'imported/toolchain/colorizing_formatter'
 
 module Bake
   module HasSources
@@ -182,8 +182,8 @@ module Bake
 
       source_patterns.each do |p|
         globRes = Dir.glob(p)
-        if (globRes.length == 0 and RakeFileUtils.verbose and not quiet)
-          Printer.printInfo "Info: Source file pattern '#{p}' did not match to any file"
+        if (globRes.length == 0 and Bake.options.verboseHigh and not quiet)
+          Bake.formatter.printInfo "Info: Source file pattern '#{p}' did not match to any file"
         end
         globRes.each do |f|
           next if exclude_files.include?(f)
@@ -248,7 +248,7 @@ module Bake
         compiler = the_tcs[:COMPILER][type]
       
         if Rake::application.preproFlags and compiler[:PREPRO_FLAGS] == ""
-          Printer.printInfo("Info: No preprocessor option available for " + sourceRel)
+          Bake.formatter.printInfo("Info: No preprocessor option available for " + sourceRel)
         else
       
           i_array = the_tcs == @tcs ? @include_string[type] : get_include_string(the_tcs, type)
@@ -345,19 +345,14 @@ module Bake
             end
 
             console_output.gsub!(/[\r]/, "")
-            highlighter = @tcs[:CONSOLE_HIGHLIGHTER]
-            if (highlighter and highlighter.enabled?)
-              puts highlighter.format(console_output, error_descs, error_parser)
-            else
-              puts console_output
-            end
+            Bake.formatter.format(console_output, error_descs, error_parser)
 
             Rake.application.idei.set_errors(error_descs)
           rescue Exception => e
-            Printer.printWarning "Parsing output failed (maybe language not set to English?): " + e.message
-            puts e.backtrace
+            Bake.formatter.printWarning "Parsing output failed (maybe language not set to English?): " + e.message
             puts "Original output:"
             puts console_output
+            raise e
           end
         else
           puts console_output # fallback

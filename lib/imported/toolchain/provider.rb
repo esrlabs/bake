@@ -1,5 +1,3 @@
-require 'imported/toolchain/colorizing_formatter'
-
 module Bake
   module Toolchain
 
@@ -91,8 +89,6 @@ module Bake
           :CLEAN => "clean"
         },
         
-        :CONSOLE_HIGHLIGHTER => ColorizingFormatter.new,
-        
         :LINT_POLICY => []
       }
 
@@ -116,7 +112,7 @@ module Bake
       
         if name == "TI"
           if not ENV['TI_HOME']
-            Printer.printError "Error: Please set TI_HOME"
+            Bake.formatter.printError "Error: Please set TI_HOME"
             ExitHelper.exit(1)
           end
         end

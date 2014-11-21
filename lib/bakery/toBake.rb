@@ -5,10 +5,10 @@ module Bake
   def self.getBuildPattern(cols, name)
 
     if (cols.length == 0)
-      Printer.printError "Collection #{name} not found in #{@options.collection_dir+"/Collection.meta"}"
+      Bake.formatter.printError "Collection #{name} not found in #{@options.collection_dir+"/Collection.meta"}"
       ExitHelper.exit(1)
     elsif (cols.length > 1)
-      Printer.printError "Collection #{name} found more than once in #{@options.collection_dir+"/Collection.meta"}"
+      Bake.formatter.printError "Collection #{name} found more than once in #{@options.collection_dir+"/Collection.meta"}"
       ExitHelper.exit(1)
     end
 
@@ -16,11 +16,11 @@ module Bake
 
     col.project.each do |p|
       if p.name == ""
-        Printer.printError "Error in #{@options.collection_dir+"/Collection.meta"} (line #{p.line_number}): Project name empty"
+        Bake.formatter.printError "Error in #{@options.collection_dir+"/Collection.meta"} (line #{p.line_number}): Project name empty"
         ExitHelper.exit(1)
       end
       if p.config == ""
-        Printer.printError "Error in #{@options.collection_dir+"/Collection.meta"} (line #{p.line_number}): Config name empty"
+        Bake.formatter.printError "Error in #{@options.collection_dir+"/Collection.meta"} (line #{p.line_number}): Config name empty"
         ExitHelper.exit(1)
       end
     end
@@ -54,7 +54,7 @@ module Bake
     end
 
     toBuildPattern.each do |bp|
-      Printer.printInfo "Info in #{@options.collection_dir+"/Collection.meta"} (line #{bp.coll_p.line_number}): No match for project #{bp.coll_p.name} with config #{bp.coll_p.config}" unless bp.coll_p.isFound
+      Bake.formatter.printInfo "Info in #{@options.collection_dir+"/Collection.meta"} (line #{bp.coll_p.line_number}): No match for project #{bp.coll_p.name} with config #{bp.coll_p.config}" unless bp.coll_p.isFound
     end
 
     col.exclude.each do |p|

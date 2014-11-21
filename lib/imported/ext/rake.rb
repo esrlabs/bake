@@ -7,7 +7,7 @@ require 'rake'
 require 'stringio'
 require 'thread'
 
-require 'imported/utils/printer'
+require 'imported/toolchain/colorizing_formatter'
 
 module Bake
   class SystemCommandFailed < Exception
@@ -17,26 +17,11 @@ end
 module Rake
 
   class Application
-    attr_writer :max_parallel_tasks
     attr_writer :check_unnecessary_includes
     attr_writer :deriveIncludes
     attr_writer :preproFlags
     attr_writer :consoleOutput_fullnames
     attr_writer :consoleOutput_visualStudio
-    attr_writer :addEmptyLine
-    attr_writer :debug
-    attr_writer :lint
-    def max_parallel_tasks
-      @max_parallel_tasks ||= 8
-    end
-    
-    def debug
-      @debug ||= false
-    end
-    
-    def addEmptyLine
-      @addEmptyLine ||= false
-    end
     
     def check_unnecessary_includes
       @check_unnecessary_includes ||= false
@@ -78,10 +63,6 @@ module Rake
     
     def consoleOutput_visualStudio
       @consoleOutput_visualStudio ||= false
-    end
-    
-    def lint
-      @lint ||= false
     end
     
   end
@@ -141,7 +122,7 @@ module Rake
             res.severity = Bake::ErrorParser::SEVERITY_ERROR
             res.message = message
             Rake.application.idei.set_errors([res])
-            Bake::Printer.printError message
+            Bake.formatter.printError message
             set_failed
             return
           end
@@ -159,7 +140,7 @@ module Rake
         
         @error_strings = {}
         
-        Jobs.new(file_tasks, application.max_parallel_tasks) do |jobs|
+        Jobs.new(file_tasks, Bake.options.threads) do |jobs|
           handle_jobs(jobs, args, invocation_chain)
         end.join
         
@@ -174,7 +155,7 @@ module Rake
               next if i=="."
               if not @bb.deps_in_depFiles.any? { |d| d.index(i) == 0 }
                 msg = "Info: Include to #{i} seems to be unnecessary"
-                Bake::Printer.printInfo msg
+                Bake.formatter.printInfo msg
                 res = Bake::ErrorDesc.new
                 res.file_name = @project_dir
                 res.line_number = 0
@@ -313,8 +294,8 @@ module Rake
               end
               return
             end
-            Bake::Printer.printError "Error #{name}: #{e.message}"
-            if RakeFileUtils.verbose
+            Bake.formatter.printError "Error #{name}: #{e.message}"
+            if Bake.options.debug
               puts e.backtrace
             end       
             set_failed
@@ -377,14 +358,14 @@ module Rake
     def handle_error(ex1, isSysCmd)
       if not Rake.application.idei.get_abort()
         if not isSysCmd
-          Bake::Printer.printError "Error for task #{@name}: #{ex1.message}"
-          Bake::Printer.printError(ex1.backtrace) if Rake.application.debug
+          Bake.formatter.printError "Error for task #{@name}: #{ex1.message}"
+          Bake.formatter.printError(ex1.backtrace) if Bake.options.debug
         end
       end
       begin
         FileUtils.rm(@name) if File.exists?(@name)
       rescue Exception => ex2
-        Bake::Printer.printError "Error: Could not delete #{@name}: #{ex2.message}"
+        Bake.formatter.printError "Error: Could not delete #{@name}: #{ex2.message}"
       end
       set_failed
     end

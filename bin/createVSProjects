@@ -3,7 +3,7 @@ $:.unshift(File.dirname(__FILE__)+"/../lib")
 
 require "securerandom"
 require "vs/options"
-require 'bake/version'
+require 'common/version'
 
 puts "-- bake #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
 

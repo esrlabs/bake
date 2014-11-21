@@ -2,13 +2,12 @@ module Bake
 
   class Subst
   
-    def self.itute(config, projName, options, isMainProj, toolchain)
+    def self.itute(config, projName, isMainProj, toolchain)
     
       @@configName = config.name
       @@projDir = config.parent.get_project_dir
       @@projName = projName
-      @@options = options
-      @@mainProjectName = File::basename(options.main_dir)
+      @@mainProjectName = File::basename(Bake.options.main_dir)
       @@resolvedVars = 0
       @@configFilename = config.file_name
       
@@ -33,7 +32,7 @@ module Bake
       config.set.each do |s|
      
         if (s.value != "" and s.cmd != "")
-          Printer.printError "Error: #{config.file_name}(#{s.line_number}): value and cmd attributes must be used exclusively"
+          Bake.formatter.printError "Error: #{config.file_name}(#{s.line_number}): value and cmd attributes must be used exclusively"
           ExitHelper.exit(1)
         end
         
@@ -56,7 +55,7 @@ module Bake
           rescue
           end
           if (cmd_result == false)
-            Printer.printWarning "Warning: #{config.file_name}(#{s.line_number}): command not successful, variable #{s.name} wil be set to \"\"  (#{consoleOutput.chomp})."
+            Bake.formatter.printWarning "Warning: #{config.file_name}(#{s.line_number}): command not successful, variable #{s.name} wil be set to \"\"  (#{consoleOutput.chomp})."
             @@userVarMap[s.name] = ""
           end          
         end
@@ -78,7 +77,7 @@ module Bake
         lastFoundInVar = @@resolvedVars 
       end      
       if (@@resolvedVars > 0)
-        Printer.printError "Error: #{config.file_name}: cyclic variable substitution detected"
+        Bake.formatter.printError "Error: #{config.file_name}: cyclic variable substitution detected"
         ExitHelper.exit(1)
       end
       
@@ -97,16 +96,16 @@ module Bake
         @@resolvedVars += 1
         var = str[posStart+2..posEnd-1]
 
-        if @@options.vars.has_key?(var)
-          substStr << @@options.vars[var]  
+        if Bake.options.vars.has_key?(var)
+          substStr << Bake.options.vars[var]  
         elsif @@userVarMap.has_key?(var)
           substStr << @@userVarMap[var]       
         elsif var == "MainConfigName"
-          substStr << @@options.build_config
+          substStr << Bake.options.build_config
         elsif var == "MainProjectName"
           substStr << @@mainProjectName
         elsif var == "MainProjectDir"
-          substStr << @@options.main_dir
+          substStr << Bake.options.main_dir
         elsif var == "ConfigName"
          substStr << @@configName
         elsif var == "ProjectName"
@@ -115,9 +114,9 @@ module Bake
           substStr << @@projDir
         elsif var == "OutputDir"
           if @@projName == @@mainProjectName 
-            substStr << @@options.build_config
+            substStr << Bake.options.build_config
           else
-            substStr << (@@options.build_config + "_" + @@mainProjectName)
+            substStr << (Bake.options.build_config + "_" + @@mainProjectName)
           end
         elsif var == "Time"
           substStr << Time.now.to_s
@@ -138,8 +137,8 @@ module Bake
         elsif ENV[var]
           substStr << ENV[var]
         else
-          if @@options.verbose
-            Printer.printInfo "Info: #{@@configFilename}: substitute variable '$(#{var})' with empty string"
+          if Bake.options.verboseHigh
+            Bake.formatter.printInfo "Info: #{@@configFilename}: substitute variable '$(#{var})' with empty string"
           end
           substStr << ""
         end

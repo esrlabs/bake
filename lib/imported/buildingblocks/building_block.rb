@@ -3,7 +3,7 @@ require 'imported/utils/exit_helper'
 require 'imported/ext/rake'
 require 'imported/ext/file'
 require 'imported/ide_interface'
-require 'imported/utils/printer'
+require 'imported/toolchain/colorizing_formatter'
 
 # no deprecated warning for rake >= 0.9.x
 include Rake::DSL if defined?(Rake::DSL)
@@ -126,7 +126,7 @@ module Bake
         rescue ExitHelperException
           raise
         rescue Exception => e
-          Printer.printError e.message
+          Bake.formatter.printError e.message
           ExitHelper.exit(1)
         end
       end
@@ -146,11 +146,11 @@ module Bake
 
     def printCmd(cmd, alternate, showPath)
       @lastCommand = cmd
-      if showPath or RakeFileUtils.verbose or (alternate.nil? and not Rake::application.options.silent)
+      if showPath or Bake.options.verboseHigh or (alternate.nil? and not Bake.options.verboseLow)
         @printedCmdAlternate = false
         exedIn = ""
-        exedIn = "\n(executed in '#{@project_dir}')" if (showPath or RakeFileUtils.verbose)
-        puts "" if Rake::application.addEmptyLine
+        exedIn = "\n(executed in '#{@project_dir}')" if (showPath or Bake.options.verboseHigh)
+        puts "" if Bake.options.verboseHigh # todo: why?
         if cmd.is_a?(Array)
           puts cmd.join(' ') + exedIn
         else
@@ -158,7 +158,7 @@ module Bake
         end
       else
         @printedCmdAlternate = true
-        puts alternate unless Rake::application.options.silent
+        puts alternate if not Bake.options.verboseLow
       end
       @lastCommand = cmd
     end
@@ -167,13 +167,13 @@ module Bake
     def process_result(cmd, console_output, error_parser, alternate, success)
       hasError = (success == false)
       if (cmd != @lastCommand) or (@printedCmdAlternate and hasError)
-        printCmd(cmd, alternate, hasError && Rake::application.lint == false)
+        printCmd(cmd, alternate, (hasError and not Bake.options.lint))
       end
       errorPrinted = process_console_output(console_output, error_parser)
 
       if hasError
         if not errorPrinted
-          Printer.printError "Error: system command failed"
+          Bake.formatter.printError "Error: system command failed"
           res = ErrorDesc.new
           res.file_name = @project_dir
           res.line_number = 0

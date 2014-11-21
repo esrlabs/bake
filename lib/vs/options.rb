@@ -1,4 +1,5 @@
-require "option/parser"
+require "common/options/parser"
+require "common/options/option"
 
 module Bake
 

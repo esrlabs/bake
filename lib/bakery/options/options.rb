@@ -1,6 +1,5 @@
-require 'imported/utils/printer'
 require 'imported/toolchain/colorizing_formatter'
-require 'option/parser'
+require 'common/options/parser'
 
 module Bake
 
@@ -23,10 +22,10 @@ module Bake
             
       add_option(Option.new("-b",true)        { |x| set_collection_name(x)     })
       add_option(Option.new("-m",true)        { |x| set_collection_dir(x)     })
-      add_option(Option.new("-r",false)       {     set_error                 })
-      add_option(Option.new("-a",true)        { |x| set_color(x)              })
+      add_option(Option.new("-r",false)       {     @error = true                 })
+      add_option(Option.new("-a",true)        { |x|Bake.formatter.setColorScheme(x.to_sym)               })
       add_option(Option.new("-w",true)        { |x| set_root(x)               })
-      add_option(Option.new("--socket",true)  { |x| set_socket(x)             })
+      add_option(Option.new("--socket",true)  { |x| @socket = String === x ? x.to_i : x             })
       add_option(Option.new("-h",false)       {     usage; ExitHelper.exit(0) })
     end
     
@@ -54,18 +53,18 @@ module Bake
     
     def check_valid_dir(dir)
      if not File.exists?(dir)
-        Printer.printError "Error: Directory #{dir} does not exist"
+        Bake.formatter.printError "Error: Directory #{dir} does not exist"
         ExitHelper.exit(1)
       end
       if not File.directory?(dir)
-        Printer.printError "Error: #{dir} is not a directory"
+        Bake.formatter.printError "Error: #{dir} is not a directory"
         ExitHelper.exit(1)
       end      
     end    
     
     def set_collection_name(collection_name)
       if not @collection_name.empty?
-        Printer.printError "Error: Cannot set collection name '#{collection_name}', because collection name is already set to '#{@collection_name}'"
+        Bake.formatter.printError "Error: Cannot set collection name '#{collection_name}', because collection name is already set to '#{@collection_name}'"
         ExitHelper.exit(1)
       end      
       @collection_name = collection_name
@@ -76,29 +75,13 @@ module Bake
       @collection_dir = File.expand_path(dir.gsub(/[\\]/,'/'))
       @def_roots = calc_def_roots(@collection_dir)
     end
-    
-    def set_color(x)
-      if (x != "black" and x != "white")
-        Printer.printError "Error: color scheme must be 'black' or 'white'"
-        ExitHelper.exit(1)
-      end      
-      @color = x
-      ColorizingFormatter.enabled = true
-      ColorizingFormatter::setColorScheme(x.to_sym)
-    end    
-    def set_error()
-      @error = true
-    end
 
     def set_root(dir)
       check_valid_dir(dir)
       r = File.expand_path(dir.gsub(/[\\]/,'/'))
       @roots << r if not @roots.include?r
     end
-        
-    def set_socket(num)
-      @socket = String === num ? num.to_i : num
-    end  
+
   
   end
 

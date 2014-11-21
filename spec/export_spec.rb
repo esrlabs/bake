@@ -2,10 +2,10 @@
 
 
 
-require 'bake/version'
+require 'common/version'
 
 require 'tocxx'
-require 'bake/options'
+require 'bake/options/options'
 require 'imported/utils/exit_helper'
 require 'imported/utils/cleanup'
 require 'fileutils'
@@ -25,9 +25,9 @@ describe "Export" do
     FileUtils.rm_rf("spec/testdata/root1/lib3/src/x.cpp")
     File.open("spec/testdata/root1/lib3/src/x.cpp", 'w') { |file| file.write("int i = 2;\n") }
     
-    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "--rebuild"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "--rebuild"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()    
     
@@ -38,9 +38,9 @@ describe "Export" do
   end
   
   it 'With file build' do
-    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()    
     
@@ -54,9 +54,9 @@ describe "Export" do
     
     FileUtils.rm_rf("spec/testdata/root1/lib3/src/x.cpp")
     
-    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "--rebuild"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "--rebuild"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()    
     
@@ -67,9 +67,9 @@ describe "Export" do
   end
   it 'Without file clean' do
     
-    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-c"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-c"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()   
     
@@ -77,9 +77,9 @@ describe "Export" do
   end
   it 'Without file build' do
     
-    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     
@@ -90,9 +90,9 @@ describe "Export" do
   end
   it 'Without file lib' do
     
-    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "lib3"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "lib3"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     
@@ -103,9 +103,9 @@ describe "Export" do
   end
   it 'Without file lib rebuild' do
     
-    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "lib3", "--rebuild"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "lib3", "--rebuild"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     
@@ -116,9 +116,9 @@ describe "Export" do
   end
   it 'Without file main rebuild' do
     
-    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "main", "--rebuild"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "main", "--rebuild"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
 
@@ -132,9 +132,9 @@ describe "Export" do
     FileUtils.rm_rf("spec/testdata/root1/lib3/src/x.cpp")
     File.open("spec/testdata/root1/lib3/src/x.cpp", 'w') { |file| file.write("int i = 2;\n") }
     
-    options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     

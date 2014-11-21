@@ -1,7 +1,7 @@
 require 'imported/utils/exit_helper'
-require 'imported/utils/printer'
-require 'bake/version'
-require 'bake/options'
+require 'imported/toolchain/colorizing_formatter'
+require 'common/options/parser'
+require 'common/version'
 
 module Bake
 
@@ -29,7 +29,6 @@ module Bake
         CLOBBER.include(File.dirname(pm_filename)+"/.bake")
           
         FileUtils.mkdir_p(File.dirname(@cacheFilename))
-        @options = options
         @defaultToolchain = nil
         @defaultToolchainTime = nil
       end
@@ -44,9 +43,9 @@ module Bake
             cache = Marshal.load(contents)
             
             if cache.version != Version.number
-              Printer.printInfo("Info: cache version ("+cache.version+") does not match to bake version ("+Version.number+"), reloading meta information")
+              Bake.formatter.printInfo("Info: cache version ("+cache.version+") does not match to bake version ("+Version.number+"), reloading meta information")
               cache = nil
-              @options.set_nocache # complete re-read 
+              Bake.options.set_nocache # complete re-read 
             else
               @defaultToolchain = cache.defaultToolchain
               @defaultToolchainTime = cache.defaultToolchainTime
@@ -54,18 +53,18 @@ module Bake
               
             if cache != nil
               if cache.cache_file != @cacheFilename
-                Printer.printInfo "Info: cache filename changed, reloading meta information"
+                Bake.formatter.printInfo "Info: cache filename changed, reloading meta information"
                 cache = nil
-                @options.set_nocache # abs dir may wrong 
+                Bake.options.set_nocache # abs dir may wrong 
               end
             end
             
             if cache != nil
               cache.files.each do |c|
                 if (not File.exists?(c))
-                  Printer.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
+                  Bake.formatter.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
                   cache = nil
-                  @options.set_nocache # abs dir may wrong 
+                  Bake.options.set_nocache # abs dir may wrong 
                   break
                 end
               end
@@ -74,9 +73,9 @@ module Bake
             if cache != nil
               cache.project2config.each do |pname,config|
                 if not File.exists?(config.file_name)
-                  Printer.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
+                  Bake.formatter.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
                   cache = nil
-                  @options.set_nocache # abs dir may wrong 
+                  Bake.options.set_nocache # abs dir may wrong 
                 end
               end  
             end
@@ -84,7 +83,7 @@ module Bake
             if cache != nil
               cache.files.each do |c|
                 if File.mtime(c) > cacheTime
-                  Printer.printInfo "Info: cache is out-of-date, reloading meta information"
+                  Bake.formatter.printInfo "Info: cache is out-of-date, reloading meta information"
                   cache = nil
                   break
                 end
@@ -92,9 +91,9 @@ module Bake
             end
 
             if cache != nil
-              if cache.workspace_roots.length == @options.roots.length
+              if cache.workspace_roots.length == Bake.options.roots.length
                 cache.workspace_roots.each do |r|
-                  if not @options.roots.include?r
+                  if not Bake.options.roots.include?r
                     cache = nil
                     break
                   end
@@ -102,36 +101,36 @@ module Bake
               else
                 cache = nil
               end
-              Printer.printInfo "Info: specified roots differ from cached roots, reloading meta information" if cache.nil?
+              Bake.formatter.printInfo "Info: specified roots differ from cached roots, reloading meta information" if cache.nil?
             end
             
             if cache != nil
-              if (not @options.include_filter.eql?(cache.include_filter)) or (not @options.exclude_filter.eql?(cache.exclude_filter))
+              if (not Bake.options.include_filter.eql?(cache.include_filter)) or (not Bake.options.exclude_filter.eql?(cache.exclude_filter))
                 cache = nil
-                Printer.printInfo "Info: specified filters differ from cached filters, reloading meta information"
+                Bake.formatter.printInfo "Info: specified filters differ from cached filters, reloading meta information"
               end
             end 
             
             if cache != nil
-              if (not @options.no_autodir.eql?(cache.no_autodir))
+              if (not Bake.options.no_autodir.eql?(cache.no_autodir))
                 cache = nil
-                Printer.printInfo "Info: no_autodir option differs in cache, reloading meta information"
+                Bake.formatter.printInfo "Info: no_autodir option differs in cache, reloading meta information"
               end
             end             
             
           else
-            Printer.printInfo("Info: cache not found, reloading meta information")
+            Bake.formatter.printInfo("Info: cache not found, reloading meta information")
           end
           
         rescue ExitHelperException
           raise
         rescue
-          Printer.printWarning "Warning: cache file corrupt, reloading meta information"
+          Bake.formatter.printWarning "Warning: cache file corrupt, reloading meta information"
           cache = nil
         end      
         
         if cache != nil
-          Printer.printInfo "Info: cache is up-to-date, loading cached meta information" if @options.verbose
+          Bake.formatter.printInfo "Info: cache is up-to-date, loading cached meta information" if Bake.options.verboseHigh
           
           cache.files.each do |c|
             CLOBBER.include(File.dirname(c)+"/.bake")
@@ -149,10 +148,10 @@ module Bake
         cache.files = project_files
         cache.cache_file = @cacheFilename
         cache.version = Version.number
-        cache.include_filter = @options.include_filter
-        cache.no_autodir = @options.no_autodir
-        cache.exclude_filter = @options.exclude_filter
-        cache.workspace_roots = @options.roots
+        cache.include_filter = Bake.options.include_filter
+        cache.no_autodir = Bake.options.no_autodir
+        cache.exclude_filter = Bake.options.exclude_filter
+        cache.workspace_roots = Bake.options.roots
         cache.defaultToolchain = defaultToolchain
         cache.defaultToolchainTime = defaultToolchainTime
         bbdump = Marshal.dump(cache)

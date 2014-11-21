@@ -1,6 +1,6 @@
 require 'imported/buildingblocks/building_block'
 require 'imported/buildingblocks/has_libraries_mixin'
-require 'imported/utils/printer'
+require 'imported/toolchain/colorizing_formatter'
 require 'imported/utils/process'
 
 module Bake
@@ -74,7 +74,7 @@ module Bake
     def executeCmd(cmd)
         Dir.chdir(@project_dir) do
           check_config_file
-          puts cmd + (RakeFileUtils.verbose ? "\n(executed in '#{@project_dir}')" : "")
+          puts cmd + (Bake.options.verboseHigh ? "\n(executed in '#{@project_dir}')" : "")
           cmd_result = false
           begin
             cmd_result = ProcessHelper.spawnProcess(cmd + " 2>&1")
@@ -93,7 +93,7 @@ module Bake
               end
               Rake.application.idei.set_errors([err_res])
             end
-            Printer.printError "Error: command \"#{cmd}\" failed" + (RakeFileUtils.verbose ? "" : "\n(executed in '#{@project_dir}')")
+            Bake.formatter.printError "Error: command \"#{cmd}\" failed" + (Bake.options.verboseHigh ? "" : "\n(executed in '#{@project_dir}')")
             raise SystemCommandFailed.new
           end
         end

@@ -33,12 +33,12 @@ module Bake
           srcs = calc_sources_to_build.keys
           
           if @lint_min >= 0 and @lint_min >= srcs.length
-            Printer.printError "Error: lint_min is set to #{@lint_min}, but only #{srcs.length} file(s) are specified to lint"
+            Bake.formatter.printError "Error: lint_min is set to #{@lint_min}, but only #{srcs.length} file(s) are specified to lint"
             ExitHelper.exit(1) 
           end
           
           if @lint_max >= 0 and @lint_max >= srcs.length
-            Printer.printError "Error: lint_max is set to #{@lint_max}, but only #{srcs.length} file(s) are specified to lint"
+            Bake.formatter.printError "Error: lint_max is set to #{@lint_max}, but only #{srcs.length} file(s) are specified to lint"
             ExitHelper.exit(1) 
           end      
           

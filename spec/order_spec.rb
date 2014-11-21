@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'bake/version'
+require 'common/version'
 
 require 'tocxx'
-require 'bake/options'
+require 'bake/options/options'
 require 'imported/utils/exit_helper'
 require 'imported/utils/cleanup'
 require 'fileutils'
@@ -14,9 +14,9 @@ module Bake
 describe "Order" do
   
   it 'order of libs' do
-    options = Options.new(["-m", "spec/testdata/order/p1", "-b", "test"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/order/p1", "-b", "test"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
 

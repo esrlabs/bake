@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'bake/version'
+require 'common/version'
 
 require 'tocxx'
-require 'bake/options'
+require 'bake/options/options'
 require 'imported/utils/exit_helper'
 require 'socket'
 require 'imported/utils/cleanup'
@@ -15,54 +15,54 @@ module Bake
 describe "Set" do
   
   it 'value' do
-    options = Options.new(["-m", "spec/testdata/set", "-b", "value"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/set", "-b", "value"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect(($mystring.include?"*GUGU*")).to be == true
   end
 
   it 'cmd' do
-    options = Options.new(["-m", "spec/testdata/set", "-b", "cmd"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/set", "-b", "cmd"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect(($mystring.include?"*GAGA*")).to be == true
   end
   
   it 'cat' do
-    options = Options.new(["-m", "spec/testdata/set", "-b", "cat"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/set", "-b", "cat"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect(($mystring.include?"*MYTEST ABC*")).to be == true
   end  
 
   it 'arti' do
-    options = Options.new(["-m", "spec/testdata/set", "-b", "arti"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/set", "-b", "arti"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect(($mystring.include?"arti/*GAGA*")).to be == true
   end
   
   it 'triple' do
-    options = Options.new(["-m", "spec/testdata/set", "-b", "triple"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/set", "-b", "triple"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect(($mystring.include?"*GAGAGUGUHUHU*")).to be == true
   end
   
   it 'recursive' do
-    options = Options.new(["-m", "spec/testdata/set", "-b", "recursive"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/set", "-b", "recursive"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect(($mystring.include?"**GUGU*-HUHU *GUGU*.elf*")).to be == true
@@ -70,9 +70,9 @@ describe "Set" do
   end
   
   it 'no cmd' do
-    options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect(($mystring.include?"Project A TestA   A")).to be == true
@@ -81,9 +81,9 @@ describe "Set" do
   end
 
   it 'cmd A' do
-    options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test", "--set", "a=X"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test", "--set", "a=X"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect(($mystring.include?"Project A X   A")).to be == true
@@ -92,9 +92,9 @@ describe "Set" do
   end
   
   it 'cmd B' do
-    options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test", "--set", "b=X"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/set_set/A", "-b", "test", "--set", "b=X"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect(($mystring.include?"Project A TestA X  A")).to be == true

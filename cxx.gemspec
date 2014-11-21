@@ -1,7 +1,7 @@
 $:.unshift(File.dirname(__FILE__)+"/")
 
 require "rake"
-require "lib/bake/version"
+require "lib/common/version"
 
 include FileUtils
 
@@ -28,6 +28,8 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["-x", "doc"]
   s.add_dependency("rtext", "=0.2.0")
   s.add_dependency("rgen", "=0.6.0")
+  s.add_dependency("highline", ">= 1.6.0")
+  s.add_dependency("colored")
   s.executables = ["bake", "bakery", "createVSProjects", "bake-doc"]
   s.licenses    = ['MIT']
 end

@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'bake/version'
+require 'common/version'
 
 require 'tocxx'
-require 'bake/options'
+require 'bake/options/options'
 require 'bake/util'
 require 'imported/utils/exit_helper'
 require 'socket'
@@ -16,9 +16,9 @@ module Bake
 describe "Deps" do
 
   it 'custom deps exe' do
-    options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "Debug", "--rebuild", "-v2"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "Debug", "--rebuild", "-v2"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect($mystring.include?("Building 1 of 6: p3 (Debug)")).to be == true
@@ -34,9 +34,9 @@ describe "Deps" do
   end
   
   it 'exe deps exe' do
-    options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "Debug2", "--rebuild", "-v2"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "Debug2", "--rebuild", "-v2"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect($mystring.include?("Building 1 of 6: p3 (Debug)")).to be == true
@@ -51,17 +51,17 @@ describe "Deps" do
   end
   
   it 'different config of same proj' do
-    options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "DebugWrong"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "DebugWrong"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     expect { tocxx.doit() }.to raise_error(ExitHelperException)
     expect($mystring.include?("Error: dependency to config 'DebugWrong' of project 'p3' found (line 11), but config Debug was requested earlier")).to be == true
   end  
   
   it 'circ deps' do
-    options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "DebugCirc"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/deps/p1", "-b", "DebugCirc"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect($mystring.include?("Circular dependency detected")).to be == true

@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
 
-require 'bake/version'
+require 'common/version'
 
 require 'tocxx'
-require 'bake/options'
+require 'bake/options/options'
 require 'imported/utils/exit_helper'
 require 'socket'
 require 'imported/utils/cleanup'
+require 'helper'
 
 module Bake
 
@@ -14,21 +15,22 @@ describe "Socket Handler" do
   
   it 'should recv/send to a port on localhost' do
     ExitHelper.reset_exit_code
-    options = Options.new(["--socket"])
-    expect { options.parse_options() }.to raise_error(ExitHelperException)
+    Bake.options = Options.new(["--socket"])
+    expect { Bake.options.parse_options() }.to raise_error(ExitHelperException)
     expect($mystring.include?("Argument for option --socket missing")).to be == true
 
     ExitHelper.reset_exit_code
-    options = Options.new(["--socket", "10000"])
-    options.parse_options()
-    expect(options.socket).to be == 10000
+    Bake.options = Options.new(["--socket", "10000"])
+    expect { Bake.options.parse_options }.to raise_error(ExitHelperException)
     
-    tocxx = Bake::ToCxx.new(options)
+    expect(Bake.options.socket).to be == 10000
+    
+    tocxx = Bake::ToCxx.new
     expect { tocxx.connect() }.to raise_error(ExitHelperException)
 
     serverSocket = TCPServer.new('localhost', 10000)
 
-    tocxx = Bake::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new
     tocxx.connect()
     clientSocket = serverSocket.accept
     expect(clientSocket.nil?).to be == false

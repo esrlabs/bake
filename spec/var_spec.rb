@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'bake/version'
+require 'common/version'
 
 require 'tocxx'
-require 'bake/options'
+require 'bake/options/options'
 require 'imported/utils/exit_helper'
 require 'socket'
 require 'imported/utils/cleanup'
@@ -16,9 +16,9 @@ describe "VarSubst" do
   
   it 'vars should be substed' do
   
-    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "--include_filter", "var"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "--include_filter", "var"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
   
@@ -71,9 +71,9 @@ describe "VarSubst" do
 
   it 'artifactname' do
 
-    options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test2", "--include_filter", "var"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test2", "--include_filter", "var"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
   

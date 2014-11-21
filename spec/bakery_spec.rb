@@ -1,11 +1,9 @@
 #!/usr/bin/env ruby
 
-
-
-require 'bake/version'
+require 'common/version'
 
 require 'tocxx'
-require 'bake/options'
+require 'bake/options/options'
 require 'imported/utils/exit_helper'
 require 'imported/utils/cleanup'
 require 'fileutils'

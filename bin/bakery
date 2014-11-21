@@ -3,7 +3,7 @@
 $timeStart = Time.now
 
 $:.unshift(File.dirname(__FILE__)+"/../lib")
-require 'bake/version'
+require 'common/version'
 
 require 'imported/utils/utils'
 
@@ -12,26 +12,27 @@ puts "-- bakery #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}
 STDOUT.sync = true
 STDERR.sync = true
 
-require 'imported/utils/printer'
+require 'imported/toolchain/colorizing_formatter'
 require 'tocxx'
-require "bakery/loader"
-require "bakery/options"
+require "bakery/model/loader"
+require "bakery/options/options"
 require "bakery/toBake"
 require "bakery/buildPattern"
 require 'imported/ext/stdout'
 require 'imported/utils/cleanup'
 
 module Bake
-
  
   @options = BakeryOptions.new(ARGV)
   @options.parse_options
 
   env = nil
   begin
-    loader = BakeryLoader.new(@options) 
+    loader = BakeryLoader.new 
     env = loader.load(@options.collection_dir+"/Collection.meta")
   rescue Exception => e
+    puts e
+    puts e.backtrace
     ExitHelper.exit(1)
   end 
 
@@ -96,14 +97,14 @@ module Bake
     cmd = (["-m", p, "-b", bp.conf] + passedParams)
     cmdWithNum = "* bakery #{currentRun} of #{maxRuns}: bake " + cmd.join(" ") + " *"
     print "\n"; cmdWithNum.length.times { print "*" }; print "\n";
-    Printer.printInfo cmdWithNum
+    Bake.formatter.printInfo cmdWithNum
     cmdWithNum.length.times { print "*" }; print "\n";
     
     runOk = true
     begin
-      bakeOptions = Options.new(cmd)
-      bakeOptions.parse_options
-      tocxx = ToCxx.new(bakeOptions)
+      Bake.options = Options.new(cmd)
+      Bake.options.parse_options
+      tocxx = ToCxx.new
       if tocxx.doit()
         runOk = tocxx.start()
       else
@@ -147,13 +148,13 @@ module Bake
   msg1.length.times { stars << "*" }
 
   if failedRuns == 0
-    Printer.printSuccess stars
-    Printer.printSuccess msg1
-    Printer.printSuccess stars
+    Bake.formatter.printSuccess stars
+    Bake.formatter.printSuccess msg1
+    Bake.formatter.printSuccess stars
   else
-    Printer.printError stars
-    Printer.printError msg1
-    Printer.printError stars
+    Bake.formatter.printError stars
+    Bake.formatter.printError msg1
+    Bake.formatter.printError stars
   end
   
   Rake.application.idei.disconnect()

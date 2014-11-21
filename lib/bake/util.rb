@@ -1,7 +1,7 @@
 require 'bake/model/metamodel_ext'
 require 'bake/model/metamodel'
 require 'set'
-require 'imported/utils/printer'
+require 'imported/toolchain/colorizing_formatter'
 require 'imported/utils/exit_helper'
 require 'imported/utils/utils'
 
@@ -19,7 +19,7 @@ def adjustFlags(orgStr, flags)
         begin
           o.match("\\A"+r+"\\Z")
         rescue Exception => e
-          Bake::Printer.printError "Error: #{f.file_name}(#{f.line_number}): " + e.message
+          Bake.formatter.printError "Error: #{f.file_name}(#{f.line_number}): " + e.message
           Bake::ExitHelper.exit(1)
         end
       }}

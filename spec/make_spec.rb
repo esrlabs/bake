@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'bake/version'
+require 'common/version'
 
 require 'tocxx'
-require 'bake/options'
+require 'bake/options/options'
 require 'bake/util'
 require 'imported/utils/exit_helper'
 require 'socket'
@@ -18,9 +18,9 @@ module Bake
 describe "Makefile" do
 
   it 'builds' do
-    options = Options.new(["-m", "spec/testdata/make/main", "test"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/make/main", "test"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect($mystring.include?("make all -j")).to be == true
@@ -28,9 +28,9 @@ describe "Makefile" do
   end
   
   it 'cleans' do
-    options = Options.new(["-m", "spec/testdata/make/main", "test", "-c"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/make/main", "test", "-c"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     tocxx.doit()
     tocxx.start()
     expect($mystring.include?("Clean done.")).to be == true

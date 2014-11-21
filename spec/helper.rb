@@ -1,4 +1,5 @@
 require 'tempfile'
+require 'imported/utils/cleanup'
 
 module Bake
 

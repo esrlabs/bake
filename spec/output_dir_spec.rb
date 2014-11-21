@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'bake/version'
+require 'common/version'
 
 require 'tocxx'
-require 'bake/options'
+require 'bake/options/options'
 require 'imported/utils/exit_helper'
 require 'imported/utils/cleanup'
 require 'fileutils'
@@ -12,9 +12,9 @@ require 'helper'
 module Bake
 
 def self.start(opt)
-  options = Options.new(opt)
-  options.parse_options()
-  tocxx = Bake::ToCxx.new(options)
+  Bake.options = Options.new(opt)
+  Bake.options.parse_options()
+  tocxx = Bake::ToCxx.new
   tocxx.doit()
   tocxx.start()
 end

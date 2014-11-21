@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'bake/version'
+require 'common/version'
 
 require 'tocxx'
-require 'bake/options'
+require 'bake/options/options'
 require 'imported/utils/exit_helper'
 require 'imported/utils/cleanup'
 require 'fileutils'
@@ -14,9 +14,9 @@ module Bake
 describe "ShowInc" do
 
   it 'RelativePath' do
-    options = Options.new(["-m", "spec/testdata/showinc/main", "-b", "test" , "--show_incs_and_defs"])
-    options.parse_options()
-    tocxx = Bake::ToCxx.new(options)
+    Bake.options = Options.new(["-m", "spec/testdata/showinc/main", "-b", "test" , "--show_incs_and_defs"])
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
     expect { tocxx.doit() }.to raise_error(ExitHelperException)
     
     s = "main\n"+

@@ -3,7 +3,7 @@
 $timeStart = Time.now
 
 $:.unshift(File.dirname(__FILE__)+"/../lib")
-require 'bake/version'
+require 'common/version'
 
 STDOUT.sync = true
 STDERR.sync = true
@@ -11,7 +11,7 @@ STDERR.sync = true
 puts "-- bake #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
 
 require 'tocxx'
-require 'bake/options'
+require 'common/options/option'
 require 'socket'
 
 module Bake
@@ -29,11 +29,11 @@ module Bake
   end
 
   earlyExit = nil
+  Bake.options = Options.new(ARGV)
   begin
-    options = Options.new(ARGV)
-    options.parse_options
+    Bake.options.parse_options
 
-    tocxx = Bake::ToCxx.new(options)
+    tocxx = Bake::ToCxx.new
 
     tocxx.connect()
     
@@ -49,11 +49,10 @@ module Bake
     rescue Exception => e2
     end
   end
-  
 
   timeEnd = Time.now
   timeDiff = timeEnd - $timeStart
-  Printer.printInfo "\nTime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60]
+  Bake.formatter.printInfo "\nTime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60]
   
   # update check
   #begin
@@ -67,12 +66,12 @@ module Bake
   #    end 
   #  end
   #  if vtextSplitted.length > 1
-  #    if isNewer(options.eclipse_version, vtextSplitted[1])
+  #    if isNewer(Bake.options.eclipse_version, vtextSplitted[1])
   #      versionWarningString = versionWarningString + "\nNewer version of bake Eclipse plugin available: #{vtextSplitted[1]} - please update!"
   #    end 
   #  end
   #  if versionWarningString != ""
-  #    Printer.printWarning versionWarningString
+  #    Bake.formatter.printWarning versionWarningString
   #  end
   #rescue Exception => e
   #end  
