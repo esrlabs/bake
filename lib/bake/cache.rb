@@ -23,10 +23,10 @@ module Bake
       attr_reader :defaultToolchainTime
       attr_reader :cacheFilename
   
-      def initialize(pm_filename, config_name, options)
-        @cacheFilename = File.dirname(pm_filename)+"/.bake/"+File.basename(pm_filename)+"."+sanitize_filename(config_name)+".cache"
+      def initialize()
+        @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta."+sanitize_filename(Bake.options.build_config)+".cache"
         
-        CLOBBER.include(File.dirname(pm_filename)+"/.bake")
+        CLOBBER.include(Bake.options.main_dir+"/.bake")
           
         FileUtils.mkdir_p(File.dirname(@cacheFilename))
         @defaultToolchain = nil
@@ -45,17 +45,15 @@ module Bake
             if cache.version != Version.number
               Bake.formatter.printInfo("Info: cache version ("+cache.version+") does not match to bake version ("+Version.number+"), reloading meta information")
               cache = nil
-              Bake.options.set_nocache # complete re-read 
             else
               @defaultToolchain = cache.defaultToolchain
               @defaultToolchainTime = cache.defaultToolchainTime
-            end
+            end  
               
             if cache != nil
               if cache.cache_file != @cacheFilename
                 Bake.formatter.printInfo "Info: cache filename changed, reloading meta information"
                 cache = nil
-                Bake.options.set_nocache # abs dir may wrong 
               end
             end
             
@@ -64,7 +62,6 @@ module Bake
                 if (not File.exists?(c))
                   Bake.formatter.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
                   cache = nil
-                  Bake.options.set_nocache # abs dir may wrong 
                   break
                 end
               end
@@ -75,7 +72,6 @@ module Bake
                 if not File.exists?(config.file_name)
                   Bake.formatter.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
                   cache = nil
-                  Bake.options.set_nocache # abs dir may wrong 
                 end
               end  
             end
@@ -116,7 +112,7 @@ module Bake
                 cache = nil
                 Bake.formatter.printInfo "Info: no_autodir option differs in cache, reloading meta information"
               end
-            end             
+            end
             
           else
             Bake.formatter.printInfo("Info: cache not found, reloading meta information")
@@ -133,12 +129,13 @@ module Bake
           Bake.formatter.printInfo "Info: cache is up-to-date, loading cached meta information" if Bake.options.verboseHigh
           
           cache.files.each do |c|
-            CLOBBER.include(File.dirname(c)+"/.bake")
+            CLOBBER.include(File.dirname(c)+"/.bake") # really?
           end          
           
           return cache.project2config
+        else
+          return nil
         end
-        return nil
         
       end
       

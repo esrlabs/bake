@@ -9,7 +9,7 @@ require 'bake/util'
 require 'bake/cache'
 require 'bake/subst'
 require 'bake/mergeConfig'
-require 'bake/model/loader'
+
 require 'imported/buildingblocks/module'
 require 'imported/buildingblocks/makefile'
 require 'imported/buildingblocks/executable'
@@ -26,6 +26,7 @@ require 'imported/ext/stdout'
 require 'imported/ext/rake'
 require 'imported/utils/utils'
 require 'bake/toolchain/colorizing_formatter'
+require 'bake/config/loader'
 
 require 'set'
 require 'socket'
@@ -109,7 +110,7 @@ module Bake
               m.pathTo.split(",").each do |p|
                 nameOfP = p.strip
                 dirOfP = nil
-                if not @project2config.include?nameOfP
+                if not @loadedConfig.project2config.include?nameOfP
                   Bake.options.roots.each do |r|
                     absIncDir = r+"/"+nameOfP
                     if File.exists?(absIncDir)
@@ -118,7 +119,7 @@ module Bake
                     end
                   end
                 else
-                  dirOfP = @project2config[nameOfP].parent.get_project_dir
+                  dirOfP = @loadedConfig.project2config[nameOfP].parent.get_project_dir
                 end
                 if dirOfP == nil
                   Bake.formatter.printError "Error: Project '#{nameOfP}' not found for makefile #{projDir}/#{m.name}"
@@ -159,8 +160,8 @@ module Bake
       if (inc[0] == projName)
         res = inc[1..-1].join("/") # within self
         res = "." if res == "" 
-      elsif @project2config.include?(inc[0])
-        dirOther = @project2config[inc[0]].parent.get_project_dir
+      elsif @loadedConfig.project2config.include?(inc[0])
+        dirOther = @loadedConfig.project2config[inc[0]].parent.get_project_dir
         res = File.rel_from_to_project(projDir, dirOther)
         postfix = inc[1..-1].join("/")
         res = res + postfix if postfix != ""
@@ -188,201 +189,7 @@ module Bake
     end
 
     
-    def getFullProject(configs, configname, filename)
-      config = nil
-      configs.each do |c|
-        if c.name == configname
-          if config
-            Bake.formatter.printError "Error: Config '#{configname}' found more than once in '#{filename}'"
-            ExitHelper.exit(1)
-          end
-          config = c
-        end
-      end 
-      
-      if not config
-        Bake.formatter.printError "Error: Config '#{configname}' not found in '#{filename}'"
-        ExitHelper.exit(1)
-      end
-      
-      if config.extends != ""
-        parent = getFullProject(configs, config.extends, filename)
-        MergeConfig.new(config, parent).merge()
-      end
-      
-      config
-    end
-    
-    
-    def loadProjMeta(loader, filename, configname)
-      @project_files << filename
-      f = loader.load(filename)
 
-      config = nil
-      
-      if f.root_elements.length != 1 or not Metamodel::Project === f.root_elements[0]
-        Bake.formatter.printError "Error: '#{filename}' must have exactly one 'Project' element as root element"
-        ExitHelper.exit(1)
-      end
-      
-      f.root_elements.each do |e|
-        x = e.getConfig
-        config = getFullProject(x,configname,filename)
-        
-        x.each do |y|
-          if y != config
-            e.removeGeneric("Config", y)
-          end
-        end
-      end
-      f.mark_changed
-      f.build_index
-
-      if not config
-        Bake.formatter.printError "Error: Config '#{configname}' not found in '#{filename}'"
-        ExitHelper.exit(1)
-      end
-      
-      config
-    end
-
-    def load_meta 
-    
-      loader = Loader.new
-      @project_files = []
-      
-      @project2config = {}
-
-      project2config_pending = {}
-      project2config_pending[@mainProjectName] = Bake.options.build_config
-      
-      if not File.exist?(Bake.options.main_dir+"/Project.meta")
-        Bake.formatter.printError "Error: #{Bake.options.main_dir}/Project.meta not found"
-        ExitHelper.exit(1)
-      end
-        
-      potentialProjs = []
-      Bake.options.roots.each do |r|
-        if (r.length == 3 && r.include?(":/"))
-          r = r + @mainProjectName # glob would not work otherwise on windows (ruby bug?)
-        end
-        r = r+"/**{,/*/**}/Project.meta"  
-        potentialProjs.concat(Dir.glob(r))
-      end
-      
-      potentialProjs = potentialProjs.uniq.sort unless potentialProjs.empty?
-      
-      while project2config_pending.length > 0
-      
-        pname_toload = project2config_pending.keys[0]
-        cname_toload = project2config_pending[pname_toload]
-        project2config_pending.delete(pname_toload)
-        
-        # check if file is in more than one root
-        pmeta_filenames = []
-
-        potentialProjs.each do |pp|
-          if pp.include?("/" + pname_toload + "/Project.meta") or pp == pname_toload + "/Project.meta" 
-            pmeta_filenames << pp
-          end
-        end
-
-        if pmeta_filenames.empty?
-          Bake.formatter.printError "Error: #{pname_toload}/Project.meta not found"
-          ExitHelper.exit(1)
-        end
-        
-        if pmeta_filenames.length > 1
-          Bake.formatter.printWarning "Warning: #{pname_toload} exists more than once:"
-          chosen = " (chosen)"
-          pmeta_filenames.each do |f|
-            Bake.formatter.printWarning "  #{f}#{chosen}"
-            chosen = ""
-          end
-        end
-        
-
-        config = loadProjMeta(loader, pmeta_filenames[0], cname_toload)
-        
-        @project2config[pname_toload] = config
-      
-        project2configLocal = {}
-        
-        if @project2config.length == 1
-          if config.defaultToolchain == nil
-            Bake.formatter.printError "Error: Main project configuration must contain DefaultToolchain"
-            ExitHelper.exit(1)
-          else
-            basedOn = config.defaultToolchain.basedOn
-            basedOn = "GCC_Lint" if Bake.options.lint
-            basedOnToolchain = Bake::Toolchain::Provider[basedOn]
-            if basedOnToolchain == nil
-              Bake.formatter.printError "Error: DefaultToolchain based on unknown compiler '#{basedOn}'"
-              ExitHelper.exit(1)
-            end
-            @defaultToolchain = Utils.deep_copy(basedOnToolchain)
-            integrateToolchain(@defaultToolchain, config.defaultToolchain)
-            
-            if @defaultToolchainCached
-              unless @defaultToolchain[:LINKER][:FLAGS]               == @defaultToolchainCached[:LINKER][:FLAGS] and
-                @defaultToolchain[:LINKER][:LIB_PREFIX_FLAGS]         == @defaultToolchainCached[:LINKER][:LIB_PREFIX_FLAGS] and
-                @defaultToolchain[:LINKER][:LIB_POSTFIX_FLAGS]        == @defaultToolchainCached[:LINKER][:LIB_POSTFIX_FLAGS] and
-                @defaultToolchain[:ARCHIVER][:FLAGS]                  == @defaultToolchainCached[:ARCHIVER][:FLAGS] and
-                @defaultToolchain[:COMPILER][:CPP][:FLAGS]            == @defaultToolchainCached[:COMPILER][:CPP][:FLAGS] and
-                @defaultToolchain[:COMPILER][:CPP][:DEFINES].join("") == @defaultToolchainCached[:COMPILER][:CPP][:DEFINES].join("") and
-                @defaultToolchain[:COMPILER][:C][:FLAGS]              == @defaultToolchainCached[:COMPILER][:C][:FLAGS] and
-                @defaultToolchain[:COMPILER][:C][:DEFINES].join("")   == @defaultToolchainCached[:COMPILER][:C][:DEFINES].join("") and
-                @defaultToolchain[:COMPILER][:ASM][:FLAGS]            == @defaultToolchainCached[:COMPILER][:ASM][:FLAGS] and
-                @defaultToolchain[:COMPILER][:ASM][:DEFINES].join("") == @defaultToolchainCached[:COMPILER][:ASM][:DEFINES].join("") and
-                @defaultToolchain[:LINT_POLICY].join("")              == @defaultToolchainCached[:LINT_POLICY].join("")
-                @defaultToolchainTime = @mainMetaTime
-              end
-            end
-            
-          end
-        end
-        
-        if config.respond_to?("toolchain") and config.toolchain
-          config.toolchain.compiler.each do |c|
-            if not c.internalDefines.nil? and c.internalDefines != ""
-              Bake.formatter.printError "Error: #{c.file_name}(#{c.internalDefines.line_number}): InternalDefines only allowed in DefaultToolchain'"
-              ExitHelper.exit(1)
-            end
-          end
-        end
-        
-        config.dependency.each do |d|
-          pname = d.name
-          cname = d.config
-        
-          # check that a project is not dependent twice
-          if project2configLocal.include?pname
-            Bake.formatter.printError "Error: More than one dependencies found to '#{pname}' in config '#{config.name}'"
-            ExitHelper.exit(1)
-          end
-          project2configLocal[pname] = cname
-      
-          # check pending loads
-          inconsistentConfigs = nil
-          if @project2config.include?pname
-            inconsistentConfigs = @project2config[pname].name if @project2config[pname].name != cname
-          else
-            if project2config_pending.include?pname
-              if project2config_pending[pname] != cname
-                inconsistentConfigs = project2config_pending[pname]
-              end
-            else
-              project2config_pending[pname] = cname
-            end
-          end
-          if inconsistentConfigs
-            Bake.formatter.printError "Error: dependency to config '#{cname}' of project '#{pname}' found (line #{d.line_number}), but config #{inconsistentConfigs} was requested earlier"
-            ExitHelper.exit(1)
-          end
-        end
-      end
-
-    end
 
     def writeCMake
       Bake.formatter.printError "Error: --cmake not supported by this version."
@@ -391,7 +198,7 @@ module Bake
     def getTc(config)
       tcs = nil
       if not Metamodel::CustomConfig === config
-        tcs = Utils.deep_copy(@defaultToolchain)
+        tcs = Utils.deep_copy(@loadedConfig.defaultToolchain)
         integrateToolchain(tcs, config.toolchain)
       else
         tcs = Utils.deep_copy(Bake::Toolchain::Provider.default)
@@ -400,23 +207,14 @@ module Bake
     end
     
     def substVars
-      @mainConfig = @project2config[@mainProjectName]
-
-      basedOn = @mainConfig.defaultToolchain.basedOn
-      basedOn = "GCC_Lint" if Bake.options.lint
-
-      basedOnToolchain = Bake::Toolchain::Provider[basedOn]
-      @defaultToolchain = Utils.deep_copy(basedOnToolchain)
-      integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)      
-
       Subst.itute(@mainConfig, @mainProjectName, true, getTc(@mainConfig))
-      @project2config.each do |projName, config|
+      @loadedConfig.project2config.each do |projName, config|
         Subst.itute(config, projName, false, getTc(config)) if projName != @mainProjectName  
       end
     end
     
     def convert2bb
-      @project2config.each do |projName, config|
+      @loadedConfig.project2config.each do |projName, config|
 
         projDir = config.parent.get_project_dir
         @lib_elements = {}
@@ -463,18 +261,17 @@ module Bake
         
         ([bbModule] + bbModule.contents).each do |c|
           c.set_tcs(tcs)
-          if (@defaultToolchainTime <= File.mtime(config.file_name))
+          if (@loadedConfig.defaultToolchainTime <= File.mtime(config.file_name))
             c.set_config_files([config.file_name])
           else
             xxx = file "ssss"
-            $defaultToolchainTime = @defaultToolchainTime
+            $defaultToolchainTime = @loadedConfig.defaultToolchainTime
             def xxx.timestamp
               $defaultToolchainTime
             end
             def xxx.needed?
               true
             end
-            @defaultToolchainTime
           
             c.set_config_files([config.file_name, "ssss"])
           end
@@ -633,38 +430,11 @@ module Bake
       
       @mainProjectName = File::basename(Bake.options.main_dir)
 
-      @startupFilename = Bake.options.filename
+      @loadedConfig = Config.new
+      @loadedConfig.load
+      
 
-      @mainMeta = Bake.options.main_dir + "/Project.meta"
-
-      cache = CacheAccess.new(@mainMeta, Bake.options.build_config, Bake.options)
-      
-      if File.exists? @mainMeta
-        @defaultToolchainTime = File.mtime(@mainMeta)
-        @mainMetaTime = @defaultToolchainTime 
-      else
-        @defaultToolchainTime = Time.now
-      end
-      
-      forceLoadMeta = Bake.options.nocache
-      
-      @defaultToolchainCached = nil
-      
-      if not forceLoadMeta
-        @project2config = cache.load_cache
-        @defaultToolchainCached = cache.defaultToolchain
-        @defaultToolchainTime = cache.defaultToolchainTime unless cache.defaultToolchainTime.nil? 
-        if @project2config.nil?
-          forceLoadMeta = true
-        else
-          @defaultToolchain = @defaultToolchainCached
-        end
-      end
-
-      if forceLoadMeta
-        load_meta
-        cache.write_cache(@project_files, @project2config, @defaultToolchain, @defaultToolchainTime)
-      end
+      @mainConfig = @loadedConfig.project2config[@mainProjectName]
       
       substVars
       
@@ -687,13 +457,13 @@ module Bake
 
       #################################################
       
-      if Bake.options.single or @startupFilename
+      if Bake.options.single or Bake.options.filename
         content_names = startBB.contents.map { |c| c.name }
         startBB.main_content.set_helper_dependencies(startBB.main_content.dependencies.dup) if Executable === startBB.main_content
         startBB.main_content.dependencies.delete_if { |d| not content_names.include?d}
       end
 
-      if @startupFilename
+      if Bake.options.filename
         startBB.contents.each do |c|
           if SourceLibrary === c or Executable === c
             
@@ -701,20 +471,20 @@ module Bake
             Dir.chdir(startBB.project_dir) do
               
               theFile = []
-              if not File.exists?(@startupFilename)
+              if not File.exists?(Bake.options.filename)
                 Dir.chdir(startBB.project_dir) do
-                  theFile = Dir.glob("**/#{@startupFilename}")
+                  theFile = Dir.glob("**/#{Bake.options.filename}")
                   theFile.map! {|tf| startBB.project_dir + "/" + tf}
                 end
                 if theFile.length == 0
-                  Bake.formatter.printError "Error: #{@startupFilename} not found in project #{Bake.options.project}"
+                  Bake.formatter.printError "Error: #{Bake.options.filename} not found in project #{Bake.options.project}"
                   ExitHelper.exit(1)
                 end
               else
-                if File.is_absolute?(@startupFilename)
-                  theFile << @startupFilename
+                if File.is_absolute?(Bake.options.filename)
+                  theFile << Bake.options.filename
                 else
-                  theFile << startBB.project_dir + "/" + @startupFilename
+                  theFile << startBB.project_dir + "/" + Bake.options.filename
                 end
                   
               end
@@ -725,7 +495,7 @@ module Bake
               end
               theFile.delete_if { |f| exclude_files.any? {|e| e==f} }
               if theFile.length == 0
-                Bake.formatter.printError "Error: #{@startupFilename} excluded in config #{Bake.options.build_config} of project #{Bake.options.project}"
+                Bake.formatter.printError "Error: #{Bake.options.filename} excluded in config #{Bake.options.build_config} of project #{Bake.options.project}"
                 ExitHelper.exit(1)
               end
               
@@ -736,20 +506,19 @@ module Bake
               
               theFile.delete_if { |f| source_files.all? {|e| e!=f} }
               if theFile.length == 0
-                Bake.formatter.printError "Error: #{@startupFilename} is no source file in config #{Bake.options.build_config} of project #{Bake.options.project}"
+                Bake.formatter.printError "Error: #{Bake.options.filename} is no source file in config #{Bake.options.build_config} of project #{Bake.options.project}"
                 ExitHelper.exit(1)
               elsif theFile.length > 1
-                Bake.formatter.printError "Error: #{@startupFilename} is ambiguous in project #{Bake.options.project}"
+                Bake.formatter.printError "Error: #{Bake.options.filename} is ambiguous in project #{Bake.options.project}"
                 ExitHelper.exit(1)
               else
-                @startupFilename = theFile[0]
+                c.set_sources([theFile[0]])
+                c.set_source_patterns([])
+                c.set_exclude_sources([])
+                c.extend(SingleSourceModule) unless Bake.options.lint
               end
             end
-         
-            c.set_sources([@startupFilename])
-            c.set_source_patterns([])
-            c.set_exclude_sources([])
-            c.extend(SingleSourceModule) unless Bake.options.lint
+
             break
           else
             def c.needed?
@@ -760,7 +529,7 @@ module Bake
       end
       
       
-      Rake.application.check_unnecessary_includes = (@startupFilename == nil) if Bake.options.check_uninc
+      Rake.application.check_unnecessary_includes = (Bake.options.filename == nil) if Bake.options.check_uninc
       
 
       #################################################
@@ -775,7 +544,7 @@ module Bake
 
       @bbs = []
       @num_modules = 1
-      if Bake.options.single or @startupFilename
+      if Bake.options.single or Bake.options.filename
         @bbs << startBB
         @bbs.concat(startBB.contents)
       else
@@ -873,7 +642,7 @@ module Bake
         set_output_taskname(bb)
       end
       
-      if @startupFilename
+      if Bake.options.filename
         runTaskName = @parseBB.get_task_name
       else       
         runTaskName = startBB.get_task_name
@@ -882,7 +651,7 @@ module Bake
       
       @runTask = Rake.application[runTaskName]
 
-      if @startupFilename
+      if Bake.options.filename
         @runTask.prerequisites.clear
       end
 
@@ -893,14 +662,14 @@ module Bake
     
       if Bake.options.clean
         cleanTask = nil
-        if @startupFilename
+        if Bake.options.filename
           Dir.chdir(@parseBB.project_dir) do
           
-            if File.is_absolute?(@startupFilename)
-              @startupFilename = File.rel_from_to_project(@parseBB.project_dir, @startupFilename, false)
+            if File.is_absolute?(Bake.options.filename)
+              Bake.options.filename = File.rel_from_to_project(@parseBB.project_dir, Bake.options.filename, false)
             end
           
-            of = @parseBB.get_object_file(@startupFilename)
+            of = @parseBB.get_object_file(Bake.options.filename)
             object = File.expand_path(of)
 
             FileUtils.rm object, :force => true

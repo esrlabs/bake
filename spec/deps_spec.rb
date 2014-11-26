@@ -55,7 +55,7 @@ describe "Deps" do
     Bake.options.parse_options()
     tocxx = Bake::ToCxx.new
     expect { tocxx.doit() }.to raise_error(ExitHelperException)
-    expect($mystring.include?("Error: dependency to config 'DebugWrong' of project 'p3' found (line 11), but config Debug was requested earlier")).to be == true
+    expect($mystring.include?("Different dependencies found")).to be == true
   end  
   
   it 'circ deps' do
