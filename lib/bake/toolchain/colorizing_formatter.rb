@@ -61,25 +61,25 @@ module Bake
       if @scheme == :none
         puts compiler_output
       else 
-        res = ""
+        #res = ""
         begin
           zipped = compiler_output.split($/).zip(error_descs)
           zipped.each do |l,desc|
             if desc.severity != 255
               coloring = {}
               if desc.severity == ErrorParser::SEVERITY_WARNING
-                res << printWarning(l)
+                printWarning(l)
               elsif desc.severity == ErrorParser::SEVERITY_ERROR
-                res << printError(l)
+                printError(l)
               else
-                res << printInfo(l)
+                printInfo(l)
               end
             else
-              res << l
+              puts l
             end
-            res << "\n" 
+            puts "\n" 
           end
-          puts res
+          #puts res
         rescue Exception => e
           puts "Error while parsing compiler output: #{e}"
           puts compiler_output

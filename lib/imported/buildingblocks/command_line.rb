@@ -32,10 +32,10 @@ module Bake
       @defined_in_line
     end
 
-    def initialize(name)
-      set_command_line(name)
+    def initialize(commandLine, projectName, configName)
+      set_command_line(commandLine)
       @num = Rake.application.command_line_number
-      super(get_task_name)
+      super(projectName, configName)
     end
 
     def get_task_name()

@@ -4,25 +4,13 @@ require 'imported/buildingblocks/has_includes_mixin'
 
 module Bake
 
-  class BinaryLibrary < BuildingBlock
+  class CustomConfig < BuildingBlock
     include HasLibraries
     include HasIncludes
 
-    def initialize(name, useNameAsLib = true)
-      super(name)
-      if useNameAsLib
-        @useNameAsLib = name
-        add_lib_element(HasLibraries::LIB, name, true)
-      else
-        @useNameAsLib = nil
-      end
-    end
-
     def get_task_name()
-      return @useNameAsLib if @useNameAsLib
-      @name
+      @task_name ||= "MAIN " + @project_name+"_"+@config_name
     end
-
 
     def convert_to_rake()
       res = task get_task_name
@@ -30,7 +18,7 @@ module Bake
         return false
       end
       res.transparent_timestamp = true
-      res.type = Rake::Task::BINARY
+      res.type = Rake::Task::CUSTOM
       setup_rake_dependencies(res)
       res
     end

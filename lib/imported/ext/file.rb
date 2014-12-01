@@ -14,12 +14,14 @@ class File
 
   # seems both are rel or both are abs in all cases
   def self.rel_from_to_project(from,to,endWithSlash = true)
+
     return nil if from.nil? or to.nil?
     
 	toSplitted = to.split('/')
 	fromSplitted = from.split('/')
 	
 	max = [toSplitted.length, fromSplitted.length].min
+
 	
 	return nil if max < 1
 	

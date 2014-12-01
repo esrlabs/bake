@@ -40,33 +40,23 @@ module Bake
       @target
     end
 
-    def initialize(mfile, mtarget)
+    def initialize(mfile, mtarget, projetName, configName)
       @target = mtarget != "" ? mtarget : "all"
       @makefile = mfile
       @flags = ""
       @path_to = {}
       @num = Rake.application.makefile_number
-      super(get_task_name)
+      super(projetName, configName)
     end
 
     def get_task_name()
-      "makefile (#{@num}): " + get_makefile + (get_target ? ("_"+get_target) : "")
+      @task_name ||= "makefile (#{@num}): " + get_makefile + (get_target ? ("_"+get_target) : "")
     end
 
     def calc_pathes_to_projects
       vars = []
       @path_to.each do |k,v|
-        bb = ALL_BUILDING_BLOCKS[p]
-        if bb
-          pref = File.rel_from_to_project(@project_dir,bb.project_dir)
-          rex = Regexp.new "\\.\\.\\/(.*)#{p}"
-          var = pref.scan(rex)[0]
-          if var
-            vars << "PATH_TO_#{p}=#{var[0]}"
-          end
-        else
-          vars << "PATH_TO_#{k}=#{v}"
-        end
+        vars << "PATH_TO_#{k}=#{v}"
       end
       vars.join(" ")
     end

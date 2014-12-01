@@ -10,12 +10,12 @@ module Bake
     end
 
    def set_dependencies(deps)
-      @dependencies = deps.map { |dep| dep.instance_of?(String) ? dep : dep.name }
+      @dependencies = deps.map { |dep| dep.instance_of?(String) ? dep : dep.get_task_name }
       self
     end
 
     def set_helper_dependencies(deps)
-      @helper_dependencies = deps.map { |dep| dep.instance_of?(String) ? dep : dep.name }
+      @helper_dependencies = deps.map { |dep| dep.instance_of?(String) ? dep : dep.get_task_name }
       self
     end
 

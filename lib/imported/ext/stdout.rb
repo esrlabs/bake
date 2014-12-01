@@ -17,7 +17,6 @@ class ThreadOut
   def puts(stuff='')
     if Thread.current[:stdout] then
       Thread.current[:stdout].puts stuff
-      STDERR.puts Thread.current[:stdout].class
     else
       @out.puts stuff
     end

@@ -14,10 +14,8 @@ require 'imported/buildingblocks/module'
 require 'imported/buildingblocks/makefile'
 require 'imported/buildingblocks/executable'
 require 'imported/buildingblocks/lint'
-require 'imported/buildingblocks/binary_library'
-require 'imported/buildingblocks/custom_building_block'
+require 'imported/buildingblocks/custom_config'
 require 'imported/buildingblocks/command_line'
-require 'imported/buildingblocks/single_source'
 require 'imported/utils/exit_helper'
 require 'imported/ide_interface'
 require 'imported/ext/file'
@@ -41,7 +39,7 @@ module Bake
       @configTcMap = {}
     end
     
-    def set_output_taskname(bb)
+    def set_output_taskname(bb, ind)
       return if not bb.instance_of?ModuleBuildingBlock
       outputTaskname = task "Print #{bb.get_task_name}" do
         num = Rake.application.idei.get_number_of_projects
@@ -49,24 +47,33 @@ module Bake
         @numCurrent += 1
         
         if not Bake.options.verboseLow
-          Bake.formatter.printAdditionalInfo "**** Building #{@numCurrent} of #{num}: #{bb.name.gsub("Project ","")} (#{bb.config_name}) ****"
+          Bake.formatter.printAdditionalInfo "**** Building #{@numCurrent} of #{num}: #{bb.project_name} (#{bb.config_name}) ****"
         end
         
-        Rake.application.idei.set_build_info(bb.name.gsub("Project ",""), bb.config_name)
+        Rake.application.idei.set_build_info(bb.project_name, bb.config_name)
       end
       outputTaskname.type = Rake::Task::UTIL
       outputTaskname.transparent_timestamp = true
+      
+      lastWithP = nil
       insertAt = 0
+      
+      # fuck ist das ne kacke!
       t = Rake.application[bb.last_content.get_task_name]
+      if (Executable === bb.last_content or SourceLibrary == bb.last_content)  
+        t = Rake.application[t.prerequisites[0]]
+      end
+      
       t.prerequisites.each do |p|
-        pname = String === p ? p : p.name 
+        pname = String === p ? p : p.name
         if pname.index("Project ") == 0
           insertAt = insertAt + 1
         else
           break
         end
       end
-      t.prerequisites.insert(insertAt, outputTaskname)
+
+      Rake.application[t].prerequisites.insert(insertAt, outputTaskname)
     end
 
 
@@ -80,7 +87,7 @@ module Bake
     end
 
     # PRE and POST CONDITIONS
-    def addSteps(steps, bbModule, projDir, globalFilterStr, tcs)
+    def addSteps(projName, steps, bbModule, projDir, globalFilterStr, tcs, config)
       if steps
         array = (Metamodel::Step === steps ? [steps] : steps.step)
         array.reverse.each do |m|
@@ -103,14 +110,13 @@ module Bake
           end
         
           if Bake::Metamodel::Makefile === m
-            nameOfBB = m.name+"_"+m.target
-            bb = Makefile.new(m.name, m.target)
+            bb = Makefile.new(m.name, m.target, projName, config.name)
             if m.pathTo != ""
               pathHash = {}
               m.pathTo.split(",").each do |p|
                 nameOfP = p.strip
                 dirOfP = nil
-                if not @loadedConfig.project2config.include?nameOfP
+                if not @loadedConfig.referencedConfigs.include?nameOfP
                   Bake.options.roots.each do |r|
                     absIncDir = r+"/"+nameOfP
                     if File.exists?(absIncDir)
@@ -119,7 +125,7 @@ module Bake
                     end
                   end
                 else
-                  dirOfP = @loadedConfig.project2config[nameOfP].parent.get_project_dir
+                  dirOfP = @loadedConfig.referencedConfigs[nameOfP].first.parent.get_project_dir
                 end
                 if dirOfP == nil
                   Bake.formatter.printError "Error: Project '#{nameOfP}' not found for makefile #{projDir}/#{m.name}"
@@ -134,15 +140,14 @@ module Bake
             
             @lib_elements[m.line_number] = [HasLibraries::LIB_WITH_PATH, m.lib] if m.lib != ""
           elsif Bake::Metamodel::CommandLine === m
-            nameOfBB = m.name
-            bb = CommandLine.new(nameOfBB)
+            bb = CommandLine.new(m.name, projName, config.name)
             bb.set_defined_in_file(m.file_name.to_s)
             bb.set_defined_in_line(m.line_number)
             bb.pre_step  = true if globalFilterStr
           else
             next
           end
-          bbModule.last_content.dependencies << bb.name
+          bbModule.last_content.dependencies << bb.get_task_name
           bbModule.contents << bb
           bbModule.last_content = bb
         end
@@ -160,8 +165,8 @@ module Bake
       if (inc[0] == projName)
         res = inc[1..-1].join("/") # within self
         res = "." if res == "" 
-      elsif @loadedConfig.project2config.include?(inc[0])
-        dirOther = @loadedConfig.project2config[inc[0]].parent.get_project_dir
+      elsif @loadedConfig.referencedConfigs.include?(inc[0])
+        dirOther = @loadedConfig.referencedConfigs[inc[0]].first.parent.get_project_dir
         res = File.rel_from_to_project(projDir, dirOther)
         postfix = inc[1..-1].join("/")
         res = res + postfix if postfix != ""
@@ -208,194 +213,199 @@ module Bake
     
     def substVars
       Subst.itute(@mainConfig, @mainProjectName, true, getTc(@mainConfig))
-      @loadedConfig.project2config.each do |projName, config|
-        Subst.itute(config, projName, false, getTc(config)) if projName != @mainProjectName  
+      @loadedConfig.referencedConfigs.each do |projName, configs|
+        configs.each do |config|
+          Subst.itute(config, projName, false, getTc(config)) if projName != @mainProjectName
+        end  
       end
     end
     
     def convert2bb
-      @loadedConfig.project2config.each do |projName, config|
-
-        projDir = config.parent.get_project_dir
-        @lib_elements = {}
-
-        bbModule = ModuleBuildingBlock.new("Project "+projName)
-        bbModule.contents = []
-        
-        tcs = @configTcMap[config]       
+      @loadedConfig.referencedConfigs.each do |projName, configs|
+        configs.each do |config|
+  
+          projDir = config.parent.get_project_dir
+          @lib_elements = {}
+  
+          bbModule = ModuleBuildingBlock.new(projName, config.name)
+          bbModule.contents = []
           
-        addSteps(config.postSteps, bbModule, projDir, "POST", tcs) if not Bake.options.linkOnly
-
-        if Metamodel::CustomConfig === config
-          if config.step
-            if config.step.filter != ""
-              Bake.formatter.printError "Error: #{config.file_name}(#{config.step.line_number}): attribute filter not allowed here"
-              ExitHelper.exit(1)
-            end
-            if config.step.default != "on"
-              Bake.formatter.printError "Error: #{config.file_name}(#{config.step.line_number}): attribute default not allowed here"
-              ExitHelper.exit(1)
-            end
-            addSteps(config.step, bbModule, projDir, nil, tcs)
-          end 
-          bbModule.main_content = BinaryLibrary.new(projName, false)
-        elsif Bake.options.lint
-          bbModule.main_content = Lint.new(projName)
-          bbModule.main_content.set_lint_min(Bake.options.lint_min).set_lint_max(Bake.options.lint_max)
-        elsif Metamodel::LibraryConfig === config
-          bbModule.main_content = SourceLibrary.new(projName)
-        elsif Metamodel::ExecutableConfig === config
-          bbModule.main_content = Executable.new(projName)
-          if not config.artifactName.nil?
-            x = Bake.options.build_config + "/" + config.artifactName.name
-            bbModule.main_content.set_executable_name(x)
-          end 
-          bbModule.main_content.set_linker_script(convPath(config.linkerScript, config)) unless config.linkerScript.nil?
-        end
-        bbModule.last_content.dependencies << bbModule.main_content.name
-        bbModule.last_content = bbModule.main_content
-        bbModule.contents << bbModule.main_content
-        
-        # PRE CONDITIONS
-        addSteps(config.preSteps, bbModule, projDir, "PRE", tcs) if not Bake.options.linkOnly       
-        
-        ([bbModule] + bbModule.contents).each do |c|
-          c.set_tcs(tcs)
-          if (@loadedConfig.defaultToolchainTime <= File.mtime(config.file_name))
-            c.set_config_files([config.file_name])
-          else
-            xxx = file "ssss"
-            $defaultToolchainTime = @loadedConfig.defaultToolchainTime
-            def xxx.timestamp
-              $defaultToolchainTime
-            end
-            def xxx.needed?
-              true
-            end
-          
-            c.set_config_files([config.file_name, "ssss"])
+          tcs = @configTcMap[config]       
+            
+          addSteps(projName, config.postSteps, bbModule, projDir, "POST", tcs, config) if not Bake.options.linkOnly
+  
+          if Metamodel::CustomConfig === config
+            if config.step
+              if config.step.filter != ""
+                Bake.formatter.printError "Error: #{config.file_name}(#{config.step.line_number}): attribute filter not allowed here"
+                ExitHelper.exit(1)
+              end
+              if config.step.default != "on"
+                Bake.formatter.printError "Error: #{config.file_name}(#{config.step.line_number}): attribute default not allowed here"
+                ExitHelper.exit(1)
+              end
+              addSteps(projName, config.step, bbModule, projDir, nil, tcs, config)
+            end 
+            bbModule.main_content = CustomConfig.new(projName, config.name)
+          elsif Bake.options.lint
+            bbModule.main_content = Lint.new(projName, config.name)
+            bbModule.main_content.set_lint_min(Bake.options.lint_min).set_lint_max(Bake.options.lint_max)
+          elsif Metamodel::LibraryConfig === config
+            bbModule.main_content = SourceLibrary.new(projName, config.name)
+          elsif Metamodel::ExecutableConfig === config
+            bbModule.main_content = Executable.new(projName, config.name)
+            if not config.artifactName.nil?
+              x = Bake.options.build_config + "/" + config.artifactName.name
+              bbModule.main_content.set_executable_name(x)
+            end 
+            bbModule.main_content.set_linker_script(convPath(config.linkerScript, config)) unless config.linkerScript.nil?
           end
-          c.set_project_dir(projDir)
+          bbModule.last_content.dependencies << bbModule.main_content.get_task_name
+          bbModule.last_content = bbModule.main_content
+          bbModule.contents << bbModule.main_content
           
-          if tcs[:OUTPUT_DIR] != nil
-            p = convPath(tcs[:OUTPUT_DIR], config)
-            c.set_output_dir(p)
-          elsif projName == @mainProjectName
-            c.set_output_dir(Bake.options.build_config)
-          else
-            c.set_output_dir(Bake.options.build_config + "_" + @mainProjectName)
-          end
-          c.set_config_name(config.name)
-        end
-                  
-        if HasLibraries === bbModule.main_content
-          config.userLibrary.each do |l|
-            ln = l.lib
-            ls = nil
-            if l.lib.include?("/")
-              pos = l.lib.rindex("/")
-              ls = convPath(l.lib[0..pos-1], config)
-              ln = l.lib[pos+1..-1]
-            end
-            @lib_elements[l.line_number] = ls.nil? ? [] : [HasLibraries::SEARCH_PATH, ls] 
-            @lib_elements[l.line_number].concat [HasLibraries::USERLIB, ln]
-          end
+          # PRE CONDITIONS
+          addSteps(projName, config.preSteps, bbModule, projDir, "PRE", tcs, config) if not Bake.options.linkOnly       
           
-          config.exLib.each do |exLib|
-            ln = exLib.name
-            ls = nil
-            if exLib.name.include?("/")
-              pos = exLib.name.rindex("/")
-              ls = convPath(exLib.name[0..pos-1], config)
-              ln = exLib.name[pos+1..-1]
-            end
-            if exLib.search
-              @lib_elements[exLib.line_number] = ls.nil? ? [] : [HasLibraries::SEARCH_PATH, ls] 
-              @lib_elements[exLib.line_number].concat [HasLibraries::LIB, ln]
+          ([bbModule] + bbModule.contents).each do |c|
+            c.set_tcs(tcs)
+            if (@loadedConfig.defaultToolchainTime <= File.mtime(config.file_name))
+              c.set_config_files([config.file_name])
             else
-              @lib_elements[exLib.line_number] = [HasLibraries::LIB_WITH_PATH, (ls.nil? ? ln : (ls + "/" + ln))]
+              xxx = file "ssss"
+              
+              $defaultToolchainTime = @loadedConfig.defaultToolchainTime
+              def xxx.timestamp
+                $defaultToolchainTime
+              end
+              def xxx.needed?
+                true
+              end
+            
+              c.set_config_files([config.file_name, "ssss"])
             end
+            c.set_project_dir(projDir)
+            
+            if tcs[:OUTPUT_DIR] != nil
+              p = convPath(tcs[:OUTPUT_DIR], config)
+              c.set_output_dir(p)
+            elsif projName == @mainProjectName and config == @mainConfig 
+              c.set_output_dir(Bake.options.build_config)
+            else
+              c.set_output_dir(Bake.options.build_config + "_" + @mainProjectName)
+            end
+            
           end
-          
-          config.exLibSearchPath.each do |exLibSP|
-            @lib_elements[exLibSP.line_number] = [HasLibraries::SEARCH_PATH, convPath(exLibSP, config)] 
-          end
-        end
-
-        if HasSources === bbModule.main_content
-          srcs = config.files.map do |f|
-            f.name
-          end
-          ex_srcs = config.excludeFiles.map {|f| f.name}        
-        
-          bbModule.main_content.set_local_includes(
-            config.includeDir.map do |dir|
-              (dir.name == "___ROOTS___") ? (Bake.options.roots.map { |r| File.rel_from_to_project(projDir,r,false) }) : convPath(dir, config)
-            end.flatten
-          )
-          
-          bbModule.main_content.set_source_patterns(srcs)
-          bbModule.main_content.set_exclude_sources(ex_srcs)
-          
-          tcsMapConverted = {}
-          srcs = config.files.each do |f|
-            if (f.define.length > 0 or f.flags.length > 0)
-              if f.name.include?"*"
-                Bake.formatter.printWarning "Warning: #{config.file_name}(#{f.line_number}): toolchain settings not allowed for file pattern #{f.name}"
-                err_res = ErrorDesc.new
-                err_res.file_name = config.file_name
-                err_res.line_number = f.line_number
-                err_res.severity = ErrorParser::SEVERITY_WARNING
-                err_res.message = "Toolchain settings not allowed for file patterns"
-                Rake.application.idei.set_errors([err_res])                
+                    
+          if HasLibraries === bbModule.main_content
+            config.userLibrary.each do |l|
+              ln = l.lib
+              ls = nil
+              if l.lib.include?("/")
+                pos = l.lib.rindex("/")
+                ls = convPath(l.lib[0..pos-1], config)
+                ln = l.lib[pos+1..-1]
+              end
+              @lib_elements[l.line_number] = ls.nil? ? [] : [HasLibraries::SEARCH_PATH, ls] 
+              @lib_elements[l.line_number].concat [HasLibraries::USERLIB, ln]
+            end
+            
+            config.exLib.each do |exLib|
+              ln = exLib.name
+              ls = nil
+              if exLib.name.include?("/")
+                pos = exLib.name.rindex("/")
+                ls = convPath(exLib.name[0..pos-1], config)
+                ln = exLib.name[pos+1..-1]
+              end
+              if exLib.search
+                @lib_elements[exLib.line_number] = ls.nil? ? [] : [HasLibraries::SEARCH_PATH, ls] 
+                @lib_elements[exLib.line_number].concat [HasLibraries::LIB, ln]
               else
-                tcsMapConverted[f.name] = integrateCompilerFile(Utils.deep_copy(tcs),f)
+                @lib_elements[exLib.line_number] = [HasLibraries::LIB_WITH_PATH, (ls.nil? ? ln : (ls + "/" + ln))]
               end
             end
-          end
-          bbModule.main_content.set_tcs4source(tcsMapConverted)
-          
-        end
-
-        # special exe stuff
-        if Metamodel::ExecutableConfig === config and not Bake.options.lint
-          if not config.mapFile.nil?
-            if config.mapFile.name == ""
-              exeName = bbModule.main_content.get_executable_name
-              mapfileName = exeName.chomp(File.extname(exeName)) + ".map"
-            else
-              mapfileName = config.mapFile.name 
+            
+            config.exLibSearchPath.each do |exLibSP|
+              @lib_elements[exLibSP.line_number] = [HasLibraries::SEARCH_PATH, convPath(exLibSP, config)] 
             end
-             
-            bbModule.main_content.set_mapfile(mapfileName)
           end
+  
+          if HasSources === bbModule.main_content
+            srcs = config.files.map do |f|
+              f.name
+            end
+            ex_srcs = config.excludeFiles.map {|f| f.name}        
+          
+            bbModule.main_content.set_local_includes(
+              config.includeDir.map do |dir|
+                (dir.name == "___ROOTS___") ? (Bake.options.roots.map { |r| File.rel_from_to_project(projDir,r,false) }) : convPath(dir, config)
+              end.flatten
+            )
+            
+            bbModule.main_content.set_source_patterns(srcs)
+            bbModule.main_content.set_exclude_sources(ex_srcs)
+            
+            tcsMapConverted = {}
+            srcs = config.files.each do |f|
+              if (f.define.length > 0 or f.flags.length > 0)
+                if f.name.include?"*"
+                  Bake.formatter.printWarning "Warning: #{config.file_name}(#{f.line_number}): toolchain settings not allowed for file pattern #{f.name}"
+                  err_res = ErrorDesc.new
+                  err_res.file_name = config.file_name
+                  err_res.line_number = f.line_number
+                  err_res.severity = ErrorParser::SEVERITY_WARNING
+                  err_res.message = "Toolchain settings not allowed for file patterns"
+                  Rake.application.idei.set_errors([err_res])                
+                else
+                  tcsMapConverted[f.name] = integrateCompilerFile(Utils.deep_copy(tcs),f)
+                end
+              end
+            end
+            bbModule.main_content.set_tcs4source(tcsMapConverted)
+            
+          end
+  
+          # special exe stuff
+          if Metamodel::ExecutableConfig === config and not Bake.options.lint
+            if not config.mapFile.nil?
+              if config.mapFile.name == ""
+                exeName = bbModule.main_content.get_executable_name
+                mapfileName = exeName.chomp(File.extname(exeName)) + ".map"
+              else
+                mapfileName = config.mapFile.name 
+              end
+               
+              bbModule.main_content.set_mapfile(mapfileName)
+            end
+          end
+          
+          bbModule.contents.each do |c|
+            if Bake::CommandLine === c
+              cmdLine = convPath(c.get_command_line, config, bbModule.main_content)
+              c.set_command_line(cmdLine)
+            end
+          end 
+  
+          # DEPS
+          projDeps = config.dependency.map { |dd| "Project "+dd.name+","+dd.config }
+          projDeps.concat(bbModule.main_content.dependencies)
+          bbModule.main_content.set_dependencies(projDeps) #ALEX
+          config.dependency.each { |dd| @lib_elements[dd.line_number] = [HasLibraries::DEPENDENCY, "MAIN "+dd.name+","+dd.config] } 
+          
+  
+          @lib_elements.sort.each do |x|
+            v = x[1]
+            elem = 0
+            while elem < v.length do 
+              bbModule.main_content.add_lib_elements([v[elem..elem+1]])
+              elem = elem + 2
+            end
+          end
+  
         end
-        
-        bbModule.contents.each do |c|
-          if Bake::CommandLine === c
-            cmdLine = convPath(c.get_command_line, config, bbModule.main_content)
-            c.set_command_line(cmdLine)
-          end
-        end 
-
-        # DEPS
-        projDeps = config.dependency.map { |dd| "Project "+dd.name }
-        projDeps.concat(bbModule.main_content.dependencies)
-        bbModule.main_content.set_dependencies(projDeps)
-        config.dependency.each { |dd| @lib_elements[dd.line_number] = [HasLibraries::DEPENDENCY, dd.name] } 
-        
-
-        @lib_elements.sort.each do |x|
-          v = x[1]
-          elem = 0
-          while elem < v.length do 
-            bbModule.main_content.add_lib_elements([v[elem..elem+1]])
-            elem = elem + 2
-          end
-        end
-
       end
-      
+
       ALL_BUILDING_BLOCKS.each do |bbname,bb|
         bb.complete_init
       end
@@ -433,8 +443,7 @@ module Bake
       @loadedConfig = Config.new
       @loadedConfig.load
       
-
-      @mainConfig = @loadedConfig.project2config[@mainProjectName]
+      @mainConfig = @loadedConfig.referencedConfigs[@mainProjectName].select { |c| c.name == Bake.options.build_config }.first
       
       substVars
       
@@ -447,18 +456,26 @@ module Bake
       
       #################################################
 
-      startBBName = "Project "+Bake.options.project
-      startBB = ALL_BUILDING_BLOCKS[startBBName]
-      if startBB.nil?
-        Bake.formatter.printError "Error: Project #{Bake.options.project} is not a dependency of #{@mainProjectName}"
-        ExitHelper.exit(1)
-      end 
-
+      startBBName = "Project "+Bake.options.project # can be "a,b" or just "a"
+      if ALL_BUILDING_BLOCKS.include?startBBName
+        startBB = ALL_BUILDING_BLOCKS[startBBName] 
+      else
+        possibleBlocks = ALL_BUILDING_BLOCKS.select { |name,block| name.start_with?(startBBName + ",") }
+        if possibleBlocks.length > 1
+          Bake.formatter.printError "Error: Dependency to project #{Bake.options.project} is ambiguous for project #{@mainProjectName}"
+          ExitHelper.exit(1)
+        elsif possibleBlocks.empty?
+          Bake.formatter.printError "Error: Project #{Bake.options.project} is not a dependency of #{@mainProjectName},#{@mainConfig.name}"
+          ExitHelper.exit(1)
+        end
+        startBB = possibleBlocks.values[0]
+        startBBName = startBB.get_task_name
+      end
 
       #################################################
       
       if Bake.options.single or Bake.options.filename
-        content_names = startBB.contents.map { |c| c.name }
+        content_names = startBB.contents.map { |c| c.get_task_name }
         startBB.main_content.set_helper_dependencies(startBB.main_content.dependencies.dup) if Executable === startBB.main_content
         startBB.main_content.dependencies.delete_if { |d| not content_names.include?d}
       end
@@ -515,7 +532,6 @@ module Bake
                 c.set_sources([theFile[0]])
                 c.set_source_patterns([])
                 c.set_exclude_sources([])
-                c.extend(SingleSourceModule) unless Bake.options.lint
               end
             end
 
@@ -536,11 +552,10 @@ module Bake
 
 
       startBB.contents.each do |b|
-        if SourceLibrary === b or Executable === b or BinaryLibrary === b
+        if SourceLibrary === b or Executable === b or CustomConfig === b
           @parseBB = b
         end
       end
-
 
       @bbs = []
       @num_modules = 1
@@ -555,7 +570,7 @@ module Bake
         if Bake.options.show_includes
           @bbs.each do |bb|
             if HasIncludes === bb
-              print bb.name
+              print bb.project_name
               li = bb.local_includes
               li.each { |i| print "##{i}" }
               print "\n"
@@ -598,7 +613,7 @@ module Bake
           
           @bbs.each do |bb|
             if HasIncludes === bb
-              puts bb.name
+              puts bb.project_name
               
               puts " includes"
               (bb.local_includes + intIncs).each { |i| puts "  #{i}" }
@@ -622,7 +637,6 @@ module Bake
         end
       end      
       
-      
       theExeBB = nil
       @bbs.each do |bb|
         res = bb.convert_to_rake()
@@ -638,20 +652,20 @@ module Bake
         end
       end
 
-      @bbs.each do |bb|
-        set_output_taskname(bb)
+      @bbs.each_with_index do |bb, index|
+        set_output_taskname(bb, index)
       end
       
       if Bake.options.filename
-        runTaskName = @parseBB.get_task_name
+        runTaskName = "Objects of " + @parseBB.get_task_name
       else       
         runTaskName = startBB.get_task_name
       end
       
-      
       @runTask = Rake.application[runTaskName]
 
       if Bake.options.filename
+        @runTask.prerequisites
         @runTask.prerequisites.clear
       end
 
@@ -664,14 +678,9 @@ module Bake
         cleanTask = nil
         if Bake.options.filename
           Dir.chdir(@parseBB.project_dir) do
-          
-            if File.is_absolute?(Bake.options.filename)
-              Bake.options.filename = File.rel_from_to_project(@parseBB.project_dir, Bake.options.filename, false)
-            end
-          
-            of = @parseBB.get_object_file(Bake.options.filename)
+            relSource = File.rel_from_to_project(@parseBB.project_dir, @parseBB.sources[0], false)
+            of = @parseBB.get_object_file(relSource)
             object = File.expand_path(of)
-
             FileUtils.rm object, :force => true
             FileUtils.rm @parseBB.get_dep_file(object), :force => true
           end 
@@ -698,7 +707,7 @@ module Bake
         end
           
       end
-      Rake::application.idei.set_build_info(@parseBB.name, @parseBB.config_name, @num_modules)
+      Rake::application.idei.set_build_info(@parseBB.project_name, @parseBB.config_name, @num_modules)
         
       @runTask.invoke
           

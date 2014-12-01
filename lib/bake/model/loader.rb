@@ -32,7 +32,6 @@ module Bake
       end
       
       @model = RGen::Fragment::FragmentedModel.new(:env => @env)
-      @mainProjectName = File::basename(Bake.options.main_dir)
     end
     
     def load(filename)

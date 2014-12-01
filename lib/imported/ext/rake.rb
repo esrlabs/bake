@@ -271,16 +271,21 @@ module Rake
 
     def new_invoke_prerequisites(task_args, invocation_chain)
       orgLength = 0
+      
       while @prerequisites.length > orgLength do
         orgLength = @prerequisites.length
 
+        #puts "    #{@name} : #{@prerequisites}"
+
+        
         @prerequisites.dup.each do |n| # dup needed when apply tasks changes that array
           break if Rake.application.idei.get_abort
           #break if @failure
-
+          
           prereq = nil
           begin
             prereq = application[n, @scope]
+
             prereq_args = task_args.new_scope(prereq.arg_names)
             prereq.invoke_with_call_chain(prereq_args, invocation_chain)
             set_failed if prereq.failure

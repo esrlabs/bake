@@ -19,7 +19,8 @@ module Bake
   class BuildingBlock
     include HasDependencies
 
-    attr_reader :name
+    attr_reader :bbname
+    attr_reader :project_name
     attr_reader :config_name
     attr_reader :config_files
 
@@ -27,11 +28,6 @@ module Bake
     attr_accessor :output_dir
     attr_accessor :output_dir_relPath
     attr_accessor :pre_step
-
-    def set_name(x)
-      @name = x
-      self
-    end
 
     def set_tcs(x)
       @tcs = x
@@ -75,10 +71,11 @@ module Bake
       
       self
     end
-
-    def initialize(name)
-      @name = name
-      @config_name = nil
+    
+    def initialize(projectName, configName)
+      @project_name = projectName
+      @config_name = configName
+      
       @config_files = []
       @config_date = nil
       @project_dir = nil
@@ -88,15 +85,11 @@ module Bake
       @printedCmdAlternate = false
       @lastCommand = nil
 
-      if ALL_BUILDING_BLOCKS.include?(@name) and not self.instance_of?(BinaryLibrary)
-        raise "building block already exists: #{name}"
+      if ALL_BUILDING_BLOCKS.include?(get_task_name) # and not self.instance_of?(BinaryLibrary)
+        raise "building block already exists: #{get_task_name}"
       else
-        ALL_BUILDING_BLOCKS[@name] = self
+        ALL_BUILDING_BLOCKS[get_task_name] = self
       end
-    end
-
-    def set_config_name(x)
-      @config_name = x
     end
 
     def complete_init()
@@ -116,7 +109,7 @@ module Bake
       dependencies.reverse_each do |d|
         begin
           bb = ALL_BUILDING_BLOCKS[d]
-          raise "Error: tried to add the dependencies of \"#{d}\" to \"#{@name}\" but such a building block could not be found!" unless bb
+          raise "Error: tried to add the dependencies of \"#{d}\" to \"#{get_task_name}\" but such a building block could not be found!" unless bb
 
           if multitask and bb.pre_step
             multitask.prerequisites.unshift(bb.get_task_name)

@@ -12,15 +12,15 @@ module Bake
     attr_accessor :main_content
     attr_accessor :last_content
 
-    def initialize(name)
-      super
+    def initialize(name, configName)
       @contents = []
       @last_content = self
       @main_content = nil
+      super
     end
 
     def get_task_name()
-      name
+      @task_name ||= "Project "+@project_name+","+@config_name
     end
 
     def convert_to_rake()

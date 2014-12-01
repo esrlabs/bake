@@ -120,7 +120,7 @@ module Bake
     end
 
     def get_sources_task_name
-      "Objects of #{name}"
+      "Objects of #{get_task_name}"
     end
 
     def parse_includes(deps)
@@ -194,6 +194,7 @@ module Bake
           sources_to_build[f] = t
         end
       end
+      #puts sources_to_build
       sources_to_build      
     end
     

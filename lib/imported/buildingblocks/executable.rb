@@ -27,8 +27,8 @@ module Bake
       self
     end
 
-    def initialize(name)
-      super(name)
+    def initialize(projectName, configName)
+      super
       @linker_script = nil
       @mapfile = nil
     end
@@ -38,12 +38,17 @@ module Bake
     end
 
     def get_executable_name() # maybe relative path
-      @exe_name ||= File.join([@output_dir_relPath, "#{@name}#{@tcs[:LINKER][:OUTPUT_ENDING]}"])
+      @exe_name ||= File.join([@output_dir_relPath, "#{@project_name}#{@tcs[:LINKER][:OUTPUT_ENDING]}"])
     end
 
-    def get_task_name() # full path
-      @task_name ||= File.join([@output_dir, "#{@name}#{@tcs[:LINKER][:OUTPUT_ENDING]}"])
+    def get_full_exe_name() # full path
+      @full_exe_name ||= File.join([@output_dir, "#{@project_name}#{@tcs[:LINKER][:OUTPUT_ENDING]}"])
     end
+    
+    def get_task_name() # full path
+      @task_name ||= "MAIN "+@project_name+","+@config_name
+    end
+
 
     def collect_unique(array, set)
       ret = []
@@ -85,11 +90,22 @@ module Bake
 
       return res if @dep_set.include?d
       @dep_set << d
-
+      
+#      puts "CCCCCCCCCC: #{d.get_task_name}"
+      
+     # if ModuleBuildingBlock === d
+     #   puts "AAAAAAAAAAAAAAAAAA"
+     #   d.dependencies.each do |e| # maybe reverse_each
+     #     puts "BBBBBBBBBB: #{ALL_BUILDING_BLOCKS[e].get_task_name}"
+     #     res += calc_linker_lib_string_recursive(ALL_BUILDING_BLOCKS[e])
+     #   end
+     #   return res
+     # end
+      
       if HasLibraries === d
         prefix = nil
         linker = @tcs[:LINKER]
-
+          
         d.lib_elements.each do |elem|
           case elem[0]
             when HasLibraries::LIB
@@ -123,7 +139,7 @@ module Bake
       object_multitask = prepare_tasks_for_objects()
       linker = @tcs[:LINKER]
 
-      res = typed_file_task Rake::Task::EXECUTABLE, get_task_name => object_multitask do
+      res = typed_file_task Rake::Task::EXECUTABLE, get_full_exe_name => object_multitask do
         Dir.chdir(@project_dir) do
 
           cmd = [linker[:COMMAND]] # g++
@@ -188,18 +204,17 @@ module Bake
       res.enhance(@config_files)
       res.enhance([@project_dir + "/" + @linker_script]) if @linker_script
 
-      add_output_dir_dependency(get_task_name, res, true)
-      add_grouping_tasks(get_task_name)
+      add_output_dir_dependency(get_full_exe_name, res, true)
       setup_rake_dependencies(res, object_multitask)
 
       # check that all source libs are checked even if they are not a real rake dependency (can happen if "build this project only")
       begin
-        libChecker = task get_task_name+"LibChecker" do
-          if File.exists?(get_task_name) # otherwise the task will be executed anyway
+        libChecker = task get_full_exe_name+"LibChecker" do
+          if File.exists?(get_full_exe_name) # otherwise the task will be executed anyway
             all_dependencies.each do |bb|
               if bb and SourceLibrary === bb
-                f = bb.get_task_name # = abs path of library
-                if not File.exists?(f) or File.mtime(f) > File.mtime(get_task_name)
+                f = bb.get_full_archive_name # = abs path of library
+                if not File.exists?(f) or File.mtime(f) > File.mtime(get_full_exe_name)
                   def res.needed?
                     true
                   end
@@ -217,26 +232,8 @@ module Bake
       libChecker.transparent_timestamp = true
       res.enhance([libChecker])
 
-      return res
-    end
-
-    def add_grouping_tasks(executable)
-      namespace 'exe' do
-        desc executable
-        task @name => executable
-      end
-      create_run_task(executable, @name)
-    end
-
-    def create_run_task(executable, name)
-      namespace 'run' do
-        desc "run executable #{executable}"
-        res = task name => executable do |t|
-          sh executable
-        end
-        res.type = Rake::Task::RUN
-        res
-      end
+      task get_task_name => res
+      res
     end
 
     def get_temp_filename

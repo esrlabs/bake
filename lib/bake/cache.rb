@@ -6,7 +6,7 @@ require 'common/version'
 module Bake
 
   class Cache
-    attr_accessor :project2config
+    attr_accessor :referencedConfigs
     attr_accessor :files # project_files
     attr_accessor :cache_file
     attr_accessor :version
@@ -68,10 +68,12 @@ module Bake
             end
             
             if cache != nil
-              cache.project2config.each do |pname,config|
-                if not File.exists?(config.file_name)
-                  Bake.formatter.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
-                  cache = nil
+              cache.referencedConfigs.each do |pname,configs|
+                configs.each do |config|
+                  if not File.exists?(config.file_name)
+                    Bake.formatter.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
+                    cache = nil
+                  end
                 end
               end  
             end
@@ -132,16 +134,16 @@ module Bake
             CLOBBER.include(File.dirname(c)+"/.bake") # really?
           end          
           
-          return cache.project2config
+          return cache.referencedConfigs
         else
           return nil
         end
         
       end
       
-      def write_cache(project_files, project2config, defaultToolchain, defaultToolchainTime)
+      def write_cache(project_files, referencedConfigs, defaultToolchain, defaultToolchainTime)
         cache = Cache.new
-        cache.project2config = project2config
+        cache.referencedConfigs = referencedConfigs
         cache.files = project_files
         cache.cache_file = @cacheFilename
         cache.version = Version.number
