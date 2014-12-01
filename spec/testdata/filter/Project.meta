@@ -1,0 +1,54 @@
+Project {
+
+  CustomConfig OneStep {
+    DefaultToolchain GCC
+    PostSteps {
+      CommandLine "echo test done"
+    }
+  }
+
+  CustomConfig OneStepDefaultOn {
+    DefaultToolchain GCC
+    PreSteps {
+      CommandLine "echo test done", default: on
+    }
+  }
+
+  CustomConfig OneStepDefaultOff {
+    DefaultToolchain GCC
+    PostSteps {
+      CommandLine "echo test done", default: off
+    }
+  }
+
+  CustomConfig OneStepDefaultOnFILTER {
+    DefaultToolchain GCC
+    PostSteps {
+      CommandLine "echo test done", default: on, filter: "FILTER"
+    }
+  }
+
+  CustomConfig OneStepDefaultOffFILTER {
+    DefaultToolchain GCC
+    PostSteps {
+      CommandLine "echo test done", default: off, filter: "FILTER"
+    }
+  }
+  
+  CustomConfig MultipleSteps {
+    DefaultToolchain GCC
+    PreSteps {
+      CommandLine "echo test pre1", default: off, filter: "FILTER"
+      CommandLine "echo test pre2", default: off, filter: "FILTER2"
+      CommandLine "echo test pre3", default: on, filter: "FILTER2"
+      CommandLine "echo test pre4", default: on, filter: "FILTER"
+    }
+    PostSteps {
+      CommandLine "echo test post1", default: off, filter: "FILTER"
+      CommandLine "echo test post2", default: off, filter: "FILTER2"
+      CommandLine "echo test post3", default: on, filter: "FILTER2"
+      CommandLine "echo test post4", default: on, filter: "FILTER"
+    }
+  }  
+
+}

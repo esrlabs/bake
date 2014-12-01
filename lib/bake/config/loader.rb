@@ -20,7 +20,7 @@ module Bake
       end 
       
       if not config
-        Bake.formatter.printError "Error: Config '#{configname}' not found in '#{config.file_name}'"
+        Bake.formatter.printError "Error: Config '#{configname}' not found in '#{configs[0].file_name}'"
         ExitHelper.exit(1)
       end
       
@@ -44,6 +44,11 @@ module Bake
       end
       
       configs = f.root_elements[0].getConfig
+      
+      if configs.length == 0
+        Bake.formatter.printError "Error: #{c.file_name}: No config found"
+        ExitHelper.exit(1)
+      end
       
       configs.each do |config|
         # todo:extra methods for all steps here
@@ -204,7 +209,35 @@ module Bake
       @potentialProjs = @potentialProjs.uniq.sort
     end
     
-  
+    
+    def filterStep(step, globalFilterStr)
+      
+      # 1st prio: explicit single filter
+      if step.filter != "" 
+        return true if  Bake.options.exclude_filter.include?step.filter
+        return false if Bake.options.include_filter.include?step.filter
+      end 
+
+      # 2nd prio: explicit global filter
+      if globalFilterStr != nil
+        return true if  Bake.options.exclude_filter.include?globalFilterStr
+        return false if Bake.options.include_filter.include?globalFilterStr
+      end      
+      
+      # 3nd prio: default
+      return true if step.default == "off"
+      false      
+    end
+        
+    def filterSteps
+      @referencedConfigs.each do |projName, configs|
+        configs.each do |config|
+          config.preSteps.step  = config.preSteps.step.delete_if  { |step| filterStep(step, "PRE") }  if config.preSteps
+          config.postSteps.step = config.postSteps.step.delete_if { |step| filterStep(step, "POST") } if config.postSteps
+        end
+      end
+    end
+
     def load()
       @loader = Loader.new
       cache = CacheAccess.new()
@@ -233,6 +266,8 @@ module Bake
             @defaultToolchainTime = cache.defaultToolchainTime
           end
         end
+        
+        filterSteps
         
         cache.write_cache(@project_files, @referencedConfigs, @defaultToolchain, @defaultToolchainTime)
       else

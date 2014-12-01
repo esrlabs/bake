@@ -91,23 +91,6 @@ module Bake
       if steps
         array = (Metamodel::Step === steps ? [steps] : steps.step)
         array.reverse.each do |m|
-
-          checkDefault = true          
-          if m.filter != "" # explicit filter = 1. prio
-            next if Bake.options.exclude_filter.include?m.filter
-            checkDefault = false if Bake.options.include_filter.include?m.filter
-          end
-
-          if globalFilterStr != nil
-            if checkDefault == true # global filter = 2. prio
-              next if Bake.options.exclude_filter.include?globalFilterStr
-              checkDefault = false if Bake.options.include_filter.include?globalFilterStr
-            end
-          end
-          
-          if checkDefault # default = 3. prio
-            next if m.default == "off"
-          end
         
           if Bake::Metamodel::Makefile === m
             bb = Makefile.new(m.name, m.target, projName, config.name)
@@ -218,6 +201,19 @@ module Bake
           Subst.itute(config, projName, false, getTc(config)) if projName != @mainProjectName
         end  
       end
+    end
+    
+
+    
+    def convert2bb2
+      @loadedConfig.referencedConfigs.each do |projName, configs|
+        configs.each do |config|
+          
+          # steps
+          # addSteps(projName, config.postSteps, bbModule, projDir, "POST", tcs, config) if not Bake.options.linkOnly
+          
+        end
+      end      
     end
     
     def convert2bb
@@ -453,6 +449,8 @@ module Bake
       end
       
       convert2bb
+      convert2bb2
+      
       
       #################################################
 
