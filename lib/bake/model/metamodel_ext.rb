@@ -10,6 +10,12 @@ module Bake
           ::File.dirname(file_name)
         end
       end
+      
+      module BaseConfig_INTERNAL::ClassModule
+        def qname
+          @qname ||= parent.name + "," + name
+        end
+      end      
 
   end
 end

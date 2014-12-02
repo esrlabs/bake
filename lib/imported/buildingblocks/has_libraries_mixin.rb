@@ -22,12 +22,8 @@ module Bake
 
     # 1. element: type
     # 2. element: name, must not be a building block
-    def add_lib_elements(array_of_tuples, front = false)
-      if front
-        @lib_elements = array_of_tuples+lib_elements
-      else
-        lib_elements.concat(array_of_tuples)
-      end
+    def add_lib_elements(array_of_tuples)
+      lib_elements.concat(array_of_tuples)
     end
 
   end

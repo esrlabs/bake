@@ -26,6 +26,10 @@ require 'imported/utils/utils'
 require 'bake/toolchain/colorizing_formatter'
 require 'bake/config/loader'
 
+require 'blocks/block'
+require 'blocks/commandLine'
+require 'blocks/makefile'
+
 require 'set'
 require 'socket'
 
@@ -35,7 +39,10 @@ module Bake
 
   class ToCxx
 
+    
     def initialize
+        
+        
       @configTcMap = {}
     end
     
@@ -84,57 +91,6 @@ module Bake
       needed_bbs << bbChild
       bbChild.dependencies.each { |d| isModule += calc_needed_bbs(d, needed_bbs) }
       return isModule
-    end
-
-    # PRE and POST CONDITIONS
-    def addSteps(projName, steps, bbModule, projDir, globalFilterStr, tcs, config)
-      if steps
-        array = (Metamodel::Step === steps ? [steps] : steps.step)
-        array.reverse.each do |m|
-        
-          if Bake::Metamodel::Makefile === m
-            bb = Makefile.new(m.name, m.target, projName, config.name)
-            if m.pathTo != ""
-              pathHash = {}
-              m.pathTo.split(",").each do |p|
-                nameOfP = p.strip
-                dirOfP = nil
-                if not @loadedConfig.referencedConfigs.include?nameOfP
-                  Bake.options.roots.each do |r|
-                    absIncDir = r+"/"+nameOfP
-                    if File.exists?(absIncDir)
-                      dirOfP = absIncDir
-                      break
-                    end
-                  end
-                else
-                  dirOfP = @loadedConfig.referencedConfigs[nameOfP].first.parent.get_project_dir
-                end
-                if dirOfP == nil
-                  Bake.formatter.printError "Error: Project '#{nameOfP}' not found for makefile #{projDir}/#{m.name}"
-                  ExitHelper.exit(1)
-                end
-                pathHash[nameOfP] = File.rel_from_to_project(File.dirname(projDir),File.dirname(dirOfP))
-              end
-              bb.set_path_to(pathHash)
-              bb.pre_step = true if globalFilterStr
-            end 
-            bb.set_flags(adjustFlags(tcs[:MAKE][:FLAGS],m.flags)) if m.flags
-            
-            @lib_elements[m.line_number] = [HasLibraries::LIB_WITH_PATH, m.lib] if m.lib != ""
-          elsif Bake::Metamodel::CommandLine === m
-            bb = CommandLine.new(m.name, projName, config.name)
-            bb.set_defined_in_file(m.file_name.to_s)
-            bb.set_defined_in_line(m.line_number)
-            bb.pre_step  = true if globalFilterStr
-          else
-            next
-          end
-          bbModule.last_content.dependencies << bb.get_task_name
-          bbModule.contents << bb
-          bbModule.last_content = bb
-        end
-      end
     end
 
     def convPath(dir, config, exe = nil)
@@ -205,17 +161,50 @@ module Bake
     
 
     
+    def addSteps(blockSteps, configSteps)
+      configSteps.step.each do |step|
+        if Bake::Metamodel::Makefile === step
+          blockSteps << Blocks::Makefile.new(step)
+        elsif Bake::Metamodel::CommandLine === step
+          blockSteps << Blocks::CommandLine.new(step)
+        end
+      end if configSteps
+    end
+
+    def addDependencies(block, configDeps)
+      configDeps.each do |dep|
+        @loadedConfig.referencedConfigs[dep.name].each do |config|
+          if config.name == dep.config
+            block.dependencies << config.qname
+            break
+          end  
+        end
+      end
+    end    
+    
     def convert2bb2
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
           
-          # steps
-          # addSteps(projName, config.postSteps, bbModule, projDir, "POST", tcs, config) if not Bake.options.linkOnly
+          block = Blocks::Block.new(projName, config.name)
           
+          @startBlock = block if Blocks::ALL_BLOCKS.empty?
+          Blocks::ALL_BLOCKS[config.qname] = block
+          
+          if not Bake.options.linkOnly
+            addSteps(block.preSteps,  config.preSteps)
+            addSteps(block.postSteps, config.postSteps)
+          end
+          
+          # todo: überprüfung auch bei convertBBs
+          if not Bake.options.single and not Bake.options.filename
+            addDependencies(block, config.dependency)
+          end
+                    
         end
       end      
     end
-    
+
     def convert2bb
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
@@ -228,8 +217,6 @@ module Bake
           
           tcs = @configTcMap[config]       
             
-          addSteps(projName, config.postSteps, bbModule, projDir, "POST", tcs, config) if not Bake.options.linkOnly
-  
           if Metamodel::CustomConfig === config
             if config.step
               if config.step.filter != ""
@@ -240,7 +227,7 @@ module Bake
                 Bake.formatter.printError "Error: #{config.file_name}(#{config.step.line_number}): attribute default not allowed here"
                 ExitHelper.exit(1)
               end
-              addSteps(projName, config.step, bbModule, projDir, nil, tcs, config)
+              #addSteps(projName, config.step, bbModule, projDir, nil, tcs, config)
             end 
             bbModule.main_content = CustomConfig.new(projName, config.name)
           elsif Bake.options.lint
@@ -260,8 +247,6 @@ module Bake
           bbModule.last_content = bbModule.main_content
           bbModule.contents << bbModule.main_content
           
-          # PRE CONDITIONS
-          addSteps(projName, config.preSteps, bbModule, projDir, "PRE", tcs, config) if not Bake.options.linkOnly       
           
           ([bbModule] + bbModule.contents).each do |c|
             c.set_tcs(tcs)
@@ -448,8 +433,12 @@ module Bake
         ExitHelper.exit(0)
       end
       
-      convert2bb
+      #convert2bb
       convert2bb2
+      
+      @startBlock.execute
+      
+      return true
       
       
       #################################################

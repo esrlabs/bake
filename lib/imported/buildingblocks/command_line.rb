@@ -19,17 +19,9 @@ module Bake
       self
     end
 
-    def get_defined_in_file
-      @defined_in_file
-    end
-
     def set_defined_in_line(x)
       @defined_in_line = x
       self
-    end
-
-    def get_defined_in_line
-      @defined_in_line
     end
 
     def initialize(commandLine, projectName, configName)

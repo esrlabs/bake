@@ -37,9 +37,10 @@ module Bake
 
     tocxx.connect()
     
-    if tocxx.doit()
-      tocxx.start()
-    end
+    tocxx.doit()
+    #if tocxx.doit()
+    #  tocxx.start()
+    #end
     tocxx.disconnect()
     
   rescue SystemExit => e
