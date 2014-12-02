@@ -12,9 +12,6 @@ module Bake
   # stores all defined buildingblocks by name (the name should be unique)
   ALL_BUILDING_BLOCKS = {}
 
-  trap("INT") do
-    Rake.application.idei.set_abort(true)
-  end
 
   class BuildingBlock
     include HasDependencies

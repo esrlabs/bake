@@ -1,4 +1,8 @@
 module Bake
+  
+  class AbortException < StandardError
+  end
+  
   module Utils
   
     def self.flagSplit(str, removeQuotes)

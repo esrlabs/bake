@@ -161,10 +161,10 @@ module Bake
     
 
     
-    def addSteps(blockSteps, configSteps)
-      configSteps.step.each do |step|
+    def addSteps(block, blockSteps, configSteps)
+      Array(configSteps.step).each do |step|
         if Bake::Metamodel::Makefile === step
-          blockSteps << Blocks::Makefile.new(step)
+          blockSteps << Blocks::Makefile.new(step, @loadedConfig.referencedConfigs, block)
         elsif Bake::Metamodel::CommandLine === step
           blockSteps << Blocks::CommandLine.new(step)
         end
@@ -192,9 +192,14 @@ module Bake
           Blocks::ALL_BLOCKS[config.qname] = block
           
           if not Bake.options.linkOnly
-            addSteps(block.preSteps,  config.preSteps)
-            addSteps(block.postSteps, config.postSteps)
+            addSteps(block, block.preSteps,  config.preSteps)
+            addSteps(block, block.postSteps, config.postSteps)
           end
+          
+          if Metamodel::CustomConfig === config
+            addSteps(block, block.mainSteps, config) if config.step 
+          end
+          
           
           # todo: überprüfung auch bei convertBBs
           if not Bake.options.single and not Bake.options.filename
@@ -417,6 +422,17 @@ module Bake
       parsingOk
     end
 
+    def sayGoodbye
+      # text = ""
+      # this "fun part" shall not fail in any case!        
+      begin
+        #if Time.now.year == 2012 and Time.now.month == 1
+        #  text = "  --  The munich software team wishes you a happy new year 2012!"
+      rescue Exception
+      end
+    end
+
+
     def doit_internal()
       
       @mainProjectName = File::basename(Bake.options.main_dir)
@@ -436,9 +452,40 @@ module Bake
       #convert2bb
       convert2bb2
       
-      @startBlock.execute
+      result = BUILD_PASSED # TODO: wird das nur hier gebraucht?
+      begin
+        result = @startBlock.execute ? BUILD_PASSED : BUILD_ABORTED  
+      rescue AbortException
+        result = BUILD_ABORTED
+      rescue Exception => ex
+        if Bake.options.debug
+          puts ex.message
+          puts ex.backtrace
+        end 
+        result = BUILD_FAILED
+      end
       
-      return true
+        
+      buildType = Bake.options.rebuild ? "Rebuild" : "Build"
+          
+      if result == BUILD_ABORTED
+        Bake.formatter.printError "\n#{buildType} aborted."
+        return false          
+      elsif result == BUILD_FAILED
+        #if Rake::application.preproFlags
+        #  Bake.formatter.printSuccess "\nPreprocessing done."
+        #  return true
+        #else
+          Bake.formatter.printError "\n#{buildType} failed."
+          return false
+        #end
+      else
+        Bake.formatter.printSuccess("\n#{buildType} done.")
+        sayGoodbye
+        return true          
+      end
+      
+      
       
       
       #################################################
@@ -532,9 +579,6 @@ module Bake
       end
       
       
-      Rake.application.check_unnecessary_includes = (Bake.options.filename == nil) if Bake.options.check_uninc
-      
-
       #################################################
 
 

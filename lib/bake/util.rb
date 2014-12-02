@@ -5,6 +5,11 @@ require 'bake/toolchain/colorizing_formatter'
 require 'imported/utils/exit_helper'
 require 'imported/utils/utils'
 
+
+def remove_empty_strings_and_join(a, j=' ')
+  return a.reject{|e|e.to_s.empty?}.join(j)
+end
+
 def adjustFlags(orgStr, flags)
   orgSplitted = Bake::Utils::flagSplit(orgStr, false)
 

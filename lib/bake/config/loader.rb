@@ -31,8 +31,36 @@ module Bake
       
       config
     end
+
+    def symlinkCheck(filename)
+      dirOfProjMeta = File.dirname(filename)
+      Dir.chdir(dirOfProjMeta) do
+        if Dir.pwd != dirOfProjMeta and File.dirname(Dir.pwd) != File.dirname(dirOfProjMeta)
+          isSym = false
+          begin
+            isSym = File.symlink?(dirOfProjMeta)
+          rescue
+          end
+          if isSym
+            message = "Error: symlinks only allowed with the same parent dir as the target: #{dirOfProjMeta} --> #{Dir.pwd}"
+            res = Bake::ErrorDesc.new
+            res.file_name = dirOfProjMeta
+            res.line_number = 0
+            res.severity = Bake::ErrorParser::SEVERITY_ERROR
+            res.message = message
+            Rake.application.idei.set_errors([res])
+            Bake.formatter.printError message
+            ExitHelper.exit(1)
+          end
+        end
+      end
+    end
+        
     
     def loadProjMeta(filename)
+      
+      symlinkCheck(filename)
+      
       @project_files << filename
       f = @loader.load(filename)
 

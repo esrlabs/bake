@@ -18,7 +18,7 @@ module Bake
   class Options < Parser
     attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :clean, :rebuild, :single, :nocache, :show_includes, :show_includes_and_defines, :linkOnly, :check_uninc, :no_autodir, :clobber, :lint, :debug, :cmake # Boolean
+    attr_reader :stopOnFirstError, :clean, :rebuild, :single, :nocache, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :cmake # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verboseLow
@@ -28,6 +28,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
+      @stopOnFirstError = false
       @verboseLow = false
       @verboseHigh = false
       @vars = {}
@@ -42,7 +43,6 @@ module Bake
       @debug = false
       @rebuild = false
       @nocache = false
-      @check_uninc = false
       @show_includes = false
       @show_includes_and_defines = false
       @linkOnly = false
@@ -67,7 +67,7 @@ module Bake
       add_option(Option.new("-c",false)                    {     @clean = true              })
       add_option(Option.new("-a",true)                     { |x| Bake.formatter.setColorScheme(x.to_sym)              })
       add_option(Option.new("-w",true)                     { |x| set_root(x)                })
-      add_option(Option.new("-r",false)                    {     Rake::Task.bail_on_first_error = true                  })
+      add_option(Option.new("-r",false)                    {     @stopOnFirstError = true                  })
       add_option(Option.new("--depfileInfo",false)         {     Bake::HasSources.print_additional_depfile_info = true   })
       add_option(Option.new("--rebuild",false)             {     @clean = true; @rebuild = true                })
       add_option(Option.new("--prepro",false)              {     Rake::application.preproFlags = true                 })
@@ -101,7 +101,6 @@ module Bake
       add_option(Option.new("--eclipse_version",true)      { |x| @eclipse_version = x     })
       add_option(Option.new("--show_license",false)        {     License.show              })
       add_option(Option.new("--version",false)             {     ExitHelper.exit(0)         })
-      add_option(Option.new("--check_uninc",false)         {     @check_uninc = true            })
       add_option(Option.new("--cmake",false)               {     @cmake = true                  })
 
     end

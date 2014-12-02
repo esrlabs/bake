@@ -5,23 +5,24 @@ module Bake
     module HasExecuteCommand
       
       def executeCommand(commandLine)
-        puts commandLine + (Bake.options.verboseHigh ? "\n(executed in '#{@projectDir}')" : "")
+        puts commandLine if not Bake.options.verboseLow
+        puts "(executed in '#{@projectDir}')" if Bake.options.verboseHigh
         cmd_result = false
         begin
-          rd, wr = IO.pipe
-          cmd = [commandLine]
-          cmd << { :err=>wr, :out=>wr }
-          cmd_result, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
-          puts consoleOutput
-          
-        # bei makefile.... - must be tested!
-        #  cmd_result = ProcessHelper.spawnProcess(commandLine + " 2>&1")
+          Dir.chdir(@projectDir) do
+            #rd, wr = IO.pipe
+            #cmd = [commandLine]
+            #cmd << { :err=>wr, :out=>wr }
+            #cmd_result, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
+            #puts consoleOutput
+            
+          # bei makefile.... - must be tested!
+            cmd_result = ProcessHelper.spawnProcess(commandLine + " 2>&1")
+          end
   
         rescue
         end
           
-  
-  
         if (cmd_result == false)
           if Rake.application.idei # todo
             err_res = ErrorDesc.new
@@ -31,8 +32,9 @@ module Bake
             err_res.message = "Command \"#{commandLine}\" failed"
             Rake.application.idei.set_errors([err_res])
           end
-          Bake.formatter.printError "Error: command \"#{commandLine}\" failed" + (Bake.options.verboseHigh ? "" : "\n(executed in '#{@project_dir}')")
-          # TODO raise SystemCommandFailed.new
+          Bake.formatter.printError "Error: command \"#{commandLine}\" failed"
+          puts "(executed in '#{@projectDir}')" if not Bake.options.verboseHigh
+          raise SystemCommandFailed.new
         end
       end
           

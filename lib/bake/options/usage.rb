@@ -24,7 +24,6 @@ module Bake
       puts "                          to specify only a part of the file list to lint (default -1)."
       puts " --lint_max <num>         See above (default -1)."
       puts " --ignore_cache           Rereads the original meta files - usefull if workspace structure has been changed."
-      puts " --check_uninc            Checks for unnecessary includes (only done for successful project builds)."
       puts " --threads <num>          Set NUMBER of parallel compiled files (default is 8)."
       puts " --socket <num>           Set SOCKET for sending errors, receiving commands, etc. - used by e.g. Eclipse."
       puts " --toolchain_info <name>  Prints default values of a toolchain."

@@ -17,16 +17,11 @@ end
 module Rake
 
   class Application
-    attr_writer :check_unnecessary_includes
     attr_writer :deriveIncludes
     attr_writer :preproFlags
     attr_writer :consoleOutput_fullnames
     attr_writer :consoleOutput_visualStudio
     
-    def check_unnecessary_includes
-      @check_unnecessary_includes ||= false
-    end
-
     def idei
       @idei ||= Bake::IDEInterface.new
     end
@@ -108,25 +103,6 @@ module Rake
       return if @failure # pre step has failed
 
       Dir.chdir(@bb.project_dir) do
-        if Dir.pwd != @bb.project_dir and File.dirname(Dir.pwd) != File.dirname(@bb.project_dir)
-          isSym = false
-          begin
-            isSym = File.symlink?(@bb.project_dir)
-          rescue
-          end
-          if isSym
-            message = "Symlinks only allowed with the same parent dir as the target: #{@bb.project_dir} --> #{Dir.pwd}"
-            res = Bake::ErrorDesc.new
-            res.file_name = @bb.project_dir
-            res.line_number = 0
-            res.severity = Bake::ErrorParser::SEVERITY_ERROR
-            res.message = message
-            Rake.application.idei.set_errors([res])
-            Bake.formatter.printError message
-            set_failed
-            return
-          end
-        end
       
         file_tasks = @bb.create_object_file_tasks
         
@@ -149,23 +125,6 @@ module Rake
         # (it is not deterministic which file compilation finishes first)
         @error_strings.sort.each {|es| puts es[1]} 
       
-        if Rake.application.check_unnecessary_includes
-          if not @failure # otherwise the dependency files might be incorrect or not complete
-            @bb.incArray.each do |i|
-              next if i=="."
-              if not @bb.deps_in_depFiles.any? { |d| d.index(i) == 0 }
-                msg = "Info: Include to #{i} seems to be unnecessary"
-                Bake.formatter.printInfo msg
-                res = Bake::ErrorDesc.new
-                res.file_name = @project_dir
-                res.line_number = 0
-                res.severity = Bake::ErrorParser::SEVERITY_INFO
-                res.message = msg
-                Rake.application.idei.set_errors([res])              
-              end
-            end
-          end
-        end
       
       end
       
@@ -275,9 +234,6 @@ module Rake
       while @prerequisites.length > orgLength do
         orgLength = @prerequisites.length
 
-        #puts "    #{@name} : #{@prerequisites}"
-
-        
         @prerequisites.dup.each do |n| # dup needed when apply tasks changes that array
           break if Rake.application.idei.get_abort
           #break if @failure
@@ -304,9 +260,6 @@ module Rake
               puts e.backtrace
             end       
             set_failed
-            if e.message.include?"Circular dependency detected"
-              Rake.application.idei.set_abort(true)
-            end
           end
 
         end

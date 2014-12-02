@@ -9,7 +9,7 @@ module Bake
       def initialize(config)
         @config = config # Bake::Metamodel::CommandLine
         @commandLine = config.name
-        @projectDir = config.parent.parent.parent.get_project_dir
+        @projectDir = config.get_project_dir
       end
       
       def execute

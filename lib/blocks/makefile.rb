@@ -13,8 +13,8 @@ module Bake
       
       def initialize(config, referencedConfigs, block)
         @config = config
-        @projectDir = config.parent.parent.parent.get_project_dir
-        @path_to = []
+        @projectDir = config.get_project_dir
+        @path_to = ""
         @flags = adjustFlags("",config.flags) if config.flags # TODO: CHANGE SYNTAX
         @makefile = config.name
         @target = config.target != "" ? config.target : "all"
@@ -44,14 +44,14 @@ module Bake
       end      
       
       def calcPathTo(referencedConfigs)
-     
-        if config.pathTo != ""
+        @path_to = ""
+        if @config.pathTo != ""
           pathHash = {}
-          config.pathTo.split(",").each do |p|
+          @config.pathTo.split(",").each do |p|
             nameOfP = p.strip
             dirOfP = nil
             if referencedConfigs.include?nameOfP
-              dirOfP = referencedConfigs[nameOfP].first.parent.get_project_dir
+              dirOfP = referencedConfigs[nameOfP].first.get_project_dir
             else
               Bake.options.roots.each do |r|
                 absIncDir = r+"/"+nameOfP
@@ -62,26 +62,26 @@ module Bake
               end
             end
             if dirOfP == nil
-              Bake.formatter.printError "Error: Project '#{nameOfP}' not found for makefile #{@projectDir}/#{config.name}"
+              Bake.formatter.printError "Error: Project '#{nameOfP}' not found for makefile #{@projectDir}/#{@config.name}"
               ExitHelper.exit(1)
             end
             pathHash[nameOfP] = File.rel_from_to_project(File.dirname(@projectDir),File.dirname(dirOfP))
           end
+          path_to_array = []
+          pathHash.each { |k,v| path_to_array << "PATH_TO_#{k}=#{v}" }
+          @path_to = path_to_array.join(" ")
         end
         
-        @path_to = []
-        pathHash.each { |k,v| @path_to << "PATH_TO_#{k}=#{v}" }
-        @path_to.join(" ")
       end
       
-    end
-        
-    def execute
-      executeCommand(@commandLine)
-     end
+      def execute
+        executeCommand(@commandLine)
+       end
+      
+      def clean
+        executeCommand(@cleanLine)
+      end
     
-    def clean
-      executeCommand(@cleanLine)
     end
     
   end

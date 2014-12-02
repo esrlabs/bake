@@ -11,3 +11,4 @@ test2/
 test3/
 Debug*/
 *.exe
+**/obj/*
