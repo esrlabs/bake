@@ -1,4 +1,3 @@
-require 'imported/ext/rake'
 require 'bake/toolchain/colorizing_formatter'
 require 'common/options/parser'
 require 'bake/options/showToolchains'
@@ -16,18 +15,22 @@ module Bake
   end
     
   class Options < Parser
-    attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version # String
+    attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version, :main_project_name # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :stopOnFirstError, :clean, :rebuild, :single, :nocache, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :cmake # Boolean
+    attr_reader :stopOnFirstError, :clean, :rebuild, :single, :nocache, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :cmake, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verboseLow
     attr_reader :verboseHigh
+    attr_reader :consoleOutput_fullnames, :consoleOutput_visualStudio 
     
 
     def initialize(argv)
       super(argv)
 
+      @consoleOutput_fullnames = false
+      @consoleOutput_visualStudio = false           
+      @prepro = false
       @stopOnFirstError = false
       @verboseLow = false
       @verboseHigh = false
@@ -57,6 +60,7 @@ module Bake
       @exclude_filter = []
       @def_roots = []
       @eclipse_version = ""
+      @main_project_name = ""
       
       add_default(Proc.new{ |x| set_build_config_default(x) })
       
@@ -68,9 +72,8 @@ module Bake
       add_option(Option.new("-a",true)                     { |x| Bake.formatter.setColorScheme(x.to_sym)              })
       add_option(Option.new("-w",true)                     { |x| set_root(x)                })
       add_option(Option.new("-r",false)                    {     @stopOnFirstError = true                  })
-      add_option(Option.new("--depfileInfo",false)         {     Bake::HasSources.print_additional_depfile_info = true   })
       add_option(Option.new("--rebuild",false)             {     @clean = true; @rebuild = true                })
-      add_option(Option.new("--prepro",false)              {     Rake::application.preproFlags = true                 })
+      add_option(Option.new("--prepro",false)              {     @prepro = true                 })
       add_option(Option.new("--link_only",false)           {     @linkOnly = true; @single = true               })
       add_option(Option.new("--no_autodir",false)          {     @no_autodir = true         })
       add_option(Option.new("--lint",false)                {     @lint = true               })
@@ -92,8 +95,8 @@ module Bake
       add_option(Option.new("--toolchain_names",false)     {     ToolchainInfo.showToolchainList           })
       add_option(Option.new("--include_filter",true)       { |x| @include_filter << x       })
       add_option(Option.new("--exclude_filter",true)       { |x| @exclude_filter << x       })
-      add_option(Option.new("--show_abs_paths",false)      {     Rake::application.consoleOutput_fullnames = true         })
-      add_option(Option.new("--visualStudio",false)        {     Rake::application.consoleOutput_visualStudio = true           })
+      add_option(Option.new("--show_abs_paths",false)      {     @consoleOutput_fullnames = true         })
+      add_option(Option.new("--visualStudio",false)        {     @consoleOutput_visualStudio = true           })
       add_option(Option.new("-h",false)                    {     Bake::Usage.show                 })
       add_option(Option.new("--help",false)                {     Bake::Usage.show                 })
       add_option(Option.new("--show_include_paths",false)  {     @show_includes = true      })
@@ -172,6 +175,7 @@ module Bake
     def set_main_dir(dir)
       check_valid_dir(dir)
       @main_dir = File.expand_path(dir.gsub(/[\\]/,'/'))
+      @main_project_name = File::basename(@main_dir)
       @def_roots = calc_def_roots(@main_dir)
     end
     

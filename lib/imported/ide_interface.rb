@@ -21,6 +21,11 @@ module Bake
       @abort = false
       @thread = nil
     end
+    
+    def self.instance
+      @@ide ||= IDEInterface.new
+    end
+    
 
     def mutex
       @mutex ||= Mutex.new

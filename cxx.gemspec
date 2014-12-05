@@ -1,6 +1,6 @@
 $:.unshift(File.dirname(__FILE__)+"/")
 
-require "rake"
+#require "rake"
 require "lib/common/version"
 
 include FileUtils

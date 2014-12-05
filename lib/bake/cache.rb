@@ -26,7 +26,7 @@ module Bake
       def initialize()
         @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta."+sanitize_filename(Bake.options.build_config)+".cache"
         
-        CLOBBER.include(Bake.options.main_dir+"/.bake")
+        #TODO CLOBBER.include(Bake.options.main_dir+"/.bake")
           
         FileUtils.mkdir_p(File.dirname(@cacheFilename))
         @defaultToolchain = nil
@@ -131,7 +131,7 @@ module Bake
           Bake.formatter.printInfo "Info: cache is up-to-date, loading cached meta information" if Bake.options.verboseHigh
           
           cache.files.each do |c|
-            CLOBBER.include(File.dirname(c)+"/.bake") # really?
+            #TODO CLOBBER.include(File.dirname(c)+"/.bake") # really?
           end          
           
           return cache.referencedConfigs

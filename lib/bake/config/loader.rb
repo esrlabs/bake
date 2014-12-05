@@ -5,7 +5,12 @@ module Bake
   class Config
     attr_reader :referencedConfigs
     attr_reader :defaultToolchain
-    attr_reader :defaultToolchainTime
+    
+    @@defaultToolchainTime = nil
+    
+    def self.defaultToolchainTime
+      @@defaultToolchainTime
+    end
     
     def getFullProject(configs, configname)
       config = nil
@@ -48,7 +53,7 @@ module Bake
             res.line_number = 0
             res.severity = Bake::ErrorParser::SEVERITY_ERROR
             res.message = message
-            Rake.application.idei.set_errors([res])
+            Bake::IDEInterface.instance.set_errors([res])
             Bake.formatter.printError message
             ExitHelper.exit(1)
           end
@@ -178,7 +183,6 @@ module Bake
     end
     
     def loadMainMeta()
-      @mainProjectName = File::basename(Bake.options.main_dir)
       mainMeta = Bake.options.main_dir+"/Project.meta"
       if not File.exist?(mainMeta)
         Bake.formatter.printError "Error: #{mainMeta} not found"
@@ -189,15 +193,15 @@ module Bake
       
       configs = loadProjMeta(mainMeta)
       @loadedConfigs = {}
-      @loadedConfigs[@mainProjectName] = configs
+      @loadedConfigs[Bake.options.main_project_name] = configs
       
       config = getFullProject(configs,Bake.options.build_config)
       @referencedConfigs = {}
-      @referencedConfigs[@mainProjectName] = [config]
+      @referencedConfigs[Bake.options.main_project_name] = [config]
         
       #@mainConfig = loadProjMeta(mainMeta, Bake.options.build_config)
       #@project2config = {}
-      #@project2config[@mainProjectName] = config
+      #@project2config[Bake.options.main_project_name] = config
       
       
         
@@ -216,7 +220,7 @@ module Bake
       end
       @defaultToolchain = Utils.deep_copy(@basedOnToolchain)
       integrateToolchain(@defaultToolchain, config.defaultToolchain)
-      @defaultToolchainTime = File.mtime(mainMeta)
+      @@defaultToolchainTime = File.mtime(mainMeta)
       
       @depsPending = config.dependency
 
@@ -228,7 +232,7 @@ module Bake
       @potentialProjs = []
       Bake.options.roots.each do |r|
         if (r.length == 3 && r.include?(":/"))
-          r = r + @mainProjectName # glob would not work otherwise on windows (ruby bug?)
+          r = r + Bake.options.main_project_name # glob would not work otherwise on windows (ruby bug?)
         end
         r = r+"/**{,/*/**}/Project.meta"  
         @potentialProjs.concat(Dir.glob(r))
@@ -278,7 +282,7 @@ module Bake
         while dep = @depsPending.shift
           loadMeta(dep)
         end
-        
+
         if (cache.defaultToolchain)
           if @defaultToolchain[:LINKER][:FLAGS]                   == cache.defaultToolchain[:LINKER][:FLAGS] and
             @defaultToolchain[:LINKER][:LIB_PREFIX_FLAGS]         == cache.defaultToolchain[:LINKER][:LIB_PREFIX_FLAGS] and
@@ -291,16 +295,16 @@ module Bake
             @defaultToolchain[:COMPILER][:ASM][:FLAGS]            == cache.defaultToolchain[:COMPILER][:ASM][:FLAGS] and
             @defaultToolchain[:COMPILER][:ASM][:DEFINES].join("") == cache.defaultToolchain[:COMPILER][:ASM][:DEFINES].join("") and
             @defaultToolchain[:LINT_POLICY].join("")              == cache.defaultToolchain[:LINT_POLICY].join("")
-            @defaultToolchainTime = cache.defaultToolchainTime
+            @@defaultToolchainTime = cache.defaultToolchainTime
           end
         end
         
         filterSteps
         
-        cache.write_cache(@project_files, @referencedConfigs, @defaultToolchain, @defaultToolchainTime)
+        cache.write_cache(@project_files, @referencedConfigs, @defaultToolchain, @@defaultToolchainTime)
       else
         @defaultToolchain = cache.defaultToolchain
-        @defaultToolchainTime = cache.defaultToolchainTime
+        @@defaultToolchainTime = cache.defaultToolchainTime
       end
     end
     

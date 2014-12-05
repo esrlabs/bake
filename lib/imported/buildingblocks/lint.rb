@@ -1,7 +1,5 @@
-require 'imported/buildingblocks/source_library'
-
 module Bake
-  class Lint < SourceLibrary
+  class Lint #< SourceLibrary
 
     def initialize()
       super
@@ -20,7 +18,7 @@ module Bake
     end
     
     def get_task_name()
-      @task_name ||= File.join([@output_dir, "#{@project_name}_lint"])
+      #@task_name ||= File.join([@output_dir, "#{@project_name}_lint"])
     end    
     
     def convert_to_rake()

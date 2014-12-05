@@ -7,7 +7,6 @@ module Bake
       @@configName = config.name
       @@projDir = config.parent.get_project_dir
       @@projName = projName
-      @@mainProjectName = File::basename(Bake.options.main_dir)
       @@resolvedVars = 0
       @@configFilename = config.file_name
       
@@ -103,7 +102,7 @@ module Bake
         elsif var == "MainConfigName"
           substStr << Bake.options.build_config
         elsif var == "MainProjectName"
-          substStr << @@mainProjectName
+          substStr << Bake.options.main_project_name
         elsif var == "MainProjectDir"
           substStr << Bake.options.main_dir
         elsif var == "ConfigName"
@@ -113,10 +112,10 @@ module Bake
         elsif var == "ProjectDir"
           substStr << @@projDir
         elsif var == "OutputDir"
-          if @@projName == @@mainProjectName 
+          if @@projName == Bake.options.main_project_name
             substStr << Bake.options.build_config
           else
-            substStr << (Bake.options.build_config + "_" + @@mainProjectName)
+            substStr << (Bake.options.build_config + "_" + Bake.options.main_project_name)
           end
         elsif var == "Time"
           substStr << Time.now.to_s

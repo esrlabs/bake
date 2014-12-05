@@ -24,13 +24,13 @@ module Bake
         end
           
         if (cmd_result == false)
-          if Rake.application.idei # todo
+          if Bake::IDEInterface.instance # todo
             err_res = ErrorDesc.new
             err_res.file_name = @config.file_name.to_s
             err_res.line_number = @config.line_number
             err_res.severity = ErrorParser::SEVERITY_ERROR
             err_res.message = "Command \"#{commandLine}\" failed"
-            Rake.application.idei.set_errors([err_res])
+            Bake::IDEInterface.instance.set_errors([err_res])
           end
           Bake.formatter.printError "Error: command \"#{commandLine}\" failed"
           puts "(executed in '#{@projectDir}')" if not Bake.options.verboseHigh

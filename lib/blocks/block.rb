@@ -1,3 +1,5 @@
+require 'bake/libElement'
+
 module Bake
 
   BUILD_PASSED = 0
@@ -6,6 +8,7 @@ module Bake
   
   module Blocks
 
+    
     ALL_BLOCKS = {} # NEW
     ABORTED = false
 
@@ -13,21 +16,13 @@ module Bake
     trap("INT") do
       ProcessHelper.killProcess
       ABORTED = true
-      #Rake.application.idei.set_abort(true)
+      #Bake::IDEInterface.instance.set_abort(true)
     end
         
     class Block
 
-      LIB = 1
-      USERLIB = 2
-      LIB_WITH_PATH = 3
-      SEARCH_PATH = 4
-      DEPENDENCY = 5
+      attr_reader :lib_elements, :projectDir, :library
   
-      def lib_elements
-        @lib_elements ||= []
-      end      
-           
       def preSteps
         @preSteps ||= []
       end
@@ -44,12 +39,64 @@ module Bake
         @dependencies ||= []
       end
       
-      def initialize(projName, configName)
-        @visited = false
-        @projName = projName
-        @configName = configName
-        @@block_counter = 0
+      def set_library(library)
+        @library = library
       end
+      
+      def initialize(config, referencedConfigs)
+        
+        @library = nil
+        @visited = false
+        @config = config
+        @referencedConfigs = referencedConfigs
+        @projName = config.parent.name
+        @configName = config.name
+        @projectDir = config.get_project_dir
+        @@block_counter = 0
+        
+        @lib_elements = Bake::LibElements.calcLibElements(@config)
+      end
+      
+      def add_lib_element(elem)
+        @lib_elements[2000000000] = [elem]
+      end
+      
+      def convPath(dir)
+         d = dir.respond_to?("name") ? dir.name : dir
+         return d if Bake.options.no_autodir
+         
+         inc = d.split("/")
+         if (inc[0] == @projectName)
+           res = inc[1..-1].join("/") # within self
+           res = "." if res == "" 
+         elsif @referencedConfigs.include?(inc[0])
+           dirOther = @referencedConfigs[inc[0]].first.parent.get_project_dir
+           res = File.rel_from_to_project(@projectDir, dirOther)
+           postfix = inc[1..-1].join("/")
+           res = res + postfix if postfix != ""
+         else
+           if (inc[0] != "..")
+             return d if File.exists?(@projectDir + "/" + d) # e.g. "include"
+           
+             # check if dir exists without Project.meta entry
+             Bake.options.roots.each do |r|
+               absIncDir = r+"/"+d
+               if File.exists?(absIncDir)
+                 res = File.rel_from_to_project(@projectDir,absIncDir)
+                 if not res.nil?
+                   return res
+                 end 
+               end
+             end
+           else
+             Bake.formatter.printInfo "Info: #{@projectName} uses \"..\" in path name #{d}" if Bake.options.verboseHigh
+           end
+           
+           res = d # relative from self as last resort
+         end
+         res
+       end      
+      
       
       def block_counter
         @@block_counter += 1
@@ -70,7 +117,7 @@ module Bake
           # delete file?
           if not ABORTED # means no kill from IDE. TODO: test this!
             Bake.formatter.printError "Error: #{ex1.message}"
-            Bake.formatter.printError(ex1.backtrace) if Bake.options.debug
+            puts ex1.backtrace if Bake.options.debug
           end
         end 
         
@@ -88,6 +135,9 @@ module Bake
           #Bake.formatter.printError "Error: Could not delete #{@name}: #{ex2.message}"
       #  end
       #end
+      
+
+      
       
       def execute
         if (@visited)

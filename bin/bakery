@@ -82,7 +82,7 @@ module Bake
   end  
   
   if @options.socket != 0
-    Rake.application.idei.connect(@options.socket)
+    Bake::IDEInterface.instance.connect(@options.socket)
   end
 
   msg1 = "* bakery "
@@ -157,7 +157,7 @@ module Bake
     Bake.formatter.printError stars
   end
   
-  Rake.application.idei.disconnect()
+  Bake::IDEInterface.instance.disconnect()
 
   ExitHelper.disable_exit_test
   ExitHelper.exit(exitValue)

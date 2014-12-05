@@ -6,7 +6,7 @@ module Bake
     class CommandLine
       include HasExecuteCommand
       
-      def initialize(config)
+      def initialize(config, referencedConfigs)
         @config = config # Bake::Metamodel::CommandLine
         @commandLine = config.name
         @projectDir = config.get_project_dir
