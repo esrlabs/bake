@@ -290,7 +290,7 @@ module Bake
         if Bake.options.clean or Bake.options.rebuild
           result = callBlocks(startBlocks, :clean)
         end
-        if not Bake.options.clean
+        if Bake.options.rebuild or not Bake.options.clean
           result = callBlocks(startBlocks, :execute) && result
         end      
       rescue AbortException
@@ -403,86 +403,20 @@ module Bake
         end
       end
 
-      if Bake.options.filename
-        runTaskName = "Objects of " + @parseBB.get_task_name
-      else       
-        runTaskName = startBB.get_task_name
-      end
-      
-      @runTask = Rake.application[runTaskName]
 
-      if Bake.options.filename
-        @runTask.prerequisites
-        @runTask.prerequisites.clear
-      end
 
       return true
     end
 
     def start()
     
-      if Bake.options.clean
-        cleanTask = nil
-        if Bake.options.filename
-          Dir.chdir(@parseBB.project_dir) do
-            relSource = File.rel_from_to_project(@parseBB.project_dir, @parseBB.sources[0], false)
-            of = @parseBB.get_object_file(relSource)
-            object = File.expand_path(of)
-            FileUtils.rm object, :force => true
-            FileUtils.rm @parseBB.get_dep_file(object), :force => true
-          end 
-        else
-          if Bake.options.clobber
-            cleanTask = Rake.application[:clobber]
-            cleanType = "Clobber"
-          else
-            cleanTask = Rake.application[:clean]
-            cleanType = "Clean"
-          end
-          cleanTask.invoke
-        end
+      #cleanType = "Clobber"
+      #Bake::IDEInterface.instance.set_build_info(@parseBB.project_name, @parseBB.config_name, @num_modules)
         
-        if Bake::IDEInterface.instance and Bake::IDEInterface.instance.get_abort
-          Bake.formatter.printError "\#{cleanType} aborted."
-          return false          
-        elsif cleanTask != nil and cleanTask.failure
-          Bake.formatter.printError "\n#{cleanType} failed."
-          return false
-        elsif not Bake.options.rebuild
-          Bake.formatter.printSuccess "\n#{cleanType} done."
-          return true          
-        end
-          
-      end
-      Bake::IDEInterface.instance.set_build_info(@parseBB.project_name, @parseBB.config_name, @num_modules)
-        
-      @runTask.invoke
-          
-      buildType = Bake.options.rebuild ? "Rebuild" : "Build"
-          
-      if Bake::IDEInterface.instance and Bake::IDEInterface.instance.get_abort
-        Bake.formatter.printError "\n#{buildType} aborted."
-        return false          
-      elsif @runTask.failure
-        if Rake::application.preproFlags
-          Bake.formatter.printSuccess "\nPreprocessing done."
-          return true
-        else
-          Bake.formatter.printError "\n#{buildType} failed."
-          return false
-        end
-      else
-        text = ""
-        # this "fun part" shall not fail in any case!        
-        begin
-          #if Time.now.year == 2012 and Time.now.month == 1
-          #  text = "  --  The munich software team wishes you a happy new year 2012!"
-          #end
-        rescue Exception
-        end
-        Bake.formatter.printSuccess("\n#{buildType} done." + text)
-        return true          
-      end
+      #elsif @runTask.failure
+      #  if Rake::application.preproFlags
+      #    Bake.formatter.printSuccess "\nPreprocessing done."
+      #    return true
     end
 
     def connect()

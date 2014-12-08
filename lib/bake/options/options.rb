@@ -119,11 +119,6 @@ module Bake
         end
       end
       
-      if @clean and @rebuild
-        Bake.formatter.printError "Error: rebuild and clean not allowed at the same time" 
-        ExitHelper.exit(1)
-      end
-      
       if @linkOnly
         if @rebuild
           Bake.formatter.printError "Error: --link_only and --rebuild not allowed at the same time" 

@@ -201,6 +201,16 @@ module Bake
         end
         
         result = callSteps(:clean)
+        
+        if Bake.options.clobber
+          Dir.chdir(@projectDir) do
+            if File.exist?".bake" 
+              puts "Deleting folder .bake" if Bake.options.verboseHigh
+              FileUtils.rm_rf(".bake")
+            end
+          end          
+        end
+        
         return (depResult && result)
       end      
             
