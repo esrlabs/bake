@@ -39,6 +39,7 @@ module Bake
         return true if oTime < File.mtime(@config.file_name)
         return true if oTime < Bake::Config.defaultToolchainTime 
         return true if oTime < File.mtime(source) 
+        return true if Bake.options.prepro
         
         if type != :ASM
           begin
@@ -93,11 +94,6 @@ module Bake
         
         return true if not needed?(source, object, type, dep_filename)
 
-        if Bake.options.prepro and compiler[:PREPRO_FLAGS] == ""
-          Bake.formatter.printInfo("Info: No preprocessor option available for " + source)
-          return true ## ??
-        end
-        
         if @fileTcs.include?(source)
           compiler = @fileTcs[source][:COMPILER][type]
           defines = getDefines(compiler)
@@ -108,7 +104,12 @@ module Bake
           flags = @flag_array[type]
         end
         includes = @include_array[type]
-           
+
+        if Bake.options.prepro and compiler[:PREPRO_FLAGS] == "" 
+          Bake.formatter.printError("Info: No preprocessor option available for " + source)
+          raise SystemCommandFailed.new 
+        end
+                   
         prepareOutputDir(object)
 
         
@@ -139,7 +140,8 @@ module Bake
         success, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
         cmd.pop
    
-        process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "Compiling #{source}", success)
+        outputType = Bake.options.prepro ? "Preprocessing" : "Compiling"
+        process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", success)
    
         convert_depfile(dep_filename)
         check_config_file

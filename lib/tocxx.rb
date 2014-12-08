@@ -113,20 +113,24 @@ module Bake
           #@startBlock = block if Blocks::ALL_BLOCKS.empty?
           Blocks::ALL_BLOCKS[config.qname] = block
           
-          if not Bake.options.linkOnly
+          if not Bake.options.linkOnly and not Bake.options.prepro 
             addSteps(block, block.preSteps,  config.preSteps)
             addSteps(block, block.postSteps, config.postSteps)
           end
           
           if Metamodel::CustomConfig === config
-            addSteps(block, block.mainSteps, config) if config.step 
+            if not Bake.options.prepro
+              addSteps(block, block.mainSteps, config) if config.step
+            end 
           else
             compile = Blocks::Compile.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config])
             block.mainSteps << compile
-            if Metamodel::LibraryConfig === config
-              block.mainSteps << Blocks::Library.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
-            else
-              block.mainSteps << Blocks::Executable.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
+            if not Bake.options.prepro
+              if Metamodel::LibraryConfig === config
+                block.mainSteps << Blocks::Library.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
+              else
+                block.mainSteps << Blocks::Executable.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
+              end
             end
           end
           
@@ -285,6 +289,16 @@ module Bake
       
       startBlocks = calcStartBlocks
       
+      taskType = "Build"
+      if Bake.options.prepro
+        taskType = "Preprocessing"
+      elsif Bake.options.rebuild
+        taskType = "Rebuild"
+      elsif Bake.options.clean
+        taskType = "Clean"
+      end
+        
+      
       begin
         result = true
         if Bake.options.clean or Bake.options.rebuild
@@ -294,25 +308,18 @@ module Bake
           result = callBlocks(startBlocks, :execute) && result
         end      
       rescue AbortException
-        Bake.formatter.printError "\nAborted."
+        Bake.formatter.printError "\n#{taskType} aborted."
         return false          
       end
             
       if result == false
-        #if Rake::application.preproFlags
-        #  Bake.formatter.printSuccess "\nPreprocessing done."
-        #  return true
-        #else
-          Bake.formatter.printError "\nFailed."
-          return false
-        #end
+        Bake.formatter.printError "\n#{taskType} failed."
+        return false
       else
-        Bake.formatter.printSuccess("\nDone.")
+        Bake.formatter.printSuccess("\n#{taskType} done.")
         sayGoodbye
         return true          
       end
-      
-
       
       #################################################
 
@@ -409,9 +416,6 @@ module Bake
     end
 
     def start()
-    
-      #cleanType = "Clobber"
-      #Bake::IDEInterface.instance.set_build_info(@parseBB.project_name, @parseBB.config_name, @num_modules)
         
       #elsif @runTask.failure
       #  if Rake::application.preproFlags
