@@ -88,7 +88,7 @@ module Bake
         if config.respond_to?("toolchain") and config.toolchain
           config.toolchain.compiler.each do |c|
             if not c.internalDefines.nil? and c.internalDefines != ""
-              Bake.formatter.printError "Error: #{c.file_name}(#{c.internalDefines.line_number}): InternalDefines only allowed in DefaultToolchain'"
+              Bake.formatter.printError "Error: #{c.file_name}(#{c.internalDefines.line_number}): InternalDefines only allowed in DefaultToolchain"
               ExitHelper.exit(1)
             end
           end
@@ -113,6 +113,16 @@ module Bake
       configs
     end
     
+    
+    def validateDependencies(config)
+      config.dependency.each do |dep|
+        if dep.name.include?"$" or dep.config.include?"$"
+          Bake.formatter.printError "Error: #{dep.file_name}(#{dep.line_number}): No variables allowed in Dependency definition"
+          ExitHelper.exit(1)
+        end
+        dep.name = config.parent.name if dep.name == ""
+      end
+    end
 
     def loadMeta(dep)
 
@@ -156,6 +166,7 @@ module Bake
         return
       end
       
+      validateDependencies(config)
       @depsPending += config.dependency
 
       
@@ -222,6 +233,7 @@ module Bake
       integrateToolchain(@defaultToolchain, config.defaultToolchain)
       @@defaultToolchainTime = File.mtime(mainMeta)
       
+      validateDependencies(config)
       @depsPending = config.dependency
 
     end

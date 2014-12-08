@@ -110,7 +110,7 @@ module Bake
           
           block = Blocks::Block.new(config, @loadedConfig.referencedConfigs)
           
-          @startBlock = block if Blocks::ALL_BLOCKS.empty?
+          #@startBlock = block if Blocks::ALL_BLOCKS.empty?
           Blocks::ALL_BLOCKS[config.qname] = block
           
           if not Bake.options.linkOnly
@@ -132,7 +132,7 @@ module Bake
           
           
           # todo: überprüfung auch bei convertBBs
-          if not Bake.options.single and not Bake.options.filename
+          if not Bake.options.project and not Bake.options.filename
             addDependencies(block, config.dependency)
           end
                     
@@ -206,11 +206,70 @@ module Bake
       end
     end
 
+    def callBlock(block, method)
+      begin
+        return block.send(method)
+      rescue AbortException
+        raise
+      rescue Exception => ex
+        if Bake.options.debug
+          puts ex.message
+          puts ex.backtrace
+        end 
+        return false
+      end
+    end
+    
+    def callBlocks(startBlocks, method)
+      Blocks::ALL_BLOCKS.each {|name,block| block.visited = false }
+      Blocks::Block.reset_block_counter
+      result = true
+      startBlocks.each do |block|
+        result = callBlock(block, method) && result
+      end
+      return result
+    end
+    
+    def calcStartBlocks
+      startProjectName = nil
+      startConfigName = nil
+      if Bake.options.project
+        splitted = Bake.options.project.split(',')
+        startProjectName = splitted[0]
+        startConfigName = splitted[1] if splitted.length == 2
+      elsif Bake.options.filename
+        startProjectName = Bake.options.main_project_name
+        startConfigName = Bake.options.build_config  
+      end
 
+      if startConfigName
+        blockName = startProjectName+","+startConfigName
+        if not Blocks::ALL_BLOCKS.include?(startProjectName+","+startConfigName)
+          Bake.formatter.printError "Error: project #{startProjectName} with config #{startConfigName} not found"
+          ExitHelper.exit(1)
+        end
+        startBlocks = [Blocks::ALL_BLOCKS[startProjectName+","+startConfigName]]
+        Blocks::Block.set_num_projects(1)
+      elsif startProjectName
+        startBlocks = []
+        Blocks::ALL_BLOCKS.each do |blockName, block|
+          if blockName.start_with? startProjectName
+            startBlocks << block
+          end
+        end
+        startBlocks.reverse! # most probably the order of dependencies if any
+        Blocks::Block.set_num_projects(startBlocks.length)
+      else
+        startBlocks = [Blocks::ALL_BLOCKS[Bake.options.main_project_name+","+Bake.options.build_config]]
+        Blocks::Block.set_num_projects(Blocks::ALL_BLOCKS.length)
+      end
+     return startBlocks       
+    end
+    
     def doit_internal()
       
       @loadedConfig = Config.new
-      @loadedConfig.load
+      @loadedConfig.load # Dependency must be substed
       
       @mainConfig = @loadedConfig.referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
       
@@ -222,153 +281,41 @@ module Bake
         ExitHelper.exit(0)
       end
       
-      #convert2bb
       convert2bb2
       
-      result = BUILD_PASSED # TODO: wird das nur hier gebraucht?
-      begin
-        result = @startBlock.execute ? BUILD_PASSED : BUILD_ABORTED  
-      rescue AbortException
-        result = BUILD_ABORTED
-      rescue Exception => ex
-        if Bake.options.debug
-          puts ex.message
-          puts ex.backtrace
-        end 
-        result = BUILD_FAILED
-      end
+      startBlocks = calcStartBlocks
       
-        
-      buildType = Bake.options.rebuild ? "Rebuild" : "Build"
-          
-      if result == BUILD_ABORTED
-        Bake.formatter.printError "\n#{buildType} aborted."
+      begin
+        result = true
+        if Bake.options.clean or Bake.options.rebuild
+          result = callBlocks(startBlocks, :clean)
+        end
+        if not Bake.options.clean
+          result = callBlocks(startBlocks, :execute) && result
+        end      
+      rescue AbortException
+        Bake.formatter.printError "\nAborted."
         return false          
-      elsif result == BUILD_FAILED
+      end
+            
+      if result == false
         #if Rake::application.preproFlags
         #  Bake.formatter.printSuccess "\nPreprocessing done."
         #  return true
         #else
-          Bake.formatter.printError "\n#{buildType} failed."
+          Bake.formatter.printError "\nFailed."
           return false
         #end
       else
-        Bake.formatter.printSuccess("\n#{buildType} done.")
+        Bake.formatter.printSuccess("\nDone.")
         sayGoodbye
         return true          
       end
       
-      
-      
-      
-      #################################################
 
-      startBBName = "Project "+Bake.options.project # can be "a,b" or just "a"
-      if ALL_BUILDING_BLOCKS.include?startBBName
-        startBB = ALL_BUILDING_BLOCKS[startBBName] 
-      else
-        possibleBlocks = ALL_BUILDING_BLOCKS.select { |name,block| name.start_with?(startBBName + ",") }
-        if possibleBlocks.length > 1
-          Bake.formatter.printError "Error: Dependency to project #{Bake.options.project} is ambiguous for project #{Bake.options.main_project_name}"
-          ExitHelper.exit(1)
-        elsif possibleBlocks.empty?
-          Bake.formatter.printError "Error: Project #{Bake.options.project} is not a dependency of #{Bake.options.main_project_name},#{@mainConfig.name}"
-          ExitHelper.exit(1)
-        end
-        startBB = possibleBlocks.values[0]
-        startBBName = startBB.get_task_name
-      end
-
-      #################################################
-      
-      if Bake.options.single or Bake.options.filename
-        content_names = startBB.contents.map { |c| c.get_task_name }
-        startBB.main_content.set_helper_dependencies(startBB.main_content.dependencies.dup) if Executable === startBB.main_content
-        startBB.main_content.dependencies.delete_if { |d| not content_names.include?d}
-      end
-
-      if Bake.options.filename
-        startBB.contents.each do |c|
-          if SourceLibrary === c or Executable === c
-            
-            # check that the file is REALLY included and glob if file does not exist and guess what file can be meant 
-            Dir.chdir(startBB.project_dir) do
-              
-              theFile = []
-              if not File.exists?(Bake.options.filename)
-                Dir.chdir(startBB.project_dir) do
-                  theFile = Dir.glob("**/#{Bake.options.filename}")
-                  theFile.map! {|tf| startBB.project_dir + "/" + tf}
-                end
-                if theFile.length == 0
-                  Bake.formatter.printError "Error: #{Bake.options.filename} not found in project #{Bake.options.project}"
-                  ExitHelper.exit(1)
-                end
-              else
-                if File.is_absolute?(Bake.options.filename)
-                  theFile << Bake.options.filename
-                else
-                  theFile << startBB.project_dir + "/" + Bake.options.filename
-                end
-                  
-              end
-              
-              exclude_files = []
-              c.exclude_sources.each do |e|
-                Dir.glob(e).each {|f| exclude_files << f} 
-              end
-              theFile.delete_if { |f| exclude_files.any? {|e| e==f} }
-              if theFile.length == 0
-                Bake.formatter.printError "Error: #{Bake.options.filename} excluded in config #{Bake.options.build_config} of project #{Bake.options.project}"
-                ExitHelper.exit(1)
-              end
-              
-              source_files = c.sources.dup
-              c.source_patterns.each do |p|
-                Dir.glob(p).each {|f| source_files << (startBB.project_dir + "/" + f)} 
-              end
-              
-              theFile.delete_if { |f| source_files.all? {|e| e!=f} }
-              if theFile.length == 0
-                Bake.formatter.printError "Error: #{Bake.options.filename} is no source file in config #{Bake.options.build_config} of project #{Bake.options.project}"
-                ExitHelper.exit(1)
-              elsif theFile.length > 1
-                Bake.formatter.printError "Error: #{Bake.options.filename} is ambiguous in project #{Bake.options.project}"
-                ExitHelper.exit(1)
-              else
-                c.set_sources([theFile[0]])
-                c.set_source_patterns([])
-                c.set_exclude_sources([])
-              end
-            end
-
-            break
-          else
-            def c.needed?
-              false
-            end
-          end
-        end
-      end
-      
       
       #################################################
 
-
-      startBB.contents.each do |b|
-        if SourceLibrary === b or Executable === b or CustomConfig === b
-          @parseBB = b
-        end
-      end
-
-      @bbs = []
-      @num_modules = 1
-      if Bake.options.single or Bake.options.filename
-        @bbs << startBB
-        @bbs.concat(startBB.contents)
-      else
-        #@num_modules = calc_needed_bbs(startBBName, @bbs)
-      end
 
       begin # show incs and stuff
         if Bake.options.show_includes

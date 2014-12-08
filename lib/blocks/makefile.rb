@@ -79,7 +79,7 @@ module Bake
        end
       
       def clean
-        executeCommand(@cleanLine)
+        executeCommand(@cleanLine) unless Bake.options.filename
       end
     
     end

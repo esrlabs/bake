@@ -22,6 +22,7 @@ module Bake
     class Block
 
       attr_reader :lib_elements, :projectDir, :library
+      attr_accessor :visited
   
       def preSteps
         @preSteps ||= []
@@ -98,14 +99,22 @@ module Bake
        end      
       
       
-      def block_counter
+      def self.block_counter
         @@block_counter += 1
       end
+
+      def self.reset_block_counter
+        @@block_counter = 0
+      end
       
-      def executeStep(step)
+      def self.set_num_projects(num)
+        @@num_projects = num
+      end
+
+      def executeStep(step, method)
         result = false
         begin
-          step.execute
+          step.send method
           result = true
         rescue Bake::ExitHelperException
           raise
@@ -137,7 +146,30 @@ module Bake
       #end
       
 
+      def callDeps(method)
+        depResult = true
+        dependencies.each do |dep|
+          depResult = ALL_BLOCKS[dep].send(method) and depResult
+        end
+        return depResult
+      end
       
+      def callSteps(method)
+        result = true
+        preSteps.each do |step|
+          result = executeStep(step, method) if result
+        end
+
+        mainSteps.each do |step|
+          result = executeStep(step, method) if result
+        end
+
+        postSteps.each do |step|
+          result = executeStep(step, method) if result
+        end
+        
+        return result        
+      end
       
       def execute
         if (@visited)
@@ -148,33 +180,32 @@ module Bake
         end
         @visited = true
    
-        depResult = true
-        dependencies.each do |dep|
-          depResult = ALL_BLOCKS[dep].execute and depResult
-        end
+        depResult = callDeps(:execute)
         
         if not Bake.options.verboseLow
-          Bake.formatter.printAdditionalInfo "**** Building #{block_counter} of #{ALL_BLOCKS.size}: #{@projName} (#{@configName}) ****"     
-        end
-        
-        result = true
-        preSteps.each do |step|
-          result = executeStep(step) if result
+          Bake.formatter.printAdditionalInfo "**** Building #{Block.block_counter} of #{@@num_projects}: #{@projName} (#{@configName}) ****"     
         end
 
-        mainSteps.each do |step|
-          result = executeStep(step) if result
-        end
-
-        postSteps.each do |step|
-          result = executeStep(step) if result
-        end
-        
+        result = callSteps(:execute)
         return (depResult && result)
-                
       end
+
+      def clean
+        return true if (@visited)
+        @visited = true
       
+        depResult = callDeps(:clean)
+        
+        if Bake.options.verboseHigh
+          Bake.formatter.printAdditionalInfo "**** Cleaning #{Block.block_counter} of #{@@num_projects}: #{@projName} (#{@configName}) ****"     
+        end
+        
+        result = callSteps(:clean)
+        return (depResult && result)
+      end      
+            
     end
+    
     
     
   end

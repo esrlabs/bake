@@ -17,7 +17,7 @@ module Bake
   class Options < Parser
     attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version, :main_project_name # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :stopOnFirstError, :clean, :rebuild, :single, :nocache, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :cmake, :prepro # Boolean
+    attr_reader :stopOnFirstError, :clean, :rebuild, :nocache, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :cmake, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verboseLow
@@ -39,7 +39,6 @@ module Bake
       @main_dir = nil
       @project = nil      
       @filename = nil
-      @single = false
       @clean = false
       @clobber = false
       @lint = false
@@ -66,15 +65,15 @@ module Bake
       
       add_option(Option.new("-m",true)                     { |x| set_main_dir(x)            })
       add_option(Option.new("-b",true)                     { |x| set_build_config(x)        })
-      add_option(Option.new("-p",true)                     { |x| @project = x; @single = true })
+      add_option(Option.new("-p",true)                     { |x| @project = x;})
       add_option(Option.new("-f",true)                     { |x| @filename = x.gsub(/[\\]/,'/')            })
       add_option(Option.new("-c",false)                    {     @clean = true              })
       add_option(Option.new("-a",true)                     { |x| Bake.formatter.setColorScheme(x.to_sym)              })
       add_option(Option.new("-w",true)                     { |x| set_root(x)                })
       add_option(Option.new("-r",false)                    {     @stopOnFirstError = true                  })
-      add_option(Option.new("--rebuild",false)             {     @clean = true; @rebuild = true                })
+      add_option(Option.new("--rebuild",false)             {     @rebuild = true                })
       add_option(Option.new("--prepro",false)              {     @prepro = true                 })
-      add_option(Option.new("--link_only",false)           {     @linkOnly = true; @single = true               })
+      add_option(Option.new("--link_only",false)           {     @linkOnly = true;              })
       add_option(Option.new("--no_autodir",false)          {     @no_autodir = true         })
       add_option(Option.new("--lint",false)                {     @lint = true               })
       add_option(Option.new("--lint_min",true)             { |x| @lint_min = String === x ? x.to_i : x            })
@@ -111,8 +110,19 @@ module Bake
     def parse_options()
       parse_internal(false)
       set_main_dir(Dir.pwd) if @main_dir.nil?
-      @project = File.basename(@main_dir) if @project.nil?
       @roots = @def_roots if @roots.length == 0
+      
+      if @project
+        if @project.split(',').length > 2
+          Bake.formatter.printError "Error: only one comma allowed for -p" 
+          ExitHelper.exit(1)
+        end
+      end
+      
+      if @clean and @rebuild
+        Bake.formatter.printError "Error: rebuild and clean not allowed at the same time" 
+        ExitHelper.exit(1)
+      end
       
       if @linkOnly
         if @rebuild
@@ -125,7 +135,7 @@ module Bake
         end
       end
       
-      if @lint and not @single
+      if @lint and not @project
         Bake.formatter.printError "Error: --lint must be used together with -p and optional with -f" 
         ExitHelper.exit(1)
       end

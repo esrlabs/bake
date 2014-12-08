@@ -43,7 +43,7 @@ module Bake
         elsif @projectName == Bake.options.main_project_name and @config.name == Bake.options.build_config 
           @output_dir = Bake.options.build_config
         else
-          @output_dir = Bake.options.build_config + "_" + Bake.options.main_project_name
+          @output_dir = @config.name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
         end
       end
       

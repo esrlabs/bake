@@ -1,0 +1,15 @@
+Project {
+
+  LibraryConfig testLib1 {
+ 
+  } 
+
+  ExecutableConfig test1 {
+    Files "src/main.cpp"
+    Dependency lib, config: testSub1
+    Dependency lib, config: testSub2
+    Dependency config: testLib1
+    DefaultToolchain GCC
+  } 
+
+}

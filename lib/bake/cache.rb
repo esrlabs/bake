@@ -160,9 +160,9 @@ module Bake
         end
         File.open(@cacheFilename, 'wb') {|file| file.write(bbdump) }
           
-        project_files.each do |f|
-          CLOBBER.include(File.dirname(f)+"/.bake")
-        end
+        #project_files.each do |f|
+        #  CLOBBER.include(File.dirname(f)+"/.bake")
+        #end
 
       end
       

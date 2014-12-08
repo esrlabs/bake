@@ -235,10 +235,29 @@ module Bake
       end
       
       def clean
-        # todo only of Bake.options.file_name
+        if Bake.options.filename
+          Dir.chdir(@projectDir) do
+            calcSources(true)
+            @source_files.each do |source|
+              
+              type = get_source_type(source)
+              next if type.nil?
+              object = get_object_file(source)
+              dep_filename = calcDepFile(object, type)
+              if File.exist?object 
+                puts "Deleting file #{object}" if Bake.options.verboseHigh
+                FileUtils.rm_rf(object)
+              end
+              if File.exist?dep_filename 
+                puts "Deleting file #{dep_filename}" if Bake.options.verboseHigh
+                FileUtils.rm_rf(dep_filename)
+              end
+            end
+          end
+        end
       end
       
-      def calcSources
+      def calcSources(quite = false)
         @source_files = []
     
         exclude_files = Set.new
@@ -249,7 +268,7 @@ module Bake
         source_files = Set.new
         @src_pattern.each do |p|
           res = Dir.glob(p)
-          if (res.length == 0 and Bake.options.verboseHigh)
+          if res.length == 0 and Bake.options.verboseHigh and quite == false
             Bake.formatter.printInfo "Info: Source file pattern '#{p}' did not match to any file"
           end
           res.each do |f|
@@ -257,6 +276,16 @@ module Bake
             source_files << f
           end
         end
+        
+        if Bake.options.filename
+          source_files.keep_if do |source|
+            source.include?Bake.options.filename
+          end
+          if source_files.length == 0 and not Bake.options.verboseLow and quite == false
+            Bake.formatter.printInfo "Info: #{Bake.options.filename} did not match to any source"
+          end
+        end
+        
         @source_files = source_files.sort.to_a
       end
         

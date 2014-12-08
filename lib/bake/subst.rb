@@ -65,7 +65,7 @@ module Bake
      
       3.times {
         subst(config);
-        substToolchain(toolchain)
+        #substToolchain(toolchain)
       }
       
       @@resolvedVars = 0

@@ -57,8 +57,11 @@ module Bake
       
       def clean
         Dir.chdir(@projectDir) do 
-          FileUtils.rm_rf(@output_dir)
-        end
+          if File.exist?@output_dir 
+            puts "Deleting folder #{@output_dir}" if Bake.options.verboseHigh
+            FileUtils.rm_rf(@output_dir)
+          end
+        end unless Bake.options.filename
       end
    
       

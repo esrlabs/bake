@@ -1,0 +1,10 @@
+Project {
+
+  LibraryConfig testSub1 {
+ 
+  } 
+
+  LibraryConfig testSub2 {
+  } 
+
+}
