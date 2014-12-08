@@ -34,12 +34,14 @@ module Bake
       end
       
       def needed?(source, object, type, dep_filename)
+        return false if Bake.options.linkOnly
+        return true if Bake.options.prepro
+        
         return true if not File.exist?(object)
         oTime = File.mtime(object)
         return true if oTime < File.mtime(@config.file_name)
         return true if oTime < Bake::Config.defaultToolchainTime 
         return true if oTime < File.mtime(source) 
-        return true if Bake.options.prepro
         
         if type != :ASM
           begin

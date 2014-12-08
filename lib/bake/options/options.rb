@@ -128,8 +128,23 @@ module Bake
           Bake.formatter.printError "Error: --link_only and -c not allowed at the same time" 
           ExitHelper.exit(1)
         end
+        if @prepro
+          Bake.formatter.printError "Error: --link_only and --prepro not allowed at the same time" 
+          ExitHelper.exit(1)
+        end
       end
-      
+
+      if @prepro
+        if @rebuild
+          Bake.formatter.printError "Error: --prepro and --rebuild not allowed at the same time" 
+          ExitHelper.exit(1)
+        end
+        if @clean
+          Bake.formatter.printError "Error: --prepro and -c not allowed at the same time" 
+          ExitHelper.exit(1)
+        end
+      end
+            
       if @lint and not @project
         Bake.formatter.printError "Error: --lint must be used together with -p and optional with -f" 
         ExitHelper.exit(1)

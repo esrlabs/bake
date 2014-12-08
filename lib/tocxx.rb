@@ -113,24 +113,22 @@ module Bake
           #@startBlock = block if Blocks::ALL_BLOCKS.empty?
           Blocks::ALL_BLOCKS[config.qname] = block
           
-          if not Bake.options.linkOnly and not Bake.options.prepro 
+          if not Bake.options.linkOnly and not Bake.options.prepro
             addSteps(block, block.preSteps,  config.preSteps)
             addSteps(block, block.postSteps, config.postSteps)
           end
           
           if Metamodel::CustomConfig === config
-            if not Bake.options.prepro
+            if not Bake.options.linkOnly and not Bake.options.prepro
               addSteps(block, block.mainSteps, config) if config.step
             end 
           else
             compile = Blocks::Compile.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config])
             block.mainSteps << compile
-            if not Bake.options.prepro
-              if Metamodel::LibraryConfig === config
-                block.mainSteps << Blocks::Library.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
-              else
-                block.mainSteps << Blocks::Executable.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
-              end
+            if Metamodel::LibraryConfig === config
+              block.mainSteps << Blocks::Library.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
+            else
+              block.mainSteps << Blocks::Executable.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
             end
           end
           
@@ -289,13 +287,15 @@ module Bake
       
       startBlocks = calcStartBlocks
       
-      taskType = "Build"
+      taskType = "Building"
       if Bake.options.prepro
         taskType = "Preprocessing"
+      elsif Bake.options.linkOnly
+          taskType = "Linking"
       elsif Bake.options.rebuild
-        taskType = "Rebuild"
+        taskType = "Rebuilding"
       elsif Bake.options.clean
-        taskType = "Clean"
+        taskType = "Cleaning"
       end
         
       

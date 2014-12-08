@@ -42,6 +42,9 @@ module Bake
       
 
       def needed?(libs)
+        return true if Bake.options.linkOnly
+        return false if Bake.options.prepro
+        
         # exe
         return true if not File.exists?(@exe_name)
         eTime = File.mtime(@exe_name)

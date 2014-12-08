@@ -18,6 +18,9 @@ module Bake
       end
   
       def needed?
+        return false if Bake.options.linkOnly
+        return false if Bake.options.prepro
+        
         return true if not File.exist?(archive_name)
         aTime = File.mtime(archive_name)
         return true if aTime < File.mtime(@config.file_name)
