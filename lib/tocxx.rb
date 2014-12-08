@@ -27,8 +27,6 @@ require 'blocks/executable'
 require 'set'
 require 'socket'
 
-#require 'ruby-prof'
-
 module Bake
 
   class SystemCommandFailed < Exception
@@ -36,27 +34,10 @@ module Bake
   
   class ToCxx
 
-    
     def initialize
-        
-        
       @configTcMap = {}
     end
-    
 
-
- 
-
-    
-
-
-    def writeCMake
-      Bake.formatter.printError "Error: --cmake not supported by this version."
-    end
-
-    def getTc(config)
-    end
-    
     def createConfigTcs
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
@@ -131,9 +112,7 @@ module Bake
               block.mainSteps << Blocks::Executable.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
             end
           end
-          
-          
-          # todo: überprüfung auch bei convertBBs
+
           if not Bake.options.project and not Bake.options.filename
             addDependencies(block, config.dependency)
           end
@@ -146,30 +125,10 @@ module Bake
     def convert2bb
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
-  
-          projDir = config.parent.get_project_dir
-          @lib_elements = {}
-  
-          bbModule = ModuleBuildingBlock.new(projName, config.name)
-          bbModule.contents = []
-          
-          tcs = @configTcMap[config]       
-            
           if Bake.options.lint
             bbModule.main_content = Lint.new(projName, config.name)
             bbModule.main_content.set_lint_min(Bake.options.lint_min).set_lint_max(Bake.options.lint_max)
           end
-          
-  
-          @lib_elements.sort.each do |x|
-            v = x[1]
-            elem = 0
-            while elem < v.length do 
-              bbModule.main_content.add_lib_elements([v[elem..elem+1]])
-              elem = elem + 2
-            end
-          end
-  
         end
       end
 
@@ -196,16 +155,6 @@ module Bake
       
       raise ex if ex
       parsingOk
-    end
-
-    def sayGoodbye
-      # text = ""
-      # this "fun part" shall not fail in any case!        
-      begin
-        #if Time.now.year == 2012 and Time.now.month == 1
-        #  text = "  --  The munich software team wishes you a happy new year 2012!"
-      rescue Exception
-      end
     end
 
     def callBlock(block, method)
@@ -278,11 +227,6 @@ module Bake
       createConfigTcs
       substVars
       
-      if (Bake.options.cmake)
-        writeCMake
-        ExitHelper.exit(0)
-      end
-      
       convert2bb2
       
       startBlocks = calcStartBlocks
@@ -317,7 +261,6 @@ module Bake
         return false
       else
         Bake.formatter.printSuccess("\n#{taskType} done.")
-        sayGoodbye
         return true          
       end
       
@@ -415,14 +358,6 @@ module Bake
       return true
     end
 
-    def start()
-        
-      #elsif @runTask.failure
-      #  if Rake::application.preproFlags
-      #    Bake.formatter.printSuccess "\nPreprocessing done."
-      #    return true
-    end
-
     def connect()
       if Bake.options.socket != 0
         Bake::IDEInterface.instance.connect(Bake.options.socket)
@@ -435,10 +370,5 @@ module Bake
       end
     end
 
-
   end
 end
-
-
-# metamodel Files vs File vs Dir vs Make vs ... ? merge?
-

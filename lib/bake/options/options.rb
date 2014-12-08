@@ -17,7 +17,7 @@ module Bake
   class Options < Parser
     attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version, :main_project_name # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :stopOnFirstError, :clean, :rebuild, :nocache, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :cmake, :prepro # Boolean
+    attr_reader :stopOnFirstError, :clean, :rebuild, :nocache, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verboseLow
@@ -49,7 +49,6 @@ module Bake
       @show_includes_and_defines = false
       @linkOnly = false
       @no_autodir = false
-      @cmake = false
       @threads = 8
       @lint_min = -1
       @lint_max = -1
@@ -103,7 +102,6 @@ module Bake
       add_option(Option.new("--eclipse_version",true)      { |x| @eclipse_version = x     })
       add_option(Option.new("--show_license",false)        {     License.show              })
       add_option(Option.new("--version",false)             {     ExitHelper.exit(0)         })
-      add_option(Option.new("--cmake",false)               {     @cmake = true                  })
 
     end
 

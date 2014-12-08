@@ -42,8 +42,6 @@ module Bake
       puts " --show_license           Print the license."
       puts ""
       puts " --debug                  Print out backtraces in some cases - used only for debugging bake."      
-#      puts ""
-#      puts " --cmake                  Temporary switch for BSW."
       ExitHelper.exit(0)      
     end
 
