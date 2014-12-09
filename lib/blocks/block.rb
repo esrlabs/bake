@@ -130,10 +130,12 @@ module Bake
           end
         end 
         
-        if Bake.options.stopOnFirstError or ABORTED
+        if ABORTED
           raise AbortException.new
         end
         
+        #if not result and Bake.options.stopOnFirstError 
+                 
         return result
       end
       
@@ -150,6 +152,7 @@ module Bake
         depResult = true
         dependencies.each do |dep|
           depResult = ALL_BLOCKS[dep].send(method) and depResult
+          break if not depResult and Bake.options.stopOnFirstError
         end
         return depResult
       end
@@ -158,14 +161,17 @@ module Bake
         result = true
         preSteps.each do |step|
           result = executeStep(step, method) if result
+          return false if not result and Bake.options.stopOnFirstError
         end
 
         mainSteps.each do |step|
           result = executeStep(step, method) if result
+          return false if not result and Bake.options.stopOnFirstError
         end
 
         postSteps.each do |step|
           result = executeStep(step, method) if result
+          return false if not result and Bake.options.stopOnFirstError
         end
         
         return result        
@@ -181,6 +187,7 @@ module Bake
         @visited = true
    
         depResult = callDeps(:execute)
+        return false if not depResult and Bake.options.stopOnFirstError
         
         if not Bake.options.verboseLow
           Bake.formatter.printAdditionalInfo "**** Building #{Block.block_counter} of #{@@num_projects}: #{@projName} (#{@configName}) ****"     
@@ -195,6 +202,7 @@ module Bake
         @visited = true
       
         depResult = callDeps(:clean)
+        return false if not depResult and Bake.options.stopOnFirstError
         
         if Bake.options.verboseHigh
           Bake.formatter.printAdditionalInfo "**** Cleaning #{Block.block_counter} of #{@@num_projects}: #{@projName} (#{@configName}) ****"     

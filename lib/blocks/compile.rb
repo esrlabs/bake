@@ -214,7 +214,7 @@ module Bake
                   
               mutex.synchronize do
                 if s.string.length > 0 
-                  if Bake.options.stopOnFirstError and not success
+                  if Bake.options.stopOnFirstError and not result
                     @error_strings[source] = s.string
                   else
                     puts s.string
@@ -227,15 +227,15 @@ module Bake
             end
           end
           compileJobs.join
-            
+
+          # can only happen in case of bail_on_first_error.
+          # if not sorted, it may be confusing when builing more than once and the order of the error appearances changes from build to build
+          # (it is not deterministic which file compilation finishes first)
+          @error_strings.sort.each {|es| puts es[1]}
+                      
           raise SystemCommandFailed.new if compileJobs.failed
           
         end
-          
-        # can only happen in case of bail_on_first_error.
-        # if not sorted, it may be confusing when builing more than once and the order of the error appearances changes from build to build
-        # (it is not deterministic which file compilation finishes first)
-        @error_strings.sort.each {|es| puts es[1]}
       end
       
       def clean

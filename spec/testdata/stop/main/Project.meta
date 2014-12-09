@@ -1,0 +1,19 @@
+Project {
+
+  ExecutableConfig test1 {
+    Files "src/*.cpp"
+    Dependency lib, config: testSub
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Define "$(FORCE_ERROR_COMPILER)"
+      }
+      Archiver {
+        Flags "$(FORCE_ERROR_ARCHIVER)"
+      }
+      Linker {
+        Flags "$(FORCE_ERROR_LINKER)"
+      }
+    }
+  } 
+
+}

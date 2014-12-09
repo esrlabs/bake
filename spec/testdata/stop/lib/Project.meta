@@ -1,0 +1,15 @@
+Project {
+
+  LibraryConfig testSub {
+     Files "src/*.cpp"
+     PreSteps {
+       CommandLine "echo$(FORCE_ERROR_PRE1) PRE1"
+       CommandLine "echo$(FORCE_ERROR_PRE2) PRE2"
+     }
+     PostSteps {
+       CommandLine "echo$(FORCE_ERROR_POST1) POST1"
+       CommandLine "echo$(FORCE_ERROR_POST2) POST2"
+     }
+  } 
+
+}

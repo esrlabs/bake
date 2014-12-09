@@ -1,0 +1,3 @@
+#ifdef LIB
+#error
+#endif

@@ -1,0 +1,3 @@
+#ifdef MAIN
+#error
+#endif

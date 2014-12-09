@@ -177,6 +177,7 @@ module Bake
       result = true
       startBlocks.each do |block|
         result = callBlock(block, method) && result
+        return false if not result and Bake.options.stopOnFirstError
       end
       return result
     end

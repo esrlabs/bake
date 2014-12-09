@@ -65,7 +65,7 @@ module Bake
      
       3.times {
         subst(config);
-        #substToolchain(toolchain)
+        substToolchain(toolchain)
       }
       
       @@resolvedVars = 0
@@ -149,15 +149,24 @@ module Bake
     end
 
     def self.substToolchain(elem)
-      elem.each do |k, e|
-        if Hash === e or Array === e
-          substToolchain(e) 
-        elsif String === e
-          elem[k] = substString(e)
-        end  
+      if Hash === elem
+        elem.each do |k, e|
+          if Hash === e or Array === e
+            substToolchain(e)
+          elsif String === e
+            elem[k] = substString(e)
+          end
+        end
+      elsif Array === elem
+        elem.each_with_index do |e, i|
+          if Hash === e or Array === e
+            substToolchain(e)
+          elsif String === e
+            elem[i] = substString(e)
+          end
+        end
       end
     end
-
     
     def self.subst(elem)
       elem.class.ecore.eAllAttributes_derived.each do |a|
