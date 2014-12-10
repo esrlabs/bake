@@ -1,3 +1,3 @@
-#ifdef LIB
+#ifdef FECLIB
 #error
 #endif
