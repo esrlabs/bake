@@ -1,15 +1,41 @@
 Project {
 
   LibraryConfig testLib1 {
- 
+    IncludeDir "incMainC"
+    IncludeDir "incMainD"
+    Toolchain {
+      Compiler C {
+        Define "D5"
+      }
+      Compiler CPP {
+        Define "D6"
+      }
+    }
   } 
 
   ExecutableConfig test1 {
+    IncludeDir "incMainA"
+    IncludeDir "incMainB"
     Files "src/main.cpp"
     Dependency lib, config: testSub1
     Dependency lib, config: testSub2
     Dependency config: testLib1
-    DefaultToolchain GCC
+    DefaultToolchain GCC {
+      Compiler C {
+        Define "D1"
+      }
+      Compiler CPP {
+        Define "D2"
+      }
+    }
+    Toolchain {
+      Compiler C {
+        Define "D3"
+      }
+      Compiler CPP {
+        Define "D4"
+      }
+    }
   } 
 
 }

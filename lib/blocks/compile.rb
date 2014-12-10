@@ -12,7 +12,7 @@ module Bake
     
     class Compile < BlockBase
       
-      attr_reader :objects
+      attr_reader :objects, :include_list
       
       def initialize(block, config, referencedConfigs, tcs)
         super(block, config, referencedConfigs, tcs)
@@ -294,19 +294,20 @@ module Bake
       end
         
       def calcIncludes
-        incList = @config.includeDir.map do |dir|
+        @include_list = @config.includeDir.map do |dir|
           (dir.name == "___ROOTS___") ? (Bake.options.roots.map { |r| File.rel_from_to_project(@projectDir,r,false) }) : @block.convPath(dir)
         end.flatten
         
         @include_array = {}
         [:CPP, :C, :ASM].each do |type|
-          @include_array[type] = incList.map {|k| "#{@tcs[:COMPILER][type][:INCLUDE_PATH_FLAG]}#{k}"}
+          @include_array[type] = @include_list.map {|k| "#{@tcs[:COMPILER][type][:INCLUDE_PATH_FLAG]}#{k}"}
         end
       end
       
       def getDefines(compiler)
         compiler[:DEFINES].map {|k| "#{compiler[:DEFINE_FLAG]}#{k}"}
       end
+      
       def getFlags(compiler)
         Bake::Utils::flagSplit(compiler[:FLAGS],true)
       end

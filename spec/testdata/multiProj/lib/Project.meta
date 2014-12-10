@@ -1,10 +1,10 @@
 Project {
 
   LibraryConfig testSub1 {
- 
   } 
 
   LibraryConfig testSub2 {
+    IncludeDir "incLib"
   } 
 
 }

@@ -36,6 +36,8 @@ module Bake
       puts " --show_abs_paths         Compiler prints absolute filename paths instead of relative paths."
       puts " --no_autodir             Disable auto completion of paths like in IncludeDir"
       puts " --set <key>=<value>      Sets a variable. Overwrites variables defined in Project.metas (can be used multiple times)."
+      puts " --show_include_paths     Used by IDEs plugins"
+      puts " --show_incs_and_defs     Used by IDEs plugins"
       puts ""
       puts " --version                Print version."
       puts " -h, --help               Print this help."

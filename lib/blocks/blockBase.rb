@@ -3,6 +3,8 @@ module Bake
     
     class BlockBase
 
+      attr_reader :tcs
+      
       def initialize(block, config, referencedConfigs, tcs)
         @block = block
         @config = config

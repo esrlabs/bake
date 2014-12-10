@@ -10,6 +10,7 @@ module Bake
 
     
     ALL_BLOCKS = {} # NEW
+    ALL_COMPILE_BLOCKS = {} # NEW
     ABORTED = false
 
 

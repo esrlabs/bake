@@ -2,6 +2,7 @@
 
 
 require 'bake/model/metamodel_ext'
+
 require 'bake/util'
 require 'bake/cache'
 require 'bake/subst'
@@ -26,6 +27,8 @@ require 'blocks/executable'
 
 require 'set'
 require 'socket'
+
+require 'blocks/showIncludes'
 
 module Bake
 
@@ -91,7 +94,6 @@ module Bake
           
           block = Blocks::Block.new(config, @loadedConfig.referencedConfigs)
           
-          #@startBlock = block if Blocks::ALL_BLOCKS.empty?
           Blocks::ALL_BLOCKS[config.qname] = block
           
           if not Bake.options.linkOnly and not Bake.options.prepro
@@ -105,6 +107,7 @@ module Bake
             end 
           else
             compile = Blocks::Compile.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config])
+            (Blocks::ALL_COMPILE_BLOCKS[projName] ||= []) << compile
             block.mainSteps << compile
             if Metamodel::LibraryConfig === config
               block.mainSteps << Blocks::Library.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
@@ -230,6 +233,9 @@ module Bake
       
       convert2bb2
       
+      Blocks::Show.includes if Bake.options.show_includes
+      Blocks::Show.includesAndDefines(@mainConfig) if Bake.options.show_includes_and_defines
+      
       startBlocks = calcStartBlocks
       
       taskType = "Building"
@@ -266,85 +272,9 @@ module Bake
       end
       
       #################################################
-
-
-      begin # show incs and stuff
-        if Bake.options.show_includes
-          @bbs.each do |bb|
-            if HasIncludes === bb
-              print bb.project_name
-              li = bb.local_includes
-              li.each { |i| print "##{i}" }
-              print "\n"
-            end
-          end
-          ExitHelper.exit(0)
-        end
-        
-        if Bake.options.show_includes_and_defines
-          intIncs = []
-          intDefs = {:CPP => [], :C => [], :ASM => []}
-          Dir.chdir(Bake.options.main_dir) do
-          
-            if (@mainConfig.defaultToolchain.internalIncludes)
-              iname = convPath(@mainConfig.defaultToolchain.internalIncludes.name, @mainConfig)
-              if iname != ""
-                if not File.exists?(iname)
-                  Bake.formatter.printError "Error: InternalIncludes file #{iname} does not exist"
-                  ExitHelper.exit(1)
-                end
-                IO.foreach(iname) {|x| add_line_if_no_comment(intIncs,x) }
-              end
-            end
-            
-            @mainConfig.defaultToolchain.compiler.each do |c|
-              if (c.internalDefines)
-                dname = convPath(c.internalDefines.name, @mainConfig)
-                if dname != ""
-                  if not File.exists?(dname)
-                    Bake.formatter.printError "Error: InternalDefines file #{dname} does not exist"
-                    ExitHelper.exit(1)
-                  end
-                  IO.foreach(dname) {|x| add_line_if_no_comment(intDefs[c.ctype],x)  }
-                end
-              end
-            end
-            
-          end
-          
-          
-          @bbs.each do |bb|
-            if HasIncludes === bb
-              puts bb.project_name
-              
-              puts " includes"
-              (bb.local_includes + intIncs).each { |i| puts "  #{i}" }
-  
-              [:CPP, :C, :ASM].each do |type|
-                puts " #{type} defines"
-                (bb.tcs[:COMPILER][type][:DEFINES] + intDefs[type]).each { |d| puts "  #{d}" }
-              end
-              puts " done"
-            end
-          end
-          ExitHelper.exit(0)
-        end
-      rescue Exception => e
-        if (not SystemExit === e)
-          puts e
-          puts e.backtrace
-          ExitHelper.exit(1)
-        else
-          raise e
-        end
-      end      
       
       theExeBB = nil
-      @bbs.each do |bb|
-        res = bb.convert_to_rake()
-        theExeBB = res if Executable === bb
-      end
-      
+            
       if Bake.options.linkOnly
         if theExeBB.nil?
           Bake.formatter.printError "Error: no executable to link"
