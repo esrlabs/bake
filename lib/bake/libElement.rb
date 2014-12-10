@@ -92,27 +92,27 @@ module Bake
     
     
     
-    def self.calcLibElements(config)
+    def self.calcLibElements(block)
       lib_elements = {} # key = line number, value = array pairs [type, name/path string]
         
-      config.userLibrary.each do |l|
+      block.config.userLibrary.each do |l|
         ln = l.lib
         ls = nil
         if l.lib.include?("/")
           pos = l.lib.rindex("/")
-          ls = convPath(l.lib[0..pos-1])
+          ls = block.convPath(l.lib[0..pos-1])
           ln = l.lib[pos+1..-1]
         end
         lib_elements[l.line_number] = ls.nil? ? [] : [LibElement.new(LibElement::SEARCH_PATH, ls)] 
         lib_elements[l.line_number] << LibElement.new(LibElement::USERLIB, ln)
       end
       
-      config.exLib.each do |exLib|
+      block.config.exLib.each do |exLib|
         ln = exLib.name
         ls = nil
         if exLib.name.include?("/")
           pos = exLib.name.rindex("/")
-          ls = convPath(exLib.name[0..pos-1])
+          ls = block.convPath(exLib.name[0..pos-1])
           ln = exLib.name[pos+1..-1]
         end
         if exLib.search
@@ -124,11 +124,11 @@ module Bake
         end
       end
       
-      config.exLibSearchPath.each do |exLibSP|
-        lib_elements[exLibSP.line_number] = [LibElement.new(LibElement::SEARCH_PATH, convPath(exLibSP))] 
+      block.config.exLibSearchPath.each do |exLibSP|
+        lib_elements[exLibSP.line_number] = [LibElement.new(LibElement::SEARCH_PATH, block.convPath(exLibSP))] 
       end
     
-      config.dependency.each { |dep| lib_elements[dep.line_number] = [LibElement.new(LibElement::DEPENDENCY, dep.name+","+dep.config)]}
+      block.config.dependency.each { |dep| lib_elements[dep.line_number] = [LibElement.new(LibElement::DEPENDENCY, dep.name+","+dep.config)]}
       return lib_elements
     end      
      

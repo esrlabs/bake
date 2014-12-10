@@ -22,7 +22,7 @@ module Bake
         
     class Block
 
-      attr_reader :lib_elements, :projectDir, :library
+      attr_reader :lib_elements, :projectDir, :library, :config
       attr_accessor :visited
   
       def preSteps
@@ -56,7 +56,7 @@ module Bake
         @projectDir = config.get_project_dir
         @@block_counter = 0
         
-        @lib_elements = Bake::LibElements.calcLibElements(@config)
+        @lib_elements = Bake::LibElements.calcLibElements(self)
       end
       
       def add_lib_element(elem)

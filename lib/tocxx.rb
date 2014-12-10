@@ -138,28 +138,6 @@ module Bake
       
     end
 
-    def doit()
-      parsingOk = false
-      ex = nil
-      begin
-        parsingOk = doit_internal
-      rescue Exception => e
-        ex = e
-      end
-      if not parsingOk and Bake::IDEInterface.instance
-        Bake::IDEInterface.instance.set_build_info(Bake.options.main_project_name, Bake.options.build_config.nil? ? "Not set" : Bake.options.build_config, 0)
-        err_res = ErrorDesc.new
-        err_res.file_name = Bake.options.main_dir
-        err_res.line_number = 0
-        err_res.severity = ErrorParser::SEVERITY_ERROR
-        err_res.message = "Parsing configurations failed, see log output."
-        Bake::IDEInterface.instance.set_errors([err_res])
-      end
-      
-      raise ex if ex
-      parsingOk
-    end
-
     def callBlock(block, method)
       begin
         return block.send(method)
@@ -221,7 +199,7 @@ module Bake
      return startBlocks       
     end
     
-    def doit_internal()
+    def doit()
       
       @loadedConfig = Config.new
       @loadedConfig.load # Dependency must be substed
@@ -249,7 +227,6 @@ module Bake
         taskType = "Cleaning"
       end
         
-      
       begin
         result = true
         if Bake.options.clean or Bake.options.rebuild
@@ -271,22 +248,6 @@ module Bake
         return true          
       end
       
-      #################################################
-      
-      theExeBB = nil
-            
-      if Bake.options.linkOnly
-        if theExeBB.nil?
-          Bake.formatter.printError "Error: no executable to link"
-          ExitHelper.exit(1)
-        else
-          theExeBB.prerequisites.delete_if {|p| Rake::Task::SOURCEMULTI == Rake.application[p].type}
-        end
-      end
-
-
-
-      return true
     end
 
     def connect()
