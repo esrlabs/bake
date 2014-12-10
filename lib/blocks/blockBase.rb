@@ -63,7 +63,7 @@ module Bake
           end
         else
           @printedCmdAlternate = true
-          puts alternate if not Bake.options.verboseLow
+          puts alternate if not Bake.options.verboseLow and alternate != ""
         end
         @lastCommand = cmd
       end
@@ -88,7 +88,7 @@ module Bake
                 console_output = console_output_VS
               end
   
-              if Bake::GCCLintErrorParser === error_parser # hack: need to know if lint is enabled...
+              if Bake.options.lint
                 ret = error_descs.any? { |e| e.severity != ErrorParser::SEVERITY_OK }
               else
                 ret = error_descs.any? { |e| e.severity == ErrorParser::SEVERITY_ERROR }

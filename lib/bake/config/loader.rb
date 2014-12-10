@@ -210,12 +210,6 @@ module Bake
       @referencedConfigs = {}
       @referencedConfigs[Bake.options.main_project_name] = [config]
         
-      #@mainConfig = loadProjMeta(mainMeta, Bake.options.build_config)
-      #@project2config = {}
-      #@project2config[Bake.options.main_project_name] = config
-      
-      
-        
       if config.defaultToolchain == nil
         Bake.formatter.printError "Error: Main project configuration must contain DefaultToolchain"
         ExitHelper.exit(1)
@@ -223,7 +217,6 @@ module Bake
       
       # todo: move to other class
       basedOn = config.defaultToolchain.basedOn
-      basedOn = "GCC_Lint" if Bake.options.lint # todo: no GCC_Lint
       @basedOnToolchain = Bake::Toolchain::Provider[basedOn]
       if @basedOnToolchain.nil?
         Bake.formatter.printError "Error: DefaultToolchain based on unknown compiler '#{basedOn}'"
@@ -235,11 +228,8 @@ module Bake
       
       validateDependencies(config)
       @depsPending = config.dependency
-
     end
     
-
-            
     def checkRoots()
       @potentialProjs = []
       Bake.options.roots.each do |r|
@@ -318,6 +308,7 @@ module Bake
         @defaultToolchain = cache.defaultToolchain
         @@defaultToolchainTime = cache.defaultToolchainTime
       end
+      
     end
     
     

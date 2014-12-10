@@ -1,3 +1,3 @@
-#ifdef MAIN
+#ifdef FECMAIN
 #error
 #endif

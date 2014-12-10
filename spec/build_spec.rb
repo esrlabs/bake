@@ -11,35 +11,39 @@ require 'helper'
 
 module Bake
 
+  def self.startCache(opt)
+    Bake.options = Options.new(["-m", "spec/testdata/cache/main"].concat(opt))
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
+    tocxx.doit()
+    Utils.cleanup_rake
+  end  
+  
 describe "Building" do
   
   it 'workspace' do
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-v2"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startCache(["-b", "test", "-v2"])
 
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
+    
+    STDERR.puts $mystring
     
     expect($mystring.split("PREMAIN").length).to be == 3
     expect($mystring.split("POSTMAIN").length).to be == 3
     
-    expect($mystring.include?("../lib1/test_main/liblib1.a makefile/dummy.a")).to be == true # makefile lib shall be put to the end of the lib string
+    
+    
+    expect($mystring.include?("../lib1/testsub_main_test/liblib1.a makefile/dummy.a")).to be == true # makefile lib shall be put to the end of the lib string
   end
 
   it 'single lib' do
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
-    Bake.options = Options.new(["-p", "lib1", "-m", "spec/testdata/cache/main", "-b", "test"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startCache(["-p", "lib1", "-b", "test"])
 
-    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/liblib1.a")).to be == true
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
     expect($mystring.split("PRELIB1").length).to be == 3
@@ -47,20 +51,16 @@ describe "Building" do
   end  
 
   it 'single exe should fail' do
-    expect(File.exists?("spec/testdata/cache/lib1/test_main/src/lib1.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/src/lib1.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/liblib1.a")).to be == false
 
     expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == false
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-p", "main"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startCache(["-p", "main", "-b", "test"])
 
-    expect(File.exists?("spec/testdata/cache/lib1/test_main/src/lib1.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/src/lib1.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/liblib1.a")).to be == false
 
     expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == true
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
@@ -75,11 +75,7 @@ describe "Building" do
     expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == false
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
 
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-f", "src/main.cpp"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startCache(["-b", "test", "-f", "src/main.cpp"])
 
     expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == true
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
@@ -88,23 +84,13 @@ describe "Building" do
   end  
 
   it 'clean single file' do
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    
+    Bake.startCache(["-b", "test"])
+
     expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == true
     expect(File.exists?("spec/testdata/cache/main/test/src/main.d")).to be == true
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
 
-    Utils.cleanup_rake
-
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-f", "src/main.cpp", "-c"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startCache(["-b", "test", "-f", "src/main.cpp", "-c"])
     
     expect(File.exists?("spec/testdata/cache/main/test/src/main.o")).to be == false
     expect(File.exists?("spec/testdata/cache/main/test/src/main.d")).to be == false
@@ -114,102 +100,62 @@ describe "Building" do
   end  
 
   it 'clean single lib' do
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-
+    Bake.startCache(["-b", "test"])
+    
     expect(File.exists?("spec/testdata/cache/main/test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/test_main")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/liblib1.a")).to be == true
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
 
-    Utils.cleanup_rake
-
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-p", "lib1", "-b", "test", "-c"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startCache(["-b", "test", "-p", "lib1", "-c"])
 
     expect(File.exists?("spec/testdata/cache/main/test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/test_main")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/liblib1.a")).to be == false
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
     
     expect(ExitHelper.exit_code).to be == 0
   end
     
   it 'clean single lib' do
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-
+    Bake.startCache(["-b", "test"])
+    
     expect(File.exists?("spec/testdata/cache/main/test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/test_main")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/liblib1.a")).to be == true
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
 
-    Utils.cleanup_rake
-
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-p", "main", "-c"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startCache(["-b", "test","-p", "main", "-c"])
 
     expect(File.exists?("spec/testdata/cache/main/test")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/test_main")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/test_main/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/liblib1.a")).to be == true
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == false
     
     expect(ExitHelper.exit_code).to be == 0
   end  
   
   it 'clobber' do
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startCache(["-b", "test"])
 
     expect(File.exists?("spec/testdata/cache/main/.bake")).to be == true
     expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == true
 
-    Utils.cleanup_rake
-
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "--clobber"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startCache(["-b", "test", "--clobber"])
 
     expect(File.exists?("spec/testdata/cache/main/.bake")).to be == false
     expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == false
   end    
   
   it 'clobber project only' do
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-p", "lib1"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startCache(["-b", "test", "-p", "lib1"])
 
     expect(File.exists?("spec/testdata/cache/main/.bake")).to be == true
     expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == true
 
-    Utils.cleanup_rake
+    Bake.startCache(["-b", "test", "-p", "lib1", "--clobber"])
 
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "-p", "lib1", "--clobber"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-
-    expect(File.exists?("spec/testdata/cache/main/.bake")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/.bake")).to be == true
     expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == false
   end    
 

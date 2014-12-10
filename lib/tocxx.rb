@@ -8,7 +8,6 @@ require 'bake/cache'
 require 'bake/subst'
 require 'bake/mergeConfig'
 
-require 'imported/buildingblocks/lint'
 require 'imported/utils/exit_helper'
 require 'imported/ide_interface'
 require 'imported/ext/file'
@@ -24,6 +23,7 @@ require 'blocks/makefile'
 require 'blocks/compile'
 require 'blocks/library'
 require 'blocks/executable'
+require 'blocks/lint'
 
 require 'set'
 require 'socket'
@@ -46,7 +46,7 @@ module Bake
         configs.each do |config|
           tcs = nil
           if not Metamodel::CustomConfig === config
-            tcs = Utils.deep_copy(@loadedConfig.defaultToolchain)
+            tcs = Utils.deep_copy(@defaultToolchain)
             integrateToolchain(tcs, config.toolchain)
           else
             tcs = Utils.deep_copy(Bake::Toolchain::Provider.default)
@@ -88,7 +88,7 @@ module Bake
       end
     end    
     
-    def convert2bb2
+    def convert2bb
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
           
@@ -96,46 +96,36 @@ module Bake
           
           Blocks::ALL_BLOCKS[config.qname] = block
           
-          if not Bake.options.linkOnly and not Bake.options.prepro
+          if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.filename
             addSteps(block, block.preSteps,  config.preSteps)
             addSteps(block, block.postSteps, config.postSteps)
           end
           
           if Metamodel::CustomConfig === config
-            if not Bake.options.linkOnly and not Bake.options.prepro
+            if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.filename
               addSteps(block, block.mainSteps, config) if config.step
             end 
+          elsif Bake.options.lint
+            block.mainSteps << Blocks::Lint.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config])
           else
             compile = Blocks::Compile.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config])
             (Blocks::ALL_COMPILE_BLOCKS[projName] ||= []) << compile
             block.mainSteps << compile
-            if Metamodel::LibraryConfig === config
-              block.mainSteps << Blocks::Library.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
-            else
-              block.mainSteps << Blocks::Executable.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
+            if not Bake.options.filename
+              if Metamodel::LibraryConfig === config
+                block.mainSteps << Blocks::Library.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
+              else
+                block.mainSteps << Blocks::Executable.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
+              end
             end
           end
 
-          if not Bake.options.project and not Bake.options.filename
+          if not Bake.options.project# and not Bake.options.filename
             addDependencies(block, config.dependency)
           end
                     
         end
       end
-
-      end
-
-    def convert2bb
-      @loadedConfig.referencedConfigs.each do |projName, configs|
-        configs.each do |config|
-          if Bake.options.lint
-            bbModule.main_content = Lint.new(projName, config.name)
-            bbModule.main_content.set_lint_min(Bake.options.lint_min).set_lint_max(Bake.options.lint_max)
-          end
-        end
-      end
-
-      
     end
 
     def callBlock(block, method)
@@ -170,9 +160,9 @@ module Bake
         splitted = Bake.options.project.split(',')
         startProjectName = splitted[0]
         startConfigName = splitted[1] if splitted.length == 2
-      elsif Bake.options.filename
-        startProjectName = Bake.options.main_project_name
-        startConfigName = Bake.options.build_config  
+      #elsif Bake.options.filename
+      #  startProjectName = Bake.options.main_project_name
+      #  startConfigName = Bake.options.build_config  
       end
 
       if startConfigName
@@ -205,11 +195,18 @@ module Bake
       @loadedConfig.load # Dependency must be substed
       
       @mainConfig = @loadedConfig.referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
-      
+
+      if Bake.options.lint # todo: no GCC_Lint
+        @defaultToolchain = Utils.deep_copy(Bake::Toolchain::Provider["GCC_Lint"])
+        integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
+      else
+        @defaultToolchain = @loadedConfig.defaultToolchain
+      end
+        
       createConfigTcs
       substVars
       
-      convert2bb2
+      convert2bb
       
       Blocks::Show.includes if Bake.options.show_includes
       Blocks::Show.includesAndDefines(@mainConfig) if Bake.options.show_includes_and_defines
@@ -217,7 +214,9 @@ module Bake
       startBlocks = calcStartBlocks
       
       taskType = "Building"
-      if Bake.options.prepro
+      if Bake.options.lint
+        taskType = "Linting"
+      elsif Bake.options.prepro
         taskType = "Preprocessing"
       elsif Bake.options.linkOnly
           taskType = "Linking"
@@ -237,15 +236,16 @@ module Bake
         end      
       rescue AbortException
         Bake.formatter.printError "\n#{taskType} aborted."
-        return false          
+        ExitHelper.set_exit_code(1)
+        return
       end
             
       if result == false
         Bake.formatter.printError "\n#{taskType} failed."
-        return false
+        ExitHelper.set_exit_code(1)
+        return
       else
         Bake.formatter.printSuccess("\n#{taskType} done.")
-        return true          
       end
       
     end

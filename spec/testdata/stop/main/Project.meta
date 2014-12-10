@@ -5,7 +5,7 @@ Project {
     Dependency lib, config: testSub
     DefaultToolchain GCC {
       Compiler CPP {
-        Define "$(FORCE_ERROR_COMPILER)"
+        Define "FEC$(FORCE_ERROR_COMPILER)"
       }
       Archiver {
         Flags "$(FORCE_ERROR_ARCHIVER)"

@@ -61,7 +61,6 @@ module Bake
       if @scheme == :none
         puts compiler_output
       else 
-        #res = ""
         begin
           zipped = compiler_output.split($/).zip(error_descs)
           zipped.each do |l,desc|
@@ -77,9 +76,7 @@ module Bake
             else
               puts l
             end
-            puts "\n" 
           end
-          #puts res
         rescue Exception => e
           puts "Error while parsing compiler output: #{e}"
           puts compiler_output

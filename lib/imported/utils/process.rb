@@ -4,6 +4,7 @@ module Bake
     @@pid = nil
 
     def self.readOutput(sp, rd, wr)
+      @@pid = sp
       wr.close
         
       consoleOutput = ""
@@ -22,6 +23,7 @@ module Bake
       end
         
       Process.wait(sp)
+      @@pid = nil
       rd.close
       
       consoleOutput.encode!('UTF-8',  :invalid => :replace, :undef => :replace, :replace => '')

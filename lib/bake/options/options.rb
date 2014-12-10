@@ -50,7 +50,7 @@ module Bake
       @linkOnly = false
       @no_autodir = false
       @threads = 8
-      @lint_min = -1
+      @lint_min = 0
       @lint_max = -1
       @roots = []
       @socket = 0

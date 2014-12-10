@@ -70,7 +70,7 @@ module Bake
             @@linker_libs_array << "#{@@linker[:USER_LIB_FLAG]}#{elem.value}"
           when LibElement::LIB_WITH_PATH
             adaptedPath, prefix = adaptPath(elem.value, block, prefix)
-            @@linker_libs_arrayes <<  adaptedPath
+            @@linker_libs_array <<  adaptedPath
           when LibElement::SEARCH_PATH
             adaptedPath, prefix = adaptPath(elem.value, block, prefix)
             if not @@lib_path_set.include?adaptedPath

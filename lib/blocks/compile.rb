@@ -285,7 +285,7 @@ module Bake
           source_files.keep_if do |source|
             source.include?Bake.options.filename
           end
-          if source_files.length == 0 and not Bake.options.verboseLow and quite == false
+          if source_files.length == 0 and Bake.options.verboseHigh and quite == false
             Bake.formatter.printInfo "Info: #{Bake.options.filename} did not match to any source"
           end
         end
