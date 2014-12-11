@@ -117,8 +117,6 @@ module Bake
         begin
           step.send method
           result = true
-        rescue Bake::ExitHelperException
-          raise
         rescue Bake::SystemCommandFailed => scf
           # delete file?
         rescue SystemExit => exSys

@@ -11,8 +11,6 @@ require 'helper'
 
 module Bake
 
-ExitHelper.enable_exit_test
-
 describe "bake" do
 
   it 'collection double' do

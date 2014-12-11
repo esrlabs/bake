@@ -371,13 +371,8 @@ describe "Merging Configs" do
   end   
     
   it 'parent broken' do
-    
     expect(File.exists?("spec/testdata/merge/main/testE6/testE6.exe")).to be == false
-    
     Bake.startBake("merge/main", ["ParentKaputt", "--rebuild"])
-
-    #expect { tocxx.doit() }.to raise_error(ExitHelperException)
-    
     expect($mystring.include?("Error: Config 'dasGibtsDochGarNicht' not found")).to be == true
   end   
 

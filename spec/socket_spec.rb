@@ -16,17 +16,17 @@ describe "Socket Handler" do
   it 'should recv/send to a port on localhost' do
     ExitHelper.reset_exit_code
     Bake.options = Options.new(["--socket"])
-    expect { Bake.options.parse_options() }.to raise_error(ExitHelperException)
+    expect { Bake.options.parse_options() }.to raise_error(ExitHelperXXXException)
     expect($mystring.include?("Argument for option --socket missing")).to be == true
 
     ExitHelper.reset_exit_code
     Bake.options = Options.new(["--socket", "10000"])
-    expect { Bake.options.parse_options }.to raise_error(ExitHelperException)
+    expect { Bake.options.parse_options }.to raise_error(ExitHelperXXXException)
     
     expect(Bake.options.socket).to be == 10000
     
     tocxx = Bake::ToCxx.new
-    expect { tocxx.connect() }.to raise_error(ExitHelperException)
+    expect { tocxx.connect() }.to raise_error(ExitHelperXXXException)
 
     serverSocket = TCPServer.new('localhost', 10000)
 

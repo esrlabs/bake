@@ -48,7 +48,7 @@ module Bake
       rescue SystemExit => e
         raise
       rescue Exception => e
-        Bake.formatter.printError e.message unless e.message.include?("Bake::ExitHelperException")
+        Bake.formatter.printError e.message
         ExitHelper.exit(1)
       end
       

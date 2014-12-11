@@ -13,8 +13,6 @@ require 'helper'
 
 module Bake
 
-ExitHelper.enable_exit_test
-
 describe "Export" do
   
   before(:all) do

@@ -38,8 +38,6 @@ module Bake
       $sstring=StringIO.open($mystring,"w+")
       $stdoutbackup=$stdout
       $stdout=$sstring
-      
-      ExitHelper.enable_exit_test
     end
     
     config.after(:each) do

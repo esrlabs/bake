@@ -119,9 +119,6 @@ module Bake
           else
             Bake.formatter.printInfo("Info: cache not found, reloading meta information")
           end
-          
-        rescue ExitHelperException
-          raise
         rescue
           Bake.formatter.printWarning "Warning: cache file corrupt, reloading meta information"
           cache = nil

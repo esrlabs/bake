@@ -87,8 +87,6 @@ module Bake
 
   msg1 = "* bakery "
 
-  ExitHelper.enable_exit_test
-  
   exitValue = 0
   abort = false
   @toBuild.each do |bp|
@@ -111,7 +109,8 @@ module Bake
         runOk = false
       end
     rescue Exception => e
-      puts e.message if e.message != "Bake::ExitHelperException"
+      # TO TEST TODO:
+      puts e.message if not e.class === SystemExit 
       runOk = false
     end
     
@@ -159,7 +158,6 @@ module Bake
   
   Bake::IDEInterface.instance.disconnect()
 
-  ExitHelper.disable_exit_test
   ExitHelper.exit(exitValue)
 end
 

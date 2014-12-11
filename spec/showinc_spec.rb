@@ -17,7 +17,7 @@ describe "ShowInc" do
     Bake.options = Options.new(["-m", "spec/testdata/showinc/main", "-b", "test" , "--show_incs_and_defs"])
     Bake.options.parse_options()
     tocxx = Bake::ToCxx.new
-    expect { tocxx.doit() }.to raise_error(ExitHelperException)
+    TODO expect { tocxx.doit() }.to raise_error(ExitHelperXXXException)
     
     s = "main\n"+
         " includes\n"+
