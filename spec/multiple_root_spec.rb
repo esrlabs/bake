@@ -15,63 +15,34 @@ describe "Multiple root" do
   
   it 'single root' do
     expect(File.exists?("spec/testdata/root1/main/test/main.exe")).to be == false
-    
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "test"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    expect { tocxx.doit() }.to raise_error(ExitHelperException)
+    Bake.startBake("root1/main", ["test"])
+    expect(ExitHelper.exit_code).to be > 0
+    expect($mystring.split("Project.meta not found").length).to be == 2
   end
   
   it 'both roots' do
     expect(File.exists?("spec/testdata/root1/main/test/main.exe")).to be == false
-    
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-
-    expect(File.exists?("spec/testdata/root1/main/test/main.exe")).to be == true
-  end
-  
-  it 'root multiple define' do
-    expect(File.exists?("spec/testdata/root1/main/test/main.exe")).to be == false
-    
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "test", "-w", "spec/testdata/root2", "-w", "spec/testdata/root1"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-
+    Bake.startBake("root1/main", ["test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2"])
     expect(File.exists?("spec/testdata/root1/main/test/main.exe")).to be == true
   end
   
   it 'wrong root' do
     expect(File.exists?("spec/testdata/root1/main/test/main.exe")).to be == false
-    
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2/lib3"])
-    expect { Bake.options.parse_options() }.to raise_error(ExitHelperException)
-    
+    Bake.startBake("root1/main", ["test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2/lib3"])
+    expect(ExitHelper.exit_code).to be > 0
     expect($mystring.split("lib3 does not exist").length).to be == 2
   end  
   
   it 'forgotten root' do
     expect(File.exists?("spec/testdata/root1/main/test/main.exe")).to be == false
-    
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "test", "-w", "spec/testdata/root1"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-  expect { tocxx.doit() }.to raise_error(ExitHelperException)
-    
+    Bake.startBake("root1/main", ["test", "-w", "spec/testdata/root1"])
+    expect(ExitHelper.exit_code).to be > 0    
     expect($mystring.split("Error: lib2/Project.meta not found").length).to be == 2
   end   
  
   it 'invalid root' do
     expect(File.exists?("spec/testdata/root1/main/test/main.exe")).to be == false
-    
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "test", "-w", "spec/testdata/GIBTS_DOCH_GAR_NICHT"])
-    expect { Bake.options.parse_options() }.to raise_error(ExitHelperException)
-    
+    Bake.startBake("root1/main", ["test", "-w", "spec/testdata/GIBTS_DOCH_GAR_NICHT"])
     expect($mystring.split("Error: Directory spec/testdata/GIBTS_DOCH_GAR_NICHT does not exist").length).to be == 2
   end    
 

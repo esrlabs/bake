@@ -17,6 +17,14 @@ ExitHelper.enable_exit_test
 
 describe "Export" do
   
+  before(:all) do
+    $noCleanTestData = true
+  end
+
+  after(:all) do
+    $noCleanTestData = false
+  end
+  
   before(:each) do
     sleep 1 # needed for timestamp tests
   end
@@ -25,126 +33,81 @@ describe "Export" do
     FileUtils.rm_rf("spec/testdata/root1/lib3/src/x.cpp")
     File.open("spec/testdata/root1/lib3/src/x.cpp", 'w') { |file| file.write("int i = 2;\n") }
     
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()    
+    Bake.startBake("root1/main", ["-b", "rel_test", "--rebuild"])
     
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
-    expect($mystring.include?("Creating rel_test_main/liblib3.a")).to be == true
+    expect($mystring.include?("Creating test_main_rel_test/liblib3.a")).to be == true
     expect($mystring.include?("Linking rel_test/main.exe")).to be == true
-    expect($mystring.include?("Rebuild done.")).to be == true
+    expect($mystring.include?("Rebuilding done.")).to be == true
   end
   
   it 'With file build' do
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()    
+    Bake.startBake("root1/main", ["-b", "rel_test"])
     
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("liblib3.a")).to be == false
     expect($mystring.include?("Linking rel_test/main.exe")).to be == false
-    expect($mystring.include?("Build done.")).to be == true
+    expect($mystring.include?("Building done.")).to be == true
   end  
   
   it 'Without file rebuild' do
-    
     FileUtils.rm_rf("spec/testdata/root1/lib3/src/x.cpp")
     
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()    
-    
+    Bake.startBake("root1/main", ["-b", "rel_test", "--rebuild"])
+
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
-    expect($mystring.include?("liblib3.a")).to be == false
+    expect($mystring.include?("liblib3.a")).to be == true
     expect($mystring.include?("Linking rel_test/main.exe")).to be == true
-    expect($mystring.include?("Rebuild done.")).to be == true
+    expect($mystring.include?("Rebuilding done.")).to be == true
   end
   it 'Without file clean' do
-    
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-c"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()   
-    
-    expect($mystring.include?("Clean done.")).to be == true
+    Bake.startBake("root1/main", ["-b", "rel_test", "-c"])
+    expect($mystring.include?("Cleaning done.")).to be == true
   end
   it 'Without file build' do
-    
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startBake("root1/main", ["-b", "rel_test"])
     
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
-    expect($mystring.include?("liblib3.a")).to be == false
+    expect($mystring.include?("liblib3.a")).to be == true
     expect($mystring.include?("Linking rel_test/main.exe")).to be == true
-    expect($mystring.include?("Build done.")).to be == true
+    expect($mystring.include?("Building done.")).to be == true
   end
   it 'Without file lib' do
-    
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "lib3"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startBake("root1/main", ["-b", "rel_test", "-p", "lib3"])
     
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("liblib3.a")).to be == false
     expect($mystring.include?("Linking rel_test/main.exe")).to be == false
-    expect($mystring.include?("Build done.")).to be == true
+    expect($mystring.include?("Building done.")).to be == true
   end
   it 'Without file lib rebuild' do
-    
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "lib3", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startBake("root1/main", ["-b", "rel_test", "-p", "lib3", "--rebuild"])
     
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
-    expect($mystring.include?("liblib3.a")).to be == false
+    expect($mystring.include?("liblib3.a")).to be == true
     expect($mystring.include?("Linking rel_test/main.exe")).to be == false
-    expect($mystring.include?("Rebuild done.")).to be == true
+    expect($mystring.include?("Rebuilding done.")).to be == true
   end
   it 'Without file main rebuild' do
-    
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test", "-p", "main", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startBake("root1/main", ["-b", "rel_test", "-p", "main", "--rebuild"])
 
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("liblib3.a")).to be == false
     expect($mystring.include?("Linking rel_test/main.exe")).to be == true
-    expect($mystring.include?("Rebuild done.")).to be == true    
+    expect($mystring.include?("Rebuilding done.")).to be == true    
   end
   it 'With file again build' do
     
     FileUtils.rm_rf("spec/testdata/root1/lib3/src/x.cpp")
     File.open("spec/testdata/root1/lib3/src/x.cpp", 'w') { |file| file.write("int i = 2;\n") }
     
-    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "-b", "rel_test"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    
+    Bake.startBake("root1/main", ["-b", "rel_test"])
+      
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
-    expect($mystring.include?("Creating rel_test_main/liblib3.a")).to be == true
+    expect($mystring.include?("Creating test_main_rel_test/liblib3.a")).to be == true
     expect($mystring.include?("Linking rel_test/main.exe")).to be == true
-    expect($mystring.include?("Build done.")).to be == true    
+    expect($mystring.include?("Building done.")).to be == true    
   end
-
-# todo: clobber test
 
 end
 

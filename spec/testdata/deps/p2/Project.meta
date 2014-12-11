@@ -6,12 +6,6 @@ ExecutableConfig Debug {
   Dependency p4, config: Debug
 }
 
-ExecutableConfig DebugWrong {
-  Files "src/main.cpp"
-  Dependency p3, config: DebugWrong
-  Dependency p4, config: Debug
-}
-
 ExecutableConfig DebugCirc {
   Files "src/main.cpp"
   Dependency p1, config: DebugCirc

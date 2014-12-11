@@ -117,7 +117,7 @@ module Bake
           printCmd(cmd, alternate, (hasError and not Bake.options.lint))
         end
         errorPrinted = process_console_output(console_output, error_parser)
-  
+        
         if hasError
           if not errorPrinted
             Bake.formatter.printError "Error: system command failed"

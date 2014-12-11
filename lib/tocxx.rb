@@ -143,7 +143,7 @@ module Bake
     end
     
     def callBlocks(startBlocks, method)
-      Blocks::ALL_BLOCKS.each {|name,block| block.visited = false }
+      Blocks::ALL_BLOCKS.each {|name,block| block.visited = false; block.inDeps = false }
       Blocks::Block.reset_block_counter
       result = true
       startBlocks.each do |block|
@@ -190,62 +190,66 @@ module Bake
     end
     
     def doit()
-      
-      @loadedConfig = Config.new
-      @loadedConfig.load # Dependency must be substed
-      
-      @mainConfig = @loadedConfig.referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
 
-      if Bake.options.lint # todo: no GCC_Lint
-        @defaultToolchain = Utils.deep_copy(Bake::Toolchain::Provider["GCC_Lint"])
-        integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
-      else
-        @defaultToolchain = @loadedConfig.defaultToolchain
-      end
+      begin      
+        @loadedConfig = Config.new
+        @loadedConfig.load # Dependency must be substed
         
-      createConfigTcs
-      substVars
-      
-      convert2bb
-      
-      Blocks::Show.includes if Bake.options.show_includes
-      Blocks::Show.includesAndDefines(@mainConfig) if Bake.options.show_includes_and_defines
-      
-      startBlocks = calcStartBlocks
-      
-      taskType = "Building"
-      if Bake.options.lint
-        taskType = "Linting"
-      elsif Bake.options.prepro
-        taskType = "Preprocessing"
-      elsif Bake.options.linkOnly
-          taskType = "Linking"
-      elsif Bake.options.rebuild
-        taskType = "Rebuilding"
-      elsif Bake.options.clean
-        taskType = "Cleaning"
-      end
-        
-      begin
-        result = true
-        if Bake.options.clean or Bake.options.rebuild
-          result = callBlocks(startBlocks, :clean)
+        @mainConfig = @loadedConfig.referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
+  
+        if Bake.options.lint # todo: no GCC_Lint
+          @defaultToolchain = Utils.deep_copy(Bake::Toolchain::Provider["GCC_Lint"])
+          integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
+        else
+          @defaultToolchain = @loadedConfig.defaultToolchain
         end
-        if Bake.options.rebuild or not Bake.options.clean
-          result = callBlocks(startBlocks, :execute) && result
-        end      
-      rescue AbortException
-        Bake.formatter.printError "\n#{taskType} aborted."
-        ExitHelper.set_exit_code(1)
-        return
-      end
-            
-      if result == false
-        Bake.formatter.printError "\n#{taskType} failed."
-        ExitHelper.set_exit_code(1)
-        return
-      else
-        Bake.formatter.printSuccess("\n#{taskType} done.")
+          
+        createConfigTcs
+        substVars
+        
+        convert2bb
+        
+        Blocks::Show.includes if Bake.options.show_includes
+        Blocks::Show.includesAndDefines(@mainConfig) if Bake.options.show_includes_and_defines
+        
+        startBlocks = calcStartBlocks
+        
+        taskType = "Building"
+        if Bake.options.lint
+          taskType = "Linting"
+        elsif Bake.options.prepro
+          taskType = "Preprocessing"
+        elsif Bake.options.linkOnly
+            taskType = "Linking"
+        elsif Bake.options.rebuild
+          taskType = "Rebuilding"
+        elsif Bake.options.clean
+          taskType = "Cleaning"
+        end
+          
+        begin
+          result = true
+          if Bake.options.clean or Bake.options.rebuild
+            result = callBlocks(startBlocks, :clean)
+          end
+          if Bake.options.rebuild or not Bake.options.clean
+            result = callBlocks(startBlocks, :execute) && result
+          end      
+        rescue AbortException
+          Bake.formatter.printError "\n#{taskType} aborted."
+          ExitHelper.set_exit_code(1)
+          return
+        end
+              
+        if result == false
+          Bake.formatter.printError "\n#{taskType} failed."
+          ExitHelper.set_exit_code(1)
+          return
+        else
+          Bake.formatter.printSuccess("\n#{taskType} done.")
+        end
+      rescue SystemExit
+        # TODO: maybe remove all/some ExitHelper.exit calls, just exit - then we do have to catch this exception anymore?
       end
       
     end

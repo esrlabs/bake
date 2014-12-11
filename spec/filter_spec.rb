@@ -11,83 +11,75 @@ require 'helper'
 
 module Bake
 
-def self.startFilter(opt)
-  Bake.options = Options.new(["-m", "spec/testdata/filter"].concat(opt))
-  Bake.options.parse_options()
-  tocxx = Bake::ToCxx.new
-  tocxx.doit()
-  tocxx.start()
-end
-  
 describe "Filter" do
   
   it 'OneStep' do
-    Bake.startFilter(["OneStep"])
+    Bake.startBake("filter",  ["OneStep"])
     expect($mystring.include?("test done")).to be == true
   end
   it 'OneStep_include' do
-    Bake.startFilter(["OneStep", "--include_filter", "FILTER"])
+    Bake.startBake("filter", ["OneStep", "--include_filter", "FILTER"])
     expect($mystring.include?("test done")).to be == true
   end
   it 'OneStep_exclude' do
-    Bake.startFilter(["OneStep", "--exclude_filter", "FILTER"])
+    Bake.startBake("filter", ["OneStep", "--exclude_filter", "FILTER"])
     expect($mystring.include?("test done")).to be == true
   end
   
   it 'OneStepDefaultOn' do
-    Bake.startFilter(["OneStepDefaultOn"])
+    Bake.startBake("filter", ["OneStepDefaultOn"])
     expect($mystring.include?("test done")).to be == true
   end
   it 'OneStepDefaultOn_include' do
-    Bake.startFilter(["OneStepDefaultOn", "--include_filter", "FILTER"])
+    Bake.startBake("filter", ["OneStepDefaultOn", "--include_filter", "FILTER"])
     expect($mystring.include?("test done")).to be == true
   end
   it 'OneStepDefaultOn_exclude' do
-    Bake.startFilter(["OneStepDefaultOn", "--exclude_filter", "FILTER"])
+    Bake.startBake("filter", ["OneStepDefaultOn", "--exclude_filter", "FILTER"])
     expect($mystring.include?("test done")).to be == true
   end
  
   it 'OneStepDefaultOff' do
-    Bake.startFilter(["OneStepDefaultOff"])
+    Bake.startBake("filter", ["OneStepDefaultOff"])
     expect($mystring.include?("test done")).to be == false
   end
   it 'OneStepDefaultOff_include' do
-    Bake.startFilter(["OneStepDefaultOff", "--include_filter", "FILTER"])
+    Bake.startBake("filter", ["OneStepDefaultOff", "--include_filter", "FILTER"])
     expect($mystring.include?("test done")).to be == false
   end
   it 'OneStepDefaultOff_exclude' do
-    Bake.startFilter(["OneStepDefaultOff", "--exclude_filter", "FILTER"])
+    Bake.startBake("filter", ["OneStepDefaultOff", "--exclude_filter", "FILTER"])
     expect($mystring.include?("test done")).to be == false
   end
   
   it 'OneStepDefaultOnFILTER' do
-    Bake.startFilter(["OneStepDefaultOnFILTER"])
+    Bake.startBake("filter", ["OneStepDefaultOnFILTER"])
     expect($mystring.include?("test done")).to be == true
   end
   it 'OneStepDefaultOnFILTER_include' do
-    Bake.startFilter(["OneStepDefaultOnFILTER", "--include_filter", "FILTER"])
+    Bake.startBake("filter", ["OneStepDefaultOnFILTER", "--include_filter", "FILTER"])
     expect($mystring.include?("test done")).to be == true
   end
   it 'OneStepDefaultOnFILTER_exclude' do
-    Bake.startFilter(["OneStepDefaultOnFILTER", "--exclude_filter", "FILTER"])
+    Bake.startBake("filter", ["OneStepDefaultOnFILTER", "--exclude_filter", "FILTER"])
     expect($mystring.include?("test done")).to be == false
   end
   
   it 'OneStepDefaultOffFILTER' do
-    Bake.startFilter(["OneStepDefaultOffFILTER"])
+    Bake.startBake("filter", ["OneStepDefaultOffFILTER"])
     expect($mystring.include?("test done")).to be == false
   end  
   it 'OneStepDefaultOffFILTER_include' do
-    Bake.startFilter(["OneStepDefaultOffFILTER", "--include_filter", "FILTER"])
+    Bake.startBake("filter", ["OneStepDefaultOffFILTER", "--include_filter", "FILTER"])
     expect($mystring.include?("test done")).to be == true
   end
   it 'OneStepDefaultOffFILTER_exclude' do
-    Bake.startFilter(["OneStepDefaultOffFILTER", "--exclude_filter", "FILTER"])
+    Bake.startBake("filter", ["OneStepDefaultOffFILTER", "--exclude_filter", "FILTER"])
     expect($mystring.include?("test done")).to be == false
   end
   
   it 'MultipleSteps' do
-    Bake.startFilter(["MultipleSteps"])
+    Bake.startBake("filter", ["MultipleSteps"])
     expect($mystring.include?("test pre1")).to be == false
     expect($mystring.include?("test pre2")).to be == false
     expect($mystring.include?("test pre3")).to be == true
@@ -99,7 +91,7 @@ describe "Filter" do
   end  
 
   it 'MultipleSteps_includeFILTER' do
-    Bake.startFilter(["MultipleSteps", "--include_filter", "FILTER"])
+    Bake.startBake("filter", ["MultipleSteps", "--include_filter", "FILTER"])
     expect($mystring.include?("test pre1")).to be == true
     expect($mystring.include?("test pre2")).to be == false
     expect($mystring.include?("test pre3")).to be == true
@@ -111,7 +103,7 @@ describe "Filter" do
   end  
 
   it 'MultipleSteps_excludeFILTER' do
-    Bake.startFilter(["MultipleSteps", "--exclude_filter", "FILTER"])
+    Bake.startBake("filter", ["MultipleSteps", "--exclude_filter", "FILTER"])
     expect($mystring.include?("test pre1")).to be == false
     expect($mystring.include?("test pre2")).to be == false
     expect($mystring.include?("test pre3")).to be == true
@@ -123,7 +115,7 @@ describe "Filter" do
   end  
   
   it 'MultipleSteps_includeALL' do
-    Bake.startFilter(["MultipleSteps", "--include_filter", "FILTER", "--include_filter", "FILTER2"])
+    Bake.startBake("filter", ["MultipleSteps", "--include_filter", "FILTER", "--include_filter", "FILTER2"])
     expect($mystring.include?("test pre1")).to be == true
     expect($mystring.include?("test pre2")).to be == true
     expect($mystring.include?("test pre3")).to be == true
@@ -135,7 +127,7 @@ describe "Filter" do
   end    
 
   it 'MultipleSteps_excludeALL' do
-    Bake.startFilter(["MultipleSteps", "--exclude_filter", "FILTER", "--exclude_filter", "FILTER2"])
+    Bake.startBake("filter", ["MultipleSteps", "--exclude_filter", "FILTER", "--exclude_filter", "FILTER2"])
     expect($mystring.include?("test pre1")).to be == false
     expect($mystring.include?("test pre2")).to be == false
     expect($mystring.include?("test pre3")).to be == false
@@ -147,7 +139,7 @@ describe "Filter" do
   end    
 
   it 'MultipleSteps_includePRE' do
-    Bake.startFilter(["MultipleSteps", "--include_filter", "PRE"])
+    Bake.startBake("filter", ["MultipleSteps", "--include_filter", "PRE"])
     expect($mystring.include?("test pre1")).to be == true
     expect($mystring.include?("test pre2")).to be == true
     expect($mystring.include?("test pre3")).to be == true
@@ -159,7 +151,7 @@ describe "Filter" do
   end  
   
   it 'MultipleSteps_excludePRE' do
-    Bake.startFilter(["MultipleSteps", "--exclude_filter", "PRE"])
+    Bake.startBake("filter", ["MultipleSteps", "--exclude_filter", "PRE"])
     expect($mystring.include?("test pre1")).to be == false
     expect($mystring.include?("test pre2")).to be == false
     expect($mystring.include?("test pre3")).to be == false
@@ -171,7 +163,7 @@ describe "Filter" do
   end 
  
   it 'MultipleSteps_includePOST' do
-    Bake.startFilter(["MultipleSteps", "--include_filter", "POST"])
+    Bake.startBake("filter", ["MultipleSteps", "--include_filter", "POST"])
     expect($mystring.include?("test pre1")).to be == false
     expect($mystring.include?("test pre2")).to be == false
     expect($mystring.include?("test pre3")).to be == true
@@ -183,7 +175,7 @@ describe "Filter" do
   end  
   
   it 'MultipleSteps_excludePOST' do
-    Bake.startFilter(["MultipleSteps", "--exclude_filter", "POST"])
+    Bake.startBake("filter", ["MultipleSteps", "--exclude_filter", "POST"])
     expect($mystring.include?("test pre1")).to be == false
     expect($mystring.include?("test pre2")).to be == false
     expect($mystring.include?("test pre3")).to be == true
@@ -195,7 +187,7 @@ describe "Filter" do
   end 
   
   it 'MultipleSteps_includeFILTERandPRE_excludePOST' do
-    Bake.startFilter(["MultipleSteps", "--include_filter", "PRE", "--exclude_filter", "POST", "--include_filter", "FILTER"])
+    Bake.startBake("filter", ["MultipleSteps", "--include_filter", "PRE", "--exclude_filter", "POST", "--include_filter", "FILTER"])
     expect($mystring.include?("test pre1")).to be == true
     expect($mystring.include?("test pre2")).to be == true
     expect($mystring.include?("test pre3")).to be == true

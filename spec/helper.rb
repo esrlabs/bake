@@ -3,11 +3,22 @@ require 'imported/utils/cleanup'
 
 module Bake
 
+  def self.startBake(proj, opt)
+    Bake.options = Options.new(["-m", "spec/testdata/#{proj}"].concat(opt))
+    Bake.options.parse_options()
+    tocxx = Bake::ToCxx.new
+    tocxx.doit()
+    Utils.cleanup_rake
+  end  
+
+  
   def self.clean_testdata()
-    r = Dir.glob("spec/testdata/**/test*")
-    r.each { |f| FileUtils.rm_rf(f) }
-    r = Dir.glob("spec/testdata/**/.bake")
-    r.each { |f| FileUtils.rm_rf(f) }
+    if not $noCleanTestData
+      r = Dir.glob("spec/testdata/**/test*")
+      r.each { |f| FileUtils.rm_rf(f) }
+      r = Dir.glob("spec/testdata/**/.bake")
+      r.each { |f| FileUtils.rm_rf(f) }
+    end
   end
 
   RSpec.configure do |config|
@@ -40,7 +51,9 @@ module Bake
       STDERR.reopen @backup_stderr
       
       ExitHelper.reset_exit_code
-      Bake::clean_testdata      
+      Bake::clean_testdata
+      
+      #puts $mystring      
     end
 
   end

@@ -15,21 +15,13 @@ module Bake
 describe "autodir" do
   
   it 'without no_autodir' do
-    Bake.options = Options.new(["-m", "spec/testdata/noAutodir/main", "-b", "test", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    expect($mystring.split("Rebuild failed.").length).to be == 2
+    Bake.startBake("noAutodir/main", ["-b", "test", "--rebuild"])
+    expect($mystring.split("Rebuilding failed.").length).to be == 2
   end
 
   it 'with no_autodir' do
-    Bake.options = Options.new(["-m", "spec/testdata/noAutodir/main", "-b", "test", "--no_autodir", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    expect($mystring.split("Rebuild done.").length).to be == 2
+    Bake.startBake("noAutodir/main", ["-b", "test", "--no_autodir", "--rebuild"])
+    expect($mystring.split("Rebuilding done.").length).to be == 2
   end
   
 end

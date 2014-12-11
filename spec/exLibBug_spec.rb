@@ -15,53 +15,28 @@ module Bake
 describe "..in ex lib" do
   
   it 'with search=true' do
-    Bake.options = Options.new(["-m", "spec/testdata/exLibBug/sub", "-b", "Debug", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    expect(($mystring.split("Rebuild done.").length)).to be == 2
+    Bake.startBake("exLibBug/sub", ["-b", "Debug", "--rebuild"])
+    expect(($mystring.split("Rebuilding done.").length)).to be == 2
 	
-    Bake.options = Options.new(["-m", "spec/testdata/exLibBug/main", "-b", "test1", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    expect(($mystring.split("Rebuild done.").length)).to be == 3
+    Bake.startBake("exLibBug/main", ["-b", "test1", "--rebuild"])
+    expect(($mystring.split("Rebuilding done.").length)).to be == 3
   end
 
   it 'with search=false' do
-    Bake.options = Options.new(["-m", "spec/testdata/exLibBug/sub", "-b", "Debug", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    expect(($mystring.split("Rebuild done.").length)).to be == 2
+    Bake.startBake("exLibBug/sub", ["-b", "Debug", "--rebuild"])
+    expect(($mystring.split("Rebuilding done.").length)).to be == 2
 	
-    Bake.options = Options.new(["-m", "spec/testdata/exLibBug/main", "-b", "test2", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    expect(($mystring.split("Rebuild done.").length)).to be == 3
+    Bake.startBake("exLibBug/main", ["-b", "test2", "--rebuild"])
+    expect(($mystring.split("Rebuilding done.").length)).to be == 3
   end
   
   it 'with searchPath' do
-    Bake.options = Options.new(["-m", "spec/testdata/exLibBug/sub", "-b", "Debug", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    expect(($mystring.split("Rebuild done.").length)).to be == 2
+    Bake.startBake("exLibBug/sub", ["-b", "Debug", "--rebuild"])
+    expect(($mystring.split("Rebuilding done.").length)).to be == 2
 	
-    Bake.options = Options.new(["-m", "spec/testdata/exLibBug/main", "-b", "test3", "--rebuild"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    expect(($mystring.split("Rebuild done.").length)).to be == 3
+    Bake.startBake("exLibBug/main", ["-b", "test3", "--rebuild"])
+    expect(($mystring.split("Rebuilding done.").length)).to be == 3
   end  
-
   
 end
 

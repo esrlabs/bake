@@ -53,7 +53,11 @@ module Bake
         consoleOutput = yield
         [($?.to_i >> 8) == 0, consoleOutput, false]
       rescue Exception => e
-        [false, e.message, true]
+        if Bake.options.debug
+          puts e.message
+          puts e.backtrace
+        end
+        [false, "Error: internal error with safeExecute()", true]
       end
     end
   end

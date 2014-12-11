@@ -18,22 +18,14 @@ module Bake
 describe "Makefile" do
 
   it 'builds' do
-    Bake.options = Options.new(["-m", "spec/testdata/make/main", "test"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    expect($mystring.include?("make all -j")).to be == true
-    expect($mystring.include?("Build done.")).to be == true
+    Bake.startBake("make/main", ["test"])
+    expect($mystring.include?("make all")).to be == true
+    expect($mystring.include?("Building done.")).to be == true
   end
   
   it 'cleans' do
-    Bake.options = Options.new(["-m", "spec/testdata/make/main", "test", "-c"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-    expect($mystring.include?("Clean done.")).to be == true
+    Bake.startBake("make/main",  ["test", "-c"])
+    expect($mystring.include?("Cleaning done.")).to be == true
   end
   
 end

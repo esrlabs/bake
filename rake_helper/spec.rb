@@ -4,7 +4,7 @@ require 'common/version'
 
 
 
-SPEC_PATTERN ='spec/**/build_spec.rb'
+SPEC_PATTERN ='spec/**/option_spec.rb'
 
 def new_rspec
   require 'rspec/core/rake_task'

@@ -21,11 +21,12 @@ module Bake
       end
       
       def calcArtifactName
-        if not @config.artifactName.nil? 
-          @exe_name = @config.artifactName
+        if not @config.artifactName.nil? and @config.artifactName.name != "" 
+          baseFilename = @config.artifactName.name
         else
-          @exe_name ||= File.join([@output_dir, "#{@projectName}#{@tcs[:LINKER][:OUTPUT_ENDING]}"])
+          baseFilename = "#{@projectName}#{@tcs[:LINKER][:OUTPUT_ENDING]}"
         end
+        @exe_name ||= File.join([@output_dir, baseFilename])
       end
       
       def calcMapFile
@@ -109,14 +110,12 @@ module Bake
                 
           success, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
           cmd.pop
-    
           # for console print
           cmd << " >#{@mapfile}" if (@mapfile and linker[:MAP_FILE_PIPE])
     
           process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, success)
     
           check_config_file()
-          
         end
         
       end

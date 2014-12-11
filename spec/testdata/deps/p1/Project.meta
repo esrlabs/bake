@@ -15,14 +15,6 @@ ExecutableConfig Debug2 {
   DefaultToolchain GCC
 }
 
-ExecutableConfig DebugWrong {
-  Files "src/main.cpp"
-  Dependency p2, config: DebugWrong
-  Dependency p3, config: Debug
-  Dependency p6, config: Debug
-  DefaultToolchain GCC
-}
-
 ExecutableConfig DebugCirc {
   Files "src/main.cpp"
   Dependency p2, config: DebugCirc

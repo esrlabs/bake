@@ -80,7 +80,7 @@ module Bake
           when LibElement::DEPENDENCY
             if Blocks::ALL_BLOCKS.include?elem.value
               bb = Blocks::ALL_BLOCKS[elem.value]
-            @@linker_libs_array += collect_recursive(bb)
+              collect_recursive(bb)
             else
               # TODO: warning or error?
             end

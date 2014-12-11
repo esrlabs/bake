@@ -23,7 +23,7 @@ module Bake
     class Block
 
       attr_reader :lib_elements, :projectDir, :library, :config
-      attr_accessor :visited
+      attr_accessor :visited, :inDeps
   
       def preSteps
         @preSteps ||= []
@@ -46,12 +46,12 @@ module Bake
       end
       
       def initialize(config, referencedConfigs)
-        
-        @library = nil
+        @inDeps = false
         @visited = false
+        @library = nil
         @config = config
         @referencedConfigs = referencedConfigs
-        @projName = config.parent.name
+        @projectName = config.parent.name
         @configName = config.name
         @projectDir = config.get_project_dir
         @@block_counter = 0
@@ -152,7 +152,7 @@ module Bake
       def callDeps(method)
         depResult = true
         dependencies.each do |dep|
-          depResult = ALL_BLOCKS[dep].send(method) and depResult
+          depResult = (ALL_BLOCKS[dep].send(method) and depResult)
           break if not depResult and Bake.options.stopOnFirstError
         end
         return depResult
@@ -179,19 +179,23 @@ module Bake
       end
       
       def execute
-        if (@visited)
-          if Bake.options.verboseHigh
-            Bake.formatter.printAdditionalInfo "Info: circular dependency found including project #{@projName} with config #{@configName}"
+        if (@inDeps)
+          if not Bake.options.verboseLow
+            Bake.formatter.printWarning "Warning: circular dependency found including project #{@projectName} with config #{@configName}"
           end
           return true
         end
+
+        return true if (@visited)
         @visited = true
    
+        @inDeps = true
         depResult = callDeps(:execute)
+        @inDeps = false
         return false if not depResult and Bake.options.stopOnFirstError
         
         if not Bake.options.verboseLow
-          Bake.formatter.printAdditionalInfo "**** Building #{Block.block_counter} of #{@@num_projects}: #{@projName} (#{@configName}) ****"     
+          Bake.formatter.printAdditionalInfo "**** Building #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"     
         end
 
         result = callSteps(:execute)
@@ -201,12 +205,12 @@ module Bake
       def clean
         return true if (@visited)
         @visited = true
-      
+
         depResult = callDeps(:clean)
         return false if not depResult and Bake.options.stopOnFirstError
         
         if Bake.options.verboseHigh
-          Bake.formatter.printAdditionalInfo "**** Cleaning #{Block.block_counter} of #{@@num_projects}: #{@projName} (#{@configName}) ****"     
+          Bake.formatter.printAdditionalInfo "**** Cleaning #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"     
         end
         
         result = callSteps(:clean)
