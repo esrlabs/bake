@@ -1,4 +1,4 @@
-require 'imported/utils/utils'
+require 'common/utils'
 require 'bake/toolchain/provider'
 require 'bake/toolchain/errorparser/error_parser'
 require 'bake/toolchain/errorparser/gcc_lint_error_parser'

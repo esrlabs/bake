@@ -1,5 +1,5 @@
 require 'bake/model/metamodel'
-require 'imported/ext/file'
+require 'common/ext/file'
 
 module Bake
   module Metamodel

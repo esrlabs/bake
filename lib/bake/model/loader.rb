@@ -9,7 +9,7 @@ require 'rgen/util/file_cache_map'
 
 require 'rtext/default_loader'
 
-require 'imported/utils/exit_helper'
+require 'common/exit_helper'
 require 'bake/toolchain/colorizing_formatter'
 require 'bake/options/options'
 

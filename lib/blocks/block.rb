@@ -1,4 +1,5 @@
 require 'bake/libElement'
+require 'common/abortException'
 
 module Bake
 

@@ -17,8 +17,13 @@ require 'socket'
 module Bake
 
   earlyExit = nil
-  Bake.options = Options.new(ARGV)
   begin
+    if RUBY_VERSION[0..2] == "1.8"
+      Bake.formatter.printError "Error: Ruby 1.8 not supported anymore. Use Ruby 1.9 or greater."
+      ExitHelper.exit(1)
+    end
+    
+    Bake.options = Options.new(ARGV)
     Bake.options.parse_options
 
     tocxx = Bake::ToCxx.new

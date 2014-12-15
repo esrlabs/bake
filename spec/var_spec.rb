@@ -2,9 +2,8 @@
 
 require 'common/version'
 
-require 'tocxx'
 require 'bake/options/options'
-require 'imported/utils/exit_helper'
+require 'common/exit_helper'
 require 'socket'
 require 'fileutils'
 require 'helper'
@@ -63,9 +62,9 @@ describe "VarSubst" do
   
     expect(($mystring.include?"ArtifactName_main abc.def")).to be == true
     expect(($mystring.include?"ArtifactNameBase_main abc")).to be == true
+    expect(($mystring.include?"SLASH\\SLASH")).to be == true
   end  
-
-  
+    
 end
 
 end

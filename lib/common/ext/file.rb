@@ -1,15 +1,11 @@
-require 'imported/utils/utils'
+require 'common/utils'
 
 class File
 
   SLASH = '/'
 
   def self.is_absolute?(filename)
-    if Bake::Utils.old_ruby?
-      filename[0] == 47 or filename[1] == 58 # 47 = /, 58 = :
-    else
-      filename[0] == SLASH or filename[1] == ':'
-    end
+    filename[0] == SLASH or filename[1] == ':'
   end
 
   # seems both are rel or both are abs in all cases
@@ -30,13 +26,8 @@ class File
 	# path letter in windows may be case different
   toIsWindowsAbs = false
 	if toSplitted[0].length > 1 and fromSplitted[0].length > 1
-      if Bake::Utils.old_ruby?
-        toIsWindowsAbs = toSplitted[0][1] == 58
-        i = 1 if toIsWindowsAbs and fromSplitted[0][1] == 58 and toSplitted[0][0].downcase == fromSplitted[0][0].downcase 
-      else
-        toIsWindowsAbs = toSplitted[0][1] == ':'
-        i = 1  if toIsWindowsAbs and fromSplitted[0][1] == ':' and toSplitted[0][0].downcase == fromSplitted[0][0].downcase
-      end	
+    toIsWindowsAbs = toSplitted[0][1] == ':'
+    i = 1  if toIsWindowsAbs and fromSplitted[0][1] == ':' and toSplitted[0][0].downcase == fromSplitted[0][0].downcase
 	end
 	
   if (toIsWindowsAbs and i==0)

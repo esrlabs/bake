@@ -42,6 +42,7 @@ Project {
     PreSteps {
       CommandLine "echo ArtifactName_main $(ArtifactName)", default: off, filter: var
       CommandLine "echo ArtifactNameBase_main $(ArtifactNameBase)", default: off, filter: var
+      CommandLine "echo SLASH$(/)SLASH", default: off, filter: var
     }
     ArtifactName "abc.def"
     DefaultToolchain GCC

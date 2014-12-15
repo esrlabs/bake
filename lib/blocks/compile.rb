@@ -1,8 +1,8 @@
 require 'blocks/blockBase'
 require 'multithread/job'
 require 'yaml'
-require 'imported/utils/process'
-require 'imported/utils/utils'
+require 'common/process'
+require 'common/utils'
 require 'bake/toolchain/colorizing_formatter'
 require 'bake/config/loader'
 

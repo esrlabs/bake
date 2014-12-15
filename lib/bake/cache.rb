@@ -1,4 +1,4 @@
-require 'imported/utils/exit_helper'
+require 'common/exit_helper'
 require 'bake/toolchain/colorizing_formatter'
 require 'common/options/parser'
 require 'common/version'

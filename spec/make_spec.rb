@@ -2,15 +2,14 @@
 
 require 'common/version'
 
-require 'tocxx'
 require 'bake/options/options'
 require 'bake/util'
-require 'imported/utils/exit_helper'
+require 'common/exit_helper'
 require 'socket'
 require 'fileutils'
 require 'helper'
 
-require 'imported/ext/stdout'
+require 'common/ext/stdout'
 
 module Bake
 

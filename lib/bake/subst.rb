@@ -128,7 +128,7 @@ module Bake
         elsif var == "Roots"
           substStr << "___ROOTS___"
         elsif var == "/"
-          if Bake::OS.windows?
+          if Bake::Utils::OS.windows?
             substStr << "\\"
           else
             substStr << "/"

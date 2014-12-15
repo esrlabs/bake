@@ -8,12 +8,12 @@ require 'bake/cache'
 require 'bake/subst'
 require 'bake/mergeConfig'
 
-require 'imported/utils/exit_helper'
-require 'imported/ide_interface'
-require 'imported/ext/file'
+require 'common/exit_helper'
+require 'common/ide_interface'
+require 'common/ext/file'
 require 'bake/toolchain/provider'
-require 'imported/ext/stdout'
-require 'imported/utils/utils'
+require 'common/ext/stdout'
+require 'common/utils'
 require 'bake/toolchain/colorizing_formatter'
 require 'bake/config/loader'
 
@@ -29,6 +29,7 @@ require 'set'
 require 'socket'
 
 require 'blocks/showIncludes'
+require 'common/abortException'
 
 module Bake
 

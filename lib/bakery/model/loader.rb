@@ -7,7 +7,7 @@ require 'rgen/fragment/fragmented_model'
 
 require 'rtext/default_loader'
 
-require 'imported/utils/exit_helper'
+require 'common/exit_helper'
 require 'bake/toolchain/colorizing_formatter'
 
 module Bake

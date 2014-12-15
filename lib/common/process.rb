@@ -33,7 +33,6 @@ module Bake
     end
 
     def self.spawnProcess(cmdLine)
-      return system(cmdLine) if Bake::Utils.old_ruby?
       @@pid = spawn(cmdLine)
       pid, status = Process.wait2(@@pid)
       @@pid = nil

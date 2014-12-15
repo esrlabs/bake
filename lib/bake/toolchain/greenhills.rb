@@ -1,5 +1,5 @@
 require 'bake/toolchain/provider'
-require 'imported/utils/utils'
+require 'common/utils'
 require 'bake/toolchain/errorparser/greenhills_compiler_error_parser'
 require 'bake/toolchain/errorparser/greenhills_linker_error_parser'
 

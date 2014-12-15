@@ -2,9 +2,8 @@
 
 require 'common/version'
 
-require 'tocxx'
 require 'bake/options/options'
-require 'imported/utils/exit_helper'
+require 'common/exit_helper'
 require 'socket'
 require 'fileutils'
 require 'helper'

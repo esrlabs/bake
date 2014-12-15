@@ -2,8 +2,8 @@ require 'bake/model/metamodel_ext'
 require 'bake/model/metamodel'
 require 'set'
 require 'bake/toolchain/colorizing_formatter'
-require 'imported/utils/exit_helper'
-require 'imported/utils/utils'
+require 'common/exit_helper'
+require 'common/utils'
 
 
 def remove_empty_strings_and_join(a, j=' ')

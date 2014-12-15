@@ -5,7 +5,7 @@ $timeStart = Time.now
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 require 'common/version'
 
-require 'imported/utils/utils'
+require 'common/utils'
 
 puts "-- bakery #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
 
@@ -18,7 +18,7 @@ require "bakery/model/loader"
 require "bakery/options/options"
 require "bakery/toBake"
 require "bakery/buildPattern"
-require 'imported/ext/stdout'
+require 'common/ext/stdout'
 require 'common/cleanup'
 
 module Bake

@@ -1,4 +1,4 @@
-require 'imported/ext/stdout'
+require 'common/ext/stdout'
 require 'stringio'
 require 'thread'
 

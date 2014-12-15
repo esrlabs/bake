@@ -1,5 +1,6 @@
 require 'tempfile'
 require 'common/cleanup'
+require 'tocxx'
 
 module Bake
 
