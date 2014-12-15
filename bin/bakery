@@ -19,7 +19,7 @@ require "bakery/options/options"
 require "bakery/toBake"
 require "bakery/buildPattern"
 require 'imported/ext/stdout'
-require 'imported/utils/cleanup'
+require 'common/cleanup'
 
 module Bake
  
@@ -109,7 +109,7 @@ module Bake
       puts e.message if not e.class === SystemExit 
     end
     
-    Utils.cleanup_rake
+    Bake::cleanup
     ExitHelper.reset_exit_code
       
     if runOk == false

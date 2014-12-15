@@ -5,14 +5,13 @@ require 'common/version'
 require 'tocxx'
 require 'bake/options/options'
 require 'imported/utils/exit_helper'
-require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 
 module Bake
 
 describe "Merging Configs" do
-=begin  
+  
   it 'build base (all)' do
     expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
     expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
@@ -336,7 +335,7 @@ describe "Merging Configs" do
   end   
           
   # Valid for exe config
-=end  
+
   it 'linkerscript, artifact, map (all)' do
     expect(File.exists?("spec/testdata/merge/main/testE3/testE3.map")).to be == false
     expect(File.exists?("spec/testdata/merge/main/testE3/testE3.exe")).to be == false

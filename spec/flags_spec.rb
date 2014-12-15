@@ -7,7 +7,6 @@ require 'bake/options/options'
 require 'bake/util'
 require 'imported/utils/exit_helper'
 require 'socket'
-require 'imported/utils/cleanup'
 require 'fileutils'
 require 'helper'
 

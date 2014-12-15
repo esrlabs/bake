@@ -6,7 +6,6 @@ require 'tocxx'
 require 'bake/options/options'
 require 'imported/utils/exit_helper'
 require 'socket'
-require 'imported/utils/cleanup'
 require 'helper'
 
 module Bake

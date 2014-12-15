@@ -1,5 +1,5 @@
 require 'tempfile'
-require 'imported/utils/cleanup'
+require 'common/cleanup'
 
 module Bake
 
@@ -8,7 +8,7 @@ module Bake
     Bake.options.parse_options()
     tocxx = Bake::ToCxx.new
     tocxx.doit()
-    Utils.cleanup_rake
+    Bake::cleanup
   end  
 
   
@@ -24,7 +24,7 @@ module Bake
   RSpec.configure do |config|
 
     config.before(:each) do
-      Utils.cleanup_rake
+      Bake::cleanup
       Bake::clean_testdata
       
       @backup_stdout = STDOUT.dup
