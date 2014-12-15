@@ -191,6 +191,19 @@ module Bake
     
     def doit()
 
+      taskType = "Building"
+      if Bake.options.lint
+        taskType = "Linting"
+      elsif Bake.options.prepro
+        taskType = "Preprocessing"
+      elsif Bake.options.linkOnly
+          taskType = "Linking"
+      elsif Bake.options.rebuild
+        taskType = "Rebuilding"
+      elsif Bake.options.clean
+        taskType = "Cleaning"
+      end      
+      
       begin      
         @loadedConfig = Config.new
         @loadedConfig.load # Dependency must be substed
@@ -213,20 +226,7 @@ module Bake
         Blocks::Show.includesAndDefines(@mainConfig) if Bake.options.show_includes_and_defines
         
         startBlocks = calcStartBlocks
-        
-        taskType = "Building"
-        if Bake.options.lint
-          taskType = "Linting"
-        elsif Bake.options.prepro
-          taskType = "Preprocessing"
-        elsif Bake.options.linkOnly
-            taskType = "Linking"
-        elsif Bake.options.rebuild
-          taskType = "Rebuilding"
-        elsif Bake.options.clean
-          taskType = "Cleaning"
-        end
-          
+
         begin
           result = true
           if Bake.options.clean or Bake.options.rebuild
@@ -249,7 +249,7 @@ module Bake
           Bake.formatter.printSuccess("\n#{taskType} done.")
         end
       rescue SystemExit
-        # TODO: maybe remove all/some ExitHelper.exit calls, just exit - then we do have to catch this exception anymore?
+        Bake.formatter.printError "\n#{taskType} failed."
       end
       
     end

@@ -98,20 +98,15 @@ module Bake
     Bake.formatter.printInfo cmdWithNum
     cmdWithNum.length.times { print "*" }; print "\n";
     
-    runOk = true
+    runOk = false
     begin
       Bake.options = Options.new(cmd)
       Bake.options.parse_options
       tocxx = ToCxx.new
-      if tocxx.doit()
-        runOk = tocxx.start()
-      else
-        runOk = false
-      end
+      tocxx.doit()
+      runOk = ExitHelper.exit_code == 0
     rescue Exception => e
-      # TO TEST TODO:
       puts e.message if not e.class === SystemExit 
-      runOk = false
     end
     
     Utils.cleanup_rake

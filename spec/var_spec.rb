@@ -15,13 +15,8 @@ module Bake
 describe "VarSubst" do
   
   it 'vars should be substed' do
-  
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test", "--include_filter", "var"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
-  
+    Bake.startBake("cache/main", ["test", "--include_filter", "var"])
+
     expect(($mystring.include?"MainConfigName_lib1 test")).to be == true
     expect(($mystring.include?"MainConfigName_main test")).to be == true
     
@@ -43,11 +38,6 @@ describe "VarSubst" do
     expect(($mystring.include?"ArtifactNameBase_lib1 \n")).to be == true
     expect(($mystring.include?"ArtifactNameBase_main main")).to be == true
 
-    if RUBY_VERSION[0..2] == "1.9" 
-      expect(($mystring.include?"Time_lib1")).to be == true
-      expect(($mystring.include?"Time_main")).to be == true
-    end
-    
     expect(($mystring.include?"Hostname_lib1 ")).to be == true
     expect(($mystring.include?"Hostname_main ")).to be == true
     expect(($mystring.include?"Hostname_lib1 \n")).to be == false
@@ -70,12 +60,7 @@ describe "VarSubst" do
   end
 
   it 'artifactname' do
-
-    Bake.options = Options.new(["-m", "spec/testdata/cache/main", "-b", "test2", "--include_filter", "var"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    tocxx.start()
+    Bake.startBake("cache/main", ["test2", "--include_filter", "var"])
   
     expect(($mystring.include?"ArtifactName_main abc.def")).to be == true
     expect(($mystring.include?"ArtifactNameBase_main abc")).to be == true

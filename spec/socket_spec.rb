@@ -13,25 +13,27 @@ module Bake
 
 describe "Socket Handler" do
   
-  it 'should recv/send to a port on localhost' do
-    ExitHelper.reset_exit_code
-    Bake.options = Options.new(["--socket"])
-    expect { Bake.options.parse_options() }.to raise_error(ExitHelperXXXException)
+  it 'socket option invalid' do
+    expect { Bake.startBake("set_set/A", ["test", "--socket"]) }.to raise_error(SystemExit)
     expect($mystring.include?("Argument for option --socket missing")).to be == true
-
-    ExitHelper.reset_exit_code
-    Bake.options = Options.new(["--socket", "10000"])
-    expect { Bake.options.parse_options }.to raise_error(ExitHelperXXXException)
+  end
     
+  it 'no server socket' do
+    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "test", "--socket", "10000"])
+    Bake.options.parse_options()
     expect(Bake.options.socket).to be == 10000
-    
     tocxx = Bake::ToCxx.new
-    expect { tocxx.connect() }.to raise_error(ExitHelperXXXException)
-
+    expect { tocxx.connect() }.to raise_error(SystemExit)
+  end
+   
+  it 'todo' do
     serverSocket = TCPServer.new('localhost', 10000)
 
+    Bake.options = Options.new(["-m", "spec/testdata/root1/main", "test", "--socket", "10000"])
+    Bake.options.parse_options()
     tocxx = Bake::ToCxx.new
     tocxx.connect()
+    
     clientSocket = serverSocket.accept
     expect(clientSocket.nil?).to be == false
     
@@ -52,8 +54,8 @@ describe "Socket Handler" do
     clientSocket.send("X",0) # triggers abort
     sleep 1.1
     
-    expect(Bake::IDEInterface.instance.get_abort).to be == true
     
+    expect(Bake::IDEInterface.instance.get_abort).to be == true
     tocxx.disconnect()
   end
   

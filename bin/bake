@@ -16,27 +16,13 @@ require 'socket'
 
 module Bake
 
-  def self.isNewer(oldVersion, newVersion)
-    oldSplitted = oldVersion.split(".")
-    newSplitted = newVersion.split(".")
-    if oldSplitted.length >= 3 and newSplitted.length >= 3
-      3.times do |i|
-        return true if newSplitted[i].to_i > oldSplitted[i].to_i
-        return false if newSplitted[i].to_i < oldSplitted[i].to_i
-      end
-    end
-    return false;
-  end
-
   earlyExit = nil
   Bake.options = Options.new(ARGV)
   begin
     Bake.options.parse_options
 
     tocxx = Bake::ToCxx.new
-
     tocxx.connect()
-    
     tocxx.doit()
     tocxx.disconnect()
     
@@ -51,29 +37,6 @@ module Bake
   timeEnd = Time.now
   timeDiff = timeEnd - $timeStart
   Bake.formatter.printInfo "\nTime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60]
-  
-  # update check
-  #begin
-  #  versionWarningString = ""
-  #  require 'net/http'
-  #  vtext = Net::HTTP.get('10.40.38.84', '/bake/versions.txt')
-  #  vtextSplitted = vtext.split(" ")
-  #  if vtextSplitted.length > 0
-  #    if isNewer(Bake::Version.bake, vtextSplitted[0])
-  #      versionWarningString = versionWarningString + "\nNewer version of bake gem available: #{vtextSplitted[0]} - please update!"
-  #    end 
-  #  end
-  #  if vtextSplitted.length > 1
-  #    if isNewer(Bake.options.eclipse_version, vtextSplitted[1])
-  #      versionWarningString = versionWarningString + "\nNewer version of bake Eclipse plugin available: #{vtextSplitted[1]} - please update!"
-  #    end 
-  #  end
-  #  if versionWarningString != ""
-  #    Bake.formatter.printWarning versionWarningString
-  #  end
-  #rescue Exception => e
-  #end  
-
   
   raise earlyExit if earlyExit
 end

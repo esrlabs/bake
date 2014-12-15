@@ -15,10 +15,9 @@ describe "ShowInc" do
 
   it 'RelativePath' do
     Bake.options = Options.new(["-m", "spec/testdata/showinc/main", "-b", "test" , "--show_incs_and_defs"])
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    TODO expect { tocxx.doit() }.to raise_error(ExitHelperXXXException)
-    
+      
+    Bake.startBake("showinc/main", ["test", "--show_incs_and_defs"])
+      
     s = "main\n"+
         " includes\n"+
         "  A/include\n"+

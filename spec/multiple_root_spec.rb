@@ -28,7 +28,7 @@ describe "Multiple root" do
   
   it 'wrong root' do
     expect(File.exists?("spec/testdata/root1/main/test/main.exe")).to be == false
-    Bake.startBake("root1/main", ["test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2/lib3"])
+    expect { Bake.startBake("root1/main", ["test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2/lib3"]) }.to raise_error(SystemExit)
     expect(ExitHelper.exit_code).to be > 0
     expect($mystring.split("lib3 does not exist").length).to be == 2
   end  
@@ -42,7 +42,7 @@ describe "Multiple root" do
  
   it 'invalid root' do
     expect(File.exists?("spec/testdata/root1/main/test/main.exe")).to be == false
-    Bake.startBake("root1/main", ["test", "-w", "spec/testdata/GIBTS_DOCH_GAR_NICHT"])
+    expect { Bake.startBake("root1/main", ["test", "-w", "spec/testdata/GIBTS_DOCH_GAR_NICHT"]) }.to raise_error(SystemExit)
     expect($mystring.split("Error: Directory spec/testdata/GIBTS_DOCH_GAR_NICHT does not exist").length).to be == 2
   end    
 
