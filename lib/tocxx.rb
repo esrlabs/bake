@@ -161,9 +161,6 @@ module Bake
         splitted = Bake.options.project.split(',')
         startProjectName = splitted[0]
         startConfigName = splitted[1] if splitted.length == 2
-      #elsif Bake.options.filename
-      #  startProjectName = Bake.options.main_project_name
-      #  startConfigName = Bake.options.build_config  
       end
 
       if startConfigName

@@ -6,8 +6,14 @@ Project {
     Person "TBD", email: "TBD@TBD.com"
   }
 
-  ExecutableConfig test {
+  ExecutableConfig testMultiFile {
     Files "**/*.cpp"
+    Dependency lib1, config: testMultiFile
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test {
+    Files "**/main.cpp"
     IncludeDir "include"
     IncludeDir "lib1/include"
     Dependency lib1, config: testsub

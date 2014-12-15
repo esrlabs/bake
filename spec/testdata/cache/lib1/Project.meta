@@ -3,9 +3,13 @@ Project {
   Responsible {
     Person "TBD", email: "TBD@TBD.com"
   }
-
-  LibraryConfig testsub {
+  
+  LibraryConfig testMultiFile {
     Files "**/*.cpp"
+  }
+  
+  LibraryConfig testsub {
+    Files "**/lib1.cpp"
     IncludeDir "include"
     PreSteps {
       CommandLine "echo PRELIB1"

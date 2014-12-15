@@ -88,6 +88,46 @@ describe "Building" do
     
     expect(ExitHelper.exit_code).to be == 0
   end  
+  
+  it 'multiple file 1' do
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/x/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
+
+    Bake.startBake("cache/main", ["-b", "testMultiFile", "-f", "src/multi.cpp"])
+
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/multi.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/x/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testMultiFile_main_testMultiFile/src/multi.o")).to be == true
+
+    Bake.startBake("cache/main", ["-b", "testMultiFile", "-f", "src/multi.cpp", "-c"])
+
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/x/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
+              
+    expect(ExitHelper.exit_code).to be == 0
+  end  
+
+  it 'multiple file 2' do
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/x/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
+
+    Bake.startBake("cache/main", ["-b", "testMultiFile", "-f", "multi.cpp"])
+
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/multi.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/x/multi.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/testMultiFile_main_testMultiFile/src/multi.o")).to be == true
+
+    Bake.startBake("cache/main", ["-b", "testMultiFile", "-f", "multi.cpp", "-c"])
+
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/testMultiFile/src/x/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
+              
+    expect(ExitHelper.exit_code).to be == 0
+  end  
 
   it 'clean single lib' do
     Bake.startBake("cache/main", ["-b", "test"])
