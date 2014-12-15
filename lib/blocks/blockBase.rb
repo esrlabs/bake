@@ -30,11 +30,18 @@ module Bake
         end
       end
             
-      def prepareOutputDir(filename)
-        if File.exists?(filename)
-          FileUtils.rm(filename)
-        else 
-          FileUtils.mkdir_p(File.dirname(filename))
+      def prepareOutput(filename)
+        begin
+          if File.exists?(filename)
+            FileUtils.rm(filename)
+          else 
+            FileUtils.mkdir_p(File.dirname(filename))
+          end
+        rescue Exception => e
+          if Bake.options.debug
+            puts e.message
+            puts e.backtrace
+          end
         end        
       end
       

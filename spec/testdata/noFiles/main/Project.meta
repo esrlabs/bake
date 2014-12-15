@@ -1,0 +1,32 @@
+Project {
+
+  LibraryConfig testSub {
+    Files "src/main.cpp"
+  }
+
+  ExecutableConfig testExe {
+    Dependency config: testSub
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig testLib {
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig testFileDoesNotExist {
+    Files "src/DoesNotExist.cpp"
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig testFilePattern1DoesNotExist {
+    Files "src/DoesNotExist*.cpp"
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig testFilePattern2DoesNotExist {
+    Files "src/DoesNotExist?.cpp"
+    DefaultToolchain GCC
+  }
+
+
+}

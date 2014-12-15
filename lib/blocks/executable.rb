@@ -78,7 +78,7 @@ module Bake
           libs, linker_libs_array = LibElements.calc_linker_lib_string(@block, @tcs)
           return unless needed?(libs)
           
-          prepareOutputDir(@exe_name)
+          prepareOutput(@exe_name)
 
           linker = @tcs[:LINKER]
     

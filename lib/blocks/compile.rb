@@ -56,9 +56,6 @@ module Bake
             return true
           end
         end
-
-
-                
         false
       end
       
@@ -81,13 +78,8 @@ module Bake
       end
                 
       def compileFile(source)
-        
-        #if File.is_absolute?(source)
-        #  source = File.rel_from_to_project(@projectDir, source, false)
-        #end
-        
         type = get_source_type(source)
-        return true if type.nil? # todo: info output
+        return true if type.nil?
         
         object = get_object_file(source)
         @objects << object
@@ -112,7 +104,7 @@ module Bake
           raise SystemCommandFailed.new 
         end
                    
-        prepareOutputDir(object)
+        prepareOutput(object)
 
         
         cmd = [compiler[:COMMAND]]
@@ -163,7 +155,6 @@ module Bake
         @deps_in_depFiles ||= Set.new
       end
 
-            
       def mutex
         @mutex ||= Mutex.new
       end
@@ -175,17 +166,13 @@ module Bake
           
           @error_strings = {}
           
-          # TODO: test when no files are added
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|
-            while true do
+            while source = jobs.get_next_or_nil do
               
               if jobs.failed and (Bake.options.stopOnFirstError or Blocks::ABORTED)
                 break
               end
               
-              source = jobs.get_next_or_nil
-              break unless source # TODO: write better while
-        
               s = StringIO.new
               tmp = Thread.current[:stdout]
               Thread.current[:stdout] = s unless tmp
@@ -194,14 +181,12 @@ module Bake
               begin
                 compileFile(source)
                 result = true
-              rescue Bake::ExitHelperException
-                raise ## ?
               rescue Bake::SystemCommandFailed => scf # normal compilation error
-                # delete file?
               rescue SystemExit => exSys
-                ProcessHelper.killProcess # delete file when killing process! ?
+                ProcessHelper.killProcess
+                prepareOutput(get_object_file(source)) # maybe not written completely
               rescue Exception => ex1
-                # delete file?
+                prepareOutput(get_object_file(source)) # maybe not written completely
                 if not Blocks::ABORTED # means no kill from IDE. TODO: test this!
                   Bake.formatter.printError "Error: #{ex1.message}"
                   puts ex1.backtrace if Bake.options.debug
@@ -222,8 +207,6 @@ module Bake
                 end
               end                  
                   
-                # if failed....
-                
             end
           end
           compileJobs.join
@@ -261,7 +244,7 @@ module Bake
         end
       end
       
-      def calcSources(quite = false)
+      def calcSources(cleaning = false)
         @source_files = []
     
         exclude_files = Set.new
@@ -272,8 +255,13 @@ module Bake
         source_files = Set.new
         @src_pattern.each do |p|
           res = Dir.glob(p)
-          if res.length == 0 and Bake.options.verboseHigh and quite == false
-            Bake.formatter.printInfo "Info: Source file pattern '#{p}' did not match to any file"
+          if res.length == 0 and cleaning == false
+            if not p.include?"*" and not p.include?"?"
+              Bake.formatter.printError "Error: Source file '#{p}' not found"
+              raise SystemCommandFailed.new  
+            elsif not Bake.options.verboseLow
+              Bake.formatter.printInfo "Info: Source file pattern '#{p}' does not match to any file"
+            end
           end
           res.each do |f|
             next if exclude_files.include?(f)
@@ -286,7 +274,7 @@ module Bake
             source.include?Bake.options.filename
           end
           if source_files.length == 0 and Bake.options.verboseHigh and quite == false
-            Bake.formatter.printInfo "Info: #{Bake.options.filename} did not match to any source"
+            Bake.formatter.printInfo "Info: #{Bake.options.filename} does not match to any source"
           end
         end
         

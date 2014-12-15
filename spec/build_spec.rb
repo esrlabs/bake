@@ -18,12 +18,8 @@ describe "Building" do
 
     expect(File.exists?("spec/testdata/cache/main/test/main.exe")).to be == true
     
-    STDERR.puts $mystring
-    
     expect($mystring.split("PREMAIN").length).to be == 3
     expect($mystring.split("POSTMAIN").length).to be == 3
-    
-    
     
     expect($mystring.include?("../lib1/testsub_main_test/liblib1.a makefile/dummy.a")).to be == true # makefile lib shall be put to the end of the lib string
   end
@@ -189,6 +185,36 @@ describe "Building" do
     expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == false
   end    
 
+  
+  it 'no src for lib' do
+    Bake.startBake("noFiles/main", ["testLib", "--rebuild"])
+    expect(ExitHelper.exit_code).to be == 0
+  end 
+  
+  it 'no src for exe' do
+    Bake.startBake("noFiles/main", ["testExe", "--rebuild"])
+    expect(ExitHelper.exit_code).to be == 0
+  end
+  
+  it 'no src for pattern*' do
+    Bake.startBake("noFiles/main", ["testFilePattern1DoesNotExist", "--rebuild"])
+    expect(ExitHelper.exit_code).to be == 0
+  end
+  
+  it 'no src for pattern?' do
+    Bake.startBake("noFiles/main", ["testFilePattern2DoesNotExist", "--rebuild"])
+    expect(ExitHelper.exit_code).to be == 0
+  end
+  
+  it 'no src for src' do
+    Bake.startBake("noFiles/main", ["testFileDoesNotExist", "--rebuild"])
+    expect(ExitHelper.exit_code).to be > 0
+    expect($mystring.include?("Compiling")).to be == false
+    expect($mystring.include?("Creating")).to be == false
+  end
+  
+
+   
 end
 
 end

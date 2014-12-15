@@ -36,7 +36,7 @@ module Bake
         Dir.chdir(@projectDir) do
           return unless needed?
           
-          prepareOutputDir(archive_name)
+          prepareOutput(archive_name)
         
           archiver = @tcs[:ARCHIVER]
        
