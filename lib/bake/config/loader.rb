@@ -257,7 +257,7 @@ module Bake
         return true if  Bake.options.exclude_filter.include?globalFilterStr
         return false if Bake.options.include_filter.include?globalFilterStr
       end      
-      
+
       # 3nd prio: default
       return true if step.default == "off"
       false      
@@ -268,6 +268,9 @@ module Bake
         configs.each do |config|
           config.preSteps.step  = config.preSteps.step.delete_if  { |step| filterStep(step, "PRE") }  if config.preSteps
           config.postSteps.step = config.postSteps.step.delete_if { |step| filterStep(step, "POST") } if config.postSteps
+          if Metamodel::CustomConfig === config and config.step
+            config.step = nil if filterStep(config.step, nil)
+          end
         end
       end
     end

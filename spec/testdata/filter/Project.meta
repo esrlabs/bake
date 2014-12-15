@@ -49,6 +49,17 @@ Project {
       CommandLine "echo test post3", default: on, filter: "FILTER2"
       CommandLine "echo test post4", default: on, filter: "FILTER"
     }
+  }
+  
+  CustomConfig FilterMain {
+    DefaultToolchain GCC
+    PreSteps {
+      CommandLine "echo PREFILTER", default: off, filter: "FILTER1"
+    }
+    CommandLine "echo MAINFILTER", default: off, filter: "FILTER1"
+    PostSteps {
+      CommandLine "echo POSTFILTER", default: off, filter: "FILTER2"
+    }
   }  
 
 }

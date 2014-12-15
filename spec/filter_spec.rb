@@ -195,7 +195,28 @@ describe "Filter" do
     expect($mystring.include?("test post3")).to be == false
     expect($mystring.include?("test post4")).to be == true
   end   
-    
+
+  it 'Filter_Main_off' do
+    Bake.startBake("filter", ["FilterMain"])
+    expect($mystring.include?("PREFILTER")).to be == false
+    expect($mystring.include?("MAINFILTER")).to be == false
+    expect($mystring.include?("POSTFILTER")).to be == false
+  end   
+
+  it 'Filter_Main_Filter1' do
+    Bake.startBake("filter", ["FilterMain", "--include_filter", "FILTER1"])
+    expect($mystring.include?("PREFILTER")).to be == true
+    expect($mystring.include?("MAINFILTER")).to be == true
+    expect($mystring.include?("POSTFILTER")).to be == false
+  end   
+      
+  it 'Filter_Main_Filter1_Filter2' do
+    Bake.startBake("filter", ["FilterMain", "--include_filter", "FILTER1", "--include_filter", "FILTER2"])
+    expect($mystring.include?("PREFILTER")).to be == true
+    expect($mystring.include?("MAINFILTER")).to be == true
+    expect($mystring.include?("POSTFILTER")).to be == true
+  end
+     
 end
 
 end
