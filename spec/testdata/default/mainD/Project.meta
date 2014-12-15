@@ -1,0 +1,18 @@
+Project default: test2 {
+
+  LibraryConfig test1 {
+    Dependency libNoD
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test2 {
+    Dependency libD
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test3 {
+    Dependency
+    DefaultToolchain GCC
+  }
+
+}

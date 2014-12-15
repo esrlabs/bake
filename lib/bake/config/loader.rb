@@ -13,6 +13,20 @@ module Bake
     end
     
     def getFullProject(configs, configname)
+      if configs.length == 0
+        Bake.formatter.printError "Error: No valid config found"
+        ExitHelper.exit(1)
+      end
+      
+      if (configname == "")
+        if configs[0].parent.default != ""
+          configname = configs[0].parent.default
+        else
+          Bake.formatter.printError "Error: No default config specified in '#{configs[0].file_name}'"
+          ExitHelper.exit(1)
+        end
+      end
+      
       config = nil
       configs.each do |c|
         if c.name == configname
@@ -30,11 +44,11 @@ module Bake
       end
       
       if config.extends != ""
-        parent = getFullProject(configs, config.extends)
+        parent,parentConfigName = getFullProject(configs, config.extends)
         MergeConfig.new(config, parent).merge()
       end
       
-      config
+      [config, configname]
     end
 
     def symlinkCheck(filename)
@@ -94,22 +108,6 @@ module Bake
           end
         end
       end
-        
-        
-        ####config = getFullProject(x,configname,filename)
-        
-        #x.each do |y|
-        #  if y != config
-        #    e.removeGeneric("Config", y)
-        #  end
-        #end
-      #end
-      #f.mark_changed
-      #f.build_index
-      
-
-
-      
       configs
     end
     
@@ -155,7 +153,7 @@ module Bake
       end
       
       # get config
-      config = getFullProject(@loadedConfigs[dep.name],dep.config)
+      config, dep.config = getFullProject(@loadedConfigs[dep.name],dep.config)
       
       # config not referenced yet
       if not @referencedConfigs.include?dep.name
@@ -168,29 +166,6 @@ module Bake
       
       validateDependencies(config)
       @depsPending += config.dependency
-
-      
-      
-            
-#      # todo: allowed different configs
-#      if @project2config.include?dep.name
-#        if @project2config[dep.name].name != dep.config
-#          # todo: better error desc
-#          Bake.formatter.printError "Error: Different dependencies found to '#{dep.name}'"
-#          ExitHelper.exit(1)
-#        end
-#        return
-#      end
-      
-      # check if file is in more than one root
-
-
-      
-
-      
-#      @project2config[dep.name] = config
-      
-
     end
     
     def loadMainMeta()
@@ -206,7 +181,7 @@ module Bake
       @loadedConfigs = {}
       @loadedConfigs[Bake.options.main_project_name] = configs
       
-      config = getFullProject(configs,Bake.options.build_config)
+      config, Bake.options.build_config = getFullProject(configs,Bake.options.build_config)
       @referencedConfigs = {}
       @referencedConfigs[Bake.options.main_project_name] = [config]
         
@@ -288,6 +263,8 @@ module Bake
           loadMeta(dep)
         end
 
+
+        
         if (cache.defaultToolchain)
           if @defaultToolchain[:LINKER][:FLAGS]                   == cache.defaultToolchain[:LINKER][:FLAGS] and
             @defaultToolchain[:LINKER][:LIB_PREFIX_FLAGS]         == cache.defaultToolchain[:LINKER][:LIB_PREFIX_FLAGS] and

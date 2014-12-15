@@ -15,19 +15,21 @@ module Bake
   end
     
   class Options < Parser
-    attr_reader :build_config, :main_dir, :project, :filename, :eclipse_version, :main_project_name # String
+    attr_accessor :build_config
+    attr_reader :main_dir, :project, :filename, :eclipse_version, :main_project_name # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
     attr_reader :stopOnFirstError, :clean, :rebuild, :nocache, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verboseLow
     attr_reader :verboseHigh
-    attr_reader :consoleOutput_fullnames, :consoleOutput_visualStudio 
+    attr_reader :consoleOutput_fullnames, :consoleOutput_visualStudio
     
 
     def initialize(argv)
       super(argv)
 
+      @showConfigs = false
       @consoleOutput_fullnames = false
       @consoleOutput_visualStudio = false           
       @prepro = false
@@ -102,6 +104,8 @@ module Bake
       add_option(Option.new("--eclipse_version",true)      { |x| @eclipse_version = x     })
       add_option(Option.new("--show_license",false)        {     License.show              })
       add_option(Option.new("--version",false)             {     ExitHelper.exit(0)         })
+      add_option(Option.new("--show_configNames",false)    {     @showConfigs = true    })
+      
 
     end
 
@@ -158,10 +162,7 @@ module Bake
         ExitHelper.exit(1)
       end
       
-      if @build_config == "" 
-        ConfigNames.show
-      end            
-            
+      ConfigNames.show if @showConfigs
     end
     
     def check_valid_dir(dir)

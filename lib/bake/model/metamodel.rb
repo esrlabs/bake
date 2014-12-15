@@ -104,7 +104,7 @@ module Bake
       class Description < ModelElement
         has_attr 'text', String, :defaultValueLiteral => ""
       end
-
+      
       class Responsible < ModelElement
         contains_many "person", Person, 'parent'
       end
@@ -227,6 +227,7 @@ module Bake
       end
 
       class Project < ModelElement
+        has_attr 'default', String, :defaultValueLiteral => ""
         contains_one 'description', Description, 'parent'
         contains_one 'responsible', Responsible, 'parent'
         contains_many 'config', BaseConfig_INTERNAL, 'parent'

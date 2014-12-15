@@ -16,6 +16,7 @@ module Bake
     attr_accessor :defaultToolchain
     attr_accessor :defaultToolchainTime
     attr_accessor :no_autodir
+    attr_accessor :build_config
   end
   
   class CacheAccess
@@ -24,7 +25,9 @@ module Bake
       attr_reader :cacheFilename
   
       def initialize()
-        @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta."+sanitize_filename(Bake.options.build_config)+".cache"
+        sani = sanitize_filename(Bake.options.build_config)
+        sani = "__D-FAULT__" if sani.length == 0
+        @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta." + sani + ".cache"
         
         #TODO CLOBBER.include(Bake.options.main_dir+"/.bake")
           
@@ -119,23 +122,18 @@ module Bake
           else
             Bake.formatter.printInfo("Info: cache not found, reloading meta information")
           end
-        rescue
-          Bake.formatter.printWarning "Warning: cache file corrupt, reloading meta information"
+        rescue Exception
+          Bake.formatter.printWarning "Warning: cache file corrupt, reloading meta information (cache might be written by an older bake version)"
           cache = nil
         end      
         
         if cache != nil
           Bake.formatter.printInfo "Info: cache is up-to-date, loading cached meta information" if Bake.options.verboseHigh
-          
-          cache.files.each do |c|
-            #TODO CLOBBER.include(File.dirname(c)+"/.bake") # really?
-          end          
-          
+          Bake.options.build_config = cache.build_config if Bake.options.build_config == ""
           return cache.referencedConfigs
-        else
-          return nil
         end
-        
+
+        return nil
       end
       
       def write_cache(project_files, referencedConfigs, defaultToolchain, defaultToolchainTime)
@@ -150,17 +148,14 @@ module Bake
         cache.workspace_roots = Bake.options.roots
         cache.defaultToolchain = defaultToolchain
         cache.defaultToolchainTime = defaultToolchainTime
+        cache.build_config = Bake.options.build_config
         bbdump = Marshal.dump(cache)
         begin
           File.delete(@cacheFilename)
         rescue
         end
+        puts @cacheFilename
         File.open(@cacheFilename, 'wb') {|file| file.write(bbdump) }
-          
-        #project_files.each do |f|
-        #  CLOBBER.include(File.dirname(f)+"/.bake")
-        #end
-
       end
       
   end

@@ -1,0 +1,15 @@
+Project default: testL1B {
+
+  LibraryConfig testL1A {
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig testL1B {
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig testL1C {
+    DefaultToolchain GCC
+  }
+
+}

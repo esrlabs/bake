@@ -46,7 +46,7 @@ describe "Option Parser" do
 
   it 'should provide a flag to specify number of compile threads' do
     Bake.options = Options.new([])
-    expect { Bake.options.parse_options() }.to raise_error(SystemExit)
+    Bake.options.parse_options()
     expect(Bake.options.threads).to be == 8 # default
     
     Bake.options = Options.new(["--threads"])
@@ -57,11 +57,26 @@ describe "Option Parser" do
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     
     Bake.options = Options.new(["--threads", "2"])
-    expect { Bake.options.parse_options() }.to raise_error(SystemExit)
+    Bake.options.parse_options()
     expect(Bake.options.threads).to be == 2
   end
 
- 
+  it 'should provide a config names with default' do
+    Bake.options = Options.new(["--show_configNames", "-m", "spec/testdata/default/libD"])
+    expect { Bake.options.parse_options() }.to raise_error(SystemExit)
+    expect($mystring.include?("* testL1A")).to be == true
+    expect($mystring.include?("* testL1B (default)")).to be == true
+    expect($mystring.include?("* testL1C")).to be == true
+  end
+
+  it 'should provide a config names' do
+    Bake.options = Options.new(["--show_configNames", "-m", "spec/testdata/default/libNoD"])
+    expect { Bake.options.parse_options() }.to raise_error(SystemExit)
+    expect($mystring.include?("* testL2A")).to be == true
+    expect($mystring.include?("* testL2B")).to be == true
+    expect($mystring.include?("* testL2C")).to be == true
+  end
+   
 end
 
 end
