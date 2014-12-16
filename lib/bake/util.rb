@@ -123,11 +123,13 @@ def calc_def_roots(dir)
   rootsFile = searchRootsFile(dir)
   if (rootsFile)
     File.open(rootsFile).each do |line|
-      line.gsub!(/[\\]/,'/')
-      if File.is_absolute?(line)
-        def_roots << line
-      else
-        def_roots << File.dirname(rootsFile) + "/" + line
+      line = line.split("#")[0].strip.gsub(/[\\]/,'/')
+      if line != ""
+        if File.is_absolute?(line)
+          def_roots << line
+        else
+          def_roots << File.dirname(rootsFile) + "/" + line
+        end
       end
     end
   else
