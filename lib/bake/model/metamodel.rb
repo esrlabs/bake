@@ -15,13 +15,13 @@ module Bake
         annotation :details => {'internal' => 'true'}
       end
       module ClassModule
-      	attr_accessor :fragment_ref
-      	
-      	def id
+         attr_accessor :fragment_ref
+         
+         def id
           splitted = file_name.split("/")
           splitted[splitted.length-2]
-        end      	
-      	
+        end         
+         
       end
     end
 
@@ -190,10 +190,10 @@ module Bake
         contains_many 'set', Set, 'parent'
         
         module ClassModule
-      	  def ident
-      	    s = file_name.split("/")
+           def ident
+             s = file_name.split("/")
             s[s.length-2] + "/" + name
-          end      	
+          end         
         end
         
       end
@@ -205,10 +205,10 @@ module Bake
         contains_one 'toolchain', Toolchain, 'parent'
         
         module ClassModule
-      	  def ident
-      	    s = file_name.split("/")
+           def ident
+             s = file_name.split("/")
             s[s.length-2] + "/" + name
-          end      	
+          end         
         end
         
       end      
@@ -233,11 +233,11 @@ module Bake
         contains_many 'config', BaseConfig_INTERNAL, 'parent'
         
         module ClassModule
-      	  def name
+           def name
             splitted = file_name.split("/")
             x = splitted[splitted.length-2]
             x
-          end      	
+          end         
         end
                 
       end
