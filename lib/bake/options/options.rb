@@ -2,6 +2,7 @@ require 'bake/toolchain/colorizing_formatter'
 require 'common/options/parser'
 require 'bake/options/showToolchains'
 require 'bake/options/showConfigNames'
+require 'bake/options/showLicense'
 require 'bake/options/usage'
 require 'common/options/option'
 

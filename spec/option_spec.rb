@@ -77,6 +77,14 @@ describe "Option Parser" do
     expect($mystring.include?("* testL2C")).to be == true
   end
    
+  it 'should provide a config names' do
+    Bake.options = Options.new(["--show_license"])
+    expect { Bake.options.parse_options() }.to raise_error(SystemExit)
+    expect($mystring.include?("E.S.R.")).to be == true
+    expect($mystring.include?("lake")).to be == true
+    expect($mystring.include?("cxxproject")).to be == true
+  end
+  
 end
 
 end
