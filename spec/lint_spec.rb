@@ -21,6 +21,11 @@ describe "Lint" do
     expect($mystring.split("Module:").length).to be == 4
   end
   
+  it 'lint proj diab' do
+    Bake.startBake("stop/main", ["testDiabLint", "--lint", "-p", "main"])
+    expect($mystring.split("Module:").length).to be == 4
+  end
+  
   it 'lint all files' do
     Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "-f", "a"])
     expect($mystring.split("Module:").length).to be == 4

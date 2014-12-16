@@ -204,12 +204,12 @@ module Bake
       
       begin      
         @loadedConfig = Config.new
-        @loadedConfig.load # Dependency must be substed
+        @loadedConfig.load # todo: Dependency must be substed
         
         @mainConfig = @loadedConfig.referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
   
-        if Bake.options.lint # todo: no GCC_Lint
-          @defaultToolchain = Utils.deep_copy(Bake::Toolchain::Provider["GCC_Lint"])
+        if Bake.options.lint
+          @defaultToolchain = Utils.deep_copy(Bake::Toolchain::Provider["Lint"])
           integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
         else
           @defaultToolchain = @loadedConfig.defaultToolchain

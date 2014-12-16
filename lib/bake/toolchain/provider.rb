@@ -122,7 +122,7 @@ module Bake
       end
 
       def self.list
-        return @@settings.delete_if {|x| x.include?"_Lint" }
+        return @@settings.delete_if {|x| x.include?"Lint" }
       end
 
     end
@@ -132,7 +132,7 @@ end
 
 require 'bake/toolchain/diab'
 require 'bake/toolchain/gcc'
-require 'bake/toolchain/gcc_lint'
+require 'bake/toolchain/lint'
 require 'bake/toolchain/clang'
 require 'bake/toolchain/ti'
 require 'bake/toolchain/greenhills'

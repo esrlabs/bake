@@ -18,7 +18,7 @@ module Bake
       @error = false
       @roots = []
       @socket = 0
-      @def_root = []
+      @def_roots = []
             
       add_option(Option.new("-b",true)        { |x| set_collection_name(x)     })
       add_option(Option.new("-m",true)        { |x| set_collection_dir(x)     })
@@ -31,23 +31,22 @@ module Bake
     
     def usage
       puts "\nUsage: bake <name> [options]"
-      puts " -b <name>         Name of the collection to build."
-      puts " -m <dir>          Directory containing the collection file (default is current directory)."
-      puts " -r                Stop on first error."
-      puts " -a <scheme>       Use ansi color sequences (console must support it). Possible values are 'white' and 'black'."
-      puts " -h                Print this help."
-      puts " -w <root>         Add a workspace root (can be used multiple times)."
-      puts "                   If no root is specified, the parent directory of Collection.meta is added automatically."
-      puts " --socket <num>    Set socket for sending errors, receiving commands, etc. - used by e.g. Eclipse."
-      puts "Note: all parameters except -b, -p and -h will be passed to bake - see bake help for more options." 
+      puts " -b <name>       Name of the collection to build."
+      puts " -m <dir>        Directory containing the collection file (default is current directory)."
+      puts " -r              Stop on first error."
+      puts " -a <scheme>     Use ansi color sequences (console must support it). Possible values are 'white' and 'black'."
+      puts " -h              Print this help."
+      puts " -w <root>       Add a workspace root (can be used multiple times)."
+      puts "                 If no root is specified, the parent directory of Collection.meta is added automatically."
+      puts " --socket <num>  Set socket for sending errors, receiving commands, etc. - used by e.g. Eclipse."
+      puts "Note: all parameters except -b, -m and -h will be passed to bake - see bake help for more options." 
     end
   
     def parse_options()
       parse_internal(true)
       set_collection_dir(Dir.pwd) if @collection_dir.nil?
       if @roots.length == 0
-        @roots = @def_root 
-        @roots << @collection_dir unless @def_root.include?@collection_dir
+        @roots = @def_roots 
       end
     end
     
@@ -60,7 +59,7 @@ module Bake
         Bake.formatter.printError "Error: #{dir} is not a directory"
         ExitHelper.exit(1)
       end      
-    end    
+    end
     
     def set_collection_name(collection_name)
       if not @collection_name.empty?

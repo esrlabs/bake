@@ -58,7 +58,15 @@ describe "bake" do
     expect(str.include?("1 of 1 builds failed")).to be == true
   end
 
-  it 'collection ref' do
+  it 'collection ref without -b' do
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r`
+    expect(str.include?("3 of 3 builds ok")).to be == true
+    expect(str.include?("root1/lib1 -b test")).to be == true
+    expect(str.include?("root2/lib2 -b test")).to be == true
+    expect(str.include?("root1/main -b test")).to be == true
+  end    
+  
+  it 'collection ref with -b' do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r`
     expect(str.include?("3 of 3 builds ok")).to be == true
     expect(str.include?("root1/lib1 -b test")).to be == true
@@ -76,6 +84,16 @@ describe "bake" do
     expect(str.include?("Collection Wrong not found")).to be == true
   end    
 
+  it 'collection option ok' do
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r --show_configs`
+    expect(str.include?("3 of 3 builds ok")).to be == true
+  end  
+  
+  it 'collection option not ok' do
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 --lint_min`
+    expect(str.include?("3 of 3 builds failed")).to be == true
+  end  
+   
 end
 
 end

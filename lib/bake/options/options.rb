@@ -17,7 +17,7 @@ module Bake
     
   class Options < Parser
     attr_accessor :build_config
-    attr_reader :main_dir, :project, :filename, :eclipse_version, :main_project_name # String
+    attr_reader :main_dir, :project, :filename, :main_project_name # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
     attr_reader :stopOnFirstError, :clean, :rebuild, :nocache, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
@@ -60,7 +60,6 @@ module Bake
       @include_filter = []
       @exclude_filter = []
       @def_roots = []
-      @eclipse_version = ""
       @main_project_name = ""
       
       add_default(Proc.new{ |x| set_build_config_default(x) })
@@ -102,7 +101,6 @@ module Bake
       add_option(Option.new("--help",false)                {     Bake::Usage.show                 })
       add_option(Option.new("--show_include_paths",false)  {     @show_includes = true      })
       add_option(Option.new("--show_incs_and_defs",false)  {     @show_includes_and_defines = true  })
-      add_option(Option.new("--eclipse_version",true)      { |x| @eclipse_version = x     })
       add_option(Option.new("--show_license",false)        {     License.show              })
       add_option(Option.new("--version",false)             {     ExitHelper.exit(0)         })
       add_option(Option.new("--show_configs",false)        {     @showConfigs = true    })

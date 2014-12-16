@@ -1,7 +1,7 @@
 require 'bake/toolchain/errorparser/error_parser'
 
 module Bake
-  class GCCLintErrorParser < ErrorParser
+  class LintErrorParser < ErrorParser
 
     def initialize()
       @error_expression = /([^:]*):([0-9]+): ([A-Za-z]+)(.+)/

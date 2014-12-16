@@ -30,6 +30,8 @@ module Bake
   begin
     loader = BakeryLoader.new 
     env = loader.load(@options.collection_dir+"/Collection.meta")
+  rescue SystemExit => e
+    raise e
   rescue Exception => e
     puts e
     puts e.backtrace
@@ -38,7 +40,7 @@ module Bake
 
   
   if @options.collection_name.empty? 
-    puts "Please specify a collection name (with -b). Possible values are:"      
+    puts "Please specify a collection name. Possible values are:"      
     env.find(:class => BakeryModel::Collection).each { |e|
       puts "* " + e.name
     }
@@ -69,14 +71,23 @@ module Bake
   
   passedParams = []
   excludeParam = false
+  wasMinus = false
   ARGV.each do |x|
-    if (x=="-b" or x=="-m" or x=="-p" or x=="-e" or x=="--socket")
+    if (x=="-b" or x=="-m" or x=="--socket")
       excludeParam = true
       next
     end
     if excludeParam
       excludeParam = false
       next
+    end
+    if x.length > 0
+      if x[0] == "-"
+        wasMinus = true
+      else
+        next if not wasMinus
+        wasMinus = false
+      end
     end
     passedParams << x
   end  
@@ -94,9 +105,10 @@ module Bake
     p = File.dirname(bp.proj)
     cmd = (["-m", p, "-b", bp.conf] + passedParams)
     cmdWithNum = "* bakery #{currentRun} of #{maxRuns}: bake " + cmd.join(" ") + " *"
-    print "\n"; cmdWithNum.length.times { print "*" }; print "\n";
+    puts "\n************************************************";
     Bake.formatter.printInfo cmdWithNum
-    cmdWithNum.length.times { print "*" }; print "\n";
+    puts "************************************************";
+   
     
     runOk = false
     begin
@@ -104,9 +116,11 @@ module Bake
       Bake.options.parse_options
       tocxx = ToCxx.new
       tocxx.doit()
-      runOk = ExitHelper.exit_code == 0
+      runOk = (ExitHelper.exit_code == 0)
+    rescue SystemExit
+      runOk = (ExitHelper.exit_code == 0)
     rescue Exception => e
-      puts e.message if not e.class === SystemExit 
+      puts e.message
     end
     
     Bake::cleanup
