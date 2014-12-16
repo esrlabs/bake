@@ -14,7 +14,7 @@ module Bake
       puts " -r                       Stop on first error."
       puts " -w <root>                Add a workspace root (can be used multiple times)."
       puts "                          If no root is specified, the parent directory of the main project is added automatically."
-      puts " --show_configNames       Shows all configs with DefaultToolchain."
+      puts " --show_configs           Shows all configs with DefaultToolchain."
       puts " --rebuild                Clean before build."
       puts " --clobber                Clean the file/project (same as option -c) AND the bake cache files."
       puts " --prepro                 Stop after preprocessor."

@@ -62,7 +62,7 @@ describe "Option Parser" do
   end
 
   it 'should provide a config names with default' do
-    Bake.options = Options.new(["--show_configNames", "-m", "spec/testdata/default/libD"])
+    Bake.options = Options.new(["--show_configs", "-m", "spec/testdata/default/libD"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("* testL1A")).to be == true
     expect($mystring.include?("* testL1B (default)")).to be == true
@@ -70,7 +70,7 @@ describe "Option Parser" do
   end
 
   it 'should provide a config names' do
-    Bake.options = Options.new(["--show_configNames", "-m", "spec/testdata/default/libNoD"])
+    Bake.options = Options.new(["--show_configs", "-m", "spec/testdata/default/libNoD"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("* testL2A")).to be == true
     expect($mystring.include?("* testL2B")).to be == true

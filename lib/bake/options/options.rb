@@ -104,7 +104,7 @@ module Bake
       add_option(Option.new("--eclipse_version",true)      { |x| @eclipse_version = x     })
       add_option(Option.new("--show_license",false)        {     License.show              })
       add_option(Option.new("--version",false)             {     ExitHelper.exit(0)         })
-      add_option(Option.new("--show_configNames",false)    {     @showConfigs = true    })
+      add_option(Option.new("--show_configs",false)        {     @showConfigs = true    })
       
 
     end
@@ -149,16 +149,6 @@ module Bake
             
       if @lint and not @project
         Bake.formatter.printError "Error: --lint must be used together with -p and optional with -f" 
-        ExitHelper.exit(1)
-      end
-
-      if @lint and @clean
-        Bake.formatter.printError "Error: --lint and -c not allowed (yet)" 
-        ExitHelper.exit(1)
-      end
-      
-      if @lint_max >= 0 and @lint_min >= 0 and @lint_max < @lint_min
-        Bake.formatter.printError "Error: lint_max must be greater than lint_min" 
         ExitHelper.exit(1)
       end
       

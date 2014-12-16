@@ -3,6 +3,7 @@ Project {
   LibraryConfig testLib1 {
     IncludeDir "incMainC"
     IncludeDir "incMainD"
+    Files "src/nix.cpp"
     Toolchain {
       Compiler C {
         Define "D5"
