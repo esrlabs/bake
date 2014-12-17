@@ -1,0 +1,9 @@
+Project {
+  ExecutableConfig test {
+    Files "**/*.cpp"
+    Dependency exe1, config: test
+    Dependency exe2, config: test
+    Dependency exe3, config: test
+    DefaultToolchain GCC
+  }
+}

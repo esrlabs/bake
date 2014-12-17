@@ -19,7 +19,7 @@ module Bake
         end
           
         if (cmd_result == false and (not ignoreStr or not output.include?ignoreStr))
-          if Bake::IDEInterface.instance # todo
+          if Bake::IDEInterface.instance
             err_res = ErrorDesc.new
             err_res.file_name = @config.file_name.to_s
             err_res.line_number = @config.line_number

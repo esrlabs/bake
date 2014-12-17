@@ -1,0 +1,6 @@
+Project {
+  ExecutableConfig test {
+    Files "**/*.cpp"
+    Dependency lib1, config: test
+  }
+}

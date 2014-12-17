@@ -213,6 +213,19 @@ describe "Building" do
     expect($mystring.include?("Creating")).to be == false
   end
   
+  it 'three exes' do
+    Bake.startBake("threeExe/main", ["test", "-v2"])
+    expect(ExitHelper.exit_code).to be == 0
+
+    exe1 = "g++ -o test_main_test/exe1.exe test_main_test/src/main.o ../lib1/test_main_test/liblib1.a"     
+    exe2 = "g++ -o test_main_test/exe2.exe test_main_test/src/main.o ../lib2/test_main_test/liblib2.a"     
+    exe3 = "g++ -o test_main_test/exe3.exe test_main_test/src/main.o ../lib2/test_main_test/liblib2.a ../lib3/test_main_test/liblib3.a"     
+    main = "g++ -o test/main.exe test/src/main.o ../lib1/test_main_test/liblib1.a ../lib2/test_main_test/liblib2.a ../lib3/test_main_test/liblib3.a"     
+    expect($mystring.include?(exe1)).to be == true
+    expect($mystring.include?(exe2)).to be == true
+    expect($mystring.include?(exe3)).to be == true
+    expect($mystring.include?(main)).to be == true
+  end
 
    
 end
