@@ -89,7 +89,7 @@ module Bake
                 descCounter = 0
                 console_output.each_line do |l|
                   d = error_descs[descCounter]
-                  console_output_VS << error_parser.makeVsError(l, d) << "\n"
+                  console_output_VS << error_parser.makeVsError(l.rstrip, d) << "\n"
                   descCounter = descCounter + 1
                 end
                 console_output = console_output_VS

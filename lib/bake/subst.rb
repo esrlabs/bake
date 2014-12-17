@@ -40,17 +40,11 @@ module Bake
         else
           cmd_result = false
           begin
-            rd, wr = IO.pipe
-            cmd = [substString(s.cmd)]
-            cmd << {
-             :err=>wr,
-             :out=>wr
-            }
-            consoleOutput = ""
             Dir.chdir(@@projDir) do
-              cmd_result, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
+              cmd = [substString(s.cmd)]
+              cmd_result, consoleOutput = ProcessHelper.run(cmd)
+              @@userVarMap[s.name] = consoleOutput.chomp
             end
-          @@userVarMap[s.name] = consoleOutput.chomp
           rescue
           end
           if (cmd_result == false)

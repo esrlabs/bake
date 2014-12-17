@@ -25,19 +25,18 @@ module Bake
       fcm = RGen::Util::FileCacheMap.new(".bake", ".cache")
       fcm.version_info = Version.number
       @DumpFileCache = RGen::Fragment::DumpFileCache.new(fcm)
+      @model = RGen::Fragment::FragmentedModel.new(:env => @env)
+    end
+    
+    def load(filename)
+      sumErrors = 0
+
       if Bake.options.nocache
         def @DumpFileCache.load(fragment)
           :invalid
         end
       end
-      
-      @model = RGen::Fragment::FragmentedModel.new(:env => @env)
-    end
-    
-    def load(filename)
-    
-      sumErrors = 0
-      
+            
       if not File.exists?filename
         Bake.formatter.printError "Error: #{filename} does not exist"
         ExitHelper.exit(1) 

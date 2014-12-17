@@ -107,7 +107,7 @@ module Bake
         prepareOutput(object)
 
         
-        cmd = [compiler[:COMMAND]]
+        cmd = Utils.flagSplit(compiler[:COMMAND], false)
         cmd += compiler[:COMPILE_FLAGS].split(" ")
           
         if dep_filename
@@ -121,19 +121,15 @@ module Bake
           end
         end
              
-             
+
         cmd += compiler[:PREPRO_FLAGS].split(" ") if Bake.options.prepro
         cmd += flags
         cmd += includes
         cmd += defines
         cmd += (compiler[:OBJECT_FILE_FLAG] + object).split(" ")
         cmd << source
-   
-        rd, wr = IO.pipe
-        cmd << { :err=>wr, :out=>wr }
-        success, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
-        cmd.pop
-   
+
+        success, consoleOutput = ProcessHelper.run(cmd, false, false)
         outputType = Bake.options.prepro ? "Preprocessing" : "Compiling"
         process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", success)
    
@@ -169,7 +165,7 @@ module Bake
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|
             while source = jobs.get_next_or_nil do
               
-              if jobs.failed and (Bake.options.stopOnFirstError or Blocks::ABORTED)
+              if (jobs.failed and Bake.options.stopOnFirstError) or Bake::IDEInterface.instance.get_abort
                 break
               end
               
@@ -183,11 +179,8 @@ module Bake
                 result = true
               rescue Bake::SystemCommandFailed => scf # normal compilation error
               rescue SystemExit => exSys
-                ProcessHelper.killProcess
-                prepareOutput(get_object_file(source)) # maybe not written completely
               rescue Exception => ex1
-                prepareOutput(get_object_file(source)) # maybe not written completely
-                if not Blocks::ABORTED # means no kill from IDE. TODO: test this!
+                if not Bake::IDEInterface.instance.get_abort # means no kill from IDE. TODO: test this!
                   Bake.formatter.printError "Error: #{ex1.message}"
                   puts ex1.backtrace if Bake.options.debug
                 end

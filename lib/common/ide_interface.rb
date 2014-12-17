@@ -187,7 +187,7 @@ module Bake
 
     def set_abort(value)
       @abort = value
-      ProcessHelper.killProcess if @abort
+      ProcessHelper.killProcess(false) if @abort
     end
 
   end

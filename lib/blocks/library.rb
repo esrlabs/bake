@@ -40,18 +40,13 @@ module Bake
         
           archiver = @tcs[:ARCHIVER]
        
-          cmd = [archiver[:COMMAND]] # ar
+          cmd = Utils.flagSplit(archiver[:COMMAND], false) # ar
           cmd += Bake::Utils::flagSplit(archiver[:FLAGS],true) # --all_load
           cmd += archiver[:ARCHIVE_FLAGS].split(" ")
           cmd << archive_name
           cmd += @compileBlock.objects
           
-          # todo: always these lines? could be made dry  
-          rd, wr = IO.pipe
-          cmd << { :err=>wr, :out=>wr }
-          success, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
-          cmd.pop
-         
+          success, consoleOutput = ProcessHelper.run(cmd, false, false)
           process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{archive_name}", success)
          
           check_config_file()

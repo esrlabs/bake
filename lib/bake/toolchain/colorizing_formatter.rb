@@ -78,7 +78,8 @@ module Bake
             end
           end
         rescue Exception => e
-          puts "Error while parsing compiler output: #{e}"
+          puts "Error while parsing output: #{e}"
+          puts e.backtrace if Bake.options.debug
           puts compiler_output
         end
       end

@@ -10,17 +10,11 @@ module Bake
         cmd_result = false
         begin
           Dir.chdir(@projectDir) do
-            rd, wr = IO.pipe
-            cmd = [commandLine]
-            cmd << { :err=>wr, :out=>wr }
-            cmd_result, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
-            puts consoleOutput
-            
-          # bei makefile.... - must be tested!
-            #cmd_result = ProcessHelper.spawnProcess(commandLine + " 2>&1")
+            cmd_result, output = ProcessHelper.run([commandLine], true)
           end
-  
-        rescue
+        rescue Exception=>e
+          puts e.message
+          puts e.backtrace if Bake.options.debug
         end
           
         if (cmd_result == false)

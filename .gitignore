@@ -11,5 +11,6 @@ test2/
 test3/
 test*_*_*/
 Debug*/
+dummy_main*/
 *.exe
 **/obj/*

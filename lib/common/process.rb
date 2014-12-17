@@ -2,63 +2,59 @@ module Bake
 
   class ProcessHelper
     @@pid = nil
+    @@rd = nil
 
-    def self.readOutput(sp, rd, wr)
-      @@pid = sp
+    def self.run(cmdLineArray, immediateOutput=false, force=true, outpipe=nil)
+      rd, wr = IO.pipe
+      @@rd = rd if force
+      cmdLineArray << { :err=>wr, :out=>(outpipe ? outpipe : wr) }
+      pid = spawn(*cmdLineArray)
+      @@pid = pid if force
       wr.close
-        
-      consoleOutput = ""
+      output = ""
       begin
-        while not rd.eof? 
-           tmp = rd.read(1000)
-           if (tmp != nil)
-             consoleOutput << tmp
-           end  
+        while not rd.eof?
+          tmp = rd.read(1)
+          if (tmp != nil)
+            tmp.encode!('UTF-8',  :invalid => :replace, :undef => :replace, :replace => '')
+            tmp.encode!('binary', :invalid => :replace, :undef => :replace, :replace => '')
+            output << tmp
+            
+            print tmp if immediateOutput
+          end
         end
-      rescue Exception=>e
+      rescue
         # Seems to be a bug in ruby: sometimes there is a bad file descriptor on Windows instead of eof, which causes
         # an exception on read(). However, this happens not before everything is read, so there is no practical difference
         # how to "break" the loop.
         # This problem occurs on Windows command shell and Cygwin.
       end
-        
-      Process.wait(sp)
-      @@pid = nil
-      rd.close
       
-      consoleOutput.encode!('UTF-8',  :invalid => :replace, :undef => :replace, :replace => '')
-      consoleOutput.encode!('binary', :invalid => :replace, :undef => :replace, :replace => '')
-      
-      consoleOutput
-    end
-
-    def self.spawnProcess(cmdLine)
-      @@pid = spawn(cmdLine)
-      pid, status = Process.wait2(@@pid)
+      begin
+        rd.close
+      rescue
+      end 
+      pid, status = Process.wait2(pid)
       @@pid = nil
-      status.success? 
+      @@rd = nil
+      cmdLineArray.pop
+      return [false, output] if status.nil?
+      [status.success?, output]
     end
-
-    def self.killProcess
+       
+    def self.killProcess(force) # do not kill compile processes or implement rd and pid array if really needed
+      begin
+        @@rd.close
+      rescue Exception => e
+      end
       begin
         Process.kill("KILL",@@pid)
-      rescue
+      rescue Exception => e
       end
+      @@rd = nil
       @@pid = nil
     end
     
-    def self.safeExecute
-      begin
-        consoleOutput = yield
-        [($?.to_i >> 8) == 0, consoleOutput, false]
-      rescue Exception => e
-        if Bake.options.debug
-          puts e.message
-          puts e.backtrace
-        end
-        [false, "Error: internal error with safeExecute()", true]
-      end
-    end
   end
 
 end

@@ -82,7 +82,7 @@ module Bake
 
           linker = @tcs[:LINKER]
     
-          cmd = [linker[:COMMAND]] # g++
+          cmd = Utils.flagSplit(linker[:COMMAND], false) # g++
           cmd += linker[:MUST_FLAGS].split(" ")
           cmd += Bake::Utils::flagSplit(linker[:FLAGS],true)
           cmd << linker[:EXE_FLAG]
@@ -100,18 +100,14 @@ module Bake
     
           mapfileStr = (@mapfile and linker[:MAP_FILE_PIPE]) ? " >#{@mapfile}" : ""
     
-          rd, wr = IO.pipe
+          # pre print because linking can take much time
           cmdLinePrint = cmd
           printCmd(cmdLinePrint, "Linking #{@exe_name}", false)
-          cmd << {
-            :out=> (@mapfile and linker[:MAP_FILE_PIPE]) ? "#{@mapfile}" : wr, # > xy.map
-            :err=>wr
-          }
-                
-          success, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
-          cmd.pop
+          
+          outPipe = (@mapfile and linker[:MAP_FILE_PIPE]) ? "#{@mapfile}" : nil
+          success, consoleOutput = ProcessHelper.run(cmd, false, false, outPipe)
           # for console print
-          cmd << " >#{@mapfile}" if (@mapfile and linker[:MAP_FILE_PIPE])
+          cmd << " >#{outPipe}" if outPipe
     
           process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, success)
     

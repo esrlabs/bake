@@ -37,12 +37,8 @@ module Bake
             cmd += @tcs[:LINT_POLICY]
             
             cmd += @source_files
-                    
-            rd, wr = IO.pipe
-            cmd << {:err=>wr,:out=>wr}
-            success, consoleOutput = ProcessHelper.safeExecute() { sp = spawn(*cmd); ProcessHelper.readOutput(sp, rd, wr) }
-            cmd.pop
-    
+                   
+            success, consoleOutput = ProcessHelper.run(cmd, false)
             process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "", success)
           end
         end

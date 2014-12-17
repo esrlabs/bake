@@ -9,18 +9,9 @@ module Bake
   
   module Blocks
 
-    
-    ALL_BLOCKS = {} # NEW
-    ALL_COMPILE_BLOCKS = {} # NEW
-    ABORTED = false
+    ALL_BLOCKS = {}
+    ALL_COMPILE_BLOCKS = {}
 
-
-    trap("INT") do
-      ProcessHelper.killProcess
-      ABORTED = true
-      #Bake::IDEInterface.instance.set_abort(true)
-    end
-        
     class Block
 
       attr_reader :lib_elements, :projectDir, :library, :config
@@ -121,16 +112,16 @@ module Bake
         rescue Bake::SystemCommandFailed => scf
           # delete file?
         rescue SystemExit => exSys
-          ProcessHelper.killProcess
+          ProcessHelper.killProcess(true)
         rescue Exception => ex1
           # delete file?
-          if not ABORTED # means no kill from IDE. TODO: test this!
+          if not Bake::IDEInterface.instance.get_abort # means no kill from IDE. TODO: test this!
             Bake.formatter.printError "Error: #{ex1.message}"
             puts ex1.backtrace if Bake.options.debug
           end
         end 
         
-        if ABORTED
+        if Bake::IDEInterface.instance.get_abort
           raise AbortException.new
         end
         

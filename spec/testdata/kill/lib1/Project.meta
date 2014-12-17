@@ -1,0 +1,76 @@
+Project {
+
+  LibraryConfig testPreCmd {
+    PreSteps {
+      CommandLine "echo STEP1"
+      CommandLine "ruby takesLong.rb"
+      CommandLine "echo STEP2"
+    }
+  }
+  
+  LibraryConfig testPreMake {
+    PreSteps {
+      CommandLine "echo STEP1"
+      Makefile "makefile/makefile"
+      CommandLine "echo STEP2"
+    }
+  }
+  
+  CustomConfig testCmd {
+    PreSteps {
+      CommandLine "echo STEP1"
+    }
+    CommandLine "ruby takesLong.rb"
+    PostSteps {
+      CommandLine "echo STEP2"
+    }
+  }
+  
+  CustomConfig testMake {
+    PreSteps {
+      CommandLine "echo STEP1"
+    }
+    Makefile "makefile/makefile"
+    PostSteps {
+      CommandLine "echo STEP2"
+    }
+  }  
+  
+  LibraryConfig testCompile {
+    PreSteps {
+      CommandLine "echo STEP1"
+    }
+    Files "src/*.cpp"
+    PostSteps {
+      CommandLine "echo STEP2"
+    }
+    Toolchain {
+      Compiler CPP, command: "ruby compile.rb"
+    }
+  }
+
+  LibraryConfig testArchive {
+    PreSteps {
+      CommandLine "echo STEP1"
+    }
+    PostSteps {
+      CommandLine "echo STEP2"
+    }
+    Toolchain {
+      Archiver command: "ruby archive.rb"
+    }
+  }
+  
+  ExecutableConfig testLink {
+    PreSteps {
+      CommandLine "echo STEP1"
+    }
+    PostSteps {
+      CommandLine "echo STEP2"
+    }
+    Toolchain {
+      Linker command: "ruby link.rb"
+    }
+  }  
+
+}

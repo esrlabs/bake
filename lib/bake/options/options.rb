@@ -16,10 +16,10 @@ module Bake
   end
     
   class Options < Parser
-    attr_accessor :build_config
+    attr_accessor :build_config, :nocache
     attr_reader :main_dir, :project, :filename, :main_project_name # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :stopOnFirstError, :clean, :rebuild, :nocache, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :prepro # Boolean
+    attr_reader :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verboseLow

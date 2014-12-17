@@ -3,6 +3,9 @@ module Bake
   module Utils
   
     def self.flagSplit(str, removeQuotes)
+      return [] if str == ""
+      return [str] unless str.include?" "
+      
       hasQuote = false
       hasDoubleQuote = false
       hadQuote = false

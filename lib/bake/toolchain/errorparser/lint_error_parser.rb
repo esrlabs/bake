@@ -4,7 +4,7 @@ module Bake
   class LintErrorParser < ErrorParser
 
     def initialize()
-      @error_expression = /([^:]*):([0-9]+): ([A-Za-z]+)(.+)/
+      @error_expression = /([^:]*):([0-9]+): ([A-Za-z]+)[ ]*(.+)/
     end
 
     def scan_lines(consoleOutput, proj_dir)

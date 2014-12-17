@@ -25,12 +25,12 @@ module Bake
       attr_reader :cacheFilename
   
       def initialize()
-        sani = sanitize_filename(Bake.options.build_config)
-        sani = "__D-FAULT__" if sani.length == 0
-        @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta." + sani + ".cache"
+        if Bake.options.build_config == ""
+          @cacheFilename = Bake.options.main_dir+"/.bake/Default.Project.meta.cache"
+        else
+          @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta." + sanitize_filename(Bake.options.build_config) + ".cache"
+        end
         
-        #TODO CLOBBER.include(Bake.options.main_dir+"/.bake")
-          
         FileUtils.mkdir_p(File.dirname(@cacheFilename))
         @defaultToolchain = nil
         @defaultToolchainTime = nil
@@ -63,6 +63,7 @@ module Bake
             if cache != nil
               cache.files.each do |c|
                 if (not File.exists?(c))
+                  Bake.options.nocache = true
                   Bake.formatter.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
                   cache = nil
                   break
@@ -74,6 +75,7 @@ module Bake
               cache.referencedConfigs.each do |pname,configs|
                 configs.each do |config|
                   if not File.exists?(config.file_name)
+                    Bake.options.nocache = true
                     Bake.formatter.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
                     cache = nil
                   end
@@ -154,8 +156,8 @@ module Bake
           File.delete(@cacheFilename)
         rescue
         end
-        puts @cacheFilename
         File.open(@cacheFilename, 'wb') {|file| file.write(bbdump) }
+        Bake.options.nocache = false
       end
       
   end
