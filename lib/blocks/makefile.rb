@@ -79,7 +79,7 @@ module Bake
        end
       
       def clean
-        executeCommand(@cleanLine) unless Bake.options.filename
+        executeCommand(@cleanLine, "No rule to make target 'clean'.") unless Bake.options.filename
       end
     
     end

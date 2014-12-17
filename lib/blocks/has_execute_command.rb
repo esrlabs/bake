@@ -4,10 +4,11 @@ module Bake
   
     module HasExecuteCommand
       
-      def executeCommand(commandLine)
+      def executeCommand(commandLine, ignoreStr=nil)
         puts commandLine if not Bake.options.verboseLow
         puts "(executed in '#{@projectDir}')" if Bake.options.verboseHigh
         cmd_result = false
+        output = ""
         begin
           Dir.chdir(@projectDir) do
             cmd_result, output = ProcessHelper.run([commandLine], true)
@@ -17,7 +18,7 @@ module Bake
           puts e.backtrace if Bake.options.debug
         end
           
-        if (cmd_result == false)
+        if (cmd_result == false and (not ignoreStr or not output.include?ignoreStr))
           if Bake::IDEInterface.instance # todo
             err_res = ErrorDesc.new
             err_res.file_name = @config.file_name.to_s
