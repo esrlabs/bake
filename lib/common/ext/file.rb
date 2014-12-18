@@ -71,4 +71,18 @@ class File
     end
   end
 
+  def self.which(cmd)
+    return nil if not cmd
+    exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
+    ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+      exts.each { |ext|
+        exe = File.join(path, "#{cmd}#{ext}")
+        if File.executable?(exe) && !File.directory?(exe)
+          return File.dirname(exe.gsub(/[\\]/,'/'))
+        end 
+      }
+    end
+    return nil
+  end
+  
 end

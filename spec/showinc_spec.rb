@@ -12,8 +12,6 @@ module Bake
 describe "ShowInc" do
 
   it 'RelativePath' do
-    Bake.options = Options.new(["-m", "spec/testdata/showinc/main", "-b", "test" , "--show_incs_and_defs"])
-      
     Bake.startBake("showinc/main", ["test", "--show_incs_and_defs"])
       
     s = "main\n"+
@@ -53,7 +51,16 @@ describe "ShowInc" do
 
   end
   
+  it 'Vars' do
+    Bake.startBake("showinc/main", ["testVar", "--show_incs_and_defs"])
+    expect($mystring.match(/.+\/\.\.\/include1/).nil?).to be == false
+    expect($mystring.match(/.+\/\.\.\/include2/).nil?).to be == false
+    expect($mystring.match(/.+\/\.\.\/include3/).nil?).to be == false
+    expect($mystring.match(/.+\/\.\.\/include4/).nil?).to be == false
+    expect($mystring.match(/.+\/\.\.\/include5/).nil?).to be == false
+  end
   
+
   
 end
 

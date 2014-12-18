@@ -28,17 +28,31 @@ module Bake
         ExitHelper.exit(0) }
       end
       
-      def self.readInternalIncludes(mainConfig, mainBlock)
+      def self.readInternalIncludes(mainConfig, mainBlock, mainTcs)
         intIncs = []
         Dir.chdir(Bake.options.main_dir) do
           if (mainConfig.defaultToolchain.internalIncludes)
+            
+            cppExe      = File.which(mainTcs[:COMPILER][:CPP][:COMMAND]) 
+            cExe        = File.which(mainTcs[:COMPILER][:C][:COMMAND])
+            asmExe      = File.which(mainTcs[:COMPILER][:ASM][:COMMAND])
+            archiverExe = File.which(mainTcs[:ARCHIVER][:COMMAND])
+            linkerExe   = File.which(mainTcs[:LINKER][:COMMAND])
+            
             iname = mainBlock.convPath(mainConfig.defaultToolchain.internalIncludes.name)
             if iname != ""
               if not File.exists?(iname)
                 Bake.formatter.printError "Error: InternalIncludes file #{iname} does not exist"
                 ExitHelper.exit(1)
               end
-              IO.foreach(iname) {|x| add_line_if_no_comment(intIncs,x) }
+              IO.foreach(iname) do |x|
+                x.sub!("$(CPP_PATH)",      cppExe) if cppExe
+                x.sub!("$(C_PATH)",        cExe) if cExe
+                x.sub!("$(ASM_PATH)",      asmExe) if asmExe
+                x.sub!("$(ARCHIVER_PATH)", archiverExe) if archiverExe
+                x.sub!("$(LINKER_PATH)",   linkerExe) if linkerExe
+                add_line_if_no_comment(intIncs,x)
+              end
             end
           end
         end
@@ -64,11 +78,11 @@ module Bake
         return intDefs
       end
       
-      def self.includesAndDefines(mainConfig)
+      def self.includesAndDefines(mainConfig, mainTcs)
         secureShow {
         mainBlock = Blocks::ALL_BLOCKS[Bake.options.main_project_name+","+Bake.options.build_config]
 
-        intIncs = readInternalIncludes(mainConfig, mainBlock)
+        intIncs = readInternalIncludes(mainConfig, mainBlock, mainTcs)
         intDefs = readInternalDefines(mainConfig, mainBlock)
 
       

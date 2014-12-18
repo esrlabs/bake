@@ -1,0 +1,5 @@
+$(CPP_PATH)/../include1
+$(C_PATH)/../include2
+$(ASM_PATH)/../include3
+$(ARCHIVER_PATH)/../include4
+$(LINKER_PATH)/../include5

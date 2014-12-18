@@ -65,9 +65,9 @@ module Bake
            res = "." if res == "" 
          elsif @referencedConfigs.include?(inc[0])
            dirOther = @referencedConfigs[inc[0]].first.parent.get_project_dir
-           res = File.rel_from_to_project(@projectDir, dirOther)
+           res = File.rel_from_to_project(@projectDir, dirOther, false)
            postfix = inc[1..-1].join("/")
-           res = res + postfix if postfix != ""
+           res = res + "/" + postfix if postfix != ""
          else
            if (inc[0] != "..")
              return d if File.exists?(@projectDir + "/" + d) # e.g. "include"
@@ -76,7 +76,7 @@ module Bake
              Bake.options.roots.each do |r|
                absIncDir = r+"/"+d
                if File.exists?(absIncDir)
-                 res = File.rel_from_to_project(@projectDir,absIncDir)
+                 res = File.rel_from_to_project(@projectDir,absIncDir,false)
                  if not res.nil?
                    return res
                  end 

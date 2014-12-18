@@ -233,7 +233,7 @@ module Bake
         convert2bb
         
         Blocks::Show.includes if Bake.options.show_includes
-        Blocks::Show.includesAndDefines(@mainConfig) if Bake.options.show_includes_and_defines
+        Blocks::Show.includesAndDefines(@mainConfig, @configTcMap[@mainConfig]) if Bake.options.show_includes_and_defines
         
         startBlocks = calcStartBlocks
 
