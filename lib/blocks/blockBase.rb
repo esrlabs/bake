@@ -143,28 +143,7 @@ module Bake
         end
       end      
       
-      
-      
-      
-      
-          
-
-#
-#@lib_elements.sort.each do |x|
-#  v = x[1]
-#  elem = 0
-#  while elem < v.length do 
-#    bbModule.main_content.add_lib_elements([v[elem..elem+1]])
-#    elem = elem + 2
-#  end
-#end
-      
-      
-      
-            
     end
     
   end
-  
-  
 end

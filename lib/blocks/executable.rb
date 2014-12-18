@@ -10,8 +10,8 @@ module Bake
         super(block, config, referencedConfigs, tcs)
         @compileBlock = compileBlock
 
-        calcMapFile
         calcArtifactName
+        calcMapFile
         calcLinkerScript
 
       end
@@ -31,10 +31,9 @@ module Bake
       
       def calcMapFile
         @mapfile = nil
-        if not Bake.options.lint and not @config.mapFile.nil?
+        if (not Bake.options.lint) and (not @config.mapFile.nil?)
           if @config.mapFile.name == ""
-            exeName = bbModule.main_content.get_executable_name
-            @mapfile = exeName.chomp(File.extname(exeName)) + ".map"
+            @mapfile = @exe_name.chomp(File.extname(@exe_name)) + ".map"
           else
             @mapfile = @config.mapFile.name 
           end
@@ -101,14 +100,12 @@ module Bake
           mapfileStr = (@mapfile and linker[:MAP_FILE_PIPE]) ? " >#{@mapfile}" : ""
     
           # pre print because linking can take much time
-          cmdLinePrint = cmd
-          printCmd(cmdLinePrint, "Linking #{@exe_name}", false)
-          
+          cmdLinePrint = cmd.dup
           outPipe = (@mapfile and linker[:MAP_FILE_PIPE]) ? "#{@mapfile}" : nil
+          cmdLinePrint << "> #{outPipe}" if outPipe
+          
+          printCmd(cmdLinePrint, "Linking #{@exe_name}", false)
           success, consoleOutput = ProcessHelper.run(cmd, false, false, outPipe)
-          # for console print
-          cmd << " >#{outPipe}" if outPipe
-    
           process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, success)
     
           check_config_file()

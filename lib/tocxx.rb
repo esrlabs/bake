@@ -237,6 +237,8 @@ module Bake
         
         startBlocks = calcStartBlocks
 
+        Bake::IDEInterface.instance.set_build_info(@mainConfig.parent.name, @mainConfig.name, Blocks::ALL_BLOCKS.length)
+        
         begin
           result = true
           if Bake.options.clean or Bake.options.rebuild

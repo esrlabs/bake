@@ -4,7 +4,7 @@ require 'thread'
 
 module Bake
 
-  # header of tcp msg from lake to eclipse:
+  # header of tcp msg from bake to eclipse:
   # 1 byte = type (problem = 0x01)
   # 4 bytes = length of msg
 

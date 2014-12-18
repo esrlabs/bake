@@ -171,6 +171,8 @@ module Bake
         @inDeps = false
         return false if not depResult and Bake.options.stopOnFirstError
         
+        Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
+        
         if not Bake.options.verboseLow
           Bake.formatter.printAdditionalInfo "**** Building #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"     
         end

@@ -69,5 +69,17 @@ Project {
     }
   }
 
+  ExecutableConfig testMapEmpty {
+    MapFile
+    Files "src/multi.cpp"
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig testMapDada {
+    MapFile "$(OutputDir)/dada.map"
+    Files "src/multi.cpp"
+    DefaultToolchain GCC
+  }
+
 
 }
