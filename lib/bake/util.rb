@@ -80,7 +80,7 @@ def integrateCompiler(tcs, compiler, type)
   end
   tcs[:COMPILER][type][:FLAGS] = adjustFlags(tcs[:COMPILER][type][:FLAGS], compiler.flags)
   compiler.define.each do |d|
-    tcs[:COMPILER][type][:DEFINES] << d.str
+    tcs[:COMPILER][type][:DEFINES] << d.str unless tcs[:COMPILER][type][:DEFINES].include? d.str
   end
 end
 

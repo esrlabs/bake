@@ -64,5 +64,48 @@ ExecutableConfig recursive {
   }
 }
 
+ExecutableConfig testFlagSub {
+  Files "src/main.cpp"
+  PreSteps {
+    CommandLine "echo SUB$(VAR1)"
+    CommandLine "echo SUB$(ConfigName)"
+  }
+  Toolchain {
+    Compiler CPP {
+      Flags "-O3"
+      Flags add: "$(VAR2)"
+      Flags remove: "-$(MainProjectName)"
+      Flags remove: "$(VAR1)"
+      Flags add: "$(VAR2)"
+      Define "$(ConfigName)"
+    }
+  }
+}
+
+LibraryConfig testFlag {
+  Dependency config: testFlagSub
+  Files "src/main.cpp"
+  Set VAR1, value: "-O3"
+  Set VAR2, value: "-O2"
+  PreSteps {
+    CommandLine "echo MAIN$(VAR1)"
+    CommandLine "echo MAIN$(ConfigName)"
+  }
+  Toolchain {
+    Compiler CPP {
+      Flags remove: "*$(MainProjectName)"
+      Define "GAGA"
+      Define "GAGA"
+    }
+  }
+  DefaultToolchain GCC {
+    Compiler CPP {
+      Flags add: "-$(MainProjectName)"
+      Define "X$(ConfigName)X"
+      Define "X=\"$(Time)\""
+    }
+  }
+}
+
 
 }

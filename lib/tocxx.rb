@@ -42,13 +42,12 @@ module Bake
       @configTcMap = {}
     end
 
-    def createConfigTcs
+    def createBaseTcsForConfig
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
           tcs = nil
           if not Metamodel::CustomConfig === config
             tcs = Utils.deep_copy(@defaultToolchain)
-            integrateToolchain(tcs, config.toolchain)
           else
             tcs = Utils.deep_copy(Bake::Toolchain::Provider.default)
           end    
@@ -56,12 +55,24 @@ module Bake
         end  
       end
     end
-    
+
+    def createTcsForConfig
+      @loadedConfig.referencedConfigs.each do |projName, configs|
+        configs.each do |config|
+          if not Metamodel::CustomConfig === config
+            integrateToolchain(@configTcMap[config], config.toolchain)
+          end
+        end  
+      end
+    end
+        
     def substVars
       Subst.itute(@mainConfig, Bake.options.main_project_name, true, @configTcMap[@mainConfig])
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
-          Subst.itute(config, projName, false, @configTcMap[config]) if projName != Bake.options.main_project_name
+          if config != @mainConfig 
+            Subst.itute(config, projName, false, @configTcMap[config])
+          end 
         end  
       end
     end
@@ -215,8 +226,9 @@ module Bake
           @defaultToolchain = @loadedConfig.defaultToolchain
         end
           
-        createConfigTcs
+        createBaseTcsForConfig
         substVars
+        createTcsForConfig
         
         convert2bb
         

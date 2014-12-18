@@ -11,7 +11,7 @@ require 'helper'
 module Bake
 
 describe "Set" do
-  
+
   it 'value' do
     Bake.startBake("set", ["value"])
     expect(($mystring.include?"*GUGU*")).to be == true
@@ -64,6 +64,26 @@ describe "Set" do
     expect(($mystring.include?"Project C TestA X TestC C")).to be == true
   end
   
+  it 'flag' do
+    Bake.startBake("set", ["testFlag", "-v2"])
+    expect(($mystring.include?"SUB-O3")).to be == true
+    expect(($mystring.include?"SUBtestFlagSub")).to be == true
+    expect(($mystring.include?"MAIN-O3")).to be == true
+    expect(($mystring.include?"MAINtestFlag")).to be == true
+    
+    expect(($mystring.include?"-set")).to be == false
+    expect(($mystring.split("-DX=").length)).to be == 3
+    
+    expect(($mystring.include?"main.d -O2 -DXtestFlagSubX")).to be == true
+    expect(($mystring.include?"main.d -DXtestFlagX")).to be == true
+    
+    expect(($mystring.include?"-DtestFlagSub")).to be == true
+    expect(($mystring.include?"-DtestFlag ")).to be == false
+
+    expect(($mystring.include?" -O3")).to be == false
+    
+    expect(($mystring.split("GAGA").length)).to be == 2
+  end  
       
 end
 
