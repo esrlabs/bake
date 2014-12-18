@@ -72,7 +72,7 @@ class File
   end
 
   def self.which(cmd)
-    return nil if not cmd
+    return "" if not cmd
     exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
     ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
       exts.each { |ext|
@@ -82,7 +82,7 @@ class File
         end 
       }
     end
-    return nil
+    return ""
   end
   
 end

@@ -54,4 +54,20 @@ Project {
     DefaultToolchain GCC
   }
 
+  ExecutableConfig testPathes {
+    IncludeDir "A$(CPPPath)"
+    IncludeDir "B$(CPath)"
+    IncludeDir "C$(ASMPath)"
+    IncludeDir "D$(ArchiverPath)"
+    IncludeDir "E$(LinkerPath)"
+    Files "src/multi.cpp"
+    Toolchain {
+      Compiler C, command: "ruby"
+    }
+    DefaultToolchain GCC {
+      Compiler ASM, command: "ruby"
+    }
+  }
+
+
 }

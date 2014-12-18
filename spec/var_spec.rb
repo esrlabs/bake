@@ -64,7 +64,16 @@ describe "VarSubst" do
     expect(($mystring.include?"ArtifactNameBase_main abc")).to be == true
     expect(($mystring.include?"SLASH\\SLASH")).to be == true
   end  
-    
+
+
+  it 'pathes' do
+    Bake.startBake("cache/main", ["testPathes", "-v2"])
+
+    expect($mystring.scan("ruby").count).to be == 2 # assuming ruby is is a ruby dir
+    expect($mystring.scan("bin").count).to be >= 3 # assuming that gcc in in a bin dir
+  end  
+
+      
 end
 
 end

@@ -46,11 +46,11 @@ module Bake
                 ExitHelper.exit(1)
               end
               IO.foreach(iname) do |x|
-                x.sub!("$(CPP_PATH)",      cppExe) if cppExe
-                x.sub!("$(C_PATH)",        cExe) if cExe
-                x.sub!("$(ASM_PATH)",      asmExe) if asmExe
-                x.sub!("$(ARCHIVER_PATH)", archiverExe) if archiverExe
-                x.sub!("$(LINKER_PATH)",   linkerExe) if linkerExe
+                x.sub!("$(CPPPath)",      cppExe)
+                x.sub!("$(CPath)",        cExe)
+                x.sub!("$(ASMPath)",      asmExe)
+                x.sub!("$(ArchiverPath)", archiverExe)
+                x.sub!("$(LinkerPath)",   linkerExe)
                 add_line_if_no_comment(intIncs,x)
               end
             end

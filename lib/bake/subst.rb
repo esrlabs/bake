@@ -2,8 +2,44 @@ module Bake
 
   class Subst
   
-    def self.itute(config, projName, isMainProj, toolchain)
+    # this is done lazy because usually there is no need to calculate that
+    def self.lazyPathes
+      return unless @@lazy
+      
+      cppCmd = @@toolchain[:COMPILER][:CPP][:COMMAND]
+      cCmd = @@toolchain[:COMPILER][:C][:COMMAND]
+      asmCmd = @@toolchain[:COMPILER][:ASM][:COMMAND]
+      archiverCmd = @@toolchain[:ARCHIVER][:COMMAND]
+      linkerCmd = @@toolchain[:LINKER][:COMMAND]
+        
+      if (not Metamodel::CustomConfig === @@config) and @@config.toolchain
+        linkerCmd = @@config.toolchain.linker.command if @@config.toolchain.linker and @@config.toolchain.linker.command != ""
+        archiverCmd = @@config.toolchain.archiver.command if @@config.toolchain.linker and @@config.toolchain.archiver.command != ""
+        @@config.toolchain.compiler.each do |c|
+          if c.ctype == :CPP
+            cppCmd = c.command
+          elsif c.ctype == :C
+            cCmd = c.command
+          elsif c.ctype == :ASM
+            asmCmd = c.command
+          end
+        end
+      end 
+      
+      @@cppExe      = File.which(cppCmd) 
+      @@cExe        = File.which(cCmd)
+      @@asmExe      = File.which(asmCmd)
+      @@archiverExe = File.which(archiverCmd)
+      @@linkerExe   = File.which(linkerCmd)
+      
+      @@lazy = false
+    end
     
+    def self.itute(config, projName, isMainProj, toolchain)
+      @@lazy = true
+      @@config = config
+      @@toolchain = toolchain
+      
       @@configName = config.name
       @@projDir = config.parent.get_project_dir
       @@projName = projName
@@ -119,6 +155,21 @@ module Bake
           substStr << @@artifactName
         elsif var == "ArtifactNameBase"
           substStr << @@artifactName.chomp(File.extname(@@artifactName))
+        elsif var == "CPPPath"
+          self.lazyPathes
+          substStr << @@cppExe
+        elsif var == "CPath"
+          self.lazyPathes
+          substStr << @@cExe
+        elsif var == "ASMPath"
+          self.lazyPathes
+          substStr << @@asmExe
+        elsif var == "ArchiverPath"
+          self.lazyPathes
+          substStr << @@archiverExe
+        elsif var == "LinkerPath"
+          self.lazyPathes
+          substStr << @@linkerExe
         elsif var == "Roots"
           substStr << "___ROOTS___"
         elsif var == "/"
