@@ -15,14 +15,13 @@ module Bake
         @config = config
         @projectDir = config.get_project_dir
         @path_to = ""
-        @flags = adjustFlags("",config.flags) if config.flags # TODO: CHANGE SYNTAX
+        @flags = adjustFlags("",config.flags) if config.flags
         @makefile = config.name
         @target = config.target != "" ? config.target : "all"
         calcPathTo(referencedConfigs)
         calcCommandLine
         calcCleanLine
 
-        # TODO
         block.lib_elements[config.line_number] = [LibElement.new(LibElement::LIB_WITH_PATH, config.lib)] if config.lib != ""
       end
       

@@ -180,7 +180,7 @@ module Bake
               rescue Bake::SystemCommandFailed => scf # normal compilation error
               rescue SystemExit => exSys
               rescue Exception => ex1
-                if not Bake::IDEInterface.instance.get_abort # means no kill from IDE. TODO: test this!
+                if not Bake::IDEInterface.instance.get_abort
                   Bake.formatter.printError "Error: #{ex1.message}"
                   puts ex1.backtrace if Bake.options.debug
                 end

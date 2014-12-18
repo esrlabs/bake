@@ -215,7 +215,7 @@ module Bake
       
       begin      
         @loadedConfig = Config.new
-        @loadedConfig.load # todo: Dependency must be substed
+        @loadedConfig.load
         
         @mainConfig = @loadedConfig.referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
   

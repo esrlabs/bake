@@ -110,12 +110,10 @@ module Bake
           step.send method
           result = true
         rescue Bake::SystemCommandFailed => scf
-          # delete file?
         rescue SystemExit => exSys
           ProcessHelper.killProcess(true)
         rescue Exception => ex1
-          # delete file?
-          if not Bake::IDEInterface.instance.get_abort # means no kill from IDE. TODO: test this!
+          if not Bake::IDEInterface.instance.get_abort
             Bake.formatter.printError "Error: #{ex1.message}"
             puts ex1.backtrace if Bake.options.debug
           end
@@ -125,19 +123,8 @@ module Bake
           raise AbortException.new
         end
         
-        #if not result and Bake.options.stopOnFirstError 
-                 
         return result
       end
-      
-      #def handle_error(ex1, isSysCmd)
-      #  begin
-          #FileUtils.rm(@name) if File.exists?(@name)
-      #  rescue Exception => ex2
-          #Bake.formatter.printError "Error: Could not delete #{@name}: #{ex2.message}"
-      #  end
-      #end
-      
 
       def callDeps(method)
         depResult = true

@@ -25,7 +25,7 @@ describe "Socket Handler" do
     expect { tocxx.connect() }.to raise_error(SystemExit)
   end
    
-  it 'todo' do
+  it 'abort' do
     serverSocket = TCPServer.new('localhost', 10000)
 
     Bake.options = Options.new(["-m", "spec/testdata/root1/main", "test", "--socket", "10000"])
@@ -52,7 +52,6 @@ describe "Socket Handler" do
     
     clientSocket.send("X",0) # triggers abort
     sleep 1.1
-    
     
     expect(Bake::IDEInterface.instance.get_abort).to be == true
     tocxx.disconnect()

@@ -98,7 +98,6 @@ module Bake
       end
       
       configs.each do |config|
-        # todo:extra methods for all steps here
         if config.respond_to?("toolchain") and config.toolchain
           config.toolchain.compiler.each do |c|
             if not c.internalDefines.nil? and c.internalDefines != ""
@@ -190,7 +189,6 @@ module Bake
         ExitHelper.exit(1)
       end
       
-      # todo: move to other class
       basedOn = config.defaultToolchain.basedOn
       @basedOnToolchain = Bake::Toolchain::Provider[basedOn]
       if @basedOnToolchain.nil?

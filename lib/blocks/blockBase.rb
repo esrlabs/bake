@@ -24,8 +24,10 @@ module Bake
         if File.exists?(@config.file_name) and File.mtime(@config.file_name) > @config_date
           begin
             FileUtils.touch(@config.file_name)
-          rescue Exception
-            # TODO: verbose error message
+          rescue Exception=>e
+            if Bake.options.verboseHigh
+              Bake.formatter.printWarning "Warning: could not touch #{@config.file_name}: #{e.message}"               
+            end
           end
         end
       end
@@ -62,7 +64,7 @@ module Bake
           @printedCmdAlternate = false
           exedIn = ""
           exedIn = "\n(executed in '#{@projectDir}')" if (showPath or Bake.options.verboseHigh)
-          puts "" if Bake.options.verboseHigh # todo: why?
+          puts "" if Bake.options.verboseHigh
           if cmd.is_a?(Array)
             puts cmd.join(' ') + exedIn
           else

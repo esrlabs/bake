@@ -6,7 +6,6 @@ module Bake
 
       module ModelElement::ClassModule
         def get_project_dir
-          # todo: no. must be set from outside
           ::File.dirname(file_name)
         end
       end
