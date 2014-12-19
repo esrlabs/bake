@@ -1,0 +1,5 @@
+Project {
+  LibraryConfig testWrong {
+    Files "src/wrong.cpp"
+  }
+}

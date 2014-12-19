@@ -240,7 +240,18 @@ describe "Building" do
     expect(File.exist?("spec/testdata/cache/main/testMapDada/dada.map")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end  
-     
+ 
+  it 'LibHasError_noLink' do
+    Bake.startBake("errors/main", ["testWrong"])
+    expect($mystring.include?("main.exe")).to be == false
+  end  
+   
+  it 'ExeHasError_noLink' do
+    Bake.startBake("errors/main", ["testWrong2"])
+    expect($mystring.include?("main.exe")).to be == false
+  end 
+      
+  
 end
 
 end

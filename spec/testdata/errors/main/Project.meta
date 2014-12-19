@@ -1,0 +1,11 @@
+Project {
+  ExecutableConfig testWrong {
+    Dependency lib, config: testWrong
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
+  ExecutableConfig testWrong2 {
+    Files "src/wrong.cpp"
+    DefaultToolchain GCC
+  }
+}

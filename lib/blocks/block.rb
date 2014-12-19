@@ -15,7 +15,7 @@ module Bake
     class Block
 
       attr_reader :lib_elements, :projectDir, :library, :config
-      attr_accessor :visited, :inDeps
+      attr_accessor :visited, :inDeps, :result
   
       def preSteps
         @preSteps ||= []
@@ -47,6 +47,7 @@ module Bake
         @configName = config.name
         @projectDir = config.get_project_dir
         @@block_counter = 0
+        @result = false
         
         @lib_elements = Bake::LibElements.calcLibElements(self)
       end
@@ -177,7 +178,7 @@ module Bake
           Bake.formatter.printAdditionalInfo "**** Building #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"     
         end
 
-        result = callSteps(:execute)
+        @result = callSteps(:execute)
         return (depResult && result)
       end
 
@@ -192,7 +193,7 @@ module Bake
           Bake.formatter.printAdditionalInfo "**** Cleaning #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"     
         end
         
-        result = callSteps(:clean)
+        @result = callSteps(:clean)
         
         if Bake.options.clobber
           Dir.chdir(@projectDir) do

@@ -40,8 +40,17 @@ module Bake
         end
       end
       
+      def depHasError(block)
+        block.dependencies.each do |dep|
+          subBlock = Blocks::ALL_BLOCKS[dep]
+          return true unless subBlock.result
+          return depHasError(subBlock)
+        end
+        return false
+      end
 
       def needed?(libs)
+        return false if depHasError(@block)
         return true if Bake.options.linkOnly
         return false if Bake.options.prepro
         

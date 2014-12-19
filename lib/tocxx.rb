@@ -155,7 +155,7 @@ module Bake
     end
     
     def callBlocks(startBlocks, method)
-      Blocks::ALL_BLOCKS.each {|name,block| block.visited = false; block.inDeps = false }
+      Blocks::ALL_BLOCKS.each {|name,block| block.visited = false; block.result = false;  block.inDeps = false }
       Blocks::Block.reset_block_counter
       result = true
       startBlocks.each do |block|
