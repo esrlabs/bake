@@ -145,7 +145,7 @@ module Bake
           if @@projName == Bake.options.main_project_name
             substStr << Bake.options.build_config
           else
-            substStr << (Bake.options.build_config + "_" + Bake.options.main_project_name)
+            substStr << @@configName + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
           end
         elsif var == "Time"
           substStr << Time.now.to_s

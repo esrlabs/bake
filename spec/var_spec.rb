@@ -27,7 +27,7 @@ describe "VarSubst" do
     expect(($mystring.include?"ConfigName_lib1 testsub")).to be == true
     expect(($mystring.include?"ConfigName_main test")).to be == true
 
-    expect(($mystring.include?"OutputDir_lib1 test_main")).to be == true
+    expect(($mystring.include?"OutputDir_lib1 testsub_main_test")).to be == true
     expect(($mystring.include?"OutputDir_main test")).to be == true
 
     expect(($mystring.include?"ArtifactName_lib1 \n")).to be == true
