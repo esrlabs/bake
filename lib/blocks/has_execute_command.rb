@@ -27,7 +27,7 @@ module Bake
             err_res.message = "Command \"#{commandLine}\" failed"
             Bake::IDEInterface.instance.set_errors([err_res])
           end
-          Bake.formatter.printError "Error: command \"#{commandLine}\" failed"
+          Bake.formatter.printError("Error: command \"#{commandLine}\" failed")
           puts "(executed in '#{@projectDir}')" if not Bake.options.verboseHigh
           raise SystemCommandFailed.new
         end

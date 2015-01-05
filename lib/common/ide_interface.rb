@@ -52,7 +52,7 @@ module Bake
         end
 
       rescue Exception => e
-        Bake.formatter.printError "Error: #{e.message}"
+        Bake.formatter.printError("Error: #{e.message}")
         ExitHelper.exit(1)
       end
     end
@@ -63,7 +63,7 @@ module Bake
         begin
           @socket.close
         rescue Exception => e
-          Bake.formatter.printError "Error: #{e.message}"
+          Bake.formatter.printError("Error: #{e.message}")
           ExitHelper.exit(1)
         end
         @socket = nil
@@ -123,7 +123,7 @@ module Bake
           begin
             mutex.synchronize { @socket.write(packet) }
           rescue Exception => e
-            Bake.formatter.printError "Error: #{e.message}"
+            Bake.formatter.printError("Error: #{e.message}")
             set_abort(true)
           end
         end
@@ -171,7 +171,7 @@ module Bake
       begin
         mutex.synchronize { @socket.write(packet) if @socket }
       rescue Exception => e
-        Bake.formatter.printError "Error: #{e.message}"
+        Bake.formatter.printError("Error: #{e.message}")
         set_abort(true)
       end
 

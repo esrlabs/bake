@@ -67,24 +67,30 @@ module Bake
       config.set.each do |s|
      
         if (s.value != "" and s.cmd != "")
-          Bake.formatter.printError "Error: #{config.file_name}(#{s.line_number}): value and cmd attributes must be used exclusively"
+          Bake.formatter.printError("value and cmd attributes must be used exclusively", s)
           ExitHelper.exit(1)
         end
         
         if (s.value != "")
-          @@userVarMap[s.name] = substString(s.value)
+          setName = substString(s.name, s)
+          if (setName.empty?)
+            Bake.formatter.printWarning("Name of variable must not be empty - variable will be ignored", s)
+          else
+            @@userVarMap[s.name] = substString(s.value, s)
+          end
         else
           cmd_result = false
           begin
             Dir.chdir(@@projDir) do
-              cmd = [substString(s.cmd)]
+              cmd = [substString(s.cmd, s)]
               cmd_result, consoleOutput = ProcessHelper.run(cmd)
               @@userVarMap[s.name] = consoleOutput.chomp
             end
-          rescue
+          rescue Exception=>e
+            consoleOutput = e.message
           end
           if (cmd_result == false)
-            Bake.formatter.printWarning "Warning: #{config.file_name}(#{s.line_number}): command not successful, variable #{s.name} wil be set to \"\"  (#{consoleOutput.chomp})."
+            Bake.formatter.printWarning("Command not successful, variable #{s.name} wil be set to \"\" (#{consoleOutput.chomp}).", s)
             @@userVarMap[s.name] = ""
           end          
         end
@@ -106,13 +112,13 @@ module Bake
         lastFoundInVar = @@resolvedVars 
       end      
       if (@@resolvedVars > 0)
-        Bake.formatter.printError "Error: #{config.file_name}: cyclic variable substitution detected"
+        Bake.formatter.printError("Cyclic variable substitution detected", config.file_name)
         ExitHelper.exit(1)
       end
       
     end
     
-    def self.substString(str)
+    def self.substString(str, elem=nil)
       substStr = ""
       posSubst = 0
       while (true)
@@ -182,7 +188,12 @@ module Bake
           substStr << ENV[var]
         else
           if Bake.options.verboseHigh
-            Bake.formatter.printInfo "Info: #{@@configFilename}: substitute variable '$(#{var})' with empty string"
+            msg = "Substitute variable '$(#{var})' with empty string"
+            if elem
+              Bake.formatter.printInfo(msg, elem)
+            else
+              Bake.formatter.printInfo(msg +  " in the toolchain", @@config)
+            end
           end
           substStr << ""
         end
@@ -216,9 +227,11 @@ module Bake
     def self.subst(elem)
       elem.class.ecore.eAllAttributes_derived.each do |a|
         next if a.name == "file_name" or a.name == "line_number"
-        #next if Metamodel::DefaultToolchain === elem
+        return if Metamodel::Set === elem.class
+        return if Metamodel::DefaultToolchain === elem
+        return if Metamodel::Toolchain === elem.class
         next if a.eType.name != "EString" 
-        substStr = substString(elem.getGeneric(a.name))
+        substStr = substString(elem.getGeneric(a.name), elem)
         elem.setGeneric(a.name, substStr)
       end
     

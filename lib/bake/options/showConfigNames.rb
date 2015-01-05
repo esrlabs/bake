@@ -7,11 +7,11 @@ module Bake
   
     def self.show
       loader = Loader.new
-      
-      f = loader.load(Bake.options.main_dir+"/Project.meta")
+      filename = Bake.options.main_dir+"/Project.meta"
+      f = loader.load(filename)
       
       if f.root_elements.length != 1 or not Metamodel::Project === f.root_elements[0]
-        Bake.formatter.printError "Error: '#{filename}' must have exactly one 'Project' element as root element"
+        Bake.formatter.printError("Config file must have exactly one 'Project' element as root element", filename)
         ExitHelper.exit(1)
       end
       
@@ -28,7 +28,7 @@ module Bake
           puts "* " + v + d
         end 
       else
-        Bake.formatter.printError "Error: No configurations with a DefaultToolchain found!"
+        Bake.formatter.printWarning("No configuration with a DefaultToolchain found", filename)
       end
       
       ExitHelper.exit(0)

@@ -48,7 +48,7 @@ module Bake
       rescue SystemExit => e
         raise
       rescue Exception => e
-        Bake.formatter.printError e.message
+        Bake.formatter.printError("Error: " + e.message)
         ExitHelper.exit(1)
       end
       

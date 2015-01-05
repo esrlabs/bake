@@ -17,9 +17,6 @@ module Bake
       def initialize(block, config, referencedConfigs, tcs)
         super(block, config, referencedConfigs, tcs)
         @objects = []
-          
-        @src_pattern    = config.files.map        { |f| f.name }
-        @ex_src_pattern = config.excludeFiles.map { |f| f.name }     
         
         calcFileTcs
         calcIncludes
@@ -100,7 +97,7 @@ module Bake
         includes = @include_array[type]
 
         if Bake.options.prepro and compiler[:PREPRO_FLAGS] == "" 
-          Bake.formatter.printError("Info: No preprocessor option available for " + source)
+          Bake.formatter.printError("Error: No preprocessor option available for " + source)
           raise SystemCommandFailed.new 
         end
                    
@@ -181,7 +178,7 @@ module Bake
               rescue SystemExit => exSys
               rescue Exception => ex1
                 if not Bake::IDEInterface.instance.get_abort
-                  Bake.formatter.printError "Error: #{ex1.message}"
+                  Bake.formatter.printError("Error: #{ex1.message}")
                   puts ex1.backtrace if Bake.options.debug
                 end
               end 
@@ -241,19 +238,20 @@ module Bake
         @source_files = []
     
         exclude_files = Set.new
-        @ex_src_pattern.each do |p|
-          Dir.glob(p).each {|f| exclude_files << f}
+        @config.excludeFiles.each do |p|
+          Dir.glob(p.name).each {|f| exclude_files << f}
         end
           
         source_files = Set.new
-        @src_pattern.each do |p|
+        @config.files.each do |sources|
+          p = sources.name
           res = Dir.glob(p)
           if res.length == 0 and cleaning == false
             if not p.include?"*" and not p.include?"?"
-              Bake.formatter.printError "Error: Source file '#{p}' not found"
+              Bake.formatter.printError("Source file '#{p}' not found", sources)
               raise SystemCommandFailed.new  
             elsif not Bake.options.verboseLow
-              Bake.formatter.printInfo "Info: Source file pattern '#{p}' does not match to any file"
+              Bake.formatter.printInfo("Source file pattern '#{p}' does not match to any file", sources)
             end
           end
           res.each do |f|
@@ -266,8 +264,8 @@ module Bake
           source_files.keep_if do |source|
             source.include?Bake.options.filename
           end
-          if source_files.length == 0 and Bake.options.verboseHigh and quite == false
-            Bake.formatter.printInfo "Info: #{Bake.options.filename} does not match to any source"
+          if source_files.length == 0 and cleaning == false
+            Bake.formatter.printInfo("#{Bake.options.filename} does not match to any source", @config)
           end
         end
         
@@ -311,7 +309,7 @@ module Bake
         @config.files.each do |f|
           if (f.define.length > 0 or f.flags.length > 0)
             if f.name.include?"*"
-              Bake.formatter.printWarning "Warning: #{@config.file_name}(#{f.line_number}): toolchain settings not allowed for file pattern #{f.name}"
+              Bake.formatter.printWarning("Toolchain settings not allowed for file pattern #{f.name}", f)
               err_res = ErrorDesc.new
               err_res.file_name = @config.file_name
               err_res.line_number = f.line_number

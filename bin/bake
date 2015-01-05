@@ -19,7 +19,7 @@ module Bake
   earlyExit = nil
   begin
     if RUBY_VERSION[0..2] == "1.8"
-      Bake.formatter.printError "Error: Ruby 1.8 not supported anymore. Use Ruby 1.9 or greater."
+      Bake.formatter.printError("Error: Ruby 1.8 not supported anymore. Use Ruby 1.9 or greater.")
       ExitHelper.exit(1)
     end
     
@@ -41,7 +41,7 @@ module Bake
 
   timeEnd = Time.now
   timeDiff = timeEnd - $timeStart
-  Bake.formatter.printInfo "\nTime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60]
+  Bake.formatter.printInfo("\nTime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60])
   
   raise earlyExit if earlyExit
 end

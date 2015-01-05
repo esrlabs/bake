@@ -9,11 +9,9 @@ module Bake
 
     TiChain = Provider.add("TI")
 
-    ti_home = ENV['TI_HOME'] 
-
     TiChain[:COMPILER][:CPP].update({
-      :COMMAND => "#{ti_home}/ccsv5/tools/compiler/tms470/bin/cl470",
-      :FLAGS => "-mv7A8 -g --include_path=\"#{ti_home}/ccsv5/tools/compiler/tms470/include\" --diag_warning=225 -me --abi=eabi --code_state=32 --preproc_with_compile",
+      :COMMAND => "ti_cl",
+      :FLAGS => "",
       :DEFINE_FLAG => "--define=",
       :OBJECT_FILE_FLAG => "--output_file=",
       :INCLUDE_PATH_FLAG => "--include_path=",
@@ -28,14 +26,13 @@ module Bake
     TiChain[:COMPILER][:ASM] = Utils.deep_copy(TiChain[:COMPILER][:C])
     TiChain[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]
 
-    TiChain[:ARCHIVER][:COMMAND] = "#{ti_home}/ccsv5/tools/compiler/tms470/bin/ar470"
+    TiChain[:ARCHIVER][:COMMAND] = "ti_ar"
     TiChain[:ARCHIVER][:ARCHIVE_FLAGS] = "r"
 
-    TiChain[:LINKER][:COMMAND] = "#{ti_home}/ccsv5/tools/compiler/tms470/bin/cl470"
-    TiChain[:LINKER][:FLAGS] = "-mv7A8 -g --diag_warning=225 -me --abi=eabi --code_state=32 -z --warn_sections -i\"#{ti_home}/ccsv5/tools/compiler/tms470/lib\" -i\"#{ti_home}/ccsv5/tools/compiler/tms470/include\""
+    TiChain[:LINKER][:COMMAND] = "ti_cl"
+    TiChain[:LINKER][:FLAGS] = ""
     TiChain[:LINKER][:MAP_FILE_FLAG] = '-m'
     TiChain[:LINKER][:EXE_FLAG] = "-o"
-    TiChain[:LINKER][:LIB_PREFIX_FLAGS] = '-lDebug/configPkg/linker.cmd'
     TiChain[:LINKER][:LIB_FLAG] = "-l"
     TiChain[:LINKER][:LIB_PATH_FLAG] = "-i"
 

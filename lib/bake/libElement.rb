@@ -100,7 +100,7 @@ module Bake
         ls = nil
         if l.lib.include?("/")
           pos = l.lib.rindex("/")
-          ls = block.convPath(l.lib[0..pos-1])
+          ls = block.convPath(l.lib[0..pos-1], l)
           ln = l.lib[pos+1..-1]
         end
         lib_elements[l.line_number] = ls.nil? ? [] : [LibElement.new(LibElement::SEARCH_PATH, ls)] 
@@ -112,7 +112,7 @@ module Bake
         ls = nil
         if exLib.name.include?("/")
           pos = exLib.name.rindex("/")
-          ls = block.convPath(exLib.name[0..pos-1])
+          ls = block.convPath(exLib.name[0..pos-1], exLib)
           ln = exLib.name[pos+1..-1]
         end
         if exLib.search

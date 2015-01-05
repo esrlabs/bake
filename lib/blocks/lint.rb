@@ -24,7 +24,7 @@ module Bake
           end
                     
           if noFilesToLint
-            Bake.formatter.printInfo "Info: no files to lint"
+            Bake.formatter.printInfo("No files to lint", @config)
           else
             @source_files = @source_files[Bake.options.lint_min..Bake.options.lint_max]    
             

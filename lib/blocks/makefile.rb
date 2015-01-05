@@ -61,7 +61,7 @@ module Bake
               end
             end
             if dirOfP == nil
-              Bake.formatter.printError "Error: Project '#{nameOfP}' not found for makefile #{@projectDir}/#{@config.name}"
+              Bake.formatter.printError("Project '#{nameOfP}' not found", @config)
               ExitHelper.exit(1)
             end
             pathHash[nameOfP] = File.rel_from_to_project(File.dirname(@projectDir),File.dirname(dirOfP))

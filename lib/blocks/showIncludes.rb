@@ -30,8 +30,9 @@ module Bake
       
       def self.readInternalIncludes(mainConfig, mainBlock, mainTcs)
         intIncs = []
+        iinc = mainConfig.defaultToolchain.internalIncludes
         Dir.chdir(Bake.options.main_dir) do
-          if (mainConfig.defaultToolchain.internalIncludes)
+          if (iinc)
             
             cppExe      = File.which(mainTcs[:COMPILER][:CPP][:COMMAND]) 
             cExe        = File.which(mainTcs[:COMPILER][:C][:COMMAND])
@@ -39,10 +40,10 @@ module Bake
             archiverExe = File.which(mainTcs[:ARCHIVER][:COMMAND])
             linkerExe   = File.which(mainTcs[:LINKER][:COMMAND])
             
-            iname = mainBlock.convPath(mainConfig.defaultToolchain.internalIncludes.name)
+            iname = mainBlock.convPath(iinc)
             if iname != ""
               if not File.exists?(iname)
-                Bake.formatter.printError "Error: InternalIncludes file #{iname} does not exist"
+                Bake.formatter.printError("InternalIncludes file #{iname} does not exist", iinc)
                 ExitHelper.exit(1)
               end
               IO.foreach(iname) do |x|
@@ -64,10 +65,10 @@ module Bake
         Dir.chdir(Bake.options.main_dir) do
           mainConfig.defaultToolchain.compiler.each do |c|
             if (c.internalDefines)
-              dname = mainBlock.convPath(c.internalDefines.name)
+              dname = mainBlock.convPath(c.internalDefines)
               if dname != ""
                 if not File.exists?(dname)
-                  Bake.formatter.printError "Error: InternalDefines file #{dname} does not exist"
+                  Bake.formatter.printError("InternalDefines file #{dname} does not exist", c.internalDefines)
                   ExitHelper.exit(1)
                 end
                 IO.foreach(dname) {|x| add_line_if_no_comment(intDefs[c.ctype],x)  }

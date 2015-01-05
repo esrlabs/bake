@@ -71,13 +71,13 @@ describe "Lint" do
   it 'lint minmax neg' do
     Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint_min", "2", "--lint_max", "1"])
     expect($mystring.split("Module:").length).to be == 1
-    expect($mystring.include?("Info: no files to lint")).to be == true
+    expect($mystring.include?("Info: No files to lint")).to be == true
   end     
   
   it 'lint min too high' do
     Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint_min", "3"])
     expect($mystring.split("Module:").length).to be == 1
-    expect($mystring.include?("Info: no files to lint")).to be == true
+    expect($mystring.include?("Info: No files to lint")).to be == true
   end    
 
   it 'lint multi proj' do

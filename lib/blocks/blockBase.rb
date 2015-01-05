@@ -26,7 +26,7 @@ module Bake
             FileUtils.touch(@config.file_name)
           rescue Exception=>e
             if Bake.options.verboseHigh
-              Bake.formatter.printWarning "Warning: could not touch #{@config.file_name}: #{e.message}"               
+              Bake.formatter.printWarning("Could not touch #{@config.file_name}: #{e.message}", @config.file_name)              
             end
           end
         end
@@ -108,9 +108,9 @@ module Bake
   
               Bake::IDEInterface.instance.set_errors(error_descs)
             rescue Exception => e
-              Bake.formatter.printWarning "Parsing output failed (maybe language not set to English?): " + e.message
-              puts "Original output:"
-              puts console_output
+              Bake.formatter.printWarning("Parsing output failed (maybe language not set to English?): " + e.message)
+              Bake.formatter.printWarning("Original output:")
+              Bake.formatter.printWarning(console_output)
               raise e
             end
           else
@@ -127,16 +127,8 @@ module Bake
         end
         errorPrinted = process_console_output(console_output, error_parser)
         
-        if hasError
-          if not errorPrinted
-            Bake.formatter.printError "Error: system command failed"
-            res = ErrorDesc.new
-            res.file_name = @project_dir
-            res.line_number = 0
-            res.message = "Unknown error, see log output. Maybe the bake error parser has to be updated..."
-            res.severity = ErrorParser::SEVERITY_ERROR
-            Bake::IDEInterface.instance.set_errors([res])
-          end
+        if hasError and not errorPrinted
+          Bake.formatter.printError("System command failed", @projectDir)
         end
         if hasError or errorPrinted
           raise SystemCommandFailed.new

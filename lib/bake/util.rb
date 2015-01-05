@@ -24,7 +24,7 @@ def adjustFlags(orgStr, flags)
         begin
           o.match("\\A"+r+"\\Z")
         rescue Exception => e
-          Bake.formatter.printError "Error: #{f.file_name}(#{f.line_number}): " + e.message
+          Bake.formatter.printError(e.message, f)
           Bake::ExitHelper.exit(1)
         end
       }}

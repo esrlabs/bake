@@ -173,7 +173,7 @@ module Bake
       if startConfigName
         blockName = startProjectName+","+startConfigName
         if not Blocks::ALL_BLOCKS.include?(startProjectName+","+startConfigName)
-          Bake.formatter.printError "Error: project #{startProjectName} with config #{startConfigName} not found"
+          Bake.formatter.printError("Error: project #{startProjectName} with config #{startConfigName} not found")
           ExitHelper.exit(1)
         end
         startBlocks = [Blocks::ALL_BLOCKS[startProjectName+","+startConfigName]]
@@ -186,7 +186,7 @@ module Bake
           end
         end
         if startBlocks.length == 0
-          Bake.formatter.printError "Error: project #{startProjectName} not found"
+          Bake.formatter.printError("Error: project #{startProjectName} not found")
           ExitHelper.exit(1)
         end
         startBlocks.reverse! # most probably the order of dependencies if any
@@ -250,20 +250,20 @@ module Bake
             result = callBlocks(startBlocks, :execute) && result
           end      
         rescue AbortException
-          Bake.formatter.printError "\n#{taskType} aborted."
+          Bake.formatter.printError("\n#{taskType} aborted.")
           ExitHelper.set_exit_code(1)
           return
         end
               
         if result == false
-          Bake.formatter.printError "\n#{taskType} failed."
+          Bake.formatter.printError("\n#{taskType} failed.")
           ExitHelper.set_exit_code(1)
           return
         else
           Bake.formatter.printSuccess("\n#{taskType} done.")
         end
       rescue SystemExit
-        Bake.formatter.printError "\n#{taskType} failed."
+        Bake.formatter.printError("\n#{taskType} failed.")
       end
       
     end

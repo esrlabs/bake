@@ -55,7 +55,7 @@ module Bake
               
             if cache != nil
               if cache.cache_file != @cacheFilename
-                Bake.formatter.printInfo "Info: cache filename changed, reloading meta information"
+                Bake.formatter.printInfo("Info: cache filename changed, reloading meta information")
                 cache = nil
               end
             end
@@ -64,7 +64,7 @@ module Bake
               cache.files.each do |c|
                 if (not File.exists?(c))
                   Bake.options.nocache = true
-                  Bake.formatter.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
+                  Bake.formatter.printInfo("Info: meta file(s) renamed or deleted, reloading meta information")
                   cache = nil
                   break
                 end
@@ -76,7 +76,7 @@ module Bake
                 configs.each do |config|
                   if not File.exists?(config.file_name)
                     Bake.options.nocache = true
-                    Bake.formatter.printInfo "Info: meta file(s) renamed or deleted, reloading meta information"
+                    Bake.formatter.printInfo("Info: meta file(s) renamed or deleted, reloading meta information")
                     cache = nil
                   end
                 end
@@ -86,7 +86,7 @@ module Bake
             if cache != nil
               cache.files.each do |c|
                 if File.mtime(c) > cacheTime
-                  Bake.formatter.printInfo "Info: cache is out-of-date, reloading meta information"
+                  Bake.formatter.printInfo("Info: cache is out-of-date, reloading meta information")
                   cache = nil
                   break
                 end
@@ -104,20 +104,20 @@ module Bake
               else
                 cache = nil
               end
-              Bake.formatter.printInfo "Info: specified roots differ from cached roots, reloading meta information" if cache.nil?
+              Bake.formatter.printInfo("Info: specified roots differ from cached roots, reloading meta information") if cache.nil?
             end
             
             if cache != nil
               if (not Bake.options.include_filter.eql?(cache.include_filter)) or (not Bake.options.exclude_filter.eql?(cache.exclude_filter))
                 cache = nil
-                Bake.formatter.printInfo "Info: specified filters differ from cached filters, reloading meta information"
+                Bake.formatter.printInfo("Info: specified filters differ from cached filters, reloading meta information")
               end
             end 
             
             if cache != nil
               if (not Bake.options.no_autodir.eql?(cache.no_autodir))
                 cache = nil
-                Bake.formatter.printInfo "Info: no_autodir option differs in cache, reloading meta information"
+                Bake.formatter.printInfo("Info: no_autodir option differs in cache, reloading meta information")
               end
             end
             
@@ -125,12 +125,12 @@ module Bake
             Bake.formatter.printInfo("Info: cache not found, reloading meta information")
           end
         rescue Exception
-          Bake.formatter.printWarning "Warning: cache file corrupt, reloading meta information (cache might be written by an older bake version)"
+          Bake.formatter.printWarning("Warning: cache file corrupt, reloading meta information (cache might be written by an older bake version)")
           cache = nil
         end      
         
         if cache != nil
-          Bake.formatter.printInfo "Info: cache is up-to-date, loading cached meta information" if Bake.options.verboseHigh
+          Bake.formatter.printInfo("Info: cache is up-to-date, loading cached meta information") if Bake.options.verboseHigh
           Bake.options.build_config = cache.build_config if Bake.options.build_config == ""
           return cache.referencedConfigs
         end

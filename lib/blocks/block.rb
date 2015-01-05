@@ -56,8 +56,14 @@ module Bake
         @lib_elements[2000000000] = [elem]
       end
       
-      def convPath(dir)
-         d = dir.respond_to?("name") ? dir.name : dir
+      def convPath(dir, elem=nil)
+         if dir.respond_to?("name")
+           d = dir.name
+           elem = dir
+         else
+           d = dir
+         end
+         
          return d if Bake.options.no_autodir
          
          inc = d.split("/")
@@ -84,7 +90,9 @@ module Bake
                end
              end
            else
-             Bake.formatter.printInfo "Info: #{@projectName} uses \"..\" in path name #{d}" if Bake.options.verboseHigh
+             if elem and Bake.options.verboseHigh
+               Bake.formatter.printInfo("\"..\" in path name found", elem)
+             end
            end
            
            res = d # relative from self as last resort
@@ -115,7 +123,7 @@ module Bake
           ProcessHelper.killProcess(true)
         rescue Exception => ex1
           if not Bake::IDEInterface.instance.get_abort
-            Bake.formatter.printError "Error: #{ex1.message}"
+            Bake.formatter.printError("Error: #{ex1.message}")
             puts ex1.backtrace if Bake.options.debug
           end
         end 
@@ -159,7 +167,7 @@ module Bake
       def execute
         if (@inDeps)
           if not Bake.options.verboseLow
-            Bake.formatter.printWarning "Warning: circular dependency found including project #{@projectName} with config #{@configName}"
+            Bake.formatter.printWarning("Circular dependency found including project #{@projectName} with config #{@configName}", @config)
           end
           return true
         end

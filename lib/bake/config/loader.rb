@@ -12,17 +12,13 @@ module Bake
       @@defaultToolchainTime
     end
     
-    def getFullProject(configs, configname)
-      if configs.length == 0
-        Bake.formatter.printError "Error: No valid config found"
-        ExitHelper.exit(1)
-      end
+    def getFullProject(configs, configname) # note: configs is never empty
       
       if (configname == "")
         if configs[0].parent.default != ""
           configname = configs[0].parent.default
         else
-          Bake.formatter.printError "Error: No default config specified in '#{configs[0].file_name}'"
+          Bake.formatter.printError("No default config specified", configs[0].file_name) 
           ExitHelper.exit(1)
         end
       end
@@ -31,7 +27,7 @@ module Bake
       configs.each do |c|
         if c.name == configname
           if config
-            Bake.formatter.printError "Error: Config '#{configname}' found more than once in '#{config.file_name}'"
+            Bake.formatter.printError("Config '#{configname}' found more than once",config.file_name)
             ExitHelper.exit(1)
           end
           config = c
@@ -39,7 +35,7 @@ module Bake
       end 
       
       if not config
-        Bake.formatter.printError "Error: Config '#{configname}' not found in '#{configs[0].file_name}'"
+        Bake.formatter.printError("Config '#{configname}' not found", configs[0].file_name)
         ExitHelper.exit(1)
       end
       
@@ -61,14 +57,7 @@ module Bake
           rescue
           end
           if isSym
-            message = "Error: symlinks only allowed with the same parent dir as the target: #{dirOfProjMeta} --> #{Dir.pwd}"
-            res = Bake::ErrorDesc.new
-            res.file_name = dirOfProjMeta
-            res.line_number = 0
-            res.severity = Bake::ErrorParser::SEVERITY_ERROR
-            res.message = message
-            Bake::IDEInterface.instance.set_errors([res])
-            Bake.formatter.printError message
+            Bake.formatter.printError("Symlinks only allowed with the same parent dir as the target: #{dirOfProjMeta} --> #{Dir.pwd}", filename)
             ExitHelper.exit(1)
           end
         end
@@ -86,14 +75,14 @@ module Bake
       config = nil
       
       if f.root_elements.length != 1 or not Metamodel::Project === f.root_elements[0]
-        Bake.formatter.printError "Error: '#{filename}' must have exactly one 'Project' element as root element"
+        Bake.formatter.printError("Config file must have exactly one 'Project' element as root element", filename)
         ExitHelper.exit(1)
       end
       
       configs = f.root_elements[0].getConfig
       
       if configs.length == 0
-        Bake.formatter.printError "Error: #{c.file_name}: No config found"
+        Bake.formatter.printError("No config found", filename)
         ExitHelper.exit(1)
       end
       
@@ -101,7 +90,7 @@ module Bake
         if config.respond_to?("toolchain") and config.toolchain
           config.toolchain.compiler.each do |c|
             if not c.internalDefines.nil? and c.internalDefines != ""
-              Bake.formatter.printError "Error: #{c.file_name}(#{c.internalDefines.line_number}): InternalDefines only allowed in DefaultToolchain"
+              Bake.formatter.printError("InternalDefines only allowed in DefaultToolchain", c.internalDefines)
               ExitHelper.exit(1)
             end
           end
@@ -114,7 +103,7 @@ module Bake
     def validateDependencies(config)
       config.dependency.each do |dep|
         if dep.name.include?"$" or dep.config.include?"$"
-          Bake.formatter.printError "Error: #{dep.file_name}(#{dep.line_number}): No variables allowed in Dependency definition"
+          Bake.formatter.printError("No variables allowed in Dependency definition", dep)
           ExitHelper.exit(1)
         end
         dep.name = config.parent.name if dep.name == ""
@@ -135,15 +124,15 @@ module Bake
         end
   
         if pmeta_filenames.empty?
-          Bake.formatter.printError "Error: #{dep.name}/Project.meta not found"
+          Bake.formatter.printError("#{dep.name}/Project.meta not found", dep)
           ExitHelper.exit(1)
         end
         
         if pmeta_filenames.length > 1
-          Bake.formatter.printWarning "Warning: #{dep.name} exists more than once:"
+          Bake.formatter.printWarning("Project #{dep.name} exists more than once", dep)
           chosen = " (chosen)"
           pmeta_filenames.each do |f|
-            Bake.formatter.printWarning "  #{f}#{chosen}"
+            Bake.formatter.printWarning("  #{File.dirname(f)}#{chosen}")
             chosen = ""
           end
         end
@@ -170,7 +159,7 @@ module Bake
     def loadMainMeta()
       mainMeta = Bake.options.main_dir+"/Project.meta"
       if not File.exist?(mainMeta)
-        Bake.formatter.printError "Error: #{mainMeta} not found"
+        Bake.formatter.printError("Error: #{mainMeta} not found")
         ExitHelper.exit(1)
       end
         
@@ -185,14 +174,14 @@ module Bake
       @referencedConfigs[Bake.options.main_project_name] = [config]
         
       if config.defaultToolchain == nil
-        Bake.formatter.printError "Error: Main project configuration must contain DefaultToolchain"
+        Bake.formatter.printError("Main project configuration must contain DefaultToolchain", config)
         ExitHelper.exit(1)
       end
       
       basedOn = config.defaultToolchain.basedOn
       @basedOnToolchain = Bake::Toolchain::Provider[basedOn]
       if @basedOnToolchain.nil?
-        Bake.formatter.printError "Error: DefaultToolchain based on unknown compiler '#{basedOn}'"
+        Bake.formatter.printError("DefaultToolchain based on unknown compiler '#{basedOn}'", config.defaultToolchain)
         ExitHelper.exit(1)
       end
       @defaultToolchain = Utils.deep_copy(@basedOnToolchain)

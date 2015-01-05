@@ -28,21 +28,21 @@ describe "Docu" do
   it 'onlySub' do
     Bake.startBake("docu/main", ["testonlySub", "--docu"])
     expect($mystring.include?("Docu_of_testself")).to be == true
-    expect($mystring.include?("no documentation command specified")).to be == true
+    expect($mystring.include?("No documentation command specified")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
   
   it 'broken' do
     Bake.startBake("docu/main", ["testbroken", "--docu"])
     expect($mystring.include?("kaputt")).to be == true
-    expect($mystring.include?("no documentation command specified")).to be == true
+    expect($mystring.include?("No documentation command specified")).to be == true
     expect(ExitHelper.exit_code).to be > 0
   end
   
   it 'unbroken' do
     Bake.startBake("docu/main", ["testbroken", "-p", "main,testbroken", "--docu"])
     expect($mystring.include?("kaputt")).to be == false
-    expect($mystring.include?("no documentation command specified")).to be == true
+    expect($mystring.include?("No documentation command specified")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
   

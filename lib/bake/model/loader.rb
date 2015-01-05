@@ -38,7 +38,7 @@ module Bake
       end
             
       if not File.exists?filename
-        Bake.formatter.printError "Error: #{filename} does not exist"
+        Bake.formatter.printError("Error: #{filename} does not exist")
         ExitHelper.exit(1) 
       end
     
@@ -64,7 +64,7 @@ module Bake
         when :load
           puts "Loading #{fragment.location}"
         else
-          Bake.formatter.printError "Error: Could not load #{fragment.location}"
+          Bake.formatter.printError("Error: Could not load #{fragment.location}")
           ExitHelper.exit(1)     
         end
       })
@@ -73,7 +73,7 @@ module Bake
       @model.remove_fragment(f)
     
       f.data[:problems].each do |p|
-        Bake.formatter.printError "Error: "+p.file+"("+p.line.to_s+"): "+p.message
+        Bake.formatter.printError(p.message, p)
       end
       
       if f.data[:problems].length > 0

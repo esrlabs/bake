@@ -26,7 +26,7 @@ module Bake
       sumErrors = 0
       
       if not File.exists?filename
-        Bake.formatter.printError "Error: #{filename} does not exist"
+        Bake.formatter.printError("Error: #{filename} does not exist")
         ExitHelper.exit(1) 
       end
     
@@ -40,7 +40,7 @@ module Bake
       f = @model.fragments[0]
       
       f.data[:problems].each do |p|
-        Bake.formatter.printError "Error: "+p.file+"("+p.line.to_s+"): "+p.message
+        Bake.formatter.printError(p.message, p)
       end
       
       if f.data[:problems].length > 0

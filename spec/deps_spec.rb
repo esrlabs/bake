@@ -41,7 +41,7 @@ describe "Deps" do
   
   it 'circ deps' do
     Bake.startBake("deps/p1", ["-b", "DebugCirc"])
-    expect($mystring.include?("Warning: circular dependency found")).to be == true
+    expect($mystring.include?("Circular dependency found")).to be == true
   end  
   
 end

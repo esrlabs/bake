@@ -108,7 +108,7 @@ module Bake
     cmd = (["-m", pRel, "-b", bp.conf] + passedParams)
     cmdWithNum = "* bakery #{currentRun} of #{maxRuns}: bake " + cmd.join(" ") + " *"
     puts "\n************************************************";
-    Bake.formatter.printInfo cmdWithNum
+    Bake.formatter.printInfo(cmdWithNum)
     puts "************************************************";
    
     
@@ -158,13 +158,13 @@ module Bake
   msg1.length.times { stars << "*" }
 
   if failedRuns == 0
-    Bake.formatter.printSuccess stars
-    Bake.formatter.printSuccess msg1
-    Bake.formatter.printSuccess stars
+    Bake.formatter.printSuccess(stars)
+    Bake.formatter.printSuccess(msg1)
+    Bake.formatter.printSuccess(stars)
   else
-    Bake.formatter.printError stars
-    Bake.formatter.printError msg1
-    Bake.formatter.printError stars
+    Bake.formatter.printError(stars)
+    Bake.formatter.printError(msg1)
+    Bake.formatter.printError(stars)
   end
   
   Bake::IDEInterface.instance.disconnect()

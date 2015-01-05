@@ -118,44 +118,44 @@ module Bake
       
       if @project
         if @project.split(',').length > 2
-          Bake.formatter.printError "Error: only one comma allowed for -p" 
+          Bake.formatter.printError("Error: only one comma allowed for -p")
           ExitHelper.exit(1)
         end
       end
       
       if @linkOnly
         if @rebuild
-          Bake.formatter.printError "Error: --link_only and --rebuild not allowed at the same time" 
+          Bake.formatter.printError("Error: --link_only and --rebuild not allowed at the same time")
           ExitHelper.exit(1)
         end
         if @clean
-          Bake.formatter.printError "Error: --link_only and -c not allowed at the same time" 
+          Bake.formatter.printError("Error: --link_only and -c not allowed at the same time")
           ExitHelper.exit(1)
         end
         if @prepro
-          Bake.formatter.printError "Error: --link_only and --prepro not allowed at the same time" 
+          Bake.formatter.printError("Error: --link_only and --prepro not allowed at the same time")
           ExitHelper.exit(1)
         end
       end
 
       if @prepro
         if @rebuild
-          Bake.formatter.printError "Error: --prepro and --rebuild not allowed at the same time" 
+          Bake.formatter.printError("Error: --prepro and --rebuild not allowed at the same time")
           ExitHelper.exit(1)
         end
         if @clean
-          Bake.formatter.printError "Error: --prepro and -c not allowed at the same time" 
+          Bake.formatter.printError("Error: --prepro and -c not allowed at the same time")
           ExitHelper.exit(1)
         end
       end
            
       if @lint and @docu
-        Bake.formatter.printError "Error: --lint and --docu not allowed at the same time"
+        Bake.formatter.printError("Error: --lint and --docu not allowed at the same time")
         ExitHelper.exit(1)
       end
        
       if @lint and not @project
-        Bake.formatter.printError "Error: --lint must be used together with -p and optional with -f" 
+        Bake.formatter.printError("Error: --lint must be used together with -p and optional with -f")
         ExitHelper.exit(1)
       end
 
@@ -164,11 +164,11 @@ module Bake
     
     def check_valid_dir(dir)
      if not File.exists?(dir)
-        Bake.formatter.printError "Error: Directory #{dir} does not exist"
+        Bake.formatter.printError("Error: Directory #{dir} does not exist")
         ExitHelper.exit(1)
       end
       if not File.directory?(dir)
-        Bake.formatter.printError "Error: #{dir} is not a directory"
+        Bake.formatter.printError("Error: #{dir} is not a directory")
         ExitHelper.exit(1)
       end      
     end    
@@ -182,7 +182,7 @@ module Bake
 
     def set_build_config(config)
       if not @build_config.empty?
-        Bake.formatter.printError "Error: Cannot set build config '#{config}', because build config is already set to '#{@build_config}'"
+        Bake.formatter.printError("Error: Cannot set build config '#{config}', because build config is already set to '#{@build_config}'")
         ExitHelper.exit(1)
       end
       @build_config = config
@@ -204,7 +204,7 @@ module Bake
     def set_threads(num)
       @threads = String === num ? num.to_i : num
       if @threads <= 0
-        Bake.formatter.printError "Error: number of threads must be > 0"
+        Bake.formatter.printError("Error: number of threads must be > 0")
         ExitHelper.exit(1)
       end
     end
@@ -212,7 +212,7 @@ module Bake
     def set_set(str)
       ar = str.split("=")
       if not str.include?"=" or ar[0].length == 0
-        Bake.formatter.printError "Error: --set must be followed by key=value"
+        Bake.formatter.printError("Error: --set must be followed by key=value")
         ExitHelper.exit(1)
       end
       @vars[ar[0]] = ar[1..-1].join("=")

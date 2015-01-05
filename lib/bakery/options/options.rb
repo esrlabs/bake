@@ -52,18 +52,18 @@ module Bake
     
     def check_valid_dir(dir)
      if not File.exists?(dir)
-        Bake.formatter.printError "Error: Directory #{dir} does not exist"
+        Bake.formatter.printError("Error: Directory #{dir} does not exist")
         ExitHelper.exit(1)
       end
       if not File.directory?(dir)
-        Bake.formatter.printError "Error: #{dir} is not a directory"
+        Bake.formatter.printError("Error: #{dir} is not a directory")
         ExitHelper.exit(1)
       end      
     end
     
     def set_collection_name(collection_name)
       if not @collection_name.empty?
-        Bake.formatter.printError "Error: Cannot set collection name '#{collection_name}', because collection name is already set to '#{@collection_name}'"
+        Bake.formatter.printError("Error: Cannot set collection name '#{collection_name}', because collection name is already set to '#{@collection_name}'")
         ExitHelper.exit(1)
       end      
       @collection_name = collection_name
