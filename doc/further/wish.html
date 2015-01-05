@@ -6,24 +6,33 @@
 <body>
 <h1>Wishes and planned features</h1>
 
-Features listed on this page are open for discussion.
+bake:
 <ul>
-<li>Project configurations are placed in Project.meta. If more than one meta file would be supported, different applications may edit different meta files.
-<ul>
-	<li>Applications can change e.g. compiler flags without breaking another application.
-    <li>However, if e.g. a new include path is needed, all meta-files have to be adapted.
-</ul>
+<li>Show lint output during linting. This is possible, but the error parser mechanism has to be refactored
+<li>Support VS compiler
+<li>Glob in Windows does not work if Project.meta is placed in root folder. Implement workaround
+<li>Support read-only file systems (cache files cannot be written)
 <li>Another way to define IncludeDirs, etc. which avoids repeating the work IncludeDir for every include dir (rtext change?)
 <li>meta files: "{" not only at the end of a line, should be possible to place anywhere
-<li>New lines in problems view are shown as a square sign. These signs should be somehow removed without breaking the annotations in the source files.
-<li>Maybe a project property page can be introduced as Project.meta-Viewer/Editor - this could be a feature for a later version.
 <li>Global bake config (e.g. for -v or -a black)
-<li>Support toolchain settings for files with wildcards. Clarify how to proceed with ambiguous declarations.
-<li>Word wrap in colored console in Eclipse (seems to be a bit tricky)
-<li>Additional redirect from errors and warnings in a log file.
+<li>Support toolchain settings for files with wildcards. Clarify how to proceed with ambiguous declarations
+<li>Additional redirect from errors and warnings in a log file
 <li>Conditional variables like ifeq ($(VIDEO_MODE_12BIT_JPEG), 1)
-<li>Better annotations undefined symbol errors (if e.g. filename is given in error message)
-<li>Better error log in Eclipse if plugin does not work
+<li>Better annotations for undefined symbol errors (if e.g. filename is given in error message)
+<li>Cache source file names which are used for creating an archive or executable (to detect that rebuild is necessary if sources are specified with wildcards in Project.meta and some files were deleted)
+</ul>
+
+IDEs:
+<ul>
+<li>VS: Debugging in VS
+<li>Eclipse: newlines in problems view are shown as a square sign. These signs should be somehow removed without breaking the annotations in the source files
+<li>Eclipse: Word wrap in colored console (seems to be a bit tricky)
+<li>Eclipse: better error log if plugin does not work
+</ul>
+
+Internal:
+<ul>
+<li>Cleanup names of attributes in metamodel
 </ul>
 
 </body>
