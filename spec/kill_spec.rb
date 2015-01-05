@@ -11,6 +11,10 @@ module Bake
 
   def self.startKillTest(config, test)
     serverSocket = TCPServer.new('localhost', 10000)
+    
+    serverSocket.setsockopt(:SOCKET, :REUSEADDR, true)
+    serverSocket.setsockopt(Socket::SOL_SOCKET,Socket::SO_REUSEADDR, true)
+    serverSocket.setsockopt(Socket::Option.bool(:INET, :SOCKET, :REUSEADDR, true))
      
     Bake.options = Options.new(["-m", "spec/testdata/kill/main", config, "--socket", "10000", "--threads", "2"])
     Bake.options.parse_options()
