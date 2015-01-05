@@ -51,12 +51,17 @@ def integrateToolchain(tcs, toolchain)
     integrateCompiler(tcs, c, c.ctype)
   end
   integrateLintPolicy(tcs, toolchain.lintPolicy)
+  integrateDocu(tcs, toolchain.docu) if toolchain.docu
 end  
 
 def integrateLintPolicy(tcs, policies)
   policies.each do |d|
     tcs[:LINT_POLICY] << d.name
   end
+end
+
+def integrateDocu(tcs, docu)
+  tcs[:DOCU] = docu.name if docu.name != ""
 end
 
 def integrateLinker(tcs, linker)

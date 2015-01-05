@@ -24,6 +24,7 @@ require 'blocks/compile'
 require 'blocks/library'
 require 'blocks/executable'
 require 'blocks/lint'
+require 'blocks/docu'
 
 require 'set'
 require 'socket'
@@ -45,12 +46,7 @@ module Bake
     def createBaseTcsForConfig
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
-          tcs = nil
-          if not Metamodel::CustomConfig === config
-            tcs = Utils.deep_copy(@defaultToolchain)
-          else
-            tcs = Utils.deep_copy(Bake::Toolchain::Provider.default)
-          end    
+          tcs = Utils.deep_copy(@defaultToolchain)
           @configTcMap[config] = tcs
         end  
       end
@@ -59,9 +55,7 @@ module Bake
     def createTcsForConfig
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
-          if not Metamodel::CustomConfig === config
-            integrateToolchain(@configTcMap[config], config.toolchain)
-          end
+          integrateToolchain(@configTcMap[config], config.toolchain)
         end  
       end
     end
@@ -108,13 +102,15 @@ module Bake
           
           Blocks::ALL_BLOCKS[config.qname] = block
           
-          if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.filename
+          if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.docu and not Bake.options.filename
             addSteps(block, block.preSteps,  config.preSteps)
             addSteps(block, block.postSteps, config.postSteps)
           end
           
-          if Metamodel::CustomConfig === config
-            if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.filename
+          if Bake.options.docu
+            block.mainSteps << Blocks::Docu.new(config, @configTcMap[config])
+          elsif Metamodel::CustomConfig === config
+            if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.docu and not Bake.options.filename
               addSteps(block, block.mainSteps, config) if config.step
             end 
           elsif Bake.options.lint
@@ -203,6 +199,8 @@ module Bake
       taskType = "Building"
       if Bake.options.lint
         taskType = "Linting"
+      elsif Bake.options.docu
+        taskType = "Generating documentation"
       elsif Bake.options.prepro
         taskType = "Preprocessing"
       elsif Bake.options.linkOnly

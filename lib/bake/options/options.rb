@@ -19,7 +19,7 @@ module Bake
     attr_accessor :build_config, :nocache
     attr_reader :main_dir, :project, :filename, :main_project_name # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :debug, :prepro # Boolean
+    attr_reader :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verboseLow
@@ -45,6 +45,7 @@ module Bake
       @clean = false
       @clobber = false
       @lint = false
+      @docu = false
       @debug = false
       @rebuild = false
       @nocache = false
@@ -80,7 +81,9 @@ module Bake
       add_option(Option.new("--lint_min",true)             { |x| @lint_min = String === x ? x.to_i : x            })
       add_option(Option.new("--lint_max",true)             { |x| @lint_max = String === x ? x.to_i : x            })
       
-      add_option(Option.new("-v0",false)                   {     @verboseLow = true; @verboseHigh = false              })
+      add_option(Option.new("--docu",false)                {     @docu = true               })
+
+        add_option(Option.new("-v0",false)                   {     @verboseLow = true; @verboseHigh = false              })
       add_option(Option.new("-v1",false)                   {     @verboseLow = false; @verboseHigh = false                   })
       add_option(Option.new("-v2",false)                   {     @verboseLow = false; @verboseHigh = true                   })
         
@@ -145,12 +148,17 @@ module Bake
           ExitHelper.exit(1)
         end
       end
-            
+           
+      if @lint and @docu
+        Bake.formatter.printError "Error: --lint and --docu not allowed at the same time"
+        ExitHelper.exit(1)
+      end
+       
       if @lint and not @project
         Bake.formatter.printError "Error: --lint must be used together with -p and optional with -f" 
         ExitHelper.exit(1)
       end
-      
+
       ConfigNames.show if @showConfigs
     end
     

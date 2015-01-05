@@ -78,6 +78,10 @@ module Bake
         has_attr 'name', String, :defaultValueLiteral => ""
       end      
       
+      class Docu < ModelElement
+        has_attr 'name', String, :defaultValueLiteral => ""
+      end 
+         
       class DefaultToolchain < ModelElement
         has_attr 'basedOn', String, :defaultValueLiteral => ""
         has_attr 'outputDir', String, :defaultValueLiteral => ""
@@ -86,6 +90,7 @@ module Bake
         contains_one 'linker', Linker, 'parent'
         contains_many 'lintPolicy', LintPolicy, 'parent'
         contains_one 'internalIncludes', InternalIncludes, 'parent'
+        contains_one 'docu', Docu, 'parent'
       end
 
       class Toolchain < ModelElement
@@ -94,6 +99,7 @@ module Bake
         contains_one 'archiver', Archiver, 'parent'
         contains_one 'linker', Linker, 'parent'
         contains_many 'lintPolicy', LintPolicy, 'parent'
+        contains_one 'docu', Docu, 'parent'
       end
       
       class Person < ModelElement
@@ -187,6 +193,7 @@ module Bake
         contains_many 'exLib', ExternalLibrary, 'parent'
         contains_many 'exLibSearchPath', ExternalLibrarySearchPath, 'parent'
         contains_one 'defaultToolchain', DefaultToolchain, 'parent'
+        contains_one 'toolchain', Toolchain, 'parent'
         contains_many 'set', Set, 'parent'
         
         module ClassModule
@@ -202,7 +209,7 @@ module Bake
         contains_many 'files', Files, 'parent'
         contains_many 'excludeFiles', ExcludeFiles, 'parent'
         contains_many 'includeDir', IncludeDir, 'parent'
-        contains_one 'toolchain', Toolchain, 'parent'
+
         
         module ClassModule
            def ident

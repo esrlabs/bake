@@ -275,6 +275,7 @@ module Bake
             @defaultToolchain[:COMPILER][:ASM][:FLAGS]            == cache.defaultToolchain[:COMPILER][:ASM][:FLAGS] and
             @defaultToolchain[:COMPILER][:ASM][:DEFINES].join("") == cache.defaultToolchain[:COMPILER][:ASM][:DEFINES].join("") and
             @defaultToolchain[:LINT_POLICY].join("")              == cache.defaultToolchain[:LINT_POLICY].join("")
+            @defaultToolchain[:DOCU]                              == cache.defaultToolchain[:DOCU]
             @@defaultToolchainTime = cache.defaultToolchainTime
           end
         end

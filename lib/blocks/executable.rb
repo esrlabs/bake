@@ -31,7 +31,7 @@ module Bake
       
       def calcMapFile
         @mapfile = nil
-        if (not Bake.options.lint) and (not @config.mapFile.nil?)
+        if (not Bake.options.docu) and (not Bake.options.lint) and (not @config.mapFile.nil?)
           if @config.mapFile.name == ""
             @mapfile = @exe_name.chomp(File.extname(@exe_name)) + ".map"
           else

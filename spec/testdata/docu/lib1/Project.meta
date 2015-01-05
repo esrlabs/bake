@@ -1,0 +1,11 @@
+Project {
+
+  CustomConfig testmain
+
+  CustomConfig testself {
+    Toolchain {
+	  Docu "echo Docu_of_$(ConfigName)"
+	}
+  }
+  
+}

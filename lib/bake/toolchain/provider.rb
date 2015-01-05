@@ -89,7 +89,8 @@ module Bake
           :CLEAN => "clean"
         },
         
-        :LINT_POLICY => []
+        :LINT_POLICY => [],
+        :DOCU => ""
       }
 
       def self.add(name, basedOn = nil)

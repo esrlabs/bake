@@ -12,7 +12,7 @@ module Bake
       archiverCmd = @@toolchain[:ARCHIVER][:COMMAND]
       linkerCmd = @@toolchain[:LINKER][:COMMAND]
         
-      if (not Metamodel::CustomConfig === @@config) and @@config.toolchain
+      if @@config.toolchain
         linkerCmd = @@config.toolchain.linker.command if @@config.toolchain.linker and @@config.toolchain.linker.command != ""
         archiverCmd = @@config.toolchain.archiver.command if @@config.toolchain.linker and @@config.toolchain.archiver.command != ""
         @@config.toolchain.compiler.each do |c|
