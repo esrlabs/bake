@@ -185,6 +185,10 @@ module Bake
             startBlocks << block
           end
         end
+        if startBlocks.length == 0
+          Bake.formatter.printError "Error: project #{startProjectName} not found"
+          ExitHelper.exit(1)
+        end
         startBlocks.reverse! # most probably the order of dependencies if any
         Blocks::Block.set_num_projects(startBlocks.length)
       else
