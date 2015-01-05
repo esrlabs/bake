@@ -103,7 +103,9 @@ module Bake
   @toBuild.each do |bp|
     currentRun += 1
     p = File.dirname(bp.proj)
-    cmd = (["-m", p, "-b", bp.conf] + passedParams)
+    pRel = File.rel_from_to_project(Dir.pwd, p, false)
+    pRel = "." if pRel.empty?
+    cmd = (["-m", pRel, "-b", bp.conf] + passedParams)
     cmdWithNum = "* bakery #{currentRun} of #{maxRuns}: bake " + cmd.join(" ") + " *"
     puts "\n************************************************";
     Bake.formatter.printInfo cmdWithNum
