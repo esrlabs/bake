@@ -19,15 +19,7 @@ module Bake
         end
           
         if (cmd_result == false and (not ignoreStr or not output.include?ignoreStr))
-          if Bake::IDEInterface.instance
-            err_res = ErrorDesc.new
-            err_res.file_name = @config.file_name.to_s
-            err_res.line_number = @config.line_number
-            err_res.severity = ErrorParser::SEVERITY_ERROR
-            err_res.message = "Command \"#{commandLine}\" failed"
-            Bake::IDEInterface.instance.set_errors([err_res])
-          end
-          Bake.formatter.printError("Error: command \"#{commandLine}\" failed")
+          Bake.formatter.printError("Command \"#{commandLine}\" failed", @config)
           puts "(executed in '#{@projectDir}')" if not Bake.options.verboseHigh
           raise SystemCommandFailed.new
         end

@@ -73,7 +73,7 @@ module Bake
       @model.remove_fragment(f)
     
       f.data[:problems].each do |p|
-        Bake.formatter.printError(p.message, p)
+        Bake.formatter.printError(p.message, p.file, p.line)
       end
       
       if f.data[:problems].length > 0
