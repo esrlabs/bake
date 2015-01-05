@@ -69,7 +69,7 @@ describe "Option Parser" do
     expect($mystring.include?("* testL1C")).to be == true
   end
 
-  it 'should provide a config names' do
+  it 'should provide config names' do
     Bake.options = Options.new(["--show_configs", "-m", "spec/testdata/default/libNoD"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("* testL2A")).to be == true
@@ -77,7 +77,7 @@ describe "Option Parser" do
     expect($mystring.include?("* testL2C")).to be == true
   end
    
-  it 'should provide a config names' do
+  it 'should provide a license' do
     Bake.options = Options.new(["--show_license"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("E.S.R.")).to be == true
