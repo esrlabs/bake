@@ -1,6 +1,6 @@
 $:.unshift(File.dirname(__FILE__)+"/")
 
-#require "rake"
+require "rake"
 require "lib/common/version"
 
 include FileUtils
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.name = "bake-toolkit"
   s.version = PKG_VERSION
   s.summary = "Build tool to compile C/C++ projects fast and easy."
+  s.description = "See documentation for more details"
   s.files = PKG_FILES.to_a
   s.require_path = "lib"
   s.author = "Alexander Schaal"
