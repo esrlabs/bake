@@ -11,7 +11,6 @@ Using bake in Eclipse is very similar compared to the CDT build mechanism.
 <p>
 One major difference is, that .cproject and .project files are just wrappers. Do not use the standard property pages, they will be simply ignored! <b>Edit only the Project.meta files.</b><br>
 <b>The .cproject and .project files shall not be committed to your source control.</b>
-However, you may commit .cproject and .project files with an empty dummy configuration <b>once</b> to avoid the following importing step for future checkouts.
 
 <h2>Import</h2>
 
@@ -23,6 +22,9 @@ The importer can be found unter File->Import or in the context menu of the Proje
 All (sub)directories with a Project.meta are listed here. Choose the projects to import and press Finish.<p>
 <img src="import/Select.png"/>
 <img src="import/Import.png"/><br>	
+<br>
+Note, that .(c)project files will not be overwritten per default. If e.g. a project is not a c-project, some bake features will not available.
+In this case, enable the recreate option. This is also a good idea, if you want to get rid of old configurations. 
 
 </body>
 

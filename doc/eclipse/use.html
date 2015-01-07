@@ -19,12 +19,15 @@ The chosen config is marked with a filled circle before the config name.You can 
 <p>
 This label decoration can be switched off and on via Window->Preferences->General->Appearance->Label Decorations.
 
-<h2>Adjust includes for CDT</h2>
+<h2>Adjust includes and defines for CDT</h2>
 
-As you might have already seen, a new menu item for the main project is enabled now: Adjust includes for CDT.<br>
-All CDT features work out-of-the-box except those about the #include statements e.g. auto-completion of includes. To import the "bake includes" into the CDT .cproject files, simply click on this menu item.<br>
-<b>This is not a must, it's just convenience.</b><br>
-Note: importing can take between a few seconds and a minute depending on the size of the workspace and the number of project settings which have to be written.<br>
+As you might have already seen, a new menu item for the main project is enabled now: Adjust includes and defines for CDT.<br>
+All CDT features work out-of-the-box except those about the #include and #define statements e.g. auto-completion of includes.
+To import the includes and defines into the CDT .cproject files, simply click on this menu item.<p>
+Compiler internal includes and defines must be specified in InternalInclude and InternalDefine files. See "Syntax" help page how to set the name of these files. Note, that the
+variables CPPPath, CPath, ASMPath, ArchiverPath and LinkerPath can be used in these files.<br>
+<p>
+Adjusting can take between a few seconds and a minute depending on the size of the workspace and the number of project settings which have to be written.<br>
 
 <h2>Build/Clean Projects/Files</h2>
 

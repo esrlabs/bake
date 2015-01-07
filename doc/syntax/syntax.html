@@ -64,7 +64,7 @@ z-index: 100;
 
 <table border="1" style="font-family:monospace"; font-size:10><td>
 
-<span class="help" onMouseover="showProject()" onMouseout="notip()">Project</span> {<br>
+<span class="help" onMouseover="showProject()" onMouseout="notip()">Project</span> <span class="help" onMouseover="showDefaultConfig()" onMouseout="notip()">default</span>: &#60;name&#62; {<br>
 &nbsp; <br>
 
 &nbsp; <span class="help" onMouseover="showDescription()" onMouseout="notip()">Description</span>  &#60;text&#62;<br><br>
@@ -123,16 +123,10 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showInternalIncludes()" onMouseout="notip()">InternalIncludes</span> &#60;file&#62;<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultLintPolicy()" onMouseout="notip()">LintPolicy</span> &#60;policy&#62;<br>
-&nbsp; &nbsp; }<br></span><br></span>
-
-              <span id="libExe_part"><span class="show" style="background-color:#EEEEEE;">
-&nbsp; &nbsp; <span class="mycomment"># Valid for ExecutableConfig and LibraryConfig</span><br><br>
-&nbsp; &nbsp; <span class="help" onMouseover="showFiles()" onMouseout="notip()">Files</span> &#60;pattern&#62; {<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDocu()" onMouseout="notip()">Docu</span> &#60;cmdLine&#62;<br>
 &nbsp; &nbsp; }<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showExcludeFiles()" onMouseout="notip()">ExcludeFiles</span> &#60;pattern&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;<br>
+
+
 &nbsp; &nbsp; <span class="help" onMouseover="showToolchainProject()" onMouseout="notip()">Toolchain</span> <span class="help" onMouseover="showOutputDir()" onMouseout="notip()">outputDir</span>: &#60;dir&#62; {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C, 
                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br> 
@@ -150,7 +144,20 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPostfixFlags()" onMouseout="notip()">LibPostfixFlags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLintPolicy()" onMouseout="notip()">LintPolicy</span> &#60;policy&#62;<br>
-&nbsp; &nbsp; }<br></span><br></span>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDocu()" onMouseout="notip()">Docu</span> &#60;cmdLine&#62;<br>
+&nbsp; &nbsp; }<br></span><br>
+</span>
+
+              <span id="libExe_part"><span class="show" style="background-color:#EEEEEE;">
+&nbsp; &nbsp; <span class="mycomment"># Valid for ExecutableConfig and LibraryConfig</span><br><br>
+&nbsp; &nbsp; <span class="help" onMouseover="showFiles()" onMouseout="notip()">Files</span> &#60;pattern&#62; {<br>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
+&nbsp; &nbsp; }<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showExcludeFiles()" onMouseout="notip()">ExcludeFiles</span> &#60;pattern&#62;<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;<br>
+
+</span><br></span>
 
               <span id="exe_part"><span class="show" style="background-color:#EEEEEE;">
 &nbsp; &nbsp; <span class="mycomment"># Valid for ExecutableConfig</span><br><br>
@@ -165,11 +172,16 @@ z-index: 100;
                             <span style="background-color:#DDDDDD;" id="makefile_part" class="showInline"> &#60;name&#62;,
                                           <span class="help" onMouseover="showMakefileLib()" onMouseout="notip()">lib</span>: &#60;lib&#62;,
 										  <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
-										  <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62; {<br>
+										  <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
+										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
+                                          <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62; {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>										  
 &nbsp; &nbsp; }<br>										  										  						
 							</span>
-                            <span style="background-color:#DDDDDD;" id="commandline_part"  class="hide">&#60;line&#62;</span>
+                            <span style="background-color:#DDDDDD;" id="commandline_part"  class="hide">&#60;line&#62;,
+                            <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
+                            <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;
+                            </span>
 &nbsp; &nbsp; <br></span><br></span>
 &nbsp; }<br>
 }<br>
@@ -189,6 +201,16 @@ function showProject() {
   str = 'A bake project is very similiar to a project in Eclipse, Visual Studio, etc.<br>'+
     'The name of the project is the directory name of the Project.meta file.'
   ddrivetip("Project", "Yes", "1", "-",str)
+}
+
+function showDefaultConfig() {
+  str = 'Default configuration which is used if not explicitly specified on command line or Dependency definition.<br><br>'+
+    'Examples:<br>'+
+    '# Project.meta:<br>'+
+    'Dependency canDriver # uses default config of canDriver project<br>'+
+    '# Command line:<br>'+
+    'bake -m folder/dir/projABC # builds default config of project projABC'
+  ddrivetip("defaukt", "No", "-", "-",str)
 }
 
 function showResponsible() {
@@ -411,7 +433,9 @@ function showSet() {
 
 function showDependency() {   
   str = 'Specifies another project to be built before this project.<br>'+
-    'The archive, linker libs and search paths are imported from this project to the this project automatically.'
+    'The archive, linker libs and search paths are imported from this project to the this project automatically.<br>'+
+    'If you omit the project, the current project will be used.<br>'+
+    'If you omit the config name, the default config will be used.'
 	ddrivetip("Dependency", "No","0..n","-",str)  
 }
 
@@ -517,6 +541,10 @@ function showLinker() {
 
 function showLintPolicy() {  
   ddrivetip("LintPolicy", "No","0..n","-","lnt-file - but it can be used for any other command line option for Lint.")  
+}
+
+function showDocu() {  
+  ddrivetip("Docu", "No","0..1","-","Command to build the documentation. e.g.:<br>doxygen main.cfg")  
 }
 
 function showDefaultFlags() {  

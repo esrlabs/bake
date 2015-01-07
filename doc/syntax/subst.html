@@ -41,6 +41,11 @@ bake includes also some standard variables:
   <tr><td>$(ArtifactNameBase)</td> <td>bootloader_1.0</td></tr>
   <tr><td>$(Time)</td> <td>2012-12-24 20:00:00 +0200</td></tr>
   <tr><td>$(Hostname)</td> <td>MY_COMPUTER</td></tr>
+  <tr><td>$(CPPPath)</td> <td>/usr/bin</td></tr>
+  <tr><td>$(CPath)</td> <td>/usr/bin</td></tr>
+  <tr><td>$(ASMPath)</td> <td>/usr/bin</td></tr>
+  <tr><td>$(ArchiverPath)</td> <td>/usr/bin</td></tr>
+  <tr><td>$(LinkerPath)</td> <td>/usr/bin</td></tr>
 </table>
 <br>
 <table border="1">
@@ -61,6 +66,8 @@ Otherwise:
 </table>
 <p>
 If the environment variable does not exist, it will be substituted by an empty string.
+<p>
+Note, that variables in <b>Dependency</b> definitions are not allowed.
 
 <h3>Equal variables</h3>
 
@@ -75,7 +82,7 @@ If the environment variable does not exist, it will be substituted by an empty s
 <h4>In subproject</h4>
 <table border="1">
   <tr><th bgcolor="#CCCCCC">Variable</th><th bgcolor="#CCCCCC">is equal to</th></tr>
-  <tr><td>$(OutputDir)</td> <td>$(MainConfigName)_$(MainProjectName)</td></tr>
+  <tr><td>$(OutputDir)</td> <td>$(ConfigName)_$(MainProjectName)_$(MainConfigName)</td></tr>
 </table>
 
 <h3>Auto-adjustment of paths to existing projects</h3>

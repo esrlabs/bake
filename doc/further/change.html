@@ -7,6 +7,131 @@
 <body>
 <h1>Changelog</h1>
 
+January 7, 2015 - bake-toolkit 2.0.3<br>
+<ul>
+
+
+<li><b>Changed: default configuration is chosen if configuration name is omitted. This applies to command line as well as to <i>Dependency</i> definitions, e.g.:</b><br>
+# Project.meta:<br>
+Dependency canDriver # no <i>config</i> attribute<br>
+# Command line:<br>
+bake -m bla/myProj # no configuration name specified<br>
+<b>To show the possible configs of a project, use the --show_configs command line option.</b>
+<p>
+<li><b>Added: More than one config of a project can be used in the workspace.</b><br>
+Example:<br>
+Dependency canDriver, config: C1<br>
+Dependency canDriver, config: C2<br>
+<b>To reference a config of the current project, omit the project name, e.g.:</b><br>
+Dependency config: C3<br>
+<b>To build a single project, you can still use -p command line argument:</b><br>
+bake Debug -p canDriver<br>
+<b>However, if canDriver has more than one config in the workspace, all configs will be built. To build only a single config, use a comma separator like this:</b><br>
+bake Debug -p canDriver,C1<br>
+<p>
+<li><b>The default output folder has been changed due to the new feature of having several configs of a project in one workspace.</b><br>
+<table border="1">
+  <tr>
+    <th></th>
+    <th>Old</th> 
+    <th>New</th>
+  </tr>
+  <tr>
+    <td><b>Main project</b></td>
+    <td>$(MainConfigName)</td> 
+    <td>$(MainConfigName)</td>
+  </tr>
+  <tr>
+    <td><b>Sub project</b></td>
+    <td>$(MainConfigName)_$(MainProjectName)</td> 
+    <td>$(SubConfigName)_$(MainProjectName)_$(MainConfigName)</td>
+  </tr>
+</table>
+<b>Be careful if you have something like this in Project.meta:</b><br>
+ExternalLibrary "bspCoreZ6/$(MainConfigName)_$(MainProjectName)/src/coreZ6/startup/startupCode.o", search:false<br>
+<b>This refers to the old output directory. Change it or if you want to support old and new bake versions,
+write a <i>PreStep</i> which copies the file from the new location to the old one.</b>
+
+<p>
+<li><b>Changed: with -f a pattern can be specified, not only a single file. All files matching this string will be compiled.</b>
+<li><b>Changed: variables in Dependency definitions are not allowed anymore to avoid inconsistencies.</b>
+<li><b>Changed: no error will be reported anymore if makefile has no clean target.</b>
+<li><b>Changed: Source files will now be compiled and archived ordered by the <i>Files</i> definition in Project.meta, not by a Eclipse-backward-compatibility-ordering.</b>
+<li><b>Changed: reworked some error messages, more error annotations are shown in IDEs</b>
+<p>
+<li><b>Added: "--include_filter" and "--exclude_filter" also work for main step of <i>CustomConfig</i></b>
+<li><b>Added: possibility to add comments in roots.bake</b>
+<li><b>Added: new variables CPPPath, CPath, ASMPath, ArchiverPath and LinkerPath. These variables can also be used in <i>InternalDefines</i> and <i>InternalInclude</i> files.</b>
+<li><b>Added: lint is not restricted to GCC toolchain anymore.</b><br>
+<li><b>Added: --docu option. Specify the docu command line in <i>Docu</i> tag of the <i>(Default)Toolchain</i>.</b><br>
+<p>
+<li><b>Removed: support for Ruby 1.8. Use Ruby 1.9 or higher.</b>
+<li><b>Removed: dependencies to cxxproject and rake gems</b>
+<li><b>Removed: "-j" as default flag when calling makefiles. This must be explicitly specified.</b>
+<li><b>Removed: option to check for unnecessary includes</b>
+<li><b>Removed: hardcoded TI compiler commands and flags</b>
+<table border="1">
+  <tr>
+    <th></th>
+    <th>Old</th> 
+    <th>New</th>
+  </tr>
+  <tr>
+    <td><b>Compiler command</b></td>
+    <td>$(ti_home)/ccsv5/tools/compiler/tms470/bin/cl470</td> 
+    <td>ti_cl</td>
+  </tr>
+  <tr>
+    <td><b>Compiler flags</b></td>
+    <td>-mv7A8 -g --include_path="#{ti_home}/ccsv5/tools/compiler/tms470/include" --diag_warning=225 -me --abi=eabi --code_state=32 --preproc_with_compile</td> 
+    <td></td>
+  </tr>
+  <tr>
+    <td><b>Archiver command</b></td>
+    <td>$(ti_home)/ccsv5/tools/compiler/tms470/bin/ar470</td> 
+    <td>ti_ar</td>
+  </tr>
+  <tr>
+    <td><b>Linker command</b></td>
+    <td>$(ti_home)/ccsv5/tools/compiler/tms470/bin/cl470</td> 
+    <td>ti_cl</td>
+  </tr>
+  <tr>
+    <td><b>Linker flags</b></td>
+    <td>-mv7A8 -g --diag_warning=225 -me --abi=eabi --code_state=32 -z --warn_sections -i"$(ti_home)/ccsv5/tools/compiler/tms470/lib" -i"$(ti_home)/ccsv5/tools/compiler/tms470/include"</td> 
+    <td></td>
+  </tr>
+  <tr>
+    <td><b>Linker lib prefix flags</b></td>
+    <td>-lDebug/configPkg/linker.cmd</td> 
+    <td></td>
+  </tr>
+</table>
+<p>
+<li><b>Bugfix: variables in <i>add</i> and <i>remove</i> attributes of <i>Flags</i> now work as intended</b>
+<li><b>Bugfix: output folder was not created if no sources are specified for <i>LibraryConfig</i> and <i>ExecutableConfig</i>.</b>
+<li><b>Bugfix: "-p" was not forwarded in bakery.</b>
+<p>
+<li><b>Cosmetic: bakery now calls bake with relative pathnames, which results in nicer outputs.</b>
+
+
+
+</ul>
+
+December 19, 2014 - Eclipse plugin 1.2.0<br>
+<ul>
+<li><b>Bugifx: it is now ensured, that bake will be started from Eclipse working directory</b>
+<li><b>Bugfix: projects created with the "new bake project wizard" are now placed in the correct folder.</b>
+<li><b>Added: Eclipse working directory shown in bake preference dialog (important if -w option is used with relative paths)</b>
+<li><b>Added: Options to recreate .(c)project files when importing bake projects</b>
+<li><b>Changed: Eclipse configurations will be named "bake" and not "Do not use this config, use bake instead"</b> 
+</ul>
+
+December 16, 2014 - Eclipse plugin 1.1.1<br>
+<ul>
+<li><b>Bugfix: Adjust include and defines broken feature used wrong command line option.</b>
+</ul>
+
 November 7, 2014 - bake-toolkit 1.8.0, Eclipse plugin 1.1.0<br>
 <ul>
 <li><b>Added: InternalIncludes and InternalDefines in DefaultToolchain, which are forwarded to the IDE.</b>
@@ -55,7 +180,7 @@ July 18, 2014 - bake-toolkit 1.5.0<br>
 June 6, 2014 - bake-toolkit 1.4.0<br>
 <ul>
 <li><b>Bugfix: variables can be used in "Set" now</b>
-<li><b>Added: variable "MainProjectDir"
+<li><b>Added: variable "MainProjectDir"</b>
 </ul>
 
 May 23, 2014 - bake-toolkit 1.3.0<br>

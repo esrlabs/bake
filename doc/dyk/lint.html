@@ -42,8 +42,7 @@ In rare cases lint has problems if it has to open too many (include) files. If t
 bake Debug -p MyLibraryProject --lint --lint_min 51 --lint_max 100 (lints the next 50 files)
 bake Debug -p MyLibraryProject --lint --lint_min 101               (lints the rest of the files)</code></pre>
 <p>
-Lint in bake uses GCC includes to check system include stuff. Therefore it is required to have a working GCC installation.<br>
-But you don't have to use a config with GCC toolchain. Every other toolchain is also valid.
+Currently the lint output is buffered and not shown before lint has been finished. The reason is the implementation of the error parser. This will change in future.
 
 </body>
 
