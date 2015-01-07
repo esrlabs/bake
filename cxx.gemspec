@@ -33,4 +33,5 @@ Gem::Specification.new do |s|
   s.add_dependency("colored")
   s.executables = ["bake", "bakery", "createVSProjects", "bake-doc"]
   s.licenses    = ['MIT']
+  s.required_ruby_version = '>= 1.9'
 end

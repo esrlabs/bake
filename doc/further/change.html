@@ -18,7 +18,7 @@ Dependency canDriver # no <i>config</i> attribute<br>
 bake -m bla/myProj # no configuration name specified<br>
 <b>To show the possible configs of a project, use the --show_configs command line option.</b>
 <p>
-<li><b>Added: More than one config of a project can be used in the workspace.</b><br>
+<li><b>Changed: more than one config of a project can be used in one build.</b><br>
 Example:<br>
 Dependency canDriver, config: C1<br>
 Dependency canDriver, config: C2<br>
@@ -29,7 +29,7 @@ bake Debug -p canDriver<br>
 <b>However, if canDriver has more than one config in the workspace, all configs will be built. To build only a single config, use a comma separator like this:</b><br>
 bake Debug -p canDriver,C1<br>
 <p>
-<li><b>The default output folder has been changed due to the new feature of having several configs of a project in one workspace.</b><br>
+<li><b>Changed: the default output folder has been changed due to the new feature of having several configs of a project in one workspace.</b><br>
 <table border="1">
   <tr>
     <th></th>
@@ -56,7 +56,7 @@ write a <i>PreStep</i> which copies the file from the new location to the old on
 <li><b>Changed: with -f a pattern can be specified, not only a single file. All files matching this string will be compiled.</b>
 <li><b>Changed: variables in Dependency definitions are not allowed anymore to avoid inconsistencies.</b>
 <li><b>Changed: no error will be reported anymore if makefile has no clean target.</b>
-<li><b>Changed: Source files will now be compiled and archived ordered by the <i>Files</i> definition in Project.meta, not by a Eclipse-backward-compatibility-ordering.</b>
+<li><b>Changed: source files will now be compiled and archived ordered by the <i>Files</i> definition in Project.meta, not by a Eclipse-backward-compatibility-ordering.</b>
 <li><b>Changed: reworked some error messages, more error annotations are shown in IDEs</b>
 <p>
 <li><b>Added: "--include_filter" and "--exclude_filter" also work for main step of <i>CustomConfig</i></b>
