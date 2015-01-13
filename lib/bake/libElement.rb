@@ -44,7 +44,7 @@ module Bake
         prefix ||= File.rel_from_to_project(@@projectDir,block.projectDir)
         adaptedPath = prefix + path if prefix
       end
-      adaptedPath = "\"" + adaptedPath + "\"" if adaptedPath.include?(" ")
+      #adaptedPath = "\"" + adaptedPath + "\"" if adaptedPath.include?(" ")
       [adaptedPath, prefix]
     end
     

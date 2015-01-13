@@ -198,7 +198,7 @@ module Bake
         if (r.length == 3 && r.include?(":/"))
           r = r + Bake.options.main_project_name # glob would not work otherwise on windows (ruby bug?)
         end
-        r = r+"/**{,/*/**}/Project.meta"  
+        r = r+"/**{,/*/**}/Project.meta"
         @potentialProjs.concat(Dir.glob(r))
       end
       

@@ -1,0 +1,8 @@
+Project default: testSpaces {
+
+  LibraryConfig testSpaces {
+	Files "src/sub.cpp"
+	IncludeDir "inc lude"
+  }
+
+}

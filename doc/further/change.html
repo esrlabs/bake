@@ -7,10 +7,13 @@
 <body>
 <h1>Changelog</h1>
 
+January 13, 2015 - bake-toolkit 2.0.4<br>
+<ul>
+<li><b>Bugfix: compiler could not access dependency files in some cases</b>
+</ul>
+
 January 7, 2015 - bake-toolkit 2.0.3<br>
 <ul>
-
-
 <li><b>Changed: default configuration is chosen if configuration name is omitted. This applies to command line as well as to <i>Dependency</i> definitions, e.g.:</b><br>
 # Project.meta:<br>
 Dependency canDriver # no <i>config</i> attribute<br>
@@ -120,7 +123,7 @@ write a <i>PreStep</i> which copies the file from the new location to the old on
 
 December 19, 2014 - Eclipse plugin 1.2.0<br>
 <ul>
-<li><b>Bugifx: it is now ensured, that bake will be started from Eclipse working directory</b>
+<li><b>Bugfix: it is now ensured, that bake will be started from Eclipse working directory</b>
 <li><b>Bugfix: projects created with the "new bake project wizard" are now placed in the correct folder.</b>
 <li><b>Added: Eclipse working directory shown in bake preference dialog (important if -w option is used with relative paths)</b>
 <li><b>Added: Options to recreate .(c)project files when importing bake projects</b>

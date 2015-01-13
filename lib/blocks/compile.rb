@@ -42,11 +42,14 @@ module Bake
         
         if type != :ASM
           begin
-            deps = YAML.load_file(dep_filename)
-            deps.each do |d|
-              return true if not File.exist?(d) or oTime < File.mtime(d) 
+            File.open(dep_filename) do |f|
+              deps = YAML::load(f)
+              deps.each do |d|
+                return true if not File.exist?(d) or oTime < File.mtime(d) 
+              end
             end
           rescue Exception => ex
+            puts "Could not load "+ dep_filename + "." if Bake.options.debug
             # puts ex.message
            #  puts ex.backtrace
             # may happen if dep_filename was not converted the last time
@@ -56,12 +59,10 @@ module Bake
         false
       end
       
-      
       def calcDepFile(object, type)
         dep_filename = nil
         if type != :ASM
           dep_filename = object[0..-3] + ".d"
-          dep_filename = "\"" + dep_filename + "\"" if dep_filename.include?" "
         end
         dep_filename
       end
@@ -113,17 +114,31 @@ module Bake
             if @tcs[:COMPILER][type][:DEP_FLAGS_SPACE]
               cmd << dep_filename
             else
-              cmd[cmd.length-1] << dep_filename
+              if dep_filename.include?" "
+                cmd[cmd.length-1] << "\"" + dep_filename + "\""
+              else
+                cmd[cmd.length-1] << dep_filename
+              end
+              
             end
           end
         end
              
-
         cmd += compiler[:PREPRO_FLAGS].split(" ") if Bake.options.prepro
         cmd += flags
         cmd += includes
         cmd += defines
-        cmd += (compiler[:OBJECT_FILE_FLAG] + object).split(" ")
+        
+        if compiler[:OBJ_FLAG_SPACE]
+          cmd << compiler[:OBJECT_FILE_FLAG]
+          cmd << object
+        else
+          if object.include?" "
+            cmd << compiler[:OBJECT_FILE_FLAG] + "\"" + object + "\"" 
+          else
+            cmd << compiler[:OBJECT_FILE_FLAG] + object
+          end
+        end
         cmd << source
 
         success, consoleOutput = ProcessHelper.run(cmd, false, false)
@@ -137,10 +152,12 @@ module Bake
       def convert_depfile(dep_filename)
         return if not dep_filename or not File.exist?(dep_filename)
         deps_string = File.read(dep_filename)
+        deps_string = deps_string.gsub(/\\\n/,'')
+        deps = deps_string.split(/([^\\]) /).each_slice(2).map(&:join)[2..-1]
+
         # deps_string looks like "test.o: test.cpp test.h" -> remove .o and .cpp from list
-        deps = deps_string.gsub(/\\\n/,'').split()[2..-1]
         return if deps.nil? # ok, because next run the source will be recompiled due to invalid dep_filename
-        expanded_deps = deps.map { |d| d.gsub(/[\\]/,'/') }
+        expanded_deps = deps.map { |d| d.gsub(/[\\] /,' ').gsub(/[\\]/,'/').strip }
         File.open(dep_filename, 'wb') { |f| f.write(expanded_deps.to_yaml) }
       end
 

@@ -1,0 +1,11 @@
+Project default: testSpaces {
+
+  ExecutableConfig testSpaces {
+    Dependency "sub proj"
+	Files "src/main.cpp"
+	IncludeDir "inc lude"
+	IncludeDir "sub proj/inc lude"
+	DefaultToolchain GCC
+  }
+
+}
