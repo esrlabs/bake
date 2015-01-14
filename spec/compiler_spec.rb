@@ -9,12 +9,22 @@ require 'helper'
 
 module Bake
 
+$dccInstalled = false
+  
 describe "compiler" do
-begin
+  
+  before(:all) do
+    $noCleanTestData = true
+  end
+
+  after(:all) do
+    $noCleanTestData = false
+  end
   
   it 'dcc rebuild' do
     begin
       `dcc`
+      $dccInstalled = true
     rescue Exception
       fail "dcc not installed" # fail only once on non dcc systems
     end
@@ -28,22 +38,18 @@ begin
   end
 
   it 'dcc build' do
-      begin
-        `dcc`
-        Bake.startBake("compiler/dcc", ["test"])
-        expect($mystring.include?("lib.cpp")).to be == false
-        expect($mystring.include?("main.cpp")).to be == false
-        expect($mystring.include?("libdcc.a")).to be == false
-        expect($mystring.include?("dcc.elf")).to be == false
-        expect(ExitHelper.exit_code).to be == 0
-      rescue Exception
-      end
+    if $dccInstalled
+      Bake.startBake("compiler/dcc", ["test"])
+      expect($mystring.include?("lib.cpp")).to be == false
+      expect($mystring.include?("main.cpp")).to be == false
+      expect($mystring.include?("libdcc.a")).to be == false
+      expect($mystring.include?("dcc.elf")).to be == false
+      expect(ExitHelper.exit_code).to be == 0
     end
   end
   
   it 'dcc touch' do
-    begin
-      `dcc`
+    if $dccInstalled
       sleep 1.1
       FileUtils.touch("spec/testdata/compiler/dcc/include/inc1.h")
       
@@ -53,17 +59,32 @@ begin
       expect($mystring.include?("libdcc.a")).to be == false
       expect($mystring.include?("dcc.elf")).to be == true
       expect(ExitHelper.exit_code).to be == 0
-    rescue Exception
+    end
+  end
+  
+  it 'dcc move' do
+    if $dccInstalled
+      path = "spec/testdata/compiler/dcc/include/"
+      FileUtils.cp(path + "inc1.h", path + "inc1.h.bak") 
+      FileUtils.rm_f(path + "inc1.h");
+      
+      Bake.startBake("compiler/dcc", ["test"])
+      expect($mystring.include?("lib.cpp")).to be == false
+      expect($mystring.include?("main.cpp")).to be == true
+      expect($mystring.include?("libdcc.a")).to be == false
+      expect($mystring.include?("dcc.elf")).to be == false
+      expect(ExitHelper.exit_code).to be > 0
+      
+      FileUtils.mv(path + "inc1.h.bak", path + "inc1.h") 
     end
   end
 
   it 'dcc dep' do
-    begin
+    if $dccInstalled
       `dcc`
       depStr = File.read("spec/testdata/compiler/dcc/test/src/main.d.bake")
       expect(depStr.include?("inc1.h")).to be == true
       expect(depStr.include?("inc 2.h")).to be == true
-    rescue Exception
     end
   end
   
