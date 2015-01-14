@@ -153,11 +153,6 @@ module Bake
         Bake.formatter.printError("Error: --lint and --docu not allowed at the same time")
         ExitHelper.exit(1)
       end
-       
-      if @lint and not @project
-        Bake.formatter.printError("Error: --lint must be used together with -p and optional with -f")
-        ExitHelper.exit(1)
-      end
 
       ConfigNames.show if @showConfigs
     end
