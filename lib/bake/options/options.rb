@@ -3,6 +3,7 @@ require 'common/options/parser'
 require 'bake/options/showToolchains'
 require 'bake/options/showConfigNames'
 require 'bake/options/showLicense'
+require 'bake/options/showDoc'
 require 'bake/options/usage'
 require 'common/options/option'
 
@@ -105,6 +106,7 @@ module Bake
       add_option(Option.new("--show_include_paths",false)  {     @show_includes = true      })
       add_option(Option.new("--show_incs_and_defs",false)  {     @show_includes_and_defines = true  })
       add_option(Option.new("--show_license",false)        {     License.show              })
+      add_option(Option.new("--doc",false)                 {     Doc.show              })
       add_option(Option.new("--version",false)             {     ExitHelper.exit(0)         })
       add_option(Option.new("--show_configs",false)        {     @showConfigs = true    })
       

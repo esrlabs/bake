@@ -41,6 +41,7 @@ module Bake
       puts " --show_incs_and_defs     Used by IDEs plugins"
       puts ""
       puts " --version                Print version."
+      puts " --doc                    Open documentation in browser"
       puts " -h, --help               Print this help."
       puts " --show_license           Print the license."
       puts ""
