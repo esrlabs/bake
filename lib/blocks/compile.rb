@@ -91,7 +91,7 @@ module Bake
         @objects << object
         
         dep_filename = calcDepFile(object, type)
-        dep_filename_conv = calcDepFileConv(dep_filename)
+        dep_filename_conv = calcDepFileConv(dep_filename) if type != :ASM
         
         reason = needed?(source, object, type, dep_filename_conv)
         return true unless reason
@@ -154,7 +154,7 @@ module Bake
         outputType = Bake.options.prepro ? "Preprocessing" : "Compiling"
         process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
    
-        Compile.convert_depfile(dep_filename, dep_filename_conv, @projectDir, @tcs[:COMPILER][:DEP_FILE_SINGLE_LINE])
+        Compile.convert_depfile(dep_filename, dep_filename_conv, @projectDir, @tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if type != :ASM
         check_config_file
       end
 
