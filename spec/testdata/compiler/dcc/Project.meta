@@ -1,0 +1,21 @@
+Project {
+
+  LibraryConfig testLib {
+    Files "src/lib.cpp"
+  }
+  
+  ExecutableConfig test {
+    IncludeDir include
+    Dependency config: testLib
+    Files "src/main.cpp"
+    DefaultToolchain Diab {
+      Compiler CPP {
+        Flags "-tPPCE200Z6VEN:simple"
+      }
+      Linker {
+        Flags "-tPPCVLEEN:simple"
+      }
+    }
+  }
+
+}

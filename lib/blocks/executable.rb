@@ -51,30 +51,34 @@ module Bake
 
       def needed?(libs)
         return false if depHasError(@block)
-        return true if Bake.options.linkOnly
         return false if Bake.options.prepro
+        return "because linkOnly was specified" if Bake.options.linkOnly
         
         # exe
-        return true if not File.exists?(@exe_name)
+        return "because executable does not exist" if not File.exists?(@exe_name)
+
         eTime = File.mtime(@exe_name)
           
         # config
-        return true if eTime < File.mtime(@config.file_name)
-        return true if eTime < Bake::Config.defaultToolchainTime
+        return "because config file has been changed" if eTime < File.mtime(@config.file_name)
+        return "because DefaultToolchain has been changed" if eTime < Bake::Config.defaultToolchainTime
         
         # linkerscript
         if @linker_script
-          return true if not File.exists?(@linker_script) or eTime < File.mtime(@linker_script)
+          return "because linker script does not exist - will most probably result in an error" if not File.exists?(@linker_script)
+          return "because linker script is newer than executable" if eTime < File.mtime(@linker_script)
         end
         
         # sources
         @compileBlock.objects.each do |obj|
-          return true if not File.exists?(obj) or eTime < File.mtime(obj)
+          return "because object #{obj} does not exist" if not File.exists?(obj)
+          return "because object #{obj} is newer than executable" if eTime < File.mtime(obj)
         end
         
         # libs
         libs.each do |lib|
-          return true if not File.exists?(lib) or File.mtime(lib) > eTime
+          return "because library #{lib} does not exist" if not File.exists?(lib)
+          return "because library #{lib} is newer than executable" if eTime < File.mtime(lib)
         end
         false
       end
@@ -84,7 +88,9 @@ module Bake
         Dir.chdir(@projectDir) do
           
           libs, linker_libs_array = LibElements.calc_linker_lib_string(@block, @tcs)
-          return unless needed?(libs)
+          
+          reason = needed?(libs)
+          return unless reason
           
           prepareOutput(@exe_name)
 
@@ -113,9 +119,9 @@ module Bake
           outPipe = (@mapfile and linker[:MAP_FILE_PIPE]) ? "#{@mapfile}" : nil
           cmdLinePrint << "> #{outPipe}" if outPipe
           
-          printCmd(cmdLinePrint, "Linking #{@exe_name}", false)
+          printCmd(cmdLinePrint, "Linking #{@exe_name}", reason, false)
           success, consoleOutput = ProcessHelper.run(cmd, false, false, outPipe)
-          process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, success)
+          process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, reason, success)
     
           check_config_file()
         end

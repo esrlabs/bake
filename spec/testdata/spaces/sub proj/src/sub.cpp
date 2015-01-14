@@ -1,6 +1,6 @@
 #include "val.h"
 
-int retval()
+int retval2()
 {
 	return VAL;
 }

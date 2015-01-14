@@ -38,8 +38,9 @@ module Bake
             
             cmd += @source_files
                    
+            printCmd(cmd, "Linting #{@source_files.length} file(s)...", nil, false)
             success, consoleOutput = ProcessHelper.run(cmd, false)
-            process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "", success)
+            process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "Linting...", nil, success)
           end
         end
       end  

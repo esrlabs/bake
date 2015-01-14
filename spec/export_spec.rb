@@ -36,7 +36,7 @@ describe "Export" do
   end
   
   it 'With file build' do
-    Bake.startBake("root1/main", ["-b", "rel_test"])
+    Bake.startBake("root1/main", ["-b", "rel_test", "-v2"])
     
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("liblib3.a")).to be == false

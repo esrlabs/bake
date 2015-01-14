@@ -21,20 +21,29 @@ module Bake
         return false if Bake.options.linkOnly
         return false if Bake.options.prepro
         
-        return true if not File.exist?(archive_name)
+        # lib
+        return "because library does not exist" if not File.exists?(archive_name)
+
         aTime = File.mtime(archive_name)
-        return true if aTime < File.mtime(@config.file_name)
-        return true if aTime < Bake::Config.defaultToolchainTime
+        
+        # config
+        return "because config file has been changed" if aTime < File.mtime(@config.file_name)
+        return "because DefaultToolchain has been changed" if aTime < Bake::Config.defaultToolchainTime
+                
+        # sources
         @compileBlock.objects.each do |obj|
-          return true if not File.exists?(obj) or aTime < File.mtime(obj)
+          return "because object #{obj} does not exist" if not File.exists?(obj)
+          return "because object #{obj} is newer than executable" if aTime < File.mtime(obj)
         end
+        
         false
       end
       
       def execute
 
         Dir.chdir(@projectDir) do
-          return unless needed?
+          reason = needed?
+          return unless reason
           
           prepareOutput(archive_name)
         
@@ -47,7 +56,7 @@ module Bake
           cmd += @compileBlock.objects
           
           success, consoleOutput = ProcessHelper.run(cmd, false, false)
-          process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{archive_name}", success)
+          process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{archive_name}", reason, success)
          
           check_config_file()
         end

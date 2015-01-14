@@ -93,7 +93,8 @@ module Bake
         },
         
         :LINT_POLICY => [],
-        :DOCU => ""
+        :DOCU => "",
+        :DEP_FILE_SINGLE_LINE => false
       }
 
       def self.add(name, basedOn = nil)

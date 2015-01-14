@@ -58,23 +58,39 @@ module Bake
         end
       end
       
-      def printCmd(cmd, alternate, showPath)
+      def printCmd(cmd, alternate, reason, forceVerbose)
+        
+        if (cmd == @lastCommand)
+          if (Bake.options.verboseHigh or (@printedCmdAlternate and not forceVerbose))
+            return
+          end
+        end
+        
         @lastCommand = cmd
-        if showPath or Bake.options.verboseHigh or (alternate.nil? and not Bake.options.verboseLow)
+        
+        return if Bake.options.verboseLow and not forceVerbose
+
+        if forceVerbose or Bake.options.verboseHigh or not alternate
           @printedCmdAlternate = false
-          exedIn = ""
-          exedIn = "\n(executed in '#{@projectDir}')" if (showPath or Bake.options.verboseHigh)
-          puts "" if Bake.options.verboseHigh
-          if cmd.is_a?(Array)
-            puts cmd.join(' ') + exedIn
+          if Bake.options.verboseHigh
+            puts "" # for A.K. :-)  
+            exedIn = "\n(executed in '#{@projectDir}')"
+            because = reason ? "\n(#{reason})" : ""
           else
-            puts cmd + exedIn
+            exedIn = ""
+            because = ""
+          end
+          
+          if cmd.is_a?(Array)
+            puts cmd.join(' ') + exedIn + because
+          else
+            puts cmd + exedIn + because
           end
         else
           @printedCmdAlternate = true
-          puts alternate if not Bake.options.verboseLow and alternate != ""
+          puts alternate
         end
-        @lastCommand = cmd
+
       end
       
       def process_console_output(console_output, error_parser)
@@ -120,11 +136,9 @@ module Bake
         ret
       end
       
-      def process_result(cmd, console_output, error_parser, alternate, success)
+      def process_result(cmd, console_output, error_parser, alternate, reason, success)
         hasError = (success == false)
-        if (cmd != @lastCommand) or (@printedCmdAlternate and hasError)
-          printCmd(cmd, alternate, (hasError and not Bake.options.lint))
-        end
+        printCmd(cmd, alternate, reason, (hasError and not Bake.options.lint))
         errorPrinted = process_console_output(console_output, error_parser)
         
         if hasError and not errorPrinted

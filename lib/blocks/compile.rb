@@ -1,6 +1,5 @@
 require 'blocks/blockBase'
 require 'multithread/job'
-require 'yaml'
 require 'common/process'
 require 'common/utils'
 require 'bake/toolchain/colorizing_formatter'
@@ -30,32 +29,37 @@ module Bake
         File.join([@output_dir, adaptedSource])
       end
       
-      def needed?(source, object, type, dep_filename)
+      def needed?(source, object, type, dep_filename_conv)
         return false if Bake.options.linkOnly
-        return true if Bake.options.prepro
+
+        return "because prepro was specified" if Bake.options.prepro
         
-        return true if not File.exist?(object)
+        return "because object does not exist" if not File.exist?(object)
         oTime = File.mtime(object)
-        return true if oTime < File.mtime(@config.file_name)
-        return true if oTime < Bake::Config.defaultToolchainTime 
-        return true if oTime < File.mtime(source) 
         
+        return "because config file has been changed" if oTime < File.mtime(@config.file_name)
+        return "Compiling #{source} because DefaultToolchain has been changed" if oTime < Bake::Config.defaultToolchainTime
+        
+        return "because source is newer than object" if oTime < File.mtime(source)
+
+        return "because dependency file could not exist" if not File.exist?(dep_filename_conv)
+
         if type != :ASM
           begin
-            File.open(dep_filename) do |f|
-              deps = YAML::load(f)
-              deps.each do |d|
-                return true if not File.exist?(d) or oTime < File.mtime(d) 
-              end
+            File.readlines(dep_filename_conv).map{|line| line.strip}.each do |dep|
+              return "because dependent header #{dep} does not exist" if not File.exist?(dep)
+              return "because dependent header #{dep} is newer than object" if oTime < File.mtime(dep)
             end
           rescue Exception => ex
-            puts "Could not load "+ dep_filename + "." if Bake.options.debug
-            # puts ex.message
-           #  puts ex.backtrace
-            # may happen if dep_filename was not converted the last time
-            return true
+            if Bake.options.debug
+              puts "While reading #{dep_filename_conv}:"
+              puts ex.message
+              puts ex.backtrace 
+            end
+            return "because dependency file could not be loaded"
           end
         end
+        
         false
       end
       
@@ -65,6 +69,10 @@ module Bake
           dep_filename = object[0..-3] + ".d"
         end
         dep_filename
+      end
+      
+      def calcDepFileConv(dep_filename)
+        dep_filename + ".bake"
       end
 
       def get_source_type(source)
@@ -83,8 +91,10 @@ module Bake
         @objects << object
         
         dep_filename = calcDepFile(object, type)
+        dep_filename_conv = calcDepFileConv(dep_filename)
         
-        return true if not needed?(source, object, type, dep_filename)
+        reason = needed?(source, object, type, dep_filename_conv)
+        return true unless reason
 
         if @fileTcs.include?(source)
           compiler = @fileTcs[source][:COMPILER][type]
@@ -103,7 +113,6 @@ module Bake
         end
                    
         prepareOutput(object)
-
         
         cmd = Utils.flagSplit(compiler[:COMMAND], false)
         cmd += compiler[:COMPILE_FLAGS].split(" ")
@@ -143,26 +152,48 @@ module Bake
 
         success, consoleOutput = ProcessHelper.run(cmd, false, false)
         outputType = Bake.options.prepro ? "Preprocessing" : "Compiling"
-        process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", success)
+        process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
    
-        convert_depfile(dep_filename)
+        Compile.convert_depfile(dep_filename, dep_filename_conv, @projectDir, @tcs[:COMPILER][:DEP_FILE_SINGLE_LINE])
         check_config_file
       end
 
-      def convert_depfile(dep_filename)
-        return if not dep_filename or not File.exist?(dep_filename)
-        deps_string = File.read(dep_filename)
-        deps_string = deps_string.gsub(/\\\n/,'')
-        deps = deps_string.split(/([^\\]) /).each_slice(2).map(&:join)[2..-1]
-
-        # deps_string looks like "test.o: test.cpp test.h" -> remove .o and .cpp from list
-        return if deps.nil? # ok, because next run the source will be recompiled due to invalid dep_filename
-        expanded_deps = deps.map { |d| d.gsub(/[\\] /,' ').gsub(/[\\]/,'/').strip }
-        File.open(dep_filename, 'wb') { |f| f.write(expanded_deps.to_yaml) }
+      def self.read_depfile(dep_filename, projDir, singeLine)
+        deps = []
+        begin
+          if singeLine
+            File.readlines(dep_filename).each do |line|
+              splitted = line.split(": ")
+              deps << splitted[1].gsub(/[\\]/,'/') if splitted.length > 1
+            end
+          else          
+            deps_string = File.read(dep_filename)
+            deps_string = deps_string.gsub(/\\\n/,'')
+            dep_splitted = deps_string.split(/([^\\]) /).each_slice(2).map(&:join)[2..-1]
+            deps = dep_splitted.map { |d| d.gsub(/[\\] /,' ').gsub(/[\\]/,'/').strip }.delete_if {|d| d == "" }
+          end
+        rescue Exception
+          Bake.formatter.printWarning("Could not read '#{dep_filename}'", projDir)
+          return nil
+        end
+        deps
       end
-
-      def deps_in_depFiles
-        @deps_in_depFiles ||= Set.new
+      
+      # todo: move to toolchain util file
+      def self.convert_depfile(dep_filename, dep_filename_conv, projDir, singleLine)
+        deps = read_depfile(dep_filename, projDir, singleLine)
+        if deps
+          begin
+            File.open(dep_filename_conv, 'wb') do |f|
+              deps.each do |dep|
+                f.puts(dep)
+              end
+            end
+          rescue Exception
+            Bake.formatter.printWarning("Could not write '#{dep_filename_conv}'", projDir)
+            return nil
+          end
+        end
       end
 
       def mutex
