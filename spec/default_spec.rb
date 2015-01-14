@@ -27,8 +27,10 @@ describe "Default" do
 
   it 'lib no default config' do
     Bake.startBake("default/libNoD", ["--rebuild"])
-    expect($mystring.include?("No default config")).to be == true
-    expect(ExitHelper.exit_code).to be > 0
+    expect($mystring.include?("* testL2A")).to be == true
+    expect($mystring.include?("* testL2B")).to be == true
+    expect($mystring.include?("* testL2C")).to be == true
+    expect(ExitHelper.exit_code).to be == 0
   end  
 
   it 'main sub default config' do

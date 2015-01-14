@@ -169,6 +169,10 @@ module Bake
       @loadedConfigs = {}
       @loadedConfigs[Bake.options.main_project_name] = configs
       
+      if (Bake.options.build_config == "" and configs[0].parent.default == "")
+        ConfigNames.print(configs, nil, mainMeta)
+      end
+      
       config, Bake.options.build_config = getFullProject(configs,Bake.options.build_config)
       @referencedConfigs = {}
       @referencedConfigs[Bake.options.main_project_name] = [config]
