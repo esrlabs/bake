@@ -1,0 +1,26 @@
+Project {
+
+CustomConfig test1 {
+  Dependency doubledep2, config: test
+  Dependency doubledep2, config: test
+  DefaultToolchain GCC
+}
+
+CustomConfig test2 {
+  Dependency doubledep2, config: test
+  Dependency doubledep2
+  DefaultToolchain GCC
+}
+
+CustomConfig test3b {
+  Dependency doubledep2
+  DefaultToolchain GCC
+}
+
+CustomConfig test3 {
+  Dependency doubledep2, config: test
+  Dependency config: test3b
+  DefaultToolchain GCC
+}
+
+}

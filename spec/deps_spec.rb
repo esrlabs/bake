@@ -44,6 +44,21 @@ describe "Deps" do
     expect($mystring.include?("Circular dependency found")).to be == true
   end  
   
+  it 'double dep explicit' do
+    Bake.startBake("deps/doubledep1", ["test1"])
+    expect($mystring.split("echo sub").length).to be == 2
+  end 
+  
+  it 'double dep default' do
+    Bake.startBake("deps/doubledep1", ["test2"])
+    expect($mystring.split("echo sub").length).to be == 2
+  end   
+  
+  it 'double dep derive' do
+    Bake.startBake("deps/doubledep1", ["test3"])
+    expect($mystring.split("echo sub").length).to be == 2
+  end  
+
 end
 
 end
