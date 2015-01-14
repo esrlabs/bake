@@ -25,7 +25,7 @@ Example:
 <pre id="rundrum"><code>bake Debug -p MyLibraryProject --lint</code></pre>
 
 <h3>How does it work</h3>
-You can lint LibraryConfigs, ExecutableConfigs and single files, but not the complete workspace. The CPP Toolchain settings
+You can lint LibraryConfigs, ExecutableConfigs, single files and the complete workspace (in this case the projects are linted separately). The CPP Toolchain settings
 of the project are used regardless of the file type and file specific options.
 
 It is possible to specify lnt-files with LintPolicy, but you can add every other lint command line option as well.<br>
@@ -42,7 +42,7 @@ In rare cases lint has problems if it has to open too many (include) files. If t
 bake Debug -p MyLibraryProject --lint --lint_min 51 --lint_max 100 (lints the next 50 files)
 bake Debug -p MyLibraryProject --lint --lint_min 101               (lints the rest of the files)</code></pre>
 <p>
-Currently the lint output is buffered and not shown before lint has been finished. The reason is the implementation of the error parser. This will change in future.
+Currently the lint output is buffered and not shown before lint has finished a project. The reason is the implementation of the error parser. This will change in future.
 
 </body>
 
