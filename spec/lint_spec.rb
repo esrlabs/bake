@@ -11,13 +11,6 @@ module Bake
 
 describe "Lint" do
   
-  it 'project needed' do
-    if Utils::OS.windows? 
-      expect { Bake.startBake("stop/main", ["test1", "--lint"]) }.to raise_error(SystemExit)
-      expect($mystring.include?("Error: --lint must be used together with -p")).to be == true
-    end
-  end
-  
   it 'lint proj' do
     if Utils::OS.windows?
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main"])
