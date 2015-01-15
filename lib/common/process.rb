@@ -8,7 +8,11 @@ module Bake
       rd, wr = IO.pipe
       @@rd = rd if force
       cmdLineArray << { :err=>wr, :out=>(outpipe ? outpipe : wr) }
-      pid = spawn(*cmdLineArray)
+      begin
+        pid = spawn(*cmdLineArray)
+      rescue Exception => e
+        return [false, e.message]
+      end
       @@pid = pid if force
       wr.close
       output = ""
