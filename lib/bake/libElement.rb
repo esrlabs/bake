@@ -28,11 +28,8 @@ module Bake
       
       collect_recursive(block)
       
-      if @@linker[:LIST_MODE]
-        @@linker_libs_array.map { |x| x+"(*.o)"} # TODO: is that really needed?
-        if not (@lib_path_set.empty?)
-          @@linker_libs_array << (@@linker[:LIB_PATH_FLAG] + @lib_path_set.join(","));
-        end
+      if @@linker[:LIST_MODE] and not @@lib_path_set.empty?
+        @@linker_libs_array << (@@linker[:LIB_PATH_FLAG] + @@lib_path_set.join(","));
       end
       
       return [@@source_libraries, @@linker_libs_array] 
