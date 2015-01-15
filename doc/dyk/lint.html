@@ -36,6 +36,23 @@ A possible approach is to add global Lint policies in the DefaultToolchain like 
   LintPolicy "$(ProjectDir)/lint/suppressions.lnt"
 }</code></pre>
 
+<h3>How to start for GCC</h3>
+Lint will fail if compiler internal includes and defines are missing. Therefore lint comes with some helper files.
+For GCC, follow the steps below.<br>
+First extract the compiler includes and defines:
+<pre id="rundrum"><code>make -f .../PcLint/../lnt/co-gcc.mak</code></pre>
+You will get some lnt files: gcc-include-path.lnt, lint_cmac.h, lint_cppmac.h and size-options.lnt.<br>
+Write a lnt file with the following content:
+<pre id="rundrum"><code>-i".../PcLint/.../lnt"
+-i"...pathToTheLntFilesExtractedAbove"
+gcc-include-path.lnt
+.../PcLint/.../lnt/co-gcc.lnt</code></pre>
+Afterwards you can test lint directly without bake like this:
+<pre id="rundrum"><code>lint-nt your.lnt test.cpp</code></pre>
+To use in bake, add a LintPolicy in Project.meta:
+<pre id="rundrum"><code>LintPolicy ".../your.lnt"</code></pre>
+
+
 <h3>Notes</h3>
 In rare cases lint has problems if it has to open too many (include) files. If that is the case, use --lint_min and --lint_max command line option of bake. Example:
 <pre id="rundrum"><code>bake Debug -p MyLibraryProject --lint --lint_max 50                (lints the first 51 files)
@@ -43,7 +60,8 @@ bake Debug -p MyLibraryProject --lint --lint_min 51 --lint_max 100 (lints the ne
 bake Debug -p MyLibraryProject --lint --lint_min 101               (lints the rest of the files)</code></pre>
 <p>
 Currently the lint output is buffered and not shown before lint has finished a project. The reason is the implementation of the error parser. This will change in future.
-
+<p>
+If you have another lint command than lint-nt.exe, use an alias.
 </body>
 
 </html>
