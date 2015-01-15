@@ -40,7 +40,7 @@ module Bake
       if (file_name)
         d = ErrorDesc.new
         d.file_name = file_name
-        d.line_number = (line_number ? line_number : "0")
+        d.line_number = (line_number ? line_number : 0)
         d.message = str
         d.severity = severity
         Bake::IDEInterface.instance.set_errors([d])
