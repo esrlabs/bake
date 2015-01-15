@@ -88,7 +88,7 @@ describe "compiler" do
     end
   end
   
-  it 'keil' do
+  it 'keil deps - no single line' do
     path = "spec/testdata/compiler/keil"
     Blocks::Compile.convert_depfile("#{path}/dep.d", "#{path}/test_conv_dep.d", "DIR", true)
     
@@ -102,6 +102,13 @@ describe "compiler" do
     expect(str.length).to be == 6
   end
   
+  it 'keil libs - list mode' do
+    Bake.startBake("compiler/keil", ["test", "-p", "keil,test"])
+
+    expect($mystring.include?("libkeil.a a.lib b.lib c.lib lib3/d.lib")).to be == true
+    expect($mystring.include?("--userlibpath=lib1,lib2")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
 
 end
 

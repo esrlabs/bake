@@ -1,0 +1,19 @@
+Project {
+
+  LibraryConfig testLib {
+  
+  }
+
+  ExecutableConfig test {
+    Dependency config: testLib
+    ExternalLibrarySearchPath lib1
+    ExternalLibrary "lib1/a.lib"
+    ExternalLibrarySearchPath lib2
+    ExternalLibrary "b.lib"
+    ExternalLibrary "lib2/c.lib"
+    ExternalLibrary "lib3/d.lib", search: false
+  
+    DefaultToolchain Keil
+  }
+
+}
