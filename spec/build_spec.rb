@@ -250,7 +250,18 @@ describe "Building" do
     Bake.startBake("errors/main", ["testWrong2"])
     expect($mystring.include?("main.exe")).to be == false
   end 
+  
+  it 'assembler' do
+    Bake.startBake("assembler", ["test"])
+    
+    expect($mystring.include?("a.S")).to be == true
+    expect($mystring.include?("main.cpp")).to be == true
+    expect($mystring.include?("assembler.")).to be == true
       
+    Bake.startBake("assembler", ["test"])
+   
+    expect(ExitHelper.exit_code).to be == 0
+  end
   
 end
 

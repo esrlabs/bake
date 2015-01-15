@@ -42,9 +42,9 @@ module Bake
         
         return "because source is newer than object" if oTime < File.mtime(source)
 
-        return "because dependency file could not exist" if not File.exist?(dep_filename_conv)
-
         if type != :ASM
+          return "because dependency file does not exist" if not File.exist?(dep_filename_conv)
+          
           begin
             File.readlines(dep_filename_conv).map{|line| line.strip}.each do |dep|
               return "because dependent header #{dep} does not exist" if not File.exist?(dep)
