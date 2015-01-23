@@ -80,6 +80,7 @@ module Bake
           end
         else
           cmd_result = false
+          consoleOutput = ""
           begin
             Dir.chdir(@@projDir) do
               cmd = [substString(s.cmd, s)]
@@ -90,7 +91,7 @@ module Bake
             consoleOutput = e.message
           end
           if (cmd_result == false)
-            Bake.formatter.printWarning("Command not successful, variable #{s.name} wil be set to \"\" (#{consoleOutput.chomp}).", s)
+            Bake.formatter.printWarning("Command not successful, variable #{s.name} will be set to \"\" (#{consoleOutput.chomp}).", s)
             @@userVarMap[s.name] = ""
           end          
         end

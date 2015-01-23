@@ -1,5 +1,12 @@
 Project {
 
+CustomConfig cmdBroken {
+  Set VAR1, cmd: "GUGU"
+  CommandLine "echo *$(VAR1)*"
+  DefaultToolchain GCC
+}
+
+
 ExecutableConfig value {
   Set VAR1, value: "GUGU"
   PreSteps {
