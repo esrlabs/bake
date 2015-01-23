@@ -18,7 +18,7 @@ module Bake
     
   class Options < Parser
     attr_accessor :build_config, :nocache
-    attr_reader :main_dir, :project, :filename, :main_project_name # String
+    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
     attr_reader :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
@@ -41,6 +41,7 @@ module Bake
       @main_dir = nil
       @project = nil      
       @filename = nil
+      @cc2j_filename = nil
       @clean = false
       @clobber = false
       @lint = false
@@ -108,7 +109,7 @@ module Bake
       add_option(Option.new("--doc",false)                 {     Doc.show              })
       add_option(Option.new("--version",false)             {     ExitHelper.exit(0)         })
       add_option(Option.new("--show_configs",false)        {     @showConfigs = true    })
-      
+      add_option(Option.new("--writeCC2J",true)            { |x| @cc2j_filename = x.gsub(/[\\]/,'/')            })
 
     end
 

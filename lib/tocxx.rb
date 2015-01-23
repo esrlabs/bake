@@ -254,6 +254,21 @@ module Bake
           ExitHelper.set_exit_code(1)
           return
         end
+        
+        if Bake.options.cc2j_filename
+          Blocks::BlockBase.prepareOutput(Bake.options.cc2j_filename)
+          File.open(Bake.options.cc2j_filename, 'w') do |f|  
+            f.puts "["
+            noComma = Blocks::CC2J.length - 1
+            Blocks::CC2J.each_with_index do |c, index|
+              cmd = c[:command].is_a?(Array) ? c[:command].join(' ') : c[:command]
+              f.puts "  { \"directory\": \"" + c[:directory] +  "\","
+              f.puts "    \"command\": \"" + cmd +  "\","
+              f.puts "    \"file\": \"" + c[:file] +  "\" }#{index == noComma ? "" : ","}"
+            end
+            f.puts "]"
+          end
+        end
               
         if result == false
           Bake.formatter.printError("\n#{taskType} failed.")

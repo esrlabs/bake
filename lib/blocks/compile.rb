@@ -123,7 +123,7 @@ module Bake
           raise SystemCommandFailed.new 
         end
                    
-        prepareOutput(object)
+        BlockBase.prepareOutput(object)
         
         cmd = Utils.flagSplit(compiler[:COMMAND], false)
         cmd += compiler[:COMPILE_FLAGS].split(" ")
@@ -161,6 +161,10 @@ module Bake
         end
         cmd << source
 
+        if Bake.options.cc2j_filename
+          Blocks::CC2J << { :directory => @projectDir, :command => cmd, :file => source }
+        end
+        
         success, consoleOutput = ProcessHelper.run(cmd, false, false)
         outputType = Bake.options.prepro ? "Preprocessing" : "Compiling"
         process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)

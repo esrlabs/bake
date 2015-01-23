@@ -9,6 +9,7 @@ module Bake
   
   module Blocks
 
+    CC2J = []
     ALL_BLOCKS = {}
     ALL_COMPILE_BLOCKS = {}
 

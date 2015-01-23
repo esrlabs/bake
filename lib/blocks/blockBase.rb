@@ -32,7 +32,7 @@ module Bake
         end
       end
             
-      def prepareOutput(filename)
+      def self.prepareOutput(filename)
         begin
           if File.exists?(filename)
             FileUtils.rm(filename)

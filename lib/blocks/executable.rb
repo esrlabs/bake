@@ -92,7 +92,7 @@ module Bake
           reason = needed?(libs)
           return unless reason
           
-          prepareOutput(@exe_name)
+          BlockBase.prepareOutput(@exe_name)
 
           linker = @tcs[:LINKER]
     

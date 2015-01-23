@@ -45,7 +45,7 @@ module Bake
           reason = needed?
           return unless reason
           
-          prepareOutput(archive_name)
+          BlockBase.prepareOutput(archive_name)
         
           archiver = @tcs[:ARCHIVER]
        
