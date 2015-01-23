@@ -53,6 +53,17 @@ To use in bake, add a LintPolicy in Project.meta:
 <pre id="rundrum"><code>LintPolicy ".../your.lnt"</code></pre>
 
 
+<h3>Output to xml</h3>
+This is an example how to redirect the output to single xml files placed into the main project folder.
+<pre id="rundrum"><code>DefaultToolchain GCC {
+  LintPolicy "-os($(MainProjectDir)/$(ProjectName)_$(ConfigName)_lintout.xml)"
+  LintPolicy "-v"
+  LintPolicy "+xml(doc)"
+  LintPolicy "-format=<message><file>%f</file> <line>%l</line> <type>%t</type> <code>%n</code> <desc>%m</desc></message>"
+  LintPolicy "-format_specific= "
+  LintPolicy "-pragma(message)"</code></pre>
+      
+
 <h3>Notes</h3>
 In rare cases lint has problems if it has to open too many (include) files. If that is the case, use --lint_min and --lint_max command line option of bake. Example:
 <pre id="rundrum"><code>bake Debug -p MyLibraryProject --lint --lint_max 50                (lints the first 51 files)

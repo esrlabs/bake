@@ -21,6 +21,16 @@ describe "Hacks" do
     expect(ExitHelper.exit_code).to be == 0
   end
   
+  it 'lintpipe' do
+    expect(File.exists?("spec/testdata/hacks/main/test_lib_lib_lintout.xml")).to be == false
+    expect(File.exists?("spec/testdata/hacks/main/test_main_testLintPipe_lintout.xml")).to be == false
+    
+    Bake.startBake("hacks/main", ["testLintPipe", "--lint"])
+      
+    expect(File.exists?("spec/testdata/hacks/main/test_lib_lib_lintout.xml")).to be == true
+    expect(File.exists?("spec/testdata/hacks/main/test_main_testLintPipe_lintout.xml")).to be == true
+  end
+  
 end
 
 end

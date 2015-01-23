@@ -114,7 +114,7 @@ module Bake
               end
   
               if Bake.options.lint
-                ret = error_descs.any? { |e| e.severity != ErrorParser::SEVERITY_OK }
+                # ignore error output
               else
                 ret = error_descs.any? { |e| e.severity == ErrorParser::SEVERITY_ERROR }
               end

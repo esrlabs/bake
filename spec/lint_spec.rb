@@ -11,6 +11,14 @@ module Bake
 
 describe "Lint" do
   
+  it 'lint zero' do
+    if Utils::OS.windows?
+      Bake.startBake("stop/main", ["test1", "--lint", "-p", "main"])
+      expect($mystring.include?("Error")).to be == true
+      expect(ExitHelper.exit_code).to be == 0 
+    end
+  end
+  
   it 'lint proj' do
     if Utils::OS.windows?
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main"])
@@ -101,7 +109,7 @@ describe "Lint" do
     if Utils::OS.windows?
       Bake.startBake("multiProj/main", ["test1", "--lint", "-p", "main"])
       expect($mystring.split("Module:").length).to be == 3
-      expect($mystring.include?("Linting failed.")).to be == true
+      expect($mystring.include?("Linting done.")).to be == true
     end
   end 
   
