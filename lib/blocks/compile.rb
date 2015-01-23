@@ -47,8 +47,19 @@ module Bake
           
           begin
             File.readlines(dep_filename_conv).map{|line| line.strip}.each do |dep|
-              return "because dependent header #{dep} does not exist" if not File.exist?(dep)
-              return "because dependent header #{dep} is newer than object" if oTime < File.mtime(dep)
+              dep = "/usr/bla"
+              if not File.exist?(dep)
+                # we need a hack here. with some windows configurations the compiler prints unix paths
+                # into the dep file which cannot be found easily. this will be true for system includes,
+                # e.g. /usr/lib/...xy.h
+                if Bake::Utils::OS.windows? and dep.start_with?"/"
+                  puts "Dependency header file #{dep} ignored!" if Bake.options.debug
+                else
+                  return "because dependent header #{dep} does not exist"
+                end
+              else
+                return "because dependent header #{dep} is newer than object" if oTime < File.mtime(dep)
+              end
             end
           rescue Exception => ex
             if Bake.options.debug

@@ -1,0 +1,8 @@
+Project {
+
+LibraryConfig testDepHeader {
+  Files "src/sysheader.cpp"
+  DefaultToolchain GCC
+}
+
+}
