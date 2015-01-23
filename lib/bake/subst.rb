@@ -188,7 +188,7 @@ module Bake
         elsif ENV[var]
           substStr << ENV[var]
         else
-          if Bake.options.verboseHigh
+          if Bake.options.verbose >= 2
             msg = "Substitute variable '$(#{var})' with empty string"
             if elem
               Bake.formatter.printInfo(msg, elem)

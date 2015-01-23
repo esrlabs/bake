@@ -5,8 +5,8 @@ module Bake
     module HasExecuteCommand
       
       def executeCommand(commandLine, ignoreStr=nil)
-        puts commandLine if not Bake.options.verboseLow
-        puts "(executed in '#{@projectDir}')" if Bake.options.verboseHigh
+        puts commandLine if Bake.options.verbose >= 1
+        puts "(executed in '#{@projectDir}')" if Bake.options.verbose >= 3
         cmd_result = false
         output = ""
         begin
@@ -20,7 +20,7 @@ module Bake
           
         if (cmd_result == false and (not ignoreStr or not output.include?ignoreStr))
           Bake.formatter.printError("Command \"#{commandLine}\" failed", @config)
-          puts "(executed in '#{@projectDir}')" if not Bake.options.verboseHigh
+          puts "(executed in '#{@projectDir}')" if Bake.options.verbose >= 3
           raise SystemCommandFailed.new
         end
       end

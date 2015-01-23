@@ -435,7 +435,10 @@ function showDependency() {
   str = 'Specifies another project to be built before this project.<br>'+
     'The archive, linker libs and search paths are imported from this project to the this project automatically.<br>'+
     'If you omit the project, the current project will be used.<br>'+
-    'If you omit the config name, the default config will be used.'
+    'If you omit the config name, the default config will be used.<br>'+
+    '<b>Examples:</b><br>'+
+    '&nbsp;&nbsp; <i>Dependency gtest, config: lib<br>'+
+    '&nbsp;&nbsp; Dependency "my/folder/proj"</i>'
 	ddrivetip("Dependency", "No","0..n","-",str)  
 }
 

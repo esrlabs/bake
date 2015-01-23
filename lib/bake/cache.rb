@@ -130,7 +130,7 @@ module Bake
         end      
         
         if cache != nil
-          Bake.formatter.printInfo("Info: cache is up-to-date, loading cached meta information") if Bake.options.verboseHigh
+          Bake.formatter.printInfo("Info: cache is up-to-date, loading cached meta information") if Bake.options.verbose >= 3
           Bake.options.build_config = cache.build_config if Bake.options.build_config == ""
           return cache.referencedConfigs
         end

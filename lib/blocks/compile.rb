@@ -281,11 +281,11 @@ module Bake
               object = get_object_file(source)
               dep_filename = calcDepFile(object, type)
               if File.exist?object 
-                puts "Deleting file #{object}" if Bake.options.verboseHigh
+                puts "Deleting file #{object}" if Bake.options.verbose >= 2
                 FileUtils.rm_rf(object)
               end
               if File.exist?dep_filename 
-                puts "Deleting file #{dep_filename}" if Bake.options.verboseHigh
+                puts "Deleting file #{dep_filename}" if Bake.options.verbose >= 2
                 FileUtils.rm_rf(dep_filename)
               end
             end
@@ -309,7 +309,7 @@ module Bake
             if not p.include?"*" and not p.include?"?"
               Bake.formatter.printError("Source file '#{p}' not found", sources)
               raise SystemCommandFailed.new  
-            elsif not Bake.options.verboseLow
+            elsif Bake.options.verbose >= 1
               Bake.formatter.printInfo("Source file pattern '#{p}' does not match to any file", sources)
             end
           end

@@ -25,7 +25,7 @@ module Bake
           begin
             FileUtils.touch(@config.file_name)
           rescue Exception=>e
-            if Bake.options.verboseHigh
+            if Bake.options.verbose >= 2
               Bake.formatter.printWarning("Could not touch #{@config.file_name}: #{e.message}", @config.file_name)              
             end
           end
@@ -61,19 +61,19 @@ module Bake
       def printCmd(cmd, alternate, reason, forceVerbose)
         
         if (cmd == @lastCommand)
-          if (Bake.options.verboseHigh or (@printedCmdAlternate and not forceVerbose))
+          if (Bake.options.verbose >= 2 or (@printedCmdAlternate and not forceVerbose))
             return
           end
         end
         
         @lastCommand = cmd
         
-        return if Bake.options.verboseLow and not forceVerbose
+        return if Bake.options.verbose == 0 and not forceVerbose
 
-        if forceVerbose or Bake.options.verboseHigh or not alternate
+        if forceVerbose or Bake.options.verbose >= 2 or not alternate
           @printedCmdAlternate = false
-          if Bake.options.verboseHigh
-            puts "" # for A.K. :-)  
+          puts "" if Bake.options.verbose >= 2 # for A.K. :-)
+          if Bake.options.verbose >= 3
             exedIn = "\n(executed in '#{@projectDir}')"
             because = reason ? "\n(#{reason})" : ""
           else

@@ -111,14 +111,20 @@ module Bake
     end
 
     def loadMeta(dep)
-
+      dep_subbed = dep.name.gsub(/\\/,"/")
+      if dep_subbed.include?":" or dep_subbed.include?"../" or dep_subbed.start_with?"/" or dep_subbed.end_with?"/"
+        Bake.formatter.printError("#{dep.name}  is invalid", dep)
+        ExitHelper.exit(1)
+      end
+      dep_path, dismiss, dep_name = dep_subbed.rpartition("/")
+      
       # file not loaded yet
-      if not @loadedConfigs.include?dep.name
+      if not @loadedConfigs.include?dep_name
         
         pmeta_filenames = []
           
         @potentialProjs.each do |pp|
-          if pp.include?("/" + dep.name + "/Project.meta") or pp == (dep.name + "/Project.meta") 
+          if pp.include?("/" + dep_subbed + "/Project.meta") or pp == (dep_subbed + "/Project.meta") 
             pmeta_filenames << pp
           end
         end
@@ -137,17 +143,25 @@ module Bake
           end
         end
         
-        @loadedConfigs[dep.name] = loadProjMeta(pmeta_filenames[0])
+        @loadedConfigs[dep_name] = loadProjMeta(pmeta_filenames[0])
+      else
+        folder = @loadedConfigs[dep_name][0].get_project_dir
+        if not folder.include?dep_subbed
+          Bake.formatter.printError("Cannot load #{dep.name}, because #{folder} already loaded", dep)
+          ExitHelper.exit(1)
+        end
+        
       end
-      
+            
       # get config
-      config, dep.config = getFullProject(@loadedConfigs[dep.name],dep.config)
+      config, dep.config = getFullProject(@loadedConfigs[dep_name], dep.config)
+      dep.name = dep_name
       
       # config not referenced yet
-      if not @referencedConfigs.include?dep.name
-        @referencedConfigs[dep.name] = [config] 
-      elsif @referencedConfigs[dep.name].index { |c| c.name == dep.config } == nil
-        @referencedConfigs[dep.name] << config
+      if not @referencedConfigs.include?dep_name
+        @referencedConfigs[dep_name] = [config] 
+      elsif @referencedConfigs[dep_name].index { |c| c.name == dep.config } == nil
+        @referencedConfigs[dep_name] << config
       else
         return
       end

@@ -90,7 +90,7 @@ module Bake
                end
              end
            else
-             if elem and Bake.options.verboseHigh
+             if elem and Bake.options.verbose >= 2
                Bake.formatter.printInfo("\"..\" in path name found", elem)
              end
            end
@@ -166,7 +166,7 @@ module Bake
       
       def execute
         if (@inDeps)
-          if not Bake.options.verboseLow
+          if Bake.options.verbose >= 1
             Bake.formatter.printWarning("Circular dependency found including project #{@projectName} with config #{@configName}", @config)
           end
           return true
@@ -182,7 +182,7 @@ module Bake
         
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
         
-        if not Bake.options.verboseLow
+        if Bake.options.verbose >= 1
           Bake.formatter.printAdditionalInfo "**** Building #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"     
         end
 
@@ -197,7 +197,7 @@ module Bake
         depResult = callDeps(:clean)
         return false if not depResult and Bake.options.stopOnFirstError
         
-        if Bake.options.verboseHigh
+        if Bake.options.verbose >= 2
           Bake.formatter.printAdditionalInfo "**** Cleaning #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"     
         end
         
@@ -206,7 +206,7 @@ module Bake
         if Bake.options.clobber
           Dir.chdir(@projectDir) do
             if File.exist?".bake" 
-              puts "Deleting folder .bake" if Bake.options.verboseHigh
+              puts "Deleting folder .bake" if Bake.options.verbose >= 2
               FileUtils.rm_rf(".bake")
             end
           end          

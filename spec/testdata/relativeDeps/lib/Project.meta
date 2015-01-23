@@ -1,0 +1,8 @@
+Project default: test{
+
+  LibraryConfig test {
+    Files "l.cpp"
+    Dependency "lib/deep/deeper"
+  }
+
+}

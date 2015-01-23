@@ -50,13 +50,13 @@ module Bake
       loader.load(:before_load => proc {|fragment, kind|
         case kind
         when :load_update_cache
-          if Bake.options.verboseHigh
+          if Bake.options.verbose >= 3
             puts "Loading and caching #{fragment.location}"
           else
             puts "Loading #{fragment.location}"
           end
         when :load_cached
-          if Bake.options.verboseHigh
+          if Bake.options.verbose >= 3
             puts "Loading cached #{fragment.location}"
           else
             puts "Loading #{fragment.location}"

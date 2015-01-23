@@ -23,8 +23,7 @@ module Bake
     attr_reader :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
-    attr_reader :verboseLow
-    attr_reader :verboseHigh
+    attr_reader :verbose
     attr_reader :consoleOutput_fullnames, :consoleOutput_visualStudio
     
 
@@ -36,8 +35,7 @@ module Bake
       @consoleOutput_visualStudio = false           
       @prepro = false
       @stopOnFirstError = false
-      @verboseLow = false
-      @verboseHigh = false
+      @verbose = 1
       @vars = {}
       @build_config = ""
       @main_dir = nil
@@ -84,9 +82,10 @@ module Bake
       
       add_option(Option.new("--docu",false)                {     @docu = true               })
 
-        add_option(Option.new("-v0",false)                   {     @verboseLow = true; @verboseHigh = false              })
-      add_option(Option.new("-v1",false)                   {     @verboseLow = false; @verboseHigh = false                   })
-      add_option(Option.new("-v2",false)                   {     @verboseLow = false; @verboseHigh = true                   })
+      add_option(Option.new("-v0",false)                   {     @verbose = 0      })
+      add_option(Option.new("-v1",false)                   {     @verbose = 1      })
+      add_option(Option.new("-v2",false)                   {     @verbose = 2      })
+      add_option(Option.new("-v3",false)                   {     @verbose = 3      })
         
       add_option(Option.new("--debug",false)               {     @debug = true              })
       add_option(Option.new("--set",true)                  { |x| set_set(x)                 })

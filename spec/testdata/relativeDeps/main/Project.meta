@@ -1,0 +1,18 @@
+Project {
+
+  ExecutableConfig test {
+    Files "main.cpp"
+    Dependency lib
+    Dependency "lib/deep/deeper"
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig testConflict {
+    Files "main.cpp"
+    Dependency lib
+    Dependency "lib/deep/deeper"
+    Dependency "otherLib/deep/deeper"
+    DefaultToolchain GCC
+  }
+
+}
