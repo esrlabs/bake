@@ -47,7 +47,6 @@ module Bake
           
           begin
             File.readlines(dep_filename_conv).map{|line| line.strip}.each do |dep|
-              dep = "/usr/bla"
               if not File.exist?(dep)
                 # we need a hack here. with some windows configurations the compiler prints unix paths
                 # into the dep file which cannot be found easily. this will be true for system includes,
@@ -308,7 +307,7 @@ module Bake
         source_files = Set.new
         @config.files.each do |sources|
           p = sources.name
-          res = Dir.glob(p)
+          res = Dir.glob(p).sort
           if res.length == 0 and cleaning == false
             if not p.include?"*" and not p.include?"?"
               Bake.formatter.printError("Source file '#{p}' not found", sources)

@@ -262,7 +262,21 @@ describe "Building" do
    
     expect(ExitHelper.exit_code).to be == 0
   end
-  
+
+  it 'touch header' do
+    Bake.startBake("header/main", ["test"])
+    expect($mystring.split("Compiling").length).to be == 2
+    Bake.startBake("header/main", ["test"])
+    expect($mystring.split("Compiling").length).to be == 2
+
+    sleep 1.1
+    FileUtils.touch("spec/testdata/header/main/include/inc1.h")
+
+    Bake.startBake("header/main", ["test"])
+    expect($mystring.split("Compiling").length).to be == 3
+  end
+
+    
 end
 
 end

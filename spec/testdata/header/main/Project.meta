@@ -1,0 +1,7 @@
+Project {
+  ExecutableConfig test {
+    Files "src/main.cpp"
+    IncludeDir include
+    DefaultToolchain GCC
+  }
+}
