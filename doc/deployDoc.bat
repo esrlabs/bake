@@ -1,2 +1,2 @@
-scp -r "./" "aschaal@esrlabs.com:/var/www/esrlabs/wordpress2/gems/doc/bake-toolkit/"
+scp -P 31953 -r "./" "aschaal@173.230.139.188:/srv/www/esrlabs.com/wordpress/gems/doc/bake-toolkit/"
 pause
