@@ -10,7 +10,7 @@ require 'helper'
 module Bake
 
 describe "Merging Configs" do
-  
+=begin
   it 'build base (all)' do
     expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
     expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
@@ -70,17 +70,19 @@ describe "Merging Configs" do
     posdep11 = $mystring.index("depL1_1 (lib)")
     posdep12 = $mystring.index("depL1_2 (lib)")
     posdep21 = $mystring.index("depL2_1 (lib)")
-    posdep22 = $mystring.index("depL2_2 (new)")
+    posdep22 = $mystring.index("depL2_2 (lib)")
     posdep31 = $mystring.index("depL3_1 (lib)")
+    posdep22n = $mystring.index("depL2_2 (new)")
     posdep32 = $mystring.index("depL3_2 (lib)")
     
     expect((posdep11 < posdep12)).to be == true
     expect((posdep12 < posdep21)).to be == true
     expect((posdep21 < posdep22)).to be == true
     expect((posdep22 < posdep31)).to be == true
-    expect((posdep31 < posdep32)).to be == true
+    expect((posdep31 < posdep22n)).to be == true
+    expect((posdep22n < posdep32)).to be == true
     
-    expect($mystring.include?("depL2_2 (lib)")).to be == false
+    expect($mystring.split("depL1_1 (lib)").length == $mystring.split("depL2_1 (lib)").length).to be == true
   end    
 
   it 'deps (child)' do
@@ -217,7 +219,7 @@ describe "Merging Configs" do
   it 'defaulttoolchain (all)' do
     Bake.startBake("merge/main", ["testL3E", "--rebuild", "-v2"])
 
-    expect($mystring.include?("def1")).to be == false
+    expect($mystring.include?("def1")).to be == true
     expect($mystring.include?("def2")).to be == true
     expect($mystring.include?("-O3")).to be == true
   end    
@@ -313,7 +315,7 @@ describe "Merging Configs" do
   it 'toolchain (all)' do
     Bake.startBake("merge/main", ["testE3", "--rebuild", "-v2"])
     
-    expect($mystring.include?("def1")).to be == false
+    expect($mystring.include?("def1")).to be == true
     expect($mystring.include?("def2")).to be == true
     expect($mystring.include?("-O3")).to be == true
   end    
@@ -382,6 +384,134 @@ describe "Merging Configs" do
     expect($mystring.include?("**testE1.exe**")).to be == true # subst
     expect(File.exists?("spec/testdata/merge/main/testE6/testE1.map")).to be == true # subst
   end   
+=end
+
+  # explicitly test all toolchain merges
+  
+  it 'toolchain compiler set' do
+    Bake.startBake("merge/main", ["testTC2", "--rebuild", "-v2"])
+    expect($mystring.include?("-DX -DY")).to be == true
+  end  
+  
+  it 'toolchain overwrite basedOn' do
+    Bake.startBake("merge/main", ["testTC2", "--rebuild", "-v2"])
+    expect($mystring.include?("g++")).to be == true
+  end 
+  
+  it 'toolchain compiler flags merge' do
+    Bake.startBake("merge/main", ["testTC3", "--rebuild", "-v2"])
+    expect($mystring.include?("-DX -DZ ")).to be == true
+    expect($mystring.include?("-DGAGA")).to be == true
+  end  
+  
+  it 'toolchain compiler define merge' do
+    Bake.startBake("merge/main", ["testTC4", "--rebuild", "-v2"])
+    expect($mystring.include?("-DGAGA -DGUGU")).to be == true
+  end 
+  
+  it 'toolchain internal defines merge' do
+    Bake.startBake("merge/main", ["testTC4", "--rebuild", "--show_incs_and_defs"])
+    expect($mystring.include?("HARHAR")).to be == true
+    expect($mystring.include?("Oooooh")).to be == false
+  end  
+  
+  it 'toolchain internal defines not merge' do
+    Bake.startBake("merge/main", ["testTC5", "--rebuild", "--show_incs_and_defs"])
+    expect($mystring.include?("HARHAR")).to be == false
+    expect($mystring.include?("Oooooh")).to be == true
+  end 
+  
+  it 'toolchain compiler command merge' do
+    Bake.startBake("merge/main", ["testTC6", "--rebuild", "-v2"])
+    expect($mystring.include?("com1")).to be == true
+  end 
+  
+  it 'toolchain compiler command not merge' do
+    Bake.startBake("merge/main", ["testTC7", "--rebuild", "-v2"])
+    expect($mystring.include?("com1")).to be == true
+  end
+  
+  it 'toolchain archiver set' do
+    Bake.startBake("merge/main", ["testTC11", "--rebuild", "-v2"])
+    expect($mystring.include?("com1")).to be == true
+  end
+  
+  it 'toolchain archiver command merge' do
+    Bake.startBake("merge/main", ["testTC12", "--rebuild", "-v2"])
+    expect($mystring.include?("com1")).to be == true
+    expect($mystring.include?("-XXX")).to be == true
+  end
+  
+  it 'toolchain archiver flags merge' do
+    Bake.startBake("merge/main", ["testTC13", "--rebuild", "-v2"])
+    expect($mystring.include?("com2")).to be == true
+    expect($mystring.include?("-XXX")).to be == true
+    expect($mystring.include?("-YYY")).to be == true
+  end
+  
+  it 'toolchain linker set' do
+    Bake.startBake("merge/main", ["testTC21", "--rebuild", "-v2"])
+    expect($mystring.include?("com1")).to be == true
+  end
+  
+  it 'toolchain linker command merge' do
+    Bake.startBake("merge/main", ["testTC22", "--rebuild", "-v2"])
+    expect($mystring.include?("com1")).to be == true
+    expect($mystring.include?("-XXX")).to be == true
+  end
+  
+  it 'toolchain linker flags merge' do
+    Bake.startBake("merge/main", ["testTC23", "--rebuild", "-v2"])
+    expect($mystring.include?("com2")).to be == true
+    expect($mystring.include?("-XXX")).to be == true
+    expect($mystring.include?("-YYY")).to be == true
+  end
+  
+  it 'toolchain outputdir no merge' do
+    Bake.startBake("merge/main", ["testTC31", "--rebuild", "-v2"])
+    expect($mystring.include?("-o testEFG/main")).to be == true
+  end
+  
+  it 'toolchain outputdir merge' do
+    Bake.startBake("merge/main", ["testTC32", "--rebuild", "-v2"])
+    expect($mystring.include?("-o testABC/main")).to be == true
+  end
+  
+  it 'toolchain docu no merge' do
+    Bake.startBake("merge/main", ["testTC31", "--rebuild", "-v2", "--docu"])
+    expect($mystring.include?("blah fasel")).to be == false
+    expect($mystring.include?("nix da")).to be == true
+  end
+  
+  it 'toolchain docu merge' do
+    Bake.startBake("merge/main", ["testTC32", "--rebuild", "-v2", "--docu"])
+    expect($mystring.include?("blah fasel")).to be == true
+    expect($mystring.include?("nix da")).to be == false
+  end
+  
+  it 'toolchain lint merge' do
+    Bake.startBake("merge/main", ["testTC31", "--rebuild", "-v2", "--lint"])
+    expect($mystring.include?("intdef.txt")).to be == true
+    expect($mystring.include?("intdef2.txt")).to be == true
+  end
+  
+  it 'toolchain docu derive' do
+    Bake.startBake("merge/main", ["testTC32", "--rebuild", "-v2", "--lint"])
+    expect($mystring.include?("intdef.txt")).to be == true
+    expect($mystring.include?("intdef2.txt")).to be == false
+  end
+  
+  it 'toolchain internal includes no merge' do
+    Bake.startBake("merge/main", ["testTC31", "--rebuild", "-v2", "--show_incs_and_defs"])
+    expect($mystring.include?("HARHAR")).to be == false
+    expect($mystring.include?("Oooooh")).to be == true
+  end
+  
+  it 'toolchain internal includes merge' do
+    Bake.startBake("merge/main", ["testTC32", "--rebuild", "-v2", "--show_incs_and_defs"])
+    expect($mystring.include?("HARHAR")).to be == true
+    expect($mystring.include?("Oooooh")).to be == false
+  end
   
 end
 

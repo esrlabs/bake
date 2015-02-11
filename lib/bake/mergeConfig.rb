@@ -7,18 +7,68 @@ module Bake
       @parent = parent
     end
     
-    def mergeToolchain(pt,ct)
+    def mergeToolchain(pt,ct, isDefault)
       pt.compiler.each do |pc|
-        if ct.compiler.none?{|cc| cc.ctype == pc.ctype}
-          ct.addCompiler(pc)
+        found = false
+        ct.compiler.each do |cc|
+          if cc.ctype == pc.ctype
+            found = true
+            cc.setFlags(pc.flags + cc.flags)
+            cc.setDefine(pc.define + cc.define)
+            if cc.internalDefines.nil? and not pc.internalDefines.nil?
+              cc.setInternalDefines(pc.internalDefines)
+            end 
+            if cc.command == "" and pc.command != ""
+              cc.setCommand(pc.command)
+            end
+          end
         end
+        ct.addCompiler(pc) if not found
       end
-      if ct.archiver.nil? and not pt.archiver.nil?
-        ct.setArchiver(pt.archiver)
+
+      if not pt.archiver.nil?
+        if (ct.archiver.nil?)
+          ct.setArchiver(pt.archiver)
+        else
+          if ct.archiver.command == "" and pt.archiver.command != ""
+            ct.archiver.setCommand(pt.archiver.command)
+          end
+          ct.archiver.setFlags(pt.archiver.flags + ct.archiver.flags)
+        end
+      end 
+ 
+      if not pt.linker.nil?
+        if (ct.linker.nil?)
+          ct.setLinker(pt.linker)
+        else
+          if ct.linker.command == "" and pt.linker.command != ""
+            ct.linker.setCommand(pt.linker.command)
+          end
+          ct.linker.setFlags(pt.linker.flags + ct.linker.flags)
+          ct.linker.setLibprefixflags(pt.linker.libprefixflags + ct.linker.libprefixflags)
+          ct.linker.setLibpostfixflags(pt.linker.libpostfixflags + ct.linker.libpostfixflags)
+        end
+      end 
+      
+      if ct.outputDir == "" and pt.outputDir != ""
+        ct.setOutputDir(pt.outputDir)
       end
-      if ct.linker.nil? and not pt.linker.nil?
-        ct.setLinker(pt.linker)
+
+      if ct.docu.nil? and not pt.docu.nil?
+        ct.setDocu(pt.docu)
       end
+      
+      ct.setLintPolicy(pt.lintPolicy + ct.lintPolicy)
+      
+      if (isDefault)
+        if ct.basedOn == "" and pt.basedOn != ""
+          ct.setBasedOn(pt.basedOn)
+        end
+        if ct.internalIncludes.nil? and not pt.internalIncludes.nil?
+          ct.setInternalIncludes(pt.internalIncludes)
+        end 
+      end
+      
     end
     
     def manipulateLineNumbers(ar)
@@ -31,15 +81,7 @@ module Bake
 
       deps = @parent.dependency
       @child.dependency.each do |cd|
-        overwrite = false        
-        deps.each do |pd|
-          if pd.name == cd.name
-            pd.config = cd.config
-            overwrite = true
-            break
-          end
-        end
-        deps << cd if not overwrite 
+        deps << cd if deps.none? {|pd| pd.name == cd.name and pd.config == cd.config }
       end
       @child.setDependency(deps)
       
@@ -76,7 +118,18 @@ module Bake
         if (ct.nil?)
           @child.setDefaultToolchain(pt)
         else
-          mergeToolchain(pt,ct)
+          mergeToolchain(pt,ct,true)
+        end
+      end
+      
+      pt = @parent.toolchain
+      ct = @child.toolchain
+      
+      if not pt.nil?
+        if (ct.nil?)
+          @child.setToolchain(pt)
+        else
+          mergeToolchain(pt,ct,false)
         end
       end
       
@@ -89,22 +142,9 @@ module Bake
       # Valid for library and exe config
       
       if ((Metamodel::LibraryConfig === @child || Metamodel::ExecutableConfig === @child) && (Metamodel::LibraryConfig === @parent || Metamodel::ExecutableConfig === @parent))
-        
-        @child.setFiles(@parent.files        + @child.files)
+        @child.setFiles(@parent.files + @child.files)
         @child.setExcludeFiles(@parent.excludeFiles + @child.excludeFiles)
-        @child.setIncludeDir(@parent.includeDir   + @child.includeDir)
-        
-        pt = @parent.toolchain
-        ct = @child.toolchain
-        
-        if not pt.nil?
-          if (ct.nil?)
-            @child.setToolchain(pt)
-          else
-            mergeToolchain(pt,ct)
-          end
-        end
-                
+        @child.setIncludeDir(@parent.includeDir + @child.includeDir)
       end
       
       # Valid for exe config
@@ -112,7 +152,7 @@ module Bake
       if (Metamodel::ExecutableConfig === @child && Metamodel::ExecutableConfig === @parent)
         @child.setLinkerScript(@parent.linkerScript) if @child.linkerScript.nil? and not @parent.linkerScript.nil?
         @child.setArtifactName(@parent.artifactName) if @child.artifactName.nil? and not @parent.artifactName.nil?
-        @child.setMapFile(@parent.mapFile)      if @child.mapFile.nil?      and not @parent.mapFile.nil?
+        @child.setMapFile(@parent.mapFile) if @child.mapFile.nil?  and not @parent.mapFile.nil?
       end
     
     end

@@ -21,16 +21,16 @@ A config can be derived from another config in Project.meta like this:
 The config type of the parent config does not matter, but only settings which are valid in BOTH configs will be inherited.<br>
 In the example above D gets the dependencies from A, because "Dependency" is valid in all configs, but D does not get the "Files" from A, because "Files" is not valid in CustomConfig.
 <p>
-The following listing shows HOW settings will be derived:
+The following listing shows how settings will be derived (toolchains below):
 
 <table border="1">
   <tr><th bgcolor="#CCCCCC">Setting</th><th bgcolor="#CCCCCC">Derived</th></tr>
-  <tr><td>Dependency</td> <td>parent + child, existing dependencies will be replaced</td></tr>
-  <tr><td>ExternalLibrary<br>ExternalLibrarySearchPath<br>UserLibrary</td> <td>parent + child (ordered by line number!)</td></tr>
+  <tr><td>Set</td> <td>parent + child</td></tr>
+  <tr><td>Dependency</td> <td>parent + child</td></tr>
+  <tr><td>ExternalLibrary<br>ExternalLibrarySearchPath<br>UserLibrary</td> <td>parent + child<br>(ordered by line number!)</td></tr>
   <tr><td>PreSteps</td> <td>parent + child</td></tr>
   <tr><td>PostSteps</td> <td>parent + child</td></tr>
-  <tr><td>Toolchain<br>DefaultToolchain</td> <td>Compiler, Archiver and Linker settings used from parent<br>if not existing in child - see below</td></tr>
-  <tr><td>Makefile/CommandLine<br>(in CustomConfig)</td> <td>used from parent if not in child</td></tr>
+  <tr><td>Makefile<br>CommandLine<br>(in CustomConfig)</td> <td>used from parent if not in child</td></tr>
   <tr><td>Files</td> <td>parent + child</td></tr>
   <tr><td>ExcludeFiles</td> <td>parent + child</td></tr>
   <tr><td>IncludeDir</td> <td>parent + child</td></tr>
@@ -38,73 +38,20 @@ The following listing shows HOW settings will be derived:
   <tr><td>ArtifactName</td> <td>used from parent if not in child</td></tr>
   <tr><td>MapFile</td> <td>used from parent if not in child</td></tr>
 </table>
+<p>
+
+<table border="1">
+  <tr><th bgcolor="#CCCCCC">(Default)Toolchain<br>Setting</th><th bgcolor="#CCCCCC">Derived</th></tr>
+  <tr><td>basedOn</td> <td>used from parent if not in child</td></tr>
+  <tr><td>outputDir</td> <td>used from parent if not in child</td></tr>
+  <tr><td>command</td> <td>used from parent if not in child</td></tr>
+  <tr><td>LibPrefixFlags<br>LibPostfixFlags<br>Flags</td> <td>parent + child</td></tr>
+  <tr><td>Define</td> <td>parent + child</td></tr>
+  <tr><td>InternalDefines<br>InternalIncludes<br>(in CustomConfig)</td> <td>used from parent if not in child</td></tr>
+  <tr><td>LintPolicy</td> <td>parent + child</td></tr>
+  <tr><td>Docu</td> <td>used from parent if not in child</td></tr>
+</table>
 <br>
-<h3>Example for deriving toolchains:</h3>
-
-<pre id="rundrum"><code>ExecutableConfig A {
-  Toolchain {
-    Compiler CPP {
-      Define "DefA"
-    }
-    Linker {
-      Flags "-O3"
-    }
-  }
-}
-
-ExecutableConfig B, extends: A {
-  Toolchain {
-    Compiler CPP {
-      Define "DefB1"
-    }
-    Compiler ASM {
-      Define "DefB2"
-    }
-    Archiver {
-      Flags "-B"
-    }
-  }
-}</code></pre>	
-
-B derives from A, but B redefines Compiler CPP, therefore "DefA" will not be defined in B. But the toolchain of B does not include a Linker tag, therefore the Linker will be inherited.<br>
-The toolchain of B is treated like this:
-
-<pre id="rundrum"><code>Toolchain {
-  Compiler CPP {
-    Define "DefB1"
-  }
-  Compiler ASM {
-    Define "DefB2"
-  }
-  Archiver {
-    Flags "-B"
-  }
-  Linker {
-    Flags "-O3"
-  }
-}</code></pre>
-
-<h3>Example for deriving dependencies:</h3>
-
-<pre id="rundrum"><code>ExecutableConfig A {
-  Dependency Sub1, config s1
-  Dependency Sub2, config s2
-  Dependency Sub3, config s3
-}
-
-ExecutableConfig B, extends: A {
-  Dependency Sub4, config s4
-  Dependency Sub1, config sOther
-  Dependency Sub5, config s5
-}</code></pre>	
-
-The dependencies of B will be treated like this:
-
-<pre id="rundrum"><code>Dependency Sub1, config sOther
-Dependency Sub2, config s2
-Dependency Sub3, config s3
-Dependency Sub4, config s4
-Dependency Sub5, config s5</code></pre>
 
 </body>
 

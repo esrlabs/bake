@@ -162,6 +162,7 @@ Project {
     Dependency depL3_1, config: lib
     Dependency depL2_2, config: new
     Dependency depL3_2, config: lib
+    Dependency depL2_1, config: lib
     Files "**/*L3*"
     ExcludeFiles "**/*L3ex*"
     PreSteps {
@@ -265,6 +266,141 @@ Project {
   CustomConfig ParentKaputt, extends: dasGibtsDochGarNicht {
 	DefaultToolchain GCC
   }  
+  
+  
+  # explicit merge toolchain stuff
+  
+  ExecutableConfig testTC1 {
+    Files "src/main.cpp"
+    DefaultToolchain Diab {
+      Compiler CPP {
+        Flags "-DX"
+        Flags add: "-DY"
+        Define "GAGA"
+        InternalDefines "intdef.txt"
+      }
+      Compiler C {
+        Flags "-DA"
+      }
+    }
+  }
+  
+  ExecutableConfig testTC2, extends: testTC1 {
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig testTC3, extends: testTC1 {
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Flags remove: "-DY"
+        Flags add: "-DZ"
+      }
+    }
+  }
+  
+  ExecutableConfig testTC4, extends: testTC1 {
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Define "GUGU"
+      }
+    }
+  }
+  
+  ExecutableConfig testTC5, extends: testTC1 {
+    DefaultToolchain GCC {
+      Compiler CPP {
+        InternalDefines "intdef2.txt"
+      }
+    }
+  }
+  
+  ExecutableConfig testTC6, extends: testTC1 {
+    DefaultToolchain GCC {
+      Compiler CPP, command: "com1"
+    }
+  }
+  
+  ExecutableConfig testTC7, extends: testTC6 {
+    DefaultToolchain GCC {
+      Compiler CPP
+    }
+  }
+  
+  LibraryConfig testTC10 {
+    DefaultToolchain GCC {
+      Archiver command: "com1"
+    }
+  }
+  
+  LibraryConfig testTC11, extends: testTC10 {
+    DefaultToolchain GCC {
+    }
+  }
+  
+  LibraryConfig testTC12, extends: testTC10 {
+    DefaultToolchain GCC {
+      Archiver {
+        Flags "-XXX"
+      }
+    }
+  }
+  
+  LibraryConfig testTC13, extends: testTC12 {
+    DefaultToolchain GCC {
+      Archiver command: "com2" {
+        Flags add: "-YYY"
+      }
+    }
+  }
+  
+  ExecutableConfig testTC20 {
+    DefaultToolchain GCC {
+      Linker command: "com1"
+    }
+  }
+  
+  ExecutableConfig testTC21, extends: testTC20 {
+    DefaultToolchain GCC {
+    }
+  }
+  
+  ExecutableConfig testTC22, extends: testTC20 {
+    DefaultToolchain GCC {
+      Linker {
+        Flags "-XXX"
+      }
+    }
+  }
+  
+  ExecutableConfig testTC23, extends: testTC22 {
+    DefaultToolchain GCC {
+      Linker command: "com2" {
+        Flags add: "-YYY"
+      }
+    }
+  }
+
+  ExecutableConfig testTC30 {
+    Files "src/main.cpp"
+    DefaultToolchain GCC, outputDir: "testABC" {
+      Docu "blah fasel"
+      LintPolicy "intdef.txt"
+      InternalIncludes "intdef.txt"
+    }
+  }
+  
+  ExecutableConfig testTC31, extends: testTC30 {
+    DefaultToolchain GCC, outputDir: "testEFG" {
+      Docu "nix da"
+      LintPolicy "intdef2.txt"
+      InternalIncludes "intdef2.txt"
+    }
+ }
+  
+  ExecutableConfig testTC32, extends: testTC30 {
+    DefaultToolchain GCC
+  }
+  
   
 }
 
