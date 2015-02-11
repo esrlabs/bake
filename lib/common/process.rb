@@ -7,9 +7,10 @@ module Bake
     def self.run(cmdLineArray, immediateOutput=false, force=true, outpipe=nil)
       rd, wr = IO.pipe
       @@rd = rd if force
-      cmdLineArray << { :err=>wr, :out=>(outpipe ? outpipe : wr) }
+      duppedCmdLineArray = cmdLineArray.dup
+      duppedCmdLineArray << { :err=>wr, :out=>(outpipe ? outpipe : wr) }
       begin
-        pid = spawn(*cmdLineArray)
+        pid = spawn(*duppedCmdLineArray)
       rescue Exception => e
         return [false, e.message]
       end
