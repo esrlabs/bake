@@ -4,8 +4,8 @@ Project {
     PreSteps {
       CommandLine "echo from testSub1(1): $(OutputDir,$(MainProjectName),$(MainConfigName))"
       CommandLine "echo from testSub1(2): $(OutputDir,main,testLib1)"
-      CommandLine "echo from testSub1(3): $(OutputDir,$(ProjectName),testSub1)"
-      CommandLine "echo from testSub1(4): $(OutputDir,lib,testSub2)"
+      CommandLine "echo from testSub1(3): $(OutputDir, $(ProjectName),testSub1)"
+      CommandLine "echo from testSub1(4): $(OutputDir,lib, testSub2  )"
     }
   } 
 

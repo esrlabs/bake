@@ -170,8 +170,8 @@ module Bake
             out_proj_name = @@projName
             out_conf_name = @@configName
           else
-            out_proj_name = splittedVar[1]
-            out_conf_name = splittedVar[2]
+            out_proj_name = splittedVar[1].strip
+            out_conf_name = splittedVar[2].strip
           end
           if @@loadedConfig.referencedConfigs.has_key?out_proj_name
             configs = @@loadedConfig.referencedConfigs[out_proj_name]
