@@ -277,7 +277,7 @@ module Bake
           Bake.formatter.printSuccess("\n#{taskType} done.")
         end
       rescue SystemExit
-        Bake.formatter.printError("\n#{taskType} failed.")
+        Bake.formatter.printError("\n#{taskType} failed.") if ExitHelper.exit_code != 0
       end
       
     end
