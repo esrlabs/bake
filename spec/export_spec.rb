@@ -30,8 +30,8 @@ describe "Export" do
     Bake.startBake("root1/main", ["-b", "rel_test", "--rebuild"])
     
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
-    expect($mystring.include?("Creating test_main_rel_test/liblib3.a")).to be == true
-    expect($mystring.include?("Linking rel_test/main.exe")).to be == true
+    expect($mystring.include?("Creating build_test_main_rel_test/liblib3.a")).to be == true
+    expect($mystring.include?("Linking build_rel_test/main.exe")).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
   
@@ -40,7 +40,7 @@ describe "Export" do
     
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("liblib3.a")).to be == false
-    expect($mystring.include?("Linking rel_test/main.exe")).to be == false
+    expect($mystring.include?("Linking build_rel_test/main.exe")).to be == false
     expect($mystring.include?("Building done.")).to be == true
   end  
   
@@ -51,7 +51,7 @@ describe "Export" do
 
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("liblib3.a")).to be == true
-    expect($mystring.include?("Linking rel_test/main.exe")).to be == true
+    expect($mystring.include?("Linking build_rel_test/main.exe")).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
   it 'Without file clean' do
@@ -63,7 +63,7 @@ describe "Export" do
     
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("liblib3.a")).to be == true
-    expect($mystring.include?("Linking rel_test/main.exe")).to be == true
+    expect($mystring.include?("Linking build_rel_test/main.exe")).to be == true
     expect($mystring.include?("Building done.")).to be == true
   end
   it 'Without file lib' do
@@ -71,7 +71,7 @@ describe "Export" do
     
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("liblib3.a")).to be == false
-    expect($mystring.include?("Linking rel_test/main.exe")).to be == false
+    expect($mystring.include?("Linking build_rel_test/main.exe")).to be == false
     expect($mystring.include?("Building done.")).to be == true
   end
   it 'Without file lib rebuild' do
@@ -79,7 +79,7 @@ describe "Export" do
     
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("liblib3.a")).to be == true
-    expect($mystring.include?("Linking rel_test/main.exe")).to be == false
+    expect($mystring.include?("Linking build_rel_test/main.exe")).to be == false
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
   it 'Without file main rebuild' do
@@ -87,7 +87,7 @@ describe "Export" do
 
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("liblib3.a")).to be == false
-    expect($mystring.include?("Linking rel_test/main.exe")).to be == true
+    expect($mystring.include?("Linking build_rel_test/main.exe")).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true    
   end
   it 'With file again build' do
@@ -98,8 +98,8 @@ describe "Export" do
     Bake.startBake("root1/main", ["-b", "rel_test"])
       
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
-    expect($mystring.include?("Creating test_main_rel_test/liblib3.a")).to be == true
-    expect($mystring.include?("Linking rel_test/main.exe")).to be == true
+    expect($mystring.include?("Creating build_test_main_rel_test/liblib3.a")).to be == true
+    expect($mystring.include?("Linking build_rel_test/main.exe")).to be == true
     expect($mystring.include?("Building done.")).to be == true    
   end
 

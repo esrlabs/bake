@@ -61,11 +61,11 @@ module Bake
     end
         
     def substVars
-      Subst.itute(@mainConfig, Bake.options.main_project_name, true, @configTcMap[@mainConfig])
+      Subst.itute(@mainConfig, Bake.options.main_project_name, true, @configTcMap[@mainConfig], @loadedConfig, @configTcMap)
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
           if config != @mainConfig 
-            Subst.itute(config, projName, false, @configTcMap[config])
+            Subst.itute(config, projName, false, @configTcMap[config], @loadedConfig, @configTcMap)
           end 
         end  
       end
@@ -93,7 +93,7 @@ module Bake
         end
       end
     end    
-    
+
     def convert2bb
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
@@ -231,7 +231,6 @@ module Bake
         createBaseTcsForConfig
         substVars
         createTcsForConfig
-        
         convert2bb
         
         Blocks::Show.includes if Bake.options.show_includes

@@ -19,6 +19,8 @@ module Bake
       r.each { |f| FileUtils.rm_rf(f) }
       r = Dir.glob("spec/testdata/**/.bake")
       r.each { |f| FileUtils.rm_rf(f) }
+      r = Dir.glob("spec/testdata/**/build_*")
+      r.each { |f| FileUtils.rm_rf(f) }
     end
   end
 

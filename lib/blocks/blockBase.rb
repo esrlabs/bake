@@ -52,9 +52,9 @@ module Bake
           p = @block.convPath(@tcs[:OUTPUT_DIR])
           @output_dir = p
         elsif @projectName == Bake.options.main_project_name and @config.name == Bake.options.build_config 
-          @output_dir = Bake.options.build_config
+          @output_dir = "build_" + Bake.options.build_config
         else
-          @output_dir = @config.name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+          @output_dir = "build_" + @config.name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
         end
       end
       

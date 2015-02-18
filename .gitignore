@@ -5,6 +5,7 @@ test_main/
 test_p1/
 wrongConfig_main/
 test/
+build_*
 rel_test*
 test1/
 test2/

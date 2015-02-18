@@ -35,10 +35,12 @@ module Bake
       @@lazy = false
     end
     
-    def self.itute(config, projName, isMainProj, toolchain)
+    def self.itute(config, projName, isMainProj, toolchain, loadedConfig, configTcMap)
       @@lazy = true
       @@config = config
       @@toolchain = toolchain
+      @@loadedConfig = loadedConfig
+      @@configTcMap = configTcMap
       
       @@configName = config.name
       @@projDir = config.parent.get_project_dir
@@ -127,11 +129,24 @@ module Bake
         break if posStart.nil?
         posEnd = str.index(")", posStart)
         break if posEnd.nil?
+        posStartSub = str.index("$(", posStart+1)
+        if (not posStartSub.nil? and posStartSub < posEnd) # = nested vars
+          newStr = str[0,posStartSub] + substString(str[posStartSub..posEnd],elem)
+          if (str.length + 1 > posEnd)
+            str = newStr + str[posEnd+1..-1]
+          else
+            str = newStr
+          end
+          next
+        end
+        
         substStr << str[posSubst..posStart-1] if posStart>0
       
         @@resolvedVars += 1
         var = str[posStart+2..posEnd-1]
 
+        splittedVar = var.split(",")
+        
         if Bake.options.vars.has_key?(var)
           substStr << Bake.options.vars[var]  
         elsif @@userVarMap.has_key?(var)
@@ -149,10 +164,52 @@ module Bake
         elsif var == "ProjectDir"
           substStr << @@projDir
         elsif var == "OutputDir"
-          if @@projName == Bake.options.main_project_name
-            substStr << Bake.options.build_config
+          if @@projName == Bake.options.main_project_name and @@configName == Bake.options.build_config
+            substStr << "build_" + Bake.options.build_config
           else
-            substStr << @@configName + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+            substStr << "build_" + @@configName + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+          end
+        elsif splittedVar.length == 3 and splittedVar[0] == "OutputDir"
+          out_block_name = splittedVar[1] + "," + splittedVar[2]
+          
+          if @@loadedConfig.referencedConfigs.has_key?splittedVar[1]
+            configs = @@loadedConfig.referencedConfigs[splittedVar[1]]
+            config = configs.select {|c| c.name == splittedVar[2] }.first
+            if config
+               out_dir = nil
+              if (config.toolchain and config.toolchain.outputDir and config.toolchain.outputDir != "")
+                out_dir = config.toolchain.outputDir
+              else
+                out_dir = @@configTcMap[config][:OUTPUT_DIR]
+              end
+              if not out_dir
+                if splittedVar[1] == Bake.options.main_project_name and splittedVar[2] == Bake.options.build_config
+                  out_dir = "build_" + Bake.options.build_config
+                else
+                  out_dir = "build_" + splittedVar[2] + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+                end
+              end
+              if File.is_absolute?(out_dir)
+                substStr << out_dir
+              else
+                substStr << File.rel_from_to_project(@@projDir,config.get_project_dir,true) + out_dir
+              end
+            else
+              if Bake.options.verbose > 0
+                msg = "Substitute variable '$(#{var})' with empty string, because config #{splittedVar[2]} not found for project #{splittedVar[1]}"
+                Bake.formatter.printInfo(msg, elem ? elem : @@config)
+              end
+            end
+          else
+            if Bake.options.verbose > 0
+              msg = "Substitute variable '$(#{var})' with empty string, because project #{splittedVar[1]} not found"
+              Bake.formatter.printInfo(msg, elem ? elem : @@config)
+            end
+          end
+        elsif splittedVar.length > 1 and splittedVar[0] == "OutputDir"
+          if Bake.options.verbose > 0
+            msg = "Substitute variable '$(#{var})' with empty string, because syntax of complex variable OutputDir is not $(OutputDir,<project name>,<config name>)"
+            Bake.formatter.printInfo(msg, elem ? elem : @@config)
           end
         elsif var == "Time"
           substStr << Time.now.to_s
@@ -196,7 +253,6 @@ module Bake
               Bake.formatter.printInfo(msg +  " in the toolchain", @@config)
             end
           end
-          substStr << ""
         end
       
         posSubst = posEnd + 1
