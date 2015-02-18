@@ -1,3 +1,5 @@
+require 'pathname'
+
 module Bake
 
   class Subst
@@ -189,10 +191,11 @@ module Bake
                   out_dir = "build_" + splittedVar[2] + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
                 end
               end
+              out_dir = substString(out_dir, elem)
               if File.is_absolute?(out_dir)
                 substStr << out_dir
               else
-                substStr << File.rel_from_to_project(@@projDir,config.get_project_dir,true) + out_dir
+                substStr << Pathname.new(File.rel_from_to_project(@@projDir,config.get_project_dir,true)  + out_dir).cleanpath.to_s
               end
             else
               if Bake.options.verbose > 0

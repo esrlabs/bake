@@ -108,6 +108,22 @@ describe "VarSubst" do
     expect(($mystring.include?"from test1(b3): XX")).to be == true
   end   
   
+  it 'complex outputdir with rel' do
+    Bake.startBake("outdir/main", ["testTcRel"])
+    expect(($mystring.include?"from main(1): testOut1")).to be == true
+    expect(($mystring.include?"from main(2): ../testOut2")).to be == true
+  end
+  
+  it 'complex outputdir with abs' do
+    Bake.startBake("outdir/main", ["testDtcAbs"])
+    if Utils::OS.windows?
+      expect(($mystring.include?"from main(1): C:/temp/testOutDirD")).to be == true
+      expect(($mystring.include?"from main(2): C:/temp/testOutDirD")).to be == true
+    else
+      expect(($mystring.include?"from main(1): /tmp/testOutDirD")).to be == true
+      expect(($mystring.include?"from main(2): /tmp/testOutDirD")).to be == true
+    end
+  end  
 end
 
 end

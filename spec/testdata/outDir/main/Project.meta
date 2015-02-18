@@ -4,6 +4,10 @@ Project {
     Files "**/*.cpp"
     Dependency lib1, config: testTcRel
 	Dependency lib2, config: testTcRel
+	PreSteps {
+      CommandLine "echo from main(1): $(OutputDir,$(ProjectName),$(ConfigName))"
+      CommandLine "echo from main(2): $(OutputDir,lib1,testTcRel)"
+    }
 	DefaultToolchain GCC
     Toolchain outputDir: "testOut1"
   }
@@ -52,6 +56,11 @@ Project {
     Dependency lib1, config: testRel
 	Dependency lib2, config: testRel
 	DefaultToolchain GCC, outputDir: "$(AbsAll)"
+	PreSteps {
+      CommandLine "echo from main(1): $(OutputDir,$(ProjectName),$(ConfigName))"
+      CommandLine "echo from main(2): $(OutputDir,lib1,testRel)"
+    }
+	
   }  
   
   ExecutableConfig testDtcAbsDD {
