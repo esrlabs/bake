@@ -51,7 +51,8 @@ module Bake
                 # we need a hack here. with some windows configurations the compiler prints unix paths
                 # into the dep file which cannot be found easily. this will be true for system includes,
                 # e.g. /usr/lib/...xy.h
-                if Bake::Utils::OS.windows? and dep.start_with?"/"
+                if (Bake::Utils::OS.windows? and dep.start_with?"/") or
+                  (not Bake::Utils::OS.windows? and dep.length > 1 and dep[1] == ":")
                   puts "Dependency header file #{dep} ignored!" if Bake.options.debug
                 else
                   return "because dependent header #{dep} does not exist"
