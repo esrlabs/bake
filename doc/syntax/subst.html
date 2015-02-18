@@ -36,7 +36,8 @@ bake includes also some standard variables:
   <tr><td>$(ProjectName)</td> <td>canDriver</td></tr>
   <tr><td>$(ProjectDir)</td> <td>C:/Root/MyProject</td></tr>
   <tr><td>$(MainProjectDir)</td> <td>C:/Root/Main</td></tr>
-  <tr><td>$(OutputDir)</td> <td>Debug_bootloader</td></tr>
+  <tr><td>$(OutputDir)</td> <td>build_lib_bootloader_Debug<br><i>output dir of the current config</i></td></tr>
+  <tr><td>$(OutputDir,<i>projName</i>,<i>confName</i>)</td> <td><i>output dir of a specific config<br>relative to the current project</i></td></tr>
   <tr><td>$(ArtifactName)</td> <td>bootloader_1.0.elf</td></tr>
   <tr><td>$(ArtifactNameBase)</td> <td>bootloader_1.0</td></tr>
   <tr><td>$(Time)</td> <td>2012-12-24 20:00:00 +0200</td></tr>
@@ -69,21 +70,19 @@ If the environment variable does not exist, it will be substituted by an empty s
 <p>
 Note, that variables in <b>Dependency</b> definitions are not allowed.
 
-<h3>Equal variables</h3>
+<h3>Equal variables in the main config</h3>
 
-<h4>In main project</h4>
 <table border="1">
   <tr><th bgcolor="#CCCCCC">Variable</th><th bgcolor="#CCCCCC">is equal to</th></tr>
   <tr><td>$(MainConfigName)</td> <td>$(ConfigName)</td></tr>
   <tr><td>$(MainProjectName)</td> <td>$(ProjectName)</td></tr>
-  <tr><td>$(OutputDir)</td> <td>$(MainConfigName)</td></tr>
 </table>
 
-<h4>In subproject</h4>
-<table border="1">
-  <tr><th bgcolor="#CCCCCC">Variable</th><th bgcolor="#CCCCCC">is equal to</th></tr>
-  <tr><td>$(OutputDir)</td> <td>$(ConfigName)_$(MainProjectName)_$(MainConfigName)</td></tr>
-</table>
+<h3>Nested variables</h3>
+
+Variables can be nested like this:
+<pre id="rundrum"><code>$(OutputDir,$(TheProject),$(TheConfig))
+$(ABC$(DEF)GH)</code></pre>
 
 <h3>Auto-adjustment of paths to existing projects</h3>
 

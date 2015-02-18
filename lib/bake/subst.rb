@@ -165,18 +165,17 @@ module Bake
           substStr << @@projName
         elsif var == "ProjectDir"
           substStr << @@projDir
-        elsif var == "OutputDir"
-          if @@projName == Bake.options.main_project_name and @@configName == Bake.options.build_config
-            substStr << "build_" + Bake.options.build_config
+        elsif var == "OutputDir" or (splittedVar.length == 3 and splittedVar[0] == "OutputDir")
+          if (var == "OutputDir")
+            out_proj_name = @@projName
+            out_conf_name = @@configName
           else
-            substStr << "build_" + @@configName + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+            out_proj_name = splittedVar[1]
+            out_conf_name = splittedVar[2]
           end
-        elsif splittedVar.length == 3 and splittedVar[0] == "OutputDir"
-          out_block_name = splittedVar[1] + "," + splittedVar[2]
-          
-          if @@loadedConfig.referencedConfigs.has_key?splittedVar[1]
-            configs = @@loadedConfig.referencedConfigs[splittedVar[1]]
-            config = configs.select {|c| c.name == splittedVar[2] }.first
+          if @@loadedConfig.referencedConfigs.has_key?out_proj_name
+            configs = @@loadedConfig.referencedConfigs[out_proj_name]
+            config = configs.select {|c| c.name == out_conf_name }.first
             if config
                out_dir = nil
               if (config.toolchain and config.toolchain.outputDir and config.toolchain.outputDir != "")
@@ -185,10 +184,10 @@ module Bake
                 out_dir = @@configTcMap[config][:OUTPUT_DIR]
               end
               if not out_dir
-                if splittedVar[1] == Bake.options.main_project_name and splittedVar[2] == Bake.options.build_config
+                if out_proj_name == Bake.options.main_project_name and out_conf_name == Bake.options.build_config
                   out_dir = "build_" + Bake.options.build_config
                 else
-                  out_dir = "build_" + splittedVar[2] + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+                  out_dir = "build_" + out_conf_name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
                 end
               end
               out_dir = substString(out_dir, elem)
@@ -199,13 +198,13 @@ module Bake
               end
             else
               if Bake.options.verbose > 0
-                msg = "Substitute variable '$(#{var})' with empty string, because config #{splittedVar[2]} not found for project #{splittedVar[1]}"
+                msg = "Substitute variable '$(#{var})' with empty string, because config #{out_conf_name} not found for project #{out_proj_name}"
                 Bake.formatter.printInfo(msg, elem ? elem : @@config)
               end
             end
           else
             if Bake.options.verbose > 0
-              msg = "Substitute variable '$(#{var})' with empty string, because project #{splittedVar[1]} not found"
+              msg = "Substitute variable '$(#{var})' with empty string, because project #{out_proj_name} not found"
               Bake.formatter.printInfo(msg, elem ? elem : @@config)
             end
           end
