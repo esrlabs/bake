@@ -1,4 +1,4 @@
 bake
 ====
 
-Fast and easy build tool.
+Build tool for C++ projects.
