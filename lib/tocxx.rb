@@ -102,7 +102,7 @@ module Bake
           
           Blocks::ALL_BLOCKS[config.qname] = block
           
-          if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.docu and not Bake.options.filename
+          if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
             addSteps(block, block.preSteps,  config.preSteps)
             addSteps(block, block.postSteps, config.postSteps)
           end
@@ -110,7 +110,7 @@ module Bake
           if Bake.options.docu
             block.mainSteps << Blocks::Docu.new(config, @configTcMap[config])
           elsif Metamodel::CustomConfig === config
-            if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.docu and not Bake.options.filename
+            if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
               addSteps(block, block.mainSteps, config) if config.step
             end 
           elsif Bake.options.lint
@@ -119,7 +119,7 @@ module Bake
             compile = Blocks::Compile.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config])
             (Blocks::ALL_COMPILE_BLOCKS[projName] ||= []) << compile
             block.mainSteps << compile
-            if not Bake.options.filename
+            if not Bake.options.filename and not Bake.options.analyze
               if Metamodel::LibraryConfig === config
                 block.mainSteps << Blocks::Library.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
               else
@@ -219,6 +219,8 @@ module Bake
         @loadedConfig = Config.new
         @loadedConfig.load
         
+        taskType = "Analyzing" if Bake.options.analyze
+                  
         @mainConfig = @loadedConfig.referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
   
         if Bake.options.lint

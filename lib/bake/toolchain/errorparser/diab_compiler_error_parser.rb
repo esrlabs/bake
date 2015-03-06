@@ -12,7 +12,7 @@ module Bake
       res = []
       error_severity = 255
       consoleOutputFullnames = ""
-      consoleOutput.each_line do |l|
+      consoleOutput[0].each_line do |l|
         d = ErrorDesc.new
         lstripped = l.rstrip
         scan_res = lstripped.scan(@error_expression_start)

@@ -1,18 +1,23 @@
 require 'bake/toolchain/errorparser/error_parser'
 
 module Bake
-  class GCCLinkerErrorParser < ErrorParser
+  class MSVCLinkerErrorParser < ErrorParser
 
     def initialize()
       # todo: is every line an error?
-      # todo: some linker errors look like simple text, dunno how to parse properly...
-      # @error_expression1 = /(.*:\(\..*\)): (.*)/  # e.g. /c/Tool/Temp/ccAlar4R.o:x.cpp:(.text+0x17): undefined reference to `_a'
-      # @error_expression2 = /(.*):([0-9]+): (.*)/  # e.g. /usr/lib/gcc/i686-pc-cygwin/4.3.4/../../../../i686-pc-cygwin/bin/ld:roodi.yml.a:1: syntax error
     end
 
     def scan_lines(consoleOutput, proj_dir)
       res = []
+      consoleOutputFiltered = ""
+      filterLine = 0
+
       consoleOutput[0].each_line do |l|
+      filterLine = filterLine + 1
+        next if (filterLine == 1 and l.include?"Microsoft (R)")
+        next if (filterLine == 2 and l.include?"Copyright (C)")
+        next if (filterLine == 3 and l.strip.empty?)
+        
         l.rstrip!
         d = ErrorDesc.new
         d.file_name = proj_dir
@@ -25,8 +30,10 @@ module Bake
         else
           d.severity = SEVERITY_ERROR
         end
+        consoleOutputFiltered << l
         res << d
       end
+      consoleOutput[0] = consoleOutputFiltered
       [res, consoleOutput[0]]
     end
 

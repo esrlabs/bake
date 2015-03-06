@@ -11,7 +11,7 @@ module Bake
     CLANG_CHAIN = Provider.add("CLANG")
 
     CLANG_CHAIN[:COMPILER][:CPP].update({
-      :COMMAND => "llvm-g++",
+      :COMMAND => "clang",
       :DEFINE_FLAG => "-D",
       :OBJECT_FILE_FLAG => "-o",
       :OBJ_FLAG_SPACE => true,

@@ -99,8 +99,15 @@ module Bake
           cmd = Utils.flagSplit(linker[:COMMAND], false) # g++
           cmd += linker[:MUST_FLAGS].split(" ")
           cmd += Bake::Utils::flagSplit(linker[:FLAGS],true)
+          
+            
           cmd << linker[:EXE_FLAG]
-          cmd << @exe_name # -o debug/x.exe
+          if linker[:EXE_FLAG_SPACE]
+            cmd << @exe_name
+          else
+            cmd[cmd.length-1] += @exe_name
+          end
+
           cmd += @compileBlock.objects
           cmd << linker[:SCRIPT] if @linker_script # -T
           cmd << @linker_script if @linker_script # xy/xy.dld

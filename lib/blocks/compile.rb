@@ -24,7 +24,9 @@ module Bake
       end
    
       def get_object_file(source)
-        adaptedSource = source.chomp(File.extname(source)).gsub(/\.\./, "##") + (Bake.options.prepro ? ".i" : ".o")
+
+        # until now all OBJECT_FILE_ENDING are equal in all three types
+        adaptedSource = source.chomp(File.extname(source)).gsub(/\.\./, "##") + (Bake.options.prepro ? ".i" : @tcs[:COMPILER][:CPP][:OBJECT_FILE_ENDING])
         return adaptedSource if File.is_absolute?source
         File.join([@output_dir, adaptedSource])
       end
@@ -32,7 +34,12 @@ module Bake
       def needed?(source, object, type, dep_filename_conv)
         return false if Bake.options.linkOnly
 
-        return "because prepro was specified" if Bake.options.prepro
+        return "because analyzer toolchain is configured" if Bake.options.analyze
+
+        if Bake.options.prepro
+          return "because prepro was specified and source is no assembler file" if type != :ASM
+          return false 
+        end
         
         return "because object does not exist" if not File.exist?(object)
         oTime = File.mtime(object)
@@ -41,7 +48,7 @@ module Bake
         return "Compiling #{source} because DefaultToolchain has been changed" if oTime < Bake::Config.defaultToolchainTime
         
         return "because source is newer than object" if oTime < File.mtime(source)
-
+        
         if type != :ASM
           return "because dependency file does not exist" if not File.exist?(dep_filename_conv)
           
@@ -149,14 +156,17 @@ module Bake
         cmd += includes
         cmd += defines
         
+        offlag = compiler[:OBJECT_FILE_FLAG]       
+        offlag = compiler[:PREPRO_FILE_FLAG] if compiler[:PREPRO_FILE_FLAG] and Bake.options.prepro
+
         if compiler[:OBJ_FLAG_SPACE]
-          cmd << compiler[:OBJECT_FILE_FLAG]
+          cmd << offlag
           cmd << object
         else
           if object.include?" "
-            cmd << compiler[:OBJECT_FILE_FLAG] + "\"" + object + "\"" 
+            cmd << offlag + "\"" + object + "\"" 
           else
-            cmd << compiler[:OBJECT_FILE_FLAG] + object
+            cmd << offlag + object
           end
         end
         cmd << source
@@ -164,12 +174,14 @@ module Bake
         if Bake.options.cc2j_filename
           Blocks::CC2J << { :directory => @projectDir, :command => cmd, :file => source }
         end
-        
         success, consoleOutput = ProcessHelper.run(cmd, false, false)
-        outputType = Bake.options.prepro ? "Preprocessing" : "Compiling"
-        process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
+        outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
+        incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
    
-        Compile.convert_depfile(dep_filename, dep_filename_conv, @projectDir, @tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if type != :ASM
+        if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
+          incList = Compile.read_depfile(dep_filename, @projectDir, @tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
+          Compile.write_depfile(incList, dep_filename_conv) 
+        end
         check_config_file
       end
 
@@ -195,8 +207,7 @@ module Bake
       end
       
       # todo: move to toolchain util file
-      def self.convert_depfile(dep_filename, dep_filename_conv, projDir, singleLine)
-        deps = read_depfile(dep_filename, projDir, singleLine)
+      def self.write_depfile(deps, dep_filename_conv)
         if deps
           begin
             File.open(dep_filename_conv, 'wb') do |f|
@@ -275,7 +286,7 @@ module Bake
       end
       
       def clean
-        if Bake.options.filename
+        if Bake.options.filename or Bake.options.analyze
           Dir.chdir(@projectDir) do
             calcSources(true)
             @source_files.each do |source|
@@ -283,14 +294,16 @@ module Bake
               type = get_source_type(source)
               next if type.nil?
               object = get_object_file(source)
-              dep_filename = calcDepFile(object, type)
               if File.exist?object 
                 puts "Deleting file #{object}" if Bake.options.verbose >= 2
                 FileUtils.rm_rf(object)
               end
-              if File.exist?dep_filename 
-                puts "Deleting file #{dep_filename}" if Bake.options.verbose >= 2
-                FileUtils.rm_rf(dep_filename)
+              if not Bake.options.analyze
+                dep_filename = calcDepFile(object, type)
+                if dep_filename and File.exist?dep_filename 
+                  puts "Deleting file #{dep_filename}" if Bake.options.verbose >= 2
+                  FileUtils.rm_rf(dep_filename)
+                end
               end
             end
           end

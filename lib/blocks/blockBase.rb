@@ -59,7 +59,6 @@ module Bake
       end
       
       def printCmd(cmd, alternate, reason, forceVerbose)
-        
         if (cmd == @lastCommand)
           if (Bake.options.verbose >= 2 or (@printedCmdAlternate and not forceVerbose))
             return
@@ -95,13 +94,16 @@ module Bake
       
       def process_console_output(console_output, error_parser)
         ret = false
-        if not console_output.empty?
+        incList = nil
+        #if not console_output.empty?
           if error_parser
             begin
-              error_descs, console_output_full = error_parser.scan_lines(console_output, @projectDir)
-  
+              x = [console_output]
+              error_descs, console_output_full, incList = error_parser.scan_lines(x, @projectDir)
+            
+              console_output = x[0]
               console_output = console_output_full if Bake.options.consoleOutput_fullnames
-              
+
               if Bake.options.consoleOutput_visualStudio
                 console_output_VS = ""
                 descCounter = 0
@@ -132,14 +134,14 @@ module Bake
           else
             puts console_output # fallback
           end
-        end
-        ret
+        #end
+        [ret, incList]
       end
       
       def process_result(cmd, console_output, error_parser, alternate, reason, success)
         hasError = (success == false)
         printCmd(cmd, alternate, reason, (hasError and not Bake.options.lint))
-        errorPrinted = process_console_output(console_output, error_parser)
+        errorPrinted, incList = process_console_output(console_output, error_parser)
         
         if hasError and not errorPrinted
           Bake.formatter.printError("System command failed", @projectDir)
@@ -147,6 +149,7 @@ module Bake
         if hasError or errorPrinted
           raise SystemCommandFailed.new
         end
+        incList
       end      
       
     end

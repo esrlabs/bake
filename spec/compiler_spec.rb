@@ -90,7 +90,8 @@ describe "compiler" do
   
   it 'keil deps - no single line' do
     path = "spec/testdata/compiler/keil"
-    Blocks::Compile.convert_depfile("#{path}/dep.d", "#{path}/test_conv_dep.d", "DIR", true)
+    incList = Blocks::Compile.read_depfile("#{path}/dep.d", "DIR", true)
+    Blocks::Compile.write_depfile(incList, "#{path}/test_conv_dep.d")
     
     str = File.read("#{path}/test_conv_dep.d").split("\n")
     expect(str.include?("A/B.h")).to be == true

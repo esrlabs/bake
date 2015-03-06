@@ -42,7 +42,6 @@ module Bake
       pid, status = Process.wait2(pid)
       @@pid = nil
       @@rd = nil
-      cmdLineArray.pop
       return [false, output] if status.nil?
       [status.success?, output]
     end

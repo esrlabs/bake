@@ -52,7 +52,13 @@ module Bake
           cmd = Utils.flagSplit(archiver[:COMMAND], false) # ar
           cmd += Bake::Utils::flagSplit(archiver[:FLAGS],true) # --all_load
           cmd += archiver[:ARCHIVE_FLAGS].split(" ")
-          cmd << archive_name
+            
+          if archiver[:ARCHIVE_FLAGS_SPACE]
+            cmd << archive_name
+          else
+            cmd[cmd.length-1] += archive_name
+          end
+            
           cmd += @compileBlock.objects
           
           success, consoleOutput = ProcessHelper.run(cmd, false, false)

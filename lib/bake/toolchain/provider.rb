@@ -10,6 +10,7 @@ module Bake
             :COMMAND => "",
             :DEFINE_FLAG => "",
             :OBJECT_FILE_FLAG => "",
+            :OBJECT_FILE_ENDING => ".o",
             :OBJ_FLAG_SPACE => false,
             :INCLUDE_PATH_FLAG => "",
             :COMPILE_FLAGS => "",
@@ -20,12 +21,14 @@ module Bake
             :DEP_FLAGS_SPACE => false,
             :DEP_FLAGS_FILENAME => true,
             :ERROR_PARSER => nil,
-            :PREPRO_FLAGS => ""
+            :PREPRO_FLAGS => "",
+            :PREPRO_FILE_FLAG => nil
           },
           :C => {
             :COMMAND => "",
             :DEFINE_FLAG => "",
             :OBJECT_FILE_FLAG => "",
+            :OBJECT_FILE_ENDING => ".o",
             :OBJ_FLAG_SPACE => false,
             :INCLUDE_PATH_FLAG => "",
             :COMPILE_FLAGS => "",
@@ -36,12 +39,14 @@ module Bake
             :DEP_FLAGS_SPACE => false,
             :DEP_FLAGS_FILENAME => true,
             :ERROR_PARSER => nil,
-            :PREPRO_FLAGS => ""
+            :PREPRO_FLAGS => "",
+            :PREPRO_FILE_FLAG => nil
           },
           :ASM => {
             :COMMAND => "",
             :DEFINE_FLAG => "",
             :OBJECT_FILE_FLAG => "",
+            :OBJECT_FILE_ENDING => ".o",
             :OBJ_FLAG_SPACE => false,
             :INCLUDE_PATH_FLAG => "",
             :COMPILE_FLAGS => "",
@@ -52,7 +57,8 @@ module Bake
             :DEP_FLAGS_SPACE => false,
             :DEP_FLAGS_FILENAME => true,
             :ERROR_PARSER => nil,
-            :PREPRO_FLAGS => ""
+            :PREPRO_FLAGS => "",
+            :PREPRO_FILE_FLAG => nil
           }
         },
 
@@ -60,6 +66,7 @@ module Bake
         {
           :COMMAND => "",
           :ARCHIVE_FLAGS => "",
+          :ARCHIVE_FLAGS_SPACE => true,
           :FLAGS => "",
           :ERROR_PARSER => nil
         },
@@ -71,6 +78,7 @@ module Bake
           :SCRIPT => "",
           :USER_LIB_FLAG => "",
           :EXE_FLAG => "",
+          :EXE_FLAG_SPACE => true,
           :LIB_FLAG => "",
           :LIB_PATH_FLAG => "",
           :LIB_PREFIX_FLAGS => "", # "-Wl,--whole-archive",
@@ -131,6 +139,8 @@ require 'bake/toolchain/diab'
 require 'bake/toolchain/gcc'
 require 'bake/toolchain/lint'
 require 'bake/toolchain/clang'
+require 'bake/toolchain/clang_analyze'
 require 'bake/toolchain/ti'
 require 'bake/toolchain/greenhills'
 require 'bake/toolchain/keil'
+require 'bake/toolchain/msvc'

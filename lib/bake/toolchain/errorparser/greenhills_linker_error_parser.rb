@@ -21,7 +21,7 @@ module Bake
     def scan_lines(consoleOutput, proj_dir)
       res = []
       error_severity = 255
-      consoleOutput.each_line do |l|
+      consoleOutput[0].each_line do |l|
         l.rstrip!
         d = ErrorDesc.new
         scan_res = l.scan(@error_expression)
@@ -37,7 +37,7 @@ module Bake
         end
         res << d
       end
-      [res, consoleOutput]
+      [res, consoleOutput[0]]
     end
 
   end
