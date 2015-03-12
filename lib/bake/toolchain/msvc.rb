@@ -36,7 +36,6 @@ module Bake
     MSVCChain[:ARCHIVER][:ARCHIVE_FLAGS_SPACE] = false
 
     MSVCChain[:LINKER][:COMMAND] = "link"
-    MSVCChain[:LINKER][:SCRIPT] = "-T"
     MSVCChain[:LINKER][:USER_LIB_FLAG] = ""
     MSVCChain[:LINKER][:EXE_FLAG] = "-out:"
     MSVCChain[:LINKER][:EXE_FLAG_SPACE] = false

@@ -6,7 +6,7 @@ module Bake
     CLANG_ANALYZE_CHAIN = Provider.add("CLANG_ANALYZE")
 
     CLANG_ANALYZE_CHAIN[:COMPILER][:CPP].update({
-      :COMMAND => "clang",
+      :COMMAND => "clang++",
       :DEFINE_FLAG => "-D",
       :OBJECT_FILE_FLAG => "-o",
       :OBJ_FLAG_SPACE => true,
@@ -20,6 +20,7 @@ module Bake
 
     CLANG_ANALYZE_CHAIN[:COMPILER][:C] = Utils.deep_copy(CLANG_ANALYZE_CHAIN[:COMPILER][:CPP])
     CLANG_ANALYZE_CHAIN[:COMPILER][:C][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:C][:SOURCE_FILE_ENDINGS]
+    CLANG_ANALYZE_CHAIN[:COMPILER][:C][:COMMAND] = "clang"
 
     CLANG_ANALYZE_CHAIN[:COMPILER][:ASM] = Utils.deep_copy(CLANG_ANALYZE_CHAIN[:COMPILER][:C])
     CLANG_ANALYZE_CHAIN[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]
