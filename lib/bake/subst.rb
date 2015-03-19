@@ -18,12 +18,14 @@ module Bake
         linkerCmd = @@config.toolchain.linker.command if @@config.toolchain.linker and @@config.toolchain.linker.command != ""
         archiverCmd = @@config.toolchain.archiver.command if @@config.toolchain.linker and @@config.toolchain.archiver.command != ""
         @@config.toolchain.compiler.each do |c|
-          if c.ctype == :CPP
-            cppCmd = c.command
-          elsif c.ctype == :C
-            cCmd = c.command
-          elsif c.ctype == :ASM
-            asmCmd = c.command
+          if c.command != ""
+            if c.ctype == :CPP
+              cppCmd = c.command
+            elsif c.ctype == :C
+              cCmd = c.command
+            elsif c.ctype == :ASM
+              asmCmd = c.command
+            end
           end
         end
       end 
@@ -262,7 +264,7 @@ module Bake
       substStr << str[posSubst..-1]
       substStr
     end
-
+    
     def self.substToolchain(elem)
       if Hash === elem
         elem.each do |k, e|

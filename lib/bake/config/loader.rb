@@ -295,7 +295,7 @@ module Bake
         @@defaultToolchainTime = cache.defaultToolchainTime
       end
 
-      # todo: cleanup this hack      
+      # todo: cleanup this hack 
       Bake.options.analyze = @defaultToolchain[:COMPILER][:CPP][:COMPILE_FLAGS].include?"analyze"
       
     end
