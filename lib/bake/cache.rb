@@ -14,14 +14,12 @@ module Bake
     attr_accessor :include_filter
     attr_accessor :exclude_filter
     attr_accessor :defaultToolchain
-    attr_accessor :defaultToolchainTime
     attr_accessor :no_autodir
     attr_accessor :build_config
   end
   
   class CacheAccess
       attr_reader :defaultToolchain
-      attr_reader :defaultToolchainTime
       attr_reader :cacheFilename
   
       def initialize()
@@ -33,7 +31,6 @@ module Bake
         
         FileUtils.mkdir_p(File.dirname(@cacheFilename))
         @defaultToolchain = nil
-        @defaultToolchainTime = nil
       end
       
       def load_cache
@@ -50,8 +47,7 @@ module Bake
               cache = nil
             else
               @defaultToolchain = cache.defaultToolchain
-              @defaultToolchainTime = cache.defaultToolchainTime
-            end  
+            end
               
             if cache != nil
               if cache.cache_file != @cacheFilename
@@ -138,7 +134,7 @@ module Bake
         return nil
       end
       
-      def write_cache(project_files, referencedConfigs, defaultToolchain, defaultToolchainTime)
+      def write_cache(project_files, referencedConfigs, defaultToolchain)
         cache = Cache.new
         cache.referencedConfigs = referencedConfigs
         cache.files = project_files
@@ -149,7 +145,6 @@ module Bake
         cache.exclude_filter = Bake.options.exclude_filter
         cache.workspace_roots = Bake.options.roots
         cache.defaultToolchain = defaultToolchain
-        cache.defaultToolchainTime = defaultToolchainTime
         cache.build_config = Bake.options.build_config
         bbdump = Marshal.dump(cache)
         begin

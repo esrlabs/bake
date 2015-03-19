@@ -29,6 +29,10 @@ module Bake
         @exe_name ||= File.join([@output_dir, baseFilename])
       end
       
+      def calcCmdlineFile()
+        @exe_name + ".cmdline"
+      end
+      
       def calcMapFile
         @mapfile = nil
         if (not Bake.options.docu) and (not Bake.options.lint) and (not @config.mapFile.nil?)
@@ -50,7 +54,6 @@ module Bake
       end
 
       def needed?(libs)
-        return false if depHasError(@block)
         return false if Bake.options.prepro
         return "because linkOnly was specified" if Bake.options.linkOnly
         
@@ -58,10 +61,6 @@ module Bake
         return "because executable does not exist" if not File.exists?(@exe_name)
 
         eTime = File.mtime(@exe_name)
-          
-        # config
-        return "because config file has been changed" if eTime < File.mtime(@config.file_name)
-        return "because DefaultToolchain has been changed" if eTime < Bake::Config.defaultToolchainTime
         
         # linkerscript
         if @linker_script
@@ -86,13 +85,20 @@ module Bake
       def execute
         
         Dir.chdir(@projectDir) do
+          return false if depHasError(@block)
           
           libs, linker_libs_array = LibElements.calc_linker_lib_string(@block, @tcs)
           
+          cmdLineCheck = false
+          cmdLineFile = calcCmdlineFile()
           reason = needed?(libs)
+          if not reason
+            cmdLineCheck = true
+            reason = config_changed?(cmdLineFile)
+          end
           return unless reason
           
-          BlockBase.prepareOutput(@exe_name)
+
 
           linker = @tcs[:LINKER]
     
@@ -126,8 +132,13 @@ module Bake
           outPipe = (@mapfile and linker[:MAP_FILE_PIPE]) ? "#{@mapfile}" : nil
           cmdLinePrint << "> #{outPipe}" if outPipe
           
+          return if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
+          
+          BlockBase.prepareOutput(@exe_name)
+          
           printCmd(cmdLinePrint, "Linking #{@exe_name}", reason, false)
           success, consoleOutput = ProcessHelper.run(cmd, false, false, outPipe)
+          BlockBase.writeCmdLineFile(cmd, cmdLineFile) if success
           process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, reason, success)
     
           check_config_file()

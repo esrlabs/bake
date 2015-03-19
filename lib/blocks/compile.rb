@@ -44,9 +44,6 @@ module Bake
         return "because object does not exist" if not File.exist?(object)
         oTime = File.mtime(object)
         
-        return "because config file has been changed" if oTime < File.mtime(@config.file_name)
-        return "Compiling #{source} because DefaultToolchain has been changed" if oTime < Bake::Config.defaultToolchainTime
-        
         return "because source is newer than object" if oTime < File.mtime(source)
         
         if type != :ASM
@@ -81,6 +78,10 @@ module Bake
         false
       end
       
+      def calcCmdlineFile(object)
+        object[0..-3] + ".cmdline"
+      end
+      
       def calcDepFile(object, type)
         dep_filename = nil
         if type != :ASM
@@ -111,7 +112,13 @@ module Bake
         dep_filename = calcDepFile(object, type)
         dep_filename_conv = calcDepFileConv(dep_filename) if type != :ASM
         
+        cmdLineCheck = false
+        cmdLineFile = calcCmdlineFile(object)
         reason = needed?(source, object, type, dep_filename_conv)
+        if not reason
+          cmdLineCheck = true
+          reason = config_changed?(cmdLineFile)
+        end
         return true unless reason
 
         if @fileTcs.include?(source)
@@ -130,8 +137,6 @@ module Bake
           raise SystemCommandFailed.new 
         end
                    
-        BlockBase.prepareOutput(object)
-        
         cmd = Utils.flagSplit(compiler[:COMMAND], false)
         cmd += compiler[:COMPILE_FLAGS].split(" ")
           
@@ -174,7 +179,13 @@ module Bake
         if Bake.options.cc2j_filename
           Blocks::CC2J << { :directory => @projectDir, :command => cmd, :file => source }
         end
+        
+        return if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
+        
+        BlockBase.prepareOutput(object)
         success, consoleOutput = ProcessHelper.run(cmd, false, false)
+        BlockBase.writeCmdLineFile(cmd, cmdLineFile) if success
+        
         outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
         incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
    
@@ -303,6 +314,11 @@ module Bake
                 if dep_filename and File.exist?dep_filename 
                   puts "Deleting file #{dep_filename}" if Bake.options.verbose >= 2
                   FileUtils.rm_rf(dep_filename)
+                end
+                cmdLineFile = calcCmdlineFile(object)
+                if File.exist?cmdLineFile 
+                  puts "Deleting file #{cmdLineFile}" if Bake.options.verbose >= 2
+                  FileUtils.rm_rf(cmdLineFile)
                 end
               end
             end

@@ -6,10 +6,8 @@ module Bake
     attr_reader :referencedConfigs
     attr_reader :defaultToolchain
     
-    @@defaultToolchainTime = nil
-    
     def self.defaultToolchainTime
-      @@defaultToolchainTime
+      @defaultToolchainTime ||= File.mtime(Bake.options.main_dir+"/Project.meta")
     end
     
     def getFullProject(configs, configname) # note: configs is never empty
@@ -204,7 +202,6 @@ module Bake
       end
       @defaultToolchain = Utils.deep_copy(@basedOnToolchain)
       integrateToolchain(@defaultToolchain, config.defaultToolchain)
-      @@defaultToolchainTime = File.mtime(mainMeta)
       
       validateDependencies(config)
       @depsPending = config.dependency
@@ -267,32 +264,12 @@ module Bake
         while dep = @depsPending.shift
           loadMeta(dep)
         end
-
-
-        
-        if (cache.defaultToolchain)
-          if @defaultToolchain[:LINKER][:FLAGS]                   == cache.defaultToolchain[:LINKER][:FLAGS] and
-            @defaultToolchain[:LINKER][:LIB_PREFIX_FLAGS]         == cache.defaultToolchain[:LINKER][:LIB_PREFIX_FLAGS] and
-            @defaultToolchain[:LINKER][:LIB_POSTFIX_FLAGS]        == cache.defaultToolchain[:LINKER][:LIB_POSTFIX_FLAGS] and
-            @defaultToolchain[:ARCHIVER][:FLAGS]                  == cache.defaultToolchain[:ARCHIVER][:FLAGS] and
-            @defaultToolchain[:COMPILER][:CPP][:FLAGS]            == cache.defaultToolchain[:COMPILER][:CPP][:FLAGS] and
-            @defaultToolchain[:COMPILER][:CPP][:DEFINES].join("") == cache.defaultToolchain[:COMPILER][:CPP][:DEFINES].join("") and
-            @defaultToolchain[:COMPILER][:C][:FLAGS]              == cache.defaultToolchain[:COMPILER][:C][:FLAGS] and
-            @defaultToolchain[:COMPILER][:C][:DEFINES].join("")   == cache.defaultToolchain[:COMPILER][:C][:DEFINES].join("") and
-            @defaultToolchain[:COMPILER][:ASM][:FLAGS]            == cache.defaultToolchain[:COMPILER][:ASM][:FLAGS] and
-            @defaultToolchain[:COMPILER][:ASM][:DEFINES].join("") == cache.defaultToolchain[:COMPILER][:ASM][:DEFINES].join("") and
-            @defaultToolchain[:LINT_POLICY].join("")              == cache.defaultToolchain[:LINT_POLICY].join("")
-            @defaultToolchain[:DOCU]                              == cache.defaultToolchain[:DOCU]
-            @@defaultToolchainTime = cache.defaultToolchainTime
-          end
-        end
-        
+       
         filterSteps
         
-        cache.write_cache(@project_files, @referencedConfigs, @defaultToolchain, @@defaultToolchainTime)
+        cache.write_cache(@project_files, @referencedConfigs, @defaultToolchain)
       else
         @defaultToolchain = cache.defaultToolchain
-        @@defaultToolchainTime = cache.defaultToolchainTime
       end
 
       # todo: cleanup this hack 

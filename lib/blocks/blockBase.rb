@@ -47,6 +47,42 @@ module Bake
         end        
       end
       
+      def config_changed?(cmdLineFile)
+        return "because command line file does not exist" if not File.exist?(cmdLineFile)
+        cmdTime = File.mtime(cmdLineFile)
+        return "because config file has been changed" if cmdTime < File.mtime(@config.file_name)
+        return "because DefaultToolchain has been changed" if cmdTime < Bake::Config.defaultToolchainTime
+      end
+      
+      def self.isCmdLineEqual?(cmd, cmdLineFile)       
+        begin
+          if File.exist?cmdLineFile
+            lastCmdLineArray = File.readlines(cmdLineFile)[0];
+            if lastCmdLineArray == cmd.join(" ")
+              FileUtils.touch(cmdLineFile)
+              return true
+            end
+          end
+        rescue Exception => e
+          if Bake.options.debug
+            puts e.message
+            puts e.backtrace
+          end
+        end
+        return false
+      end
+      
+      def self.writeCmdLineFile(cmd, cmdLineFile) 
+        begin
+          File.write(cmdLineFile, cmd.join(" "))
+        rescue Exception => e
+          if Bake.options.debug
+            puts e.message
+            puts e.backtrace
+          end
+        end
+      end
+      
       def calcOutputDir
         if @tcs[:OUTPUT_DIR] != nil
           p = @block.convPath(@tcs[:OUTPUT_DIR])
@@ -122,7 +158,7 @@ module Bake
               end
   
               console_output.gsub!(/[\r]/, "")
-              Bake.formatter.format(console_output, error_descs, error_parser)
+              Bake.formatter.format(console_output, error_descs, error_parser) unless console_output.empty?
   
               Bake::IDEInterface.instance.set_errors(error_descs)
             rescue Exception => e
@@ -142,7 +178,6 @@ module Bake
         hasError = (success == false)
         printCmd(cmd, alternate, reason, (hasError and not Bake.options.lint))
         errorPrinted, incList = process_console_output(console_output, error_parser)
-        
         if hasError and not errorPrinted
           Bake.formatter.printError("System command failed", @projectDir)
         end

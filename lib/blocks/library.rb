@@ -17,6 +17,10 @@ module Bake
         @archive_name ||= File.join([@output_dir, "lib#{@projectName}.a"])
       end
   
+      def calcCmdlineFile()
+        archive_name + ".cmdline"
+      end
+      
       def needed?
         return false if Bake.options.linkOnly
         return false if Bake.options.prepro
@@ -25,10 +29,6 @@ module Bake
         return "because library does not exist" if not File.exists?(archive_name)
 
         aTime = File.mtime(archive_name)
-        
-        # config
-        return "because config file has been changed" if aTime < File.mtime(@config.file_name)
-        return "because DefaultToolchain has been changed" if aTime < Bake::Config.defaultToolchainTime
                 
         # sources
         @compileBlock.objects.each do |obj|
@@ -42,10 +42,15 @@ module Bake
       def execute
 
         Dir.chdir(@projectDir) do
+
+          cmdLineCheck = false
+          cmdLineFile = calcCmdlineFile()
           reason = needed?
+          if not reason
+            cmdLineCheck = true
+            reason = config_changed?(cmdLineFile)
+          end
           return unless reason
-          
-          BlockBase.prepareOutput(archive_name)
         
           archiver = @tcs[:ARCHIVER]
        
@@ -58,10 +63,15 @@ module Bake
           else
             cmd[cmd.length-1] += archive_name
           end
-            
+          
           cmd += @compileBlock.objects
+        
+          return if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
+        
+          BlockBase.prepareOutput(archive_name)
           
           success, consoleOutput = ProcessHelper.run(cmd, false, false)
+          BlockBase.writeCmdLineFile(cmd, cmdLineFile) if success
           process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{archive_name}", reason, success)
          
           check_config_file()
