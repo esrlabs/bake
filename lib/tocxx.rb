@@ -233,10 +233,11 @@ module Bake
             ExitHelper.exit(1)
           end
           @defaultToolchain = Utils.deep_copy(basedOnToolchain)
+          Bake.options.envToolchain = true if (basedOn.include?"_ENV")
         end
         integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
           
-        # todo: cleanup this hack 
+        # todo: cleanup this hack
         Bake.options.analyze = @defaultToolchain[:COMPILER][:CPP][:COMPILE_FLAGS].include?"analyze"
         
         createBaseTcsForConfig

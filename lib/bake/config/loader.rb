@@ -5,10 +5,6 @@ module Bake
   class Config
     attr_reader :referencedConfigs
     
-    def self.defaultToolchainTime
-      @defaultToolchainTime ||= File.mtime(Bake.options.main_dir+"/Project.meta")
-    end
-    
     def getFullProject(configs, configname) # note: configs is never empty
       
       if (configname == "")

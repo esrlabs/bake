@@ -47,11 +47,17 @@ module Bake
         end        
       end
       
+      def defaultToolchainTime
+        @defaultToolchainTime ||= File.mtime(Bake.options.main_dir+"/Project.meta")
+      end
+      
       def config_changed?(cmdLineFile)
         return "because command line file does not exist" if not File.exist?(cmdLineFile)
         cmdTime = File.mtime(cmdLineFile)
         return "because config file has been changed" if cmdTime < File.mtime(@config.file_name)
-        return "because DefaultToolchain has been changed" if cmdTime < Bake::Config.defaultToolchainTime
+        return "because DefaultToolchain has been changed" if cmdTime < defaultToolchainTime
+        return "because environment variables used for toolchain have been changed" if (Bake.options.envToolchain)
+        false
       end
       
       def self.isCmdLineEqual?(cmd, cmdLineFile)       

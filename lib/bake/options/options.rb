@@ -17,7 +17,7 @@ module Bake
   end
     
   class Options < Parser
-    attr_accessor :build_config, :nocache, :analyze
+    attr_accessor :build_config, :nocache, :analyze, :envToolchain
     attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
     attr_reader :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro # Boolean
@@ -30,6 +30,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
+      @envToolchain = false
       @analyze = false
       @showConfigs = false
       @consoleOutput_fullnames = false

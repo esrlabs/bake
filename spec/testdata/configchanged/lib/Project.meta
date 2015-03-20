@@ -1,0 +1,12 @@
+Project default: lib {
+
+LibraryConfig lib {
+  Files "src/x.cpp"
+  Toolchain {
+    Compiler CPP {
+# TEST
+    }
+  }
+}
+
+}

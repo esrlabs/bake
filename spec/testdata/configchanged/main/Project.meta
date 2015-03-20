@@ -1,0 +1,19 @@
+Project {
+
+ExecutableConfig Debug {
+  Dependency lib
+  Files "src/main.cpp"
+  DefaultToolchain GCC_ENV
+}
+
+ExecutableConfig Test {
+  Dependency lib
+  Files "src/main.cpp"
+  DefaultToolchain GCC {
+    Compiler CPP {
+# TEST
+    }
+  }
+}
+
+}
