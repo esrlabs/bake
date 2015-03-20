@@ -4,7 +4,6 @@ module Bake
 
   class Config
     attr_reader :referencedConfigs
-    attr_reader :defaultToolchain
     
     def self.defaultToolchainTime
       @defaultToolchainTime ||= File.mtime(Bake.options.main_dir+"/Project.meta")
@@ -194,15 +193,6 @@ module Bake
         ExitHelper.exit(1)
       end
       
-      basedOn = config.defaultToolchain.basedOn
-      @basedOnToolchain = Bake::Toolchain::Provider[basedOn]
-      if @basedOnToolchain.nil?
-        Bake.formatter.printError("DefaultToolchain based on unknown compiler '#{basedOn}'", config.defaultToolchain)
-        ExitHelper.exit(1)
-      end
-      @defaultToolchain = Utils.deep_copy(@basedOnToolchain)
-      integrateToolchain(@defaultToolchain, config.defaultToolchain)
-      
       validateDependencies(config)
       @depsPending = config.dependency
     end
@@ -267,13 +257,8 @@ module Bake
        
         filterSteps
         
-        cache.write_cache(@project_files, @referencedConfigs, @defaultToolchain)
-      else
-        @defaultToolchain = cache.defaultToolchain
+        cache.write_cache(@project_files, @referencedConfigs)
       end
-
-      # todo: cleanup this hack 
-      Bake.options.analyze = @defaultToolchain[:COMPILER][:CPP][:COMPILE_FLAGS].include?"analyze"
       
     end
     

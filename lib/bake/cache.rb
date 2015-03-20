@@ -13,13 +13,11 @@ module Bake
     attr_accessor :workspace_roots
     attr_accessor :include_filter
     attr_accessor :exclude_filter
-    attr_accessor :defaultToolchain
     attr_accessor :no_autodir
     attr_accessor :build_config
   end
   
   class CacheAccess
-      attr_reader :defaultToolchain
       attr_reader :cacheFilename
   
       def initialize()
@@ -30,7 +28,6 @@ module Bake
         end
         
         FileUtils.mkdir_p(File.dirname(@cacheFilename))
-        @defaultToolchain = nil
       end
       
       def load_cache
@@ -45,8 +42,6 @@ module Bake
             if cache.version != Version.number
               Bake.formatter.printInfo("Info: cache version ("+cache.version+") does not match to bake version ("+Version.number+"), reloading meta information")
               cache = nil
-            else
-              @defaultToolchain = cache.defaultToolchain
             end
               
             if cache != nil
@@ -134,7 +129,7 @@ module Bake
         return nil
       end
       
-      def write_cache(project_files, referencedConfigs, defaultToolchain)
+      def write_cache(project_files, referencedConfigs)
         cache = Cache.new
         cache.referencedConfigs = referencedConfigs
         cache.files = project_files
@@ -144,7 +139,6 @@ module Bake
         cache.no_autodir = Bake.options.no_autodir
         cache.exclude_filter = Bake.options.exclude_filter
         cache.workspace_roots = Bake.options.roots
-        cache.defaultToolchain = defaultToolchain
         cache.build_config = Bake.options.build_config
         bbdump = Marshal.dump(cache)
         begin

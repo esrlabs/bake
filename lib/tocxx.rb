@@ -225,11 +225,20 @@ module Bake
   
         if Bake.options.lint
           @defaultToolchain = Utils.deep_copy(Bake::Toolchain::Provider["Lint"])
-          integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
         else
-          @defaultToolchain = @loadedConfig.defaultToolchain
+          basedOn =  @mainConfig.defaultToolchain.basedOn
+          basedOnToolchain = Bake::Toolchain::Provider[basedOn]
+          if basedOnToolchain.nil?
+            Bake.formatter.printError("DefaultToolchain based on unknown compiler '#{basedOn}'", config.defaultToolchain)
+            ExitHelper.exit(1)
+          end
+          @defaultToolchain = Utils.deep_copy(basedOnToolchain)
         end
+        integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
           
+        # todo: cleanup this hack 
+        Bake.options.analyze = @defaultToolchain[:COMPILER][:CPP][:COMPILE_FLAGS].include?"analyze"
+        
         createBaseTcsForConfig
         substVars
         createTcsForConfig
