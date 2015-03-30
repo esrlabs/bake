@@ -90,6 +90,12 @@ describe "Set" do
     expect(($mystring.include?"echo **")).to be == true
     expect(($mystring.include?"will be set to \"\"")).to be == true
   end 
+  
+  it 'setenv' do
+    Bake.startBake("set", ["setEnv"])
+    expect(($mystring.include?"echo **")).to be == true
+    expect(($mystring.include?"will be set to \"\"")).to be == true
+  end 
       
 end
 
