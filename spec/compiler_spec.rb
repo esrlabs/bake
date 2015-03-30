@@ -111,6 +111,27 @@ describe "compiler" do
     expect(ExitHelper.exit_code).to be > 0
   end
 
+  it 'msvc include parsing' do
+    ep = MSVCCompilerErrorParser.new
+    
+    x = [    
+    "Note: including file: C:\\ESRLabs\\x.h\n"+
+    "Note: including file:  C:\\ESRLabs/y.h\n"+
+    "C:\\ESRLabs\\repos\\tmp\\gmock\\fused-src\\gtest/gtest.h(9478) : warning C4661: 'esrlabs::estd::array<T>::array(void)' : no suitable definition provided for explicit template instantiation request\n"+
+    "        with\n"+
+    "        [\n"+
+    "            T=int\n"+
+    "        ]\n"+
+    "        C:\\ESRLabs\\repos\\tmp\\estl\\include\\estd/array.h(276) : see declaration of 'esrlabs::estd::array<T>::array'\n"+
+    "        with\n"+
+    "        [\n"+
+    "            T=int\n"+
+    "        ]"]
+    
+    res, fullnames, includeList = ep.scan_lines(x,nil)
+  end
+
 end
 
 end
+
