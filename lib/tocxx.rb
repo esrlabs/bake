@@ -238,9 +238,19 @@ module Bake
           if basedOn == "MSVC"
             begin
               res = `cl.exe 2>&1`
+              raise Exception.new unless $?.success?
               scan_res = res.scan(/ersion (\d+).(\d+).(\d+)/)
-              ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = "-FS" if scan_res.length > 0 and scan_res[0][0].to_i >= 18 # 18 is the compiler major version in VS2013
-            rescue Exception
+              if scan_res.length > 0
+                ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = "-FS" if scan_res[0][0].to_i >= 18 # 18 is the compiler major version in VS2013
+              else
+                Bake.formatter.printError("Could not read MSVC version")
+                ExitHelper.exit(1)
+              end
+            rescue SystemExit
+              raise
+            rescue Exception => e
+              Bake.formatter.printError("Could not detect MSVC compiler")
+              ExitHelper.exit(1)
             end
           end
           
