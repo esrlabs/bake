@@ -232,6 +232,18 @@ module Bake
             Bake.formatter.printError("DefaultToolchain based on unknown compiler '#{basedOn}'", config.defaultToolchain)
             ExitHelper.exit(1)
           end
+
+          # The flag "-FS" must only be set for VS2013 and above          
+          ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = ""
+          if basedOn == "MSVC"
+            begin
+              res = `cl.exe 2>&1`
+              scan_res = res.scan(/ersion (\d+).(\d+).(\d+)/)
+              ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = "-FS" if scan_res.length > 0 and scan_res[0][0].to_i >= 18 # 18 is the compiler major version in VS2013
+            rescue Exception
+            end
+          end
+          
           @defaultToolchain = Utils.deep_copy(basedOnToolchain)
           Bake.options.envToolchain = true if (basedOn.include?"_ENV")
         end

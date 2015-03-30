@@ -4,7 +4,7 @@ module Bake
   class MSVCCompilerErrorParser < ErrorParser
 
     def initialize()
-      @error_expression = /(.+)\(([0-9]+)\) : ([A-Za-z\._]+) (.+)/
+      @error_expression = /(.+)\(([0-9]+)\) : ([A-Za-z\._]+) (C[\d]+: .+)/
       @incEng = "Note: including file: "
       @incGer = "Hinweis: Einlesen der Datei: "
     end
@@ -28,7 +28,7 @@ module Bake
         filterLine = 100
         
         if l.include?@incEng
-          includeList << l[@incEng.length..-1] 
+          includeList << l[@incEng.length..-1].strip
           next
         end
         if l.include?@incGer

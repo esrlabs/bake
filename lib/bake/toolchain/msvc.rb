@@ -15,7 +15,7 @@ module Bake
       :OBJECT_FILE_FLAG => "-Fo",
       :OBJ_FLAG_SPACE => false,
       :INCLUDE_PATH_FLAG => "-I",
-      :COMPILE_FLAGS => "-c -EHsc",
+      :COMPILE_FLAGS => "-c -EHsc $(MSVC_FORCE_SYNC_PDB_WRITES)",
       :DEP_FLAGS_FILENAME => false,
       :DEP_FLAGS => "-showIncludes",
       :DEP_FLAGS_SPACE => true,
@@ -28,7 +28,7 @@ module Bake
 
     MSVCChain[:COMPILER][:ASM] = Utils.deep_copy(MSVCChain[:COMPILER][:C])
     MSVCChain[:COMPILER][:ASM][:COMMAND] = "ml"
-    MSVCChain[:COMPILER][:ASM][:COMPILE_FLAGS] = "-c"
+    MSVCChain[:COMPILER][:ASM][:COMPILE_FLAGS] = "-c $(MSVC_FORCE_SYNC_PDB_WRITES)"
     MSVCChain[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]
 
     MSVCChain[:ARCHIVER][:COMMAND] = "lib"
@@ -44,6 +44,7 @@ module Bake
     MSVCChain[:LINKER][:MAP_FILE_FLAG] = "-map:"
     MSVCChain[:LINKER][:MAP_FILE_PIPE] = false
     MSVCChain[:LINKER][:SCRIPT] = "Linkerscript option not supported for MSVC"
+    
     
     msvcCompilerErrorParser =                   MSVCCompilerErrorParser.new
     MSVCChain[:COMPILER][:C][:ERROR_PARSER] =   msvcCompilerErrorParser
