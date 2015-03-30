@@ -142,6 +142,7 @@ module Bake
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'default', String, :defaultValueLiteral => "on"
         has_attr 'filter', String, :defaultValueLiteral => ""
+        has_many_attr 'validExitCodes', Integer, :defaultValueLiteral => ["0"]
       end
 
       class Makefile < Step
@@ -162,6 +163,10 @@ module Bake
         contains_many 'step', Step, 'parent'
       end
 
+      class ExitSteps < ModelElement
+        contains_many 'step', Step, 'parent'
+      end
+      
       class UserLibrary < ModelElement
         has_attr 'lib', String, :defaultValueLiteral => ""
       end
@@ -182,6 +187,7 @@ module Bake
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'value', String, :defaultValueLiteral => ""
         has_attr 'cmd', String, :defaultValueLiteral => ""
+        has_attr 'env', Boolean, :defaultValueLiteral => "false"
       end  
 
       class BaseConfig_INTERNAL < ModelElement
@@ -189,6 +195,7 @@ module Bake
         has_attr 'extends', String, :defaultValueLiteral => ""
         contains_one 'preSteps', PreSteps, 'parent'
         contains_one 'postSteps', PostSteps, 'parent'
+        contains_one 'exitSteps', ExitSteps, 'parent'
         contains_many 'userLibrary', UserLibrary, 'parent'
         contains_many 'exLib', ExternalLibrary, 'parent'
         contains_many 'exLibSearchPath', ExternalLibrarySearchPath, 'parent'

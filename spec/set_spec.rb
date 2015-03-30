@@ -93,8 +93,7 @@ describe "Set" do
   
   it 'setenv' do
     Bake.startBake("set", ["setEnv"])
-    expect(($mystring.include?"echo **")).to be == true
-    expect(($mystring.include?"will be set to \"\"")).to be == true
+    expect(($mystring.include?"IT_WORKS")).to be == true
   end 
       
 end

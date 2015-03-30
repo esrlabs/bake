@@ -57,6 +57,14 @@ ExecutableConfig triple {
   }
 }
 
+CustomConfig setEnv {
+  Set TESTVAR, value: "IT_W", env: true
+  CommandLine "ruby env.rb"
+  DefaultToolchain GCC
+}
+
+
+
 ExecutableConfig recursive {
   Set VAR1, value: "GUGU"
   Set VAR2, cmd: "echo *$(VAR1)*"
