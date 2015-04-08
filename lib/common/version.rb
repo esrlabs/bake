@@ -1,7 +1,7 @@
 module Bake
   class Version
     def self.number
-      "2.4.4"
+      "2.5.0"
     end
   end
     

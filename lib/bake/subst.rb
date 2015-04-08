@@ -249,6 +249,12 @@ module Bake
           else
             substStr << "/"
           end
+        elsif var == ":"
+          if Bake::Utils::OS.windows?
+            substStr << ";"
+          else
+            substStr << ":"
+          end
         elsif ENV[var]
           substStr << ENV[var]
         else

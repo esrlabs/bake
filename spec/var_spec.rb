@@ -64,8 +64,10 @@ describe "VarSubst" do
     expect(($mystring.include?"ArtifactNameBase_main abc")).to be == true
     if Utils::OS.windows?
       expect(($mystring.include?"SLASH\\SLASH")).to be == true
+      expect(($mystring.include?"COLUMN;COLUMN")).to be == true
     else
       expect(($mystring.include?"SLASH/SLASH")).to be == true
+      expect(($mystring.include?"COLUMN:COLUMN")).to be == true
     end
     
   end  
