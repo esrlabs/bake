@@ -1,0 +1,31 @@
+Project default: test1 {
+
+  CustomConfig test1 {
+    StartupSteps {
+      CommandLine "echo LIB_STARTUP1"
+      CommandLine "echo LIB_STARTUP2"
+    }
+    CommandLine "echo LIB_MAIN"
+    ExitSteps {
+      CommandLine "echo LIB_EXIT1"
+      CommandLine "echo LIB_EXIT2"
+    }
+    DefaultToolchain GCC
+  }
+  
+   CustomConfig test2 {
+    StartupSteps {
+      CommandLine "echo LIB_STARTUP1"
+      Makefile "gaga"
+      CommandLine "echo LIB_STARTUP2"
+    }
+    CommandLine "echo LIB_MAIN"
+    ExitSteps {
+      CommandLine "echo LIB_EXIT1"
+      Makefile "gaga"
+      CommandLine "echo LIB_EXIT2"
+    }
+    DefaultToolchain GCC
+  }
+
+}

@@ -102,6 +102,9 @@ module Bake
           
           Blocks::ALL_BLOCKS[config.qname] = block
           
+          addSteps(block, block.startupSteps,  config.startupSteps)
+          addSteps(block, block.exitSteps,  config.exitSteps)
+          
           if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
             addSteps(block, block.preSteps,  config.preSteps)
             addSteps(block, block.postSteps, config.postSteps)
@@ -274,15 +277,27 @@ module Bake
 
         Bake::IDEInterface.instance.set_build_info(@mainConfig.parent.name, @mainConfig.name, Blocks::ALL_BLOCKS.length)
         
+        ideAbort = false
         begin
-          result = true
+          result = callBlocks(startBlocks, :startup)
           if Bake.options.clean or Bake.options.rebuild
-            result = callBlocks(startBlocks, :clean)
+            if not Bake.options.stopOnFirstError or result
+              result = callBlocks(startBlocks, :clean) && result
+            end
           end
           if Bake.options.rebuild or not Bake.options.clean
-            result = callBlocks(startBlocks, :execute) && result
+            if not Bake.options.stopOnFirstError or result
+              result = callBlocks(startBlocks, :execute) && result
+            end
           end      
         rescue AbortException
+          ideAbort = true
+        end
+        if not Bake.options.stopOnFirstError or result
+          result = callBlocks(startBlocks, :exits) && result
+        end 
+        
+        if ideAbort
           Bake.formatter.printError("\n#{taskType} aborted.")
           ExitHelper.set_exit_code(1)
           return

@@ -17,7 +17,11 @@ module Bake
 
       attr_reader :lib_elements, :projectDir, :library, :config
       attr_accessor :visited, :inDeps, :result
-  
+
+      def startupSteps
+        @startupSteps ||= []
+      end
+        
       def preSteps
         @preSteps ||= []
       end
@@ -30,6 +34,10 @@ module Bake
         @postSteps ||= []
       end
 
+      def exitSteps
+        @exitSteps ||= []
+      end
+      
       def dependencies
         @dependencies ||= []
       end
@@ -214,8 +222,49 @@ module Bake
         end
         
         return (depResult && result)
+      end
+      
+      def startup
+        return true if (@visited)
+        @visited = true
+
+        depResult = callDeps(:startup)
+        return false if not depResult and Bake.options.stopOnFirstError
+                
+        if Bake.options.verbose >= 1 and not startupSteps.empty? 
+          Bake.formatter.printAdditionalInfo "**** Starting up #{@projectName} (#{@configName}) ****"     
+        end
+        
+        result = true
+        startupSteps.each do |step|
+          result = executeStep(step, :startupStep) if result
+          return false if not result and Bake.options.stopOnFirstError
+        end
+        
+        return (depResult && result)
       end      
-            
+
+      def exits
+        return true if (@visited)
+        @visited = true
+      
+        depResult = callDeps(:exits)
+        return false if not depResult and Bake.options.stopOnFirstError
+        
+        if Bake.options.verbose >= 1 and not exitSteps.empty?
+          Bake.formatter.printAdditionalInfo "**** Exiting #{@projectName} (#{@configName}) ****"     
+        end
+        
+        result = true
+        exitSteps.each do |step|
+          result = executeStep(step, :exitStep) if result
+          return false if not result and Bake.options.stopOnFirstError
+        end
+        
+        return (depResult && result)
+      end      
+
+                  
     end
     
     

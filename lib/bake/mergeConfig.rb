@@ -95,6 +95,14 @@ module Bake
       @child.setExLibSearchPath(@parent.exLibSearchPath + @child.exLibSearchPath)
       @child.setUserLibrary(@parent.userLibrary     + @child.userLibrary)
       
+      if not @parent.startupSteps.nil?
+        if (@child.startupSteps.nil?)
+          @child.setStartupSteps(@parent.startupSteps)
+        else
+          @child.startupSteps.setStep(@parent.startupSteps.step + @child.startupSteps.step)
+        end
+      end
+      
       if not @parent.preSteps.nil?
         if (@child.preSteps.nil?)
           @child.setPreSteps(@parent.preSteps)
@@ -108,6 +116,14 @@ module Bake
           @child.setPostSteps(@parent.postSteps)
         else
           @child.postSteps.setStep(@parent.postSteps.step + @child.postSteps.step)
+        end
+      end
+
+      if not @parent.exitSteps.nil?
+        if (@child.exitSteps.nil?)
+          @child.setExitSteps(@parent.exitSteps)
+        else
+          @child.exitSteps.setStep(@parent.exitSteps.step + @child.exitSteps.step)
         end
       end
       

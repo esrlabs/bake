@@ -4,14 +4,14 @@ module Bake
   
     module HasExecuteCommand
       
-      def executeCommand(commandLine, ignoreStr=nil)
+      def executeCommand(commandLine, ignoreStr=nil, exitCodeArray = [0])
         puts commandLine if Bake.options.verbose >= 1
         puts "(executed in '#{@projectDir}')" if Bake.options.verbose >= 3
         cmd_result = false
         output = ""
         begin
           Dir.chdir(@projectDir) do
-            cmd_result, output = ProcessHelper.run([commandLine], true)
+            cmd_result, output = ProcessHelper.run([commandLine], true, true, nil, exitCodeArray)
           end
         rescue Exception=>e
           puts e.message

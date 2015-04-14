@@ -142,7 +142,7 @@ module Bake
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'default', String, :defaultValueLiteral => "on"
         has_attr 'filter', String, :defaultValueLiteral => ""
-        has_many_attr 'validExitCodes', Integer, :defaultValueLiteral => ["0"]
+        has_many_attr 'validExitCodes', Integer
       end
 
       class Makefile < Step
@@ -164,6 +164,10 @@ module Bake
       end
 
       class ExitSteps < ModelElement
+        contains_many 'step', Step, 'parent'
+      end
+      
+      class StartupSteps < ModelElement
         contains_many 'step', Step, 'parent'
       end
       
@@ -193,6 +197,7 @@ module Bake
       class BaseConfig_INTERNAL < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'extends', String, :defaultValueLiteral => ""
+        contains_one 'startupSteps', StartupSteps, 'parent'
         contains_one 'preSteps', PreSteps, 'parent'
         contains_one 'postSteps', PostSteps, 'parent'
         contains_one 'exitSteps', ExitSteps, 'parent'

@@ -4,7 +4,7 @@ module Bake
     @@pid = nil
     @@rd = nil
 
-    def self.run(cmdLineArray, immediateOutput=false, force=true, outpipe=nil)
+    def self.run(cmdLineArray, immediateOutput=false, force=true, outpipe=nil, exitCodeArray = [0])
       rd, wr = IO.pipe
       @@rd = rd if force
       duppedCmdLineArray = cmdLineArray.dup
@@ -43,7 +43,8 @@ module Bake
       @@pid = nil
       @@rd = nil
       return [false, output] if status.nil?
-      [status.success?, output]
+      exitCodeArray = [0] if exitCodeArray.empty?
+      [(exitCodeArray.include?status.exitstatus), output]
     end
        
     def self.killProcess(force) # do not kill compile processes or implement rd and pid array if really needed

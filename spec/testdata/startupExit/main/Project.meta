@@ -1,0 +1,60 @@
+Project {
+
+  CustomConfig test1 {
+    Dependency lib1
+    StartupSteps {
+      CommandLine "echo MAIN_STARTUP1"
+      CommandLine "echo MAIN_STARTUP2"
+    }
+    CommandLine "echo MAIN_MAIN"
+    ExitSteps {
+      CommandLine "echo MAIN_EXIT1"
+      CommandLine "echo MAIN_EXIT2"
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test2 {
+    Dependency lib1, config: test2
+    StartupSteps {
+      CommandLine "echo MAIN_STARTUP1"
+      CommandLine "echo MAIN_STARTUP2"
+    }
+    CommandLine "echo MAIN_MAIN"
+    ExitSteps {
+      CommandLine "echo MAIN_EXIT1"
+      CommandLine "echo MAIN_EXIT2"
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test3 {
+    StartupSteps {
+      CommandLine "ruby exit3"
+      CommandLine "echo MAIN_WORKS"
+    }
+    DefaultToolchain GCC
+  }
+  
+  CustomConfig test4 {
+    StartupSteps {
+      CommandLine "ruby exit3", validExitCodes: [1,2,3]
+      CommandLine "echo MAIN_WORKS"
+    }
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test5 {
+    StartupSteps {
+      CommandLine "echo MAIN_STARTUP1"
+      CommandLine "echo MAIN_STARTUP2"
+    }
+    Files "src/something.cpp"
+    ExitSteps {
+      CommandLine "echo MAIN_EXIT1"
+      CommandLine "echo MAIN_EXIT2"
+    }
+    DefaultToolchain GCC
+  }
+
+}
