@@ -62,14 +62,9 @@ describe "VarSubst" do
   
     expect(($mystring.include?"ArtifactName_main abc.def")).to be == true
     expect(($mystring.include?"ArtifactNameBase_main abc")).to be == true
-    if Utils::OS.windows?
-      expect(($mystring.include?"SLASH\\SLASH")).to be == true
-      expect(($mystring.include?"COLUMN;COLUMN")).to be == true
-    else
-      expect(($mystring.include?"SLASH/SLASH")).to be == true
-      expect(($mystring.include?"COLUMN:COLUMN")).to be == true
-    end
-    
+    expect(($mystring.include?"SLASH#{File::SEPARATOR}SLASH")).to be == true
+    expect(($mystring.include?"COLUMN#{File::PATH_SEPARATOR}COLUMN")).to be == true
+   
   end  
 
 
