@@ -64,6 +64,9 @@ module Bake
         if ct.basedOn == "" and pt.basedOn != ""
           ct.setBasedOn(pt.basedOn)
         end
+        if pt.eclipseOrder # is that a good idea?
+          ct.setEclipseOrder(pt.eclipseOrder)
+        end
         if ct.internalIncludes.nil? and not pt.internalIncludes.nil?
           ct.setInternalIncludes(pt.internalIncludes)
         end 

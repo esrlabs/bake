@@ -264,6 +264,7 @@ module Bake
           
         # todo: cleanup this hack
         Bake.options.analyze = @defaultToolchain[:COMPILER][:CPP][:COMPILE_FLAGS].include?"analyze"
+        Bake.options.eclipseOrder = @mainConfig.defaultToolchain.eclipseOrder
         
         createBaseTcsForConfig
         substVars

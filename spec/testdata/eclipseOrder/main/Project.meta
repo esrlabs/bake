@@ -1,0 +1,13 @@
+Project {
+
+  LibraryConfig test_normal {
+    Files "**/*"
+    DefaultToolchain GCC
+  }
+  
+  LibraryConfig test_eclipse {
+    Files "**/*"
+    DefaultToolchain GCC, eclipseOrder: true
+  }
+  
+}

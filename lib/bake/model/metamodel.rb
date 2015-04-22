@@ -85,6 +85,7 @@ module Bake
       class DefaultToolchain < ModelElement
         has_attr 'basedOn', String, :defaultValueLiteral => ""
         has_attr 'outputDir', String, :defaultValueLiteral => ""
+        has_attr 'eclipseOrder', Boolean, :defaultValueLiteral => "false"
         contains_many 'compiler', Compiler, 'parent'
         contains_one 'archiver', Archiver, 'parent'
         contains_one 'linker', Linker, 'parent'

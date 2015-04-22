@@ -7,10 +7,18 @@
 <body>
 <h1>Changelog</h1>
 
+April 22, 2015 - bake-toolkit 2.7.0<br>
+<ul>
+<li><b>Added: possibility to use Eclipse file ordering for compilation (<i>eclipseOrder</i> attribute for <i>DefaultToolchain</i>)</b>
+<li><b>Changed: $(:) and $(/) are now mapped to Ruby internal variables File::PATH_SEPARATOR and File::SEPARATOR.<br>
+This fixes the result in Cygwin/MinGW environments</b>
+<li><b>Bugfix: cmdline files are now written even if the build step fails</b>
+</ul>
+
 April 14, 2015 - bake-toolkit 2.6.0<br>
 <ul>
-<li><b>Added: validExitCodes attribute to steps (if a step has valid exit codes != 0)
-<li><b>Added: StartupSteps and ExitSteps (always executed before and after a build)
+<li><b>Added: validExitCodes attribute to steps (if a step has valid exit codes != 0)</b>
+<li><b>Added: StartupSteps and ExitSteps (always executed before and after a build)</b>
 </ul>
 
 April 8, 2015 - bake-toolkit 2.5.0<br>

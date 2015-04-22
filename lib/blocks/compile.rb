@@ -16,6 +16,7 @@ module Bake
       def initialize(block, config, referencedConfigs, tcs)
         super(block, config, referencedConfigs, tcs)
         @objects = []
+        @object_files = {}
         
         calcFileTcs
         calcIncludes
@@ -106,8 +107,7 @@ module Bake
         type = get_source_type(source)
         return true if type.nil?
         
-        object = get_object_file(source)
-        @objects << object
+        object = @object_files[source]
         
         dep_filename = calcDepFile(object, type)
         dep_filename_conv = calcDepFileConv(dep_filename) if type != :ASM
@@ -241,6 +241,7 @@ module Bake
         Dir.chdir(@projectDir) do
         
           calcSources
+          calcObjects
           
           @error_strings = {}
           
@@ -326,6 +327,17 @@ module Bake
         end
       end
       
+      def calcObjects
+        @source_files.each do |source|
+          type = get_source_type(source)
+          if not type.nil?
+            object = get_object_file(source)
+            @object_files[source] = object
+            @objects << object
+          end
+        end
+      end
+      
       def calcSources(cleaning = false)
         @source_files = []
     
@@ -362,6 +374,27 @@ module Bake
         end
         
         @source_files = source_files.sort.to_a
+        
+        if Bake.options.eclipseOrder # directories reverse order, files in directories in alphabetical order
+          dirs = []
+          filemap = {}
+          @source_files.reverse.each do |o|
+            d = File.dirname(o)
+            if filemap.include?(d)
+              filemap[d] << o
+            else
+              filemap[d] = [o]
+              dirs << d
+            end
+          end
+          @source_files = []
+          dirs.each do |d|
+            filemap[d].reverse.each do |f|
+              @source_files << f
+            end
+          end
+        end
+        
       end
         
       def calcIncludes
