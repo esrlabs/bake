@@ -137,8 +137,8 @@ module Bake
           BlockBase.prepareOutput(@exe_name)
           
           printCmd(cmdLinePrint, "Linking #{@exe_name}", reason, false)
+          BlockBase.writeCmdLineFile(cmd, cmdLineFile)
           success, consoleOutput = ProcessHelper.run(cmd, false, false, outPipe)
-          BlockBase.writeCmdLineFile(cmd, cmdLineFile) if success
           process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, reason, success)
     
           check_config_file()

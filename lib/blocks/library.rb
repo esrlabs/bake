@@ -70,8 +70,8 @@ module Bake
         
           BlockBase.prepareOutput(archive_name)
           
+          BlockBase.writeCmdLineFile(cmd, cmdLineFile)
           success, consoleOutput = ProcessHelper.run(cmd, false, false)
-          BlockBase.writeCmdLineFile(cmd, cmdLineFile) if success
           process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{archive_name}", reason, success)
          
           check_config_file()

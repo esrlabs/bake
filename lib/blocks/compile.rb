@@ -183,8 +183,8 @@ module Bake
         return if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
         
         BlockBase.prepareOutput(object)
+        BlockBase.writeCmdLineFile(cmd, cmdLineFile)
         success, consoleOutput = ProcessHelper.run(cmd, false, false)
-        BlockBase.writeCmdLineFile(cmd, cmdLineFile) if success
         
         outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
         incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)

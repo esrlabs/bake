@@ -1,0 +1,39 @@
+Project {
+
+  ExecutableConfig test_ok {
+    Files "src/x.cpp"
+    Dependency lib, config: test_ok
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig test_compileError {
+    Files "src/x.cpp"
+    Dependency lib, config: test_ok
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Flags add: "-wrong"
+      }
+    }
+  }
+  
+  ExecutableConfig test_archiveError {
+    Files "src/x.cpp"
+    Dependency lib, config: test_ok
+    DefaultToolchain GCC {
+      Archiver {
+        Flags add: "-wrong"
+      }
+    }
+  }
+  
+  ExecutableConfig test_linkError {
+    Files "src/x.cpp"
+    Dependency lib, config: test_ok
+    DefaultToolchain GCC {
+      Linker {
+        Flags add: "-wrong"
+      }
+    }
+  }
+
+}
