@@ -244,17 +244,9 @@ module Bake
         elsif var == "Roots"
           substStr << "___ROOTS___"
         elsif var == "/"
-          if Bake::Utils::OS.windows?
-            substStr << "\\"
-          else
-            substStr << "/"
-          end
+          substStr << File::SEPARATOR
         elsif var == ":"
-          if Bake::Utils::OS.windows?
-            substStr << ";"
-          else
-            substStr << ":"
-          end
+          substStr << File::PATH_SEPARATOR
         elsif ENV[var]
           substStr << ENV[var]
         else
