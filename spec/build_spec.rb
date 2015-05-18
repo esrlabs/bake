@@ -275,7 +275,18 @@ describe "Building" do
     Bake.startBake("header/main", ["test"])
     expect($mystring.split("Compiling").length).to be == 3
   end
+  
+  it 'start with all' do
+    Bake.startBake("startwith/main", ["test"])
+    expect($mystring.include?("echo main")).to be == true
+    expect($mystring.include?("echo main2")).to be == true
+  end
 
+  it 'start with only proj' do
+    Bake.startBake("startwith/main", ["test", "-p", "main"])
+    expect($mystring.include?("echo main")).to be == true
+    expect($mystring.include?("echo main2")).to be == false
+  end
     
 end
 

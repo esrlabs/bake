@@ -184,7 +184,7 @@ module Bake
       elsif startProjectName
         startBlocks = []
         Blocks::ALL_BLOCKS.each do |blockName, block|
-          if blockName.start_with? startProjectName
+          if blockName.start_with?(startProjectName + ",")
             startBlocks << block
           end
         end
