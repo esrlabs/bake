@@ -55,7 +55,7 @@ module Bake
               cache.files.each do |c|
                 if (not File.exists?(c))
                   Bake.options.nocache = true
-                  Bake.formatter.printInfo("Info: meta file(s) renamed or deleted, reloading meta information")
+                  Bake.formatter.printInfo("Info: cached meta file #{c} renamed or deleted, reloading meta information")
                   cache = nil
                   break
                 end
@@ -67,7 +67,7 @@ module Bake
                 configs.each do |config|
                   if not File.exists?(config.file_name)
                     Bake.options.nocache = true
-                    Bake.formatter.printInfo("Info: meta file(s) renamed or deleted, reloading meta information")
+                    Bake.formatter.printInfo("Info: cached meta file #{config.file_name} renamed or deleted, reloading meta information")
                     cache = nil
                   end
                 end
@@ -76,8 +76,8 @@ module Bake
               
             if cache != nil
               cache.files.each do |c|
-                if File.mtime(c) > cacheTime
-                  Bake.formatter.printInfo("Info: cache is out-of-date, reloading meta information")
+                if File.mtime(c) > cacheTime + 1
+                  Bake.formatter.printInfo("Info: #{c} has been changed, reloading meta information")
                   cache = nil
                   break
                 end
