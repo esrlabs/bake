@@ -100,6 +100,7 @@ describe "Config Change" do
   it 'Change main config file GCC' do
     x = File.read("spec/testdata/configchanged/main/Project.meta")
     x.gsub!("# TEST", "Flags add: \"-DGAGA\"")
+    sleep(1)
     File.write("spec/testdata/configchanged/main/Project.meta", x)
     Bake.startBake("configchanged/main", ["Test"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
@@ -111,6 +112,7 @@ describe "Config Change" do
   it 'Change lib config file GCC' do
     x = File.read("spec/testdata/configchanged/lib/Project.meta")
     x.gsub!("# TEST", "Flags add: \"-DGUGU\"")
+    sleep(1)
     File.write("spec/testdata/configchanged/lib/Project.meta", x)
     Bake.startBake("configchanged/main", ["Test"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
