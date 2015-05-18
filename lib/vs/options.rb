@@ -46,8 +46,8 @@ module Bake
     end    
     
     def set_version(v)
-	  if v != "2010" and v != "2012"
-	    puts "Error: version must be '2010' or '2012'"
+	  if v != "2010" and v != "2012" and v != "2013"
+	    puts "Error: version must be '2010', '2012' or '2013'"
       ExitHelper.exit(1)
 	  end
       @version = v

@@ -29,11 +29,14 @@ end
 @options = VsOptions.new(ARGV)
 @options.parse_options
 
-version = "12.00" 
-toolset = "v110"
+version = "13.00" 
+toolset = "v120"
 if @options.version == "2010"
   version = "11.00" 
   toolset = "v100"
+elsif @options.version == "2012"
+  version = "12.00" 
+  toolset = "v110"
 end
 
 	
