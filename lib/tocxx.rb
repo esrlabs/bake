@@ -38,7 +38,13 @@ module Bake
   end
   
   class ToCxx
+    
+    @@linkBlock = 0
 
+    def self.linkBlock
+      @@linkBlock = 1
+    end
+    
     def initialize
       @configTcMap = {}
     end
@@ -269,6 +275,9 @@ module Bake
         createBaseTcsForConfig
         substVars
         createTcsForConfig
+        
+        @@linkBlock = 0
+        
         convert2bb
         
         Blocks::Show.includes if Bake.options.show_includes
@@ -324,7 +333,11 @@ module Bake
           ExitHelper.set_exit_code(1)
           return
         else
-          Bake.formatter.printSuccess("\n#{taskType} done.")
+          if Bake.options.linkOnly and @@linkBlock == 0
+            Bake.formatter.printSuccess("\nNothing to link.")
+          else
+            Bake.formatter.printSuccess("\n#{taskType} done.")
+          end
         end
       rescue SystemExit
         Bake.formatter.printError("\n#{taskType} failed.") if ExitHelper.exit_code != 0

@@ -134,6 +134,8 @@ module Bake
           
           return if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
           
+          ToCxx.linkBlock
+          
           BlockBase.prepareOutput(@exe_name)
           
           printCmd(cmdLinePrint, "Linking #{@exe_name}", reason, false)
