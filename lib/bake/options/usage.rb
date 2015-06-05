@@ -39,6 +39,7 @@ module Bake
       puts " --set <key>=<value>      Sets a variable. Overwrites variables defined in Project.metas (can be used multiple times)."
       puts " --show_include_paths     Used by IDEs plugins"
       puts " --show_incs_and_defs     Used by IDEs plugins"
+      puts " --conversion_info        Prints infos for an external tool which converts bake configs for other build systems"
       puts " --writeCC2J <name>       Writes compiler command into a json file (experimental!)"
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
       puts ""

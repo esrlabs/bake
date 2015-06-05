@@ -21,7 +21,7 @@ module Bake
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain
     attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
-    attr_reader :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro # Boolean
+    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verbose
@@ -31,6 +31,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
+      @conversion_info = false
       @envToolchain = false
       @analyze = false
       @eclipseOrder = false
@@ -86,6 +87,7 @@ module Bake
       add_option(Option.new("--lint_max",true)             { |x| @lint_max = String === x ? x.to_i : x            })
       
       add_option(Option.new("--create",true)               { |x| Bake::Create.proj(x) })     
+      add_option(Option.new("--conversion_info",false)        { @conversion_info = true  }) 
         
       add_option(Option.new("--docu",false)                {     @docu = true               })
 
@@ -127,6 +129,37 @@ module Bake
       if @project
         if @project.split(',').length > 2
           Bake.formatter.printError("Error: only one comma allowed for -p")
+          ExitHelper.exit(1)
+        end
+      end
+      
+      if @conversion_info
+        if @rebuild
+          Bake.formatter.printError("Error: --conversion_info and --rebuild not allowed at the same time")
+          ExitHelper.exit(1)
+        end 
+        if @clean
+          Bake.formatter.printError("Error: --conversion_info and -c not allowed at the same time")
+          ExitHelper.exit(1)
+        end
+        if @prepro
+          Bake.formatter.printError("Error: --conversion_info and --prepro not allowed at the same time")
+          ExitHelper.exit(1)
+        end
+        if @linkOnly
+          Bake.formatter.printError("Error: --conversion_info and --linkOnly not allowed at the same time")
+          ExitHelper.exit(1)
+        end
+        if @lint
+          Bake.formatter.printError("Error: --conversion_info and --lint not allowed at the same time")
+          ExitHelper.exit(1)
+        end
+        if @docu
+          Bake.formatter.printError("Error: --conversion_info and --docu not allowed at the same time")
+          ExitHelper.exit(1)
+        end
+        if not @project
+          Bake.formatter.printError("Error: --conversion_info must be used with -p")
           ExitHelper.exit(1)
         end
       end
