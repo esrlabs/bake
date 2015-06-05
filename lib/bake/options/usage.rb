@@ -40,6 +40,7 @@ module Bake
       puts " --show_include_paths     Used by IDEs plugins"
       puts " --show_incs_and_defs     Used by IDEs plugins"
       puts " --writeCC2J <name>       Writes compiler command into a json file (experimental!)"
+      puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
       puts ""
       puts " --version                Print version."
       puts " --doc                    Open documentation in browser"

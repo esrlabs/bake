@@ -5,6 +5,7 @@ require 'bake/options/showConfigNames'
 require 'bake/options/showLicense'
 require 'bake/options/showDoc'
 require 'bake/options/usage'
+require 'bake/options/create'
 require 'common/options/option'
 
 module Bake
@@ -84,6 +85,8 @@ module Bake
       add_option(Option.new("--lint_min",true)             { |x| @lint_min = String === x ? x.to_i : x            })
       add_option(Option.new("--lint_max",true)             { |x| @lint_max = String === x ? x.to_i : x            })
       
+      add_option(Option.new("--create",true)               { |x| Bake::Create.proj(x) })     
+        
       add_option(Option.new("--docu",false)                {     @docu = true               })
 
       add_option(Option.new("-v0",false)                   {     @verbose = 0      })
