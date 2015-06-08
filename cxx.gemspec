@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_dependency("rgen", "=0.6.0")
   s.add_dependency("highline", ">= 1.6.0")
   s.add_dependency("colored")
-  s.executables = ["bake", "bakery", "createVSProjects"]
+  s.executables = ["bake", "bakery", "createVSProjects", "bake-doc"]
   s.licenses    = ['MIT']
   s.required_ruby_version = '>= 1.9'
 end

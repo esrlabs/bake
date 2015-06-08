@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.dirname(__FILE__)+"/../lib")
+require 'common/version'
+
+puts "-- bake #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
+
+puts "Command \"bake-doc\" not supported anymore. Please use"
+puts "\"bake --show_doc\" to open the documentation in the browser OR"
+puts "\"bake --docu ...\" for building the documentation of a project."
+exit(1)

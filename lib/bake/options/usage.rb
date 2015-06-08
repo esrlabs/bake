@@ -44,7 +44,7 @@ module Bake
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
       puts ""
       puts " --version                Print version."
-      puts " --doc                    Open documentation in browser"
+      puts " --show_doc               Open documentation in browser"
       puts " -h, --help               Print this help."
       puts " --show_license           Print the license."
       puts ""
