@@ -398,9 +398,9 @@ module Bake
       end
         
       def calcIncludes
-        @include_list = @config.includeDir.map do |dir|
+        @include_list = @config.includeDir.uniq.map do |dir|
           (dir.name == "___ROOTS___") ? (Bake.options.roots.map { |r| File.rel_from_to_project(@projectDir,r,false) }) : @block.convPath(dir)
-        end.flatten
+        end.flatten.uniq
         
         @include_array = {}
         [:CPP, :C, :ASM].each do |type|
