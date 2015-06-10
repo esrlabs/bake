@@ -11,17 +11,11 @@ module Bake
       has_attr 'line_number', Integer do
         annotation :details => {'internal' => 'true'}
       end
-      has_attr 'file_name', String do
-        annotation :details => {'internal' => 'true'}
-      end
       module ClassModule
-         attr_accessor :fragment_ref
-         
-         def id
-          splitted = file_name.split("/")
-          splitted[splitted.length-2]
-        end         
-         
+        attr_accessor :fragment_ref
+        def file_name
+          @fragment_ref.fragment.location
+        end
       end
     end
 
@@ -210,27 +204,18 @@ module Bake
         contains_many 'set', Set, 'parent'
         
         module ClassModule
-           def ident
-             s = file_name.split("/")
+          def ident
+            s = file_name.split("/")
             s[s.length-2] + "/" + name
           end         
         end
-        
+                
       end
       
       class BuildConfig_INTERNAL < BaseConfig_INTERNAL
         contains_many 'files', Files, 'parent'
         contains_many 'excludeFiles', ExcludeFiles, 'parent'
         contains_many 'includeDir', IncludeDir, 'parent'
-
-        
-        module ClassModule
-           def ident
-             s = file_name.split("/")
-            s[s.length-2] + "/" + name
-          end         
-        end
-        
       end      
       
       class ExecutableConfig < BuildConfig_INTERNAL

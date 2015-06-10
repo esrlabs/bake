@@ -41,8 +41,7 @@ module Bake
     },
     :identifier_provider => Idp.new,
     :line_number_attribute => "line_number",
-    :file_name_attribute => "file_name",
-    :fragment_ref_attribute => "fragment_ref"#,
+    :fragment_ref_attribute => "fragment_ref"
   )
 
 end
