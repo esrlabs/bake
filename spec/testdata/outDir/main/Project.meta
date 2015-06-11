@@ -5,8 +5,8 @@ Project {
     Dependency lib1, config: testTcRel
 	Dependency lib2, config: testTcRel
 	PreSteps {
-      CommandLine "echo from main(1): $(OutputDir,$(ProjectName),$(ConfigName))"
-      CommandLine "echo from main(2): $(OutputDir,lib1,testTcRel)"
+      CommandLine "echo from main 1: $(OutputDir,$(ProjectName),$(ConfigName))"
+      CommandLine "echo from main 2: $(OutputDir,lib1,testTcRel)"
     }
 	DefaultToolchain GCC
     Toolchain outputDir: "testOut1"
@@ -57,8 +57,8 @@ Project {
 	Dependency lib2, config: testRel
 	DefaultToolchain GCC, outputDir: "$(AbsAll)"
 	PreSteps {
-      CommandLine "echo from main(1): $(OutputDir,$(ProjectName),$(ConfigName))"
-      CommandLine "echo from main(2): $(OutputDir,lib1,testRel)"
+      CommandLine "echo from main 1: $(OutputDir,$(ProjectName),$(ConfigName))"
+      CommandLine "echo from main 2: $(OutputDir,lib1,testRel)"
     }
 	
   }  
@@ -69,8 +69,5 @@ Project {
 	Dependency lib2, config: testRel
 	DefaultToolchain GCC, outputDir: "T:/testOutDirE"
   }  
-  
-  
-
-  
 }
+

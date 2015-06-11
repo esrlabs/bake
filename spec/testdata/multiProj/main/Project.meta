@@ -5,10 +5,10 @@ Project {
     IncludeDir "incMainD"
     Files "src/nix.cpp"
     PreSteps {
-      CommandLine "echo from testLib1(1): $(OutputDir,$(MainProjectName),$(MainConfigName))"
-      CommandLine "echo from testLib1(2): $(OutputDir,$(ProjectName),$(ConfigName))"
-      CommandLine "echo from testLib1(3): $(OutputDir,lib,testSub1)"
-      CommandLine "echo from testLib1(4): $(OutputDir,lib,testSub2)"
+      CommandLine "echo from testLib1 1: $(OutputDir,$(MainProjectName),$(MainConfigName))"
+      CommandLine "echo from testLib1 2: $(OutputDir,$(ProjectName),$(ConfigName))"
+      CommandLine "echo from testLib1 3: $(OutputDir,lib,testSub1)"
+      CommandLine "echo from testLib1 4: $(OutputDir,lib,testSub2)"
     }
     Toolchain {
       Compiler C {
@@ -28,13 +28,13 @@ Project {
     Dependency lib, config: testSub2
     Dependency config: testLib1
     PreSteps {
-      CommandLine "echo from test1(1): $(OutputDir,$(ProjectName),$(ConfigName))"
-      CommandLine "echo from test1(2): $(OutputDir,$(ProjectName),testLib1)"
-      CommandLine "echo from test1(3): $(OutputDir,lib,testSub1)"
-      CommandLine "echo from test1(4): $(OutputDir,lib,testSub2)"
-      CommandLine "echo from test1(b1): $(OutputDir,testSub2)XX"
-      CommandLine "echo from test1(b2): $(OutputDir,$(ProjectName),fasel)XX"
-      CommandLine "echo from test1(b3): $(OutputDir,bla,fasel)XX"
+      CommandLine "echo from test1 1: $(OutputDir,$(ProjectName),$(ConfigName))"
+      CommandLine "echo from test1 2: $(OutputDir,$(ProjectName),testLib1)"
+      CommandLine "echo from test1 3: $(OutputDir,lib,testSub1)"
+      CommandLine "echo from test1 4: $(OutputDir,lib,testSub2)"
+      CommandLine "echo from test1 b1: $(OutputDir,testSub2)XX"
+      CommandLine "echo from test1 b2: $(OutputDir,$(ProjectName),fasel)XX"
+      CommandLine "echo from test1 b3: $(OutputDir,bla,fasel)XX"
     }
     DefaultToolchain GCC {
       Compiler C {

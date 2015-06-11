@@ -85,40 +85,40 @@ describe "VarSubst" do
     expect(($mystring.include?"Substitute variable '$(OutputDir,main,fasel)' with empty string, because config fasel not found for project main")).to be == true
     expect(($mystring.include?"Substitute variable '$(OutputDir,bla,fasel)' with empty string, because project bla not found")).to be == true
     
-    expect(($mystring.include?"from testSub1(1): ../main/build_test1")).to be == true
-    expect(($mystring.include?"from testSub1(2): ../main/build_testLib1_main_test1")).to be == true
-    expect(($mystring.include?"from testSub1(3): build_testSub1_main_test1")).to be == true
-    expect(($mystring.include?"from testSub1(4): build_testSub2_main_test1")).to be == true
+    expect(($mystring.include?"from testSub1 1: ../main/build_test1")).to be == true
+    expect(($mystring.include?"from testSub1 2: ../main/build_testLib1_main_test1")).to be == true
+    expect(($mystring.include?"from testSub1 3: build_testSub1_main_test1")).to be == true
+    expect(($mystring.include?"from testSub1 4: build_testSub2_main_test1")).to be == true
 
-    expect(($mystring.include?"from testLib1(1): build_test1")).to be == true
-    expect(($mystring.include?"from testLib1(2): build_testLib1_main_test1")).to be == true
-    expect(($mystring.include?"from testLib1(3): ../lib/build_testSub1_main_test1")).to be == true
-    expect(($mystring.include?"from testLib1(4): ../lib/build_testSub2_main_test1")).to be == true
+    expect(($mystring.include?"from testLib1 1: build_test1")).to be == true
+    expect(($mystring.include?"from testLib1 2: build_testLib1_main_test1")).to be == true
+    expect(($mystring.include?"from testLib1 3: ../lib/build_testSub1_main_test1")).to be == true
+    expect(($mystring.include?"from testLib1 4: ../lib/build_testSub2_main_test1")).to be == true
     
-    expect(($mystring.include?"from test1(1): build_test1")).to be == true
-    expect(($mystring.include?"from test1(2): build_testLib1_main_test1")).to be == true
-    expect(($mystring.include?"from test1(3): ../lib/build_testSub1_main_test1")).to be == true
-    expect(($mystring.include?"from test1(4): ../lib/build_testSub2_main_test1")).to be == true
+    expect(($mystring.include?"from test1 1: build_test1")).to be == true
+    expect(($mystring.include?"from test1 2: build_testLib1_main_test1")).to be == true
+    expect(($mystring.include?"from test1 3: ../lib/build_testSub1_main_test1")).to be == true
+    expect(($mystring.include?"from test1 4: ../lib/build_testSub2_main_test1")).to be == true
     
-    expect(($mystring.include?"from test1(b1): XX")).to be == true
-    expect(($mystring.include?"from test1(b2): XX")).to be == true
-    expect(($mystring.include?"from test1(b3): XX")).to be == true
+    expect(($mystring.include?"from test1 b1: XX")).to be == true
+    expect(($mystring.include?"from test1 b2: XX")).to be == true
+    expect(($mystring.include?"from test1 b3: XX")).to be == true
   end   
   
   it 'complex outputdir with rel' do
-    Bake.startBake("outdir/main", ["testTcRel"])
-    expect(($mystring.include?"from main(1): testOut1")).to be == true
-    expect(($mystring.include?"from main(2): ../testOut2")).to be == true
+    Bake.startBake("outDir/main", ["testTcRel"])
+    expect(($mystring.include?"from main 1: testOut1")).to be == true
+    expect(($mystring.include?"from main 2: ../testOut2")).to be == true
   end
   
   it 'complex outputdir with abs' do
-    Bake.startBake("outdir/main", ["testDtcAbs"])
+    Bake.startBake("outDir/main", ["testDtcAbs"])
     if Utils::OS.windows?
-      expect(($mystring.include?"from main(1): C:/temp/testOutDirD")).to be == true
-      expect(($mystring.include?"from main(2): C:/temp/testOutDirD")).to be == true
+      expect(($mystring.include?"from main 1: C:/temp/testOutDirD")).to be == true
+      expect(($mystring.include?"from main 2: C:/temp/testOutDirD")).to be == true
     else
-      expect(($mystring.include?"from main(1): /tmp/testOutDirD")).to be == true
-      expect(($mystring.include?"from main(2): /tmp/testOutDirD")).to be == true
+      expect(($mystring.include?"from main 1: /tmp/testOutDirD")).to be == true
+      expect(($mystring.include?"from main 2: /tmp/testOutDirD")).to be == true
     end
   end  
 end
