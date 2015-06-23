@@ -6,19 +6,16 @@ module Bake
   class ConfigNames
   
     def self.print(configs, default, filename)
-      validConfigs = []
+      foundValidConfig = false
       configs.each do |c|
-        validConfigs << c.name unless c.defaultToolchain.nil?
+        next if c.defaultToolchain.nil?
+        foundValidConfig = true
+        Kernel.print "* #{c.name}"
+        Kernel.print " (default)" if c.name ==  default
+        Kernel.print ": #{c.description.text}" if c.description
+        Kernel.print "\n"
       end
-      if validConfigs.length > 0
-        validConfigs.each do |v|
-          d = ""
-          d = " (default)" if v == default
-          puts "* " + v + d
-        end 
-      else
-        Bake.formatter.printWarning("No configuration with a DefaultToolchain found", filename)
-      end
+      Bake.formatter.printWarning("No configuration with a DefaultToolchain found", filename) unless foundValidConfig
       
       ExitHelper.exit(0)
     end

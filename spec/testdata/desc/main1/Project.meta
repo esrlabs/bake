@@ -1,0 +1,24 @@
+Project default: test4 {
+
+  Description "Nothing"
+
+  ExecutableConfig test1 {
+    Description "Bla"
+	DefaultToolchain GCC
+  }
+
+  ExecutableConfig test2 {
+    Description
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig test3 {
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test4 {
+    Description "Fasel"
+    DefaultToolchain GCC
+  }
+  
+}

@@ -1,0 +1,8 @@
+Project {
+
+  Description "Nothing"
+
+  ExecutableConfig test1 {
+  }
+
+}

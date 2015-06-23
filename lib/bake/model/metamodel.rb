@@ -192,6 +192,7 @@ module Bake
       class BaseConfig_INTERNAL < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'extends', String, :defaultValueLiteral => ""
+        contains_one 'description', Description, 'parent'
         contains_one 'startupSteps', StartupSteps, 'parent'
         contains_one 'preSteps', PreSteps, 'parent'
         contains_one 'postSteps', PostSteps, 'parent'
