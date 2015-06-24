@@ -1,7 +1,16 @@
 bake
 ====
 
-Build tool for C++ projects.
+bake is used to build software **fast** and **easy**.
+
+## Build tool for C++ projects.
+
+Key features
+
+* faster than many other well known build systems
+* can be run on command line with colored output
+* Eclipse and Visual Studio integration plugins provided
+* configuration files easy to understand and maintain
 
 More information can be found here:
 https://esrlabs.com/gems/doc/bake-toolkit
