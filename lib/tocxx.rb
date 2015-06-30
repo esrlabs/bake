@@ -365,3 +365,7 @@ module Bake
 
   end
 end
+
+trap("SIGINT") do
+  Bake::IDEInterface.instance.set_abort(1)
+end
