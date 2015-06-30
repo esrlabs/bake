@@ -32,15 +32,15 @@ module Bake
         File.join([@output_dir, adaptedSource])
       end
       
-      def needed?(source, object, type, dep_filename_conv)
+      def maybe_needed?(source, object, type, dep_filename_conv)
         return false if Bake.options.linkOnly
-
+        return false if Bake.options.prepro and type == ASM
+        return true
+      end
+      
+      def needed?(source, object, type, dep_filename_conv)
         return "because analyzer toolchain is configured" if Bake.options.analyze
-
-        if Bake.options.prepro
-          return "because prepro was specified and source is no assembler file" if type != :ASM
-          return false 
-        end
+        return "because prepro was specified and source is no assembler file" if Bake.options.prepro 
         
         return "because object does not exist" if not File.exist?(object)
         oTime = File.mtime(object)
@@ -114,6 +114,8 @@ module Bake
         
         cmdLineCheck = false
         cmdLineFile = calcCmdlineFile(object)
+        return true unless maybe_needed?(source, object, type, dep_filename_conv)
+
         reason = needed?(source, object, type, dep_filename_conv)
         if not reason
           cmdLineCheck = true
