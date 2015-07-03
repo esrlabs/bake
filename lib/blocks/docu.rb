@@ -17,10 +17,12 @@ module Bake
         else
           executeCommand(@commandLine)
         end
+        return true
       end
       
       def clean
         # nothing to do here
+        return true
       end
       
     end

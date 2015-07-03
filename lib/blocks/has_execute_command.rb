@@ -23,6 +23,7 @@ module Bake
           puts "(executed in '#{@projectDir}')" if Bake.options.verbose >= 3
           raise SystemCommandFailed.new
         end
+        return cmd_result
       end
           
     end

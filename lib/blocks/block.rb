@@ -123,10 +123,9 @@ module Bake
       end
 
       def executeStep(step, method)
-        result = false
+        @result = false
         begin
-          step.send method
-          result = true
+          @result = step.send(method)
         rescue Bake::SystemCommandFailed => scf
         rescue SystemExit => exSys
           ProcessHelper.killProcess(true)
@@ -141,7 +140,7 @@ module Bake
           raise AbortException.new
         end
         
-        return result
+        return @result
       end
 
       def callDeps(method)
@@ -154,23 +153,23 @@ module Bake
       end
       
       def callSteps(method)
-        result = true
+        @result = true
         preSteps.each do |step|
-          result = executeStep(step, method) if result
-          return false if not result and Bake.options.stopOnFirstError
+          @result = executeStep(step, method) if @result
+          return false if not @result and Bake.options.stopOnFirstError
         end
 
         mainSteps.each do |step|
-          result = executeStep(step, method) if result
-          return false if not result and Bake.options.stopOnFirstError
-        end
-
-        postSteps.each do |step|
-          result = executeStep(step, method) if result
-          return false if not result and Bake.options.stopOnFirstError
+          @result = executeStep(step, method) if @result
+          return false if not @result and Bake.options.stopOnFirstError
         end
         
-        return result        
+        postSteps.each do |step|
+          @result = executeStep(step, method) if @result
+          return false if not @result and Bake.options.stopOnFirstError
+        end
+        
+        return @result        
       end
       
       def execute
@@ -196,7 +195,7 @@ module Bake
         end
 
         @result = callSteps(:execute)
-        return (depResult && result)
+        return (depResult && @result)
       end
 
       def clean
@@ -221,7 +220,7 @@ module Bake
           end          
         end
         
-        return (depResult && result)
+        return (depResult && @result)
       end
       
       def startup
@@ -235,13 +234,13 @@ module Bake
           Bake.formatter.printAdditionalInfo "**** Starting up #{@projectName} (#{@configName}) ****"     
         end
         
-        result = true
+        @result = true
         startupSteps.each do |step|
-          result = executeStep(step, :startupStep) if result
-          return false if not result and Bake.options.stopOnFirstError
+          @result = executeStep(step, :startupStep) if @result
+          return false if not @result and Bake.options.stopOnFirstError
         end
         
-        return (depResult && result)
+        return (depResult && @result)
       end      
 
       def exits
@@ -255,13 +254,13 @@ module Bake
           Bake.formatter.printAdditionalInfo "**** Exiting #{@projectName} (#{@configName}) ****"     
         end
         
-        result = true
+        @result = true
         exitSteps.each do |step|
-          result = executeStep(step, :exitStep) if result
-          return false if not result and Bake.options.stopOnFirstError
+          @result = executeStep(step, :exitStep) if @result
+          return false if not @result and Bake.options.stopOnFirstError
         end
         
-        return (depResult && result)
+        return (depResult && @result)
       end      
 
                   

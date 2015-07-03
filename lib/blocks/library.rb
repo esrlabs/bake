@@ -42,7 +42,6 @@ module Bake
       def execute
 
         Dir.chdir(@projectDir) do
-
           cmdLineCheck = false
           cmdLineFile = calcCmdlineFile()
           reason = needed?
@@ -51,7 +50,6 @@ module Bake
             reason = config_changed?(cmdLineFile)
           end
           return unless reason
-        
           archiver = @tcs[:ARCHIVER]
        
           cmd = Utils.flagSplit(archiver[:COMMAND], false) # ar
@@ -66,7 +64,7 @@ module Bake
           
           cmd += @compileBlock.objects
         
-          return if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
+          return true if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
         
           BlockBase.prepareOutput(archive_name)
           
@@ -75,6 +73,7 @@ module Bake
           process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{archive_name}", reason, success)
          
           check_config_file()
+          return success
         end
       end
       
@@ -85,6 +84,7 @@ module Bake
             FileUtils.rm_rf(@output_dir)
           end
         end unless Bake.options.filename
+        return true
       end
    
       

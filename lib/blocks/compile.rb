@@ -182,7 +182,7 @@ module Bake
           Blocks::CC2J << { :directory => @projectDir, :command => cmd, :file => source }
         end
         
-        return if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
+        return true if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
         
         BlockBase.prepareOutput(object)
         BlockBase.writeCmdLineFile(cmd, cmdLineFile)
@@ -296,7 +296,9 @@ module Bake
                       
           raise SystemCommandFailed.new if compileJobs.failed
           
+          
         end
+        return true
       end
       
       def clean
@@ -327,6 +329,7 @@ module Bake
             end
           end
         end
+        return true
       end
       
       def calcObjects

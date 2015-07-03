@@ -23,6 +23,7 @@ module Bake
           (@tcs[:COMPILER][:CPP][:DEFINES] + @tcs[:COMPILER][:C][:DEFINES] + @tcs[:COMPILER][:ASM][:DEFINES]).uniq.each { |s| puts "  #{s}" }
           puts "END_INFO"
         end
+        return true
       end
       
       def clean

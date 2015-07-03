@@ -50,6 +50,7 @@ module Bake
           return true unless subBlock.result
           return depHasError(subBlock)
         end
+        
         return false
       end
 
@@ -132,7 +133,7 @@ module Bake
           outPipe = (@mapfile and linker[:MAP_FILE_PIPE]) ? "#{@mapfile}" : nil
           cmdLinePrint << "> #{outPipe}" if outPipe
           
-          return if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
+          return true if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
           
           ToCxx.linkBlock
           
@@ -144,8 +145,8 @@ module Bake
           process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, reason, success)
     
           check_config_file()
+          return success
         end
-        
       end
       
       def clean
@@ -155,6 +156,7 @@ module Bake
             FileUtils.rm_rf(@output_dir)
           end
         end unless Bake.options.filename
+        return true
       end
       
     end

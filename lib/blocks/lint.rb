@@ -9,6 +9,7 @@ module Bake
       end
   
       def execute
+        success = true
         Dir.chdir(@projectDir) do
           compiler = @tcs[:COMPILER][:CPP]
           calcSources
@@ -43,9 +44,11 @@ module Bake
             process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "Linting...", nil, success)
           end
         end
+        return success
       end  
       
       def clean
+        return true
       end
       
     end

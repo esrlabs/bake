@@ -1,0 +1,22 @@
+Project {
+
+  ExecutableConfig test {
+    Dependency lib
+    Files "src/x.cpp"
+    PostSteps {
+      CommandLine "echo hallo"
+    }
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test2 {
+    Dependency libD
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test3 {
+    Dependency
+    DefaultToolchain GCC
+  }
+
+}
