@@ -49,7 +49,7 @@ module Bake
             cmdLineCheck = true
             reason = config_changed?(cmdLineFile)
           end
-          return unless reason
+          return true unless reason
           archiver = @tcs[:ARCHIVER]
        
           cmd = Utils.flagSplit(archiver[:COMMAND], false) # ar

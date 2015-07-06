@@ -15,7 +15,7 @@ module Bake
         if @commandLine.empty?
           Bake.formatter.printInfo("No documentation command specified", @config)
         else
-          executeCommand(@commandLine)
+          return executeCommand(@commandLine)
         end
         return true
       end

@@ -74,19 +74,19 @@ module Bake
       end
       
       def execute
-        executeCommand(@commandLine, nil, @config.validExitCodes)
+        return executeCommand(@commandLine, nil, @config.validExitCodes)
        end
        
       def startupStep
-        executeCommand(@commandLine, nil, @config.validExitCodes)
+        return executeCommand(@commandLine, nil, @config.validExitCodes)
       end
 
       def exitStep
-        executeCommand(@commandLine, nil, @config.validExitCodes)
+        return executeCommand(@commandLine, nil, @config.validExitCodes)
       end
             
       def clean
-        executeCommand(@cleanLine, "No rule to make target 'clean'.", @config.validExitCodes) unless Bake.options.filename
+        return executeCommand(@cleanLine, "No rule to make target 'clean'.", @config.validExitCodes) unless Bake.options.filename
       end
     
     end
