@@ -122,6 +122,8 @@ module Bake
 
       class IncludeDir < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
+        has_attr 'infix', String, :defaultValueLiteral => ""
+        has_attr 'inherit', Boolean, :defaultValueLiteral => "false"
       end
 
       class ExternalLibrary < ModelElement

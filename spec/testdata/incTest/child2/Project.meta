@@ -1,0 +1,10 @@
+Project default: test {
+
+
+  LibraryConfig test {
+    Files "c2.c"
+    IncludeDir "child2_1", inherit: true
+	IncludeDir "child2_2"
+  }
+
+}

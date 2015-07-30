@@ -41,7 +41,15 @@ module Bake
       def dependencies
         @dependencies ||= []
       end
+
+      def childs
+        @childs ||= []
+      end
       
+      def parents
+        @parents ||= []
+      end
+            
       def set_library(library)
         @library = library
       end

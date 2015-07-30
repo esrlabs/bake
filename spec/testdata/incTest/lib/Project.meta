@@ -1,0 +1,28 @@
+Project default: test {
+
+
+  LibraryConfig test {
+    IncludeDir "lib1"
+	IncludeDir "lib2"
+	Files "l.c"  
+    Dependency child1
+	Dependency child2
+  }
+
+  
+  LibraryConfig test_base {
+    IncludeDir "lib3", inherit: true
+	IncludeDir "lib1"
+	IncludeDir "lib4", inherit: false
+	Files "l.c"  
+  }
+  
+  LibraryConfig test_main, extends: test_base{
+    IncludeDir "lib1", inherit: true
+	IncludeDir "lib3"
+	IncludeDir "lib2", inherit: false
+	Files "l.c"  
+  }
+
+
+}

@@ -91,24 +91,47 @@ module Bake
       end if configSteps
     end
 
-    def addDependencies(block, configDeps)
-      configDeps.each do |dep|
-        @loadedConfig.referencedConfigs[dep.name].each do |config|
-          if config.name == dep.config
-            block.dependencies << config.qname
+    def addDependencies(block, config)
+      config.dependency.each do |dep|
+        @loadedConfig.referencedConfigs[dep.name].each do |configRef|
+          if configRef.name == dep.config
+            block.dependencies << configRef.qname if not Bake.options.project# and not Bake.options.filename
+            blockRef = Blocks::ALL_BLOCKS[configRef.qname]
+            block.childs << blockRef
+            blockRef.parents << block
             break
           end  
         end
       end
     end    
 
+    def makeBlocks
+      @loadedConfig.referencedConfigs.each do |projName, configs|
+        configs.each do |config|
+          block = Blocks::Block.new(config, @loadedConfig.referencedConfigs)
+          Blocks::ALL_BLOCKS[config.qname] = block
+        end
+      end
+    end
+    
+    def makeGraph
+        @loadedConfig.referencedConfigs.each do |projName, configs|
+          configs.each do |config|
+            block = Blocks::ALL_BLOCKS[config.qname]
+              addDependencies(block, config)
+          end
+        end
+        Blocks::ALL_BLOCKS.each do |name,block|
+          block.dependencies.uniq!
+          block.childs.uniq!
+          block.parents.uniq!
+        end
+    end
+    
     def convert2bb
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
-          
-          block = Blocks::Block.new(config, @loadedConfig.referencedConfigs)
-          
-          Blocks::ALL_BLOCKS[config.qname] = block
+          block = Blocks::ALL_BLOCKS[config.qname]
           
           addSteps(block, block.startupSteps,  config.startupSteps)
           addSteps(block, block.exitSteps,  config.exitSteps)
@@ -141,9 +164,7 @@ module Bake
             end
           end
 
-          if not Bake.options.project# and not Bake.options.filename
-            addDependencies(block, config.dependency)
-          end
+
                     
         end
       end
@@ -284,6 +305,8 @@ module Bake
         
         @@linkBlock = 0
         
+        makeBlocks
+        makeGraph
         convert2bb
         
         Blocks::Show.includes if Bake.options.show_includes

@@ -88,6 +88,13 @@ module Bake
             end
           end
         end
+        
+        config.includeDir.each do |inc|
+          if not ["front", "back", ""].include?inc.infix
+            Bake.formatter.printError("infix of IncludeDir must be 'front' or 'back'", inc) 
+            ExitHelper.exit(1)
+          end
+        end if config.respond_to?("includeDir")
       end
       configs
     end

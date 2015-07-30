@@ -1,0 +1,34 @@
+Project default: test {
+
+  LibraryConfig test {
+    IncludeDir "main1", infix: front
+	IncludeDir "main2", infix: front
+	IncludeDir "main3", infix: back
+	IncludeDir "main4"
+    Dependency lib
+	Files "m.c"  
+    DefaultToolchain GCC
+  }
+
+   LibraryConfig test_base {
+	IncludeDir "main1"
+	IncludeDir "main2", infix: back
+	IncludeDir "main3", infix: front
+	IncludeDir "main4"
+	Files "m.c"  
+    DefaultToolchain GCC
+  }
+
+   LibraryConfig test_main, extends: test_base {
+	IncludeDir "main1", infix: back
+	IncludeDir "main2"
+	IncludeDir "main3"
+	IncludeDir "main4", infix: back
+	IncludeDir "main4", infix: front
+	Dependency lib, config: test_main
+	Files "m.c"  
+    DefaultToolchain GCC
+  }
+
+
+}

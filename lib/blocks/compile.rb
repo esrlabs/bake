@@ -119,6 +119,7 @@ module Bake
         reason = needed?(source, object, type, dep_filename_conv)
         if not reason
           cmdLineCheck = true
+          # currently this returns always != nil
           reason = config_changed?(cmdLineFile)
         end
         return true unless reason
@@ -402,10 +403,54 @@ module Bake
         
       end
         
+      def getSubBlocks(b, method)
+        b.send(method).each do |child_b|
+          if not @otherBlocks.include?child_b
+            @otherBlocks << child_b
+            getSubBlocks(child_b, method)
+          end
+        end
+      end
+      
+      def getBlocks(method)
+        @otherBlocks = []
+        getSubBlocks(@block, method)
+        return @otherBlocks
+      end      
+      
+      def mapInclude(inc, projDir)
+        (inc.name == "___ROOTS___") ? (Bake.options.roots.map { |r| File.rel_from_to_project(projDir,r,false) }) : @block.convPath(inc)
+      end
+
       def calcIncludes
+                
         @include_list = @config.includeDir.uniq.map do |dir|
-          (dir.name == "___ROOTS___") ? (Bake.options.roots.map { |r| File.rel_from_to_project(@projectDir,r,false) }) : @block.convPath(dir)
-        end.flatten.uniq
+          mapInclude(dir, @projectDir)
+        end
+        
+        getBlocks(:childs).each do |b|
+          b.config.includeDir.each do |inc|
+            if inc.inherit == true
+              @include_list << mapInclude(inc, b.config.parent.get_project_dir)              
+            end
+          end if b.config.respond_to?("includeDir")
+        end
+        
+        getBlocks(:parents).each do |b|
+          if b.config.respond_to?("includeDir")
+            include_list_front = []
+            b.config.includeDir.each do |inc|
+              if inc.infix == "front"
+                include_list_front << mapInclude(inc, b.config.parent.get_project_dir)
+              elsif inc.infix == "back"
+                @include_list << mapInclude(inc, b.config.parent.get_project_dir)
+              end
+            end 
+            @include_list = include_list_front + @include_list
+          end
+        end
+
+        @include_list = @include_list.flatten.uniq
         
         @include_array = {}
         [:CPP, :C, :ASM].each do |type|
