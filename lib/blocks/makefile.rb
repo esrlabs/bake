@@ -36,7 +36,8 @@ module Bake
       
       def calcCleanLine
         @cleanLine = remove_empty_strings_and_join([
-          MAKE_COMMAND, MAKE_CLEAN, 
+          MAKE_COMMAND, MAKE_CLEAN,
+          @flags, 
           MAKE_DIR_FLAG,  File.dirname(@makefile),
           MAKE_FILE_FLAG, File.basename(@makefile),
           @path_to]) 
