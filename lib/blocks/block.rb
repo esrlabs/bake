@@ -15,7 +15,7 @@ module Bake
 
     class Block
 
-      attr_reader :lib_elements, :projectDir, :library, :config
+      attr_reader :lib_elements, :projectDir, :library, :config, :projectName
       attr_accessor :visited, :inDeps, :result
 
       def startupSteps
