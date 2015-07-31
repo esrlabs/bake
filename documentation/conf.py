@@ -49,8 +49,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Bake'
-copyright = '2015, Alexander Schaal'
-author = 'Alexander Schaal'
+copyright = '2015, E.S.R.Labs AG'
+author = ''
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
