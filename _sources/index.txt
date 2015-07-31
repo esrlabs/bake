@@ -22,6 +22,7 @@ Bake, building software **fast** and **easy**!
                                                         performance/performance
                                                         known_issues
                                                         changelog
+                                                        license
 =======================================            =======================================
 
 
