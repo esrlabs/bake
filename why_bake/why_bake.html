@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;no title&gt; &mdash; Bake 2.10.3 documentation</title>
+    <title>Why you should use Bake &mdash; Bake 2.10.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -29,6 +29,8 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="Bake 2.10.3 documentation" href="../index.html" />
+    <link rel="next" title="Install Bake" href="../install/install_bake.html" />
+    <link rel="prev" title="Welcome to Bake’s documentation!" href="../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -47,7 +49,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="../index.html">
-          Bake-Toolkit</a>
+          Bake</a>
         <span class="navbar-text navbar-version pull-left"><b>2.10.3</b></span>
       </div>
 
@@ -63,7 +65,8 @@
      href="../index.html">Section <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul>
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Why you should use Bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install Bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
@@ -86,7 +89,11 @@
      href="#">SubSections <b class="caret"></b></a>
   <ul class="dropdown-menu localtoc"
       role="menu"
-      aria-labelledby="dLabelLocalToc"><ul class="simple">
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Why you should use Bake</a><ul>
+<li><a class="reference internal" href="#bake-desgin-goals">Bake desgin goals</a></li>
+</ul>
+</li>
 </ul>
 </ul>
 </li>
@@ -95,6 +102,14 @@
             
               
                 
+  <li>
+    <a href="../index.html" title="Previous Chapter: Welcome to Bake’s documentation!"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Welcome to Bake’...</span>
+    </a>
+  </li>
+  <li>
+    <a href="../install/install_bake.html" title="Next Chapter: Install Bake"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Install Bake &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -120,24 +135,85 @@
   <div class="row">
     <div class="col-md-12">
       
-  <blockquote>
-<div><ul class="simple">
-<li>Commandline tool</li>
-<li>Config file easy human read and writeable</li>
-<li>no meta config no generation process in btewen = what you see is what u get</li>
-<li>Just a build tool</li>
-<li>auschecken bauen! erweiterbar ueber externe scripte but on purpose
-... big mess</li>
-<li>lightweigt</li>
-<li>workspace is not tied to a specific structre</li>
-<li>dau setup in 5-10 mins</li>
-<li>serialized output even for parallel build,</li>
-<li>stop on error</li>
-<li>open source</li>
-<li>not tied to ide, cmd tool, can be integrated</li>
-<li>fast!</li>
+  <div class="section" id="why-you-should-use-bake">
+<h1>Why you should use Bake<a class="headerlink" href="#why-you-should-use-bake" title="Permalink to this headline">¶</a></h1>
+<p>Basically whether you should use Bake or not is entirely up to your circumstances,
+just take 2 minutes and have a look at our design goals and see if they fit what you are looking for.</p>
+<div class="section" id="bake-desgin-goals">
+<h2>Bake desgin goals<a class="headerlink" href="#bake-desgin-goals" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Goal</th>
+<th class="head">Reasoning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>It must be only a built tool</li>
 </ul>
-</div></blockquote>
+</td>
+<td>We want to focus your energy in providing a good build tool, we rather provide hook</td>
+</tr>
+<tr class="row-odd"><td><ul class="first last simple">
+<li>It must be a command line tool</li>
+</ul>
+</td>
+<td>Sticking to the unix and single purpose phisolophy, we think proving a command line tool
+is the easiest way to be easily used and integrated with other tools. <strong>IDE independence!</strong></td>
+</tr>
+<tr class="row-even"><td><ul class="first last simple">
+<li>It must be easy to configure</li>
+</ul>
+</td>
+<td>We want the developer to be able to focus on coding and testing not on reading and searching
+hours through the build tool documentation.</td>
+</tr>
+<tr class="row-odd"><td><ul class="first last simple">
+<li>The configuration must not be</li>
+</ul>
+</td>
+<td>We want our configurations to be WYSIWYG (What You See Is What You Get).
+We don&#8217;t want developers to spent hours in searching for a configuration error
+where are multiple other config and script generation steps are in beteween.</td>
+</tr>
+<tr class="row-even"><td><ul class="first last simple">
+<li>It must be easy to understand configurations of large project</li>
+</ul>
+</td>
+<td>In large projects build configurations usually get pretty complex and big, therefore
+usually just a few people understand the build process, which makes the maintance
+dependend on those people. This is a single point of failure in our opinion and therefore
+it should be avoided.</td>
+</tr>
+<tr class="row-odd"><td><ul class="first last simple">
+<li>It must be fast</li>
+</ul>
+</td>
+<td>We personaly aren&#8217;t fans waiting for the built, we rather build test and then do a kicker
+break!</td>
+</tr>
+<tr class="row-even"><td><ul class="first last simple">
+<li>It should be lightweight</li>
+</ul>
+</td>
+<td>Lightweight here means, less depencies because depencies can hinder people to get their
+setup up and running.</td>
+</tr>
+<tr class="row-odd"><td><ul class="first last simple">
+<li>It must be easy to use different versions of the build tool</li>
+</ul>
+</td>
+<td>Sometimes it is necessary to break compatability to embrace progress, even though
+it should be easy to switch between different version of the tool.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 
 
     </div>
