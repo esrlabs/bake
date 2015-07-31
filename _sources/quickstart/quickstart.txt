@@ -65,6 +65,6 @@ Quickstart
 
         Time: 00:00 minutes
 
-    .. warning::
+    .. note::
         The default main.cpp which is created by bake does nothing except returning the exit code 0.
 
