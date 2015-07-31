@@ -118,7 +118,7 @@ html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 # documentation.
 html_theme_options = {
     #'globaltoc_depth': 2,
-    'navbar_title': "Bake-Toolkit",
+    'navbar_title': "Bake",
     # Tab name for entire site. (Default: "Site")
     'navbar_site_name': "Section",
     'navbar_pagenav': True,
