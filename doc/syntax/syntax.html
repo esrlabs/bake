@@ -163,7 +163,7 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showExcludeFiles()" onMouseout="notip()">ExcludeFiles</span> &#60;pattern&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;, <span class="help" onMouseover="showInherit()" onMouseout="notip()">inherit</span>: true|false, <span class="help" onMouseover="showInfix()" onMouseout="notip()">infix</span>: front|back<br>
 
 </span><br></span>
 
@@ -463,6 +463,16 @@ function showIncludeDir() {
 	'<i> &nbsp; &nbsp; IncludeDir "include"</i><br>'+
     '<i> &nbsp; &nbsp; IncludeDir "generated/include"</i><br>'
   ddrivetip("IncludeDir", "No","0..n","-",str)  
+}
+
+function showInherit() {   
+  str = 'Inherits the include to all projects, which depend on this project.'
+  ddrivetip("inherit", "No","0..1","false",str)  
+}
+
+function showInfix() {   
+  str = 'Injects the include path to all childs, either at the front (e.g. for mocking code) or at the end.'
+  ddrivetip("infix", "No","0..1","-",str)  
 }
 
 function showSet() {   
