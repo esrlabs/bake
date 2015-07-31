@@ -22,7 +22,7 @@ The most important options
         All configs of the project will be built, which is usually just one config, but if you have more than one config of the project in the workspace, use a comma separator.
 
 Examples
-++++++++
+********
 
 Building an application
 -----------------------

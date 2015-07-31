@@ -93,7 +93,7 @@
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">Commandline</a><ul>
 <li><a class="reference internal" href="#how-to-get-help">How to get help</a></li>
-<li><a class="reference internal" href="#the-most-important-options">The most important options</a><ul>
+<li><a class="reference internal" href="#the-most-important-options">The most important options</a></li>
 <li><a class="reference internal" href="#examples">Examples</a><ul>
 <li><a class="reference internal" href="#building-an-application">Building an application</a></li>
 <li><a class="reference internal" href="#building-from-within-an-arbitrary-directory">Building from within an arbitrary directory</a></li>
@@ -102,8 +102,6 @@
 <li><a class="reference internal" href="#building-a-project-which-has-more-than-one-root">Building a project which has more than one root</a></li>
 <li><a class="reference internal" href="#clean-a-project-s">Clean a project(s)</a></li>
 <li><a class="reference internal" href="#build-a-single-file-s">Build a single file(s)</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -171,10 +169,11 @@
 </div>
 </li>
 </ol>
+</div>
 <div class="section" id="examples">
-<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="building-an-application">
-<h4>Building an application<a class="headerlink" href="#building-an-application" title="Permalink to this headline">¶</a></h4>
+<h3>Building an application<a class="headerlink" href="#building-an-application" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake -b Debug
 </pre></div>
@@ -189,7 +188,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="building-from-within-an-arbitrary-directory">
-<h4>Building from within an arbitrary directory<a class="headerlink" href="#building-from-within-an-arbitrary-directory" title="Permalink to this headline">¶</a></h4>
+<h3>Building from within an arbitrary directory<a class="headerlink" href="#building-from-within-an-arbitrary-directory" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root/mainProj
 </pre></div>
@@ -197,7 +196,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="building-just-one-specific-project">
-<h4>Building just one specific project<a class="headerlink" href="#building-just-one-specific-project" title="Permalink to this headline">¶</a></h4>
+<h3>Building just one specific project<a class="headerlink" href="#building-just-one-specific-project" title="Permalink to this headline">¶</a></h3>
 <p>Assuming the project name to build s myProj.</p>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -p myProj
@@ -206,7 +205,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="building-specific-projects-with-differnt-roots">
-<h4>Building specific projects with differnt roots<a class="headerlink" href="#building-specific-projects-with-differnt-roots" title="Permalink to this headline">¶</a></h4>
+<h3>Building specific projects with differnt roots<a class="headerlink" href="#building-specific-projects-with-differnt-roots" title="Permalink to this headline">¶</a></h3>
 <p>Assuming mainProj has several configs really included in the build (which is uncommon), you can choose one of the configs.</p>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -p myProj,abc
@@ -215,7 +214,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="building-a-project-which-has-more-than-one-root">
-<h4>Building a project which has more than one root<a class="headerlink" href="#building-a-project-which-has-more-than-one-root" title="Permalink to this headline">¶</a></h4>
+<h3>Building a project which has more than one root<a class="headerlink" href="#building-a-project-which-has-more-than-one-root" title="Permalink to this headline">¶</a></h3>
 <p>Assuming code has been checked out into two roots, the console supports ansi colors, you want to stop on first error and build only the project bspAbc.</p>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc
@@ -224,7 +223,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="clean-a-project-s">
-<h4>Clean a project(s)<a class="headerlink" href="#clean-a-project-s" title="Permalink to this headline">¶</a></h4>
+<h3>Clean a project(s)<a class="headerlink" href="#clean-a-project-s" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc -c
 </pre></div>
@@ -232,7 +231,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="build-a-single-file-s">
-<h4>Build a single file(s)<a class="headerlink" href="#build-a-single-file-s" title="Permalink to this headline">¶</a></h4>
+<h3>Build a single file(s)<a class="headerlink" href="#build-a-single-file-s" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -p bspAbc -f main.cpp
 <span class="gp">User@Host:~$</span> bake Debug -f .asm
@@ -243,7 +242,6 @@
 <p class="last">All files matching the pattern will be compiled (no wildcards allowed)</p>
 </div>
 </div></blockquote>
-</div>
 </div>
 </div>
 </div>
