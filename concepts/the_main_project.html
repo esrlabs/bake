@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The main project &mdash; Bake 2.10.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/Sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.10.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Bake 2.10.3 documentation" href="../index.html" />
+    <link rel="up" title="Concepts" href="concepts.html" />
+    <link rel="next" title="Syntax" href="../syntax/syntax.html" />
+    <link rel="prev" title="The Project.meta file" href="the_project_meta_file.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          Bake-Toolkit</a>
+        <span class="navbar-text navbar-version pull-left"><b>2.10.3</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install Bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Tips and Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">The main project</a><ul>
+<li><a class="reference internal" href="#advantages">Advantages</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#output-directory">Output directory</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="the_project_meta_file.html" title="Previous Chapter: The Project.meta file"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; The Project.meta...</span>
+    </a>
+  </li>
+  <li>
+    <a href="../syntax/syntax.html" title="Next Chapter: Syntax"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Syntax &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="the-main-project">
+<h1>The main project<a class="headerlink" href="#the-main-project" title="Permalink to this headline">¶</a></h1>
+<p>The concept of the main project is different to many other build systems like Eclipse CDT.
+In these build systems everything which is needed for a project is configured in the project itself.
+In bake the main project can predefine stuff for all subprojects.
+The main project can have a DefaultToolchain definition, which is valid for all projects and files referenced by the main project. Subprojects can overwrite or adjust these definitions.</p>
+<p>Projects are always built in context of the main project.</p>
+<p>To build a project, you have to specify</p>
+<blockquote>
+<div><ul class="simple">
+<li>the main project</li>
+<li>the config of the main project which references the project to build</li>
+<li>the (sub)project to build if applicable</li>
+</ul>
+</div></blockquote>
+<div class="section" id="advantages">
+<h2>Advantages<a class="headerlink" href="#advantages" title="Permalink to this headline">¶</a></h2>
+<p>Reducing the number of build configurations (toolchain settings like debug or release flags can be set outside of the project)
+Most projects do not have any compiler definitions anymore
+Only flags which must be used or flags which must not be used have to be specified in the projects
+Changing compiler definitions for all projects can be done easily in the main project build configuration</p>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Project.meta of Main (Debug and Release)</th>
+<th class="head">Project.meta of Sub (only one build config!)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last highlight-python"><div class="highlight"><pre>Project {
+
+    ExecutableConfig Debug {
+        Dependency Sub, config: Lib
+        Files &quot;**/*.cpp&quot;
+        IncludeDir &quot;include&quot;
+        DefaultToolchain GCC {
+            Compiler CPP {
+                Flags &quot;... whatever -debug_info&quot;
+                Define &quot;DEBUG&quot;
+            }
+        }
+    }
+
+    ExecutableConfig Release {
+        Dependency Sub, config: Lib
+        Files &quot;**/*.cpp&quot;
+        IncludeDir &quot;include&quot;
+        DefaultToolchain GCC {
+            Compiler CPP {
+                Flags &quot;... whatever -optimize&quot;
+                Define &quot;NDEBUG&quot;
+            }
+        }
+    }
+}
+</pre></div>
+</div>
+</td>
+<td><div class="first last highlight-python"><div class="highlight"><pre>Project {
+
+    LibraryConfig Lib {
+        Files &quot;**/*.cpp&quot;
+        IncludeDir &quot;include&quot;
+    }
+
+}
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A main project must have a DefaultToolchain - but it&#8217;s allowed to leave that definition empty.</p>
+</div>
+</div>
+<div class="section" id="output-directory">
+<h2>Output directory<a class="headerlink" href="#output-directory" title="Permalink to this headline">¶</a></h2>
+<p>A project in a specific build configuration can be build in different contexts.
+That&#8217;s why the output directory of a project cannot be simply the build configuration name of the project to avoid inconsistencies.
+Therefore the output directory names are.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Main project: $(MainConfigName) like in regular Eclipse CDT builds</li>
+<li>Subprojects: $(MainConfigName)_$(MainProjectName) instead of the config name of the subproject</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, Alexander Schaal.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

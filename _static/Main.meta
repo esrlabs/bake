@@ -1,0 +1,26 @@
+Project {
+
+    ExecutableConfig Debug {
+        Dependency Sub, config: Lib
+        Files "**/*.cpp"
+        IncludeDir "include"
+        DefaultToolchain GCC {
+            Compiler CPP {
+                Flags "... whatever -debug_info"
+                Define "DEBUG"
+            }
+        }
+    }
+
+    ExecutableConfig Release {
+        Dependency Sub, config: Lib
+        Files "**/*.cpp"
+        IncludeDir "include"
+        DefaultToolchain GCC {
+            Compiler CPP {
+                Flags "... whatever -optimize"
+                Define "NDEBUG"
+            }
+        }
+    }
+}

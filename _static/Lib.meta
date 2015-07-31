@@ -1,0 +1,8 @@
+Project {
+
+    LibraryConfig Lib {
+        Files "**/*.cpp"
+        IncludeDir "include"
+    }
+
+}

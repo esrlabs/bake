@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Project.meta file &mdash; Bake 2.10.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/Sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.10.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Bake 2.10.3 documentation" href="../index.html" />
+    <link rel="up" title="Concepts" href="concepts.html" />
+    <link rel="next" title="The main project" href="the_main_project.html" />
+    <link rel="prev" title="Concepts" href="concepts.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          Bake-Toolkit</a>
+        <span class="navbar-text navbar-version pull-left"><b>2.10.3</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install Bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Tips and Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">The Project.meta file</a><ul>
+<li><a class="reference internal" href="#what-is-the-project-meta-file">What is the Project.meta file</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="concepts.html" title="Previous Chapter: Concepts"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Concepts</span>
+    </a>
+  </li>
+  <li>
+    <a href="the_main_project.html" title="Next Chapter: The main project"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">The main project &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="the-project-meta-file">
+<h1>The Project.meta file<a class="headerlink" href="#the-project-meta-file" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-the-project-meta-file">
+<h2>What is the Project.meta file<a class="headerlink" href="#what-is-the-project-meta-file" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>Project.meta</cite> file is bakes configuration file.</p>
+<ul class="simple">
+<li>Every project has a Project.meta file in the project root directory.</li>
+<li>A Project.meta file contains one or more build configurations.</li>
+<li>A build configuration consists of toolchain settings, files to build, custom steps, etc.</li>
+</ul>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Project.meta file of Main project</th>
+<th class="head">Project.meta file of Sub project</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last highlight-python"><div class="highlight"><pre>Project {
+    ExecutableConfig Debug {
+        Dependency Sub, config: Debug
+        Files &quot;**/*.cpp&quot;
+        IncludeDir &quot;include&quot;
+        DefaultToolchain GCC {
+            Compiler CPP {
+                Flags &quot;-Wall&quot;
+            }
+        }
+        PostSteps {
+            CommandLine &quot;echo $(ArtifactName) built.&quot;
+        }
+    }
+}
+</pre></div>
+</div>
+</td>
+<td><div class="first last highlight-python"><div class="highlight"><pre>Project {
+    LibraryConfig Debug {
+        Files &quot;**/*.cpp&quot;
+        IncludeDir &quot;include&quot;
+        IncludeDir &quot;Main/include&quot;
+        ExternalLibrarySearchPath &quot;lib&quot;
+        ExternalLibrary &quot;a&quot;
+        ExternalLibrary &quot;b&quot;
+        Toolchain {
+            Compiler CPP {
+                Flags add: &quot;-g3&quot;
+            }
+        }
+    }
+}
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Let&#8217;s assume that Main and Sub are located in the same workspace root.
+To build the executable, bake can be called from the Main directory.</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~/my_project$</span> bake -b Debug
+</pre></div>
+</div>
+</div></blockquote>
+<p>What happens now?</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Reading Project.meta of Main</p>
+</li>
+<li><p class="first">Reading Project.meta of dependencies (Sub)</p>
+</li>
+<li><dl class="first docutils">
+<dt>Compiling sources of Sub, e.g.:</dt>
+<dd><div class="first highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> g++ -c -Wall -g3 -Iinclude -I../Main/include -o Debug_Main/src/xy.o src/xy.cpp
+</pre></div>
+</div>
+<ul class="last simple">
+<li>Wall is taken from the DefaultToolchain and -g3 is added by the toolchain of the Sub project.</li>
+<li>The include path to Main is automatically adjusted.</li>
+<li>The order of includes is the same as in Project.meta.</li>
+<li>g++, -c and -I are used, because GCC was specified in the DefaultToolchain.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Archiving the library, e.g.:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> ar -rc Debug_Main/libSub.a Debug_Main/src/xy.o
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Compiling sources of Main, e.g.:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> g++ -c -Wall -Iinclude -o Debug/src/main.o src/main.cpp
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Linking executable, e.g.:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> g++ -o Debug/Main.exe Debug/src/main.o ../Sub/Debug_Main/libSub.a -L../Sub/lib -la -lb
+</pre></div>
+</div>
+<p>The library search paths and libraries are added in the specified order.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Executing the post step</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> <span class="nb">echo </span>Main.exe built.
+</pre></div>
+</div>
+<p>The variable was automatically substituted.</p>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, Alexander Schaal.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
