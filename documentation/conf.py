@@ -128,7 +128,7 @@ html_theme_options = {
     #                    ("E.S.R.Labs", "https://www.esrlabs.com/", 1)
     #                ],
 
-    'bootswatch_theme': "Sandstone"
+    'bootswatch_theme': "sandstone"
 }
 
 
