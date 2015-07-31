@@ -1,0 +1,15 @@
+Project {
+    ExecutableConfig Debug {
+        Dependency Sub, config: Debug
+        Files "**/*.cpp"
+        IncludeDir "include"
+        DefaultToolchain GCC {
+            Compiler CPP {
+                Flags "-Wall"
+            }
+        }
+        PostSteps {
+            CommandLine "echo $(ArtifactName) built."
+        }
+    }
+}
