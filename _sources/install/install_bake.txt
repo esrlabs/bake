@@ -69,7 +69,7 @@ The installation of the bake gem does not start.
 **Solution:**
 
 * Check your network connection.
-* Unlock the password protected proxy by opening an external webpage (e.g. `google <https://www.google.com>`_)using your webbrowser.
+* Unlock the password protected proxy by opening an external webpage (e.g. `google <https://www.google.com>`_) using your web browser.
 
 
 Invalid Language Settings

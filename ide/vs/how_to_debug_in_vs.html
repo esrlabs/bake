@@ -78,6 +78,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../performance/performance.html">Performance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
 </ul>
 </ul>
 </li>
@@ -137,7 +138,7 @@
 <h1>How to Debug in Visual Studio<a class="headerlink" href="#how-to-debug-in-visual-studio" title="Permalink to this headline">¶</a></h1>
 <p>Natively you can only debug the output from the Microsoft VC compiler with Visual Studio. There are some plugins available for e.g. debugging gcc output. Another option is to use the MSVC toolchain from bake, which is described on this help page.
 Add debug flags to the MSVC toolchain:</p>
-<div class="highlight-plain"><div class="highlight"><pre>DefaultToolchain MSVC {
+<div class="highlight-text"><div class="highlight"><pre>DefaultToolchain MSVC {
 
     Compiler CPP {
         Flags &quot;-Zi&quot;

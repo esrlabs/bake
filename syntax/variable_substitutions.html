@@ -263,11 +263,11 @@ linker</td>
 </tr>
 <tr class="row-odd"><td><em>$(/)</em></td>
 <td>Evalutes to the directory path seperator of
-the current paltform</td>
+the current platform</td>
 <td>Windows: \, Other: /</td>
 </tr>
 <tr class="row-even"><td><em>$(:)</em></td>
-<td>Evaluates to the path variable seperaytor
+<td>Evaluates to the path variable seperator
 of the current platform</td>
 <td>Windows: ;, Other: :</td>
 </tr>
@@ -324,17 +324,17 @@ it will be substituted by an empty string.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p>If paths to other projects are needed, e.g. to &#8220;bootloaderUpdater&#8221;, don&#8217;t write a hard coded relative path like this:</p>
-<div class="last highlight-plain"><div class="highlight"><pre>CommandLine &quot;../bootloaderUpdater/tools/PrimaryBootloader2Include.exe
+<div class="last highlight-text"><div class="highlight"><pre>CommandLine &quot;../bootloaderUpdater/tools/PrimaryBootloader2Include.exe
 </pre></div>
 </div>
 </div>
 <p>If paths to other projects are needed, e.g. to &#8220;bootloaderUpdater&#8221; just reference it starting from the project folder.</p>
 <p>Example:</p>
-<div class="highlight-plain"><div class="highlight"><pre>CommandLine &quot;bootloaderUpdater/tools/PrimaryBootloader2Include.exe
+<div class="highlight-text"><div class="highlight"><pre>CommandLine &quot;bootloaderUpdater/tools/PrimaryBootloader2Include.exe
 </pre></div>
 </div>
 <p>or:</p>
-<div class="highlight-plain"><div class="highlight"><pre>IncludeDir &quot;myProjectName/bootloaderUpdater/whatever&quot;
+<div class="highlight-text"><div class="highlight"><pre>IncludeDir &quot;myProjectName/bootloaderUpdater/whatever&quot;
 </pre></div>
 </div>
 <p>Bake recognizes that the first part of the path is a valid project name and calculates the relative path to the project automatically.

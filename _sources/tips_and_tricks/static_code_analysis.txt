@@ -39,7 +39,7 @@ Configuring Lint
 In order to configure lint in the Project.meta file, just use the *LintPolicy* command, which forwards the supplied
 the parameters to lint.
 
-.. code-block:: basic
+.. code-block:: text
 
     DefaultToolchain GCC {
         ...
@@ -52,7 +52,7 @@ Example
 
 This exmample shows how to redirect the output to single xml files placed into the main project folder.
 
-.. code-block:: basic
+.. code-block:: text
 
     DefaultToolchain GCC {
         LintPolicy "-os($(MainProjectDir)/$(ProjectName)_$(ConfigName)_lintout.xml)"
@@ -92,7 +92,7 @@ Lint fails due to missing compiler includes and defines
 
     You will get a output like this:
 
-    .. code-block:: data
+    .. code-block:: text
 
         gcc-include-path.lnt, lint_cmac.h, lint_cppmac.h and size-options.lnt.
 

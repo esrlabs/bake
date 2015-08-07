@@ -187,25 +187,25 @@ it won&#8217;t be recorgnized by the bake build system.</p>
 <h3>Configuring Lint<a class="headerlink" href="#configuring-lint" title="Permalink to this headline">¶</a></h3>
 <p>In order to configure lint in the Project.meta file, just use the <em>LintPolicy</em> command, which forwards the supplied
 the parameters to lint.</p>
-<div class="highlight-basic"><div class="highlight"><pre><span class="vg">DefaultToolchain</span><span class="w"> </span><span class="vg">GCC</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="o">...</span>
-<span class="w">    </span><span class="vg">LintPolicy</span><span class="w"> </span><span class="s2">&quot;$(ProjectDir)/lint/misra.lnt&quot;</span>
-<span class="w">    </span><span class="vg">LintPolicy</span><span class="w"> </span><span class="s2">&quot;$(ProjectDir)/lint/suppressions.lnt&quot;</span>
-<span class="p">}</span>
+<div class="highlight-text"><div class="highlight"><pre>DefaultToolchain GCC {
+    ...
+    LintPolicy &quot;$(ProjectDir)/lint/misra.lnt&quot;
+    LintPolicy &quot;$(ProjectDir)/lint/suppressions.lnt&quot;
+}
 </pre></div>
 </div>
 <div class="section" id="id2">
 <h4>Example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>This exmample shows how to redirect the output to single xml files placed into the main project folder.</p>
-<div class="highlight-basic"><div class="highlight"><pre><span class="vg">DefaultToolchain</span><span class="w"> </span><span class="vg">GCC</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="vg">LintPolicy</span><span class="w"> </span><span class="s2">&quot;-os($(MainProjectDir)/$(ProjectName)_$(ConfigName)_lintout.xml)&quot;</span>
-<span class="w">    </span><span class="vg">LintPolicy</span><span class="w"> </span><span class="s2">&quot;-v&quot;</span>
-<span class="w">    </span><span class="vg">LintPolicy</span><span class="w"> </span><span class="s2">&quot;+xml(doc)&quot;</span>
-<span class="w">    </span><span class="vg">LintPolicy</span><span class="w"> </span><span class="s2">&quot;-format=%f %l %t %n %m&quot;</span>
-<span class="w">    </span><span class="vg">LintPolicy</span><span class="w"> </span><span class="s2">&quot;-format_specific= &quot;</span>
-<span class="w">    </span><span class="vg">LintPolicy</span><span class="w"> </span><span class="s2">&quot;-pragma(message)&quot;</span>
-<span class="w">    </span><span class="o">...</span>
-<span class="p">}</span>
+<div class="highlight-text"><div class="highlight"><pre>DefaultToolchain GCC {
+    LintPolicy &quot;-os($(MainProjectDir)/$(ProjectName)_$(ConfigName)_lintout.xml)&quot;
+    LintPolicy &quot;-v&quot;
+    LintPolicy &quot;+xml(doc)&quot;
+    LintPolicy &quot;-format=%f %l %t %n %m&quot;
+    LintPolicy &quot;-format_specific= &quot;
+    LintPolicy &quot;-pragma(message)&quot;
+    ...
+}
 </pre></div>
 </div>
 </div>
@@ -234,7 +234,7 @@ helper files e.g. for GCC, use the following command.</p>
 </pre></div>
 </div>
 <p>You will get a output like this:</p>
-<div class="highlight-data"><div class="highlight"><pre>gcc-include-path.lnt, lint_cmac.h, lint_cppmac.h and size-options.lnt.
+<div class="highlight-text"><div class="highlight"><pre>gcc-include-path.lnt, lint_cmac.h, lint_cppmac.h and size-options.lnt.
 </pre></div>
 </div>
 <p>You can now add the needed includes and LintPolicies (.lnt files) to your bake
