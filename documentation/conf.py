@@ -17,6 +17,7 @@ import sys
 import os
 import shlex
 import sphinx_bootstrap_theme
+sys.path.append(os.path.abspath('sphinxext'))
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -32,6 +33,13 @@ import sphinx_bootstrap_theme
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = []
+
+
+# hook up custom lexer
+#from sphinx.highlighting import lexers 
+#from bake.lexer import BakeLexer
+#lexers['bake'] = BakeLexer() 
+ 
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
