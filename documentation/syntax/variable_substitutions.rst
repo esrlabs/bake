@@ -22,8 +22,8 @@ There are two ways to create user defined variables.
 #. The variable is defined with the `--set` command line option:
 
 .. code-block:: console
-
-        bake ... --set MyVar="Hello world!"
+ 
+    User@Host:~$ bake ... --set MyVar="Hello world!"
 
 #. THe variable is defined directly in the Project.meta file.
 
