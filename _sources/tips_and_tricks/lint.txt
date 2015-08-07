@@ -1,0 +1,80 @@
+Lint
+====
+
+Bake can be easily used to `lint <http://www.gimpel.com/html/products.htm>`_ source files.
+
+Preconditions
+*************
+#. The pc-lint executable 'lint-nt.exe' must in the path
+   
+.. note::
+
+    even though there is a unix version of pc-lint the asscoated binary name must be lint-nt.exe otherwise
+    it won't be recorgnized by the bake build system.
+
+How to setup Lint for your Project
+**********************************
+add *--lint* on the command line
+
+Example:
+
+.. code-block:: console
+
+    bake Debug -p MyLibraryProject --lint
+
+How does it work
+****************
+
+You can lint LibraryConfigs, ExecutableConfigs, single files and the complete workspace (in this case the projects are linted separately). The CPP Toolchain settings of the project are used regardless of the file type and file specific options. It is possible to specify lnt-files with LintPolicy, but you can add every other lint command line option as well.
+A possible approach is to add global Lint policies in the DefaultToolchain like this:
+
+.. code-block:: plain
+
+    DefaultToolchain GCC {
+        ...
+        LintPolicy "$(ProjectDir)/lint/misra.lnt"
+        LintPolicy "$(ProjectDir)/lint/suppressions.lnt"
+    }
+
+How to start for GCC
+
+   Lint will fail if compiler internal includes and defines are missing. Therefore lint comes with some helper files. For GCC, follow the steps below.
+   First extract the compiler includes and defines:
+
+.. code-block:: console
+
+   make -f .../PcLint/../lnt/co-gcc.mak
+
+You will get some lnt files: gcc-include-path.lnt, lint_cmac.h, lint_cppmac.h and size-options.lnt.
+Write a lnt file with the following content:
+-i".../PcLint/.../lnt"
+-i"...pathToTheLntFilesExtractedAbove"
+gcc-include-path.lnt
+.../PcLint/.../lnt/co-gcc.lnt
+Afterwards you can test lint directly without bake like this:
+lint-nt your.lnt test.cpp
+To use in bake, add a LintPolicy in Project.meta:
+LintPolicy ".../your.lnt"
+Output to xml
+
+This is an example how to redirect the output to single xml files placed into the main project folder.
+DefaultToolchain GCC {
+  LintPolicy "-os($(MainProjectDir)/$(ProjectName)_$(ConfigName)_lintout.xml)"
+    LintPolicy "-v"
+      LintPolicy "+xml(doc)"
+        LintPolicy "-format=%f %l %t %n %m"
+          LintPolicy "-format_specific= "
+            LintPolicy "-pragma(message)"
+            Notes
+
+            In rare cases lint has problems if it has to open too many (include) files. If that is the case, use --lint_min and --lint_max command line option of bake. Example:
+
+.. code-block:: console
+
+    bake Debug -p MyLibraryProject --lint --lint_max 50                (lints the first 51 files)
+    bake Debug -p MyLibraryProject --lint --lint_min 51 --lint_max 100 (lints the next 50 files)
+    bake Debug -p MyLibraryProject --lint --lint_min 101               (lints the rest of the files)
+
+Currently the lint output is buffered and not shown before lint has finished a project. The reason is the implementation of the error parser. This will change in future.
+
+            If you have another lint command than lint-nt.exe, use an alias.
