@@ -17,7 +17,7 @@ Goal                                                                        Reas
 
 * It must be easy to configure                                              We want the developer to be able to focus on coding and testing not on reading and searching
                                                                             hours through the build tool documentation. 
-                                                                            *A build tool should be easy to use and not hard to maintain!*
+                                                                            **A build tool should be easy to use and not hard to maintain!**
                                                                             
 * The configuration must not be a meta language                             We want our configurations to be WYSIWYG (What You See Is What You Get).
                                                                             We don't want developers to spent hours in searching for a configuration error
