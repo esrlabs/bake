@@ -135,7 +135,7 @@ Auto-adjustment of paths to existing projects
 
     If paths to other projects are needed, e.g. to "bootloaderUpdater", don't write a hard coded relative path like this:
     
-    .. code-block:: plain
+    .. code-block:: text
 
         CommandLine "../bootloaderUpdater/tools/PrimaryBootloader2Include.exe
 
@@ -143,13 +143,13 @@ If paths to other projects are needed, e.g. to "bootloaderUpdater" just referenc
 
 Example:
 
-.. code-block:: plain
+.. code-block:: text
 
     CommandLine "bootloaderUpdater/tools/PrimaryBootloader2Include.exe
 
 or:
 
-.. code-block:: plain
+.. code-block:: text
 
     IncludeDir "myProjectName/bootloaderUpdater/whatever"
 

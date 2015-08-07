@@ -8,7 +8,7 @@ Deriving a config
 
 Derving a config in bake is pretty straight forward, and looks like this:
 
-.. code-block:: plain
+.. code-block:: text
 
     ExecutableConfig A
     LibraryConfig    B, extends: A

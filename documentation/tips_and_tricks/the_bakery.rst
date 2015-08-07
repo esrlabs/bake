@@ -47,7 +47,7 @@ Move the mouse cursor over the blue elements to display more information.
 
 Example:
 
-    .. code-block:: plain
+    .. code-block:: text
 
         Collection AllUnitTests {
             Project "*", config: UnitTest

@@ -5,7 +5,7 @@ Natively you can only debug the output from the Microsoft VC compiler with Visua
 Add debug flags to the MSVC toolchain:
 
 
-.. code-block:: plain
+.. code-block:: text
 
     DefaultToolchain MSVC {
 
