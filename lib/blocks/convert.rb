@@ -15,6 +15,8 @@ module Bake
           calcSources
                 
           puts "START_INFO"
+          puts " BAKE_PROJECTDIR"
+          puts "  #{File.expand_path(@projectDir)}"
           puts " BAKE_SOURCES"
           @source_files.each { |s| puts "  #{s}" }
           puts " BAKE_INCLUDES"
