@@ -1,7 +1,7 @@
 Why you should use Bake
 ========================
 
-Basically whether you should use Bake or not is entirely up to your circumstances, 
+Whether you should use Bake is entirely up to you, 
 just take 2 minutes and have a look at our design goals and see if they fit what you are looking for.
 
 Bake desgin goals
