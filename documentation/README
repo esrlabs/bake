@@ -1,0 +1,54 @@
+This readme provides information about how to update and contribute to the bake documentation.
+
+
+First things first:
+*******************
+
+The Bake documentation is wirtten in the .rst format and genrated using sphinx. 
+(All necessary information about .rst can be found on the sphinx website)
+
+    Some links:
+    ***********
+
+    * http://sphinx-doc.org/ 
+    * http://openalea.gforge.inria.fr/doc/openalea/doc/_build/html/source/sphinx/rest_syntax.html
+
+
+Basic Setup for writting and gernating the bake documenation
+============================================================ 
+
+* Install python 3.X (https://www.python.org/)
+    * Do it they way of your choice  brew, package manager, windowws installer, you name it!
+
+* Install Sphinx
+    * I recomend installing sphinx using the python package management system (pip)
+        * pip should be part of your python installation
+
+    Example:
+        $ pip3.4 install Sphinx
+
+* Install the bootstrap theme
+    * This also should be done using pip
+
+    Example:
+        $ pip3.4 install sphinx-bootstrap-theme
+
+
+
+How to generate the Bake documentation
+=======================================
+
+1. Navigate to the documentation directory 
+
+    Example:
+        $ cd bake/documenation
+
+2. generate the documenation
+
+    Example:
+
+        $ make html
+
+3. Check out the documenation
+
+    Docu can now be found in /bake/documenation/_build/html
