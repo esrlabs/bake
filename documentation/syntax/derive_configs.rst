@@ -1,7 +1,7 @@
 Derive configs
 ==============
 
-Bake support derving configs, which allows you to put repetetive settings in a base config.
+Bake supports deriving configs, which allows you to put repetetive settings in a base config.
 
 Deriving a config
 *****************

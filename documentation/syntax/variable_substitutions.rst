@@ -83,9 +83,9 @@ Variable                                    Description                         
                                             linker
 
 *$(/)*                                      Evalutes to the directory path seperator of         Windows: \\, Other: /
-                                            the current paltform
+                                            the current platform
 
-*$(:)*                                      Evaluates to the path variable seperaytor           Windows: ;, Other: :
+*$(:)*                                      Evaluates to the path variable seperator            Windows: ;, Other: :
                                             of the current platform
 ========================================    ===============================================     ========================================
 
