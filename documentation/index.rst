@@ -1,7 +1,7 @@
-Welcome to Bake's documentation!
+Welcome to bake's documentation!
 ================================
 
-Bake, building software **fast** and **easy**!
+bake, building software **fast** and **easy**!
 
 =======================================            =======================================
 \                                                  \ 
@@ -9,7 +9,7 @@ Bake, building software **fast** and **easy**!
 .. image:: _static/bake_tagcloud.png               **Start to bake**
 
                                                    .. toctree::
-                                                        :maxdepth: 1
+                                                        :maxdepth: 2
                                                         
                                                         why_bake/why_bake
                                                         install/install_bake
@@ -23,6 +23,11 @@ Bake, building software **fast** and **easy**!
                                                         known_issues
                                                         changelog
                                                         license
+														
+                                                   .. toctree::
+                                                        :maxdepth: 1
+
+                                                        internal
 =======================================            =======================================
 
 

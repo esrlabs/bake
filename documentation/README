@@ -4,7 +4,7 @@ This readme provides information about how to update and contribute to the bake 
 First things first:
 *******************
 
-The Bake documentation is wirtten in the .rst format and genrated using sphinx. 
+The bake documentation is wirtten in the .rst format and genrated using sphinx. 
 (All necessary information about .rst can be found on the sphinx website)
 
     Some links:
@@ -33,9 +33,13 @@ Basic Setup for writting and gernating the bake documenation
     Example:
         $ pip3.4 install sphinx-bootstrap-theme
 
+* If you get runtime errors in babel core, downgrade babel
+	
+    Example:
+        $ pip3.4 install sphinx "babel<2.0"
 
 
-How to generate the Bake documentation
+How to generate the bake documentation
 =======================================
 
 1. Navigate to the documentation directory 
