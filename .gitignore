@@ -16,4 +16,4 @@ Debug*/
 dummy_main*/
 *.exe
 **/obj/*
-**/_build/*
+**/_build/doctrees/*

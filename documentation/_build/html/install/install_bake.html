@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Install bake &mdash; bake 2.11.2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.11.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="bake 2.11.2 documentation" href="../index.html" />
+    <link rel="next" title="Quickstart" href="../quickstart/quickstart.html" />
+    <link rel="prev" title="Why you should use bake" href="../why_bake/why_bake.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          bake</a>
+        <span class="navbar-text navbar-version pull-left"><b>2.11.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Tips and Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Install bake</a><ul>
+<li><a class="reference internal" href="#how-to-install-bake">How to install bake</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#known-issues">Known Issues</a><ul>
+<li><a class="reference internal" href="#the-installation-does-not-start">The installation does not start</a></li>
+<li><a class="reference internal" href="#invalid-language-settings">Invalid Language Settings</a></li>
+<li><a class="reference internal" href="#error-message-during-the-installation">Error Message During the installation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../why_bake/why_bake.html" title="Previous Chapter: Why you should use bake"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Why you shoul...</span>
+    </a>
+  </li>
+  <li>
+    <a href="../quickstart/quickstart.html" title="Next Chapter: Quickstart"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Quickstart &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="install-bake">
+<h1>Install bake<a class="headerlink" href="#install-bake" title="Permalink to this headline">¶</a></h1>
+<p>bake is a <a class="reference external" href="https://rubygems.org/">ruby gem</a>. It runs with <a class="reference external" href="https://www.ruby-lang.org/en/">Ruby</a> <strong>&gt;= 1.9</strong>.
+bake and its depedencies can be found on <a class="reference external" href="https://rubygems.org/gems/bake-toolkit/">rubygems</a>, which is configured as ruby source per default.</p>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">The actual name of the bake gem is <a class="reference external" href="https://rubygems.org/gems/bake-toolkit/">bake-toolkit</a>.</p>
+</div>
+<div class="section" id="how-to-install-bake">
+<h2>How to install bake<a class="headerlink" href="#how-to-install-bake" title="Permalink to this headline">¶</a></h2>
+<p>Installing bake is very easy!</p>
+<ol class="arabic">
+<li><p class="first">Make sure you have installed <a class="reference external" href="https://www.ruby-lang.org/en/">Ruby</a> <strong>&gt;= 1.9</strong>.</p>
+</li>
+<li><p class="first">Istall the bake gem.</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> gem install bake-toolkit
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> ruby -v                    <span class="c"># (Check if an apropriate ruby version is installed)</span>
+<span class="go">ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0]</span>
+
+<span class="gp">User@Host:~$</span> gem install bake-toolkit   <span class="c"># (Install the bake gem)</span>
+<span class="go">Fetching: highline-1.6.15.gem (100%)</span>
+<span class="go">Fetching: colored-1.2.gem (100%)</span>
+<span class="go">Fetching: progressbar-0.11.0.gem (100%)</span>
+<span class="go">Fetching: rgen-0.6.0.gem (100%)</span>
+<span class="go">Fetching: rtext-0.2.0.gem (100%)</span>
+<span class="go">Fetching: bake-toolkit-1.0.2.gem (100%)</span>
+<span class="go">Successfully installed highline-1.6.15</span>
+<span class="go">Successfully installed colored-1.2</span>
+<span class="go">Successfully installed progressbar-0.11.0</span>
+<span class="go">Successfully installed rgen-0.6.0</span>
+<span class="go">Successfully installed rtext-0.2.0</span>
+<span class="go">Successfully installed bake-toolkit-1.0.2</span>
+<span class="go">7 gems installed</span>
+<span class="go">Installing ri documentation for highline-1.6.15...</span>
+<span class="go">Installing ri documentation for colored-1.2...</span>
+<span class="go">Installing ri documentation for progressbar-0.11.0...</span>
+<span class="go">Installing ri documentation for rgen-0.6.0...</span>
+<span class="go">Installing ri documentation for rtext-0.2.0...</span>
+<span class="go">Installing ri documentation for bake-toolkit-1.0.2...</span>
+<span class="go">Installing RDoc documentation for highline-1.6.15...</span>
+<span class="go">Installing RDoc documentation for colored-1.2...</span>
+<span class="go">Installing RDoc documentation for progressbar-0.11.0...</span>
+<span class="go">Installing RDoc documentation for rgen-0.6.0...</span>
+<span class="go">Installing RDoc documentation for rtext-0.2.0...</span>
+<span class="go">Installing RDoc documentation for bake-toolkit-1.0.2...</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="known-issues">
+<h2>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-installation-does-not-start">
+<h3>The installation does not start<a class="headerlink" href="#the-installation-does-not-start" title="Permalink to this headline">¶</a></h3>
+<p><strong>Issue:</strong>
+The installation of the bake gem does not start.
+(This is often caused by a password protected internat proxy.)</p>
+<p><strong>Solution:</strong></p>
+<ul class="simple">
+<li>Check your network connection.</li>
+<li>Unlock the password protected proxy by opening an external webpage (e.g. <a class="reference external" href="https://www.google.com">google</a>) using your web browser.</li>
+</ul>
+</div>
+<div class="section" id="invalid-language-settings">
+<h3>Invalid Language Settings<a class="headerlink" href="#invalid-language-settings" title="Permalink to this headline">¶</a></h3>
+<p><em>Issue:*</em>
+The error parsers in bake assume English language.</p>
+<p><strong>Solution:</strong></p>
+<p>Adjust your language settings e.g by setting the environment variable <strong>LC_ALL</strong>.</p>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="go">LC_ALL=en_US</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Depending on the system and the compiler the way how to change the language might be different.</p>
+</div>
+</div>
+<div class="section" id="error-message-during-the-installation">
+<h3>Error Message During the installation<a class="headerlink" href="#error-message-during-the-installation" title="Permalink to this headline">¶</a></h3>
+<p><strong>Issue:</strong>
+Ruby throws an error during the installation.</p>
+<p><strong>Solution:</strong>
+Usualy you will see an error like this:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="go">ERROR:  While generating documentation for ...</span>
+<span class="go">... MESSAGE:   Error while evaluating ...</span>
+<span class="go">   undefined method `gsub&#39; for nil:NilClass ...</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This is a ruby bug. However, the gems were installed correctly. You can avoid building the documentation by installing bake like this:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> gem install bake-toolkit --no-rdoc --no-ri
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, E.S.R.Labs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

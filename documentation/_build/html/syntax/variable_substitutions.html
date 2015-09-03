@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Variables in Project.meta &mdash; bake 2.11.2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.11.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="bake 2.11.2 documentation" href="../index.html" />
+    <link rel="up" title="Syntax" href="syntax.html" />
+    <link rel="next" title="Derive configs" href="derive_configs.html" />
+    <link rel="prev" title="The Syntax of the Project.meta file" href="project_meta_syntax.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          bake</a>
+        <span class="navbar-text navbar-version pull-left"><b>2.11.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Tips and Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Variables in Project.meta</a><ul>
+<li><a class="reference internal" href="#user-defined-variables">User defined variables</a></li>
+<li><a class="reference internal" href="#pre-defined-bake-environment-variables">Pre defined bake environment variables</a></li>
+<li><a class="reference internal" href="#nested-variables">Nested variables</a></li>
+<li><a class="reference internal" href="#auto-adjustment-of-paths-to-existing-projects">Auto-adjustment of paths to existing projects</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="project_meta_syntax.html" title="Previous Chapter: The Syntax of the Project.meta file"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; The Syntax of...</span>
+    </a>
+  </li>
+  <li>
+    <a href="derive_configs.html" title="Next Chapter: Derive configs"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Derive configs &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="variables-in-project-meta">
+<h1>Variables in Project.meta<a class="headerlink" href="#variables-in-project-meta" title="Permalink to this headline">¶</a></h1>
+<p>bake allows you to use pre defined and/or user defined variables in your Project.meta file.
+Defined variables then can be used using the following syntax:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>MyIncludes<span class="o">)</span>
+</pre></div>
+</div>
+<p>The variable MyIncludes will be substitued by its value, therefore a real life usage would look
+something like this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">IncludeDir &quot;$(MyIncludes)&quot;</span>
+</pre></div>
+</div>
+<div class="section" id="user-defined-variables">
+<h2>User defined variables<a class="headerlink" href="#user-defined-variables" title="Permalink to this headline">¶</a></h2>
+<p>There are two ways to create user defined variables.</p>
+<ol class="arabic simple">
+<li>The variable is defined with the <cite>&#8211;set</cite> command line option:</li>
+</ol>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake ... --set <span class="nv">MyVar</span><span class="o">=</span><span class="s2">&quot;Hello world!&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li>THe variable is defined directly in the Project.meta file.</li>
+</ol>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Set MyVar, value: &quot;Hello world!&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pre-defined-bake-environment-variables">
+<h2>Pre defined bake environment variables<a class="headerlink" href="#pre-defined-bake-environment-variables" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="37%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Description</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>$(MainConfigName)</em></td>
+<td>Evaluates to the main config name</td>
+<td>Debug</td>
+</tr>
+<tr class="row-odd"><td><em>$(MainProjectName)</em></td>
+<td>Evaluates to the main project name</td>
+<td>bootloader</td>
+</tr>
+<tr class="row-even"><td><em>$(ConfigName)</em></td>
+<td>Evaluates to the config name</td>
+<td>lib</td>
+</tr>
+<tr class="row-odd"><td><em>$(ProjectName)</em></td>
+<td>Evaluates to the project name</td>
+<td>canDriver</td>
+</tr>
+<tr class="row-even"><td><em>$(ProjectDir)</em></td>
+<td>Evaluates to the full path of the project
+directory</td>
+<td>C:/Root/MyProject</td>
+</tr>
+<tr class="row-odd"><td><em>$(MainProjectDir)</em></td>
+<td>Evaluates to the full path of the root projec
+directory</td>
+<td>C:/Root/Main</td>
+</tr>
+<tr class="row-even"><td><em>$(OutputDir)</em></td>
+<td>Evaluates to the full path of the output
+directory of the current config</td>
+<td>build_lib_bootloader_Debug</td>
+</tr>
+<tr class="row-odd"><td><em>$(OutputDir,projName,confName)</em></td>
+<td>Evaluates to the output dir of a specific
+config</td>
+<td>build_lib_some_Debug</td>
+</tr>
+<tr class="row-even"><td><em>$(ArtifactName)</em></td>
+<td>Evaluates to the artifact.</td>
+<td>bootloader_1.0.elf</td>
+</tr>
+<tr class="row-odd"><td><em>$(ArtifactNameBase)</em></td>
+<td>Evaluates to the base artifact name
+(Without file exension)</td>
+<td>bootloader_1.0</td>
+</tr>
+<tr class="row-even"><td><em>$(Time)</em></td>
+<td>Evaluates to the current time</td>
+<td>2012-12-24 20:00:00 +0200</td>
+</tr>
+<tr class="row-odd"><td><em>$(Hostname)</em></td>
+<td>Evaluates to the hostname</td>
+<td>MY_COMPUTER</td>
+</tr>
+<tr class="row-even"><td><em>$(CPPPath)</em></td>
+<td>Evaluates to the base path of the
+c++ compiler</td>
+<td>/usr/bin</td>
+</tr>
+<tr class="row-odd"><td><em>$(CPath)</em></td>
+<td>Evaluates to the base path of the
+c compiler</td>
+<td>/usr/bin</td>
+</tr>
+<tr class="row-even"><td><em>$(ASMPath)</em></td>
+<td>Evaluates to the base path of the
+assembler</td>
+<td>/usr/bin</td>
+</tr>
+<tr class="row-odd"><td><em>$(ArchiverPath)</em></td>
+<td>Evaluates to the base path of the
+archiver</td>
+<td>/usr/bin</td>
+</tr>
+<tr class="row-even"><td><em>$(LinkerPath)</em></td>
+<td>Evaluates to the base path of the
+linker</td>
+<td>/usr/bin</td>
+</tr>
+<tr class="row-odd"><td><em>$(/)</em></td>
+<td>Evalutes to the directory path seperator of
+the current platform</td>
+<td>Windows: \, Other: /</td>
+</tr>
+<tr class="row-even"><td><em>$(:)</em></td>
+<td>Evaluates to the path variable seperator
+of the current platform</td>
+<td>Windows: ;, Other: :</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>It is also possible to retrieve arbitrary an <em>environment variable</em> using the following syntax:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>EnvironmentVariable<span class="o">)</span>
+</pre></div>
+</div>
+<p class="last">Evaluates to the Environment with the specified name, if the specified environment variable does not exists
+it will be substituted by an empty string.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Equal variables in the main config</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Is equal to</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>$(MainConfigName)</td>
+<td>$(ConfigName)</td>
+</tr>
+<tr class="row-odd"><td>$(MainProjectName)</td>
+<td>$(ProjectName)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Variables in Dependency definitions are not allowed!</p>
+</div>
+</div>
+<div class="section" id="nested-variables">
+<h2>Nested variables<a class="headerlink" href="#nested-variables" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to nest variables.</p>
+<p>Example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>OutputDir,<span class="k">$(</span>TheProject<span class="k">)</span>,<span class="k">$(</span>TheConfig<span class="k">)</span><span class="o">)</span>
+<span class="gp">$</span><span class="o">(</span>ABC<span class="k">$(</span>DEF<span class="k">)</span>GH<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="auto-adjustment-of-paths-to-existing-projects">
+<h2>Auto-adjustment of paths to existing projects<a class="headerlink" href="#auto-adjustment-of-paths-to-existing-projects" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>If paths to other projects are needed, e.g. to &#8220;bootloaderUpdater&#8221;, don&#8217;t write a hard coded relative path like this:</p>
+<div class="last highlight-text"><div class="highlight"><pre>CommandLine &quot;../bootloaderUpdater/tools/PrimaryBootloader2Include.exe
+</pre></div>
+</div>
+</div>
+<p>If paths to other projects are needed, e.g. to &#8220;bootloaderUpdater&#8221; just reference it starting from the project folder.</p>
+<p>Example:</p>
+<div class="highlight-text"><div class="highlight"><pre>CommandLine &quot;bootloaderUpdater/tools/PrimaryBootloader2Include.exe
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-text"><div class="highlight"><pre>IncludeDir &quot;myProjectName/bootloaderUpdater/whatever&quot;
+</pre></div>
+</div>
+<p>bake recognizes that the first part of the path is a valid project name and calculates the relative path to the project automatically.
+If you have the special case that the referenced project is contained in an other workspace root, you can use the
+<cite>-w</cite> parameter or you define a <cite>roots.bake</cite>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The path auto adjustment is applied for the following elements:</p>
+<ul class="last simple">
+<li>IncludeDir</li>
+<li>ExternalLibrary</li>
+<li>ExternalLibrarySearchPath</li>
+<li>UserLibrary</li>
+<li>CommandLine</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, E.S.R.Labs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Changelog &mdash; bake 2.11.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.11.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="bake 2.11.2 documentation" href="index.html" />
+    <link rel="next" title="License" href="license.html" />
+    <link rel="prev" title="Known Issues" href="known_issues.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          bake</a>
+        <span class="navbar-text navbar-version pull-left"><b>2.11.2</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks/tips_and_tricks.html">Tips and Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internal.html">Internal developing notes</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Changelog</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="known_issues.html" title="Previous Chapter: Known Issues"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Known Issues</span>
+    </a>
+  </li>
+  <li>
+    <a href="license.html" title="Next Chapter: License"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">License &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<dl class="docutils">
+<dt>September 3, 2015 - bake-toolkit 2.11.2</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: all files were always be recompiled with ruby &lt; 1.9.3</li>
+<li>Changed: switched to new docu style, thanks Nico!</li>
+</ul>
+</dd>
+<dt>August 4, 2015 - bake-toolkit 2.11.1</dt>
+<dd><ul class="first last simple">
+<li>Added: project dir output for conversion tool</li>
+<li>Moved: wishlist to github</li>
+</ul>
+</dd>
+<dt>July 31, 2015 - bake-toolkit 2.11.0</dt>
+<dd><ul class="first last simple">
+<li>Added: new parameters for includeDir: inherit and infix</li>
+<li>Added: dependency output for conversion tool</li>
+<li>Bugfix: makefile flags where not used when cleaning the workspace</li>
+</ul>
+</dd>
+<dt>July 6, 2015 - bake-toolkit 2.10.3</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: Build stopped unintentionally when using -r</li>
+</ul>
+</dd>
+<dt>July 3, 2015 - bake-toolkit 2.10.2</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: PostSteps were unintentionally executed if a dependent step (e.g. linking) was not executed due to an error in another project (e.g. compiler error)</li>
+</ul>
+</dd>
+<dt>July 1, 2015 - bake-toolkit 2.10.1</dt>
+<dd><ul class="first last simple">
+<li>Added: Possibility to add descriptions for configs which will be printed when using &#8211;show_configs</li>
+<li>Bugfix: link_only did not link only if not all sources of the main project were not built before</li>
+<li>Bugfix: Ctrl-C on command line did not work properly under Linux</li>
+</ul>
+</dd>
+<dt>July 1, 2015 - Eclipse plugin 1.5.1</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: AdjustIncludes broken for subfolder projects (with a &#8220;^&#8221; in the name)</li>
+<li>Bugfix: Error parser broken for subfolder projects (with a &#8220;^&#8221; in the name)</li>
+<li>Bugfix: Configs with inherited DefaultToolchain were not selectable to build</li>
+</ul>
+</dd>
+<dt>June 10, 2015 - bake-toolkit 2.9.2</dt>
+<dd><ul class="first last simple">
+<li>Cosmetic: Redundant include directories are now removed before calling the compiler</li>
+<li>Bugfix: Moving cached meta files was not recognized correctly, wrong path references may have been used</li>
+</ul>
+</dd>
+<dt>June 8, 2015 - bake-toolkit 2.9.1</dt>
+<dd><ul class="first last simple">
+<li>Changed: &#8220;&#8211;doc&#8221; replaced by &#8220;&#8211;show_doc&#8221; to avoid confusion</li>
+</ul>
+</dd>
+<dt>June 5, 2015 - bake-toolkit 2.9.0</dt>
+<dd><ul class="first last simple">
+<li>Added: &#8220;&#8211;create&#8221; command line option to create project templates</li>
+<li>Added: &#8220;&#8211;conversion_info&#8221; command line option for bake conversion tool</li>
+<li>Cosmetic: made output clearer if &#8220;&#8211;link_only&#8221; is used for non ExecutableConfigs</li>
+</ul>
+</dd>
+<dt>June 5, 2015 - Eclipse plugin 1.4.5</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: input streams from bake were closed too early under Linux - console window output and AdjustCDT feature should work correctly now</li>
+<li>Added: &#8220;Link This Project Only&#8221; shortcut added</li>
+<li>Added: Files under &#8220;build_*&#8221; and &#8221;.bake&#8221; are now automatically marked as derived (not shown in &#8220;Open Resource&#8221; dialog)</li>
+<li>Changed: error message dialog of AdjustCDT now displays the end instead of the beginning of very long error messages</li>
+</ul>
+</dd>
+<dt>May 19, 2015 - bake-toolkit 2.8.0</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: when building a project with -p name, not only name was built, but all projects which start with the string name</li>
+<li>Added: more info why Project.meta files are reloaded</li>
+<li>Added: createVSProjects can create VS2013 projects</li>
+</ul>
+</dd>
+<dt>April 22, 2015 - bake-toolkit 2.7.0</dt>
+<dd><ul class="first last simple">
+<li>Added: possibility to use Eclipse file ordering for compilation (eclipseOrder attribute for DefaultToolchain)</li>
+<li>Changed: $(:) and $(/) are now mapped to Ruby internal variables <a class="reference external" href="File::PATH_SEPARATOR">File::PATH_SEPARATOR</a> and <a class="reference external" href="File::SEPARATOR">File::SEPARATOR</a>.</li>
+<li>This fixes the result in Cygwin/MinGW environments</li>
+<li>Bugfix: cmdline files are now written even if the build step fails</li>
+</ul>
+</dd>
+<dt>April 14, 2015 - bake-toolkit 2.6.0</dt>
+<dd><ul class="first last simple">
+<li>Added: validExitCodes attribute to steps (if a step has valid exit codes != 0)</li>
+<li>Added: StartupSteps and ExitSteps (always executed before and after a build)</li>
+</ul>
+</dd>
+<dt>April 8, 2015 - bake-toolkit 2.5.0</dt>
+<dd><ul class="first last simple">
+<li>Added: OS dependent variable $(:), which is used for setting the PATH variable</li>
+</ul>
+</dd>
+<dt>March 30, 2015 - bake-toolkit 2.4.3</dt>
+<dd><ul class="first last simple">
+<li>Added: If Project.meta files are updated, sources will only be recompiled if necessary</li>
+<li>Added: Set command in Project.meta has now an env attribute to store variables also in system environment which makes them accessible from user scripts</li>
+<li>Added: GCC_ENV toolchain (uses environment variables)</li>
+<li>Added: Improved MSVC support</li>
+</ul>
+</dd>
+<dt>March 16, 2015 - VS plugin 1.0.1</dt>
+<dd><ul class="first last simple">
+<li>Added: Support for VS2013</li>
+</ul>
+</dd>
+<dt>March 12, 2015 - bake-toolkit 2.3.4</dt>
+<dd><ul class="first last simple">
+<li>Changed: Clang command is now &#8220;clang&#8221; per default instead of llvm-gcc</li>
+<li>Added: CLANG_ANALYZE toolchain</li>
+<li>Added: MSVC toolchain</li>
+<li>Bugfix: some minor fixes</li>
+</ul>
+</dd>
+<dt>February 27, 2015 - Eclipse plugin 1.3.0</dt>
+<dd><ul class="first last simple">
+<li>Added: bake projects with equal names can be imported now</li>
+</ul>
+</dd>
+<dt>February 19, 2015 - bake-toolkit 2.2.2</dt>
+<dd><ul class="first last simple">
+<li>Changed: output dirs are now prefixed with &#8220;build_&#8221; per default</li>
+<li>Changed: introduced complex variable $(OutputDir,projectName,configName)</li>
+<li>Changed: reworked merge strategy of two configs, especially toolchain options</li>
+<li>Added: variables can be nested now</li>
+<li>Bugfix: fixed dependency header check for Unix when running Windows on a virtual machine</li>
+<li>Bugfix: variable OutputDir did not take overwritten output directory from toolchain into account</li>
+<li>Cosmetic: do not show internal pipes anymore when printing command lines</li>
+</ul>
+</dd>
+<dt>January 26, 2015 - bake-toolkit 2.1.1</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: dependent header file check in 2.1.0 was broken</li>
+<li>Changed: files defined via glob pattern are sorted alphabetically now</li>
+</ul>
+</dd>
+<dt>January 23, 2015 - bake-toolkit 2.1.0</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: fixed crash in warning output if setting variable via cmd did not work</li>
+<li>Workaround: dependent header files are now ignored on Windows if path starts with &#8220;/&#8221; and file cannot be found</li>
+<li>Changed: output of lint is now ignored, linting will only fails if it cannot be executed</li>
+<li>Changed: introduced new verbose mode -v3, shifted some output to this level</li>
+<li>Added: a dependency project can be specified with parent folders if it is ambiguous, e.g. Dependency &#8220;my/folder/proj&#8221;, config: lib</li>
+<li>Added: experimental CC2J output</li>
+</ul>
+</dd>
+<dt>January 23, 2015 - Eclipse plugin 1.2.1</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: importing projects with existing .(c)project files may be placed in wrong folder</li>
+</ul>
+</dd>
+<dt>January 15, 2015 - bake-toolkit 2.0.10</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: spaces in paths were not handled correctly in all cases</li>
+<li>Bugfix: dependency files of Keil compiler not treated correctly</li>
+<li>Added: showing why files are built in verbose mode -v2</li>
+<li>Added: whole workspace can be linted now (projects will be linted separately)</li>
+<li>Changed: removed bake-doc command, use bake &#8211;doc instead</li>
+<li>Changed: if no default project is specified, possible build configs are shown on command line again like in bake 1.x</li>
+</ul>
+</dd>
+<dt>January 7, 2015 - bake-toolkit 2.0.3</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Changed: default configuration is chosen if configuration name is omitted. This applies to command line as well as to Dependency definitions, e.g.:</dt>
+<dd><ul class="first">
+<li><p class="first">Project.meta</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="go">Dependency canDriver        # no config attribute</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Command line</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake -m bla/myProj
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To show the possible configs of a project, use the <cite>&#8211;show_configs</cite> command line option.</p>
+</div>
+</dd>
+</dl>
+</li>
+<li><p class="first">Changed: more than one config of a project can be used in one build.</p>
+<blockquote>
+<div><p>Example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Dependency canDriver, config: C1</span>
+<span class="go">Dependency canDriver, config: C2</span>
+</pre></div>
+</div>
+<p>To reference a config of the current project, omit the project name, e.g.:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Dependency config: C3</span>
+</pre></div>
+</div>
+<p>To build a single project, you can still use -p command line argument:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -p canDriver
+</pre></div>
+</div>
+<p>However, if canDriver has more than one config in the workspace, all configs will be built. To build only a single config, use a comma separator like this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -p canDriver,C1
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Changed: the default output folder has been changed due to the new feature of having several configs of a project in one workspace.</dt>
+<dd><table border="1" class="first docutils">
+<colgroup>
+<col width="12%" />
+<col width="36%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"></th>
+<th class="head">Old</th>
+<th class="head">New</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Main project</td>
+<td>$(MainConfigName)</td>
+<td>$(MainConfigName)</td>
+</tr>
+<tr class="row-odd"><td>Sub Project</td>
+<td>$(MainConfigName)_$(MainProjectName)</td>
+<td>$(SubConfigName)_$(MainProjectName)_$(MainConfigName)</td>
+</tr>
+</tbody>
+</table>
+<div class="last admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Be careful if you have something like this in Project.meta:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">ExternalLibrary &quot;bspCoreZ6/$(MainConfigName)_$(MainProjectName)/src/coreZ6/startup/startupCode.o&quot;, search:false</span>
+</pre></div>
+</div>
+<p class="last">This refers to the old output directory. Change it or if you want to support old and new bake versions,
+write a PreStep which copies the file from the new location to the old one.</p>
+</div>
+</dd>
+</dl>
+</li>
+<li><p class="first">Changed: with -f a pattern can be specified, not only a single file. All files matching this string will be compiled.</p>
+</li>
+<li><p class="first">Changed: variables in Dependency definitions are not allowed anymore to avoid inconsistencies.</p>
+</li>
+<li><p class="first">Changed: no error will be reported anymore if makefile has no clean target.</p>
+</li>
+<li><p class="first">Changed: source files will now be compiled and archived ordered by the Files definition in Project.meta, not by a Eclipse-backward-compatibility-ordering.</p>
+</li>
+<li><p class="first">Changed: reworked some error messages, more error annotations are shown in IDEs</p>
+</li>
+<li><p class="first">Added: &#8220;&#8211;include_filter&#8221; and &#8220;&#8211;exclude_filter&#8221; also work for main step of CustomConfig</p>
+</li>
+<li><p class="first">Added: possibility to add comments in roots.bake</p>
+</li>
+<li><p class="first">Added: new variables CPPPath, CPath, ASMPath, ArchiverPath and LinkerPath. These variables can also be used in InternalDefines and InternalInclude files.</p>
+</li>
+<li><p class="first">Added: lint is not restricted to GCC toolchain anymore.</p>
+</li>
+<li><p class="first">Added: &#8211;docu option. Specify the docu command line in Docu tag of the (Default)Toolchain.</p>
+</li>
+<li><p class="first">Removed: support for Ruby 1.8. Use Ruby 1.9 or higher.</p>
+</li>
+<li><p class="first">Removed: dependencies to cxxproject and rake gems</p>
+</li>
+<li><p class="first">Removed: &#8220;-j&#8221; as default flag when calling makefiles. This must be explicitly specified.</p>
+</li>
+<li><p class="first">Removed: option to check for unnecessary includes</p>
+</li>
+<li><dl class="first docutils">
+<dt>Removed: hardcoded TI compiler commands and flags</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="21%" />
+<col width="69%" />
+<col width="10%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"></th>
+<th class="head">Old</th>
+<th class="head">New</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Compiler command</td>
+<td>$(ti_home)/ccsv5/tools/compiler/tms470/bin/cl470</td>
+<td>ti_cl</td>
+</tr>
+<tr class="row-odd"><td>Compiler flags</td>
+<td>-mv7A8 -g &#8211;include_path=&#8221;#{ti_home}/ccsv5/tools/compiler/tms470/include&#8221;
+&#8211;diag_warning=225 -me &#8211;abi=eabi &#8211;code_state=32 &#8211;preproc_with_compile</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>Archiver command</td>
+<td>$(ti_home)/ccsv5/tools/compiler/tms470/bin/ar470</td>
+<td>ti_ar</td>
+</tr>
+<tr class="row-odd"><td>Linker command</td>
+<td>$(ti_home)/ccsv5/tools/compiler/tms470/bin/cl470</td>
+<td>ti_cl</td>
+</tr>
+<tr class="row-even"><td>Linker flags</td>
+<td>-mv7A8 -g &#8211;diag_warning=225 -me &#8211;abi=eabi &#8211;code_state=32 -z
+&#8211;warn_sections -i&#8221;$(ti_home)/ccsv5/tools/compiler/tms470/lib&#8221;
+-i&#8221;$(ti_home)/ccsv5/tools/compiler/tms470/include&#8221;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>Linker lib prefix flags</td>
+<td>-lDebug/configPkg/linker.cmd</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</li>
+<li><p class="first">Bugfix: variables in add and remove attributes of Flags now work as intended</p>
+</li>
+<li><p class="first">Bugfix: output folder was not created if no sources are specified for LibraryConfig and ExecutableConfig.</p>
+</li>
+<li><p class="first">Bugfix: &#8220;-p&#8221; was not forwarded in bakery.</p>
+</li>
+<li><p class="first">Cosmetic: bakery now calls bake with relative pathnames, which results in nicer outputs.</p>
+</li>
+</ul>
+</dd>
+<dt>December 19, 2014 - Eclipse plugin 1.2.0</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: it is now ensured, that bake will be started from Eclipse working directory</li>
+<li>Bugfix: projects created with the &#8220;new bake project wizard&#8221; are now placed in the correct folder.</li>
+<li>Added: Eclipse working directory shown in bake preference dialog (important if -w option is used with relative paths)</li>
+<li>Added: Options to recreate .(c)project files when importing bake projects</li>
+<li>Changed: Eclipse configurations will be named &#8220;bake&#8221; and not &#8220;Do not use this config, use bake instead&#8221;</li>
+</ul>
+</dd>
+<dt>December 16, 2014 - Eclipse plugin 1.1.1</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: Adjust include and defines broken feature used wrong command line option.</li>
+</ul>
+</dd>
+<dt>November 7, 2014 - bake-toolkit 1.8.0, Eclipse plugin 1.1.0</dt>
+<dd><ul class="first last simple">
+<li>Added: InternalIncludes and InternalDefines in DefaultToolchain, which are forwarded to the IDE.</li>
+<li>Changed: No default options for PC-lint in combination with GCC will be provided anymore. Use the official way, see co-gcc.lnt in PC-lint installation.</li>
+<li>Bugfix: verbose output for replacing non-existing environment variables broken.</li>
+</ul>
+</dd>
+<dt>November 4, 2014 - bake-toolkit 1.7.0</dt>
+<dd><ul class="first last simple">
+<li>Added: Option to define output directory relative/absolute for each project or for all projects.</li>
+<li>Added: &#8211;set command line option to set variables</li>
+<li>Added: Optional &#8220;Description&#8221; tag for projects in Project.meta</li>
+<li>Changed: Variables in DefaultToolchain will be substituted separately for each project.</li>
+</ul>
+</dd>
+<dt>August 8, 2014 - bake-toolkit 1.6.3</dt>
+<dd><ul class="first last simple">
+<li>Fixed: possible uninitialized variable could lead to crash bake</li>
+</ul>
+</dd>
+<dt>August 6, 2014 - bake-toolkit 1.6.2</dt>
+<dd><ul class="first last simple">
+<li>Fixed: clear clearn- and clobber-lists at startup</li>
+<li>Fixed: Variables not substituted in ArtifactName and ArtifactNameBase</li>
+<li>Added: Cyclic variable substitution</li>
+</ul>
+</dd>
+<dt>August 5, 2014 - bake-toolkit 1.6.1</dt>
+<dd><ul class="first last simple">
+<li>Added: Fixed variable substitution</li>
+</ul>
+</dd>
+<dt>August 1, 2014 - bake-toolkit 1.6.0</dt>
+<dd><ul class="first last simple">
+<li>Added: The value of a variable can be the result of a command line</li>
+</ul>
+</dd>
+<dt>July 18, 2014 - bake-toolkit 1.5.0</dt>
+<dd><ul class="first last simple">
+<li>Added: Dependencies can be overwritten in inherited projects</li>
+<li>Removed: defines cannot be filtered anymore via command line</li>
+</ul>
+</dd>
+<dt>June 6, 2014 - bake-toolkit 1.4.0</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: variables can be used in &#8220;Set&#8221; now</li>
+<li>Added: variable &#8220;MainProjectDir&#8221;</li>
+</ul>
+</dd>
+<dt>May 23, 2014 - bake-toolkit 1.3.0</dt>
+<dd><ul class="first last simple">
+<li>Added: defines can be filtered now via command line</li>
+</ul>
+</dd>
+<dt>May 2, 2014 - bake-toolkit 1.2.1</dt>
+<dd><ul class="first last simple">
+<li>Added: Set keyword for defining variables</li>
+<li>Changed: &#8220;executed in&#8221;-output now in separate line</li>
+</ul>
+</dd>
+<dt>March 14, 2014 - bake-toolkit 1.1.0</dt>
+<dd><ul class="first last simple">
+<li>Added: Lint support</li>
+<li>Added: $(ProjectDir) variable</li>
+</ul>
+</dd>
+<dt>March 7, 2014 - bake-toolkit 1.0.27</dt>
+<dd><ul class="first last simple">
+<li>Cosmetic: some pictures in documentation were missing</li>
+</ul>
+</dd>
+<dt>March 5, 2014 - bake-toolkit 1.0.26</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: in rare cases invalid characters from compiler output were not handled correctly</li>
+<li>Bugfix: changing workspace roots on command line now always regenerates build tree</li>
+<li>Added: Variable $(Roots) for IncludeDir directives</li>
+<li>Changed: dependency files for all compilers will be generated inclusive system headers</li>
+<li>Changed: abort earlier if main directory has no Project.meta</li>
+<li>Changed: every environment variable is expanded to an empty string if not defined</li>
+</ul>
+</dd>
+<dt>January 21, 2014 - bake-toolkit 1.0.25</dt>
+<dd><ul class="first last simple">
+<li>Added: configs can now be inherited</li>
+<li>Added: command bake-doc opens bake doc</li>
+<li>Changed: dependency files for Greenhills compiler will be generated with -MD instead of -MMD</li>
+</ul>
+</dd>
+<dt>September 10, 2013 - bake-toolkit 1.0.24</dt>
+<dd><ul class="first last simple">
+<li>Changed: Improved Keil linker error parser.</li>
+</ul>
+</dd>
+<dt>September 9, 2013 - bake-toolkit 1.0.23</dt>
+<dd><ul class="first last simple">
+<li>Added: Keil support.</li>
+<li>Bugfix: minor fixes.</li>
+</ul>
+</dd>
+<dt>August 21, 2013 - bake-toolkit 1.0.22</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: Searching for project folders did not work correctly.</li>
+</ul>
+</dd>
+<dt>August 20, 2013 - Eclipse plugin 1.0.5.0</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: Adjust includes in CDT is working again after Java Update.</li>
+</ul>
+</dd>
+<dt>August 1, 2013 - bake-toolkit 1.0.21</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: projects folders which are junctions were not found anymore after the last update.</li>
+</ul>
+</dd>
+<dt>July 25, 2013 - bake-toolkit 1.0.20, Eclipse plugin 1.0.4.0</dt>
+<dd><ul class="first last simple">
+<li>Added: projects can be placed more than one level below workspaces roots</li>
+</ul>
+</dd>
+<dt>June 21, 2013 - bake-toolkit 1.0.19</dt>
+<dd><ul class="first last simple">
+<li>Added: support for GreenHills compiler.</li>
+</ul>
+</dd>
+<dt>May 29, 2013 - bake-toolkit 1.0.18</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: typo in require, which has broken bake in case sensitive file systems.</li>
+</ul>
+</dd>
+<dt>May 28, 2013 - bake-toolkit 1.0.17</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: error levels greater than 255 of external processes were not be recognized correctly in some cases.</li>
+</ul>
+</dd>
+<dt>May 16, 2013 - Eclipse plugin 1.0.2.0</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: bake did not start correctly with latest Java version installed.</li>
+</ul>
+</dd>
+<dt>April 22, 2013 - bake-toolkit 1.0.16</dt>
+<dd><ul class="first last simple">
+<li>Changed: default roots of bakery are now directory of Collection.meta and it&#8217;s parent directory.</li>
+</ul>
+</dd>
+<dt>April 19, 2013 - bake-toolkit 1.0.15</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: bakery could not build projects with spaces in oathname.</li>
+</ul>
+</dd>
+<dt>April 19, 2013 - bake-toolkit 1.0.13</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: some bake options specified on bakery command line were not accepted.</li>
+</ul>
+</dd>
+<dt>April 17, 2013 - bake-toolkit 1.0.12</dt>
+<dd><ul class="first last simple">
+<li>Changed: Output folders are not deleted and rebuilt if no source files are available but the archive file.</li>
+<li>Added: Option &#8211;clobber deletes .bake cache file.</li>
+<li>Added: Collections can reference collections.</li>
+<li>Added: collection names can be specified without typing &#8220;-b&#8221;</li>
+</ul>
+</dd>
+<dt>April 4, 2013 - bake-toolkit 1.0.11</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: Executing batch files in CommandLine on Windows were broken.</li>
+<li>April 2, 2013 - bake-toolkit 1.0.10</li>
+<li>Bugfix: options &#8220;&#8211;toolchain_names&#8221; now working as intended</li>
+<li>Bugfix: default flags for makefiles (-j) no longer ignored</li>
+<li>Changed: flags for makefiles are now defined in subtags instead in attributes to be consistent with other flag definitions</li>
+<li>Added: &#8221;..&#8221; in Files and ExcludeFiles now allowed</li>
+<li>Added: command line switch to turn off &#8220;directory magic&#8221;</li>
+<li>Added: build config can be specified without typing &#8220;-b&#8221;</li>
+<li>Cosmetic: better error output if compiler not found</li>
+</ul>
+</dd>
+<dt>March 22, 2013 - bake-toolkit 1.0.9</dt>
+<dd><ul class="first last simple">
+<li>Cosmetic: Changed option &#8211;print_less to -v0 and -v to -v2. Default is -v1.</li>
+</ul>
+</dd>
+<dt>March 7, 2013 - bake-toolkit 1.0.8</dt>
+<dd><ul class="first last simple">
+<li>Added: Linkerscript can be referenced from other projects</li>
+</ul>
+</dd>
+<dt>February 13, 2013 - bake-toolkit 1.0.7</dt>
+<dd><ul class="first last simple">
+<li>Added: OS dependent variable $(/)</li>
+</ul>
+</dd>
+<dt>January 21, 2013 - bake-toolkit 1.0.6</dt>
+<dd><ul class="first last simple">
+<li>Added: support for Visual Studio</li>
+</ul>
+</dd>
+<dt>January 15, 2013 - bake-toolkit 1.0.5</dt>
+<dd><ul class="first last simple">
+<li>Changed: no indirect dependency to progressbar gem anymore</li>
+</ul>
+</dd>
+<dt>January 14, 2013 - bake-toolkit 1.0.4</dt>
+<dd><ul class="first last simple">
+<li>Added: a new cache validation check.</li>
+</ul>
+</dd>
+<dt>January 2, 2013 - bake-toolkit 1.0.3</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: option to build a single file did not accept a filename with absolute path.</li>
+</ul>
+</dd>
+<dt>October 7, 2012 - bake-toolkit 1.0.2</dt>
+<dd><ul class="first last simple">
+<li>Changed: Renamed gem from &#8220;bake&#8221; to &#8220;bake-toolkit&#8221;.</li>
+</ul>
+</dd>
+<dt>September 18, 2012 - bake 1.0.1</dt>
+<dd><ul class="first last simple">
+<li>Changed: bake now based on rgen 0.6.0 and rtext 0.2.0, which are available on rubygems.</li>
+</ul>
+</dd>
+<dt>August 31, 2012 - bake 1.0.0</dt>
+<dd><ul class="first last simple">
+<li>First official release</li>
+</ul>
+</dd>
+</dl>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, E.S.R.Labs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

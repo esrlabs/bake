@@ -13,4 +13,4 @@ Key features
 * configuration files easy to understand and maintain
 
 More information can be found here:
-https://esrlabs.com/gems/doc/bake-toolkit
+http://esrlabs.github.io/bake
