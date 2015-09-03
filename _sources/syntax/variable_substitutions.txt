@@ -1,6 +1,6 @@
 Variables in Project.meta
 =========================
-Bake allows you to use pre defined and/or user defined variables in your Project.meta file.
+bake allows you to use pre defined and/or user defined variables in your Project.meta file.
 Defined variables then can be used using the following syntax:
 
 .. code-block:: console
@@ -155,9 +155,9 @@ or:
 
 
 
-Bake recognizes that the first part of the path is a valid project name and calculates the relative path to the project automatically.
+bake recognizes that the first part of the path is a valid project name and calculates the relative path to the project automatically.
 If you have the special case that the referenced project is contained in an other workspace root, you can use the 
-`-w` parameter or you define a `roots.bake`_.
+`-w` parameter or you define a `roots.bake`.
 
 .. note::
 

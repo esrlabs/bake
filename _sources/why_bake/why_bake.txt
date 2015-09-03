@@ -1,10 +1,10 @@
-Why you should use Bake
+Why you should use bake
 ========================
 
-Whether you should use Bake is entirely up to you, 
+Whether you should use bake is entirely up to you, 
 just take 2 minutes and have a look at our design goals and see if they fit what you are looking for.
 
-Bake desgin goals
+bake desgin goals
 ******************
 
 =================================================================           =============================================================================================== 

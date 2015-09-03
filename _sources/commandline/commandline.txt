@@ -92,4 +92,16 @@ Build a single file(s)
         All files matching the pattern will be compiled (no wildcards allowed)
 
 
+roots.bake
+**********
 
+Workspace roots can be defined in a file called "roots.bake", which will be searched from main project directory to root folder.
+Example:
+
+    .. code-block:: console
+	
+        ../..
+        C:/another/root # comments written like this
+        something/else
+	
+If -w and roots.bake are not specified, the default workspace root is the parent directory of the main project.

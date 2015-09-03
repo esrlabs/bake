@@ -1,8 +1,8 @@
-Install Bake
+Install bake
 ============
 
-Bake is a `ruby gem <https://rubygems.org/>`_. It runs with `Ruby <https://www.ruby-lang.org/en/>`_ **>= 1.9**.
-Bake and its depedencies can be found on `rubygems <https://rubygems.org/gems/bake-toolkit/>`_, which is configured as ruby source per default. 
+bake is a `ruby gem <https://rubygems.org/>`_. It runs with `Ruby <https://www.ruby-lang.org/en/>`_ **>= 1.9**.
+bake and its depedencies can be found on `rubygems <https://rubygems.org/gems/bake-toolkit/>`_, which is configured as ruby source per default. 
 
 .. attention::
 

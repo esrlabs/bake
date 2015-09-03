@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tips and Tricks &mdash; Bake 2.10.3 documentation</title>
+    <title>Tips and Tricks &mdash; bake 2.11.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.10.3',
+        VERSION:     '2.11.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Bake 2.10.3 documentation" href="../index.html" />
+    <link rel="top" title="bake 2.11.2 documentation" href="../index.html" />
     <link rel="next" title="The Bakery" href="the_bakery.html" />
     <link rel="prev" title="How to Debug in Visual Studio" href="../ide/vs/how_to_debug_in_vs.html" />
 <meta charset='utf-8'>
@@ -49,8 +49,8 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="../index.html">
-          Bake</a>
-        <span class="navbar-text navbar-version pull-left"><b>2.10.3</b></span>
+          bake</a>
+        <span class="navbar-text navbar-version pull-left"><b>2.11.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -66,8 +66,8 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use Bake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install Bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
@@ -78,6 +78,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -91,7 +94,11 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Tips and Tricks</a></li>
+<li><a class="reference internal" href="#">Tips and Tricks</a><ul>
+<li><a class="reference internal" href="#unnecessary-includes">Unnecessary includes</a></li>
+<li><a class="reference internal" href="#symlinks-and-junctions">Symlinks and junctions</a></li>
+</ul>
+</li>
 </ul>
 </ul>
 </li>
@@ -101,7 +108,7 @@
               
                 
   <li>
-    <a href="../ide/vs/how_to_debug_in_vs.html" title="Previous Chapter: How to Debug in Visual Studio"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; How to Debug in ...</span>
+    <a href="../ide/vs/how_to_debug_in_vs.html" title="Previous Chapter: How to Debug in Visual Studio"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; How to Debug ...</span>
     </a>
   </li>
   <li>
@@ -140,7 +147,31 @@
 <li class="toctree-l1"><a class="reference internal" href="the_bakery.html">The Bakery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="static_code_analysis.html">Static Code Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="how_to_use_bake_with_cygwin.html">How to use bake with cygwin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="the_clang.html">Clang Analyze</a></li>
 </ul>
+</div>
+<div class="section" id="unnecessary-includes">
+<h2>Unnecessary includes<a class="headerlink" href="#unnecessary-includes" title="Permalink to this headline">¶</a></h2>
+<p>If a library or executable is successfully build with &#8220;-v&#8221;, unnecessary includes are printed out:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Info: Include to ../sub1/include/ seems to be unnecessary</span>
+<span class="go">Info: Include to ../sub2/include/ seems to be unnecessary</span>
+</pre></div>
+</div>
+<p>This features depends on the compiler dependency files. For projects with assembler files, the list might be incorrect.
+However, remove the IncludeDir statements from the Project.meta and check it out.</p>
+</div>
+<div class="section" id="symlinks-and-junctions">
+<h2>Symlinks and junctions<a class="headerlink" href="#symlinks-and-junctions" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>It is possible to use symlinks (Linux) or junctions (Windows) when working with git. Best practice:</dt>
+<dd><ul class="first last simple">
+<li>Link all used projects into _one_ directory (e.g. from application repository and basis software repository).</li>
+<li>Use this directory when working with bake, Eclipse, etc.</li>
+<li>Specify &#8220;-w &lt;absolute_path_to_working_dir&gt;.</li>
+<li>To sync/commit from/to svn, use the original directories created by git.</li>
+</ul>
+</dd>
+</dl>
 </div>
 </div>
 

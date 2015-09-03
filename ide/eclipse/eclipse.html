@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Eclipse &mdash; Bake 2.10.3 documentation</title>
+    <title>Eclipse &mdash; bake 2.11.2 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.10.3',
+        VERSION:     '2.11.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Bake 2.10.3 documentation" href="../../index.html" />
+    <link rel="top" title="bake 2.11.2 documentation" href="../../index.html" />
     <link rel="up" title="IDE Support" href="../ide_integrations.html" />
     <link rel="next" title="How to install bake Eclipse integration" href="how_to_install_eclipse_plugin.html" />
     <link rel="prev" title="IDE Support" href="../ide_integrations.html" />
@@ -50,8 +50,8 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="../../index.html">
-          Bake</a>
-        <span class="navbar-text navbar-version pull-left"><b>2.10.3</b></span>
+          bake</a>
+        <span class="navbar-text navbar-version pull-left"><b>2.11.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -67,8 +67,8 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../why_bake/why_bake.html">Why you should use Bake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../install/install_bake.html">Install Bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install_bake.html">Install bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../syntax/syntax.html">Syntax</a></li>
@@ -78,6 +78,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../performance/performance.html">Performance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../internal.html">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -91,7 +95,11 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Eclipse</a></li>
+<li><a class="reference internal" href="#">Eclipse</a><ul>
+<li><a class="reference internal" href="#syntax-highlighting">Syntax highlighting</a></li>
+<li><a class="reference internal" href="#key-bindings">Key bindings</a></li>
+</ul>
+</li>
 </ul>
 </ul>
 </li>
@@ -105,7 +113,7 @@
     </a>
   </li>
   <li>
-    <a href="how_to_install_eclipse_plugin.html" title="Next Chapter: How to install bake Eclipse integration"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">How to install b... &raquo;</span>
+    <a href="how_to_install_eclipse_plugin.html" title="Next Chapter: How to install bake Eclipse integration"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">How to instal... &raquo;</span>
     </a>
   </li>
               
@@ -143,6 +151,16 @@
 <li class="toctree-l1"><a class="reference internal" href="how_to_create_a_workspace_in_eclipse.html">How to create a workspace in Eclipse</a></li>
 <li class="toctree-l1"><a class="reference internal" href="how_to_create_a_new_project_in_eclipse.html">How to create a new project in Eclipse</a></li>
 </ul>
+</div>
+<div class="section" id="syntax-highlighting">
+<h2>Syntax highlighting<a class="headerlink" href="#syntax-highlighting" title="Permalink to this headline">¶</a></h2>
+<p>To enable syntax highlighting for the Project.meta files in Eclipse, install the &#8220;rtext_eclipse_plugin&#8221; (Help-&gt;Install New Software...) and associate &#8221;.meta&#8221; files with the rtext editor (Window-&gt;Preferences, File Associations page).
+An update site for Eclipse (needed for installation) will be provided soon. For now, you can download it manually at github.</p>
+</div>
+<div class="section" id="key-bindings">
+<h2>Key bindings<a class="headerlink" href="#key-bindings" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to bind the bake commands to keys:</p>
+<img alt="../../_images/keys.png" src="../../_images/keys.png" />
 </div>
 </div>
 

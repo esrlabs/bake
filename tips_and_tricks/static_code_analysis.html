@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Static Code Analysis &mdash; Bake 2.10.3 documentation</title>
+    <title>Static Code Analysis &mdash; bake 2.11.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.10.3',
+        VERSION:     '2.11.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Bake 2.10.3 documentation" href="../index.html" />
+    <link rel="top" title="bake 2.11.2 documentation" href="../index.html" />
     <link rel="up" title="Tips and Tricks" href="tips_and_tricks.html" />
     <link rel="next" title="How to use bake with cygwin" href="how_to_use_bake_with_cygwin.html" />
     <link rel="prev" title="The Bakery" href="the_bakery.html" />
@@ -50,8 +50,8 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="../index.html">
-          Bake</a>
-        <span class="navbar-text navbar-version pull-left"><b>2.10.3</b></span>
+          bake</a>
+        <span class="navbar-text navbar-version pull-left"><b>2.11.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -67,8 +67,8 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use Bake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install Bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
@@ -79,6 +79,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -103,7 +106,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#known-issues">Known Issues</a><ul>
-<li><a class="reference internal" href="#bake-only-searches-for-lint-nt-exe">Bake only searches for lint-nt.exe</a></li>
+<li><a class="reference internal" href="#bake-only-searches-for-lint-nt-exe">bake only searches for lint-nt.exe</a></li>
 <li><a class="reference internal" href="#lint-fails-due-to-missing-compiler-includes-and-defines">Lint fails due to missing compiler includes and defines</a></li>
 <li><a class="reference internal" href="#lint-error-due-to-too-many-includes">Lint error due to too many includes</a></li>
 </ul>
@@ -125,7 +128,7 @@
     </a>
   </li>
   <li>
-    <a href="how_to_use_bake_with_cygwin.html" title="Next Chapter: How to use bake with cygwin"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">How to use bake ... &raquo;</span>
+    <a href="how_to_use_bake_with_cygwin.html" title="Next Chapter: How to use bake with cygwin"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">How to use ba... &raquo;</span>
     </a>
   </li>
               
@@ -196,7 +199,7 @@ the parameters to lint.</p>
 </div>
 <div class="section" id="id2">
 <h4>Example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<p>This exmample shows how to redirect the output to single xml files placed into the main project folder.</p>
+<p>This example shows how to redirect the output to single xml files placed into the main project folder.</p>
 <div class="highlight-text"><div class="highlight"><pre>DefaultToolchain GCC {
     LintPolicy &quot;-os($(MainProjectDir)/$(ProjectName)_$(ConfigName)_lintout.xml)&quot;
     LintPolicy &quot;-v&quot;
@@ -213,10 +216,10 @@ the parameters to lint.</p>
 <div class="section" id="known-issues">
 <h3>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="bake-only-searches-for-lint-nt-exe">
-<h4>Bake only searches for lint-nt.exe<a class="headerlink" href="#bake-only-searches-for-lint-nt-exe" title="Permalink to this headline">¶</a></h4>
+<h4>bake only searches for lint-nt.exe<a class="headerlink" href="#bake-only-searches-for-lint-nt-exe" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p><strong>Issue:</strong>
-Bake currently does not search for all possible names of the lint application, it only searches for a file called <em>lint-nt.exe</em>.</p>
+bake currently does not search for all possible names of the lint application, it only searches for a file called <em>lint-nt.exe</em>.</p>
 <p><strong>Solution:</strong>
 If you have another lint command (e.g. because you are using flexe lint on unix)
 just create an symlink/alias which is called <em>lint-nt.exe</em>.</p>

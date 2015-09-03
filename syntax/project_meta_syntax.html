@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Syntax of the Project.meta file &mdash; Bake 2.10.3 documentation</title>
+    <title>The Syntax of the Project.meta file &mdash; bake 2.11.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.10.3',
+        VERSION:     '2.11.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Bake 2.10.3 documentation" href="../index.html" />
+    <link rel="top" title="bake 2.11.2 documentation" href="../index.html" />
     <link rel="up" title="Syntax" href="syntax.html" />
     <link rel="next" title="Variables in Project.meta" href="variable_substitutions.html" />
     <link rel="prev" title="Syntax" href="syntax.html" />
@@ -50,8 +50,8 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="../index.html">
-          Bake</a>
-        <span class="navbar-text navbar-version pull-left"><b>2.10.3</b></span>
+          bake</a>
+        <span class="navbar-text navbar-version pull-left"><b>2.11.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -67,8 +67,8 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use Bake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install Bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="syntax.html">Syntax</a></li>
@@ -78,6 +78,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -108,7 +112,7 @@
     </a>
   </li>
   <li>
-    <a href="variable_substitutions.html" title="Next Chapter: Variables in Project.meta"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Variables in Pro... &raquo;</span>
+    <a href="variable_substitutions.html" title="Next Chapter: Variables in Project.meta"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Variables in ... &raquo;</span>
     </a>
   </li>
               
@@ -295,7 +299,7 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showExcludeFiles()" onMouseout="notip()">ExcludeFiles</span> &#60;pattern&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;, <span class="help" onMouseover="showInherit()" onMouseout="notip()">inherit</span>: true|false, <span class="help" onMouseover="showInfix()" onMouseout="notip()">infix</span>: front|back<br>
 
 </span><br></span>
 
@@ -595,6 +599,16 @@ function showIncludeDir() {
 	'<i> &nbsp; &nbsp; IncludeDir "include"</i><br>'+
     '<i> &nbsp; &nbsp; IncludeDir "generated/include"</i><br>'
   ddrivetip("IncludeDir", "No","0..n","-",str)  
+}
+
+function showInherit() {   
+  str = 'Inherits the include to all projects, which depend on this project.'
+  ddrivetip("inherit", "No","0..1","false",str)  
+}
+
+function showInfix() {   
+  str = 'Injects the include path to all childs, either at the front (e.g. for mocking code) or at the end.'
+  ddrivetip("infix", "No","0..1","-",str)  
 }
 
 function showSet() {   

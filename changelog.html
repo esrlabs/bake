@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Changelog &mdash; Bake 2.10.3 documentation</title>
+    <title>Changelog &mdash; bake 2.11.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.10.3',
+        VERSION:     '2.11.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,8 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Bake 2.10.3 documentation" href="index.html" />
+    <link rel="top" title="bake 2.11.2 documentation" href="index.html" />
+    <link rel="next" title="License" href="license.html" />
     <link rel="prev" title="Known Issues" href="known_issues.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -48,8 +49,8 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="index.html">
-          Bake</a>
-        <span class="navbar-text navbar-version pull-left"><b>2.10.3</b></span>
+          bake</a>
+        <span class="navbar-text navbar-version pull-left"><b>2.11.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -65,8 +66,8 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="why_bake/why_bake.html">Why you should use Bake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install/install_bake.html">Install Bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install/install_bake.html">Install bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="concepts/concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="syntax/syntax.html">Syntax</a></li>
@@ -76,6 +77,10 @@
 <li class="toctree-l1"><a class="reference internal" href="performance/performance.html">Performance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internal.html">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -100,6 +105,10 @@
                 
   <li>
     <a href="known_issues.html" title="Previous Chapter: Known Issues"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Known Issues</span>
+    </a>
+  </li>
+  <li>
+    <a href="license.html" title="Next Chapter: License"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">License &raquo;</span>
     </a>
   </li>
               
@@ -130,6 +139,25 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>September 3, 2015 - bake-toolkit 2.11.2</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: all files were always be recompiled with ruby &lt; 1.9.3</li>
+<li>Changed: switched to new docu style, thanks Nico!</li>
+</ul>
+</dd>
+<dt>August 4, 2015 - bake-toolkit 2.11.1</dt>
+<dd><ul class="first last simple">
+<li>Added: project dir output for conversion tool</li>
+<li>Moved: wishlist to github</li>
+</ul>
+</dd>
+<dt>July 31, 2015 - bake-toolkit 2.11.0</dt>
+<dd><ul class="first last simple">
+<li>Added: new parameters for includeDir: inherit and infix</li>
+<li>Added: dependency output for conversion tool</li>
+<li>Bugfix: makefile flags where not used when cleaning the workspace</li>
+</ul>
+</dd>
 <dt>July 6, 2015 - bake-toolkit 2.10.3</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: Build stopped unintentionally when using -r</li>
@@ -230,8 +258,11 @@
 <dt>February 27, 2015 - Eclipse plugin 1.3.0</dt>
 <dd><ul class="first last simple">
 <li>Added: bake projects with equal names can be imported now</li>
-<li>February 19, 2015 - bake-toolkit 2.2.2</li>
-<li>Changed: output dirs are now prefixed with &#8220;<a href="#id1"><span class="problematic" id="id2">build_</span></a>&#8221; per default</li>
+</ul>
+</dd>
+<dt>February 19, 2015 - bake-toolkit 2.2.2</dt>
+<dd><ul class="first last simple">
+<li>Changed: output dirs are now prefixed with &#8220;build_&#8221; per default</li>
 <li>Changed: introduced complex variable $(OutputDir,projectName,configName)</li>
 <li>Changed: reworked merge strategy of two configs, especially toolchain options</li>
 <li>Added: variables can be nested now</li>

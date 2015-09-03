@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Quickstart &mdash; bake 2.11.2 documentation</title>
+    <title>The build hierarchy &mdash; bake 2.11.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -29,8 +29,9 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="bake 2.11.2 documentation" href="../index.html" />
-    <link rel="next" title="Concepts" href="../concepts/concepts.html" />
-    <link rel="prev" title="Install bake" href="../install/install_bake.html" />
+    <link rel="up" title="Concepts" href="concepts.html" />
+    <link rel="next" title="Syntax" href="../syntax/syntax.html" />
+    <link rel="prev" title="The main project" href="the_main_project.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -68,8 +69,8 @@
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
@@ -94,7 +95,11 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Quickstart</a></li>
+<li><a class="reference internal" href="#">The build hierarchy</a><ul>
+<li><a class="reference internal" href="#build-graph">Build graph</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
 </ul>
 </ul>
 </li>
@@ -104,11 +109,11 @@
               
                 
   <li>
-    <a href="../install/install_bake.html" title="Previous Chapter: Install bake"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Install bake</span>
+    <a href="the_main_project.html" title="Previous Chapter: The main project"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; The main project</span>
     </a>
   </li>
   <li>
-    <a href="../concepts/concepts.html" title="Next Chapter: Concepts"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Concepts &raquo;</span>
+    <a href="../syntax/syntax.html" title="Next Chapter: Syntax"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Syntax &raquo;</span>
     </a>
   </li>
               
@@ -136,83 +141,46 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="quickstart">
-<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
-<ol class="arabic">
-<li><dl class="first docutils">
-<dt>Create a project directory.</dt>
-<dd><div class="first last highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> mkdir my_project
-</pre></div>
-</div>
+  <div class="section" id="the-build-hierarchy">
+<h1>The build hierarchy<a class="headerlink" href="#the-build-hierarchy" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="build-graph">
+<h2>Build graph<a class="headerlink" href="#build-graph" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Depending on the contents of the Project.meta files, a build graph will be generated:</dt>
+<dd><ul class="first last simple">
+<li>An ExecutableConfig usually specifies files to compile, dependencies to other projects and linker stuff.</li>
+<li>A LibraryConfig usually specifies files to compile and archive.</li>
+<li>A CustomConfig usually defines a custom step.</li>
+</ul>
 </dd>
 </dl>
-</li>
-<li><dl class="first docutils">
-<dt>Switch to the project directory.</dt>
-<dd><div class="first last highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> <span class="nb">cd </span>my_project
-</pre></div>
+<p>Every config type can be equipped with pre and post steps like shell commands or makefiles.</p>
+<p>All these steps will be combined to a build graph.</p>
 </div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>The main project has dependencies to the projects A, B and C:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/hier.png"><img alt="../_images/hier.png" src="../_images/hier.png" style="width: 50.0%;" /></a>
+</div></blockquote>
+<p>Steps are executed bottom-up. If one step fails, all steps above won&#8217;t be executed.</p>
+<dl class="docutils">
+<dt>If e.g.</dt>
+<dd><ul class="first last simple">
+<li>PreStepMain 2 fails</li>
+<li>at least one file of library B does not compile</li>
+</ul>
+</dd>
+<dt>then</dt>
+<dd><ul class="first last simple">
+<li>library B will not be created</li>
+<li>files of the main project will not be compiled</li>
+<li>main project will not be linked</li>
+<li>post step of main project will not be executed</li>
+</ul>
 </dd>
 </dl>
-</li>
-<li><dl class="first docutils">
-<dt>Use the bake &#8211;create option to auto generate a basic project.</dt>
-<dd><div class="first highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~/my_project$</span> bake --create exe
-<span class="go">-- bake 2.10.3, ruby 2.1.2p95, platform x86_64-darwin13.0 --</span>
-<span class="go">Project created.</span>
-
-<span class="go">Time: 00:00 minutes</span>
-</pre></div>
 </div>
-<p>This will provide you with the follwing basic project structure which is ready to use</p>
-<div class="last highlight-console"><div class="highlight"><pre><span class="go">my_project</span>
-<span class="go">|</span>
-<span class="go">|-- Project.meta</span>
-<span class="go">|-- include</span>
-<span class="go">`-- src</span>
-<span class="go">     `-- main.cpp</span>
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Build the project.</dt>
-<dd><div class="first highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~/my_project$</span> bake
-<span class="go">-- bake 2.10.3, ruby 2.1.2p95, platform x86_64-darwin13.0 --</span>
-<span class="go">Info: cache not found, reloading meta information</span>
-<span class="go">Loading /Users/NiCoretti/my_project/Project.meta</span>
-<span class="go">**** Building 1 of 1: my_project (main) ****</span>
-<span class="go">Compiling src/main.cpp</span>
-<span class="go">Linking build_main/my_project.exe</span>
-
-<span class="go">Building done.</span>
-
-<span class="go">Time: 00:00 minutes</span>
-</pre></div>
-</div>
-<p>If you want a more detailed and colored output use the following command:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~/my_project$</span> bake -v2 -a black
-<span class="go">-- bake 2.10.3, ruby 2.1.2p95, platform x86_64-darwin13.0 --</span>
-<span class="go">**** Building 1 of 1: my_project (main) ****</span>
-
-<span class="go">g++ -c -MD -MF build_main/src/main.d -Iinclude -o build_main/src/main.o src/main.cpp</span>
-
-<span class="go">g++ -o build_main/my_project.exe build_main/src/main.o</span>
-
-<span class="go">Building done.</span>
-
-<span class="go">Time: 00:00 minutes</span>
-</pre></div>
-</div>
-<div class="last admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The default main.cpp which is created by bake does nothing except returning the exit code 0.</p>
-</div>
-</dd>
-</dl>
-</li>
-</ol>
 </div>
 
 

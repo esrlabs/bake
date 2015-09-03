@@ -1,6 +1,16 @@
 Changelog
 =========
 
+September 3, 2015 - bake-toolkit 2.11.2
+    * Bugfix: all files were always be recompiled with ruby < 1.9.3
+    * Changed: switched to new docu style, thanks Nico!
+August 4, 2015 - bake-toolkit 2.11.1
+    * Added: project dir output for conversion tool
+    * Moved: wishlist to github
+July 31, 2015 - bake-toolkit 2.11.0
+    * Added: new parameters for includeDir: inherit and infix
+    * Added: dependency output for conversion tool
+    * Bugfix: makefile flags where not used when cleaning the workspace
 July 6, 2015 - bake-toolkit 2.10.3
     * Bugfix: Build stopped unintentionally when using -r
 July 3, 2015 - bake-toolkit 2.10.2
@@ -55,8 +65,8 @@ March 12, 2015 - bake-toolkit 2.3.4
     * Bugfix: some minor fixes
 February 27, 2015 - Eclipse plugin 1.3.0
     * Added: bake projects with equal names can be imported now
-    * February 19, 2015 - bake-toolkit 2.2.2
-    * Changed: output dirs are now prefixed with "build_" per default
+February 19, 2015 - bake-toolkit 2.2.2
+    * Changed: output dirs are now prefixed with "build\_" per default
     * Changed: introduced complex variable $(OutputDir,projectName,configName)
     * Changed: reworked merge strategy of two configs, especially toolchain options
     * Added: variables can be nested now

@@ -50,7 +50,7 @@ the parameters to lint.
 Example
 +++++++
 
-This exmample shows how to redirect the output to single xml files placed into the main project folder.
+This example shows how to redirect the output to single xml files placed into the main project folder.
 
 .. code-block:: text
 
@@ -67,10 +67,10 @@ This exmample shows how to redirect the output to single xml files placed into t
 
 Known Issues
 ------------
-Bake only searches for lint-nt.exe
+bake only searches for lint-nt.exe
 +++++++++++++++++++++++++++++++++++
     **Issue:**
-    Bake currently does not search for all possible names of the lint application, it only searches for a file called *lint-nt.exe*.
+    bake currently does not search for all possible names of the lint application, it only searches for a file called *lint-nt.exe*.
 
     **Solution:**
     If you have another lint command (e.g. because you are using flexe lint on unix)
