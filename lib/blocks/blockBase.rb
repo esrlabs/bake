@@ -79,7 +79,7 @@ module Bake
       
       def self.writeCmdLineFile(cmd, cmdLineFile) 
         begin
-          File.write(cmdLineFile, cmd.join(" "))
+          File.open(cmdLineFile, 'w') { |f| f.write(cmd.join(" ")) }
         rescue Exception => e
           if Bake.options.debug
             puts e.message
