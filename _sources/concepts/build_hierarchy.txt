@@ -18,7 +18,7 @@ Example
 
 The main project has dependencies to the projects A, B and C:
 
-    .. image:: ../_static/hier.png
+    .. image:: ../_static/bake_build_hierachy.png
         :width: 100 %
         :scale: 50 %
 
