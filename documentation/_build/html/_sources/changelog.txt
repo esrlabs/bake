@@ -1,6 +1,9 @@
 Changelog
 =========
 
+September 8, 2015 - bake-toolkit 2.11.3
+    * Bugfix: linker executed even if a dependency has an error
+    * Bugfix: now the new docu is really added to the gem
 September 3, 2015 - bake-toolkit 2.11.2
     * Bugfix: all files were always be recompiled with ruby < 1.9.3
     * Changed: switched to new docu style, thanks Nico!
