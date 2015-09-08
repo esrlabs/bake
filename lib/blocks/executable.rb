@@ -48,7 +48,7 @@ module Bake
         block.dependencies.each do |dep|
           subBlock = Blocks::ALL_BLOCKS[dep]
           return true unless subBlock.result
-          return depHasError(subBlock)
+          return true if depHasError(subBlock)
         end
         
         return false
