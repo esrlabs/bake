@@ -1,0 +1,14 @@
+Project default: testexe {
+
+  ExecutableConfig testexe {
+    Dependency lib
+	DefaultToolchain GCC
+	PreSteps {
+	  CommandLine "echo DO_PRINT"
+	}
+	PostSteps {
+	  CommandLine "echo DO_NOT_PRINT"
+	}
+  }
+
+}

@@ -1,0 +1,7 @@
+Project default: testlib {
+
+  LibraryConfig testlib {
+    Files "src/*.cpp"
+  }
+
+}
