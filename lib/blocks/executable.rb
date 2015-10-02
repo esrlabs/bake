@@ -45,8 +45,10 @@ module Bake
       end
       
       def depHasError(block)
+        return false if block.circularCheck
+        block.circularCheck = true
         block.dependencies.each do |dep|
-          subBlock = Blocks::ALL_BLOCKS[dep]
+          subBlock, name = Blocks::ALL_BLOCKS[dep]
           return true unless subBlock.result
           return true if depHasError(subBlock)
         end
@@ -84,8 +86,8 @@ module Bake
       end
             
       def execute
-        
         Dir.chdir(@projectDir) do
+          Blocks::ALL_BLOCKS.each { |n,b| b.circularCheck = false }
           return false if depHasError(@block)
           
           libs, linker_libs_array = LibElements.calc_linker_lib_string(@block, @tcs)
@@ -99,8 +101,6 @@ module Bake
           end
           return true unless reason
           
-
-
           linker = @tcs[:LINKER]
     
           cmd = Utils.flagSplit(linker[:COMMAND], false) # g++

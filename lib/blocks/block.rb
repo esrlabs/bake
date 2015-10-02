@@ -16,7 +16,7 @@ module Bake
     class Block
 
       attr_reader :lib_elements, :projectDir, :library, :config, :projectName
-      attr_accessor :visited, :inDeps, :result
+      attr_accessor :visited, :inDeps, :result, :circularCheck
 
       def startupSteps
         @startupSteps ||= []
@@ -56,6 +56,7 @@ module Bake
       
       def initialize(config, referencedConfigs)
         @inDeps = false
+        @circularCheck
         @visited = false
         @library = nil
         @config = config

@@ -1,6 +1,8 @@
 Changelog
 =========
 
+October 2, 2015 - bake-toolkit 2.11.4
+    * Bugfix: bake aborted in larger workspaces with 2.11.3 right before linking
 September 8, 2015 - bake-toolkit 2.11.3
     * Bugfix: linker executed even if a dependency has an error
     * Bugfix: now the new docu is really added to the gem
