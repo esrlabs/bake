@@ -34,7 +34,7 @@ describe "StartupExit" do
 
     expect(ExitHelper.exit_code).to be > 0
     expect($mystring.include?("LIB_STARTUP1")).to be == true
-    expect($mystring.include?("LIB_STARTUP2")).to be == false
+    expect($mystring.include?("LIB_STARTUP2")).to be == true
     expect($mystring.include?("MAIN_STARTUP1")).to be == true
     expect($mystring.include?("MAIN_STARTUP1")).to be == true
 
@@ -42,7 +42,7 @@ describe "StartupExit" do
     expect($mystring.include?("MAIN_MAIN")).to be == true
           
     expect($mystring.include?("LIB_EXIT1")).to be == true
-    expect($mystring.include?("LIB_EXIT2")).to be == false
+    expect($mystring.include?("LIB_EXIT2")).to be == true
     expect($mystring.include?("MAIN_EXIT1")).to be == true
     expect($mystring.include?("MAIN_EXIT1")).to be == true
   end
@@ -52,23 +52,23 @@ describe "StartupExit" do
 
     expect(ExitHelper.exit_code).to be > 0
     expect($mystring.include?("LIB_STARTUP1")).to be == true
-    expect($mystring.include?("LIB_STARTUP2")).to be == false
-    expect($mystring.include?("MAIN_STARTUP1")).to be == false
-    expect($mystring.include?("MAIN_STARTUP1")).to be == false
+    expect($mystring.include?("LIB_STARTUP2")).to be == true
+    expect($mystring.include?("MAIN_STARTUP1")).to be == true
+    expect($mystring.include?("MAIN_STARTUP1")).to be == true
 
     expect($mystring.include?("LIB_MAIN")).to be == false
     expect($mystring.include?("MAIN_MAIN")).to be == false
           
-    expect($mystring.include?("LIB_EXIT1")).to be == false
-    expect($mystring.include?("LIB_EXIT2")).to be == false
-    expect($mystring.include?("MAIN_EXIT1")).to be == false
-    expect($mystring.include?("MAIN_EXIT1")).to be == false
+    expect($mystring.include?("LIB_EXIT1")).to be == true
+    expect($mystring.include?("LIB_EXIT2")).to be == true
+    expect($mystring.include?("MAIN_EXIT1")).to be == true
+    expect($mystring.include?("MAIN_EXIT1")).to be == true
   end
 
   it 'exit code invalid' do
     Bake.startBake("startupExit/main", ["-b", "test3", "-r"])
     expect(ExitHelper.exit_code).to be > 0
-    expect($mystring.include?("MAIN_WORKS")).to be == false
+    expect($mystring.include?("MAIN_WORKS")).to be == true
   end
 
   it 'exit code valid' do
