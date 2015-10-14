@@ -133,7 +133,7 @@ def calc_def_roots(dir)
         if File.is_absolute?(line)
           def_roots << line
         else
-          def_roots << File.dirname(rootsFile) + "/" + line
+          def_roots << File.expand_path(File.dirname(rootsFile) + "/" + line)
         end
       end
     end
