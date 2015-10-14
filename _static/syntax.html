@@ -317,15 +317,13 @@ function showPostSteps() {
 
 function showStartupSteps() {   
   str = 'StartupSteps of ALL projects are executed before building the first project.<br>'+
-    'The number of steps are not limited.<br>'+
-    'If a step fails, all further startup steps of the project will be skipped.'
+    'The number of steps are not limited.'
   ddrivetip("StartupSteps", "No","0..1","-",str)
 }
 
 function showExitSteps() {   
   str = 'ExitSteps of ALL projects are executed after building complete workspace even if the build has failed.<br>'+
-    'The number of steps are not limited.<br>'+
-    'If a step fails, all further exit steps of the project will be skipped.'
+    'The number of steps are not limited.'
   ddrivetip("ExitSteps", "No","0..1","-",str)
 }
 

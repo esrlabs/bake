@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Syntax of the Project.meta file &mdash; bake 2.11.4 documentation</title>
+    <title>The Syntax of the Project.meta file &mdash; bake 2.12.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.11.4',
+        VERSION:     '2.12.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="bake 2.11.4 documentation" href="../index.html" />
+    <link rel="top" title="bake 2.12.0 documentation" href="../index.html" />
     <link rel="up" title="Syntax" href="syntax.html" />
     <link rel="next" title="Variables in Project.meta" href="variable_substitutions.html" />
     <link rel="prev" title="Syntax" href="syntax.html" />
@@ -467,15 +467,13 @@ function showPostSteps() {
 
 function showStartupSteps() {   
   str = 'StartupSteps of ALL projects are executed before building the first project.<br>'+
-    'The number of steps are not limited.<br>'+
-    'If a step fails, all further startup steps of the project will be skipped.'
+    'The number of steps are not limited.'
   ddrivetip("StartupSteps", "No","0..1","-",str)
 }
 
 function showExitSteps() {   
   str = 'ExitSteps of ALL projects are executed after building complete workspace even if the build has failed.<br>'+
-    'The number of steps are not limited.<br>'+
-    'If a step fails, all further exit steps of the project will be skipped.'
+    'The number of steps are not limited.'
   ddrivetip("ExitSteps", "No","0..1","-",str)
 }
 
