@@ -1,0 +1,10 @@
+Project default: test {
+  ExecutableConfig test {
+    Dependency f
+    Dependency i
+    IncludeDir "f/include"
+    IncludeDir "i/include"
+	Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
+}

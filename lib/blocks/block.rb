@@ -65,7 +65,7 @@ module Bake
         @configName = config.name
         @projectDir = config.get_project_dir
         @@block_counter = 0
-        @result = false
+        @result = true
         
         @lib_elements = Bake::LibElements.calcLibElements(self)
       end
@@ -132,13 +132,16 @@ module Bake
       end
 
       def executeStep(step, method)
-        @result = false
         begin
-          @result = step.send(method)
+          @result = step.send(method) && @result
         rescue Bake::SystemCommandFailed => scf
+          @result = false
+          ProcessHelper.killProcess(true)
         rescue SystemExit => exSys
+          @result = false
           ProcessHelper.killProcess(true)
         rescue Exception => ex1
+          @result = false
           if not Bake::IDEInterface.instance.get_abort
             Bake.formatter.printError("Error: #{ex1.message}")
             puts ex1.backtrace if Bake.options.debug
@@ -148,7 +151,7 @@ module Bake
         if Bake::IDEInterface.instance.get_abort
           raise AbortException.new
         end
-        
+
         return @result
       end
 
@@ -162,12 +165,12 @@ module Bake
       end
       
       def callSteps(method)
-        @result = true
+        
         preSteps.each do |step|
           @result = executeStep(step, method) if @result
           return false if not @result and Bake.options.stopOnFirstError
         end
-
+        
         mainSteps.each do |step|
           @result = executeStep(step, method) if @result
           return false if not @result and Bake.options.stopOnFirstError
@@ -237,16 +240,13 @@ module Bake
         @visited = true
 
         depResult = callDeps(:startup)
-        return false if not depResult and Bake.options.stopOnFirstError
                 
         if Bake.options.verbose >= 1 and not startupSteps.empty? 
           Bake.formatter.printAdditionalInfo "**** Starting up #{@projectName} (#{@configName}) ****"     
         end
         
-        @result = true
         startupSteps.each do |step|
-          @result = executeStep(step, :startupStep) if @result
-          return false if not @result and Bake.options.stopOnFirstError
+          @result = executeStep(step, :startupStep) && @result
         end
         
         return (depResult && @result)
@@ -257,16 +257,13 @@ module Bake
         @visited = true
       
         depResult = callDeps(:exits)
-        return false if not depResult and Bake.options.stopOnFirstError
         
         if Bake.options.verbose >= 1 and not exitSteps.empty?
           Bake.formatter.printAdditionalInfo "**** Exiting #{@projectName} (#{@configName}) ****"     
         end
         
-        @result = true
         exitSteps.each do |step|
-          @result = executeStep(step, :exitStep) if @result
-          return false if not @result and Bake.options.stopOnFirstError
+          @result = executeStep(step, :exitStep) && @result
         end
         
         return (depResult && @result)

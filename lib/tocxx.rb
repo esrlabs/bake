@@ -184,13 +184,15 @@ module Bake
       end
     end
     
-    def callBlocks(startBlocks, method)
-      Blocks::ALL_BLOCKS.each {|name,block| block.visited = false; block.result = false;  block.inDeps = false }
+    def callBlocks(startBlocks, method, ignoreStopOnFirstError = false)
+      Blocks::ALL_BLOCKS.each {|name,block| block.visited = false; block.result = true;  block.inDeps = false }
       Blocks::Block.reset_block_counter
       result = true
       startBlocks.each do |block|
         result = callBlock(block, method) && result
-        return false if not result and Bake.options.stopOnFirstError
+        if not ignoreStopOnFirstError
+          return false if not result and Bake.options.stopOnFirstError
+        end
       end
       return result
     end
@@ -318,7 +320,7 @@ module Bake
         
         ideAbort = false
         begin
-          result = callBlocks(startBlocks, :startup)
+          result = callBlocks(startBlocks, :startup, true)
           if Bake.options.clean or Bake.options.rebuild
             if not Bake.options.stopOnFirstError or result
               result = callBlocks(startBlocks, :clean) && result
@@ -332,9 +334,7 @@ module Bake
         rescue AbortException
           ideAbort = true
         end
-        if not Bake.options.stopOnFirstError or result
-          result = callBlocks(startBlocks, :exits) && result
-        end 
+        result = callBlocks(startBlocks, :exits, true) && result
         
         if ideAbort
           Bake.formatter.printError("\n#{taskType} aborted.")
