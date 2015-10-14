@@ -1,6 +1,9 @@
 Changelog
 =========
 
+October 14, 2015 - bake-toolkit 2.12.0
+    * Changed: now ALL startup and exit steps are executed regardless if the previous step were successful even if stopOnFirstError was configured
+    * Bugfix: relative pathes between roots based on Roots.bake were calculated incorrectly
 October 2, 2015 - bake-toolkit 2.11.4
     * Bugfix: bake aborted in larger workspaces with 2.11.3 right before linking
 September 8, 2015 - bake-toolkit 2.11.3
@@ -150,7 +153,7 @@ January 7, 2015 - bake-toolkit 2.0.3
         ============    =====================================    =======================================================
         Main project    $(MainConfigName)                        $(MainConfigName)
 
-        Sub Project     $(MainConfigName)_$(MainProjectName)     $(SubConfigName)_$(MainProjectName)_$(MainConfigName)
+        Sub Project     $(MainConfigName)_$(MainProjectName)     $(ConfigName)_$(MainProjectName)_$(MainConfigName)
         ============    =====================================    =======================================================
 
         .. warning::
