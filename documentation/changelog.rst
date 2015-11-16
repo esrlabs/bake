@@ -1,6 +1,8 @@
 Changelog
 =========
 
+November 16, 2015 - bake-toolkit 2.12.1
+    * Bugfix: inherit and infix features may have calculated wrong relative paths
 October 26, 2015 - Eclipse plugin 1.6.0
     * Added: possibility to specify folders to exclude when importing projects
     * Bugfix: fixed exception when trying to build after starting eclipse with a closed project

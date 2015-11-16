@@ -417,21 +417,33 @@ module Bake
         getSubBlocks(@block, method)
         return @otherBlocks
       end      
-      
-      def mapInclude(inc, projDir)
-        (inc.name == "___ROOTS___") ? (Bake.options.roots.map { |r| File.rel_from_to_project(projDir,r,false) }) : @block.convPath(inc)
+
+      def mapInclude(inc, orgBlock)
+        
+        if inc.name == "___ROOTS___"
+          return Bake.options.roots.map { |r| File.rel_from_to_project(@projectDir,r,false) }
+        end
+        
+        i = orgBlock.convPath(inc)
+        if orgBlock != @block
+          if not File.is_absolute?(i)
+            i = File.rel_from_to_project(@projectDir,orgBlock.config.parent.get_project_dir) + i
+          end
+        end
+        
+        Pathname.new(i).cleanpath
       end
 
       def calcIncludes
                 
         @include_list = @config.includeDir.uniq.map do |dir|
-          mapInclude(dir, @projectDir)
+          mapInclude(dir, @block)
         end
         
         getBlocks(:childs).each do |b|
           b.config.includeDir.each do |inc|
             if inc.inherit == true
-              @include_list << mapInclude(inc, b.config.parent.get_project_dir)              
+              @include_list << mapInclude(inc, b)     
             end
           end if b.config.respond_to?("includeDir")
         end
@@ -441,9 +453,9 @@ module Bake
             include_list_front = []
             b.config.includeDir.each do |inc|
               if inc.infix == "front"
-                include_list_front << mapInclude(inc, b.config.parent.get_project_dir)
+                include_list_front << mapInclude(inc, b)
               elsif inc.infix == "back"
-                @include_list << mapInclude(inc, b.config.parent.get_project_dir)
+                @include_list << mapInclude(inc, b)
               end
             end 
             @include_list = include_list_front + @include_list
