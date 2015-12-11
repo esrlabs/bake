@@ -345,62 +345,64 @@ module Bake
       end
       
       def calcSources(cleaning = false)
-        @source_files = []
-    
-        exclude_files = Set.new
-        @config.excludeFiles.each do |p|
-          Dir.glob(p.name).each {|f| exclude_files << f}
-        end
-          
-        source_files = Set.new
-        @config.files.each do |sources|
-          p = sources.name
-          res = Dir.glob(p).sort
-          if res.length == 0 and cleaning == false
-            if not p.include?"*" and not p.include?"?"
-              Bake.formatter.printError("Source file '#{p}' not found", sources)
-              raise SystemCommandFailed.new  
-            elsif Bake.options.verbose >= 1
-              Bake.formatter.printInfo("Source file pattern '#{p}' does not match to any file", sources)
-            end
-          end
-          res.each do |f|
-            next if exclude_files.include?(f)
-            source_files << f
-          end
-        end
-        
-        if Bake.options.filename
-          source_files.keep_if do |source|
-            source.include?Bake.options.filename
-          end
-          if source_files.length == 0 and cleaning == false
-            Bake.formatter.printInfo("#{Bake.options.filename} does not match to any source", @config)
-          end
-        end
-        
-        @source_files = source_files.sort.to_a
-        
-        if Bake.options.eclipseOrder # directories reverse order, files in directories in alphabetical order
-          dirs = []
-          filemap = {}
-          @source_files.reverse.each do |o|
-            d = File.dirname(o)
-            if filemap.include?(d)
-              filemap[d] << o
-            else
-              filemap[d] = [o]
-              dirs << d
-            end
-          end
+        Dir.chdir(@projectDir) do
           @source_files = []
-          dirs.each do |d|
-            filemap[d].reverse.each do |f|
-              @source_files << f
+      
+          exclude_files = Set.new
+          @config.excludeFiles.each do |p|
+            Dir.glob(p.name).each {|f| exclude_files << f}
+          end
+            
+          source_files = Set.new
+          @config.files.each do |sources|
+            p = sources.name
+            res = Dir.glob(p).sort
+            if res.length == 0 and cleaning == false
+              if not p.include?"*" and not p.include?"?"
+                Bake.formatter.printError("Source file '#{p}' not found", sources)
+                raise SystemCommandFailed.new  
+              elsif Bake.options.verbose >= 1
+                Bake.formatter.printInfo("Source file pattern '#{p}' does not match to any file", sources)
+              end
+            end
+            res.each do |f|
+              next if exclude_files.include?(f)
+              source_files << f
+            end
+          end
+          
+          if Bake.options.filename
+            source_files.keep_if do |source|
+              source.include?Bake.options.filename
+            end
+            if source_files.length == 0 and cleaning == false
+              Bake.formatter.printInfo("#{Bake.options.filename} does not match to any source", @config)
+            end
+          end
+          
+          @source_files = source_files.sort.to_a
+          
+          if Bake.options.eclipseOrder # directories reverse order, files in directories in alphabetical order
+            dirs = []
+            filemap = {}
+            @source_files.reverse.each do |o|
+              d = File.dirname(o)
+              if filemap.include?(d)
+                filemap[d] << o
+              else
+                filemap[d] = [o]
+                dirs << d
+              end
+            end
+            @source_files = []
+            dirs.each do |d|
+              filemap[d].reverse.each do |f|
+                @source_files << f
+              end
             end
           end
         end
-        
+        return (not @source_files.empty?)
       end
         
       def getSubBlocks(b, method)

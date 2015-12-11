@@ -1,3 +1,5 @@
 Project {
-  LibraryConfig test
+  LibraryConfig test {
+    Files "x.c"
+  }
 }

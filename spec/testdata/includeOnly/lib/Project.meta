@@ -1,5 +1,6 @@
-Project {
+Project default: test {
+
   LibraryConfig test {
-    Files "x.c"
   }
+
 }

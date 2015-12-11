@@ -51,10 +51,12 @@ module Bake
         
       prefix = nil
 
-      if block.library
-        adaptedPath, prefix = adaptPath(block.library.archive_name, block, prefix)
-        @@linker_libs_array << adaptedPath
-        @@source_libraries << adaptedPath
+      if block.library 
+        if (not block.library.compileBlock.objects.empty?) or block.library.compileBlock.calcSources(true)
+          adaptedPath, prefix = adaptPath(block.library.archive_name, block, prefix)
+          @@linker_libs_array << adaptedPath
+          @@source_libraries << adaptedPath
+        end
       end
      
       block.lib_elements.each_key.sort.each do |line_num|

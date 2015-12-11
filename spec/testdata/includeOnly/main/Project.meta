@@ -1,0 +1,9 @@
+Project default: test {
+
+  ExecutableConfig test {
+    Files "m.c"
+    Dependency lib
+    DefaultToolchain GCC
+  }
+
+}

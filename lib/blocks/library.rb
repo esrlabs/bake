@@ -6,6 +6,8 @@ module Bake
     
     class Library < BlockBase
       
+      attr_reader :compileBlock
+      
       def initialize(block, config, referencedConfigs, tcs, compileBlock)
         super(block,config, referencedConfigs, tcs)
         @compileBlock = compileBlock
@@ -42,6 +44,11 @@ module Bake
       def execute
 
         Dir.chdir(@projectDir) do
+          if @compileBlock.objects.empty?
+            puts "No source files, library won't be created" if Bake.options.verbose >= 2
+            return true 
+          end
+          
           cmdLineCheck = false
           cmdLineFile = calcCmdlineFile()
           reason = needed?

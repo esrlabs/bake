@@ -1,6 +1,8 @@
 Changelog
 =========
 
+December 11, 2015 - bake-toolkit 2.12.2
+    * Change: empty libraries will not be created and linked anymore
 November 16, 2015 - bake-toolkit 2.12.1
     * Bugfix: inherit and infix features may have calculated wrong relative paths
 October 26, 2015 - Eclipse plugin 1.6.0

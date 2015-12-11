@@ -327,6 +327,7 @@ Project {
   }
   
   LibraryConfig testTC10 {
+    Files "src/dummy.c"
     DefaultToolchain GCC {
       Archiver command: "com1"
     }

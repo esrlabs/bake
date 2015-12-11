@@ -50,6 +50,7 @@ Project {
   }
 
   LibraryConfig testArchive {
+    Files "src/a.cpp"
     PreSteps {
       CommandLine "echo STEP1"
     }
@@ -62,6 +63,7 @@ Project {
   }
   
   ExecutableConfig testLink {
+    Files "src/a.cpp"
     PreSteps {
       CommandLine "echo STEP1"
     }

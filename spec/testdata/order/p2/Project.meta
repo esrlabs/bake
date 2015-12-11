@@ -5,6 +5,7 @@ Project {
   }
 
   LibraryConfig test {
+    Files "dummy.c"
     PreSteps {
       Makefile "makefile", lib: "makeIn2"
     }
