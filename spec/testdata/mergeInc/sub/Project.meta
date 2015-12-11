@@ -1,0 +1,9 @@
+Project {
+
+    LibraryConfig test {
+        IncludeDir include, inherit: true
+    }
+
+    LibraryConfig testApplication, extends: test
+	
+}

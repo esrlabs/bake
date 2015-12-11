@@ -1,0 +1,13 @@
+Project {
+	
+	ExecutableConfig test {
+		
+		Dependency lib, config: test
+		Dependency sub, config: testApplication
+		
+		Files "src/x.cpp"
+		DefaultToolchain GCC
+	}
+	
+	
+}

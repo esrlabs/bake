@@ -1,0 +1,9 @@
+Project {
+
+    LibraryConfig test {
+        Dependency sub, config: test
+        IncludeDir "include", inherit: true
+        Files "src/x.cpp"
+    }
+    
+}

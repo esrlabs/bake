@@ -2,6 +2,7 @@ Changelog
 =========
 
 December 11, 2015 - bake-toolkit 2.12.2
+    * Bugfix: extending a client config (merging) could have broken the parent config
     * Change: empty libraries will not be created and linked anymore
 November 16, 2015 - bake-toolkit 2.12.1
     * Bugfix: inherit and infix features may have calculated wrong relative paths
