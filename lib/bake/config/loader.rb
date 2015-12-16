@@ -90,8 +90,16 @@ module Bake
         end
         
         config.includeDir.each do |inc|
+          if not ["front", "back", ""].include?inc.inject
+            Bake.formatter.printError("inject of IncludeDir must be 'front' or 'back'", inc) 
+            ExitHelper.exit(1)
+          end
           if not ["front", "back", ""].include?inc.infix
             Bake.formatter.printError("infix of IncludeDir must be 'front' or 'back'", inc) 
+            ExitHelper.exit(1)
+          end
+          if (inc.infix != "" and inc.inject != "")
+            Bake.formatter.printError("IncludeDir must have inject OR infix (deprecated)", inc) 
             ExitHelper.exit(1)
           end
         end if config.respond_to?("includeDir")

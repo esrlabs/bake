@@ -454,7 +454,11 @@ module Bake
           if b.config.respond_to?("includeDir")
             include_list_front = []
             b.config.includeDir.each do |inc|
-              if inc.infix == "front"
+              if inc.inject == "front"
+                include_list_front << mapInclude(inc, b)
+              elsif inc.inject == "back"
+                @include_list << mapInclude(inc, b)
+              elsif inc.infix == "front"
                 include_list_front << mapInclude(inc, b)
               elsif inc.infix == "back"
                 @include_list << mapInclude(inc, b)

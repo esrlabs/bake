@@ -56,7 +56,7 @@ module Bake
         cmdTime = File.mtime(cmdLineFile)
         return "because config file has been changed" if cmdTime < File.mtime(@config.file_name)
         return "because DefaultToolchain has been changed" if cmdTime < defaultToolchainTime
-        return "because command line has been changed (IncludeDir inherit/infix, environment variables, ...)"
+        return "because command line has been changed (IncludeDir inherit/inject, environment variables, ...)"
       end
       
       def self.isCmdLineEqual?(cmd, cmdLineFile)       

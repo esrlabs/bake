@@ -11,7 +11,7 @@ module Bake
 
 describe "Incs" do
 
-  it 'infix_and_inherit' do
+  it 'inject_and_inherit' do
     Bake.startBake("incTest/main", ["test", "-v2", "--rebuild"])
     
     expect($mystring.include?("c1.d -I../../main/main1 -I../../main/main2 -I../child1/child1_1 -Ichild1_2 -Ichild1_3 -I../../main/main3 -o")).to be == true
