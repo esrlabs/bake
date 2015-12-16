@@ -149,7 +149,7 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showExcludeFiles()" onMouseout="notip()">ExcludeFiles</span> &#60;pattern&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;, <span class="help" onMouseover="showInherit()" onMouseout="notip()">inherit</span>: true|false, <span class="help" onMouseover="showInfix()" onMouseout="notip()">infix</span>: front|back<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;, <span class="help" onMouseover="showInherit()" onMouseout="notip()">inherit</span>: true|false, <span class="help" onMouseover="showInfix()" onMouseout="notip()">inject</span>: front|back<br>
 
 </span><br></span>
 
@@ -456,7 +456,7 @@ function showInherit() {
 
 function showInfix() {   
   str = 'Injects the include path to all childs, either at the front (e.g. for mocking code) or at the end.'
-  ddrivetip("infix", "No","0..1","-",str)  
+  ddrivetip("inject", "No","0..1","-",str)  
 }
 
 function showSet() {   

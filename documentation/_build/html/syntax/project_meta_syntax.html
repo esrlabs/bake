@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Syntax of the Project.meta file &mdash; bake 2.12.1 documentation</title>
+    <title>The Syntax of the Project.meta file &mdash; bake 2.12.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.12.1',
+        VERSION:     '2.12.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake 2.12.1 documentation" href="../index.html" />
+    <link rel="top" title="bake 2.12.2 documentation" href="../index.html" />
     <link rel="up" title="Syntax" href="syntax.html" />
     <link rel="next" title="Variables in Project.meta" href="variable_substitutions.html" />
     <link rel="prev" title="Syntax" href="syntax.html" />
@@ -300,7 +300,7 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showExcludeFiles()" onMouseout="notip()">ExcludeFiles</span> &#60;pattern&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;, <span class="help" onMouseover="showInherit()" onMouseout="notip()">inherit</span>: true|false, <span class="help" onMouseover="showInfix()" onMouseout="notip()">infix</span>: front|back<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;, <span class="help" onMouseover="showInherit()" onMouseout="notip()">inherit</span>: true|false, <span class="help" onMouseover="showInfix()" onMouseout="notip()">inject</span>: front|back<br>
 
 </span><br></span>
 
@@ -607,7 +607,7 @@ function showInherit() {
 
 function showInfix() {   
   str = 'Injects the include path to all childs, either at the front (e.g. for mocking code) or at the end.'
-  ddrivetip("infix", "No","0..1","-",str)  
+  ddrivetip("inject", "No","0..1","-",str)  
 }
 
 function showSet() {   
