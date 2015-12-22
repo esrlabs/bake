@@ -30,7 +30,7 @@ module Bake
     toBuildPattern = []
     @options.roots.each do |r|
       col.project.each do |p|
-        projs = Dir.glob(r+"/"+p.name+"/Project.meta")
+        projs = Dir.glob(r+"/**/"+p.name+"/Project.meta")
         if projs.length == 0
           toBuildPattern << BuildPattern.new(nil, nil, p) # remember it for sorted info printout
         end

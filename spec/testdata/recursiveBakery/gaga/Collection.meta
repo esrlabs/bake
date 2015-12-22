@@ -1,0 +1,7 @@
+Collection gaga {	
+  Project "gaga", config: "*"
+}
+
+Collection gugu {   
+  Project "gugu", config: "*"
+}

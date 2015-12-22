@@ -102,7 +102,22 @@ describe "bake" do
   it 'collection option not ok' do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 --lint_min`
     expect(str.include?("3 of 3 builds failed")).to be == true
-  end  
+  end 
+  
+  it 'recursive test 1' do
+    str = `ruby bin/bakery -m spec/testdata/recursiveBakery/gaga gaga`
+    expect(str.include?("ONLYGAGA")).to be == true
+    expect(str.include?("GAGAV")).to be == true
+    expect(str.include?("GAGAW")).to be == true
+    expect(str.include?("3 of 3 builds ok")).to be == true
+  end 
+  
+  it 'recursive test 2' do
+    str = `ruby bin/bakery -m spec/testdata/recursiveBakery/gaga gugu`
+    expect(str.include?("GUGUV")).to be == true
+    expect(str.include?("GUGUW")).to be == true
+    expect(str.include?("2 of 2 builds ok")).to be == true
+  end   
    
 end
 
