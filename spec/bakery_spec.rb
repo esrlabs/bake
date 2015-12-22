@@ -17,7 +17,7 @@ describe "bake" do
   end  
 
   it 'collection empty' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b gugu`
+    str = `ruby bin/bakery -m spec/testdata/root1/main gugu`
     expect(str.include?("0 of 0 builds ok")).to be == true
   end  
 
@@ -28,9 +28,19 @@ describe "bake" do
   end  
 
   it 'collection working' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b gaga -w spec/testdata/root1 -w spec/testdata/root2`
+    str = `ruby bin/bakery -m spec/testdata/root1/main gaga -w spec/testdata/root1 -w spec/testdata/root2`
     expect(str.include?("1 of 3 builds failed")).to be == true
   end  
+  
+  it 'two collection names without -b' do
+    str = `ruby bin/bakery -m spec/testdata/root1/main gaga gigi -w spec/testdata/root1 -w spec/testdata/root2`
+    expect(str.include?("1 of 3 builds failed")).to be == false
+  end 
+  
+  it 'two collection names with -b' do
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b gaga -b gigi -w spec/testdata/root1 -w spec/testdata/root2`
+    expect(str.include?("1 of 3 builds failed")).to be == false
+  end 
 
   it 'collection parse params' do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b gaga -w spec/testdata/root1 -w spec/testdata/root2 -v2 -a black --ignore_cache -r -c`

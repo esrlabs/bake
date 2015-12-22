@@ -19,6 +19,12 @@ Examples:
     .. code-block:: console
 
         bakery -b AllUnitTests
+        
+    It is possible to omit *-b*:
+
+    .. code-block:: console
+
+        bakery AllUnitTests
 
     Clean all unittests:
     

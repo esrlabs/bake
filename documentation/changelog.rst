@@ -3,6 +3,7 @@ Changelog
 
 December 23, 2015 - bake-toolkit 2.13.0
     * Added: possibility to specify minimum and maximum required bake version in Project.meta file
+    * Added: it's now possible to omit -b when executing the bakery
 December 16, 2015 - bake-toolkit 2.12.2
     * Bugfix: extending a client config (merging) could have broken the parent config
     * Changed: empty libraries will not be created and linked anymore
