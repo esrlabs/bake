@@ -57,6 +57,44 @@ module Bake
       end
     end
         
+    def checkVerFormat(ver)
+      return true if ver.empty?
+      return false if ver.length > 3
+      ver.each do |v|
+        return false if not /\A\d+\z/.match(v)
+      end
+      true
+    end
+
+    def bailOutVer(reqVersion)
+      text1 = (reqVersion.minimum.empty? ? "" : "minimum = #{reqVersion.minimum}")
+      text2 = ((reqVersion.minimum.empty? or reqVersion.maximum.empty?) ? "" : ", ")
+      text3 = (reqVersion.maximum.empty? ? "" : "maximum = #{reqVersion.maximum}")
+      Bake.formatter.printError("Not compatible with installed bake version: #{text1 + text2 + text3}", reqVersion)
+      ExitHelper.exit(1)
+    end
+    
+    def checkVer(reqVersion)
+      return if reqVersion.nil?
+      min = reqVersion.minimum.split(".")
+      max = reqVersion.maximum.split(".")
+      cur = Bake::Version.number.split(".")
+      
+      if !checkVerFormat(min) or !checkVerFormat(max)
+        Bake.formatter.printError("Version must be <major>.<minor>.<patch> whereas minor and patch are optional and all numbers >= 0.", reqVersion)
+        ExitHelper.exit(1)
+      end
+      
+      [min,max,cur].each { |arr| arr.map! {|x| x.to_i} }
+      min.each_with_index do |v,i|
+        break if v < cur[i]
+        bailOutVer(reqVersion) if v > cur[i]
+      end
+      max.each_with_index do |v,i|
+        break if v > cur[i]
+        bailOutVer(reqVersion) if v < cur[i]
+      end
+    end
     
     def loadProjMeta(filename)
       
@@ -72,6 +110,10 @@ module Bake
         ExitHelper.exit(1)
       end
       
+      reqVersion = f.root_elements[0].getRequiredBakeVersion
+
+      checkVer(reqVersion)
+     
       configs = f.root_elements[0].getConfig
       
       if configs.length == 0

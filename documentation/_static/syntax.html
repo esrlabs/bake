@@ -55,6 +55,8 @@ z-index: 100;
 
 &nbsp; <span class="help" onMouseover="showDescription()" onMouseout="notip()">Description</span>  &#60;text&#62;<br><br>
 
+&nbsp; <span class="help" onMouseover="showVersion()" onMouseout="notip()">RequiredBakeVersion</span> minimum: &#60;major.minor.patch&#62;, maximum: &#60;major.minor.patch&#62;<br><br>
+
 &nbsp; <span class="help" onMouseover="showResponsible()" onMouseout="notip()">Responsible</span>  {<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showPerson()" onMouseout="notip()">Person</span> &#60;name&#62;,
               <span class="help" onMouseover="showPersonEmail()" onMouseout="notip()">email</span>: &#60;adr&#62;<br>
@@ -219,6 +221,12 @@ function showDescription() {
   ddrivetip("Description", "No", "0..1", "-",str)
 }
 
+function showVersion() {
+  str = 'If specified, the build will be aborted if bake version is lower than mininum or greater than maximum.<br>'+
+    'It is possible to define only minimum, only maximim or both version thresholds.<br>'+
+    'Minor and patch version numbers are optional.'
+  ddrivetip("RequiredBakeVersion", "No", "0..1", "-",str)
+}
 
 function showPerson() {
   str = 'Person who is responsible for the project.'

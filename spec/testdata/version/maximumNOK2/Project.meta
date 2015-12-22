@@ -1,0 +1,10 @@
+Project  {
+	
+	RequiredBakeVersion maximum: "1.666.661"
+	
+	CustomConfig test {
+		CommandLine "echo DONE"
+		DefaultToolchain GCC
+	}
+	
+}

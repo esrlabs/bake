@@ -106,6 +106,11 @@ module Bake
         has_attr 'text', String, :defaultValueLiteral => ""
       end
       
+      class RequiredBakeVersion < ModelElement
+        has_attr 'minimum', String, :defaultValueLiteral => ""
+        has_attr 'maximum', String, :defaultValueLiteral => ""
+      end
+      
       class Responsible < ModelElement
         contains_many "person", Person, 'parent'
       end
@@ -238,6 +243,7 @@ module Bake
       class Project < ModelElement
         has_attr 'default', String, :defaultValueLiteral => ""
         contains_one 'description', Description, 'parent'
+        contains_one 'requiredBakeVersion', RequiredBakeVersion, 'parent'
         contains_one 'responsible', Responsible, 'parent'
         contains_many 'config', BaseConfig_INTERNAL, 'parent'
         
