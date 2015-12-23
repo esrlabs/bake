@@ -23,7 +23,7 @@ Project {
 	}
 	LinkerScript "ls/linkerscript1.dld"
 	ArtifactName "testE1.exe"
-	MapFile "$(ConfigName)/testE1.map"
+	MapFile "$(OutputDir)/testE1.map"
   }
   
   ExecutableConfig testE2, extends: testE1 {
@@ -47,7 +47,7 @@ Project {
     }
 	LinkerScript "ls/linkerscript2.dld"
 	ArtifactName "testE2.exe"
-	MapFile "testE2/testE2.map"
+	MapFile "$(OutputDir)/testE2.map"
   }
 
 
@@ -62,7 +62,7 @@ Project {
     DefaultToolchain GCC
 	LinkerScript "ls/linkerscript3.dld"
 	ArtifactName "testE3.exe"
-	MapFile "testE3/testE3.map"
+	MapFile "$(OutputDir)/testE3.map"
   }
 
   ExecutableConfig testE4 {
@@ -86,7 +86,7 @@ Project {
 	}
 	LinkerScript "ls/linkerscript5.dld"
 	ArtifactName "testE5.exe"
-	MapFile "testE5/testE5.map"
+	MapFile "$(OutputDir)/testE5.map"
   }  
 
   ExecutableConfig testE6, extends: testE1 {

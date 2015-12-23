@@ -10,37 +10,37 @@ require 'helper'
 module Bake
 
 describe "Merging Configs" do
-=begin
+
   it 'build base (all)' do
-    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL3/libmain.a")).to be == false
     Bake.startBake("merge/main", ["testL1", "--rebuild"])
-    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL1/libmain.a")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/build_testL2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL3/libmain.a")).to be == false
   end  
 
   it 'build child (all)' do
-    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL3/libmain.a")).to be == false
     Bake.startBake("merge/main", ["testL2", "--rebuild"])
-    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL2/libmain.a")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/build_testL3/libmain.a")).to be == false
   end  
     
   it 'build grandchild (all)' do
-    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL3/libmain.a")).to be == false
     Bake.startBake("merge/main", ["testL3", "--rebuild"])
-    expect(File.exists?("spec/testdata/merge/main/testL1/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testL2/libmain.a")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testL3/libmain.a")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/build_testL1/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL2/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL3/libmain.a")).to be == true
   end  
-  
+
   it 'file and exclude file (all)' do
     Bake.startBake("merge/main", ["testL3", "--rebuild"])
     expect($mystring.include?("stestL1.cpp")).to be == true
@@ -50,19 +50,19 @@ describe "Merging Configs" do
   end    
   
   it 'file and exclude file (child)' do
-    expect(File.exists?("spec/testdata/merge/main/testL5/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL5/libmain.a")).to be == false
     Bake.startBake("merge/main", ["testL5", "--rebuild"])
     expect($mystring.include?("stestL5.cpp")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/testL5/libmain.a")).to be == true    
+    expect(File.exists?("spec/testdata/merge/main/build_testL5/libmain.a")).to be == true    
   end    
 
   it 'file and exclude file (parent)' do
-    expect(File.exists?("spec/testdata/merge/main/testL6/libmain.a")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testL6/libmain.a")).to be == false
     Bake.startBake("merge/main", ["testL6", "--rebuild"])
     expect($mystring.include?("stestL1.cpp")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/testL6/libmain.a")).to be == true    
+    expect(File.exists?("spec/testdata/merge/main/build_testL6/libmain.a")).to be == true    
   end    
-  
+
   
   it 'deps (all)' do
     Bake.startBake("merge/main", ["testL3", "--rebuild"])
@@ -214,7 +214,7 @@ describe "Merging Configs" do
     expect((posPre1_2 < posPst1_1)).to be == true
     expect((posPst1_1 < posPst1_2)).to be == true
   end    
-  
+   
   
   it 'defaulttoolchain (all)' do
     Bake.startBake("merge/main", ["testL3E", "--rebuild", "-v2"])
@@ -336,55 +336,53 @@ describe "Merging Configs" do
   end   
           
   # Valid for exe config
-
   it 'linkerscript, artifact, map (all)' do
-    expect(File.exists?("spec/testdata/merge/main/testE3/testE3.map")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testE3/testE3.exe")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testE3/testE3.map")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testE3/testE3.exe")).to be == false
 
     Bake.startBake("merge/main", ["testE3", "--rebuild", "-v2"])
     
     expect($mystring.include?("linkerscript3")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/testE3/testE3.exe")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/testE3/testE3.map")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/build_testE3/testE3.exe")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/build_testE3/testE3.map")).to be == true
   end    
   
   it 'linkerscript, artifact, map (child)' do
-    expect(File.exists?("spec/testdata/merge/main/testE5/testE5.map")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testE5/testE5.exe")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testE5/testE5.map")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testE5/testE5.exe")).to be == false
 
     Bake.startBake("merge/main", ["testE5", "--rebuild", "-v2"])
     
     expect($mystring.include?("linkerscript5")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/testE5/testE5.exe")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/testE5/testE5.map")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/build_testE5/testE5.exe")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/build_testE5/testE5.map")).to be == true
   end    
   
   it 'linkerscript, artifact, map (parent)' do
-    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.exe")).to be == false
-    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.map")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testE6/testE1.exe")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testE6/testE1.map")).to be == false
 
     Bake.startBake("merge/main", ["testE6", "--rebuild", "-v2"])
     
     expect($mystring.include?("linkerscript1")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.exe")).to be == true
-    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.map")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/build_testE6/testE1.exe")).to be == true
+    expect(File.exists?("spec/testdata/merge/main/build_testE6/testE1.map")).to be == true
   end   
     
   it 'parent broken' do
-    expect(File.exists?("spec/testdata/merge/main/testE6/testE6.exe")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testE6/testE6.exe")).to be == false
     Bake.startBake("merge/main", ["ParentKaputt", "--rebuild"])
     expect($mystring.include?("Error: Config 'dasGibtsDochGarNicht' not found")).to be == true
   end   
 
   it 'var subst' do
-    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.map")).to be == false
+    expect(File.exists?("spec/testdata/merge/main/build_testE6/testE1.map")).to be == false
 
     Bake.startBake("merge/main", ["testE6", "--rebuild"])
     
     expect($mystring.include?("**testE1.exe**")).to be == true # subst
-    expect(File.exists?("spec/testdata/merge/main/testE6/testE1.map")).to be == true # subst
+    expect(File.exists?("spec/testdata/merge/main/build_testE6/testE1.map")).to be == true # subst
   end   
-=end
 
   # explicitly test all toolchain merges
   
@@ -517,7 +515,6 @@ describe "Merging Configs" do
     Bake.startBake("mergeInc/main", ["test", "--rebuild"])
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
-
     
 end
 

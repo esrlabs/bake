@@ -1,6 +1,8 @@
 Changelog
 =========
 
+December 23, 2015 - bake-toolkit 2.13.1
+    * Bugfix: merging configs was extremely slow in 2.12.2 and 2.13.0
 December 23, 2015 - bake-toolkit 2.13.0
     * Bugfix: It was possible that the archiver and linker were called for --prepro and --link-only builds
     * Added: possibility to specify minimum and maximum required bake version in Project.meta file

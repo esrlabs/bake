@@ -79,7 +79,8 @@ module Bake
     end
     
     def clone(obj)
-      Marshal.load(Marshal.dump(obj))
+      return obj.map {|o| o.dup} if Array === obj
+      return obj.dup
     end
     
     def merge()
@@ -104,7 +105,7 @@ module Bake
       @child.setExLib(cExLib + @child.exLib)
       @child.setExLibSearchPath(cExLibSearchPath + @child.exLibSearchPath)
       @child.setUserLibrary(cUserLibrary + @child.userLibrary)
-      
+
       if not @parent.startupSteps.nil?
         if (@child.startupSteps.nil?)
           @child.setStartupSteps(clone(@parent.startupSteps))
@@ -139,7 +140,7 @@ module Bake
       
       pt = @parent.defaultToolchain
       ct = @child.defaultToolchain
-      
+
       if not pt.nil?
         if (ct.nil?)
           @child.setDefaultToolchain(clone(pt))
@@ -158,13 +159,13 @@ module Bake
           mergeToolchain(pt,ct,false)
         end
       end
-      
+
       # Valid for custom config
       
       if (Metamodel::CustomConfig === @child && Metamodel::CustomConfig === @parent)
         @child.setStep(clone(@parent.step)) if @child.step.nil? and not @parent.step.nil?
       end
-      
+
       # Valid for library and exe config
       
       if ((Metamodel::LibraryConfig === @child || Metamodel::ExecutableConfig === @child) && (Metamodel::LibraryConfig === @parent || Metamodel::ExecutableConfig === @parent))
@@ -172,7 +173,7 @@ module Bake
         @child.setExcludeFiles(clone(@parent.excludeFiles) + @child.excludeFiles)
         @child.setIncludeDir(clone(@parent.includeDir) + @child.includeDir)
       end
-      
+
       # Valid for exe config
       
       if (Metamodel::ExecutableConfig === @child && Metamodel::ExecutableConfig === @parent)
