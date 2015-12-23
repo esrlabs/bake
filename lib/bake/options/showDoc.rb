@@ -16,12 +16,5 @@ module Bake
       ExitHelper.exit(0)
     end
     
-    def self.deprecated
-      puts "Option \"--doc\" not supported anymore. Please use"
-      puts "\"--show_doc\" to open the documentation in the browser OR"
-      puts "\"--docu\" for building the documentation of a project."
-      ExitHelper.exit(1)
-    end
-    
   end
 end

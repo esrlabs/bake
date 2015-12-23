@@ -8,39 +8,44 @@ module Bake
     def initialize(argv)
       @arguments = {}
       @argv = argv
-      @default = nil
     end
     
-    def add_option(opt)
-      @arguments[opt.param] = opt
+    #def add_option(opt)
+    #  @arguments[opt.param] = opt
+    #end
+    
+    def add_option(params, block)
+      params.each { |p| @arguments[p] = block }
     end
     
-    def add_default(opt)
-      @default = opt
+    def get_block(param)
+      opt = @arguments[param]
+      raise "Internal error in option handling" unless opt
+      opt.block
     end
     
-    def parse_internal(ignoreInvalid = true)
+    def parse_internal(ignore_invalid = false)
       pos = 0
       begin
         while pos < @argv.length do
           if not @arguments.include?@argv[pos]
-            if @default
-              res = @default.call(@argv[pos])
-              if (not res and not ignoreInvalid)
-                raise "Option #{@argv[pos]} unknown"
-              end
+            index = @argv[pos].index('-')
+            if index != nil and index == 0
+              raise "Option #{@argv[pos]} unknown" if not ignore_invalid
+            else
+              @arguments[""].call(@argv[pos]) # default paramter without "-"
             end
           else
             option = @arguments[@argv[pos]]
-            if option.arg
+            if option.parameters.length == 1
               if pos+1 < @argv.length and @argv[pos+1][0] != "-"
-                option.block.call(@argv[pos+1])
+                option.call(@argv[pos+1])
                 pos = pos + 1
               else
                 raise "Argument for option #{@argv[pos]} missing" 
               end
             else
-              option.block.call()
+              option.call()
             end
           end
           pos = pos + 1

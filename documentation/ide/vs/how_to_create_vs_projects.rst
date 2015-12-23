@@ -12,4 +12,4 @@ Example:
 
 .. code-block:: console
 
-    C:\MyProj>  createVSProjects --version 2012 --rewrite_solution
+    C:\MyProj>  createVSProjects --version 2012 --rewrite

@@ -5,6 +5,28 @@ December 23, 2015 - bake-toolkit 2.13.0
     * Added: possibility to specify minimum and maximum required bake version in Project.meta file
     * Added: it's now possible to omit -b when executing the bakery
     * Added: bakery now searches recursively for bake projects
+    * Changed: some commandline arguments changed, deprecated arguments still supported
+        
+      ==================  =======================
+      New argument        Deprecated argument                    
+      ==================  =======================
+      --do                --include_filter
+      --omit              --exclude_filter
+      --show_configs      --list
+      --link-only         --link_only
+      --generate-doc      --docu
+      --lint-min          --lint_min
+      --lint-max          --lint_max
+      --ignore-cache      --ignore_cache
+      --toolchain-info    --toolchain_info
+      --toolchain-names   --toolchain_names
+      --abs-paths         --show_abs_paths
+      --no-autodir        --no_autodir
+      --incs-and-defs     --show_incs_and_defs
+      --conversion-info   --conversion_info
+      --doc               --show_doc
+      --license           --show_license
+      ==================  =======================
 December 16, 2015 - bake-toolkit 2.12.2
     * Bugfix: extending a client config (merging) could have broken the parent config
     * Changed: empty libraries will not be created and linked anymore

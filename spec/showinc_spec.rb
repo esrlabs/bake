@@ -52,7 +52,7 @@ describe "ShowInc" do
   end
   
   it 'Vars' do
-    Bake.startBake("showinc/main", ["testVar", "--show_incs_and_defs"])
+    Bake.startBake("showinc/main", ["testVar", "--incs-and-defs"])
     expect($mystring.match(/\/.+\/\.\.\/include1/).nil?).to be == false
     expect($mystring.match(/\/.+\/\.\.\/include2/).nil?).to be == false
     expect($mystring.match(/\/.+\/\.\.\/include3/).nil?).to be == false

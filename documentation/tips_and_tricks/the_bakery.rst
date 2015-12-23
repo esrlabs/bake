@@ -36,7 +36,7 @@ Examples:
 
     .. code-block:: console
 
-        bakery -b AllUnitTests -m w:/root1/mainProj -w w:/root2 -r -a black --include_filter run
+        bakery -b AllUnitTests -m w:/root1/mainProj -w w:/root2 -r -a black --do run
 
 
 Syntax of Collection.meta

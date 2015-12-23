@@ -106,15 +106,15 @@ Lint error due to too many includes
     In rare cases lint has problems if it has to open too many (include) files. 
 
     **Solution:**
-    You can use the *--lint_max* and the *--lint_min* options to get around this issue.
+    You can use the *--lint-max* and the *--lint-min* options to get around this issue.
 
     Example:
 
     .. code-block:: console
 
-        User@Host:~$ bake Debug -p MyLibraryProject --lint --lint_max 50                 #(lints the first 51 files)
-        User@Host:~$ bake Debug -p MyLibraryProject --lint --lint_min 51 --lint_max 100  #(lints the next 50 files)
-        User@Host:~$ bake Debug -p MyLibraryProject --lint --lint_min 101                #(lints the rest of the files)
+        User@Host:~$ bake Debug -p MyLibraryProject --lint --lint-max 50                 #(lints the first 51 files)
+        User@Host:~$ bake Debug -p MyLibraryProject --lint --lint-min 51 --lint-max 100  #(lints the next 50 files)
+        User@Host:~$ bake Debug -p MyLibraryProject --lint --lint-min 101                #(lints the rest of the files)
 
 
 .. Clang Analyze

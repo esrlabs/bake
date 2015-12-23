@@ -24,22 +24,22 @@ describe "Option Parser" do
   end
 
   it 'should provide an available toolchains flag' do
-    Bake.options = Options.new(["--toolchain_names"])
+    Bake.options = Options.new(["--toolchain-names"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("Available toolchains:")).to be == true
     expect($mystring.include?("Diab")).to be == true
   end
   
   it 'should provide a flag for printing tool options' do
-    Bake.options = Options.new(["--toolchain_info"])
+    Bake.options = Options.new(["--toolchain-info"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
-    expect($mystring.include?("Argument for option --toolchain_info missing")).to be == true
+    expect($mystring.include?("Argument for option --toolchain-info missing")).to be == true
 
-    Bake.options = Options.new(["--toolchain_info", "blah"])
+    Bake.options = Options.new(["--toolchain-info", "blah"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("Toolchain not available")).to be == true
     
-    Bake.options = Options.new(["--toolchain_info", "Diab"])
+    Bake.options = Options.new(["--toolchain-info", "Diab"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.split("SOURCE_FILE_ENDINGS").length).to be == 4 # included 3 times
   end
@@ -62,7 +62,7 @@ describe "Option Parser" do
   end
 
   it 'should provide a config names with default' do
-    Bake.options = Options.new(["--show_configs", "-m", "spec/testdata/default/libD"])
+    Bake.options = Options.new(["--list", "-m", "spec/testdata/default/libD"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("* testL1A")).to be == true
     expect($mystring.include?("* testL1B (default)")).to be == true
@@ -70,7 +70,7 @@ describe "Option Parser" do
   end
 
   it 'should provide config names' do
-    Bake.options = Options.new(["--show_configs", "-m", "spec/testdata/default/libNoD"])
+    Bake.options = Options.new(["--list", "-m", "spec/testdata/default/libNoD"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("* testL2A")).to be == true
     expect($mystring.include?("* testL2B")).to be == true
@@ -78,7 +78,7 @@ describe "Option Parser" do
   end
    
   it 'should provide config names with description' do
-    Bake.options = Options.new(["--show_configs", "-m", "spec/testdata/desc/main1"])
+    Bake.options = Options.new(["--list", "-m", "spec/testdata/desc/main1"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("No configuration with a DefaultToolchain found")).to be == false
     expect($mystring.include?("* test1: Bla")).to be == true
@@ -96,7 +96,7 @@ describe "Option Parser" do
   end  
 
   it 'should provide a license' do
-    Bake.options = Options.new(["--show_license"])
+    Bake.options = Options.new(["--license"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("E.S.R.")).to be == true
     expect($mystring.include?("lake")).to be == true

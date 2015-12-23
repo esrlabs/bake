@@ -410,13 +410,13 @@ describe "Merging Configs" do
   end 
   
   it 'toolchain internal defines merge' do
-    Bake.startBake("merge/main", ["testTC4", "--rebuild", "--show_incs_and_defs"])
+    Bake.startBake("merge/main", ["testTC4", "--rebuild", "--incs-and-defs"])
     expect($mystring.include?("HARHAR")).to be == true
     expect($mystring.include?("Oooooh")).to be == false
   end  
   
   it 'toolchain internal defines not merge' do
-    Bake.startBake("merge/main", ["testTC5", "--rebuild", "--show_incs_and_defs"])
+    Bake.startBake("merge/main", ["testTC5", "--rebuild", "--incs-and-defs"])
     expect($mystring.include?("HARHAR")).to be == false
     expect($mystring.include?("Oooooh")).to be == true
   end 
@@ -484,7 +484,7 @@ describe "Merging Configs" do
   end
   
   it 'toolchain docu merge' do
-    Bake.startBake("merge/main", ["testTC32", "--rebuild", "-v2", "--docu"])
+    Bake.startBake("merge/main", ["testTC32", "--rebuild", "-v2", "--generate-doc"])
     expect($mystring.include?("blah fasel")).to be == true
     expect($mystring.include?("nix da")).to be == false
   end
@@ -502,13 +502,13 @@ describe "Merging Configs" do
   end
   
   it 'toolchain internal includes no merge' do
-    Bake.startBake("merge/main", ["testTC31", "--rebuild", "-v2", "--show_incs_and_defs"])
+    Bake.startBake("merge/main", ["testTC31", "--rebuild", "-v2", "--incs-and-defs"])
     expect($mystring.include?("HARHAR")).to be == false
     expect($mystring.include?("Oooooh")).to be == true
   end
   
   it 'toolchain internal includes merge' do
-    Bake.startBake("merge/main", ["testTC32", "--rebuild", "-v2", "--show_incs_and_defs"])
+    Bake.startBake("merge/main", ["testTC32", "--rebuild", "-v2", "--incs-and-defs"])
     expect($mystring.include?("HARHAR")).to be == true
     expect($mystring.include?("Oooooh")).to be == false
   end

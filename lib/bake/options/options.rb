@@ -6,7 +6,6 @@ require 'bake/options/showLicense'
 require 'bake/options/showDoc'
 require 'bake/options/usage'
 require 'bake/options/create'
-require 'common/options/option'
 
 module Bake
 
@@ -68,62 +67,65 @@ module Bake
       @def_roots = []
       @main_project_name = ""
       
-      add_default(Proc.new{ |x| set_build_config_default(x) })
-      
-      add_option(Option.new("-m",true)                     { |x| set_main_dir(x)            })
-      add_option(Option.new("-b",true)                     { |x| set_build_config(x)        })
-      add_option(Option.new("-p",true)                     { |x| @project = x;})
-      add_option(Option.new("-f",true)                     { |x| @filename = x.gsub(/[\\]/,'/')            })
-      add_option(Option.new("-c",false)                    {     @clean = true              })
-      add_option(Option.new("-a",true)                     { |x| Bake.formatter.setColorScheme(x.to_sym)              })
-      add_option(Option.new("-w",true)                     { |x| set_root(x)                })
-      add_option(Option.new("-r",false)                    {     @stopOnFirstError = true                  })
-      add_option(Option.new("--rebuild",false)             {     @rebuild = true                })
-      add_option(Option.new("--prepro",false)              {     @prepro = true                 })
-      add_option(Option.new("--link_only",false)           {     @linkOnly = true;              })
-      add_option(Option.new("--no_autodir",false)          {     @no_autodir = true         })
-      add_option(Option.new("--lint",false)                {     @lint = true               })
-      add_option(Option.new("--lint_min",true)             { |x| @lint_min = String === x ? x.to_i : x            })
-      add_option(Option.new("--lint_max",true)             { |x| @lint_max = String === x ? x.to_i : x            })
-      
-      add_option(Option.new("--create",true)               { |x| Bake::Create.proj(x) })     
-      add_option(Option.new("--conversion_info",false)        { @conversion_info = true  }) 
+      add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
+      add_option(["-m"                                           ], lambda { |x| set_main_dir(x)                         })
+      add_option(["-p"                                           ], lambda { |x| @project = x                            })
+      add_option(["-f"                                           ], lambda { |x| @filename = x.gsub(/[\\]/,'/')          })
+      add_option(["-c"                                           ], lambda {     @clean = true                           })
+      add_option(["-a"                                           ], lambda { |x| Bake.formatter.setColorScheme(x.to_sym) })
+      add_option(["-w"                                           ], lambda { |x| set_root(x)                             })
+      add_option(["-r"                                           ], lambda {     @stopOnFirstError = true                })
+      add_option(["--rebuild"                                    ], lambda {     @rebuild = true                         })
+      add_option(["--prepro"                                     ], lambda {     @prepro = true                          })
+      add_option(["--link-only",          "--link_only"          ], lambda {     @linkOnly = true;                       })
+      add_option(["--no-autodir",         "--no_autodir"         ], lambda {     @no_autodir = true                      })
+      add_option(["--lint"                                       ], lambda {     @lint = true                            })
+      add_option(["--lint-min",           "--lint_min"           ], lambda { |x| @lint_min = String === x ? x.to_i : x   })
+      add_option(["--lint-max",           "--lint_max"           ], lambda { |x| @lint_max = String === x ? x.to_i : x   })
+                                                                                                                         
+      add_option(["--create"                                     ], lambda { |x| Bake::Create.proj(x)                    })     
+      add_option(["--conversion-info",    "--conversion_info"    ], lambda { @conversion_info = true                     }) 
+                                                                                                                         
+      add_option(["--generate-doc",       "--docu"               ], lambda {     @docu = true                            })
+                                                                                                                         
+      add_option(["-v0"                                          ], lambda {     @verbose = 0                            })
+      add_option(["-v1"                                          ], lambda {     @verbose = 1                            })
+      add_option(["-v2"                                          ], lambda {     @verbose = 2                            })
+      add_option(["-v3"                                          ], lambda {     @verbose = 3                            })
         
-      add_option(Option.new("--docu",false)                {     @docu = true               })
+      add_option(["--debug"                                      ], lambda {     @debug = true                           })
+      add_option(["--set"                                        ], lambda { |x| set_set(x)                              })
+        
+      add_option(["--clobber"                                    ], lambda {     @clobber = true; @clean = true          })
+      add_option(["--ignore-cache",       "--ignore_cache"       ], lambda {     @nocache = true                         })
+      add_option(["--threads"                                    ], lambda { |x| set_threads(x)                          })
+      add_option(["--socket"                                     ], lambda { |x| @socket = String === x ? x.to_i : x     })
+      add_option(["--toolchain-info",     "--toolchain_info"     ], lambda { |x| ToolchainInfo.showToolchain(x)          })
+      add_option(["--toolchain-names",    "--toolchain_names"    ], lambda {     ToolchainInfo.showToolchainList         })
+      add_option(["--do",                 "--include_filter"     ], lambda { |x| @include_filter << x                    })
+      add_option(["--omit",               "--exclude_filter"     ], lambda { |x| @exclude_filter << x                    })
+      add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })
+                                                                 
+      add_option(["-h",                   "--help"               ], lambda {     Bake::Usage.show                        })
 
-      add_option(Option.new("-v0",false)                   {     @verbose = 0      })
-      add_option(Option.new("-v1",false)                   {     @verbose = 1      })
-      add_option(Option.new("-v2",false)                   {     @verbose = 2      })
-      add_option(Option.new("-v3",false)                   {     @verbose = 3      })
-        
-      add_option(Option.new("--debug",false)               {     @debug = true              })
-      add_option(Option.new("--set",true)                  { |x| set_set(x)                 })
-        
-      add_option(Option.new("--clobber",false)             {     @clobber = true; @clean = true                })
-      add_option(Option.new("--ignore_cache",false)        {     @nocache = true                })
-      add_option(Option.new("--threads",true)              { |x| set_threads(x)             })
-      add_option(Option.new("--socket",true)               { |x| @socket = String === x ? x.to_i : x              })
-      add_option(Option.new("--toolchain_info",true)       { |x| ToolchainInfo.showToolchain(x)         })
-      add_option(Option.new("--toolchain_names",false)     {     ToolchainInfo.showToolchainList           })
-      add_option(Option.new("--include_filter",true)       { |x| @include_filter << x       })
-      add_option(Option.new("--exclude_filter",true)       { |x| @exclude_filter << x       })
-      add_option(Option.new("--show_abs_paths",false)      {     @consoleOutput_fullnames = true         })
-      add_option(Option.new("--visualStudio",false)        {     @consoleOutput_visualStudio = true           })
-      add_option(Option.new("-h",false)                    {     Bake::Usage.show                 })
-      add_option(Option.new("--help",false)                {     Bake::Usage.show                 })
-      add_option(Option.new("--show_include_paths",false)  {     @show_includes = true      })
-      add_option(Option.new("--show_incs_and_defs",false)  {     @show_includes_and_defines = true  })
-      add_option(Option.new("--show_license",false)        {     License.show              })
-      add_option(Option.new("--show_doc",false)                 {     Doc.show              })
-      add_option(Option.new("--doc",false)                 {     Doc.deprecated              })
-      add_option(Option.new("--version",false)             {     ExitHelper.exit(0)         })
-      add_option(Option.new("--show_configs",false)        {     @showConfigs = true    })
-      add_option(Option.new("--writeCC2J",true)            { |x| @cc2j_filename = x.gsub(/[\\]/,'/')            })
+      add_option(["--incs-and-defs",      "--show_incs_and_defs" ], lambda {     @show_includes_and_defines = true       })
+      add_option(["--license",            "--show_license"       ], lambda {     License.show                            })
+      add_option(["--doc",                "--show_doc"           ], lambda {     Doc.show                                })
+
+      add_option(["--version"                                    ], lambda {     ExitHelper.exit(0)                      })
+      add_option(["--list",               "--show_configs"       ], lambda {     @showConfigs = true                     })
+      add_option(["--writeCC2J"                                  ], lambda { |x| @cc2j_filename = x.gsub(/[\\]/,'/')     })
+
+      # hidden
+      add_option(["--visualStudio"                               ], lambda {     @consoleOutput_visualStudio = true      })
+            
+      # deprecated and not replaced by new command
+      add_option(["--show_include_paths"                         ], lambda {     @show_includes = true                   })
 
     end
 
     def parse_options()
-      parse_internal(false)
+      parse_internal()
       set_main_dir(Dir.pwd) if @main_dir.nil?
       @roots = @def_roots if @roots.length == 0
       
@@ -136,46 +138,46 @@ module Bake
       
       if @conversion_info
         if @rebuild
-          Bake.formatter.printError("Error: --conversion_info and --rebuild not allowed at the same time")
+          Bake.formatter.printError("Error: --conversion-info and --rebuild not allowed at the same time")
           ExitHelper.exit(1)
         end 
         if @clean
-          Bake.formatter.printError("Error: --conversion_info and -c not allowed at the same time")
+          Bake.formatter.printError("Error: --conversion-info and -c not allowed at the same time")
           ExitHelper.exit(1)
         end
         if @prepro
-          Bake.formatter.printError("Error: --conversion_info and --prepro not allowed at the same time")
+          Bake.formatter.printError("Error: --conversion-info and --prepro not allowed at the same time")
           ExitHelper.exit(1)
         end
         if @linkOnly
-          Bake.formatter.printError("Error: --conversion_info and --linkOnly not allowed at the same time")
+          Bake.formatter.printError("Error: --conversion-info and --linkOnly not allowed at the same time")
           ExitHelper.exit(1)
         end
         if @lint
-          Bake.formatter.printError("Error: --conversion_info and --lint not allowed at the same time")
+          Bake.formatter.printError("Error: --conversion-info and --lint not allowed at the same time")
           ExitHelper.exit(1)
         end
         if @docu
-          Bake.formatter.printError("Error: --conversion_info and --docu not allowed at the same time")
+          Bake.formatter.printError("Error: --conversion-info and --docu not allowed at the same time")
           ExitHelper.exit(1)
         end
         if not @project
-          Bake.formatter.printError("Error: --conversion_info must be used with -p")
+          Bake.formatter.printError("Error: --conversion-info must be used with -p")
           ExitHelper.exit(1)
         end
       end
       
       if @linkOnly
         if @rebuild
-          Bake.formatter.printError("Error: --link_only and --rebuild not allowed at the same time")
+          Bake.formatter.printError("Error: --link-only and --rebuild not allowed at the same time")
           ExitHelper.exit(1)
         end
         if @clean
-          Bake.formatter.printError("Error: --link_only and -c not allowed at the same time")
+          Bake.formatter.printError("Error: --link-only and -c not allowed at the same time")
           ExitHelper.exit(1)
         end
         if @prepro
-          Bake.formatter.printError("Error: --link_only and --prepro not allowed at the same time")
+          Bake.formatter.printError("Error: --link-only and --prepro not allowed at the same time")
           ExitHelper.exit(1)
         end
       end
@@ -209,13 +211,6 @@ module Bake
         ExitHelper.exit(1)
       end      
     end    
-
-    def set_build_config_default(config)
-      index = config.index('-')
-      return false if (index != nil and index == 0) 
-      set_build_config(config)
-      return true
-    end
 
     def set_build_config(config)
       if not @build_config.empty?

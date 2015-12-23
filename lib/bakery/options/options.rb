@@ -20,15 +20,13 @@ module Bake
       @socket = 0
       @def_roots = []
             
-      add_default(Proc.new{ |x| set_collection_name_default(x) })
-        
-      add_option(Option.new("-b",true)        { |x| set_collection_name(x)     })
-      add_option(Option.new("-m",true)        { |x| set_collection_dir(x)     })
-      add_option(Option.new("-r",false)       {     @error = true                 })
-      add_option(Option.new("-a",true)        { |x|Bake.formatter.setColorScheme(x.to_sym)               })
-      add_option(Option.new("-w",true)        { |x| set_root(x)               })
-      add_option(Option.new("--socket",true)  { |x| @socket = String === x ? x.to_i : x             })
-      add_option(Option.new("-h",false)       {     usage; ExitHelper.exit(0) })
+      add_option(["-b", ""      ], lambda { |x| set_collection_name(x)                  })
+      add_option(["-m"          ], lambda { |x| set_collection_dir(x)                   })
+      add_option(["-r"          ], lambda {     @error = true                           })
+      add_option(["-a"          ], lambda { |x| Bake.formatter.setColorScheme(x.to_sym) })
+      add_option(["-w"          ], lambda { |x| set_root(x)                             })
+      add_option(["--socket"    ], lambda { |x| @socket = String === x ? x.to_i : x     })
+      add_option(["-h", "--help"], lambda {     usage; ExitHelper.exit(0)               })
     end
     
     def usage
@@ -37,7 +35,7 @@ module Bake
       puts " -m <dir>        Directory containing the collection file (default is current directory)."
       puts " -r              Stop on first error."
       puts " -a <scheme>     Use ansi color sequences (console must support it). Possible values are 'white' and 'black'."
-      puts " -h              Print this help."
+      puts " -h, --help      Print this help."
       puts " -w <root>       Add a workspace root (can be used multiple times)."
       puts "                 If no root is specified, the parent directory of Collection.meta is added automatically."
       puts " --socket <num>  Set socket for sending errors, receiving commands, etc. - used by e.g. Eclipse."
@@ -61,13 +59,6 @@ module Bake
         Bake.formatter.printError("Error: #{dir} is not a directory")
         ExitHelper.exit(1)
       end      
-    end
-    
-    def set_collection_name_default(collection_name)
-      index = collection_name.index('-')
-      return false if (index != nil and index == 0) 
-      set_collection_name(collection_name)
-      return true
     end
     
     def set_collection_name(collection_name)

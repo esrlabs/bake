@@ -13,7 +13,7 @@ module Bake
 describe "VarSubst" do
   
   it 'vars should be substed' do
-    Bake.startBake("cache/main", ["test", "--include_filter", "var"])
+    Bake.startBake("cache/main", ["test", "--do", "var"])
 
     expect(($mystring.include?"MainConfigName_lib1 test")).to be == true
     expect(($mystring.include?"MainConfigName_main test")).to be == true
@@ -58,7 +58,7 @@ describe "VarSubst" do
   end
 
   it 'artifactname' do
-    Bake.startBake("cache/main", ["test2", "--include_filter", "var"])
+    Bake.startBake("cache/main", ["test2", "--do", "var"])
   
     expect(($mystring.include?"ArtifactName_main abc.def")).to be == true
     expect(($mystring.include?"ArtifactNameBase_main abc")).to be == true

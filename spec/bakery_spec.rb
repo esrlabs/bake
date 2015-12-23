@@ -43,11 +43,11 @@ describe "bake" do
   end 
 
   it 'collection parse params' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b gaga -w spec/testdata/root1 -w spec/testdata/root2 -v2 -a black --ignore_cache -r -c`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b gaga -w spec/testdata/root1 -w spec/testdata/root2 -v2 -a black --ignore-cache -r -c`
     expect(str.include?(" -r")).to be == true
     expect(str.include?(" -a black")).to be == true
     expect(str.include?(" -v2")).to be == true
-    expect(str.include?(" --ignore_cache")).to be == true
+    expect(str.include?(" --ignore-cache")).to be == true
     expect(str.include?(" -r")).to be == true
     expect(str.include?(" -c")).to be == true
   end
@@ -95,7 +95,7 @@ describe "bake" do
   end    
 
   it 'collection option ok' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r --show_configs`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r --list`
     expect(str.include?("3 of 3 builds ok")).to be == true
   end  
   

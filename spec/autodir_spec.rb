@@ -18,7 +18,7 @@ describe "autodir" do
   end
 
   it 'with no_autodir' do
-    Bake.startBake("noAutodir/main", ["-b", "test", "--no_autodir", "--rebuild"])
+    Bake.startBake("noAutodir/main", ["-b", "test", "--no-autodir", "--rebuild"])
     expect($mystring.split("Rebuilding done.").length).to be == 2
   end
   

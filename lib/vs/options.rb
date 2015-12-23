@@ -13,10 +13,11 @@ module Bake
       @rewriteSolution = false
       @roots = []
             
-      add_option(Option.new("--version",true)           { |x| set_version(x)            })
-      add_option(Option.new("--rewrite_solution",false) {     set_rewrite_solution      })
-	    add_option(Option.new("-w",true)                  { |x| set_root(x)               })
-      add_option(Option.new("-h",false)                 {     usage; ExitHelper.exit(0) })
+      add_option(["--version"                      ], lambda { |x| set_version(x)                                                 })
+      add_option(["--rewrite", "--rewrite_solution"], lambda {     set_rewrite_solution                                           })
+	    add_option(["-w",                            ], lambda { |x| set_root(x)                                                    })
+      add_option(["-h", "--help"                   ], lambda {     usage; ExitHelper.exit(0)                                      })
+      add_option([""                               ], lambda { |x| puts "Error: invalid argument #{x}"; usage; ExitHelper.exit(1) })
     end
     
     def usage
@@ -24,13 +25,13 @@ module Bake
       puts " -w <root>           Add a workspace root. Default is current directory."
 	    puts "                     This option can be used at multiple times."
 	    puts "                     Solution files will be created in the first root directory."
-	    puts " --version <year>    Visual Studio version. Currently supported: 2010 and 2012 (default)."
-      puts " --rewrite_solution  Rewrites existing solution files instead of appending new projects."
-      puts " -h                  Print this help."
+	    puts " --version <year>    Visual Studio version. Currently supported: 2010, 2012 (default) and 2013."
+      puts " --rewrite           Rewrites existing solution files instead of appending new projects."
+      puts " -h, --help          Print this help."
     end
   
     def parse_options()
-      parse_internal(false)
+      parse_internal()
       @roots << Dir.pwd if @roots.length == 0
     end
     

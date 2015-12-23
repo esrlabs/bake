@@ -56,7 +56,7 @@ describe "Lint" do
   
   it 'lint min' do
     if Utils::OS.windows?
-      Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint_min", "1"])
+      Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint-min", "1"])
       expect($mystring.split("Module:").length).to be == 3
       expect($mystring.include?("mainb")).to be == true
       expect($mystring.include?("mainc")).to be == true
@@ -65,7 +65,7 @@ describe "Lint" do
   
   it 'lint max' do
     if Utils::OS.windows?
-      Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint_max", "1"])
+      Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint-max", "1"])
       expect($mystring.split("Module:").length).to be == 3
       expect($mystring.include?("maina")).to be == true
       expect($mystring.include?("mainb")).to be == true
@@ -74,7 +74,7 @@ describe "Lint" do
   
   it 'lint minmax eq' do
     if Utils::OS.windows?
-      Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint_min", "1", "--lint_max", "1"])
+      Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint-min", "1", "--lint-max", "1"])
       expect($mystring.split("Module:").length).to be == 2
       expect($mystring.include?("mainb")).to be == true
     end
