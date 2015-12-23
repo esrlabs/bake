@@ -56,8 +56,11 @@ module Bake
         return false
       end
 
+      def ignore?
+        Bake.options.prepro
+      end
+      
       def needed?(libs)
-        return false if Bake.options.prepro
         return "because linkOnly was specified" if Bake.options.linkOnly
         
         # exe
@@ -94,6 +97,8 @@ module Bake
           
           cmdLineCheck = false
           cmdLineFile = calcCmdlineFile()
+          
+          return true if ignore?
           reason = needed?(libs)
           if not reason
             cmdLineCheck = true

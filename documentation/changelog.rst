@@ -2,8 +2,9 @@ Changelog
 =========
 
 December 23, 2015 - bake-toolkit 2.13.0
+    * Bugfix: It was possible that the archiver and linker were called for --prepro and --link-only builds
     * Added: possibility to specify minimum and maximum required bake version in Project.meta file
-    * Added: it's now possible to omit -b when executing the bakery
+    * Added: option to omit -b when executing the bakery
     * Added: bakery now searches recursively for bake projects
     * Changed: some commandline arguments changed, deprecated arguments still supported
         

@@ -23,10 +23,11 @@ module Bake
         archive_name + ".cmdline"
       end
       
+      def ignore?
+        Bake.options.linkOnly or Bake.options.prepro
+      end
+      
       def needed?
-        return false if Bake.options.linkOnly
-        return false if Bake.options.prepro
-        
         # lib
         return "because library does not exist" if not File.exists?(archive_name)
 
@@ -51,6 +52,8 @@ module Bake
           
           cmdLineCheck = false
           cmdLineFile = calcCmdlineFile()
+          
+          return true if ignore?
           reason = needed?
           if not reason
             cmdLineCheck = true

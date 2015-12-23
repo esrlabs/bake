@@ -32,10 +32,8 @@ module Bake
         File.join([@output_dir, adaptedSource])
       end
       
-      def maybe_needed?(source, object, type, dep_filename_conv)
-        return false if Bake.options.linkOnly
-        return false if Bake.options.prepro and type == ASM
-        return true
+      def ignore?(type)
+        Bake.options.linkOnly or (Bake.options.prepro and type == ASM)
       end
       
       def needed?(source, object, type, dep_filename_conv)
@@ -114,8 +112,8 @@ module Bake
         
         cmdLineCheck = false
         cmdLineFile = calcCmdlineFile(object)
-        return true unless maybe_needed?(source, object, type, dep_filename_conv)
 
+        return true if ignore?(type)
         reason = needed?(source, object, type, dep_filename_conv)
         if not reason
           cmdLineCheck = true
