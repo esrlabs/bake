@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Changelog &mdash; bake 2.12.2 documentation</title>
+    <title>Changelog &mdash; bake 2.13.0 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.12.2',
+        VERSION:     '2.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake 2.12.2 documentation" href="index.html" />
+    <link rel="top" title="bake 2.13.0 documentation" href="index.html" />
     <link rel="next" title="License" href="license.html" />
     <link rel="prev" title="Known Issues" href="known_issues.html" />
 <meta charset='utf-8'>
@@ -140,11 +140,86 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>December 23, 2015 - bake-toolkit 2.13.0</dt>
+<dd><ul class="first last">
+<li><p class="first">Bugfix: It was possible that the archiver and linker were called for &#8211;prepro and &#8211;link-only builds</p>
+</li>
+<li><p class="first">Added: possibility to specify minimum and maximum required bake version in Project.meta file</p>
+</li>
+<li><p class="first">Added: option to omit -b when executing the bakery</p>
+</li>
+<li><p class="first">Added: bakery now searches recursively for bake projects</p>
+</li>
+<li><p class="first">Changed: some commandline arguments changed, deprecated arguments still supported</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">New argument</th>
+<th class="head">Deprecated argument</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#8211;do</td>
+<td>&#8211;include_filter</td>
+</tr>
+<tr class="row-odd"><td>&#8211;omit</td>
+<td>&#8211;exclude_filter</td>
+</tr>
+<tr class="row-even"><td>&#8211;show_configs</td>
+<td>&#8211;list</td>
+</tr>
+<tr class="row-odd"><td>&#8211;link-only</td>
+<td>&#8211;link_only</td>
+</tr>
+<tr class="row-even"><td>&#8211;generate-doc</td>
+<td>&#8211;docu</td>
+</tr>
+<tr class="row-odd"><td>&#8211;lint-min</td>
+<td>&#8211;lint_min</td>
+</tr>
+<tr class="row-even"><td>&#8211;lint-max</td>
+<td>&#8211;lint_max</td>
+</tr>
+<tr class="row-odd"><td>&#8211;ignore-cache</td>
+<td>&#8211;ignore_cache</td>
+</tr>
+<tr class="row-even"><td>&#8211;toolchain-info</td>
+<td>&#8211;toolchain_info</td>
+</tr>
+<tr class="row-odd"><td>&#8211;toolchain-names</td>
+<td>&#8211;toolchain_names</td>
+</tr>
+<tr class="row-even"><td>&#8211;abs-paths</td>
+<td>&#8211;show_abs_paths</td>
+</tr>
+<tr class="row-odd"><td>&#8211;no-autodir</td>
+<td>&#8211;no_autodir</td>
+</tr>
+<tr class="row-even"><td>&#8211;incs-and-defs</td>
+<td>&#8211;show_incs_and_defs</td>
+</tr>
+<tr class="row-odd"><td>&#8211;conversion-info</td>
+<td>&#8211;conversion_info</td>
+</tr>
+<tr class="row-even"><td>&#8211;doc</td>
+<td>&#8211;show_doc</td>
+</tr>
+<tr class="row-odd"><td>&#8211;license</td>
+<td>&#8211;show_license</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</dd>
 <dt>December 16, 2015 - bake-toolkit 2.12.2</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: extending a client config (merging) could have broken the parent config</li>
-<li>Change: empty libraries will not be created and linked anymore</li>
-<li>Change: added inject as alias for infix</li>
+<li>Changed: empty libraries will not be created and linked anymore</li>
+<li>Changed: added inject as alias for infix</li>
 </ul>
 </dd>
 <dt>November 16, 2015 - bake-toolkit 2.12.1</dt>

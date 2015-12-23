@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Bakery &mdash; bake 2.12.2 documentation</title>
+    <title>The Bakery &mdash; bake 2.13.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.12.2',
+        VERSION:     '2.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake 2.12.2 documentation" href="../index.html" />
+    <link rel="top" title="bake 2.13.0 documentation" href="../index.html" />
     <link rel="up" title="Tips and Tricks" href="tips_and_tricks.html" />
     <link rel="next" title="Static Code Analysis" href="static_code_analysis.html" />
     <link rel="prev" title="Tips and Tricks" href="tips_and_tricks.html" />
@@ -161,12 +161,16 @@ The most important options are the collection name (<em>-b</em>) and the collect
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakery -b AllUnitTests</span>
 </pre></div>
 </div>
+<p>It is possible to omit <em>-b</em>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakery AllUnitTests</span>
+</pre></div>
+</div>
 <p>Clean all unittests:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakery -b AllUnitTests -c</span>
 </pre></div>
 </div>
 <p>Build all unittests, workspace checked out into two roots, console supports colors, stop on first error, run the unittests after build:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">bakery -b AllUnitTests -m w:/root1/mainProj -w w:/root2 -r -a black --include_filter run</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakery -b AllUnitTests -m w:/root1/mainProj -w w:/root2 -r -a black --do run</span>
 </pre></div>
 </div>
 </div></blockquote>
