@@ -19,6 +19,12 @@ Examples:
     .. code-block:: console
 
         bakery -b AllUnitTests
+        
+    It is possible to omit *-b*:
+
+    .. code-block:: console
+
+        bakery AllUnitTests
 
     Clean all unittests:
     
@@ -30,7 +36,7 @@ Examples:
 
     .. code-block:: console
 
-        bakery -b AllUnitTests -m w:/root1/mainProj -w w:/root2 -r -a black --include_filter run
+        bakery -b AllUnitTests -m w:/root1/mainProj -w w:/root2 -r -a black --do run
 
 
 Syntax of Collection.meta

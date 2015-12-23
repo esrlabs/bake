@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Static Code Analysis &mdash; bake 2.12.2 documentation</title>
+    <title>Static Code Analysis &mdash; bake 2.13.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.12.2',
+        VERSION:     '2.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake 2.12.2 documentation" href="../index.html" />
+    <link rel="top" title="bake 2.13.0 documentation" href="../index.html" />
     <link rel="up" title="Tips and Tricks" href="tips_and_tricks.html" />
     <link rel="next" title="How to use bake with cygwin" href="how_to_use_bake_with_cygwin.html" />
     <link rel="prev" title="The Bakery" href="the_bakery.html" />
@@ -251,11 +251,11 @@ configuration.</p>
 <div><p><strong>Issue:</strong>
 In rare cases lint has problems if it has to open too many (include) files.</p>
 <p><strong>Solution:</strong>
-You can use the <em>&#8211;lint_max</em> and the <em>&#8211;lint_min</em> options to get around this issue.</p>
+You can use the <em>&#8211;lint-max</em> and the <em>&#8211;lint-min</em> options to get around this issue.</p>
 <p>Example:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -p MyLibraryProject --lint --lint_max <span class="m">50</span>                 <span class="c">#(lints the first 51 files)</span>
-<span class="gp">User@Host:~$</span> bake Debug -p MyLibraryProject --lint --lint_min <span class="m">51</span> --lint_max <span class="m">100</span>  <span class="c">#(lints the next 50 files)</span>
-<span class="gp">User@Host:~$</span> bake Debug -p MyLibraryProject --lint --lint_min <span class="m">101</span>                <span class="c">#(lints the rest of the files)</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -p MyLibraryProject --lint --lint-max <span class="m">50</span>                 <span class="c">#(lints the first 51 files)</span>
+<span class="gp">User@Host:~$</span> bake Debug -p MyLibraryProject --lint --lint-min <span class="m">51</span> --lint-max <span class="m">100</span>  <span class="c">#(lints the next 50 files)</span>
+<span class="gp">User@Host:~$</span> bake Debug -p MyLibraryProject --lint --lint-min <span class="m">101</span>                <span class="c">#(lints the rest of the files)</span>
 </pre></div>
 </div>
 </div></blockquote>

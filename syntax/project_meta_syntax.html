@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Syntax of the Project.meta file &mdash; bake 2.12.2 documentation</title>
+    <title>The Syntax of the Project.meta file &mdash; bake 2.13.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.12.2',
+        VERSION:     '2.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake 2.12.2 documentation" href="../index.html" />
+    <link rel="top" title="bake 2.13.0 documentation" href="../index.html" />
     <link rel="up" title="Syntax" href="syntax.html" />
     <link rel="next" title="Variables in Project.meta" href="variable_substitutions.html" />
     <link rel="prev" title="Syntax" href="syntax.html" />
@@ -206,6 +206,8 @@ z-index: 100;
 
 &nbsp; <span class="help" onMouseover="showDescription()" onMouseout="notip()">Description</span>  &#60;text&#62;<br><br>
 
+&nbsp; <span class="help" onMouseover="showVersion()" onMouseout="notip()">RequiredBakeVersion</span> minimum: &#60;major.minor.patch&#62;, maximum: &#60;major.minor.patch&#62;<br><br>
+
 &nbsp; <span class="help" onMouseover="showResponsible()" onMouseout="notip()">Responsible</span>  {<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showPerson()" onMouseout="notip()">Person</span> &#60;name&#62;,
               <span class="help" onMouseover="showPersonEmail()" onMouseout="notip()">email</span>: &#60;adr&#62;<br>
@@ -370,6 +372,12 @@ function showDescription() {
   ddrivetip("Description", "No", "0..1", "-",str)
 }
 
+function showVersion() {
+  str = 'If specified, the build will be aborted if bake version is lower than mininum or greater than maximum.<br>'+
+    'It is possible to define only minimum, only maximim or both version thresholds.<br>'+
+    'Minor and patch version numbers are optional.'
+  ddrivetip("RequiredBakeVersion", "No", "0..1", "-",str)
+}
 
 function showPerson() {
   str = 'Person who is responsible for the project.'
@@ -486,8 +494,8 @@ function showStepDefault() {
 
 function showStepFilter() {   
   str = 'A step can be switched on or off explicitly regardless of the "default" attribute with the command line options<br>'+
-	'<i> &nbsp; &nbsp; --include_filter &#60;filter name&#62;</i><br>'+
-	'<i> &nbsp; &nbsp; --exclude_filter &#60;filter name&#62;</i><br>'
+	'<i> &nbsp; &nbsp; --do &#60;filter name&#62;</i><br>'+
+	'<i> &nbsp; &nbsp; --omit &#60;filter name&#62;</i><br>'
   ddrivetip("filter", "No","-","-",str)
 }
 
