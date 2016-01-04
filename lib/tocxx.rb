@@ -34,6 +34,8 @@ require 'socket'
 require 'blocks/showIncludes'
 require 'common/abortException'
 
+require 'adapt/config/loader'
+
 module Bake
 
   class SystemCommandFailed < Exception
@@ -254,8 +256,11 @@ module Bake
       end      
       
       begin      
+        al = AdaptConfig.new
+        adaptConfigs = al.load()
+        
         @loadedConfig = Config.new
-        @loadedConfig.load
+        @loadedConfig.load(adaptConfigs)
         
         taskType = "Analyzing" if Bake.options.analyze
                   

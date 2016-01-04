@@ -1,11 +1,12 @@
 require 'bake/model/loader'
+require 'bake/config/checks'
 
 module Bake
 
   class Config
     attr_reader :referencedConfigs
     
-    def getFullProject(configs, configname) # note: configs is never empty
+    def getFullProjectInternal(configs, configname, isMain) # note: configs is never empty
       
       if (configname == "")
         if configs[0].parent.default != ""
@@ -33,10 +34,29 @@ module Bake
       end
       
       if config.extends != ""
-        parent,parentConfigName = getFullProject(configs, config.extends)
-        MergeConfig.new(config, parent).merge()
+        parent,parentConfigName = getFullProjectInternal(configs, config.extends, isMain)
+        MergeConfig.new(config, parent).merge(:merge)
       end
       
+      [config, configname]
+    end
+    
+    def getFullProject(configs, configname, isMain)
+      config, configname = getFullProjectInternal(configs, configname, isMain)
+
+      
+      # check if config has to be manipulated
+      @adaptConfigs.each do |c|
+       if c.project == config.parent.name or (isMain and c.project == "__MAIN__") or c.project == "__ALL__"
+          if c.name == config.name or (isMain and c.name == "__MAIN__") or c.name == "__ALL__"
+            MergeConfig.new(c, config).merge(c.type)
+          end
+        end
+      end
+      
+      #if @adaptConfig
+        
+        
       [config, configname]
     end
 
@@ -98,7 +118,7 @@ module Bake
     
     def loadProjMeta(filename)
       
-      symlinkCheck(filename)
+      Bake::Configs::Checks.symlinkCheck(filename)
       
       @project_files << filename
       f = @loader.load(filename)
@@ -109,43 +129,25 @@ module Bake
         Bake.formatter.printError("Config file must have exactly one 'Project' element as root element", filename)
         ExitHelper.exit(1)
       end
-      
-      reqVersion = f.root_elements[0].getRequiredBakeVersion
+      proj = f.root_elements[0]
 
+      reqVersion = proj.getRequiredBakeVersion
       checkVer(reqVersion)
      
-      configs = f.root_elements[0].getConfig
+      configs = proj.getConfig
+      Bake::Configs::Checks::commonMetamodelCheck(configs, filename)
       
-      if configs.length == 0
-        Bake.formatter.printError("No config found", filename)
-        ExitHelper.exit(1)
-      end
-      
-      configs.each do |config|
-        if config.respond_to?("toolchain") and config.toolchain
-          config.toolchain.compiler.each do |c|
-            if not c.internalDefines.nil? and c.internalDefines != ""
-              Bake.formatter.printError("InternalDefines only allowed in DefaultToolchain", c.internalDefines)
-              ExitHelper.exit(1)
-            end
-          end
+      configs.each do |c|
+        if not c.project.empty?
+          Bake.formatter.printError("Attribute 'project' must only be used in adapt config.",c) 
+          ExitHelper.exit(1)
         end
-        
-        config.includeDir.each do |inc|
-          if not ["front", "back", ""].include?inc.inject
-            Bake.formatter.printError("inject of IncludeDir must be 'front' or 'back'", inc) 
-            ExitHelper.exit(1)
-          end
-          if not ["front", "back", ""].include?inc.infix
-            Bake.formatter.printError("infix of IncludeDir must be 'front' or 'back'", inc) 
-            ExitHelper.exit(1)
-          end
-          if (inc.infix != "" and inc.inject != "")
-            Bake.formatter.printError("IncludeDir must have inject OR infix (deprecated)", inc) 
-            ExitHelper.exit(1)
-          end
-        end if config.respond_to?("includeDir")
+        if not c.type.empty?
+          Bake.formatter.printError("Attribute 'type' must only be used in adapt config.",c) 
+          ExitHelper.exit(1)
+        end
       end
+      
       configs
     end
     
@@ -204,7 +206,7 @@ module Bake
       end
             
       # get config
-      config, dep.config = getFullProject(@loadedConfigs[dep_name], dep.config)
+      config, dep.config = getFullProject(@loadedConfigs[dep_name], dep.config, false)
       dep.name = dep_name
       
       # config not referenced yet
@@ -237,7 +239,7 @@ module Bake
         ConfigNames.print(configs, nil, mainMeta)
       end
       
-      config, Bake.options.build_config = getFullProject(configs,Bake.options.build_config)
+      config, Bake.options.build_config = getFullProject(configs,Bake.options.build_config, true)
       @referencedConfigs = {}
       @referencedConfigs[Bake.options.main_project_name] = [config]
         
@@ -260,7 +262,7 @@ module Bake
         @potentialProjs.concat(Dir.glob(r))
       end
       
-      @potentialProjs = @potentialProjs.uniq.sort
+      @potentialProjs = @potentialProjs.uniq
     end
     
     
@@ -297,7 +299,9 @@ module Bake
       end
     end
 
-    def load()
+    def load(adaptConfigs)
+      @adaptConfigs = adaptConfigs
+      
       @loader = Loader.new
       cache = CacheAccess.new()
       @referencedConfigs = cache.load_cache unless Bake.options.nocache

@@ -18,7 +18,7 @@ module Bake
     
   class Options < Parser
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain
-    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename # String
+    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename, :adapt # String
     attr_reader :roots, :include_filter, :exclude_filter # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
@@ -66,6 +66,7 @@ module Bake
       @exclude_filter = []
       @def_roots = []
       @main_project_name = ""
+      @adapt = ""
       
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| set_main_dir(x)                         })
@@ -84,10 +85,12 @@ module Bake
       add_option(["--lint-max",           "--lint_max"           ], lambda { |x| @lint_max = String === x ? x.to_i : x   })
                                                                                                                          
       add_option(["--create"                                     ], lambda { |x| Bake::Create.proj(x)                    })     
-      add_option(["--conversion-info",    "--conversion_info"    ], lambda { @conversion_info = true                     }) 
+      add_option(["--conversion-info",    "--conversion_info"    ], lambda {     @conversion_info = true                 }) 
                                                                                                                          
       add_option(["--generate-doc",       "--docu"               ], lambda {     @docu = true                            })
-                                                                                                                         
+             
+      add_option(["--adapt"                                      ], lambda { |x|  @adapt = x                             })     
+                                                                                                                    
       add_option(["-v0"                                          ], lambda {     @verbose = 0                            })
       add_option(["-v1"                                          ], lambda {     @verbose = 1                            })
       add_option(["-v2"                                          ], lambda {     @verbose = 2                            })

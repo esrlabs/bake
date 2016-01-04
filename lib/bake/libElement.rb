@@ -95,12 +95,12 @@ module Bake
       lib_elements = {} # key = line number, value = array pairs [type, name/path string]
         
       block.config.userLibrary.each do |l|
-        ln = l.lib
+        ln = l.name
         ls = nil
-        if l.lib.include?("/")
-          pos = l.lib.rindex("/")
-          ls = block.convPath(l.lib[0..pos-1], l)
-          ln = l.lib[pos+1..-1]
+        if l.name.include?("/")
+          pos = l.name.rindex("/")
+          ls = block.convPath(l.name[0..pos-1], l)
+          ln = l.name[pos+1..-1]
         end
         lib_elements[l.line_number] = ls.nil? ? [] : [LibElement.new(LibElement::SEARCH_PATH, ls)] 
         lib_elements[l.line_number] << LibElement.new(LibElement::USERLIB, ln)

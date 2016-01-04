@@ -175,7 +175,7 @@ module Bake
       end
       
       class UserLibrary < ModelElement
-        has_attr 'lib', String, :defaultValueLiteral => ""
+        has_attr 'name', String, :defaultValueLiteral => ""
       end
 
       class LinkerScript < ModelElement
@@ -200,6 +200,8 @@ module Bake
       class BaseConfig_INTERNAL < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'extends', String, :defaultValueLiteral => ""
+        has_attr 'type', String, :defaultValueLiteral => ""
+        has_attr 'project', String, :defaultValueLiteral => ""
         contains_one 'description', Description, 'parent'
         contains_one 'startupSteps', StartupSteps, 'parent'
         contains_one 'preSteps', PreSteps, 'parent'
@@ -264,6 +266,11 @@ module Bake
 
       BaseConfig_INTERNAL.contains_many 'dependency', Dependency, 'parent'
 
+     class Adapt < ModelElement
+       contains_many 'config', BaseConfig_INTERNAL, 'parent'
+       contains_many 'files', Files, 'parent'
+     end
+      
   end
 
 end

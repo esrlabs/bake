@@ -29,8 +29,6 @@ module Bake
         ["str"]
       elsif c.name == "Flags" or c.name == "LibPostfixFlags" or c.name == "LibPrefixFlags"
         ["overwrite"]
-      elsif c.name == "UserLibrary"
-        ["lib"]
       elsif c.name == "DefaultToolchain"
         ["basedOn"]
       elsif c.name == "Description"
