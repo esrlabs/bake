@@ -1,0 +1,7 @@
+Project {
+
+  LibraryConfig test_ok {
+    Files "src/l2.cpp"
+  }
+
+}

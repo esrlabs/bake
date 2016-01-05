@@ -1,0 +1,33 @@
+Project {
+
+  ExecutableConfig test_dep2 {
+    Files "src/main.cpp"
+    Dependency lib1, config: test_ok
+    Dependency lib2, config: test_ok
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig test_dep0 {
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig test_set0 {
+    Files "src/main.cpp"
+    PreSteps {
+      CommandLine "echo vars: $(VAR1)$(VAR2)$(VAR3)-"
+    }
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig test_set2 {
+    Set VAR1, value: "VAR1"
+    Set VAR2, value: "VAR2"
+    Files "src/main.cpp"
+    PreSteps {
+      CommandLine "echo vars: $(VAR1)$(VAR2)$(VAR3)-"
+    }
+    DefaultToolchain GCC
+  }
+
+}

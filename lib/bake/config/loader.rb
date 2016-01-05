@@ -49,7 +49,7 @@ module Bake
       @adaptConfigs.each do |c|
        if c.project == config.parent.name or (isMain and c.project == "__MAIN__") or c.project == "__ALL__"
           if c.name == config.name or (isMain and c.name == "__MAIN__") or c.name == "__ALL__"
-            MergeConfig.new(c, config).merge(c.type)
+            MergeConfig.new(c, config).merge(c.type.to_sym)
           end
         end
       end

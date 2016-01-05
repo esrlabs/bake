@@ -50,8 +50,8 @@ module Bake
           stFlags     = clone(st.linker.flags);           ttFlags     = tt.linker.flags
           stPreFlags  = clone(st.linker.libprefixflags);  ttPreFlags  = tt.linker.libprefixflags
           stPostFlags = clone(st.linker.libpostfixflags); ttPostFlags = tt.linker.libpostfixflags
-          tt.linker.setFlags          (@merge ? (stFlags    +ttFlags)     : (ttFlags    +stFlags)    )
-          tt.linker.setLibprefixflags (@merge ? (stPreFlags +ttPreFlags)  : (ttPreFlags +stPreFlags) )
+          tt.linker.setFlags(          @merge ? (stFlags+ttFlags)         : (ttFlags+stFlags)        )
+          tt.linker.setLibprefixflags( @merge ? (stPreFlags+ttPreFlags)   : (ttPreFlags+stPreFlags)  )
           tt.linker.setLibpostfixflags(@merge ? (stPostFlags+ttPostFlags) : (ttPostFlags+stPostFlags))
         end
       end 

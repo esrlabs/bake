@@ -1,0 +1,9 @@
+Adapt {
+   
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Dependency lib1, config: test_other
+      Dependency lib1, config: test_ok
+      Dependency lib3, config: test_ok
+  }
+  
+}
