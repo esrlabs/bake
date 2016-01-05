@@ -29,5 +29,37 @@ Project {
     }
     DefaultToolchain GCC
   }
+  
+  ExecutableConfig test_art0 {
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
 
+  ExecutableConfig test_art1 {
+    Files "src/main.cpp"
+    ArtifactName "org.exe"
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig test_map0 {
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_map1 {
+    Files "src/main.cpp"
+    MapFile "$(OutputDir)/org.map"
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig test_lin0 {
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_lin1 {
+    Files "src/main.cpp"
+    LinkerScript "ls/linkerscript1.dld"
+    DefaultToolchain GCC
+  }    
 }

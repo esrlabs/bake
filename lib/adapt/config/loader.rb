@@ -6,7 +6,7 @@ module Bake
   class AdaptConfig
     attr_reader :referencedConfigs
     
-    @@filename = nil
+    @@filename = ""
     
     def self.filename
       @@filename
@@ -82,7 +82,7 @@ module Bake
     end
     
     def load()
-      @@filename = nil
+      @@filename = ""
       return [] if Bake.options.adapt.empty?
       
       @loader = Loader.new

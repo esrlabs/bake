@@ -218,13 +218,6 @@ module Bake
           end
         end
       end
-      
-      if not @merge
-        return
-      end
-      
-      #pt = @parent.defaultToolchain
-      #ct = @child.defaultToolchain
 
       st = source.defaultToolchain
       tt = target.defaultToolchain

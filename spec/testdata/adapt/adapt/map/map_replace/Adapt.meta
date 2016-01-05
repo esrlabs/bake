@@ -1,0 +1,7 @@
+Adapt {
+   
+    ExecutableConfig __MAIN__, project: __MAIN__, type: replace {
+      MapFile "$(OutputDir)/new.map"
+  }
+  
+}
