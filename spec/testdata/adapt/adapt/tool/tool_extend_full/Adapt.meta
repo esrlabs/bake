@@ -1,0 +1,34 @@
+Adapt {
+   
+  ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+    Toolchain {
+      Compiler CPP {
+        Define "CPPA=10"
+        Define "CPPB=2"
+        Flags add: "-DCPPC=30"
+        Flags add: "-DCPPD=4"
+      }
+      Compiler C {
+        Define "CCCA=10"
+        Define "CCCB=2"
+        Flags add: "-DCCCC=30"
+        Flags add: "-DCCCD=4"
+      }
+      Compiler ASM {
+        Define "ASMA=10"
+        Define "ASMB=2"
+        Flags add: "-DASMC=30"
+        Flags add: "-DASMD=4"
+      }
+      Linker {
+        Flags add: "-LPATHA0"
+        Flags add: "-LPATHB"
+        LibPrefixFlags add: "-LPATHC0"        
+        LibPrefixFlags add: "-LPATHD"
+        LibPostfixFlags add: "-LPATHE0"
+        LibPostfixFlags add: "-LPATHF"
+      }
+    }
+  }
+  
+}

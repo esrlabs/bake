@@ -526,8 +526,194 @@ describe "Adapt" do
     expect($mystring.include?("EXIT2")).to be == true
     expect($mystring.include?("EXIT3")).to be == true
   end  
+ 
+  it 'Toolchain extend empty 0' do
+    Bake.startBake("adapt/main", ["test_tool0", "--rebuild", "--adapt",  "tool_extend_empty", "-v2"])
+    expect($mystring.include?("-D")).to be == false
+    expect($mystring.include?("-L")).to be == false
+  end
+  
+  it 'Toolchain extend empty 1' do
+    Bake.startBake("adapt/main", ["test_tool1", "--rebuild", "--adapt",  "tool_extend_empty", "-v2"])
+    expect($mystring.include?("-D")).to be == false
+    expect($mystring.include?("-L")).to be == false
+  end
 
-  #toReplace = [ :toolchain, :defaultToolchain]
+  it 'Toolchain extend empty 2' do
+    Bake.startBake("adapt/main", ["test_tool2", "--rebuild", "--adapt",  "tool_extend_empty", "-v2"])
+    expect($mystring.include?("-DASMC=3 -DASMD=4 -DASMA=1 -DASMB=2")).to be == true
+    expect($mystring.include?("-DCCCC=3 -DCCCD=4 -DCCCA=1 -DCCCB=2")).to be == true
+    expect($mystring.include?("-DCPPC=3 -DCPPD=4 -DCPPA=1 -DCPPB=2")).to be == true
+    expect($mystring.include?("-LPATHA -LPATHB")).to be == true
+    expect($mystring.include?("-LPATHC -LPATHD -LPATHE -LPATHF")).to be == true
+  end
+   
+  it 'Toolchain extend full 0' do
+    Bake.startBake("adapt/main", ["test_tool0", "--rebuild", "--adapt",  "tool_extend_full", "-v2"])
+    expect($mystring.include?("-DASMC=30 -DASMD=4 -DASMA=10 -DASMB=2")).to be == true
+    expect($mystring.include?("-DCCCC=30 -DCCCD=4 -DCCCA=10 -DCCCB=2")).to be == true
+    expect($mystring.include?("-DCPPC=30 -DCPPD=4 -DCPPA=10 -DCPPB=2")).to be == true
+    expect($mystring.include?("-LPATHA0 -LPATHB")).to be == true
+    expect($mystring.include?("-LPATHC0 -LPATHD -LPATHE0 -LPATHF")).to be == true
+  end
+  
+  it 'Toolchain extend full 1' do
+    Bake.startBake("adapt/main", ["test_tool1", "--rebuild", "--adapt",  "tool_extend_full", "-v2"])
+    expect($mystring.include?("-DASMC=30 -DASMD=4 -DASMA=10 -DASMB=2")).to be == true
+    expect($mystring.include?("-DCCCC=30 -DCCCD=4 -DCCCA=10 -DCCCB=2")).to be == true
+    expect($mystring.include?("-DCPPC=30 -DCPPD=4 -DCPPA=10 -DCPPB=2")).to be == true
+    expect($mystring.include?("-LPATHA0 -LPATHB")).to be == true
+    expect($mystring.include?("-LPATHC0 -LPATHD -LPATHE0 -LPATHF")).to be == true
+  end
+
+  it 'Toolchain extend full 2' do
+    Bake.startBake("adapt/main", ["test_tool2", "--rebuild", "--adapt",  "tool_extend_full", "-v2"])
+    expect($mystring.include?("-DASMC=3 -DASMD=4 -DASMC=30 -DASMA=1 -DASMB=2 -DASMA=10")).to be == true
+    expect($mystring.include?("-DCCCC=3 -DCCCD=4 -DCCCC=30 -DCCCA=1 -DCCCB=2 -DCCCA=10")).to be == true
+    expect($mystring.include?("-DCPPC=3 -DCPPD=4 -DCPPC=30 -DCPPA=1 -DCPPB=2 -DCPPA=10")).to be == true
+    expect($mystring.include?("-LPATHA -LPATHB -LPATHA0")).to be == true
+    expect($mystring.include?("-LPATHC -LPATHD -LPATHC0 -LPATHE -LPATHF -LPATHE0")).to be == true
+  end  
+  
+  it 'Toolchain remove 0' do
+    Bake.startBake("adapt/main", ["test_tool0", "--rebuild", "--adapt",  "tool_remove", "-v2"])
+    expect($mystring.include?("-D")).to be == false
+    expect($mystring.include?("-L")).to be == false
+  end
+  
+  it 'Toolchain remove 2' do
+    Bake.startBake("adapt/main", ["test_tool2", "--rebuild", "--adapt",  "tool_remove", "-v2"])
+    expect($mystring.include?("-D")).to be == false
+    expect($mystring.include?("-L")).to be == false
+  end 
+  
+  it 'Toolchain replace 0' do
+    Bake.startBake("adapt/main", ["test_tool0", "--rebuild", "--adapt",  "tool_replace", "-v2"])
+    expect($mystring.include?("-DAAA=100")).to be == true
+    expect($mystring.include?("-L")).to be == false
+  end
+  
+  it 'Toolchain replace 2' do
+    Bake.startBake("adapt/main", ["test_tool2", "--rebuild", "--adapt",  "tool_replace", "-v2"])
+    expect($mystring.include?("-DAAA=100")).to be == true
+    expect($mystring.include?("-L")).to be == false
+  end 
+
+  it 'DefaultToolchain extend 0' do
+    Bake.startBake("adapt/main", ["test_dtool0", "--rebuild", "--adapt",  "dtool_extend", "-v2"])
+    expect($mystring.include?("-FLAG10 -FLAG2")).to be == true
+    expect($mystring.include?("test_out_new")).to be == true
+  end
+  
+  it 'DefaultToolchain extend 1' do
+    Bake.startBake("adapt/main", ["test_dtool1", "--rebuild", "--adapt",  "dtool_extend", "-v2"])
+    expect($mystring.include?("-FLAG10 -FLAG2")).to be == true
+    expect($mystring.include?("test_out_new")).to be == true
+  end
+
+  it 'DefaultToolchain extend 2' do
+    Bake.startBake("adapt/main", ["test_dtool2", "--rebuild", "--adapt",  "dtool_extend", "-v2"])
+    expect($mystring.include?("-FLAG1 -FLAG2 -FLAG10")).to be == true
+    expect($mystring.include?("test_out_new")).to be == true
+  end  
+  
+  it 'DefaultToolchain remove 0' do
+    Bake.startBake("adapt/main", ["test_dtool0", "--rebuild", "--adapt",  "dtool_remove", "-v2"])
+    expect($mystring.include?("must contain DefaultToolchain")).to be == true
+  end
+  
+  it 'DefaultToolchain remove 2' do
+    Bake.startBake("adapt/main", ["test_dtool2", "--rebuild", "--adapt",  "dtool_remove", "-v2"])
+    expect($mystring.include?("must contain DefaultToolchain")).to be == true
+  end 
+  
+  it 'DefaultToolchain replace 0' do
+    Bake.startBake("adapt/main", ["test_dtool0", "--rebuild", "--adapt",  "dtool_replace", "-v2"])
+    expect($mystring.include?("-FLAG")).to be == false
+    expect($mystring.include?("build_test_dtool0")).to be == true
+  end
+  
+  it 'DefaultToolchain replace 2' do
+    Bake.startBake("adapt/main", ["test_dtool2", "--rebuild", "--adapt",  "dtool_replace", "-v2"])
+    expect($mystring.include?("-FLAG")).to be == false
+    expect($mystring.include?("build_test_dtool2")).to be == true
+  end
+
+
+  it 'Docu extend 0' do
+    Bake.startBake("adapt/main", ["test_dtool0", "--rebuild", "--adapt",  "dtool_extend", "-v2", "--docu"])
+    expect($mystring.include?("DOCUCMD_new")).to be == true
+  end
+
+  it 'Docu extend 2' do
+    Bake.startBake("adapt/main", ["test_dtool2", "--rebuild", "--adapt",  "dtool_extend", "-v2", "--docu"])
+    expect($mystring.include?("DOCUCMD_new")).to be == true
+  end 
+  
+  it 'EclipseOrder none-none' do
+    Bake.startBake("adapt/main", ["test_eclNone", "--rebuild", "--adapt",  "ecl_none", "-v2", "--threads", "1"])
+    expect($mystring.index("add1.cpp")).to be > $mystring.index("main.cpp")
+  end
+  it 'EclipseOrder none-false' do
+    Bake.startBake("adapt/main", ["test_eclNone", "--rebuild", "--adapt",  "ecl_false", "-v2", "--threads", "1"])
+    expect($mystring.index("add1.cpp")).to be > $mystring.index("main.cpp")
+  end
+  it 'EclipseOrder none-true' do
+    Bake.startBake("adapt/main", ["test_eclNone", "--rebuild", "--adapt",  "ecl_true", "-v2", "--threads", "1"])
+    expect($mystring.index("add1.cpp")).to be < $mystring.index("main.cpp")
+  end
+  it 'EclipseOrder false-none' do
+    Bake.startBake("adapt/main", ["test_eclFalse", "--rebuild", "--adapt",  "ecl_none", "-v2", "--threads", "1"])
+    expect($mystring.index("add1.cpp")).to be > $mystring.index("main.cpp")
+  end
+  it 'EclipseOrder false-false' do
+    Bake.startBake("adapt/main", ["test_eclFalse", "--rebuild", "--adapt",  "ecl_false", "-v2", "--threads", "1"])
+    expect($mystring.index("add1.cpp")).to be > $mystring.index("main.cpp")
+  end
+  it 'EclipseOrder false-true' do
+    Bake.startBake("adapt/main", ["test_eclFalse", "--rebuild", "--adapt",  "ecl_true", "-v2", "--threads", "1"])
+    expect($mystring.index("add1.cpp")).to be < $mystring.index("main.cpp")
+  end
+  it 'EclipseOrder true-none' do
+    Bake.startBake("adapt/main", ["test_eclTrue", "--rebuild", "--adapt",  "ecl_none", "-v2", "--threads", "1"])
+    expect($mystring.index("add1.cpp")).to be < $mystring.index("main.cpp")
+  end
+  it 'EclipseOrder true-false' do
+    Bake.startBake("adapt/main", ["test_eclTrue", "--rebuild", "--adapt",  "ecl_false", "-v2", "--threads", "1"])
+    expect($mystring.index("add1.cpp")).to be < $mystring.index("main.cpp")
+  end
+  it 'EclipseOrder true-true' do
+    Bake.startBake("adapt/main", ["test_eclTrue", "--rebuild", "--adapt",  "ecl_true", "-v2", "--threads", "1"])
+    expect($mystring.index("add1.cpp")).to be < $mystring.index("main.cpp")
+  end
+  
+  it 'Lint extend 1' do
+    Bake.startBake("adapt/main", ["test_dtool1", "--rebuild", "--adapt",  "dtool_extend", "-v2", "--lint"])
+    expect($mystring.include?("LINT_POL10 LINT_POL2")).to be == true
+    expect($mystring.include?("LINT_POL1 ")).to be == false
+  end
+
+  it 'Lint extend 2' do
+    Bake.startBake("adapt/main", ["test_dtool2", "--rebuild", "--adapt",  "dtool_extend", "-v2", "--lint"])
+    expect($mystring.include?("LINT_POL1 LINT_POL2 LINT_POL10 LINT_POL2")).to be == true
+  end  
+  
+  it 'Lint replace 2' do
+    Bake.startBake("adapt/main", ["test_dtool2", "--rebuild", "--adapt",  "dtool_replace", "-v2", "--lint"])
+    expect($mystring.include?("LINT_POL3")).to be == true
+    expect($mystring.include?("LINT_POL2")).to be == false
+  end
+
+  it 'BasedOn new' do
+    Bake.startBake("adapt/main", ["test_dtool1", "--rebuild", "--adapt",  "based_new", "-v2"])
+    expect($mystring.include?("dcc")).to be == true
+  end  
+  
+  it 'BasedOn none' do
+    Bake.startBake("adapt/main", ["test_dtool1", "--rebuild", "--adapt",  "based_none", "-v2"])
+    expect($mystring.include?("g++")).to be == true
+    expect($mystring.include?("XX=YY")).to be == true
+  end
 
 end
 

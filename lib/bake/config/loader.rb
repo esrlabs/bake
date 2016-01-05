@@ -44,7 +44,7 @@ module Bake
     def getFullProject(configs, configname, isMain)
       config, configname = getFullProjectInternal(configs, configname, isMain)
 
-      
+
       # check if config has to be manipulated
       @adaptConfigs.each do |c|
        if c.project == config.parent.name or (isMain and c.project == "__MAIN__") or c.project == "__ALL__"
@@ -54,9 +54,6 @@ module Bake
         end
       end
       
-      #if @adaptConfig
-        
-        
       [config, configname]
     end
 

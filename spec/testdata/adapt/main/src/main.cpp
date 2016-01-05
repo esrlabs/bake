@@ -2,9 +2,12 @@
 
 int i=0;
 
+void foo()
+{
 #ifdef A
-i += A;
+  i += A;
 #endif
+}
 
 #ifdef B
 i += B;
@@ -12,6 +15,7 @@ i += B;
 
 int main()
 {
+	foo();
 	std::cout << "Sum: " << i << std::endl;
 	return 0;
 }

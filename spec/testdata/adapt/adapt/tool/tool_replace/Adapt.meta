@@ -1,0 +1,11 @@
+Adapt {
+   
+    ExecutableConfig __MAIN__, project: __MAIN__, type: replace {
+      Toolchain {
+        Compiler CPP {
+	      Define "AAA=100"
+        }
+      }
+  }
+  
+}

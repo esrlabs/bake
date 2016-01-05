@@ -29,7 +29,7 @@ module Bake
       end
 
       if not st.archiver.nil?
-        if (not @merge or tt.archiver.nil?)
+        if tt.archiver.nil?
           tt.setArchiver(clone(st.archiver))
         else
           if st.archiver.command != "" and (not @merge or tt.archiver.command == "")
@@ -41,7 +41,7 @@ module Bake
       end 
  
       if not st.linker.nil?
-        if (not @merge or tt.linker.nil?)
+        if tt.linker.nil?
           tt.setLinker(clone(st.linker))
         else
           if st.linker.command != "" and (not @merge or tt.linker.command == "") 
@@ -87,6 +87,7 @@ module Bake
     
     def clone(obj)
       return obj.map {|o| o.dup} if Array === obj
+      return obj if TrueClass === obj
       return obj.dup
     end
     
@@ -176,10 +177,6 @@ module Bake
       end      
     end   
     
-    def extend()
-      
-    end
-    
     def merge(type) # :merge means child will be updated, else parent will be updated
       if (type == :remove)
         remove
@@ -188,7 +185,7 @@ module Bake
         replace
         return
       end
-
+      
       @merge = (type == :merge)
       target = (@merge ? @child : @parent)
       source = (@merge ? @parent : @child)
@@ -231,7 +228,7 @@ module Bake
       st = source.defaultToolchain
       tt = target.defaultToolchain
       if not st.nil? 
-        if (not @merge or tt.nil?)
+        if tt.nil?
           target.setDefaultToolchain(clone(st))
         else
           mergeToolchain(st,tt,true)
@@ -241,7 +238,7 @@ module Bake
       st = source.toolchain
       tt = target.toolchain
       if not st.nil? 
-        if (not @merge or tt.nil?)
+        if tt.nil?
           target.setToolchain(clone(st))
         else
           mergeToolchain(st,tt,false)

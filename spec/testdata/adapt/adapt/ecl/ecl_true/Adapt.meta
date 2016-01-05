@@ -1,0 +1,7 @@
+Adapt {
+   
+  LibraryConfig __MAIN__, project: __MAIN__, type: extend {
+    DefaultToolchain GCC, eclipseOrder: true
+  }
+  
+}
