@@ -1,0 +1,8 @@
+Adapt {
+   
+    ExecutableConfig __MAIN__, project: __MAIN__, type: remove {
+      Files "src/add1.cpp"
+      Files "src/nix.cpp"
+  }
+  
+}

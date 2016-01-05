@@ -16,9 +16,10 @@ module Bake
   # mehrere kaskadiert
   # docu fix von syntax popup diag
   # adapt filename in cache -> wenn anders, dann neu einlesen  - achtung test lösche cache immer...
+  # adapt filename nicht gefunden, mehrmals...
   
 describe "Adapt" do
-
+=begin
   it 'Dep extend 0' do
     Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_extend"])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
@@ -232,16 +233,144 @@ describe "Adapt" do
     expect($mystring.include?("Rebuilding done.")).to be == true
   end  
   
+  it 'Files extend 0' do
+    Bake.startBake("adapt/main", ["test_files0", "--rebuild", "--adapt", "files_extend", "--threads", "1"])
+    expect($mystring.include?("add1.cpp")).to be == true
+    expect($mystring.include?("nix.cpp")).to be == true
+    expect($mystring.include?("main.cpp")).to be == false
+    expect($mystring.index("add1.cpp")).to be < $mystring.index("nix.cpp")
+  end  
+ 
+  it 'Files extend 2' do
+    Bake.startBake("adapt/main", ["test_files2", "--rebuild", "--adapt", "files_extend", "--threads", "1"])
+    expect($mystring.include?("main.cpp")).to be == true
+    expect($mystring.include?("nix.cpp")).to be == true
+    expect($mystring.include?("add1.cpp")).to be == true
+    expect($mystring.index("main.cpp")).to be < $mystring.index("nix.cpp")
+    expect($mystring.index("nix.cpp")).to be < $mystring.index("add1.cpp")
+  end     
+ 
+  it 'Files remove 0' do
+    Bake.startBake("adapt/main", ["test_files0", "--rebuild", "--adapt", "files_remove", "--threads", "1"])
+    expect($mystring.include?("add1.cpp")).to be == false
+    expect($mystring.include?("nix.cpp")).to be == false
+    expect($mystring.include?("main.cpp")).to be == false
+  end  
+
+  it 'Files remove 2' do
+    Bake.startBake("adapt/main", ["test_files2", "--rebuild", "--adapt", "files_remove", "--threads", "1"])
+    expect($mystring.include?("add1.cpp")).to be == false
+    expect($mystring.include?("nix.cpp")).to be == false
+    expect($mystring.include?("main.cpp")).to be == true
+  end 
   
+  it 'Files replace 0' do
+    Bake.startBake("adapt/main", ["test_files0", "--rebuild", "--adapt", "files_replace", "--threads", "1"])
+    expect($mystring.include?("add1.cpp")).to be == true
+    expect($mystring.include?("nix.cpp")).to be == true
+    expect($mystring.include?("main.cpp")).to be == false
+    expect($mystring.index("add1.cpp")).to be < $mystring.index("nix.cpp")
+  end  
+ 
+  it 'Files replace 2' do
+    Bake.startBake("adapt/main", ["test_files2", "--rebuild", "--adapt", "files_replace", "--threads", "1"])
+    expect($mystring.include?("add1.cpp")).to be == true
+    expect($mystring.include?("nix.cpp")).to be == true
+    expect($mystring.include?("main.cpp")).to be == false
+    expect($mystring.index("add1.cpp")).to be < $mystring.index("nix.cpp")
+  end    
+
+  it 'ExcludeFiles extend 0' do
+    Bake.startBake("adapt/main", ["test_exfiles0", "--rebuild", "--adapt", "exfiles_extend", "--threads", "1"])
+    expect($mystring.include?("nix.cpp")).to be == false
+    expect($mystring.include?("main.cpp")).to be == true
+    expect($mystring.include?("add1.cpp")).to be == true
+    expect($mystring.include?("add2.cpp")).to be == false
+  end  
+ 
+  it 'ExcludeFiles extend 2' do
+    Bake.startBake("adapt/main", ["test_exfiles2", "--rebuild", "--adapt", "exfiles_extend", "--threads", "1"])
+    expect($mystring.include?("nix.cpp")).to be == false
+    expect($mystring.include?("main.cpp")).to be == true
+    expect($mystring.include?("add1.cpp")).to be == false
+    expect($mystring.include?("add2.cpp")).to be == false
+  end     
+ 
+  it 'ExcludeFiles remove 0' do
+    Bake.startBake("adapt/main", ["test_exfiles0", "--rebuild", "--adapt", "exfiles_remove", "--threads", "1"])
+    expect($mystring.include?("nix.cpp")).to be == true
+    expect($mystring.include?("main.cpp")).to be == true
+    expect($mystring.include?("add1.cpp")).to be == true
+    expect($mystring.include?("add2.cpp")).to be == true
+  end  
+
+  it 'ExcludeFiles remove 2' do
+    Bake.startBake("adapt/main", ["test_exfiles2", "--rebuild", "--adapt", "exfiles_remove", "--threads", "1"])
+    expect($mystring.include?("nix.cpp")).to be == true
+    expect($mystring.include?("main.cpp")).to be == true
+    expect($mystring.include?("add1.cpp")).to be == false
+    expect($mystring.include?("add2.cpp")).to be == true
+  end 
   
+  it 'ExcludeFiles replace 0' do
+    Bake.startBake("adapt/main", ["test_exfiles0", "--rebuild", "--adapt", "exfiles_replace", "--threads", "1"])
+    expect($mystring.include?("nix.cpp")).to be == false
+    expect($mystring.include?("main.cpp")).to be == true
+    expect($mystring.include?("add1.cpp")).to be == true
+    expect($mystring.include?("add2.cpp")).to be == false
+  end  
+ 
+  it 'ExcludeFiles replace 2' do
+    Bake.startBake("adapt/main", ["test_exfiles2", "--rebuild", "--adapt", "exfiles_replace", "--threads", "1"])
+    expect($mystring.include?("nix.cpp")).to be == false
+    expect($mystring.include?("main.cpp")).to be == true
+    expect($mystring.include?("add1.cpp")).to be == true
+    expect($mystring.include?("add2.cpp")).to be == false
+  end
+
+  it 'IncludeDir extend 0' do
+    Bake.startBake("adapt/main", ["test_inc0", "--rebuild", "--adapt", "inc_extend", "-v2"])
+    expect($mystring.include?("-Iinclude/a")).to be == false
+    expect($mystring.include?("-Iinclude/b -Iinclude/c")).to be == true
+  end  
+ 
+  it 'IncludeDir extend 2' do
+    Bake.startBake("adapt/main", ["test_inc2", "--rebuild", "--adapt",  "inc_extend", "-v2"])
+    expect($mystring.include?("-Iinclude/a -Iinclude/b -Iinclude/c")).to be == true
+  end     
+ 
+  it 'IncludeDir remove 0' do
+    Bake.startBake("adapt/main", ["test_inc0", "--rebuild", "--adapt",  "inc_remove", "-v2"])
+    expect($mystring.include?("-Iinclude/a")).to be == false
+    expect($mystring.include?("-Iinclude/b")).to be == false
+    expect($mystring.include?("-Iinclude/c")).to be == false
+  end  
+
+  it 'IncludeDir remove 2' do
+    Bake.startBake("adapt/main", ["test_inc2", "--rebuild", "--adapt",  "inc_remove", "-v2"])
+    expect($mystring.include?("-Iinclude/a")).to be == true
+    expect($mystring.include?("-Iinclude/b")).to be == false
+    expect($mystring.include?("-Iinclude/c")).to be == false
+  end 
   
-  
+  it 'IncludeDir replace 0' do
+    Bake.startBake("adapt/main", ["test_inc0", "--rebuild", "--adapt",  "inc_replace", "-v2"])
+    expect($mystring.include?("-Iinclude/a")).to be == false
+    expect($mystring.include?("-Iinclude/b -Iinclude/c")).to be == true
+  end  
+ 
+  it 'IncludeDir replace 2' do
+    Bake.startBake("adapt/main", ["test_inc2", "--rebuild", "--adapt",  "inc_replace", "-v2"])
+    expect($mystring.include?("-Iinclude/a")).to be == false
+    expect($mystring.include?("-Iinclude/b -Iinclude/c")).to be == true
+  end   
+
+=end    
   
   
   #toReplace = [:exLib, :exLibSearchPath, :userLibrary, :startupSteps, :preSteps, :postSteps, :exitSteps, :toolchain, :defaultToolchain]
   #place << :step
-   # toReplace << :files << :excludeFiles << :includeDir
-    #      toReplace << :linkerScript << :artifactName << :mapFile
+
 end
 
 end

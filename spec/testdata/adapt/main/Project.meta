@@ -61,5 +61,48 @@ Project {
     Files "src/main.cpp"
     LinkerScript "ls/linkerscript1.dld"
     DefaultToolchain GCC
-  }    
+  }
+  
+  
+  ExecutableConfig test_files0 {
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_files2 {
+    Files "src/main.cpp"
+    Files "src/nix.cpp"
+    DefaultToolchain GCC
+  }   
+  
+  ExecutableConfig test_exfiles0 {
+    Files "src/main.cpp"
+    Files "src/nix.cpp"
+    Files "src/add1.cpp"
+    Files "src/add2.cpp"
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_exfiles2 {
+    Files "src/main.cpp"
+    Files "src/nix.cpp"
+    Files "src/add1.cpp"
+    Files "src/add2.cpp"
+    ExcludeFiles "src/nix.cpp"
+    ExcludeFiles "src/add1.cpp"
+    ExcludeFiles "src/doesNotExist.cpp"
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig test_inc0 {
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_inc2 {
+    Files "src/main.cpp"
+    IncludeDir "include/a"
+    IncludeDir "include/b"
+    DefaultToolchain GCC
+  }  
+      
 }
