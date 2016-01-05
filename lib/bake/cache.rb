@@ -2,6 +2,7 @@ require 'common/exit_helper'
 require 'bake/toolchain/colorizing_formatter'
 require 'common/options/parser'
 require 'common/version'
+require 'adapt/config/loader'
 
 module Bake
 
@@ -83,6 +84,14 @@ module Bake
                 end
               end
             end
+            
+            if (cache != nil and AdaptConfig.filename)
+              adaptTime = File.mtime(AdaptConfig.filename)
+              if adaptTime > cacheTime + 1
+                Bake.formatter.printInfo("Info: #{AdaptConfig.filename} has been changed, reloading meta information")
+                cache = nil
+              end
+            end
 
             if cache != nil
               if cache.workspace_roots.length == Bake.options.roots.length
@@ -115,8 +124,12 @@ module Bake
           else
             Bake.formatter.printInfo("Info: cache not found, reloading meta information")
           end
-        rescue Exception
+        rescue Exception => e
           Bake.formatter.printWarning("Warning: cache file corrupt, reloading meta information (cache might be written by an older bake version)")
+          if Bake.options.debug
+            puts e.message
+            puts e.backtrace
+          end
           cache = nil
         end      
         

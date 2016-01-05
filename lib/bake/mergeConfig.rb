@@ -7,68 +7,75 @@ module Bake
       @parent = parent
     end
     
-    def mergeToolchain(pt,ct, isDefault)
-      pt.compiler.each do |pc|
+    def mergeToolchain(st,tt, isDefault)
+      st.compiler.each do |sc|
         found = false
-        ct.compiler.each do |cc|
-          if cc.ctype == pc.ctype
+        tt.compiler.each do |tc|
+          if tc.ctype == sc.ctype
             found = true
-            cc.setFlags(clone(pc.flags) + cc.flags)
-            cc.setDefine(clone(pc.define) + cc.define)
-            if cc.internalDefines.nil? and not pc.internalDefines.nil?
-              cc.setInternalDefines(clone(pc.internalDefines))
+            sf = clone(sc.flags); tf = tc.flags
+            tc.setFlags(@merge ? (sf+tf) : (tf+sf))
+            sd = clone(sc.define); td = tc.define
+            tc.setDefine(@merge ? (sd+td) : (td+sd))
+            if not sc.internalDefines.nil? and (not @merge or tc.internalDefines.nil?) 
+              tc.setInternalDefines(clone(sc.internalDefines))
             end 
-            if cc.command == "" and pc.command != ""
-              cc.setCommand(clone(pc.command))
+            if sc.command != "" and (not @merge or tc.command == "") 
+              tc.setCommand(clone(sc.command))
             end
           end
         end
-        ct.addCompiler(pc) if not found
+        tt.addCompiler(sc) if not found
       end
 
-      if not pt.archiver.nil?
-        if (ct.archiver.nil?)
-          ct.setArchiver(clone(pt.archiver))
+      if not st.archiver.nil?
+        if (not @merge or tt.archiver.nil?)
+          tt.setArchiver(clone(st.archiver))
         else
-          if ct.archiver.command == "" and pt.archiver.command != ""
-            ct.archiver.setCommand(clone(pt.archiver.command))
+          if st.archiver.command != "" and (not @merge or tt.archiver.command == "")
+            tt.archiver.setCommand(clone(st.archiver.command))
           end
-          ct.archiver.setFlags(clone(pt.archiver.flags) + ct.archiver.flags)
+          stFlags = clone(st.archiver.flags); ttFlags = tt.archiver.flags
+          tt.archiver.setFlags(@merge ? (stFlags+ttFlags) : (ttFlags+stFlags))
         end
       end 
  
-      if not pt.linker.nil?
-        if (ct.linker.nil?)
-          ct.setLinker(clone(pt.linker))
+      if not st.linker.nil?
+        if (not @merge or tt.linker.nil?)
+          tt.setLinker(clone(st.linker))
         else
-          if ct.linker.command == "" and pt.linker.command != ""
-            ct.linker.setCommand(clone(pt.linker.command))
+          if st.linker.command != "" and (not @merge or tt.linker.command == "") 
+            tt.linker.setCommand(clone(st.linker.command))
           end
-          ct.linker.setFlags(clone(pt.linker.flags) + ct.linker.flags)
-          ct.linker.setLibprefixflags(clone(pt.linker.libprefixflags) + ct.linker.libprefixflags)
-          ct.linker.setLibpostfixflags(clone(pt.linker.libpostfixflags) + ct.linker.libpostfixflags)
+          stFlags     = clone(st.linker.flags);           ttFlags     = tt.linker.flags
+          stPreFlags  = clone(st.linker.libprefixflags);  ttPreFlags  = tt.linker.libprefixflags
+          stPostFlags = clone(st.linker.libpostfixflags); ttPostFlags = tt.linker.libpostfixflags
+          tt.linker.setFlags          (@merge ? (stFlags    +ttFlags)     : (ttFlags    +stFlags)    )
+          tt.linker.setLibprefixflags (@merge ? (stPreFlags +ttPreFlags)  : (ttPreFlags +stPreFlags) )
+          tt.linker.setLibpostfixflags(@merge ? (stPostFlags+ttPostFlags) : (ttPostFlags+stPostFlags))
         end
       end 
       
-      if ct.outputDir == "" and pt.outputDir != ""
-        ct.setOutputDir(clone(pt.outputDir))
+      if st.outputDir != "" and (not @merge or tt.outputDir == "")
+        tt.setOutputDir(clone(st.outputDir))
       end
 
-      if ct.docu.nil? and not pt.docu.nil?
-        ct.setDocu(clone(pt.docu))
+      if not st.docu.nil? and (not @merge or tt.docu.nil?) 
+        tt.setDocu(clone(st.docu))
       end
       
-      ct.setLintPolicy(clone(pt.lintPolicy) + ct.lintPolicy)
+      sLint = clone(st.lintPolicy); tLint = tt.lintPolicy
+      tt.setLintPolicy(@merge ? (sLint + tLint) : (tLint + sLint))
       
       if (isDefault)
-        if ct.basedOn == "" and pt.basedOn != ""
-          ct.setBasedOn(clone(pt.basedOn))
+        if st.basedOn != "" and (not @merge or tt.basedOn == "") 
+          tt.setBasedOn(clone(st.basedOn))
         end
-        if pt.eclipseOrder # is that a good idea?
-          ct.setEclipseOrder(clone(pt.eclipseOrder))
+        if st.eclipseOrder # eclipse order always wins
+          tt.setEclipseOrder(clone(st.eclipseOrder))
         end
-        if ct.internalIncludes.nil? and not pt.internalIncludes.nil?
-          ct.setInternalIncludes(clone(pt.internalIncludes))
+        if not st.internalIncludes.nil? and (not @merge or tt.internalIncludes.nil?) 
+          tt.setInternalIncludes(clone(st.internalIncludes))
         end 
       end
       
@@ -88,12 +95,6 @@ module Bake
     end
     def cloneChild(obj)
       @merge ? obj : clone(obj)
-    end
-    def getTargetNode()
-      @merge ? @child : @parent
-    end
-    def getSourceNode()
-      @merge ? @parent : @child
     end
     
     def replace()
@@ -173,11 +174,15 @@ module Bake
     def merge(type) # :merge means child will be updated, else parent will be updated
       if (type == :remove)
         remove
+        return
       elsif (type == :replace)
         replace
-      else
-        @merge = (type == :merge)
+        return
       end
+
+      @merge = (type == :merge)
+      target = (@merge ? @child : @parent)
+      source = (@merge ? @parent : @child)
       
       # Valid for all config types
       
@@ -185,9 +190,9 @@ module Bake
       cloneChild(@child.dependency).each do |cd|
         deps << cd if deps.none? {|pd| pd.name == cd.name and pd.config == cd.config }
       end
-      getTargetNode().setDependency(deps)
+      target.setDependency(deps)
       
-      getTargetNode().setSet(cloneParent(@parent.set) + cloneChild(@child.set))
+      target.setSet(cloneParent(@parent.set) + cloneChild(@child.set))
       
       cExLib = cloneParent(@parent.exLib)
       cExLibSearchPath = cloneParent(@parent.exLibSearchPath)
@@ -197,17 +202,17 @@ module Bake
         manipulateLineNumbers(cExLibSearchPath)
         manipulateLineNumbers(cUserLibrary)
       end
-      getTargetNode().setExLib(cExLib + cloneChild(@child.exLib))
-      getTargetNode().setExLibSearchPath(cExLibSearchPath + cloneChild(@child.exLibSearchPath))
-      getTargetNode().setUserLibrary(cUserLibrary + cloneChild(@child.userLibrary))
+      target.setExLib(cExLib + cloneChild(@child.exLib))
+      target.setExLibSearchPath(cExLibSearchPath + cloneChild(@child.exLibSearchPath))
+      target.setUserLibrary(cUserLibrary + cloneChild(@child.userLibrary))
 
  
       [:startupSteps, :preSteps, :postSteps, :exitSteps].each do |name|
-        sourceData = getSourceNode().method(name).call()
-        targetData = getTargetNode().method(name).call()
+        sourceData = source.method(name).call()
+        targetData = target.method(name).call()
         if not sourceData.nil?
           if targetData.nil?
-            getTargetNode().method(name.to_s+"=").call(clone(sourceData))
+            target.method(name.to_s+"=").call(clone(sourceData))
           else
             targetData.step = cloneParent(@parent.method(name).call().step) + cloneChild(@child.method(name).call().step)
           end
@@ -218,49 +223,51 @@ module Bake
         return
       end
       
-      pt = @parent.defaultToolchain
-      ct = @child.defaultToolchain
+      #pt = @parent.defaultToolchain
+      #ct = @child.defaultToolchain
 
-      if not pt.nil?
-        if (ct.nil?)
-          @child.setDefaultToolchain(clone(pt))
+      st = source.defaultToolchain
+      tt = target.defaultToolchain
+      if not st.nil? 
+        if (not @merge or tt.nil?)
+          target.setDefaultToolchain(clone(st))
         else
-          mergeToolchain(pt,ct,true)
+          mergeToolchain(st,tt,true)
         end
       end
       
-      pt = @parent.toolchain
-      ct = @child.toolchain
-      
-      if not pt.nil?
-        if (ct.nil?)
-          @child.setToolchain(clone(pt))
+      st = source.toolchain
+      tt = target.toolchain
+      if not st.nil? 
+        if (not @merge or tt.nil?)
+          target.setToolchain(clone(st))
         else
-          mergeToolchain(pt,ct,false)
+          mergeToolchain(st,tt,false)
         end
-      end
+      end      
+
 
       # Valid for custom config
       if (Metamodel::CustomConfig === @child && Metamodel::CustomConfig === @parent)
-        if not getSourceNode().step.nil? and (not @merge or getTargetNode().step.nil?)
-          getTargetNode().step = clone(getSourceNode().step)
+        if not source.step.nil? and (not @merge or target.step.nil?)
+          target.step = clone(source.step)
         end
       end
 
       # Valid for library and exe config
       if ((Metamodel::LibraryConfig === @child || Metamodel::ExecutableConfig === @child) && (Metamodel::LibraryConfig === @parent || Metamodel::ExecutableConfig === @parent))
-        getTargetNode().setFiles(cloneParent(@parent.files) + cloneChild(@child.files))
-        getTargetNode().setExcludeFiles(cloneParent(@parent.excludeFiles) + cloneChild(@child.excludeFiles))
-        getTargetNode().setIncludeDir(cloneParent(@parent.includeDir) + cloneChild(@child.includeDir))
+        target.setFiles(cloneParent(@parent.files) + cloneChild(@child.files))
+        target.setExcludeFiles(cloneParent(@parent.excludeFiles) + cloneChild(@child.excludeFiles))
+        target.setIncludeDir(cloneParent(@parent.includeDir) + cloneChild(@child.includeDir))
       end
 
       # Valid for exe config
       if (Metamodel::ExecutableConfig === @child && Metamodel::ExecutableConfig === @parent)
         [:linkerScript, :artifactName, :mapFile].each do |name|
-          sourceData = getSourceNode().method(name).call()
-          targetData = getTargetNode().method(name).call()
+          sourceData = source.method(name).call()
+          targetData = target.method(name).call()
           if not sourceData.nil? and (not @merge or targetData.nil?)
-            getTargetNode().method(name.to_s+"=").call(clone(sourceData))
+            target.method(name.to_s+"=").call(clone(sourceData))
           end
         end
       end

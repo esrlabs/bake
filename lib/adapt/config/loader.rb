@@ -6,21 +6,27 @@ module Bake
   class AdaptConfig
     attr_reader :referencedConfigs
     
-    def loadProjMeta(filename)
+    @@filename = nil
+    
+    def self.filename
+      @@filename
+    end 
+    
+    def loadProjMeta()
       
-      Bake::Configs::Checks.symlinkCheck(filename)
+      Bake::Configs::Checks.symlinkCheck(@@filename)
       
-      f = @loader.load(filename)
+      f = @loader.load(@@filename)
     
       if f.root_elements.length != 1 or not Metamodel::Adapt === f.root_elements[0]
-        Bake.formatter.printError("Config file must have exactly one 'Adapt' element as root element", filename)
+        Bake.formatter.printError("Config file must have exactly one 'Adapt' element as root element", @@filename)
         ExitHelper.exit(1)
       end
       
       adapt = f.root_elements[0]
       configs = adapt.getConfig
       
-      Bake::Configs::Checks::commonMetamodelCheck(configs, filename)
+      Bake::Configs::Checks::commonMetamodelCheck(configs, @@filename)
       
       configs.each do |c|
         if not c.extends.empty?
@@ -72,18 +78,19 @@ module Bake
          end
        end
        
-       potentialAdapts[0]
+       @@filename = potentialAdapts[0]
     end
     
     def load()
+      @@filename = nil
       return [] if Bake.options.adapt.empty?
       
       @loader = Loader.new
       
       potentialProjects = getPotentialAdaptionProjects()
-      filename = chooseProjectFilename(potentialProjects)
+      chooseProjectFilename(potentialProjects)
       
-      configs = loadProjMeta(filename)
+      configs = loadProjMeta()
  
       configs.each do |c|
         [:exLib, :exLibSearchPath, :userLibrary].each do |name|
