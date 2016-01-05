@@ -1,0 +1,23 @@
+Adapt {
+   
+    CustomConfig __MAIN__, project: __MAIN__, type: remove {
+      StartupSteps {
+        CommandLine "echo STARTUP2"
+        CommandLine "echo STARTUP3"
+      }
+      PreSteps {
+        CommandLine "echo PRE2"
+        CommandLine "echo PRE3"
+      }
+      PostSteps {
+        CommandLine "echo POST2"
+        CommandLine "echo POST3"
+      }
+      ExitSteps {
+        CommandLine "echo EXIT2"
+        CommandLine "echo EXIT3"
+      }
+      CommandLine "echo STEP2"
+  }
+  
+}

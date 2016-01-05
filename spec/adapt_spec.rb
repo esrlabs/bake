@@ -17,9 +17,10 @@ module Bake
   # docu fix von syntax popup diag
   # adapt filename in cache -> wenn anders, dann neu einlesen  - achtung test lösche cache immer...
   # adapt filename nicht gefunden, mehrmals...
+  # docu order of compileld files
   
 describe "Adapt" do
-=begin
+
   it 'Dep extend 0' do
     Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_extend"])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
@@ -365,11 +366,168 @@ describe "Adapt" do
     expect($mystring.include?("-Iinclude/b -Iinclude/c")).to be == true
   end   
 
-=end    
+  it 'Libs extend 0' do
+    Bake.startBake("adapt/main", ["test_libs0", "--rebuild", "--adapt", "libs_extend", "-v2"])
+    expect($mystring.include?("-lexlibA")).to be == false
+    expect($mystring.include?("-LsearchPathX")).to be == false
+    expect($mystring.include?("-l:userlibM")).to be == false
+    expect($mystring.include?("-lexlibB -lexlibC -LsearchPathY -LsearchPathZ -l:userlibN -l:userlibO")).to be == true
+  end  
+ 
+  it 'Libs extend 2' do
+    Bake.startBake("adapt/main", ["test_libs2", "--rebuild", "--adapt",  "libs_extend", "-v2"])
+    expect($mystring.include?("-lexlibA -lexlibB -LsearchPathX -LsearchPathY -l:userlibM -l:userlibN -lexlibB -lexlibC -LsearchPathZ -l:userlibN -l:userlibO")).to be == true
+  end     
+ 
+  it 'Libs remove 0' do
+    Bake.startBake("adapt/main", ["test_libs0", "--rebuild", "--adapt",  "libs_remove", "-v2"])
+    expect($mystring.include?("-lexlib")).to be == false
+    expect($mystring.include?("-LsearchPath")).to be == false
+    expect($mystring.include?("-l:userlib")).to be == false
+  end  
+
+  it 'Libs remove 2' do
+    Bake.startBake("adapt/main", ["test_libs2", "--rebuild", "--adapt",  "libs_remove", "-v2"])
+    expect($mystring.include?("-lexlibA -LsearchPathX -l:userlibM")).to be == true
+    expect($mystring.include?("-lexlibB")).to be == false
+    expect($mystring.include?("-lexlibC")).to be == false
+    expect($mystring.include?("-LsearchPathY")).to be == false
+    expect($mystring.include?("-LsearchPathZ")).to be == false
+    expect($mystring.include?("-l:userlibN")).to be == false
+    expect($mystring.include?("-l:userlibO")).to be == false
+  end 
   
+  it 'Libs replace 0' do
+    Bake.startBake("adapt/main", ["test_libs0", "--rebuild", "--adapt",  "libs_replace", "-v2"])
+    expect($mystring.include?("-lexlibB -lexlibC -LsearchPathY -LsearchPathZ -l:userlibN -l:userlibO")).to be == true
+    expect($mystring.include?("-lexlibA")).to be == false      
+    expect($mystring.include?("-LsearchPathX")).to be == false
+    expect($mystring.include?("-l:userlibM")).to be == false
+  end  
+ 
+  it 'Libs replace 2' do
+    Bake.startBake("adapt/main", ["test_libs2", "--rebuild", "--adapt",  "libs_replace", "-v2"])
+    expect($mystring.include?("-lexlibB -lexlibC -LsearchPathY -LsearchPathZ -l:userlibN -l:userlibO")).to be == true
+    expect($mystring.include?("-lexlibA")).to be == false      
+    expect($mystring.include?("-LsearchPathX")).to be == false
+    expect($mystring.include?("-l:userlibM")).to be == false
+  end  
+
+  it 'Steps extend 0' do
+    Bake.startBake("adapt/main", ["test_steps0", "--rebuild", "--adapt", "steps_extend", "-v2"])
+    expect($mystring.include?("STARTUP1")).to be == false
+    expect($mystring.include?("STARTUP2")).to be == true
+    expect($mystring.include?("STARTUP3")).to be == true
+    expect($mystring.include?("PRE1")).to be == false
+    expect($mystring.include?("PRE2")).to be == true
+    expect($mystring.include?("PRE3")).to be == true
+    expect($mystring.include?("STEP1")).to be == false
+    expect($mystring.include?("STEP2")).to be == true
+    expect($mystring.include?("POST1")).to be == false
+    expect($mystring.include?("POST2")).to be == true
+    expect($mystring.include?("POST3")).to be == true
+    expect($mystring.include?("EXIT1")).to be == false
+    expect($mystring.include?("EXIT2")).to be == true
+    expect($mystring.include?("EXIT3")).to be == true
+  end  
+ 
+  it 'Steps extend 2' do
+    Bake.startBake("adapt/main", ["test_steps2", "--rebuild", "--adapt",  "steps_extend", "-v2"])
+    expect($mystring.include?("STARTUP1")).to be == true
+    expect($mystring.include?("STARTUP2")).to be == true
+    expect($mystring.include?("STARTUP3")).to be == true
+    expect($mystring.include?("PRE1")).to be == true
+    expect($mystring.include?("PRE2")).to be == true
+    expect($mystring.include?("PRE3")).to be == true
+    expect($mystring.include?("STEP1")).to be == false
+    expect($mystring.include?("STEP2")).to be == true
+    expect($mystring.include?("POST1")).to be == true
+    expect($mystring.include?("POST2")).to be == true
+    expect($mystring.include?("POST3")).to be == true
+    expect($mystring.include?("EXIT1")).to be == true
+    expect($mystring.include?("EXIT2")).to be == true
+    expect($mystring.include?("EXIT3")).to be == true
+  end     
+ 
+  it 'Steps remove 0' do
+    Bake.startBake("adapt/main", ["test_steps0", "--rebuild", "--adapt",  "steps_remove", "-v2"])
+    expect($mystring.include?("STARTUP1")).to be == false
+    expect($mystring.include?("STARTUP2")).to be == false
+    expect($mystring.include?("STARTUP3")).to be == false
+    expect($mystring.include?("PRE1")).to be == false
+    expect($mystring.include?("PRE2")).to be == false
+    expect($mystring.include?("PRE3")).to be == false
+    expect($mystring.include?("STEP1")).to be == false
+    expect($mystring.include?("STEP2")).to be == false
+    expect($mystring.include?("POST1")).to be == false
+    expect($mystring.include?("POST2")).to be == false
+    expect($mystring.include?("POST3")).to be == false
+    expect($mystring.include?("EXIT1")).to be == false
+    expect($mystring.include?("EXIT2")).to be == false
+    expect($mystring.include?("EXIT3")).to be == false
+  end  
+
+  it 'Steps remove 2' do
+    Bake.startBake("adapt/main", ["test_steps2", "--rebuild", "--adapt",  "steps_remove", "-v2"])
+    expect($mystring.include?("STARTUP1")).to be == true
+    expect($mystring.include?("STARTUP2")).to be == false
+    expect($mystring.include?("STARTUP3")).to be == false
+    expect($mystring.include?("PRE1")).to be == true
+    expect($mystring.include?("PRE2")).to be == false
+    expect($mystring.include?("PRE3")).to be == false
+    expect($mystring.include?("STEP1")).to be == true
+    expect($mystring.include?("STEP2")).to be == false
+    expect($mystring.include?("POST1")).to be == true
+    expect($mystring.include?("POST2")).to be == false
+    expect($mystring.include?("POST3")).to be == false
+    expect($mystring.include?("EXIT1")).to be == true
+    expect($mystring.include?("EXIT2")).to be == false
+    expect($mystring.include?("EXIT3")).to be == false
+  end 
   
-  #toReplace = [:exLib, :exLibSearchPath, :userLibrary, :startupSteps, :preSteps, :postSteps, :exitSteps, :toolchain, :defaultToolchain]
-  #place << :step
+  it 'Steps remove 2 ok' do
+    Bake.startBake("adapt/main", ["test_steps2", "--rebuild", "--adapt",  "steps_remove_ok", "-v2"])
+    expect($mystring.include?("STEP1")).to be == false
+    expect($mystring.include?("STEP2")).to be == false
+  end 
+  
+  it 'Steps replace 0' do
+    Bake.startBake("adapt/main", ["test_steps0", "--rebuild", "--adapt",  "steps_replace", "-v2"])
+    expect($mystring.include?("STARTUP1")).to be == false
+    expect($mystring.include?("STARTUP2")).to be == true
+    expect($mystring.include?("STARTUP3")).to be == true
+    expect($mystring.include?("PRE1")).to be == false
+    expect($mystring.include?("PRE2")).to be == true
+    expect($mystring.include?("PRE3")).to be == true
+    expect($mystring.include?("STEP1")).to be == false
+    expect($mystring.include?("STEP2")).to be == true
+    expect($mystring.include?("POST1")).to be == false
+    expect($mystring.include?("POST2")).to be == true
+    expect($mystring.include?("POST3")).to be == true
+    expect($mystring.include?("EXIT1")).to be == false
+    expect($mystring.include?("EXIT2")).to be == true
+    expect($mystring.include?("EXIT3")).to be == true
+  end  
+ 
+  it 'Steps replace 2' do
+    Bake.startBake("adapt/main", ["test_steps2", "--rebuild", "--adapt",  "steps_replace", "-v2"])
+    expect($mystring.include?("STARTUP1")).to be == false
+    expect($mystring.include?("STARTUP2")).to be == true
+    expect($mystring.include?("STARTUP3")).to be == true
+    expect($mystring.include?("PRE1")).to be == false
+    expect($mystring.include?("PRE2")).to be == true
+    expect($mystring.include?("PRE3")).to be == true
+    expect($mystring.include?("STEP1")).to be == false
+    expect($mystring.include?("STEP2")).to be == true
+    expect($mystring.include?("POST1")).to be == false
+    expect($mystring.include?("POST2")).to be == true
+    expect($mystring.include?("POST3")).to be == true
+    expect($mystring.include?("EXIT1")).to be == false
+    expect($mystring.include?("EXIT2")).to be == true
+    expect($mystring.include?("EXIT3")).to be == true
+  end  
+
+  #toReplace = [ :toolchain, :defaultToolchain]
 
 end
 

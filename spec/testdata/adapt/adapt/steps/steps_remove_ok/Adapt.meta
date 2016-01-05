@@ -1,0 +1,7 @@
+Adapt {
+   
+    CustomConfig __MAIN__, project: __MAIN__, type: remove {
+      CommandLine "echo STEP1"
+  }
+  
+}

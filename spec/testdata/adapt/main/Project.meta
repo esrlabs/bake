@@ -104,5 +104,46 @@ Project {
     IncludeDir "include/b"
     DefaultToolchain GCC
   }  
+  
+  ExecutableConfig test_libs0 {
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_libs2 {
+    Files "src/main.cpp"
+    ExternalLibrary "exlibA"
+    ExternalLibrary "exlibB"
+    ExternalLibrarySearchPath "searchPathX"
+    ExternalLibrarySearchPath "searchPathY"
+    UserLibrary "userlibM"
+    UserLibrary "userlibN"
+    DefaultToolchain GCC
+  }  
+  
+  CustomConfig test_steps0 {
+    DefaultToolchain GCC
+  }  
+
+  CustomConfig test_steps2 {
+    StartupSteps {
+      CommandLine "echo STARTUP1"
+      CommandLine "echo STARTUP2"
+    }
+    PreSteps {
+      CommandLine "echo PRE1"
+      CommandLine "echo PRE2"
+    }
+    PostSteps {
+      CommandLine "echo POST1"
+      CommandLine "echo POST2"
+    }
+    ExitSteps {
+      CommandLine "echo EXIT1"
+      CommandLine "echo EXIT2"
+    }
+    CommandLine "echo STEP1"
+    DefaultToolchain GCC
+  }  
       
 }

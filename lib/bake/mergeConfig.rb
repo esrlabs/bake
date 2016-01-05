@@ -128,8 +128,17 @@ module Bake
       # Valid for all configs
       @parent.toolchain = nil if not @child.toolchain.nil?
       @parent.defaultToolchain = nil if not @child.defaultToolchain.nil?
-      [:toolchain, :defaultToolchain, :startupSteps, :preSteps, :postSteps, :exitSteps].each do |name|
+      [:toolchain, :defaultToolchain].each do |name|
         @parent.method(name.to_s+"=").call(nil) if not @child.method(name).call().nil?
+      end
+      
+      [:startupSteps, :preSteps, :postSteps, :exitSteps].each do |name|
+        pSteps = @parent.method(name).call()
+        cSteps = @child.method(name).call()
+        next if pSteps.nil? or cSteps.nil?
+        ps = pSteps.step  
+        ps.delete_if { |ps| cSteps.step.any? { |cs| cs.name == ps.name } }
+        pSteps.step=ps
       end
         
       toRemove = [:dependency, :set, :exLib, :exLibSearchPath, :userLibrary]

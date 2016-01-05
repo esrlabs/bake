@@ -1,0 +1,12 @@
+Adapt {
+   
+    ExecutableConfig __MAIN__, project: __MAIN__, type: replace {
+    ExternalLibrary "exlibB"
+    ExternalLibrary "exlibC"
+    ExternalLibrarySearchPath "searchPathY"
+    ExternalLibrarySearchPath "searchPathZ"
+    UserLibrary "userlibN"
+    UserLibrary "userlibO"
+  }
+  
+}
