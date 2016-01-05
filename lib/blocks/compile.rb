@@ -365,25 +365,25 @@ module Bake
             end
             res.each do |f|
               next if exclude_files.include?(f)
+              next if source_files.include?(f)
               source_files << f
+              @source_files << f
             end
           end
           
           if Bake.options.filename
-            source_files.keep_if do |source|
+            @source_files.keep_if do |source|
               source.include?Bake.options.filename
             end
-            if source_files.length == 0 and cleaning == false
+            if @source_files.length == 0 and cleaning == false
               Bake.formatter.printInfo("#{Bake.options.filename} does not match to any source", @config)
             end
           end
           
-          @source_files = source_files.sort.to_a
-          
           if Bake.options.eclipseOrder # directories reverse order, files in directories in alphabetical order
             dirs = []
             filemap = {}
-            @source_files.reverse.each do |o|
+            @source_files.sort.reverse.each do |o|
               d = File.dirname(o)
               if filemap.include?(d)
                 filemap[d] << o
