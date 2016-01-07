@@ -1,4 +1,3 @@
-#include <iostream>
 
 int i=0;
 
@@ -9,13 +8,15 @@ void foo()
 #endif
 }
 
-#ifdef B
-i += B;
-#endif
-
 int main()
 {
-	foo();
-	std::cout << "Sum: " << i << std::endl;
 	return 0;
+}
+
+extern "C"
+{
+int __main()
+{
+	return 0;
+}
 }

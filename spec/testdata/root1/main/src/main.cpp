@@ -2,12 +2,15 @@
 #include "lib1.h"
 #include "lib2.h"
 
-#include <stdio.h>
-
 int main()
 {
-	A a;
-	B b;
-   // SHOW("%d %d",a.a, b.b);
 	return 0;
+}
+
+extern "C"
+{
+int __main()
+{
+	return 0;
+}
 }

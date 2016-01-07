@@ -54,13 +54,23 @@ Project {
   
   ExecutableConfig test_lin0 {
     Files "src/main.cpp"
-    DefaultToolchain GCC
+    Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
+    DefaultToolchain GCC {
+      Linker {
+        Flags "$(NOSTDLIB)"
+      }
+    }
   }
 
   ExecutableConfig test_lin1 {
     Files "src/main.cpp"
     LinkerScript "ls/linkerscript1.dld"
-    DefaultToolchain GCC
+    Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
+    DefaultToolchain GCC {
+      Linker {
+        Flags "$(NOSTDLIB)"
+      }
+    }
   }
   
   
