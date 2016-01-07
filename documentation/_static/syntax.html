@@ -403,7 +403,8 @@ function showCommandLine() {
 
 
 function showEclipseOrder() {
-  str = 'If not specified or false, all files are compiled in alphabetical order using their full names.<p>'+
+  str = 'If not specified or false, all files are compiled in order of appearance in Project.meta. '+
+  'If the filename is a glob pattern, files are sorted alphabetically.<p>'+
   'If true, files are compiled in alphabetical order within a folder, '+
   'but the folders are sorted in reverse alphabetical order.<br>'+
   'This is only used for backward compatibility.'
@@ -662,14 +663,14 @@ return false
 
 function positiontip(e){
 if (enabletip){
-var curX=(ns6)?e.pageX : event.clientX+ietruebody().scrollLeft;
-var curY=(ns6)?e.pageY : event.clientY+ietruebody().scrollTop;
+var curX=(ns6)?e.offsetX : event.clientX+ietruebody().scrollLeft;
+var curY=(ns6)?e.pageY-80 : event.clientY+ietruebody().scrollTop;
 //Find out how close the mouse is to the corner of the window
 var rightedge=ie&&!window.opera? ietruebody().clientWidth-event.clientX-offsetxpoint : window.innerWidth-e.clientX-offsetxpoint
 var bottomedge=ie&&!window.opera? ietruebody().clientHeight-event.clientY-offsetypoint*2 : window.innerHeight-e.clientY-offsetypoint
 var bottom=ie&&!window.opera? ietruebody().clientHeight : window.innerHeight
 
-var leftedge=(offsetxpoint<0)? offsetxpoint*(-1) : -1000
+var leftedge=(offsetxpoint<0)? offsetxpoint*(-1) : offsetxpoint
 
 //if the horizontal distance isn't enough to accomodate the width of the context menu
 if (rightedge<tipobj.offsetWidth+offsetxpoint/2)
@@ -689,6 +690,7 @@ tipobj.style.top=curY+offsetypoint+"px"
 tipobj.style.visibility="visible"
 }
 }
+
 
 function notip(){
 if (ns6||ie){

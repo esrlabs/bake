@@ -1,6 +1,9 @@
 Changelog
 =========
 
+January 8, 2015 - bake-toolkit 2.14.0
+    * Added: possibility to change configs via command line, e.g. changing compiler, see "adapt" docu page
+    * Changed: default order of filenames changed, now order in Project.meta has the highest priority. Results of glob patterns are sorted alphabetically as before.
 December 23, 2015 - bake-toolkit 2.13.1
     * Bugfix: merging configs was extremely slow in 2.12.2 and 2.13.0
 December 23, 2015 - bake-toolkit 2.13.0
