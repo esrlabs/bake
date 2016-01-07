@@ -1,0 +1,31 @@
+Adapt {
+   
+  ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Files "src/add1.cpp"
+  }
+  
+  ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Toolchain {
+        Compiler CPP {
+          Define "A=1"
+        }
+      }
+  }
+  
+  ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Files "src/add2.cpp"
+  }
+  
+  ExecutableConfig __MAIN__, project: __MAIN__, type: remove {
+      Files "src/nix.cpp"
+  } 
+  
+  CustomConfig __MAIN__, project: __MAIN__, type: replace {
+      Dependency lib2, config: test_ok
+  } 
+  
+  ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Files "src/add2.cpp"
+  }  
+  
+}

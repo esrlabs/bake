@@ -11,16 +11,15 @@ require 'helper'
 
 module Bake
 
-  # todo: timestand adapt file
-  # scope __MAIN__ etc...
-  # mehrere kaskadiert
+
+  
   # docu fix von syntax popup diag
-  # adapt filename in cache -> wenn anders, dann neu einlesen  - achtung test lösche cache immer...
-  # adapt filename nicht gefunden, mehrmals...
   # docu order of compileld files
+  # docu adapt
+  # docu changed incl. file order fix
   
 describe "Adapt" do
-
+=begin
   it 'Dep extend 0' do
     Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_extend"])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
@@ -715,6 +714,155 @@ describe "Adapt" do
     expect($mystring.include?("XX=YY")).to be == true
   end
 
+  it 'Scope main_main main,test_scope_main' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_main_main", "-v2", "-p", "main,test_scope_main"])
+    expect($mystring.include?("A=1")).to be == true
+  end
+  it 'Scope main_main main,test_scope_lib' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_main_main", "-v2", "-p", "main,test_scope_lib"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope main_main lib1,test_ok' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_main_main", "-v2", "-p", "lib1,test_ok"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope main_main lib1,test_other' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_main_main", "-v2", "-p", "lib1,test_other"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope main_main lib2' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_main_main", "-v2", "-p", "lib2"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+   
+  it 'Scope all_all main,test_scope_main' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_all_all", "-v2", "-p", "main,test_scope_main"])
+    expect($mystring.include?("A=1")).to be == true
+  end
+ 
+  it 'Scope all_all main,test_scope_lib' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_all_all", "-v2", "-p", "main,test_scope_lib"])
+    expect($mystring.include?("A=1")).to be == true
+  end
+
+  it 'Scope all_all lib1,test_ok' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_all_all", "-v2", "-p", "lib1,test_ok"])
+    expect($mystring.include?("A=1")).to be == true
+  end
+  it 'Scope all_all lib1,test_other' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_all_all", "-v2", "-p", "lib1,test_other"])
+    expect($mystring.include?("A=1")).to be == true
+  end
+  it 'Scope all_all lib2' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_all_all", "-v2", "-p", "lib2"])
+    expect($mystring.include?("A=1")).to be == true
+  end
+   
+  it 'Scope all_lib1 main,test_scope_main' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_all_lib1", "-v2", "-p", "main,test_scope_main"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope all_lib1 main,test_scope_lib' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_all_lib1", "-v2", "-p", "main,test_scope_lib"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope all_lib1 lib1,test_ok' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_all_lib1", "-v2", "-p", "lib1,test_ok"])
+    expect($mystring.include?("A=1")).to be == true
+  end
+  it 'Scope all_lib1 lib1,test_other' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_all_lib1", "-v2", "-p", "lib1,test_other"])
+    expect($mystring.include?("A=1")).to be == true
+  end
+  it 'Scope all_lib1 lib2' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_all_lib1", "-v2", "-p", "lib2"])
+    expect($mystring.include?("A=1")).to be == false
+  end  
+  
+  it 'Scope testok_lib1 main,test_scope_main' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testok_lib1", "-v2", "-p", "main,test_scope_main"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope testok_lib1 main,test_scope_lib' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testok_lib1", "-v2", "-p", "main,test_scope_lib"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope testok_lib1 lib1,test_ok' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testok_lib1", "-v2", "-p", "lib1,test_ok"])
+    expect($mystring.include?("A=1")).to be == true
+  end
+  it 'Scope testok_lib1 lib1,test_other' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testok_lib1", "-v2", "-p", "lib1,test_other"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope testok_lib1 lib2' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testok_lib1", "-v2", "-p", "lib2"])
+    expect($mystring.include?("A=1")).to be == false
+  end  
+  
+  it 'Scope testok_all main,test_scope_main' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testok_all", "-v2", "-p", "main,test_scope_main"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope testok_all main,test_scope_lib' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testok_all", "-v2", "-p", "main,test_scope_lib"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope testok_all lib1,test_ok' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testok_all", "-v2", "-p", "lib1,test_ok"])
+    expect($mystring.include?("A=1")).to be == true
+  end
+  it 'Scope testok_all lib1,test_other' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testok_all", "-v2", "-p", "lib1,test_other"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope testok_all lib2' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testok_all", "-v2", "-p", "lib2"])
+    expect($mystring.include?("A=1")).to be == true
+  end  
+  
+  it 'Scope testscopemain_realmain main,test_scope_main' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testscopemain_realmain", "-v2", "-p", "main,test_scope_main"])
+    expect($mystring.include?("A=1")).to be == true
+  end
+  it 'Scope testscopemain_realmain main,test_scope_lib' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testscopemain_realmain", "-v2", "-p", "main,test_scope_lib"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope testscopemain_realmain lib1,test_ok' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testscopemain_realmain", "-v2", "-p", "lib1,test_ok"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope testscopemain_realmain lib1,test_other' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testscopemain_realmain", "-v2", "-p", "lib1,test_other"])
+    expect($mystring.include?("A=1")).to be == false
+  end
+  it 'Scope testscopemain_realmain lib2' do
+    Bake.startBake("adapt/main", ["test_scope_main", "--rebuild", "--adapt",  "scope_testscopemain_realmain", "-v2", "-p", "lib2"])
+    expect($mystring.include?("A=1")).to be == false
+  end   
+
+=end
+
+  it 'Cascade configs testscopemain_realmain lib2' do
+    Bake.startBake("adapt/main", ["test_casca", "--rebuild", "--adapt",  "cascade", "-v2"])
+    expect($mystring.include?("Building 1 of 2: lib2 (test_ok)")).to be == true
+    expect($mystring.include?("Building 2 of 2: main (test_casca)")).to be == true
+    expect($mystring.include?("nix.cpp")).to be == false
+    expect($mystring.include?("add1.cpp")).to be == true
+    expect($mystring.include?("add2.cpp")).to be == true
+    expect($mystring.include?("main.cpp")).to be == true
+    expect($mystring.include?("A=1")).to be == true
+    expect($mystring.include?("Rebuilding done")).to be == true
+  end 
+
+  # timestand adapt file
+  # adapt filename in cache -> wenn anders, dann neu einlesen  - achtung test lösche cache immer...
+  # adapt filename nicht gefunden,
+  # mehrmals gefunden
+
+
+        
 end
 
 end

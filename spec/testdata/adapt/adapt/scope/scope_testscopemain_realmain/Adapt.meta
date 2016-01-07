@@ -1,0 +1,11 @@
+Adapt {
+   
+    ExecutableConfig test_scope_main, project: main, type: extend {
+      Toolchain {
+        Compiler CPP {
+          Define "A=1"
+        }
+      }
+  }
+  
+}

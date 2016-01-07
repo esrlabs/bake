@@ -1,0 +1,11 @@
+Adapt {
+   
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Toolchain {
+        Compiler CPP {
+          Define "A=1"
+        }
+      }
+  }
+  
+}

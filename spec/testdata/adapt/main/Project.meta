@@ -243,5 +243,26 @@ Project {
     Files "src/add1.cpp"
     DefaultToolchain GCC
   }
+  
+  LibraryConfig test_scope_lib {
+    Files "src/add1.cpp"
+  }
+  
+  ExecutableConfig test_scope_main {
+    Files "src/main.cpp"
+    Dependency config: test_scope_lib
+    Dependency lib1, config: test_ok
+    Dependency lib1, config: test_other
+    Dependency lib2, config: test_ok
+    DefaultToolchain GCC
+  }
+  
+  ExecutableConfig test_casca {
+    Files "src/main.cpp"
+    Files "src/nix.cpp"
+    Dependency lib1, config: test_ok
+    Dependency lib1, config: test_other   
+    DefaultToolchain GCC
+  }
         
 }

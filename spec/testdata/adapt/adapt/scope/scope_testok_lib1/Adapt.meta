@@ -1,0 +1,11 @@
+Adapt {
+   
+    ExecutableConfig test_ok, project: lib1, type: extend {
+      Toolchain {
+        Compiler CPP {
+          Define "A=1"
+        }
+      }
+  }
+  
+}
