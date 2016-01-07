@@ -16,7 +16,7 @@ module Bake
     attr_accessor :exclude_filter
     attr_accessor :no_autodir
     attr_accessor :build_config
-    attr_accessor :adapt_filename
+    attr_accessor :adapt_filenames
   end
   
   class CacheAccess
@@ -87,17 +87,19 @@ module Bake
             end
             
             if (cache != nil)
-              if cache.adapt_filename != AdaptConfig.filename
-                Bake.formatter.printInfo("Info: adapt config filename has been changed, reloading meta information")
+              if (not AdaptConfig.filenames.eql?(cache.adapt_filenames))
+                Bake.formatter.printInfo("Info: adapt config filenames have been changed, reloading meta information")
                 cache = nil
               end
             end
             
-            if (cache != nil and not AdaptConfig.filename.empty?)
-              adaptTime = File.mtime(AdaptConfig.filename)
-              if adaptTime > cacheTime + 1
-                Bake.formatter.printInfo("Info: #{AdaptConfig.filename} has been changed, reloading meta information")
-                cache = nil
+            if (cache != nil and not AdaptConfig.filenames.empty?)
+              AdaptConfig.filenames.each do |f|
+                adaptTime = File.mtime(f)
+                if adaptTime > cacheTime + 1
+                  Bake.formatter.printInfo("Info: #{f} has been changed, reloading meta information")
+                  cache = nil
+                end
               end
             end            
 
@@ -161,7 +163,7 @@ module Bake
         cache.exclude_filter = Bake.options.exclude_filter
         cache.workspace_roots = Bake.options.roots
         cache.build_config = Bake.options.build_config
-        cache.adapt_filename = AdaptConfig.filename
+        cache.adapt_filenames = AdaptConfig.filenames
         bbdump = Marshal.dump(cache)
         begin
           File.delete(@cacheFilename)

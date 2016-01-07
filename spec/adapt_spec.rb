@@ -10,16 +10,9 @@ require 'fileutils'
 require 'helper'
 
 module Bake
-
-
-  
-  # docu fix von syntax popup diag
-  # docu order of compileld files
-  # docu adapt
-  # docu changed incl. file order fix
   
 describe "Adapt" do
-=begin
+
   it 'Dep extend 0' do
     Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_extend"])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
@@ -842,7 +835,7 @@ describe "Adapt" do
     expect($mystring.include?("A=1")).to be == false
   end   
 
-=end
+
 
   it 'Cascade configs testscopemain_realmain lib2' do
     Bake.startBake("adapt/main", ["test_casca", "--rebuild", "--adapt",  "cascade", "-v2"])
@@ -856,12 +849,54 @@ describe "Adapt" do
     expect($mystring.include?("Rebuilding done")).to be == true
   end 
 
-  # timestand adapt file
-  # adapt filename in cache -> wenn anders, dann neu einlesen  - achtung test lösche cache immer...
-  # adapt filename nicht gefunden,
-  # mehrmals gefunden
 
+  it 'Find adapt file multiple times' do
+    Bake.startBake("adapt/main", ["test_multi", "--adapt",  "multi", "-v2"])
+    expect($mystring.include?("Adaption project multi exists more than once")).to be == true
+    expect($mystring.include?("Building done")).to be == true
+    expect($mystring.include?("adapt/multiple/1/multi (chosen)")).to be == true
+    expect($mystring.include?("adapt/adapt/multiple/2/multi")).to be == true
+  end 
 
+  it 'Find adapt file no times' do
+    Bake.startBake("adapt/main", ["test_multi", "--adapt",  "doesNotExist", "-v2"])
+    expect($mystring.include?("Adaption project doesNotExist not found")).to be == true
+    expect($mystring.include?("Building failed")).to be == true
+  end   
+  
+  it 'Touch adapt' do
+    Bake.startBake("adapt/main", ["test_dep0", "--adapt", "dep_extend", "-v3"])
+    $mystring.clear
+    Bake.startBake("adapt/main", ["test_dep0", "--adapt", "dep_extend", "-v3"])
+    expect($mystring.include?("dep_extend/Adapt.meta has been changed, reloading meta information")).to be == false
+    $mystring.clear
+    sleep 2.1
+    FileUtils.touch("spec/testdata/adapt/adapt/dep/dep_extend/Adapt.meta")
+    Bake.startBake("adapt/main", ["test_dep0", "--adapt", "dep_extend", "-v3"])
+    expect($mystring.include?("dep_extend/Adapt.meta has been changed, reloading meta information")).to be == true
+  end  
+
+  it 'adapt filename changed' do
+    Bake.startBake("adapt/main", ["test_dep0", "-v3"])
+    $mystring.clear
+    Bake.startBake("adapt/main", ["test_dep0", "--adapt", "dep_extend", "-v3"])
+    expect($mystring.include?("adapt config filenames have been changed, reloading meta information")).to be == true
+    $mystring.clear
+    Bake.startBake("adapt/main", ["test_dep0", "--adapt", "dep_extend", "-v3"])
+    expect($mystring.include?("adapt config filenames have been changed, reloading meta information")).to be == false
+    $mystring.clear    
+    Bake.startBake("adapt/main", ["test_dep0", "--adapt", "dep_remove", "-v3"])
+    expect($mystring.include?("adapt config filenames have been changed, reloading meta information")).to be == true
+    $mystring.clear   
+    Bake.startBake("adapt/main", ["test_dep0", "--adapt", "dep_remove", "-v3"])
+    expect($mystring.include?("adapt config filenames have been changed, reloading meta information")).to be == false
+    $mystring.clear  
+    Bake.startBake("adapt/main", ["test_dep0", "-v3"])
+    expect($mystring.include?("adapt config filenames have been changed, reloading meta information")).to be == true
+    $mystring.clear
+    Bake.startBake("adapt/main", ["test_dep0", "-v3"])
+    expect($mystring.include?("adapt config filename has been changed, reloading meta information")).to be == false
+  end 
         
 end
 

@@ -37,7 +37,7 @@ module Bake
       puts " --abs-paths              Compiler prints absolute filename paths instead of relative paths."
       puts " --no-autodir             Disable auto completion of paths like in IncludeDir"
       puts " --set <key>=<value>      Sets a variable. Overwrites variables defined in Project.metas (can be used multiple times)."
-      puts " --adapt <name>           Specifies an adapt project to manipulate the configs"
+      puts " --adapt <name>           Specifies an adapt project to manipulate the configs (can be used multiple times)"
       puts " --incs-and-defs          Used by IDEs plugins"
       puts " --conversion-info        Prints infos for an external tool which converts bake configs for other build systems"
       puts " --writeCC2J <name>       Writes compiler command into a json file (experimental!)"

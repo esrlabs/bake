@@ -18,8 +18,8 @@ module Bake
     
   class Options < Parser
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain
-    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename, :adapt # String
-    attr_reader :roots, :include_filter, :exclude_filter # String List
+    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename # String
+    attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
@@ -66,7 +66,7 @@ module Bake
       @exclude_filter = []
       @def_roots = []
       @main_project_name = ""
-      @adapt = ""
+      @adapt = []
       
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| set_main_dir(x)                         })
@@ -89,7 +89,7 @@ module Bake
                                                                                                                          
       add_option(["--generate-doc",       "--docu"               ], lambda {     @docu = true                            })
              
-      add_option(["--adapt"                                      ], lambda { |x|  @adapt = x                             })     
+      add_option(["--adapt"                                      ], lambda { |x| set_adapt(x)                            })     
                                                                                                                     
       add_option(["-v0"                                          ], lambda {     @verbose = 0                            })
       add_option(["-v1"                                          ], lambda {     @verbose = 1                            })
@@ -131,6 +131,8 @@ module Bake
       parse_internal()
       set_main_dir(Dir.pwd) if @main_dir.nil?
       @roots = @def_roots if @roots.length == 0
+      @roots.uniq!
+      @adapt.uniq!
       
       if @project
         if @project.split(',').length > 2
@@ -234,6 +236,10 @@ module Bake
       check_valid_dir(dir)
       r = File.expand_path(dir.gsub(/[\\]/,'/'))
       @roots << r if not @roots.include?r
+    end
+    
+    def set_adapt(name)
+      @adapt << name if not @adapt.include?name
     end
         
     def set_threads(num)
