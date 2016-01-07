@@ -264,5 +264,10 @@ Project {
     Dependency lib1, config: test_other   
     DefaultToolchain GCC
   }
+  
+  ExecutableConfig test_multi {
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
         
 }
