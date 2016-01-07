@@ -57,7 +57,7 @@ module Bake
           r = r + Bake.options.main_project_name # glob would not work otherwise on windows (ruby bug?)
         end
         r = r+"/**{,/*/**}/#{Bake.options.adapt}/Adapt.meta"
-        potentialAdapts.concat(Dir.glob(r))
+        potentialAdapts.concat(Dir.glob(r).sort)
       end
       
       potentialAdapts.uniq

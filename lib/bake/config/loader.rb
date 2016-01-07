@@ -256,7 +256,7 @@ module Bake
           r = r + Bake.options.main_project_name # glob would not work otherwise on windows (ruby bug?)
         end
         r = r+"/**{,/*/**}/Project.meta"
-        @potentialProjs.concat(Dir.glob(r))
+        @potentialProjs.concat(Dir.glob(r).sort)
       end
       
       @potentialProjs = @potentialProjs.uniq
