@@ -268,7 +268,6 @@ module Bake
 
      class Adapt < ModelElement
        contains_many 'config', BaseConfig_INTERNAL, 'parent'
-       contains_many 'files', Files, 'parent'
      end
       
   end
