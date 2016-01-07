@@ -21,7 +21,7 @@ module Bake
               tc.setInternalDefines(clone(sc.internalDefines))
             end 
             if sc.command != "" and (not @merge or tc.command == "") 
-              tc.setCommand(clone(sc.command))
+              tc.setCommand(sc.command)
             end
           end
         end
@@ -33,7 +33,7 @@ module Bake
           tt.setArchiver(clone(st.archiver))
         else
           if st.archiver.command != "" and (not @merge or tt.archiver.command == "")
-            tt.archiver.setCommand(clone(st.archiver.command))
+            tt.archiver.setCommand(st.archiver.command)
           end
           stFlags = clone(st.archiver.flags); ttFlags = tt.archiver.flags
           tt.archiver.setFlags(@merge ? (stFlags+ttFlags) : (ttFlags+stFlags))
@@ -45,7 +45,7 @@ module Bake
           tt.setLinker(clone(st.linker))
         else
           if st.linker.command != "" and (not @merge or tt.linker.command == "") 
-            tt.linker.setCommand(clone(st.linker.command))
+            tt.linker.setCommand(st.linker.command)
           end
           stFlags     = clone(st.linker.flags);           ttFlags     = tt.linker.flags
           stPreFlags  = clone(st.linker.libprefixflags);  ttPreFlags  = tt.linker.libprefixflags
@@ -57,7 +57,7 @@ module Bake
       end 
       
       if st.outputDir != "" and (not @merge or tt.outputDir == "")
-        tt.setOutputDir(clone(st.outputDir))
+        tt.setOutputDir(st.outputDir)
       end
 
       if not st.docu.nil? and (not @merge or tt.docu.nil?) 
@@ -69,10 +69,10 @@ module Bake
       
       if (isDefault)
         if st.basedOn != "" and (not @merge or tt.basedOn == "") 
-          tt.setBasedOn(clone(st.basedOn))
+          tt.setBasedOn(st.basedOn)
         end
         if st.eclipseOrder # eclipse order always wins
-          tt.setEclipseOrder(clone(st.eclipseOrder))
+          tt.setEclipseOrder(st.eclipseOrder)
         end
         if not st.internalIncludes.nil? and (not @merge or tt.internalIncludes.nil?) 
           tt.setInternalIncludes(clone(st.internalIncludes))
@@ -86,9 +86,31 @@ module Bake
     end
     
     def clone(obj)
-      return obj.map {|o| o.dup} if Array === obj
-      return obj if TrueClass === obj
-      return obj.dup
+      if obj.is_a?(Metamodel::ModelElement)
+        cloneModelElement(obj)
+      elsif Array === obj
+        obj.map { |o| clone(o) }
+      else
+        obj # no clone, should not happen
+      end
+    end
+    
+    def cloneModelElement(obj)
+      cpy = obj.class.new
+      cpy.fragment_ref = obj.fragment_ref
+      obj.class.ecore.eAllStructuralFeatures.each do |f|
+        value = obj.getGeneric(f.name)
+        if f.is_a?(RGen::ECore::EReference) && f.containment
+          if value.is_a?(Array)
+            cpy.setGeneric(f.name, value.collect{|v| clone(v)})
+          elsif !value.nil?
+            cpy.setGeneric(f.name, clone(value))
+          end
+        elsif f.is_a?(RGen::ECore::EAttribute)
+          cpy.setGeneric(f.name, value)
+        end
+      end
+      cpy
     end
     
     def cloneParent(obj)
