@@ -272,7 +272,7 @@ module Bake
           basedOn =  @mainConfig.defaultToolchain.basedOn
           basedOnToolchain = Bake::Toolchain::Provider[basedOn]
           if basedOnToolchain.nil?
-            Bake.formatter.printError("DefaultToolchain based on unknown compiler '#{basedOn}'", config.defaultToolchain)
+            Bake.formatter.printError("DefaultToolchain based on unknown compiler '#{basedOn}'", @mainConfig.defaultToolchain)
             ExitHelper.exit(1)
           end
 
