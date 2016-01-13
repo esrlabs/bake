@@ -26,8 +26,8 @@ Gem::Specification.new do |s|
   s.author = "Alexander Schaal"
   s.email = "alexander.schaal@esrlabs.com"
   s.rdoc_options = ["-x", "doc"]
-  s.add_dependency("rtext", "=0.2.0")
-  s.add_dependency("rgen", "=0.6.0")
+  s.add_dependency("rtext", "=0.8.1")
+  s.add_dependency("rgen", "=0.8.0")
   s.add_dependency("highline", ">= 1.6.0")
   s.add_dependency("colored")
   s.executables = ["bake", "bakery", "createVSProjects", "bake-doc"]

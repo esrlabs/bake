@@ -44,7 +44,7 @@ describe "Adapt" do
     expect($mystring.include?("Building 2 of 2: main (test_dep2)")).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true
   end  
-  
+    
   it 'Dep replace 0' do
     Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_replace"])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
@@ -53,7 +53,7 @@ describe "Adapt" do
     expect($mystring.include?("Building 4 of 4: main (test_dep0)")).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true
   end  
-  
+
   it 'Dep replace 2' do
     Bake.startBake("adapt/main", ["test_dep2", "--rebuild", "--adapt", "dep_replace"])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
@@ -575,7 +575,9 @@ describe "Adapt" do
   
   it 'Toolchain remove 2' do
     Bake.startBake("adapt/main", ["test_tool2", "--rebuild", "--adapt",  "tool_remove", "-v2"])
-    expect($mystring.include?("-D")).to be == false
+    expect($mystring.include?("-DCPP")).to be == false
+    expect($mystring.include?("-DCCC")).to be == true
+    expect($mystring.include?("-DASM")).to be == true
     expect($mystring.include?("-L")).to be == false
   end 
   
@@ -672,7 +674,7 @@ describe "Adapt" do
   end
   it 'EclipseOrder true-false' do
     Bake.startBake("adapt/main", ["test_eclTrue", "--rebuild", "--adapt",  "ecl_false", "-v2", "--threads", "1"])
-    expect($mystring.index("add1.cpp")).to be < $mystring.index("main.cpp")
+    expect($mystring.index("add1.cpp")).to be > $mystring.index("main.cpp")
   end
   it 'EclipseOrder true-true' do
     Bake.startBake("adapt/main", ["test_eclTrue", "--rebuild", "--adapt",  "ecl_true", "-v2", "--threads", "1"])

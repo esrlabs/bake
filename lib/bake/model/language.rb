@@ -7,8 +7,8 @@ require 'rtext/language'
 module Bake
 
   class Idp
-    def call(e,unused)
-      e.respond_to?(:ident) ? e.ident() : nil # IdentifierProvider.qualified_name(e)
+    def call(e,notUsed1,notUsed2,notUsed3)
+      e.respond_to?(:ident) ? e.ident() : nil
     end
   end
 

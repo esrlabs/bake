@@ -3,8 +3,11 @@ Adapt {
     ExecutableConfig __MAIN__, project: __MAIN__, type: remove {
       Toolchain {
         Compiler CPP {
-          Define "BBB=100"
+          Define "CPPA=1"
+          Define "CPPB=2"
+          Flags
         }
+        Linker
       }
   }
   

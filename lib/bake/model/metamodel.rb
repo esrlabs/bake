@@ -12,9 +12,16 @@ module Bake
         annotation :details => {'internal' => 'true'}
       end
       module ClassModule
-        attr_accessor :fragment_ref
+        def fragment_ref=(fref)
+          @fname = fref.fragment.location
+        end
+        
         def file_name
-          @fragment_ref.fragment.location
+          @fname
+        end
+
+        def file_name=(name)
+          @fname = name
         end
       end
     end

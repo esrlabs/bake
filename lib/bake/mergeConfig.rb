@@ -7,80 +7,7 @@ module Bake
       @parent = parent
     end
     
-    def mergeToolchain(st,tt, isDefault)
-      st.compiler.each do |sc|
-        found = false
-        tt.compiler.each do |tc|
-          if tc.ctype == sc.ctype
-            found = true
-            sf = clone(sc.flags); tf = tc.flags
-            tc.setFlags(@merge ? (sf+tf) : (tf+sf))
-            sd = clone(sc.define); td = tc.define
-            tc.setDefine(@merge ? (sd+td) : (td+sd))
-            if not sc.internalDefines.nil? and (not @merge or tc.internalDefines.nil?) 
-              tc.setInternalDefines(clone(sc.internalDefines))
-            end 
-            if sc.command != "" and (not @merge or tc.command == "") 
-              tc.setCommand(sc.command)
-            end
-          end
-        end
-        tt.addCompiler(sc) if not found
-      end
 
-      if not st.archiver.nil?
-        if tt.archiver.nil?
-          tt.setArchiver(clone(st.archiver))
-        else
-          if st.archiver.command != "" and (not @merge or tt.archiver.command == "")
-            tt.archiver.setCommand(st.archiver.command)
-          end
-          stFlags = clone(st.archiver.flags); ttFlags = tt.archiver.flags
-          tt.archiver.setFlags(@merge ? (stFlags+ttFlags) : (ttFlags+stFlags))
-        end
-      end 
- 
-      if not st.linker.nil?
-        if tt.linker.nil?
-          tt.setLinker(clone(st.linker))
-        else
-          if st.linker.command != "" and (not @merge or tt.linker.command == "") 
-            tt.linker.setCommand(st.linker.command)
-          end
-          stFlags     = clone(st.linker.flags);           ttFlags     = tt.linker.flags
-          stPreFlags  = clone(st.linker.libprefixflags);  ttPreFlags  = tt.linker.libprefixflags
-          stPostFlags = clone(st.linker.libpostfixflags); ttPostFlags = tt.linker.libpostfixflags
-          tt.linker.setFlags(          @merge ? (stFlags+ttFlags)         : (ttFlags+stFlags)        )
-          tt.linker.setLibprefixflags( @merge ? (stPreFlags+ttPreFlags)   : (ttPreFlags+stPreFlags)  )
-          tt.linker.setLibpostfixflags(@merge ? (stPostFlags+ttPostFlags) : (ttPostFlags+stPostFlags))
-        end
-      end 
-      
-      if st.outputDir != "" and (not @merge or tt.outputDir == "")
-        tt.setOutputDir(st.outputDir)
-      end
-
-      if not st.docu.nil? and (not @merge or tt.docu.nil?) 
-        tt.setDocu(clone(st.docu))
-      end
-      
-      sLint = clone(st.lintPolicy); tLint = tt.lintPolicy
-      tt.setLintPolicy(@merge ? (sLint + tLint) : (tLint + sLint))
-      
-      if (isDefault)
-        if st.basedOn != "" and (not @merge or tt.basedOn == "") 
-          tt.setBasedOn(st.basedOn)
-        end
-        if st.eclipseOrder # eclipse order always wins
-          tt.setEclipseOrder(st.eclipseOrder)
-        end
-        if not st.internalIncludes.nil? and (not @merge or tt.internalIncludes.nil?) 
-          tt.setInternalIncludes(clone(st.internalIncludes))
-        end 
-      end
-      
-    end
-    
     def manipulateLineNumbers(ar)
       ar.each { |l| l.line_number -= 100000  }
     end
@@ -97,7 +24,7 @@ module Bake
     
     def cloneModelElement(obj)
       cpy = obj.class.new
-      cpy.fragment_ref = obj.fragment_ref
+      cpy.file_name = obj.file_name
       obj.class.ecore.eAllStructuralFeatures.each do |f|
         value = obj.getGeneric(f.name)
         if f.is_a?(RGen::ECore::EReference) && f.containment
@@ -107,192 +34,180 @@ module Bake
             cpy.setGeneric(f.name, clone(value))
           end
         elsif f.is_a?(RGen::ECore::EAttribute)
-          cpy.setGeneric(f.name, value)
+          cpy.setGeneric(f.name, value) if obj.eIsSet(f.name)
         end
       end
       cpy
     end
     
-    def cloneParent(obj)
-      @merge ? clone(obj) : obj
-    end
-    def cloneChild(obj)
-      @merge ? obj : clone(obj)
-    end
-    
+   
     def replace()
-      # Valid for all configs
-      toReplace = [:dependency, :set, :exLib, :exLibSearchPath, :userLibrary, :startupSteps, :preSteps, :postSteps, :exitSteps, :toolchain, :defaultToolchain]
-
-      # Valid for custom config
-      if (Metamodel::CustomConfig === @child && Metamodel::CustomConfig === @parent)
-        toReplace << :step
-      end
-
-      # Valid for library and exe config
-      if ((Metamodel::LibraryConfig === @child || Metamodel::ExecutableConfig === @child) && (Metamodel::LibraryConfig === @parent || Metamodel::ExecutableConfig === @parent))
-        toReplace << :files << :excludeFiles << :includeDir
-      end
-
-      # Valid for exe config
-      if (Metamodel::ExecutableConfig === @child && Metamodel::ExecutableConfig === @parent)
-        toReplace << :linkerScript << :artifactName << :mapFile
-      end
-      
-      toReplace.each do |name|
-        childData = @child.method(name).call()
+      @child.class.ecore.eAllReferences.each do |f|
+        next unless @parent.class.ecore.eAllReferences.include?f
+        next unless f.containment
+        childData = @child.getGeneric(f.name)
         if (Array === childData and not childData.empty?) or (Metamodel::ModelElement === childData and not childData.nil?)
-          @parent.method(name.to_s + "=").call(clone(childData))
+          @parent.setGeneric(f.name,clone(childData))
         end
       end
     end
     
-    def remove()
-      # Valid for all configs
-      @parent.toolchain = nil if not @child.toolchain.nil?
-      @parent.defaultToolchain = nil if not @child.defaultToolchain.nil?
-      [:toolchain, :defaultToolchain].each do |name|
-        @parent.method(name.to_s+"=").call(nil) if not @child.method(name).call().nil?
+    def hasSubNodes(elem)
+      elem.class.ecore.eAllReferences.each do |f|
+        next unless f.containment
+        elemData = elem.getGeneric(f.name)
+        return true if (Array === elemData && !elemData.empty?)
+        return true if (Metamodel::ModelElement === elemData)
       end
-      
-      [:startupSteps, :preSteps, :postSteps, :exitSteps].each do |name|
-        pSteps = @parent.method(name).call()
-        cSteps = @child.method(name).call()
-        next if pSteps.nil? or cSteps.nil?
-        ps = pSteps.step  
-        ps.delete_if { |ps| cSteps.step.any? { |cs| cs.name == ps.name } }
-        pSteps.step=ps
-      end
-        
-      toRemove = [:dependency, :set, :exLib, :exLibSearchPath, :userLibrary]
-        
-      # Valid for custom config
-      if (Metamodel::CustomConfig === @child && Metamodel::CustomConfig === @parent)
-        toRemove << :step
-      end
+      false
+    end
 
-      # Valid for library and exe config
-      if ((Metamodel::LibraryConfig === @child || Metamodel::ExecutableConfig === @child) && (Metamodel::LibraryConfig === @parent || Metamodel::ExecutableConfig === @parent))
-        toRemove << :files << :excludeFiles << :includeDir
-      end
-
-      # Valid for exe config
-      if (Metamodel::ExecutableConfig === @child && Metamodel::ExecutableConfig === @parent)
-        toRemove << :linkerScript << :artifactName << :mapFile
-      end
+    def sameAttr(childData, parentData)
+      childData.class.ecore.eAllAttributes.all? { |a| 
+        a.eAnnotations.each do |x| x.details.each do |y|
+          return true if (y.key == :internal and y.value == true)
+        end; end
+        a.name == "line_number" || (not childData.eIsSet(a.name)) || (childData.getGeneric(a.name) == parentData.getGeneric(a.name))
+      }
+    end
+    
+    def removeChilds(childElem, parentElem)
+      return if childElem.nil? or parentElem.nil?
       
-      toRemove.each do |name|
-        childData = @child.method(name).call()
-        parentData = @parent.method(name).call()
+      childElem.class.ecore.eAllReferences.each do |f|
+        next unless f.containment
+        
+        childData = childElem.getGeneric(f.name)
+        parentData = parentElem.getGeneric(f.name)
+        next if childData.nil? or parentData.nil?
+        
         if (Array === childData)
-          if not childData.empty?
-            parentData.delete_if { |d| childData.any? { |e| e.name == d.name } }
-            @parent.method(name.to_s + "=").call(parentData) # TODO: needed?
-          end
-        elsif not childData.nil? and not parentData.nil?
-          if childData.name == parentData.name
-            if (name != :dependency) or (childData.config == parentData.config)
-              @parent.method(name.to_s + "=").call(nil)
+          if !parentData.empty? && !childData.empty?
+            childData.each do |c|
+              cN = hasSubNodes(c)    
+              toRemove = []
+              parentData.each do |p|
+                if (not cN)
+                  if sameAttr(c, p)  
+                    toRemove << p
+                  end
+                else
+                  removeChilds(c, p);
+                end
+              end
+              toRemove.each do |r|
+                parentElem.removeGeneric(f.name, r)
+              end
             end
           end
-        end          
-      end      
-    end   
+        elsif Metamodel::ModelElement === childData
+          if sameAttr(childData, parentData)
+            cN = hasSubNodes(childData)
+            if (not cN)
+              parentElem.setGeneric(f.name, nil)
+            else
+              removeChilds(childData, parentData)
+            end
+          end # otherwise not equal, will not be deleted
+        end
+      end
+    end
+    
+    
+    def adaptAttributes(childData, parentData)
+      childData.class.ecore.eAllAttributes.each do |a| 
+        parentData.setGeneric(a.name, childData.getGeneric(a.name)) if childData.eIsSet(a.name)
+      end
+    end
+    
+    def adapt(child, parent)
+      (parent.class.ecore.eAllReferences & child.class.ecore.eAllReferences).each do |f|
+        next unless f.containment
+          
+        childData = child.getGeneric(f.name)
+        next if childData.nil? or (Array === childData && childData.empty?)
+        parentData = parent.getGeneric(f.name)
+          
+        if Array === childData
+          if f.name == "compiler"
+            childData.each do |c| 
+              p = parentData.find { |p| p.ctype == c.ctype }
+              if p.nil?
+                parentData << c
+              else
+                adaptAttributes(c, p)
+                adapt(c, p)
+              end
+            end
+            parent.setGeneric(f.name, parentData)
+          else
+            parent.setGeneric(f.name, parentData + childData)
+          end
+        elsif Metamodel::ModelElement === childData
+          if parentData.nil?
+            parent.setGeneric(f.name, childData)
+          else
+            adaptAttributes(childData, parentData)
+            adapt(childData, parentData)
+          end
+        end
+      end
+    end
+    
+    
+    def extendAttributes(childData, parentData)
+       parentData.class.ecore.eAllAttributes.each do |a| 
+         childData.setGeneric(a.name, parentData.getGeneric(a.name)) if !childData.eIsSet(a.name) && parentData.eIsSet(a.name)
+       end
+     end
+     
+     def extend(child, parent)
+       (parent.class.ecore.eAllReferences & child.class.ecore.eAllReferences).each do |f|
+         next unless f.containment
+         parentData = parent.getGeneric(f.name)
+         next if parentData.nil? or (Array === parentData && parentData.empty?)
+         childData = child.getGeneric(f.name)
+           
+         if Array === parentData
+           if f.name == "compiler"
+             extendedParentData = []
+             parentData.each do |p| 
+               c = childData.find { |c| p.ctype == c.ctype }
+               if c
+                 adaptAttributes(c, p)
+                 adapt(c, p)
+               end
+               extendedParentData << p
+             end
+             restOfChildData = childData.find_all { |c| parentData.find {|p| p.ctype != c.ctype } }
+             child.setGeneric(f.name, extendedParentData + restOfChildData)  
+           else
+             if ["exLib", "exLibSearchPath", "userLibrary"].include?f.name
+               manipulateLineNumbers(parentData)
+             end
+             child.setGeneric(f.name, parentData + childData)
+           end
+         elsif Metamodel::ModelElement === parentData
+           if childData.nil?
+             child.setGeneric(f.name, parentData)
+           else
+             extendAttributes(childData, parentData)
+             extend(childData, parentData)
+           end
+         end
+       end
+     end    
     
     def merge(type) # :merge means child will be updated, else parent will be updated
       if (type == :remove)
-        remove
-        return
+        removeChilds(@child, @parent)
       elsif (type == :replace)
         replace
-        return
+      elsif (type == :extend)
+        adapt(clone(@child), @parent)
+      elsif (type == :merge)
+        extend(@child, clone(@parent))
       end
-      
-      @merge = (type == :merge)
-      target = (@merge ? @child : @parent)
-      source = (@merge ? @parent : @child)
-      
-      # Valid for all config types
-      
-      deps = cloneParent(@parent.dependency)
-      cloneChild(@child.dependency).each do |cd|
-        deps << cd if deps.none? {|pd| pd.name == cd.name and pd.config == cd.config }
-      end
-      target.setDependency(deps)
-      
-      target.setSet(cloneParent(@parent.set) + cloneChild(@child.set))
-      
-      cExLib = cloneParent(@parent.exLib)
-      cExLibSearchPath = cloneParent(@parent.exLibSearchPath)
-      cUserLibrary = cloneParent(@parent.userLibrary)
-      if @merge # otherwise thay are already manipulated when loading Adapt.meta
-        manipulateLineNumbers(cExLib)
-        manipulateLineNumbers(cExLibSearchPath)
-        manipulateLineNumbers(cUserLibrary)
-      end
-      target.setExLib(cExLib + cloneChild(@child.exLib))
-      target.setExLibSearchPath(cExLibSearchPath + cloneChild(@child.exLibSearchPath))
-      target.setUserLibrary(cUserLibrary + cloneChild(@child.userLibrary))
-
- 
-      [:startupSteps, :preSteps, :postSteps, :exitSteps].each do |name|
-        sourceData = source.method(name).call()
-        targetData = target.method(name).call()
-        if not sourceData.nil?
-          if targetData.nil?
-            target.method(name.to_s+"=").call(clone(sourceData))
-          else
-            targetData.step = cloneParent(@parent.method(name).call().step) + cloneChild(@child.method(name).call().step)
-          end
-        end
-      end
-
-      st = source.defaultToolchain
-      tt = target.defaultToolchain
-      if not st.nil? 
-        if tt.nil?
-          target.setDefaultToolchain(clone(st))
-        else
-          mergeToolchain(st,tt,true)
-        end
-      end
-      
-      st = source.toolchain
-      tt = target.toolchain
-      if not st.nil? 
-        if tt.nil?
-          target.setToolchain(clone(st))
-        else
-          mergeToolchain(st,tt,false)
-        end
-      end      
-
-
-      # Valid for custom config
-      if (Metamodel::CustomConfig === @child && Metamodel::CustomConfig === @parent)
-        if not source.step.nil? and (not @merge or target.step.nil?)
-          target.step = clone(source.step)
-        end
-      end
-
-      # Valid for library and exe config
-      if ((Metamodel::LibraryConfig === @child || Metamodel::ExecutableConfig === @child) && (Metamodel::LibraryConfig === @parent || Metamodel::ExecutableConfig === @parent))
-        target.setFiles(cloneParent(@parent.files) + cloneChild(@child.files))
-        target.setExcludeFiles(cloneParent(@parent.excludeFiles) + cloneChild(@child.excludeFiles))
-        target.setIncludeDir(cloneParent(@parent.includeDir) + cloneChild(@child.includeDir))
-      end
-
-      # Valid for exe config
-      if (Metamodel::ExecutableConfig === @child && Metamodel::ExecutableConfig === @parent)
-        [:linkerScript, :artifactName, :mapFile].each do |name|
-          sourceData = source.method(name).call()
-          targetData = target.method(name).call()
-          if not sourceData.nil? and (not @merge or targetData.nil?)
-            target.method(name.to_s+"=").call(clone(sourceData))
-          end
-        end
-      end
-    
     end
   
   end
