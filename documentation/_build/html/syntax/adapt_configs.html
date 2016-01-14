@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Adapt configs &mdash; bake 2.13.1 documentation</title>
+    <title>Adapt configs &mdash; bake 2.14.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.13.1',
+        VERSION:     '2.14.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake 2.13.1 documentation" href="../index.html" />
+    <link rel="top" title="bake 2.14.0 documentation" href="../index.html" />
     <link rel="up" title="Syntax" href="syntax.html" />
     <link rel="next" title="Commandline" href="../commandline/commandline.html" />
     <link rel="prev" title="Derive configs" href="derive_configs.html" />
@@ -97,8 +97,15 @@
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">Adapt configs</a><ul>
-<li><a class="reference internal" href="#adapting-a-config">Adapting a config</a></li>
-<li><a class="reference internal" href="#inheritance-implications">Inheritance implications</a></li>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#effectiveness">Effectiveness</a></li>
+<li><a class="reference internal" href="#occurrences">Occurrences</a></li>
+<li><a class="reference internal" href="#types">Types</a><ul>
+<li><a class="reference internal" href="#type-extend">Type: extend</a></li>
+<li><a class="reference internal" href="#type-remove">Type: remove</a></li>
+<li><a class="reference internal" href="#type-replace">Type: replace</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -144,134 +151,118 @@
       
   <div class="section" id="adapt-configs">
 <h1>Adapt configs<a class="headerlink" href="#adapt-configs" title="Permalink to this headline">¶</a></h1>
-<p>bake supports deriving configs, which allows you to put repetetive settings in a base config.</p>
-<div class="section" id="adapting-a-config">
-<h2>Adapting a config<a class="headerlink" href="#adapting-a-config" title="Permalink to this headline">¶</a></h2>
-<p>Derving a config in bake is pretty straight forward, and looks like this:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig A
-LibraryConfig    B, extends: A
-CustomConfig     C, extends: B
-ExecutableConfig D, extends: C
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>If you want to manipulate existing configs without changing them, you can &#8220;adapt&#8221; them via command line.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The config type of the parent config does not matter, but only settings which are valid in BOTH configs will be inherited.
-In the example above D gets the dependencies from A, because &#8220;Dependency&#8221; is valid in all configs, but D does not get
-the &#8220;Files&#8221; from A, because &#8220;Files&#8221; is not valid in CustomConfig.</p>
+<p>bake searches for abc/Adapt.meta within the workspace roots. If found, the configs from the adapt file are parsed:</p>
+<div class="highlight-text"><div class="highlight"><pre>Adapt {
+  ExecutableConfig ... # 0..n
+  LibraryConfig ... # 0..n
+  CustomConfig ... # 0..n
+}
+</pre></div>
+</div>
+<p>Here is an example to change the DefaultToolchain</p>
+<div class="highlight-text"><div class="highlight"><pre>Adapt {
+  ExecutableConfig test, project: __MAIN__, type: replace {
+    DefaultToolchain GCC
+  }
+}
+</pre></div>
 </div>
 </div>
-<div class="section" id="inheritance-implications">
-<h2>Inheritance implications<a class="headerlink" href="#inheritance-implications" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
-<colgroup>
-<col width="41%" />
-<col width="59%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Setting</th>
-<th class="head">Derived</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Set</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-odd"><td>Dependency</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-even"><td>ExternalLibrary</td>
-<td>parent + child
-(ordered by line number)</td>
-</tr>
-<tr class="row-odd"><td>ExternalLibrarySearchPath</td>
-<td>parent + child
-(ordered by line number)</td>
-</tr>
-<tr class="row-even"><td>UserLibrary</td>
-<td>parent + child
-(ordered by line number)</td>
-</tr>
-<tr class="row-odd"><td>PreSteps</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-even"><td>PostSteps</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-odd"><td>Makefile</td>
-<td>used from parent if not
-in child</td>
-</tr>
-<tr class="row-even"><td>CommandLine</td>
-<td>used from parent if not
-in child</td>
-</tr>
-<tr class="row-odd"><td>Files</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-even"><td>ExcludeFiles</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-odd"><td>IncludeDir</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-even"><td>LinkerScript</td>
-<td>used from parent if not in child</td>
-</tr>
-<tr class="row-odd"><td>ArtifactName</td>
-<td>used from parent if not in child</td>
-</tr>
-<tr class="row-even"><td>MapFile</td>
-<td>used from parent if not in child</td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="docutils">
-<colgroup>
-<col width="41%" />
-<col width="59%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Toolchain Setting</th>
-<th class="head">Derived</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>basedOn</td>
-<td>used from parent if not in child</td>
-</tr>
-<tr class="row-odd"><td>outputDir</td>
-<td>used from parent if not in child</td>
-</tr>
-<tr class="row-even"><td>command</td>
-<td>used from parent if not in child</td>
-</tr>
-<tr class="row-odd"><td>LibPrefixFlags</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-even"><td>LibPostfixFlags</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-odd"><td>Flags</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-even"><td>Define</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-odd"><td>InternalDefines</td>
-<td>used from parent if not in child</td>
-</tr>
-<tr class="row-even"><td>InternalIncludes</td>
-<td>used from parent if not in child</td>
-</tr>
-<tr class="row-odd"><td>LintPolicy</td>
-<td>parent + child</td>
-</tr>
-<tr class="row-even"><td>Docu</td>
-<td>used from parent if not in child</td>
-</tr>
-</tbody>
-</table>
+<div class="section" id="effectiveness">
+<h2>Effectiveness<a class="headerlink" href="#effectiveness" title="Permalink to this headline">¶</a></h2>
+<p>The adapt configs can be applied to all configs from regular build. This can be controlled by the config names and the project attributes. The example above
+is adapted only to the config &#8220;test&#8221; of the main project. __MAIN__ and __ALL__ are keywords. __MAIN__ means the main project or config, __ALL__ means all
+projects or configs. If you want to apply the changes only to the top level config, write:</p>
+<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig __MAIN__, project: __MAIN__, ...
+</pre></div>
+</div>
+<p>If you want to apply the changes to all configs, write:</p>
+<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig __ALL__, project: __ALL__, ...
+</pre></div>
+</div>
+<p>It is possible to mix the keywords with reals project or config names.</p>
+</div>
+<div class="section" id="occurrences">
+<h2>Occurrences<a class="headerlink" href="#occurrences" title="Permalink to this headline">¶</a></h2>
+<p>You can specify more configs in one adapt file and you can specify more than one adapt file:</p>
+<div class="highlight-text"><div class="highlight"><pre>Adapt {
+  ExecutableConfig ..., project: ..., type: ... {
+    ...
+  }
+  ExecutableConfig ..., project: ..., type: ... {
+    ...
+  }
+  LibraryConfig ..., project: ..., type: ... {
+    ...
+  }
+  ...
+}
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc --adapt xy
+</pre></div>
+</div>
+<p>They will be applied in the specified order.</p>
+</div>
+<div class="section" id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to specify the type of adaption:</p>
+<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig ..., type: replace
+</pre></div>
+</div>
+<p>The type can be &#8220;replace&#8221;, &#8220;remove&#8221; or &#8220;extend&#8221;.</p>
+<div class="section" id="type-extend">
+<h3>Type: extend<a class="headerlink" href="#type-extend" title="Permalink to this headline">¶</a></h3>
+<p>This works exactly like for <a class="reference internal" href="derive_configs.html"><em>Derive configs</em></a>.</p>
+</div>
+<div class="section" id="type-remove">
+<h3>Type: remove<a class="headerlink" href="#type-remove" title="Permalink to this headline">¶</a></h3>
+<p>If parent elements can be found which matches to the child elements, they will be removed.</p>
+<p>Example project config:</p>
+<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig test {
+  DefaultToolchain GCC
+}
+</pre></div>
+</div>
+<p>Example adapt configs:</p>
+<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig __ALL__, project: __ALL__, type: remove {
+  DefaultToolchain # remove ok
+}
+
+ExecutableConfig __ALL__, project: __ALL__, type: remove {
+  DefaultToolchain GCC # remove ok
+}
+
+ExecutableConfig __ALL__, project: __ALL__, type: remove {
+  DefaultToolchain Diab # remove NOT ok
+}
+
+ExecutableConfig __ALL__, project: __ALL__, type: remove {
+  DefaultToolchain GCC, eclipseOrder: true # remove NOT ok
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="type-replace">
+<h3>Type: replace<a class="headerlink" href="#type-replace" title="Permalink to this headline">¶</a></h3>
+<p>This is for convenience. &#8220;replace&#8221; will remove all elements with the same type and extends the configs.</p>
+<p>Example:</p>
+<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig __ALL__, project: __ALL__, type: replace {
+  Files &quot;*.cpp&quot;
+  DefaultToolchain GCC {
+    Linker command: &quot;link.exe&quot;
+  }
+}
+</pre></div>
+</div>
+<p>This removes all &#8220;Files&#8221; and the &#8220;DefaultToolchain&#8221; from the original config regardless their attributes and replaces them by the elements of the adapt config.</p>
+</div>
 </div>
 </div>
 
@@ -287,7 +278,7 @@ in child</td>
       
     </p>
     <p>
-        &copy; Copyright 2015, E.S.R.Labs AG.<br/>
+        &copy; Copyright 2016, E.S.R.Labs AG.<br/>
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
     </p>
   </div>

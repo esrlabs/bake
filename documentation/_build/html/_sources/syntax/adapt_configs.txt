@@ -1,93 +1,143 @@
 Adapt configs
-==============
+=============
 
-bake supports deriving configs, which allows you to put repetetive settings in a base config.
+Introduction
+************
 
-Adapting a config
-*****************
+If you want to manipulate existing configs without changing them, you can "adapt" them via command line.
 
-Derving a config in bake is pretty straight forward, and looks like this:
+.. code-block:: console
+
+    User@Host:~$ bake test --adapt abc
+
+bake searches for abc/Adapt.meta within the workspace roots. If found, the configs from the adapt file are parsed:
 
 .. code-block:: text
 
-    ExecutableConfig A
-    LibraryConfig    B, extends: A
-    CustomConfig     C, extends: B
-    ExecutableConfig D, extends: C
+    Adapt {
+      ExecutableConfig ... # 0..n
+      LibraryConfig ... # 0..n
+      CustomConfig ... # 0..n
+    }
 
-.. note::
+Here is an example to change the DefaultToolchain
 
-    The config type of the parent config does not matter, but only settings which are valid in BOTH configs will be inherited.
-    In the example above D gets the dependencies from A, because "Dependency" is valid in all configs, but D does not get 
-    the "Files" from A, because "Files" is not valid in CustomConfig.
+.. code-block:: text
 
+    Adapt {
+      ExecutableConfig test, project: __MAIN__, type: replace {
+        DefaultToolchain GCC
+      }
+    }
 
-Inheritance implications
-************************
+Effectiveness
+*************
 
-============================        =========================================
-Setting                             Derived
-============================        =========================================
-Set                                 parent + child
+The adapt configs can be applied to all configs from regular build. This can be controlled by the config names and the project attributes. The example above
+is adapted only to the config "test" of the main project. __MAIN__ and __ALL__ are keywords. __MAIN__ means the main project or config, __ALL__ means all
+projects or configs. If you want to apply the changes only to the top level config, write:
 
-Dependency                          parent + child
+.. code-block:: text
 
-ExternalLibrary                     parent + child
-                                    (ordered by line number)
+      ExecutableConfig __MAIN__, project: __MAIN__, ...
 
-ExternalLibrarySearchPath           parent + child
-                                    (ordered by line number)
+If you want to apply the changes to all configs, write:
 
-UserLibrary                         parent + child
-                                    (ordered by line number)
+.. code-block:: text
 
-PreSteps                            parent + child
+      ExecutableConfig __ALL__, project: __ALL__, ...
 
-PostSteps                           parent + child
+It is possible to mix the keywords with reals project or config names.
 
-Makefile                            used from parent if not 
-                                    in child
+Occurrences
+***********
+    
+You can specify more configs in one adapt file and you can specify more than one adapt file:
 
-CommandLine                         used from parent if not
-                                    in child 
+.. code-block:: text
 
-Files                               parent + child
+    Adapt {
+      ExecutableConfig ..., project: ..., type: ... {
+        ...
+      }
+      ExecutableConfig ..., project: ..., type: ... {
+        ...
+      }
+      LibraryConfig ..., project: ..., type: ... {
+        ...
+      }
+      ...
+    }
 
-ExcludeFiles                        parent + child
+.. code-block:: console
 
-IncludeDir                          parent + child
+    User@Host:~$ bake test --adapt abc --adapt xy
 
-LinkerScript                        used from parent if not in child
+They will be applied in the specified order.
 
-ArtifactName                        used from parent if not in child
+Types
+*****
 
-MapFile                             used from parent if not in child
-============================        =========================================
+It is possible to specify the type of adaption:
 
+.. code-block:: text
 
-============================        =========================================
-Toolchain Setting                   Derived
-============================        =========================================
-basedOn                             used from parent if not in child
+      ExecutableConfig ..., type: replace
 
-outputDir                           used from parent if not in child
+The type can be "replace", "remove" or "extend".
 
-command                             used from parent if not in child
+Type: extend
+------------
 
-LibPrefixFlags                      parent + child
+This works exactly like for :doc:`derive_configs`.
 
-LibPostfixFlags                     parent + child
+Type: remove
+------------
 
-Flags                               parent + child
+If parent elements can be found which matches to the child elements, they will be removed.
+ 
+Example project config:
 
-Define                              parent + child
+.. code-block:: text
 
-InternalDefines                     used from parent if not in child
+    ExecutableConfig test {
+      DefaultToolchain GCC
+    }
 
-InternalIncludes                    used from parent if not in child
+Example adapt configs:
 
-LintPolicy                          parent + child
+.. code-block:: text
 
-Docu                                used from parent if not in child
-============================        =========================================
+    ExecutableConfig __ALL__, project: __ALL__, type: remove {
+      DefaultToolchain # remove ok
+    }
 
+    ExecutableConfig __ALL__, project: __ALL__, type: remove {
+      DefaultToolchain GCC # remove ok
+    }
+
+    ExecutableConfig __ALL__, project: __ALL__, type: remove {
+      DefaultToolchain Diab # remove NOT ok
+    }
+
+    ExecutableConfig __ALL__, project: __ALL__, type: remove {
+      DefaultToolchain GCC, eclipseOrder: true # remove NOT ok
+    }
+
+Type: replace
+-------------
+
+This is for convenience. "replace" will remove all elements with the same type and extends the configs.
+
+Example:
+
+.. code-block:: text
+
+    ExecutableConfig __ALL__, project: __ALL__, type: replace {
+      Files "*.cpp"
+      DefaultToolchain GCC {
+        Linker command: "link.exe"
+      }
+    }
+
+This removes all "Files" and the "DefaultToolchain" from the original config regardless their attributes and replaces them by the elements of the adapt config.
