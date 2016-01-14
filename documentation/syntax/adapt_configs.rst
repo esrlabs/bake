@@ -1,5 +1,8 @@
 Adapt configs
-==============
+=============
+
+Introduction
+************
 
 If you want to manipulate existing configs without changing them, you can "adapt" them via command line.
 
@@ -7,7 +10,7 @@ If you want to manipulate existing configs without changing them, you can "adapt
 
     User@Host:~$ bake test --adapt abc
 
-bake searched for abc/Adapt.meta within the workspace roots. If found the configs from the adapt file are parsed:
+bake searches for abc/Adapt.meta within the workspace roots. If found, the configs from the adapt file are parsed:
 
 .. code-block:: text
 
@@ -27,8 +30,11 @@ Here is an example to change the DefaultToolchain
       }
     }
 
-The adapt configs can be applied to all configs from regular build. This can be controlled by the config names and the project attribute. The exaxmple above
-is adapted only the to config "test" of the main project. __MAIN__ and __ALL__ are keywords here. __MAIN__ means the main project or config, __ALL__ means all
+Effectiveness
+*************
+
+The adapt configs can be applied to all configs from regular build. This can be controlled by the config names and the project attributes. The example above
+is adapted only to the config "test" of the main project. __MAIN__ and __ALL__ are keywords. __MAIN__ means the main project or config, __ALL__ means all
 projects or configs. If you want to apply the changes only to the top level config, write:
 
 .. code-block:: text
@@ -43,18 +49,9 @@ If you want to apply the changes to all configs, write:
 
 It is possible to mix the keywords with reals project or config names.
 
-The type of the config influences the the adaption. Only contents which are valid in the original config and the adapt config are changed. For example
-"Dependency"s are changed regardless the types, because "Dependency"s are valid in every config. "ArtifactName" will only bee adapted if both configs are
-ExecutableConfigs. Well, this should be very obvious.
-
-It is possible to specify the type of adaption:
-
-.. code-block:: text
-
-      ExecutableConfig ..., type: replace
+Occurrences
+***********
     
-The type can be "replace", "remove" or "extend". See the table below how this works in detail.
-
 You can specify more configs in one adapt file and you can specify more than one adapt file:
 
 .. code-block:: text
@@ -72,87 +69,75 @@ You can specify more configs in one adapt file and you can specify more than one
       ...
     }
 
-
 .. code-block:: console
 
     User@Host:~$ bake test --adapt abc --adapt xy
 
+They will be applied in the specified order.
+
+Types
+*****
+
+It is possible to specify the type of adaption:
+
+.. code-block:: text
+
+      ExecutableConfig ..., type: replace
+
+The type can be "replace", "remove" or "extend".
+
+Type: extend
+------------
+
+This works exactly like for :doc:`derive_configs`.
 
 Type: remove
-************
+------------
 
-Note, that only parts of the attributes are evaluated to decide, if content shall be removed.
+If parent elements can be found which matches to the child elements, they will be removed.
+ 
+Example project config:
 
-==============================        =================================================
-Setting                               When removed
-==============================        =================================================
-Toolchain (completely)                If existing in adapt config
+.. code-block:: text
 
-DefaultToolchain (completely)         If existing in adapt config
+    ExecutableConfig test {
+      DefaultToolchain GCC
+    }
 
-StartupSteps                          Steps are separately, see Makefile/CommandLine 
+Example adapt configs:
 
-PreSteps                              Steps are separately, see Makefile/CommandLine 
+.. code-block:: text
 
-PostSteps                             Steps are separately, see Makefile/CommandLine 
+    ExecutableConfig __ALL__, project: __ALL__, type: remove {
+      DefaultToolchain # remove ok
+    }
 
-ExitSteps                             Steps are separately, see Makefile/CommandLine 
+    ExecutableConfig __ALL__, project: __ALL__, type: remove {
+      DefaultToolchain GCC # remove ok
+    }
 
-Dependency                            If project name and name matches
+    ExecutableConfig __ALL__, project: __ALL__, type: remove {
+      DefaultToolchain Diab # remove NOT ok
+    }
 
-ExternalLibrary                       If name matches
+    ExecutableConfig __ALL__, project: __ALL__, type: remove {
+      DefaultToolchain GCC, eclipseOrder: true # remove NOT ok
+    }
 
-ExternalLibrarySearchPath             If path matches
+Type: replace
+-------------
 
-UserLibrary                           If name matches
+This is for convenience. "replace" will remove all elements with the same type and extends the configs.
 
-Set                                   If variable name matches
-									
-Files                                 If filename or glob pattern matches
+Example:
 
-ExcludeFiles                          If filename or glob pattern matches
+.. code-block:: text
 
-IncludeDir                            If include dir matches
+    ExecutableConfig __ALL__, project: __ALL__, type: replace {
+      Files "*.cpp"
+      DefaultToolchain GCC {
+        Linker command: "link.exe"
+      }
+    }
 
-LinkerScript                          If name matches
-
-ArtifactName                          If name matches
-
-MapFile                               If name matches
-
-MapFile                               If name matches
-
-Makefile                              If makefile name matches
-                                    
-CommandLine                           If commandline matches
-
-==============================        =================================================
-
-
-
-============================        =========================================
-Toolchain Setting                   Derived
-============================        =========================================
-basedOn                             used from parent if not in child
-
-outputDir                           used from parent if not in child
-
-command                             used from parent if not in child
-
-LibPrefixFlags                      parent + child
-
-LibPostfixFlags                     parent + child
-
-Flags                               parent + child
-
-Define                              parent + child
-
-InternalDefines                     used from parent if not in child
-
-InternalIncludes                    used from parent if not in child
-
-LintPolicy                          parent + child
-
-Docu                                used from parent if not in child
-============================        =========================================
-
+This removes all "Files" and the "DefaultToolchain" from the original config regardless their attributes and replaces them by the elements of the adapt config.

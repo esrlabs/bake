@@ -57,7 +57,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'bake'
-copyright = '2015, E.S.R.Labs AG'
+copyright = '2016, E.S.R.Labs AG'
 author = ''
 
 # The version info for the project you're documenting, acts as replacement for
