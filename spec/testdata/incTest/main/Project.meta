@@ -1,7 +1,10 @@
 Project default: test {
-
-  LibraryConfig test {
+  
+  CustomConfig test_inc {
     IncludeDir "main1", inject: front
+  }
+
+  LibraryConfig test, extends: test_inc {
 	IncludeDir "main2", inject: front
 	IncludeDir "main3", inject: back
 	IncludeDir "main4"

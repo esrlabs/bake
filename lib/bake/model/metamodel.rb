@@ -226,6 +226,7 @@ module Bake
         contains_one 'defaultToolchain', DefaultToolchain, 'parent'
         contains_one 'toolchain', Toolchain, 'parent'
         contains_many 'set', Set, 'parent'
+        contains_many 'includeDir', IncludeDir, 'parent'
         
         module ClassModule
           def ident
@@ -239,7 +240,6 @@ module Bake
       class BuildConfig_INTERNAL < BaseConfig_INTERNAL
         contains_many 'files', Files, 'parent'
         contains_many 'excludeFiles', ExcludeFiles, 'parent'
-        contains_many 'includeDir', IncludeDir, 'parent'
       end      
       
       class ExecutableConfig < BuildConfig_INTERNAL

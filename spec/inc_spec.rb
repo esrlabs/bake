@@ -15,7 +15,6 @@ describe "Incs" do
     Bake.startBake("incTest/main", ["test", "-v2", "--rebuild"])
     
     expect($mystring.include?("c1.d -I../../main/main1 -I../../main/main2 -I../child1/child1_1 -Ichild1_2 -Ichild1_3 -I../../main/main3 -o")).to be == true
-    expect($mystring.include?("c2.d -I../main/main1 -I../main/main2 -Ichild2_1 -Ichild2_2 -I../main/main3 -o")).to be == true
     expect($mystring.include?("l.d -I../main/main1 -I../main/main2 -Ilib1 -Ilib2 -I../sub/child1/child1_1 -I../sub/child1/child1_2 -I../child2/child2_1 -I../main/main3 -o")).to be == true
     expect($mystring.include?("m.d -Imain1 -Imain2 -Imain3 -Imain4 -I../sub/child1/child1_1 -I../sub/child1/child1_2 -I../child2/child2_1 -o")).to be == true
   end
