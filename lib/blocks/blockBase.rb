@@ -4,6 +4,7 @@ module Bake
     class BlockBase
 
       attr_reader :tcs
+      attr_reader :projectDir
       
       def initialize(block, config, referencedConfigs, tcs)
         @block = block

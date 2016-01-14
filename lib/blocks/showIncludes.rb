@@ -21,7 +21,14 @@ module Bake
         Blocks::ALL_COMPILE_BLOCKS.sort.each do |projName, blocks|
           print projName
           incs = []
-          blocks.each { |block| incs += block.include_list }
+          blocks.each do |block|
+            if Bake.options.consoleOutput_fullnames
+              incs += block.include_list.map { |i| File.expand_path(i, block.projectDir)  }
+            else
+              incs += block.include_list
+            end
+          end
+          
           incs.uniq.each { |inc| print "##{inc}" }
           print "\n"
         end
@@ -92,7 +99,11 @@ module Bake
           blockIncs = []
           blockDefs = {:CPP => [], :C => [], :ASM => []}
           blocks.each do |block|
-            blockIncs += block.include_list 
+            if Bake.options.consoleOutput_fullnames
+              blockIncs += block.include_list.map { |i| File.expand_path(i, block.projectDir)  }
+            else
+              blockIncs += block.include_list
+            end            
             [:CPP, :C, :ASM].each { |type| blockDefs[type] += block.tcs[:COMPILER][type][:DEFINES] }
           end
           

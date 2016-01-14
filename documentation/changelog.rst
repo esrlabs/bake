@@ -6,6 +6,7 @@ January 14, 2015 - bake-toolkit 2.14.0
     * Changed: extending configs in a Project.meta file made more generic, see "derive" docu page
     * Changed: default order of filenames changed, now order in Project.meta has the highest priority. Results of glob patterns are sorted alphabetically as before.
     * Changed: libraries from makefiles now are linked after other libraries defined from the same config
+    * Bugfix: --abs-paths now works with --incs-and-defs
 December 23, 2015 - bake-toolkit 2.13.1
     * Bugfix: merging configs was extremely slow in 2.12.2 and 2.13.0
 December 23, 2015 - bake-toolkit 2.13.0
