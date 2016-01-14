@@ -7,11 +7,6 @@ module Bake
       @parent = parent
     end
     
-
-    def manipulateLineNumbers(ar)
-      ar.each { |l| l.line_number -= 100000  }
-    end
-    
     def clone(obj)
       if obj.is_a?(Metamodel::ModelElement)
         cloneModelElement(obj)
@@ -46,8 +41,16 @@ module Bake
         next unless @parent.class.ecore.eAllReferences.include?f
         next unless f.containment
         childData = @child.getGeneric(f.name)
-        if (Array === childData and not childData.empty?) or (Metamodel::ModelElement === childData and not childData.nil?)
-          @parent.setGeneric(f.name,clone(childData))
+        if Metamodel::ModelElement === childData 
+          @parent.setGeneric(f.name,childData) if !childData.nil?
+        elsif Array === childData
+          if !childData.empty?
+            parentData = @parent.getGeneric(f.name)
+            cclasses = childData.map { |c| c.class }.uniq
+            parentData.delete_if { |p| cclasses.include?p.class }
+            parentData += childData
+            @parent.setGeneric(f.name,parentData)
+          end
         end
       end
     end
@@ -76,17 +79,16 @@ module Bake
       
       childElem.class.ecore.eAllReferences.each do |f|
         next unless f.containment
-        
         childData = childElem.getGeneric(f.name)
         parentData = parentElem.getGeneric(f.name)
         next if childData.nil? or parentData.nil?
-        
         if (Array === childData)
           if !parentData.empty? && !childData.empty?
             childData.each do |c|
               cN = hasSubNodes(c)    
               toRemove = []
               parentData.each do |p|
+                next if p.class != c.class
                 if (not cN)
                   if sameAttr(c, p)  
                     toRemove << p
@@ -101,7 +103,7 @@ module Bake
             end
           end
         elsif Metamodel::ModelElement === childData
-          if sameAttr(childData, parentData)
+          if parentData.class == childData.class && sameAttr(childData, parentData)
             cN = hasSubNodes(childData)
             if (not cN)
               parentElem.setGeneric(f.name, nil)
@@ -112,48 +114,6 @@ module Bake
         end
       end
     end
-    
-    
-    def adaptAttributes(childData, parentData)
-      childData.class.ecore.eAllAttributes.each do |a| 
-        parentData.setGeneric(a.name, childData.getGeneric(a.name)) if childData.eIsSet(a.name)
-      end
-    end
-    
-    def adapt(child, parent)
-      (parent.class.ecore.eAllReferences & child.class.ecore.eAllReferences).each do |f|
-        next unless f.containment
-          
-        childData = child.getGeneric(f.name)
-        next if childData.nil? or (Array === childData && childData.empty?)
-        parentData = parent.getGeneric(f.name)
-          
-        if Array === childData
-          if f.name == "compiler"
-            childData.each do |c| 
-              p = parentData.find { |p| p.ctype == c.ctype }
-              if p.nil?
-                parentData << c
-              else
-                adaptAttributes(c, p)
-                adapt(c, p)
-              end
-            end
-            parent.setGeneric(f.name, parentData)
-          else
-            parent.setGeneric(f.name, parentData + childData)
-          end
-        elsif Metamodel::ModelElement === childData
-          if parentData.nil?
-            parent.setGeneric(f.name, childData)
-          else
-            adaptAttributes(childData, parentData)
-            adapt(childData, parentData)
-          end
-        end
-      end
-    end
-    
     
     def extendAttributes(childData, parentData)
        parentData.class.ecore.eAllAttributes.each do |a| 
@@ -174,21 +134,20 @@ module Bake
              parentData.each do |p| 
                c = childData.find { |c| p.ctype == c.ctype }
                if c
-                 adaptAttributes(c, p)
-                 adapt(c, p)
+                 extendAttributes(c, p)
+                 extend(c, p)
+                 extendedParentData << c
+               else
+                 extendedParentData << p
                end
-               extendedParentData << p
              end
              restOfChildData = childData.find_all { |c| parentData.find {|p| p.ctype != c.ctype } }
              child.setGeneric(f.name, extendedParentData + restOfChildData)  
            else
-             if ["exLib", "exLibSearchPath", "userLibrary"].include?f.name
-               manipulateLineNumbers(parentData)
-             end
              child.setGeneric(f.name, parentData + childData)
            end
          elsif Metamodel::ModelElement === parentData
-           if childData.nil?
+           if childData.nil? || childData.class != parentData.class
              child.setGeneric(f.name, parentData)
            else
              extendAttributes(childData, parentData)
@@ -198,13 +157,24 @@ module Bake
        end
      end    
     
-    def merge(type) # :merge means child will be updated, else parent will be updated
+     def copyChildToParent(c, p)
+       (p.class.ecore.eAllReferences & c.class.ecore.eAllReferences).each do |f|
+         next unless f.containment
+         childData = c.getGeneric(f.name)
+         next if childData.nil? || (Array === childData && childData.empty?)
+         p.setGeneric(f.name, childData)
+       end        
+     end
+     
+    def merge(type)
       if (type == :remove)
         removeChilds(@child, @parent)
       elsif (type == :replace)
         replace
       elsif (type == :extend)
-        adapt(clone(@child), @parent)
+        c = clone(@child)
+        extend(c, @parent)
+        copyChildToParent(c, @parent)
       elsif (type == :merge)
         extend(@child, clone(@parent))
       end

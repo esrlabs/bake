@@ -22,7 +22,7 @@ module Bake
         calcCommandLine
         calcCleanLine
 
-        block.lib_elements[config.line_number] = [LibElement.new(LibElement::LIB_WITH_PATH, config.lib)] if config.lib != ""
+        block.lib_elements << LibElement.new(LibElement::LIB_WITH_PATH, config.lib) if config.lib != ""
       end
       
       def calcCommandLine

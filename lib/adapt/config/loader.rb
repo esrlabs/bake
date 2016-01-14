@@ -47,12 +47,6 @@ module Bake
         end
       end
       
-      configs.each do |c|
-        [:exLib, :exLibSearchPath, :userLibrary].each do |name|
-          c.method(name).call().each { |l| l.line_number += (1000000*filenum)  }
-        end        
-      end
-      
       configs
     end    
     

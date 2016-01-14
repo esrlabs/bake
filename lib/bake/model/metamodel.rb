@@ -139,15 +139,27 @@ module Bake
         has_attr 'inherit', Boolean, :defaultValueLiteral => "false"
       end
 
-      class ExternalLibrary < ModelElement
+      class LibStuff < ModelElement
+      end
+      
+      class ExternalLibrary < LibStuff
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'search', Boolean, :defaultValueLiteral => "true"
       end
 
-      class ExternalLibrarySearchPath < ModelElement
+      class ExternalLibrarySearchPath < LibStuff
         has_attr 'name', String, :defaultValueLiteral => ""
       end
 
+      class UserLibrary < LibStuff
+        has_attr 'name', String, :defaultValueLiteral => ""
+      end
+      
+      class Dependency < LibStuff
+        has_attr 'name', String, :defaultValueLiteral => ""
+        has_attr 'config', String, :defaultValueLiteral => ""
+      end
+    
       class Step < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'default', String, :defaultValueLiteral => "on"
@@ -181,10 +193,6 @@ module Bake
         contains_many 'step', Step, 'parent'
       end
       
-      class UserLibrary < ModelElement
-        has_attr 'name', String, :defaultValueLiteral => ""
-      end
-
       class LinkerScript < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
       end
@@ -214,9 +222,7 @@ module Bake
         contains_one 'preSteps', PreSteps, 'parent'
         contains_one 'postSteps', PostSteps, 'parent'
         contains_one 'exitSteps', ExitSteps, 'parent'
-        contains_many 'userLibrary', UserLibrary, 'parent'
-        contains_many 'exLib', ExternalLibrary, 'parent'
-        contains_many 'exLibSearchPath', ExternalLibrarySearchPath, 'parent'
+        contains_many 'libStuff', LibStuff, 'parent'
         contains_one 'defaultToolchain', DefaultToolchain, 'parent'
         contains_one 'toolchain', Toolchain, 'parent'
         contains_many 'set', Set, 'parent'
@@ -265,13 +271,6 @@ module Bake
         end
                 
       end
-
-      class Dependency < ModelElement
-        has_attr 'name', String, :defaultValueLiteral => ""
-        has_attr 'config', String, :defaultValueLiteral => ""
-      end
-
-      BaseConfig_INTERNAL.contains_many 'dependency', Dependency, 'parent'
 
      class Adapt < ModelElement
        contains_many 'config', BaseConfig_INTERNAL, 'parent'

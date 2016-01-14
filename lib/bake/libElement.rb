@@ -59,30 +59,28 @@ module Bake
         end
       end
      
-      block.lib_elements.each_key.sort.each do |line_num|
-        block.lib_elements[line_num].each do |elem|
+      block.lib_elements.each do |elem|
        
-          case elem.type
-          when LibElement::LIB
-            @@linker_libs_array << "#{@@linker[:LIB_FLAG]}#{elem.value}"
-          when LibElement::USERLIB
-            @@linker_libs_array << "#{@@linker[:USER_LIB_FLAG]}#{elem.value}"
-          when LibElement::LIB_WITH_PATH
-            adaptedPath, prefix = adaptPath(elem.value, block, prefix)
-            @@linker_libs_array <<  adaptedPath
-          when LibElement::SEARCH_PATH
-            adaptedPath, prefix = adaptPath(elem.value, block, prefix)
-            if not @@lib_path_set.include?adaptedPath
-              @@lib_path_set << adaptedPath
-              @@linker_libs_array << "#{@@linker[:LIB_PATH_FLAG]}#{adaptedPath}" if @@linker[:LIST_MODE] == false
-            end
-          when LibElement::DEPENDENCY
-            if Blocks::ALL_BLOCKS.include?elem.value
-              bb = Blocks::ALL_BLOCKS[elem.value]
-              collect_recursive(bb)
-            else
-              # TODO: warning or error?
-            end
+        case elem.type
+        when LibElement::LIB
+          @@linker_libs_array << "#{@@linker[:LIB_FLAG]}#{elem.value}"
+        when LibElement::USERLIB
+          @@linker_libs_array << "#{@@linker[:USER_LIB_FLAG]}#{elem.value}"
+        when LibElement::LIB_WITH_PATH
+          adaptedPath, prefix = adaptPath(elem.value, block, prefix)
+          @@linker_libs_array <<  adaptedPath
+        when LibElement::SEARCH_PATH
+          adaptedPath, prefix = adaptPath(elem.value, block, prefix)
+          if not @@lib_path_set.include?adaptedPath
+            @@lib_path_set << adaptedPath
+            @@linker_libs_array << "#{@@linker[:LIB_PATH_FLAG]}#{adaptedPath}" if @@linker[:LIST_MODE] == false
+          end
+        when LibElement::DEPENDENCY
+          if Blocks::ALL_BLOCKS.include?elem.value
+            bb = Blocks::ALL_BLOCKS[elem.value]
+            collect_recursive(bb)
+          else
+            # TODO: warning or error?
           end
         end
       end
@@ -92,42 +90,43 @@ module Bake
     
     
     def self.calcLibElements(block)
-      lib_elements = {} # key = line number, value = array pairs [type, name/path string]
+      lib_elements = [] # value = array pairs [type, name/path string]
+      
+      block.config.libStuff.each do |l|
         
-      block.config.userLibrary.each do |l|
-        ln = l.name
-        ls = nil
-        if l.name.include?("/")
-          pos = l.name.rindex("/")
-          ls = block.convPath(l.name[0..pos-1], l)
-          ln = l.name[pos+1..-1]
+        if (Metamodel::UserLibrary === l)
+          ln = l.name
+          ls = nil
+          if l.name.include?("/")
+            pos = l.name.rindex("/")
+            ls = block.convPath(l.name[0..pos-1], l)
+            ln = l.name[pos+1..-1]
+          end
+          lib_elements << LibElement.new(LibElement::SEARCH_PATH, ls) if !ls.nil?
+          lib_elements << LibElement.new(LibElement::USERLIB, ln)
+        elsif (Metamodel::ExternalLibrarySearchPath === l)
+          lib_elements << LibElement.new(LibElement::SEARCH_PATH, block.convPath(l))
+        elsif (Metamodel::ExternalLibrary === l)
+          ln = l.name
+          ls = nil
+          if l.name.include?("/")
+            pos = l.name.rindex("/")
+            ls = block.convPath(l.name[0..pos-1], l)
+            ln = l.name[pos+1..-1]
+          end
+          if l.search
+            lib_elements << LibElement.new(LibElement::SEARCH_PATH, ls) if !ls.nil?
+            lib_elements << LibElement.new(LibElement::LIB, ln)
+          else
+            ln = ls + "/" + ln unless ls.nil?
+            lib_elements << LibElement.new(LibElement::LIB_WITH_PATH, ln)
+          end        
+        elsif (Metamodel::Dependency === l)
+          lib_elements << LibElement.new(LibElement::DEPENDENCY, l.name+","+l.config)
         end
-        lib_elements[l.line_number] = ls.nil? ? [] : [LibElement.new(LibElement::SEARCH_PATH, ls)] 
-        lib_elements[l.line_number] << LibElement.new(LibElement::USERLIB, ln)
-      end
-      
-      block.config.exLib.each do |exLib|
-        ln = exLib.name
-        ls = nil
-        if exLib.name.include?("/")
-          pos = exLib.name.rindex("/")
-          ls = block.convPath(exLib.name[0..pos-1], exLib)
-          ln = exLib.name[pos+1..-1]
-        end
-        if exLib.search
-          lib_elements[exLib.line_number] = ls.nil? ? [] : [LibElement.new(LibElement::SEARCH_PATH, ls)] 
-          lib_elements[exLib.line_number] << LibElement.new(LibElement::LIB, ln)
-        else
-          ln = ls + "/" + ln unless ls.nil?
-          lib_elements[exLib.line_number] = [LibElement.new(LibElement::LIB_WITH_PATH, ln)]
-        end
-      end
-      
-      block.config.exLibSearchPath.each do |exLibSP|
-        lib_elements[exLibSP.line_number] = [LibElement.new(LibElement::SEARCH_PATH, block.convPath(exLibSP))] 
+        
       end
     
-      block.config.dependency.each { |dep| lib_elements[dep.line_number] = [LibElement.new(LibElement::DEPENDENCY, dep.name+","+dep.config)]}
       return lib_elements
     end      
      

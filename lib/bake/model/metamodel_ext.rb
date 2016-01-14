@@ -14,7 +14,10 @@ module Bake
         def qname
           @qname ||= parent.name + "," + name
         end
+        def dependency
+          libStuff.find_all { |l| Dependency === l }
+        end
       end      
-
+      
   end
 end

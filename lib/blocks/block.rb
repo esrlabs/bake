@@ -70,10 +70,6 @@ module Bake
         @lib_elements = Bake::LibElements.calcLibElements(self)
       end
       
-      def add_lib_element(elem)
-        @lib_elements[2000000000] = [elem]
-      end
-      
       def convPath(dir, elem=nil)
          if dir.respond_to?("name")
            d = dir.name
