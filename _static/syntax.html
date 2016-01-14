@@ -69,6 +69,8 @@ z-index: 100;
 			  
 			  <span><span style="background-color:#EEEEEE;" class="show">
 &nbsp; &nbsp; <span class="mycomment"># Valid for all config types</span><br><br>
+&nbsp; &nbsp; <span class="help" onMouseover="showDescription()" onMouseout="notip()">Description</span>  &#60;text&#62;<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;, <span class="help" onMouseover="showInherit()" onMouseout="notip()">inherit</span>: true|false, <span class="help" onMouseover="showInfix()" onMouseout="notip()">inject</span>: front|back<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showSet()" onMouseout="notip()">Set</span> &#60;variable&#62;, value: &#60;value&#62; | cmd: &#60;line&#62;, <span class="help" onMouseover="showEnv()" onMouseout="notip()">env</span>: true|false<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showDependency()" onMouseout="notip()">Dependency</span> &#60;project&#62;,
               <span class="help" onMouseover="showDependencyConfig()" onMouseout="notip()">config</span>: &#60;name&#62;<br>
@@ -151,7 +153,6 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showExcludeFiles()" onMouseout="notip()">ExcludeFiles</span> &#60;pattern&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;, <span class="help" onMouseover="showInherit()" onMouseout="notip()">inherit</span>: true|false, <span class="help" onMouseover="showInfix()" onMouseout="notip()">inject</span>: front|back<br>
 
 </span><br></span>
 
@@ -217,7 +218,7 @@ function showResponsible() {
 }
 
 function showDescription() {
-  str = 'Description of the project.'
+  str = 'Description of the project or config.'
   ddrivetip("Description", "No", "0..1", "-",str)
 }
 
@@ -403,7 +404,8 @@ function showCommandLine() {
 
 
 function showEclipseOrder() {
-  str = 'If not specified or false, all files are compiled in alphabetical order using their full names.<p>'+
+  str = 'If not specified or false, all files are compiled in order of appearance in Project.meta. '+
+  'If the filename is a glob pattern, files are sorted alphabetically.<p>'+
   'If true, files are compiled in alphabetical order within a folder, '+
   'but the folders are sorted in reverse alphabetical order.<br>'+
   'This is only used for backward compatibility.'
@@ -662,14 +664,14 @@ return false
 
 function positiontip(e){
 if (enabletip){
-var curX=(ns6)?e.pageX : event.clientX+ietruebody().scrollLeft;
-var curY=(ns6)?e.pageY : event.clientY+ietruebody().scrollTop;
+var curX=(ns6)?e.offsetX : event.clientX+ietruebody().scrollLeft;
+var curY=(ns6)?e.pageY-80 : event.clientY+ietruebody().scrollTop;
 //Find out how close the mouse is to the corner of the window
 var rightedge=ie&&!window.opera? ietruebody().clientWidth-event.clientX-offsetxpoint : window.innerWidth-e.clientX-offsetxpoint
 var bottomedge=ie&&!window.opera? ietruebody().clientHeight-event.clientY-offsetypoint*2 : window.innerHeight-e.clientY-offsetypoint
 var bottom=ie&&!window.opera? ietruebody().clientHeight : window.innerHeight
 
-var leftedge=(offsetxpoint<0)? offsetxpoint*(-1) : -1000
+var leftedge=(offsetxpoint<0)? offsetxpoint*(-1) : offsetxpoint
 
 //if the horizontal distance isn't enough to accomodate the width of the context menu
 if (rightedge<tipobj.offsetWidth+offsetxpoint/2)
@@ -689,6 +691,7 @@ tipobj.style.top=curY+offsetypoint+"px"
 tipobj.style.visibility="visible"
 }
 }
+
 
 function notip(){
 if (ns6||ie){

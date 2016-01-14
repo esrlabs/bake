@@ -1,6 +1,13 @@
 Changelog
 =========
 
+January 14, 2015 - bake-toolkit 2.14.0
+    * Added: possibility to change configs via command line, e.g. changing compiler, see "adapt" docu page
+    * Changed: extending configs in a Project.meta file made more generic, see "derive" docu page
+    * Changed: default order of filenames changed, now order in Project.meta has the highest priority as intended. Results of glob patterns are sorted alphabetically as before.
+    * Changed: libraries from makefiles are linked now after other libraries defined from the same config
+    * Added: IncludeDir now possible for CustomConfigs
+    * Bugfix: --abs-paths now works with --incs-and-defs
 December 23, 2015 - bake-toolkit 2.13.1
     * Bugfix: merging configs was extremely slow in 2.12.2 and 2.13.0
 December 23, 2015 - bake-toolkit 2.13.0
