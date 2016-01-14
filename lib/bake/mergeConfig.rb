@@ -1,3 +1,5 @@
+require 'rtext/serializer'
+
 module Bake
 
   class MergeConfig
@@ -167,6 +169,16 @@ module Bake
      end
      
     def merge(type)
+      #s = StringIO.new
+      #ser = RText::Serializer.new(Language)
+
+      if Bake.options.debug
+        #s.puts "\n>>>> child <<<<"
+        #ser.serialize(@child, s)
+        #s.puts "\n>>>> parent <<<<"
+        #ser.serialize(@parent, s)
+      end
+      
       if (type == :remove)
         removeChilds(@child, @parent)
       elsif (type == :replace)
@@ -178,6 +190,14 @@ module Bake
       elsif (type == :merge)
         extend(@child, clone(@parent))
       end
+
+      if Bake.options.debug
+        #s.puts "\n>>>> #{type.to_s} <<<<"
+        #ser.serialize(type == :merge ? @child : @parent, s)
+        #puts "#{s.string}"
+      end
+
+            
     end
   
   end
