@@ -26,7 +26,7 @@ module Bake
       end
     end
 
-    CompilerType = RGen::MetamodelBuilder::DataTypes::Enum.new([:CPP, :C, :ASM])
+    CompilerType = RGen::MetamodelBuilder::DataTypes::Enum.new( :name => "CompilerType", :literals => [:CPP, :C, :ASM])
 
     class Flags < ModelElement
       has_attr 'overwrite', String, :defaultValueLiteral => ""

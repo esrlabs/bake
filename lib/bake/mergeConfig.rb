@@ -169,14 +169,14 @@ module Bake
      end
      
     def merge(type)
-      #s = StringIO.new
-      #ser = RText::Serializer.new(Language)
+      s = StringIO.new
+      ser = RText::Serializer.new(Language)
 
       if Bake.options.debug
-        #s.puts "\n>>>> child <<<<"
-        #ser.serialize(@child, s)
-        #s.puts "\n>>>> parent <<<<"
-        #ser.serialize(@parent, s)
+        s.puts "\n>>>> child <<<<"
+        ser.serialize(@child, s)
+        s.puts "\n>>>> parent <<<<"
+        ser.serialize(@parent, s)
       end
       
       if (type == :remove)
@@ -192,9 +192,9 @@ module Bake
       end
 
       if Bake.options.debug
-        #s.puts "\n>>>> #{type.to_s} <<<<"
-        #ser.serialize(type == :merge ? @child : @parent, s)
-        #puts "#{s.string}"
+        s.puts "\n>>>> result of #{type.to_s} <<<<"
+        ser.serialize(type == :merge ? @child : @parent, s)
+        puts "#{s.string}"
       end
 
             
