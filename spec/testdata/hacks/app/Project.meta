@@ -1,0 +1,12 @@
+Project {
+
+ExecutableConfig testWarningIncludeDir {
+	Dependency lib
+    IncludeDir "app/include"
+	IncludeDir "main/include"
+	IncludeDir "lib/include"
+    Files "src/x.cpp"
+    DefaultToolchain GCC
+}
+
+}

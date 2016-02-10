@@ -5,6 +5,7 @@ XXX , 2016 - bake-toolkit 2.14.1
     * Added: ArtifactName can be specified for libraries
     * Added: Merged config is printed out when running bake with --debug
     * Bugfix: fixed passing arguments from bakery to bake
+    * Added: info output if "path magic" hides local pathes for IncludeDir
     
 January 14, 2016 - bake-toolkit 2.14.0
     * Added: possibility to change configs via command line, e.g. changing compiler, see "adapt" docu page

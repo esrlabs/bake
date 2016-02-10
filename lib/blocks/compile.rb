@@ -243,6 +243,10 @@ module Bake
         
           calcSources
           calcObjects
+
+          @incWarns.each do |x|
+            Bake.formatter.printInfo("IncludeDir '#{x[0].name}' will be converted to '#{x[1]}' although local path exists. If not intended, use './#{x[0].name}'.", x[0])
+          end if Bake.options.verbose >= 1
           
           @error_strings = {}
           
@@ -424,18 +428,23 @@ module Bake
           return Bake.options.roots.map { |r| File.rel_from_to_project(@projectDir,r,false) }
         end
         
-        i = orgBlock.convPath(inc)
+        i = orgBlock.convPath(inc,nil,true)
         if orgBlock != @block
           if not File.is_absolute?(i)
             i = File.rel_from_to_project(@projectDir,orgBlock.config.parent.get_project_dir) + i
           end
         end
         
-        Pathname.new(i).cleanpath
+        x = Pathname.new(i).cleanpath
+        if orgBlock.warnConvValid
+          @incWarns << [inc, x]
+        end
+        x
       end
 
       def calcIncludes
-                
+        @incWarns = []
+          
         @include_list = @config.includeDir.uniq.map do |dir|
           mapInclude(dir, @block)
         end

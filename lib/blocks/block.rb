@@ -15,7 +15,7 @@ module Bake
 
     class Block
 
-      attr_reader :lib_elements, :projectDir, :library, :config, :projectName
+      attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :warnConvValid
       attr_accessor :visited, :inDeps, :result, :circularCheck
 
       def startupSteps
@@ -70,17 +70,20 @@ module Bake
         @lib_elements = Bake::LibElements.calcLibElements(self)
       end
       
-      def convPath(dir, elem=nil)
+      def convPath(dir, elem=nil, warnIfLocal=false)
          if dir.respond_to?("name")
            d = dir.name
            elem = dir
          else
            d = dir
          end
+                  
+         @warnConvValid = false
          
          return d if Bake.options.no_autodir
          
          inc = d.split("/")
+         res = nil
          if (inc[0] == @projectName)
            res = inc[1..-1].join("/") # within self
            res = "." if res == "" 
@@ -92,15 +95,11 @@ module Bake
          else
            if (inc[0] != "..")
              return d if File.exists?(@projectDir + "/" + d) # e.g. "include"
-           
              # check if dir exists without Project.meta entry
              Bake.options.roots.each do |r|
                absIncDir = r+"/"+d
                if File.exists?(absIncDir)
                  res = File.rel_from_to_project(@projectDir,absIncDir,false)
-                 if not res.nil?
-                   return res
-                 end 
                end
              end
            else
@@ -109,8 +108,14 @@ module Bake
              end
            end
            
-           res = d # relative from self as last resort
+           if res.nil? # relative from self as last resort
+             warnIfLocal = false # no path magic -> no warning
+             res = d 
+           end
          end
+         
+         @warnConvValid = File.exists?(@projectDir + "/" + d) if warnIfLocal # only warn if path magic hides local path
+            
          res
        end      
       
