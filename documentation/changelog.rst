@@ -1,7 +1,12 @@
 Changelog
 =========
 
-January 14, 2015 - bake-toolkit 2.14.0
+XXX , 2016 - bake-toolkit 2.14.1
+    * Added: ArtifactName can be specified for libraries
+    * Added: Merged config is printed out when running bake with --debug
+    * Bugfix: fixed passing arguments from bakery to bake
+    
+January 14, 2016 - bake-toolkit 2.14.0
     * Added: possibility to change configs via command line, e.g. changing compiler, see "adapt" docu page
     * Changed: extending configs in a Project.meta file made more generic, see "derive" docu page
     * Changed: default order of filenames changed, now order in Project.meta has the highest priority as intended. Results of glob patterns are sorted alphabetically as before.

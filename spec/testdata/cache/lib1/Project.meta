@@ -11,6 +11,7 @@ Project {
   LibraryConfig testsub {
     Files "**/lib1.cpp"
     IncludeDir "include"
+    ArtifactName "this.name"
     PreSteps {
       CommandLine "echo PRELIB1"
       CommandLine "echo MainConfigName_lib1 $(MainConfigName)", default: off, filter: var

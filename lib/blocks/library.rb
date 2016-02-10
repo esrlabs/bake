@@ -6,21 +6,28 @@ module Bake
     
     class Library < BlockBase
       
-      attr_reader :compileBlock
+      attr_reader :compileBlock, :archive_name
       
       def initialize(block, config, referencedConfigs, tcs, compileBlock)
         super(block,config, referencedConfigs, tcs)
         @compileBlock = compileBlock
         
         block.set_library(self)
+        
+        calcArtifactName
       end
       
-      def archive_name()
-        @archive_name ||= File.join([@output_dir, "lib#{@projectName}.a"])
+      def calcArtifactName
+        if not @config.artifactName.nil? and @config.artifactName.name != "" 
+          baseFilename = @config.artifactName.name
+        else
+          baseFilename = "lib#{@projectName}.a"
+        end
+        @archive_name ||= File.join([@output_dir, baseFilename])
       end
   
       def calcCmdlineFile()
-        archive_name + ".cmdline"
+        @archive_name + ".cmdline"
       end
       
       def ignore?
@@ -29,9 +36,9 @@ module Bake
       
       def needed?
         # lib
-        return "because library does not exist" if not File.exists?(archive_name)
+        return "because library does not exist" if not File.exists?(@archive_name)
 
-        aTime = File.mtime(archive_name)
+        aTime = File.mtime(@archive_name)
                 
         # sources
         @compileBlock.objects.each do |obj|
@@ -67,20 +74,20 @@ module Bake
           cmd += archiver[:ARCHIVE_FLAGS].split(" ")
             
           if archiver[:ARCHIVE_FLAGS_SPACE]
-            cmd << archive_name
+            cmd << @archive_name
           else
-            cmd[cmd.length-1] += archive_name
+            cmd[cmd.length-1] += @archive_name
           end
           
           cmd += @compileBlock.objects
         
           return true if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
         
-          BlockBase.prepareOutput(archive_name)
+          BlockBase.prepareOutput(@archive_name)
           
           BlockBase.writeCmdLineFile(cmd, cmdLineFile)
           success, consoleOutput = ProcessHelper.run(cmd, false, false)
-          process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{archive_name}", reason, success)
+          process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{@archive_name}", reason, success)
          
           check_config_file()
           return success

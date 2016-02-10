@@ -240,11 +240,11 @@ module Bake
       class BuildConfig_INTERNAL < BaseConfig_INTERNAL
         contains_many 'files', Files, 'parent'
         contains_many 'excludeFiles', ExcludeFiles, 'parent'
+        contains_one 'artifactName', ArtifactName, 'parent'
       end      
       
       class ExecutableConfig < BuildConfig_INTERNAL
         contains_one 'linkerScript', LinkerScript, 'parent'
-        contains_one 'artifactName', ArtifactName, 'parent'
         contains_one 'mapFile', MapFile, 'parent'
       end
       

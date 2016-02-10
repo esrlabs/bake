@@ -53,13 +53,14 @@ module Bake
       @@configFilename = config.file_name
       
       @@artifactName = ""
-      if Metamodel::ExecutableConfig === config
+      if Metamodel::ExecutableConfig === config || Metamodel::LibraryConfig === config 
         if not config.artifactName.nil?
           @@artifactName = config.artifactName.name
-        elsif config.defaultToolchain != nil
-          basedOnToolchain = Bake::Toolchain::Provider[config.defaultToolchain.basedOn]
-          if basedOnToolchain != nil
-            @@artifactName = projName+basedOnToolchain[:LINKER][:OUTPUT_ENDING]
+        else
+          if Metamodel::ExecutableConfig === config
+            @@artifactName = projName+toolchain[:LINKER][:OUTPUT_ENDING]
+          elsif Metamodel::LibraryConfig === config
+            @@artifactName = "lib#{projName}.a"
           end
         end
       end

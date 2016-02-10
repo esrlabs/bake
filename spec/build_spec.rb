@@ -21,7 +21,7 @@ describe "Building" do
     expect($mystring.split("PREMAIN").length).to be == 3
     expect($mystring.split("POSTMAIN").length).to be == 3
     
-    expect($mystring.include?("../lib1/build_testsub_main_test/liblib1.a makefile/dummy.a")).to be == true # makefile lib shall be put to the end of the lib string
+    expect($mystring.include?("../lib1/build_testsub_main_test/this.name makefile/dummy.a")).to be == true # makefile lib shall be put to the end of the lib string
   end
 
   it 'single lib' do
@@ -29,7 +29,7 @@ describe "Building" do
     
     Bake.startBake("cache/main", ["-p", "lib1", "-b", "test"])
 
-    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/this.name")).to be == true
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == false
     
     expect($mystring.split("PRELIB1").length).to be == 3
@@ -38,7 +38,7 @@ describe "Building" do
 
   it 'single exe should fail' do
     expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/src/lib1.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/liblib1.a")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/this.name")).to be == false
 
     expect(File.exists?("spec/testdata/cache/main/build_test/src/main.o")).to be == false
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == false
@@ -46,7 +46,7 @@ describe "Building" do
     Bake.startBake("cache/main", ["-p", "main", "-b", "test"])
 
     expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/src/lib1.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/liblib1.a")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/this.name")).to be == false
 
     expect(File.exists?("spec/testdata/cache/main/build_test/src/main.o")).to be == true
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == false
@@ -130,14 +130,14 @@ describe "Building" do
     
     expect(File.exists?("spec/testdata/cache/main/build_test")).to be == true
     expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/this.name")).to be == true
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == true
 
     Bake.startBake("cache/main", ["-b", "test", "-p", "lib1", "-c"])
 
     expect(File.exists?("spec/testdata/cache/main/build_test")).to be == true
     expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/liblib1.a")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/this.name")).to be == false
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == true
     
     expect(ExitHelper.exit_code).to be == 0
@@ -148,14 +148,14 @@ describe "Building" do
     
     expect(File.exists?("spec/testdata/cache/main/build_test")).to be == true
     expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/this.name")).to be == true
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == true
 
     Bake.startBake("cache/main", ["-b", "test","-p", "main", "-c"])
 
     expect(File.exists?("spec/testdata/cache/main/build_test")).to be == false
     expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/this.name")).to be == true
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == false
     
     expect(ExitHelper.exit_code).to be == 0
