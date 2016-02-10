@@ -128,7 +128,7 @@ module Bake
     end
 
     def parse_options()
-      parse_internal()
+      parse_internal(false)
       set_main_dir(Dir.pwd) if @main_dir.nil?
       @roots = @def_roots if @roots.length == 0
       @roots.uniq!

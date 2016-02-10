@@ -42,8 +42,8 @@ module Bake
       puts "Note: all parameters except -b, -m and -h will be passed to bake - see bake help for more options." 
     end
   
-    def parse_options()
-      parse_internal(true)
+    def parse_options(bakeOptions)
+      parse_internal(true, bakeOptions)
       set_collection_dir(Dir.pwd) if @collection_dir.nil?
       if @roots.length == 0
         @roots = @def_roots 

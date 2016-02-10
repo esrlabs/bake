@@ -101,7 +101,7 @@ describe "bake" do
   
   it 'collection option not ok' do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 --lint_min`
-    expect(str.include?("3 of 3 builds failed")).to be == true
+    expect(str.include?("Argument for option --lint_min missing")).to be == true
   end 
   
   it 'recursive test 1' do

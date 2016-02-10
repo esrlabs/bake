@@ -31,7 +31,7 @@ module Bake
     end
   
     def parse_options()
-      parse_internal()
+      parse_internal(false)
       @roots << Dir.pwd if @roots.length == 0
     end
     
