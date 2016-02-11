@@ -1,11 +1,12 @@
 Changelog
 =========
 
-XXX , 2016 - bake-toolkit 2.14.1
+February 11, 2016 - bake-toolkit 2.15.0
+    * Added: multiple inheritance for configs
     * Added: ArtifactName can be specified for libraries
-    * Added: Merged config is printed out when running bake with --debug
-    * Bugfix: fixed passing arguments from bakery to bake
+    * Added: Merged configs are printed out when running bake with --debug
     * Added: info output if "path magic" hides local pathes for IncludeDir
+    * Bugfix: fixed passing arguments from bakery to bake
     
 January 14, 2016 - bake-toolkit 2.14.0
     * Added: possibility to change configs via command line, e.g. changing compiler, see "adapt" docu page

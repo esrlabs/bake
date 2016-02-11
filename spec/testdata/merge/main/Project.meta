@@ -401,7 +401,39 @@ Project {
   ExecutableConfig testTC32, extends: testTC30 {
     DefaultToolchain GCC
   }
+
+
+  ExecutableConfig testMultiBase1Base2 {
+    PreSteps {
+      CommandLine "echo XtestMultiBase1Base2X"
+    }
+  }
   
+  ExecutableConfig testMultiBase1Base1 {
+    PreSteps {
+      CommandLine "echo XtestMultiBase1Base1X"
+    }
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig testMultiBase2 {
+    PreSteps {
+      CommandLine "echo XtestMultiBase2X"
+    }
+  }
+
+  ExecutableConfig testMultiBase1, extends: "   testMultiBase1Base1 ,testMultiBase1Base2  " {
+    PreSteps {
+      CommandLine "echo XtestMultiBase1X"
+    }
+  }
+
+  CustomConfig testMulti, extends: "testMultiBase1, testMultiBase2" {
+    PreSteps {
+      CommandLine "echo XtestMultiX"
+    }
+  }
+
   
 }
 

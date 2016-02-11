@@ -34,8 +34,12 @@ module Bake
       end
       
       if config.extends != ""
-        parent,parentConfigName = getFullProjectInternal(configs, config.extends, isMain)
-        MergeConfig.new(config, parent).merge(:merge)
+        config.extends.split(",").map {|ex| ex.strip}.reverse.each do |ex|
+          if (ex != "")
+            parent,parentConfigName = getFullProjectInternal(configs, ex, isMain)
+            MergeConfig.new(config, parent).merge(:merge)
+          end
+        end
       end
       
       [config, configname]

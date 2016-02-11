@@ -515,7 +515,24 @@ describe "Merging Configs" do
     Bake.startBake("mergeInc/main", ["test", "--rebuild"])
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
+
+  it 'multi inheritence' do
+    Bake.startBake("merge/main", ["testMulti"])
+      
+    posXtestMultiBase1Base1X = $mystring.index("XtestMultiBase1Base1X")
+    posXtestMultiBase1Base2X = $mystring.index("XtestMultiBase1Base2X")
+    posXtestMultiBase1X = $mystring.index("XtestMultiBase1X")
+    posXtestMultiBase2X = $mystring.index("XtestMultiBase2X")
+    posXtestMultiX = $mystring.index("XtestMultiX")
     
+    expect((0 < posXtestMultiBase1Base1X)).to be == true
+    expect((posXtestMultiBase1Base1X < posXtestMultiBase1Base2X)).to be == true
+    expect((posXtestMultiBase1Base2X < posXtestMultiBase1X)).to be == true
+    expect((posXtestMultiBase1X < posXtestMultiBase2X)).to be == true
+    expect((posXtestMultiBase2X < posXtestMultiX)).to be == true
+  end
+
+      
 end
 
 end
