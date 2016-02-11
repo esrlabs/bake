@@ -65,7 +65,7 @@ z-index: 100;
 &nbsp; <span class="mycomment"># 0..n configs</span><br>
 &nbsp; <span class="showRadio" onMouseover="showExecutableConfig()" onMouseout="notip()" id="executableConfig">ExecutableConfig</span> |
               <span class="hideRadio" onMouseover="showLibraryConfig()" onMouseout="notip()" id="libraryConfig">LibraryConfig</span> |
-              <span class="hideRadio" onMouseover="showCustomConfig()" onMouseout="notip()" id="customConfig">CustomConfig</span> &#60;name&#62;, <span class="help" onMouseover="showExtends()" onMouseout="notip()">extends</span>: &#60;parent&#62; {<br><br>
+              <span class="hideRadio" onMouseover="showCustomConfig()" onMouseout="notip()" id="customConfig">CustomConfig</span> &#60;name&#62;, <span class="help" onMouseover="showExtends()" onMouseout="notip()">extends</span>: &#60;parent(s)&#62; {<br><br>
 			  
 			  <span><span style="background-color:#EEEEEE;" class="show">
 &nbsp; &nbsp; <span class="mycomment"># Valid for all config types</span><br><br>
@@ -153,14 +153,14 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showExcludeFiles()" onMouseout="notip()">ExcludeFiles</span> &#60;pattern&#62;<br>
-
+&nbsp; &nbsp; <span class="help" onMouseover="showArtifactName()" onMouseout="notip()">ArtifactName</span> &#60;name&#62;<br>
 </span><br></span>
 
               <span id="exe_part"><span class="show" style="background-color:#EEEEEE;">
 &nbsp; &nbsp; <span class="mycomment"># Valid for ExecutableConfig</span><br><br>
 &nbsp; &nbsp; <span class="help" onMouseover="showLinkerScript()" onMouseout="notip()">LinkerScript</span> &#60;script&#62;<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showMapFile()" onMouseout="notip()">MapFile</span> &#60;name&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showArtifactName()" onMouseout="notip()">ArtifactName</span> &#60;name&#62;<br></span><br></span>
+</span><br></span>
 
               <span id="custom_part" class="hide"><span style="background-color:#EEEEEE;" class="show">
 &nbsp; &nbsp; <span class="mycomment"># Valid for CustomConfig</span><br><br>
@@ -423,7 +423,7 @@ function showOutputDir() {
 }
 
 function showExtends() {
-	ddrivetip("extends", "No","0..1","-","Inherit settings from a parent config.<br>For more information see docu page 'Derive configs'.") 
+	ddrivetip("extends", "No","0..1","-","Inherit settings from parent config(s).<br>For more information see docu page 'Derive configs'.") 
 }
 
 function showFiles() {   
@@ -509,7 +509,7 @@ function showMapFile() {
 function showArtifactName() {   
   str = 'The artifact name inclusive file ending.<br>'+
     'The artifact will be placed in the output directory.'
-  ddrivetip("ArtifactName","No","0..1","The project name and as file ending the default linker file ending.",str)  
+  ddrivetip("ArtifactName","No","0..1","Executable: project name + toolchain dependent file ending. Library: 'lib' + project name + '.a'",str)  
 }
 
 function showMakefileCustom() {

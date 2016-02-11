@@ -1,7 +1,14 @@
 Changelog
 =========
 
-January 14, 2015 - bake-toolkit 2.14.0
+February 11, 2016 - bake-toolkit 2.15.0
+    * Added: multiple inheritance for configs
+    * Added: ArtifactName can be specified for libraries
+    * Added: Merged configs are printed out when running bake with --debug
+    * Added: info output if "path magic" hides local pathes for IncludeDir
+    * Bugfix: fixed passing arguments from bakery to bake
+    
+January 14, 2016 - bake-toolkit 2.14.0
     * Added: possibility to change configs via command line, e.g. changing compiler, see "adapt" docu page
     * Changed: extending configs in a Project.meta file made more generic, see "derive" docu page
     * Changed: default order of filenames changed, now order in Project.meta has the highest priority as intended. Results of glob patterns are sorted alphabetically as before.

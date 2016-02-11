@@ -79,3 +79,16 @@ results implicitly in:
     }
     
 
+Multiple inheritance
+********************
+
+It is possible to derive from several projects:
+
+.. code-block:: text
+
+    ExecutableConfig A
+    LibraryConfig    B
+    ExecutableConfig C, extends: "A, B"
+    
+"extends" defines a comma separated list. The merge will be performed with all parent configs.
+ 
