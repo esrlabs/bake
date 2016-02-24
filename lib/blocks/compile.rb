@@ -103,7 +103,7 @@ module Bake
                 
       def compileFile(source)
         type = get_source_type(source)
-        return true if type.nil?
+        return if type.nil?
         
         object = @object_files[source]
         
@@ -113,14 +113,12 @@ module Bake
         cmdLineCheck = false
         cmdLineFile = calcCmdlineFile(object)
 
-        return true if ignore?(type)
+        return if ignore?(type)
         reason = needed?(source, object, type, dep_filename_conv)
         if not reason
           cmdLineCheck = true
-          # currently this returns always != nil
           reason = config_changed?(cmdLineFile)
         end
-        return true unless reason
 
         if @fileTcs.include?(source)
           compiler = @fileTcs[source][:COMPILER][type]
@@ -181,20 +179,23 @@ module Bake
           Blocks::CC2J << { :directory => @projectDir, :command => cmd, :file => source }
         end
         
-        return true if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
-        
-        BlockBase.prepareOutput(object)
-        BlockBase.writeCmdLineFile(cmd, cmdLineFile)
-        success, consoleOutput = ProcessHelper.run(cmd, false, false)
-        
-        outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
-        incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
-   
-        if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
-          incList = Compile.read_depfile(dep_filename, @projectDir, @tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
-          Compile.write_depfile(incList, dep_filename_conv) 
+        if not (cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile))
+          BlockBase.prepareOutput(object)
+          BlockBase.writeCmdLineFile(cmd, cmdLineFile)
+          success, consoleOutput = ProcessHelper.run(cmd, false, false)
+          
+          outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
+          incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
+     
+          if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
+            incList = Compile.read_depfile(dep_filename, @projectDir, @tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
+            Compile.write_depfile(incList, dep_filename_conv) 
+          end
+          check_config_file
         end
-        check_config_file
+        
+        Bake::Bundle.instance.addSource(source, @include_list, dep_filename_conv) if isMainProject?
+        
       end
 
       def self.read_depfile(dep_filename, projDir, singeLine)

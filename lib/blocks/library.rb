@@ -66,7 +66,6 @@ module Bake
             cmdLineCheck = true
             reason = config_changed?(cmdLineFile)
           end
-          return true unless reason
           archiver = @tcs[:ARCHIVER]
        
           cmd = Utils.flagSplit(archiver[:COMMAND], false) # ar
@@ -81,15 +80,20 @@ module Bake
           
           cmd += @compileBlock.objects
         
-          return true if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
-        
-          BlockBase.prepareOutput(@archive_name)
+          if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
+            success = true
+          else
+            BlockBase.prepareOutput(@archive_name)
+            
+            BlockBase.writeCmdLineFile(cmd, cmdLineFile)
+            success, consoleOutput = ProcessHelper.run(cmd, false, false)
+            process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{@archive_name}", reason, success)
+           
+            check_config_file()
+          end
           
-          BlockBase.writeCmdLineFile(cmd, cmdLineFile)
-          success, consoleOutput = ProcessHelper.run(cmd, false, false)
-          process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{@archive_name}", reason, success)
-         
-          check_config_file()
+          Bake::Bundle.instance.addLib(@archive_name, isMainProject? ? @config : nil)
+          
           return success
         end
       end

@@ -1,4 +1,4 @@
-require 'rtext/serializer'
+require 'common/ext/rtext'
 
 module Bake
 
@@ -9,7 +9,7 @@ module Bake
       @parent = parent
     end
     
-    def clone(obj)
+    def self.clone(obj)
       if obj.is_a?(Metamodel::ModelElement)
         cloneModelElement(obj)
       elsif Array === obj
@@ -19,7 +19,7 @@ module Bake
       end
     end
     
-    def cloneModelElement(obj)
+    def self.cloneModelElement(obj)
       cpy = obj.class.new
       cpy.file_name = obj.file_name
       obj.class.ecore.eAllStructuralFeatures.each do |f|
@@ -184,11 +184,11 @@ module Bake
       elsif (type == :replace)
         replace
       elsif (type == :extend)
-        c = clone(@child)
+        c = MergeConfig.clone(@child)
         extend(c, @parent)
         copyChildToParent(c, @parent)
       elsif (type == :merge)
-        extend(@child, clone(@parent))
+        extend(@child, MergeConfig.clone(@parent))
       end
 
       if Bake.options.debug

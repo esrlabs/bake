@@ -6,6 +6,7 @@ require 'bake/options/showLicense'
 require 'bake/options/showDoc'
 require 'bake/options/usage'
 require 'bake/options/create'
+require 'bake/bundle'
 
 module Bake
 
@@ -18,7 +19,7 @@ module Bake
     
   class Options < Parser
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain
-    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename # String
+    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename, :bundleDir # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
@@ -67,6 +68,7 @@ module Bake
       @def_roots = []
       @main_project_name = ""
       @adapt = []
+      @bundleDir = nil
       
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| set_main_dir(x)                         })
@@ -108,6 +110,7 @@ module Bake
       add_option(["--do",                 "--include_filter"     ], lambda { |x| @include_filter << x                    })
       add_option(["--omit",               "--exclude_filter"     ], lambda { |x| @exclude_filter << x                    })
       add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })
+      add_option(["--bundle"                                     ], lambda { |x| set_bundle_dir(x)                       })
                                                                  
       add_option(["-h",                   "--help"               ], lambda {     Bake::Usage.show                        })
 
@@ -128,6 +131,7 @@ module Bake
     end
 
     def parse_options()
+      Bake::Bundle.instance.cleanup()
       parse_internal(false)
       set_main_dir(Dir.pwd) if @main_dir.nil?
       @roots = @def_roots if @roots.length == 0
@@ -231,6 +235,12 @@ module Bake
       @main_project_name = File::basename(@main_dir)
       @def_roots = calc_def_roots(@main_dir)
     end
+    
+    def set_bundle_dir(dir)
+      d = File.expand_path(dir.gsub(/[\\]/,'/'))
+      Bake::Bundle.instance.setOutputDir(d)
+    end
+    
     
     def set_root(dir)
       check_valid_dir(dir)

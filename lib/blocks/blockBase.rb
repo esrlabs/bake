@@ -1,3 +1,5 @@
+require 'bake/bundle'
+
 module Bake
   module Blocks
     
@@ -89,11 +91,15 @@ module Bake
         end
       end
       
+      def isMainProject?
+        @projectName == Bake.options.main_project_name and @config.name == Bake.options.build_config 
+      end
+      
       def calcOutputDir
         if @tcs[:OUTPUT_DIR] != nil
           p = @block.convPath(@tcs[:OUTPUT_DIR])
           @output_dir = p
-        elsif @projectName == Bake.options.main_project_name and @config.name == Bake.options.build_config 
+        elsif isMainProject?
           @output_dir = "build_" + Bake.options.build_config
         else
           @output_dir = "build_" + @config.name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config

@@ -104,8 +104,7 @@ module Bake
             cmdLineCheck = true
             reason = config_changed?(cmdLineFile)
           end
-          return true unless reason
-          
+            
           linker = @tcs[:LINKER]
     
           cmd = Utils.flagSplit(linker[:COMMAND], false) # g++
@@ -138,18 +137,23 @@ module Bake
           outPipe = (@mapfile and linker[:MAP_FILE_PIPE]) ? "#{@mapfile}" : nil
           cmdLinePrint << "> #{outPipe}" if outPipe
           
-          return true if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
+          if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
+            success = true
+          else
+            ToCxx.linkBlock
+            
+            BlockBase.prepareOutput(@exe_name)
+            
+            printCmd(cmdLinePrint, "Linking #{@exe_name}", reason, false)
+            BlockBase.writeCmdLineFile(cmd, cmdLineFile)
+            success, consoleOutput = ProcessHelper.run(cmd, false, false, outPipe)
+            process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, reason, success)
+      
+            check_config_file()
+          end
           
-          ToCxx.linkBlock
+          Bake::Bundle.instance.addBinary(@exe_name, @linker_script, isMainProject? ? @config : nil)
           
-          BlockBase.prepareOutput(@exe_name)
-          
-          printCmd(cmdLinePrint, "Linking #{@exe_name}", reason, false)
-          BlockBase.writeCmdLineFile(cmd, cmdLineFile)
-          success, consoleOutput = ProcessHelper.run(cmd, false, false, outPipe)
-          process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, reason, success)
-    
-          check_config_file()
           return success
         end
       end

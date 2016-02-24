@@ -40,6 +40,7 @@ module Bake
       puts " --adapt <name>           Specifies an adapt project to manipulate the configs (can be used multiple times)"
       puts " --incs-and-defs          Used by IDEs plugins"
       puts " --conversion-info        Prints infos for an external tool which converts bake configs for other build systems"
+      puts " --bundle <dir>           Bundles the output (experimental, description will follow)"
       puts " --writeCC2J <name>       Writes compiler command into a json file (experimental!)"
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
       puts ""
