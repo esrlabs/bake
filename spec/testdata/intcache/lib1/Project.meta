@@ -1,0 +1,8 @@
+Project default: test {
+
+  CustomConfig test {
+    CommandLine "echo __$(ProjectDir)__"
+    DefaultToolchain GCC
+  }
+  
+}

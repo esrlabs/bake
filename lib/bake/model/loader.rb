@@ -28,20 +28,8 @@ module Bake
       @model = RGen::Fragment::FragmentedModel.new(:env => @env)
     end
     
-    def load(filename)
-      sumErrors = 0
-
-      if Bake.options.nocache
-        def @DumpFileCache.load(fragment)
-          :invalid
-        end
-      end
-            
-      if not File.exists?filename
-        Bake.formatter.printError("Error: #{filename} does not exist")
-        ExitHelper.exit(1) 
-      end
-    
+    def load_internal(filename, silent = false)
+      silent = false if Bake.options.debug
       loader = RText::DefaultLoader.new(
         Bake::Language,
         @model,
@@ -51,36 +39,60 @@ module Bake
         case kind
         when :load_update_cache
           if Bake.options.verbose >= 3
-            puts "Loading and caching #{fragment.location}"
+            puts "Loading and caching #{fragment.location}" unless silent
           else
-            puts "Loading #{fragment.location}"
+            puts "Loading #{fragment.location}" unless silent
           end
         when :load_cached
           if Bake.options.verbose >= 3
-            puts "Loading cached #{fragment.location}"
+            puts "Loading cached #{fragment.location}" unless silent
           else
-            puts "Loading #{fragment.location}"
+            puts "Loading #{fragment.location}" unless silent
           end
         when :load
-          puts "Loading #{fragment.location}"
+          puts "Loading #{fragment.location}" unless silent
         else
           Bake.formatter.printError("Error: Could not load #{fragment.location}")
           ExitHelper.exit(1)     
         end
       })
     
-      f = @model.fragments[0]
-      @model.remove_fragment(f)
+      frag = @model.fragments[0]
+      @model.remove_fragment(frag)
+      frag
+    end
     
-      f.data[:problems].each do |p|
-        Bake.formatter.printError(p.message, p.file, p.line)
-      end
-      
-      if f.data[:problems].length > 0
+    
+    def load(filename)
+      sumErrors = 0
+
+      if not File.exists?filename
+        Bake.formatter.printError("Error: #{filename} does not exist")
         ExitHelper.exit(1) 
       end
       
-      return f
+      frag = nil
+      if not Bake.options.nocache
+        frag = load_internal(filename) # regular load
+        frag = nil if frag.root_elements.length > 0 and filename != frag.root_elements[0].file_name
+      end
+      
+      if frag.nil?
+        def @DumpFileCache.load(fragment)
+          :invalid
+        end
+        frag = load_internal(filename, !Bake.options.nocache)
+      end
+    
+      frag.data[:problems].each do |p|
+        Bake.formatter.printError(p.message, p.file, p.line)
+      end
+      
+      if frag.data[:problems].length > 0
+        ExitHelper.exit(1) 
+      end
+      
+      return frag
     
     end
   

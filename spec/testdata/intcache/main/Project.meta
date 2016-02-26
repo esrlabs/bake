@@ -1,0 +1,13 @@
+Project {
+
+  CustomConfig test1 {
+    Dependency lib1
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test2 {
+    Dependency lib2
+    DefaultToolchain GCC
+  }
+  
+}
