@@ -26,7 +26,7 @@ module Bake
       puts "                          to specify only a part of the file list to lint (default -1)."
       puts " --lint-max <num>         See above (default -1)."
       puts " --ignore-cache           Rereads the original meta files - usefull if workspace structure has been changed."
-      puts " --threads <num>          Set NUMBER of parallel compiled files (default is 8)."
+      puts " -j <num>                 Set NUMBER of parallel compiled files (default is 8)."
       puts " --socket <num>           Set SOCKET for sending errors, receiving commands, etc. - used by e.g. Eclipse."
       puts " --toolchain-info <name>  Prints default values of a toolchain."
       puts " --toolchain-names        Prints available toolchains."

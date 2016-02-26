@@ -49,14 +49,14 @@ describe "Option Parser" do
     Bake.options.parse_options()
     expect(Bake.options.threads).to be == 8 # default
     
-    Bake.options = Options.new(["--threads"])
+    Bake.options = Options.new(["-j"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
-    expect($mystring.include?("Argument for option --threads missing")).to be == true
+    expect($mystring.include?("Argument for option -j missing")).to be == true
 
-    Bake.options = Options.new(["--threads", "aaaaah"])
+    Bake.options = Options.new(["-j", "aaaaah"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     
-    Bake.options = Options.new(["--threads", "2"])
+    Bake.options = Options.new(["-j", "2"])
     Bake.options.parse_options()
     expect(Bake.options.threads).to be == 2
   end

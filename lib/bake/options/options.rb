@@ -103,7 +103,7 @@ module Bake
         
       add_option(["--clobber"                                    ], lambda {     @clobber = true; @clean = true          })
       add_option(["--ignore-cache",       "--ignore_cache"       ], lambda {     @nocache = true                         })
-      add_option(["--threads"                                    ], lambda { |x| set_threads(x)                          })
+      add_option(["-j",                   "--threads"            ], lambda { |x| set_threads(x)                          })
       add_option(["--socket"                                     ], lambda { |x| @socket = String === x ? x.to_i : x     })
       add_option(["--toolchain-info",     "--toolchain_info"     ], lambda { |x| ToolchainInfo.showToolchain(x)          })
       add_option(["--toolchain-names",    "--toolchain_names"    ], lambda {     ToolchainInfo.showToolchainList         })
