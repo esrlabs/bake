@@ -1,6 +1,11 @@
 Changelog
 =========
 
+February 26, 2016 - bake-toolkit 2.16.1
+    * Added: experimental bundle feature
+    * Changed: "--threads" now deprected, use "-j" instead
+    * Bugfix: in rare cases the cache from a copied/moved Project.meta file was reused instead of reloading the file. This could lead to errors.
+
 February 11, 2016 - bake-toolkit 2.15.0
     * Added: multiple inheritance for configs
     * Added: ArtifactName can be specified for libraries
