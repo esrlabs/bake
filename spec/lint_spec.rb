@@ -11,8 +11,19 @@ module Bake
 
 describe "Lint" do
   
+  it 'lint installed' do
+    begin
+      `lint-nt.exe2 -v`
+      $lintInstalled = true
+    rescue Exception
+      if not $ci_running
+        fail "lint not installed" # fail only once on non lint systems
+      end
+    end
+  end
+  
   it 'lint zero' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main"])
       expect($mystring.include?("Error")).to be == true
       expect(ExitHelper.exit_code).to be == 0 
@@ -20,21 +31,21 @@ describe "Lint" do
   end
   
   it 'lint proj' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main"])
       expect($mystring.split("Module:").length).to be == 4
     end
   end
   
   it 'lint proj diab' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["testDiabLint", "--lint", "-p", "main"])
       expect($mystring.split("Module:").length).to be == 4
     end
   end
   
   it 'lint all files' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "-f", "a"])
       expect($mystring.split("Module:").length).to be == 4
     end
@@ -48,14 +59,14 @@ describe "Lint" do
   end   
  
   it 'lint no file' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "-f", "x"])
       expect($mystring.split("Module:").length).to be == 1
     end
   end    
   
   it 'lint min' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint-min", "1"])
       expect($mystring.split("Module:").length).to be == 3
       expect($mystring.include?("mainb")).to be == true
@@ -64,7 +75,7 @@ describe "Lint" do
   end    
   
   it 'lint max' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint-max", "1"])
       expect($mystring.split("Module:").length).to be == 3
       expect($mystring.include?("maina")).to be == true
@@ -73,7 +84,7 @@ describe "Lint" do
   end   
   
   it 'lint minmax eq' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint-min", "1", "--lint-max", "1"])
       expect($mystring.split("Module:").length).to be == 2
       expect($mystring.include?("mainb")).to be == true
@@ -81,7 +92,7 @@ describe "Lint" do
   end   
   
   it 'lint minmax pos' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint_min", "1", "--lint_max", "2"])
       expect($mystring.split("Module:").length).to be == 3
       expect($mystring.include?("mainb")).to be == true
@@ -98,7 +109,7 @@ describe "Lint" do
   end     
   
   it 'lint min too high' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint_min", "3"])
       expect($mystring.split("Module:").length).to be == 1
       expect($mystring.include?("Info: No files to lint")).to be == true
@@ -106,7 +117,7 @@ describe "Lint" do
   end    
 
   it 'lint multi proj' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("multiProj/main", ["test1", "--lint", "-p", "main"])
       expect($mystring.split("Module:").length).to be == 3
       expect($mystring.include?("Linting done.")).to be == true

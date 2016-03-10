@@ -8,6 +8,9 @@ def new_rspec
   desc "Run specs"
   RSpec::Core::RakeTask.new() do |t|
     t.pattern = SPEC_PATTERN
+    if $travis
+      t.rspec_opts = "spec/options.rb"
+    end
   end
 end
 
@@ -42,3 +45,8 @@ end
 task :spec do
   puts 'Please run test:spec'
 end
+
+task :travis do
+  $travis = true
+  Rake::Task["test:spec"].invoke  
+end 

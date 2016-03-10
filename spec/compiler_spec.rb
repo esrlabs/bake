@@ -21,20 +21,26 @@ describe "compiler" do
     $noCleanTestData = false
   end
   
-  it 'dcc rebuild' do
+  it 'dcc installed' do
     begin
       `dcc`
       $dccInstalled = true
     rescue Exception
-      fail "dcc not installed" # fail only once on non dcc systems
+      if not $ci_running
+        fail "dcc not installed" # fail only once on non dcc systems
+      end
     end
-    
-    Bake.startBake("compiler/dcc", ["test", "--rebuild"])
-    expect($mystring.include?("lib.cpp")).to be == true
-    expect($mystring.include?("main.cpp")).to be == true
-    expect($mystring.include?("libdcc.a")).to be == true
-    expect($mystring.include?("dcc.elf")).to be == true
-    expect(ExitHelper.exit_code).to be == 0
+  end
+  
+  it 'dcc rebuild' do
+    if $dccInstalled
+      Bake.startBake("compiler/dcc", ["test", "--rebuild"])
+      expect($mystring.include?("lib.cpp")).to be == true
+      expect($mystring.include?("main.cpp")).to be == true
+      expect($mystring.include?("libdcc.a")).to be == true
+      expect($mystring.include?("dcc.elf")).to be == true
+      expect(ExitHelper.exit_code).to be == 0
+    end
   end
 
   it 'dcc build' do

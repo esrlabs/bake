@@ -1,4 +1,5 @@
 [![version](https://badge.fury.io/gh/esrlabs%2Fbake.svg)](https://badge.fury.io/gh/esrlabs%2Fbake)
+[![Build Status](https://travis-ci.org/esrlabs/bake.svg?branch=master)](https://travis-ci.org/esrlabs/bake)
 
 bake
 ====
