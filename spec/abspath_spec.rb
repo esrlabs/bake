@@ -1,12 +1,17 @@
 #!/usr/bin/env ruby
 
+require 'socket'
+require 'fileutils'
+require 'helper'
+
+require 'coveralls'
+Coveralls.wear_merged!
+
 require 'common/version'
 
 require 'bake/options/options'
 require 'common/exit_helper'
-require 'socket'
-require 'fileutils'
-require 'helper'
+
 
 module Bake
 

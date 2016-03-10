@@ -17,3 +17,4 @@ dummy_main*/
 *.exe
 **/obj/*
 **/_build/doctrees/*
+coverage/*
