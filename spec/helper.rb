@@ -1,6 +1,3 @@
-require 'coveralls'
-Coveralls.wear_merged!
-
 require 'tempfile'
 require 'common/cleanup'
 require 'tocxx'

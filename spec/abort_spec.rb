@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+require 'coveralls'
+Coveralls.wear!
+
 require 'helper'
 
 require 'socket'
