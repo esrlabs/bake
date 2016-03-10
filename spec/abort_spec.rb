@@ -1,11 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'socket'
-require 'fileutils'
 require 'helper'
 
-require 'coveralls'
-Coveralls.wear_merged!
+require 'socket'
+require 'fileutils'
 
 require 'common/version'
 
@@ -22,5 +20,6 @@ describe "autodir" do
   end
 
 end
+
 
 end

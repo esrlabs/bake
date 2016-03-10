@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
 
+require 'helper'
+
 require 'common/version'
 
 require 'bake/options/options'
 require 'common/exit_helper'
 require 'fileutils'
-require 'helper'
 
 module Bake
 

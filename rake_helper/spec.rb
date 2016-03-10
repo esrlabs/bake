@@ -52,5 +52,4 @@ end
 task :travis do
   $travis = true
   Rake::Task["test:spec"].invoke
-  Rake::Task["coveralls:push"].invoke    
 end 

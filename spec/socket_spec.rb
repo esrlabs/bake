@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
 
+require 'helper'
+
 require 'common/version'
 
 require 'tocxx'
 require 'bake/options/options'
 require 'common/exit_helper'
 require 'socket'
-require 'helper'
 
 module Bake
 
