@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'coveralls'
-Coveralls.wear!
+Coveralls.wear_merged!
 
 require 'helper'
 
