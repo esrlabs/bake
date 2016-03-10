@@ -200,13 +200,13 @@ describe "Adapt" do
   it 'LinkerScript remove 0' do
     Bake.startBake("adapt/main", ["test_lin0", "--rebuild", "-v2", "--adapt", "lin_remove_ok"])
     expect($mystring.include?(".dld")).to be == false
-    expect($mystring.include?("Rebuilding done.")).to be == true
+    expect(File.exists?("spec/testdata/adapt/main/build_test_lin0/main.exe")).to be == true
   end   
   
   it 'LinkerScript remove 1 ok' do
     Bake.startBake("adapt/main", ["test_lin1", "--rebuild", "-v2", "--adapt", "lin_remove_ok"])
     expect($mystring.include?(".dld")).to be == false
-    expect($mystring.include?("Rebuilding done.")).to be == true
+    expect(File.exists?("spec/testdata/adapt/main/build_test_lin1/main.exe")).to be == true
   end   
   
   it 'LinkerScript remove 1 nok' do
