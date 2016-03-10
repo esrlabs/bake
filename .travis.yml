@@ -10,7 +10,7 @@ install:
  - gem install coveralls
  - gem install rtext -v 0.8.1
  - gem install rgen -v 0.8.0
- - gem install highline -v 1.6.0
+ - gem install highline -v ">= 1.6.0"
  - gem install colored
  - gem install rspec
 
