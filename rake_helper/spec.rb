@@ -1,6 +1,9 @@
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 require 'common/version'
 
+require 'coveralls/rake/task'
+Coveralls::RakeTask.new
+
 SPEC_PATTERN ='spec/**/*_spec.rb'
 
 def new_rspec
@@ -48,5 +51,6 @@ end
 
 task :travis do
   $travis = true
-  Rake::Task["test:spec"].invoke  
+  Rake::Task["test:spec"].invoke
+  Rake::Task["coveralls:push"].invoke    
 end 
