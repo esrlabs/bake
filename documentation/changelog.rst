@@ -60,7 +60,7 @@ October 26, 2015 - Eclipse plugin 1.6.0
     * Bugfix: fixed exception when trying to build after starting eclipse with a closed project
 October 14, 2015 - bake-toolkit 2.12.0
     * Changed: now ALL startup and exit steps are executed regardless if the previous steps were successful even if stopOnFirstError was configured
-    * Bugfix: relative pathes between roots based on Roots.bake were calculated incorrectly
+    * Bugfix: relative pathes between roots based on roots.bake were calculated incorrectly
 October 2, 2015 - bake-toolkit 2.11.4
     * Bugfix: bake aborted in larger workspaces with 2.11.3 right before linking
 September 8, 2015 - bake-toolkit 2.11.3

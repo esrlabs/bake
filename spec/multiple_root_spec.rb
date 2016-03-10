@@ -64,7 +64,7 @@ describe "Multiple root" do
     expect(File.exists?("spec/testdata/root1/mainAutoRoot/build_test/mainAutoRoot.exe")).to be == true
   end
   
-  it 'Roots.bake' do
+  it 'roots.bake' do
     Bake.startBake("rrmeta/a/b/c/d", ["test"])
     expect(ExitHelper.exit_code).to be == 0
   end
