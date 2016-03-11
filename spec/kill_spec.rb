@@ -13,21 +13,36 @@ module Bake
   def self.startKillTest(config, test)
     serverSocket = TCPServer.new('localhost', 10000)
      
+    puts "A"
     Bake.options = Options.new(["-m", "spec/testdata/kill/main", config, "--socket", "10000", "-j", "2"])
     Bake.options.parse_options()
+    
+    puts "B"
     tocxx = Bake::ToCxx.new
     tocxx.connect()
      
+    puts "C"
+    
     clientSocket = serverSocket.accept
+    
+    puts "D"
+    
     test.expect(clientSocket.nil?).to test.be == false
      
+    puts "E"
+    
     Thread.new {
+      puts "F"
       sleep 1
+      puts "G"
       clientSocket.send("X",0) # triggers abort
+      puts "H"
     }
-     
+    puts "I"
     tocxx.doit
+    puts "J"
     sleep 1
+    puts "K"
      
     test.expect(Bake::IDEInterface.instance.get_abort).to test.be == true
     tocxx.disconnect()
