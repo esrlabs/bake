@@ -75,7 +75,7 @@ describe "VarSubst" do
     Bake.startBake("cache/main", ["testPathes", "-v2"])
 
     if not Utils::OS.windows?
-      expect($mystring.scan("/usr/bin").count).to be >= 5 
+      expect($mystring.scan("/usr/bin").count + $mystring.scan("/ruby").count).to be >= 5 
     else
       expect($mystring.scan("ruby").count).to be == 2 # assuming ruby is is a ruby dir
       expect($mystring.scan("bin").count).to be >= 3 # assuming that gcc in in a bin dir

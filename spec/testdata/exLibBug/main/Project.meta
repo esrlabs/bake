@@ -2,19 +2,19 @@ Project {
 
   ExecutableConfig test1 {
     Files "**/*.cpp"
-	ExternalLibrary "../sub/Debug/sub", search: true
+	ExternalLibrary "../sub/build_Debug/sub", search: true
 	DefaultToolchain GCC
   }
 
   ExecutableConfig test2 {
     Files "**/*.cpp"
-	ExternalLibrary "../sub/Debug/libsub.a", search: false
+	ExternalLibrary "../sub/build_Debug/libsub.a", search: false
 	DefaultToolchain GCC
   }
 
   ExecutableConfig test3 {
     Files "**/*.cpp"
-	ExternalLibrarySearchPath "../sub/Debug"
+	ExternalLibrarySearchPath "../sub/build_Debug"
 	ExternalLibrary "sub"
 	DefaultToolchain GCC
   }
