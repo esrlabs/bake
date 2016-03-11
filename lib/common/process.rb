@@ -49,20 +49,13 @@ module Bake
        
     def self.killProcess(force) # do not kill compile processes or implement rd and pid array if really needed
       begin
-        puts "_a"
         @@rd.close
-        puts "_b"
       rescue Exception => e
-        puts "_c"
       end
       begin
-        puts "_d"
         Process.kill("KILL",@@pid)
-        puts "_e"
       rescue Exception => e
-        puts "_f"
       end
-      puts "_g"
       @@rd = nil
       @@pid = nil
     end
