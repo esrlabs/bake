@@ -54,3 +54,8 @@ task :travis do
   Rake::Task["test:spec"].invoke
   Rake::Task["coveralls:push"].invoke
 end 
+
+task :appveyor do
+  $travis = true
+  Rake::Task["test:spec"].invoke
+end 

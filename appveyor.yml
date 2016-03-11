@@ -1,0 +1,25 @@
+version: '{build}'
+
+skip_tags: true
+
+os: Windows Server 2012
+
+environment:
+  matrix:
+    - ruby_version: "193"
+    - ruby_version: "22"
+
+install:
+  - SET PATH=C:\Ruby%ruby_version%\bin;%PATH%
+  - gem install coveralls
+  - gem install simplecov
+  - gem install rtext -v 0.8.1
+  - gem install rgen -v 0.8.0
+  - gem install highline -v ">= 1.6.0"
+  - gem install colored
+  - gem install rspec
+
+test_script:
+  - rake appveyor
+
+build: off

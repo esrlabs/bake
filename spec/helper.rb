@@ -9,6 +9,9 @@ require 'tempfile'
 require 'common/cleanup'
 require 'tocxx'
 
+require 'options'
+
+
 module Bake
 
   def self.startBake(proj, opt)
