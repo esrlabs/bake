@@ -4,7 +4,7 @@ require 'common/version'
 require 'coveralls/rake/task'
 Coveralls::RakeTask.new
 
-SPEC_PATTERN ='spec/**/*_spec.rb'
+SPEC_PATTERN ='spec/**/exLibBug_spec.rb'
 
 def new_rspec
   require 'rspec/core/rake_task'
