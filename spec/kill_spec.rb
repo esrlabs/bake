@@ -21,8 +21,8 @@ module Bake
     clientSocket = serverSocket.accept
     test.expect(clientSocket.nil?).to test.be == false
      
-    Thread.new {
-     t = sleep 1
+    t = Thread.new {
+      sleep 1
       clientSocket.send("X",0) # triggers abort
     }
      
