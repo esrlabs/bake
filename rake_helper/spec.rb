@@ -1,8 +1,11 @@
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 require 'common/version'
 
-require 'coveralls/rake/task'
-Coveralls::RakeTask.new
+begin
+  require 'coveralls/rake/task'
+  Coveralls::RakeTask.new
+rescue LoadError
+end
 
 SPEC_PATTERN ='spec/**/*_spec.rb'
 
@@ -52,7 +55,10 @@ end
 task :travis do
   $travis = true
   Rake::Task["test:spec"].invoke
-  Rake::Task["coveralls:push"].invoke
+  begin    
+    Rake::Task["coveralls:push"].invoke
+  rescue Exception
+  end
 end 
 
 task :appveyor do
