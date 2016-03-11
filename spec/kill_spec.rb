@@ -31,7 +31,7 @@ module Bake
      
     puts "E"
     
-    Thread.new {
+    t = Thread.new {
       puts "F"
       sleep 1
       puts "G"
@@ -47,7 +47,11 @@ module Bake
     test.expect(Bake::IDEInterface.instance.get_abort).to test.be == true
     tocxx.disconnect()
     
+    t.join
+    
     serverSocket.close
+    
+    
     
     test.expect($mystring.include?"lib1 (#{config})").to test.be == true
     test.expect($mystring.include?"lib2 (dummy)").to test.be == false
