@@ -24,5 +24,11 @@ module Bake
 end
 
 at_exit do
-  exit(Bake::ExitHelper.exit_code)
+  if Bake::ExitHelper.exit_code != 0
+    exit(Bake::ExitHelper.exit_code)
+  elsif not $!.nil?
+    exit($!.success? ? 0 : 1)
+  else
+    exit(0)
+  end
 end

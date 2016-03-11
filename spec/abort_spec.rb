@@ -1,12 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'simplecov'
-require 'coveralls'
-SimpleCov.start do
-  add_filter 'spec'
-end
-Coveralls.wear_merged!
-
 require 'helper'
 
 require 'socket'
