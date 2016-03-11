@@ -43,31 +43,31 @@ module Bake
       Bake::cleanup
       Bake::clean_testdata
       
-      @backup_stdout = STDOUT.dup
-      @backup_stderr = STDERR.dup
-      @fstdout = Tempfile.open("captured_stdout")
-      @fstderr = Tempfile.open("captured_stderr")
-      STDOUT.reopen(@fstdout)
-      STDERR.reopen(@fstderr)
+   #   @backup_stdout = STDOUT.dup
+   #   @backup_stderr = STDERR.dup
+   #   @fstdout = Tempfile.open("captured_stdout")
+   #   @fstderr = Tempfile.open("captured_stderr")
+   #   STDOUT.reopen(@fstdout)
+   #   STDERR.reopen(@fstderr)
       
-      $mystring=""
-      $sstring=StringIO.open($mystring,"w+")
-      $stdoutbackup=$stdout
-      $stdout=$sstring
+   #   $mystring=""
+   #   $sstring=StringIO.open($mystring,"w+")
+   #   $stdoutbackup=$stdout
+   #   $stdout=$sstring
     end
     
     config.after(:each) do
-      $stdout=$stdoutbackup
+   #   $stdout=$stdoutbackup
       
-      @fstdout.rewind; @fstdout.read; @fstdout.close
-      @fstderr.rewind; @fstderr.read; @fstderr.close
-      STDOUT.reopen @backup_stdout
-      STDERR.reopen @backup_stderr
+   #   @fstdout.rewind; @fstdout.read; @fstdout.close
+   #   @fstderr.rewind; @fstderr.read; @fstderr.close
+   #   STDOUT.reopen @backup_stdout
+   #   STDERR.reopen @backup_stderr
       
       ExitHelper.reset_exit_code
       Bake::clean_testdata
       
-      puts $mystring      
+   #   puts $mystring      
     end
 
   end

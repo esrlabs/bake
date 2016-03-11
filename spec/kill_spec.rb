@@ -32,7 +32,8 @@ module Bake
     puts "E"
     
     t = Thread.new {
-      puts "F"
+      $stderr.puts "P2"
+      puts "P1"
       sleep 1
       puts "G"
       clientSocket.send("X",0) # triggers abort
