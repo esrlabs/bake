@@ -1,9 +1,12 @@
-require 'simplecov'
-require 'coveralls'
-SimpleCov.start do
-  add_filter 'spec'
+begin
+  require 'simplecov'
+  require 'coveralls'
+  SimpleCov.start do
+    add_filter 'spec'
+  end
+  Coveralls.wear_merged!
+rescue LoadError
 end
-Coveralls.wear_merged!
 
 require 'tempfile'
 require 'common/cleanup'

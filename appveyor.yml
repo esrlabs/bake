@@ -11,8 +11,6 @@ environment:
 
 install:
   - SET PATH=C:\Ruby%ruby_version%\bin;%PATH%
-  - gem install coveralls
-  - gem install simplecov
   - gem install rtext -v 0.8.1
   - gem install rgen -v 0.8.0
   - gem install highline -v ">= 1.6.0"
