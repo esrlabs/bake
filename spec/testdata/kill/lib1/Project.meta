@@ -29,6 +29,7 @@ Project {
   CustomConfig testMake {
     PreSteps {
       CommandLine "echo STEP1"
+      CommandLine "make -v"
     }
     Makefile "makefile/makefile"
     PostSteps {

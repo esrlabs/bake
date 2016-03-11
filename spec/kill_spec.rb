@@ -35,9 +35,11 @@ module Bake
       $stderr.puts "P2"
       puts "P1"
       sleep 1
-      puts "G"
+      puts "G2"
+      $stderr.puts "P1"
       clientSocket.send("X",0) # triggers abort
-      puts "H"
+      puts "H2"
+      $stderr.puts "H1"
     }
     puts "I"
     tocxx.doit
