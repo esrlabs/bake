@@ -63,24 +63,21 @@ describe "Option Parser" do
   end
 
   it 'should provide a config names with default' do
-    Bake.options = Options.new(["--list", "-m", "spec/testdata/default/libD"])
-    expect { Bake.options.parse_options() }.to raise_error(SystemExit)
+    Bake.startBake("default/libD", ["--list"])
     expect($mystring.include?("* testL1A")).to be == true
     expect($mystring.include?("* testL1B (default)")).to be == true
     expect($mystring.include?("* testL1C")).to be == true
   end
 
   it 'should provide config names' do
-    Bake.options = Options.new(["--list", "-m", "spec/testdata/default/libNoD"])
-    expect { Bake.options.parse_options() }.to raise_error(SystemExit)
+    Bake.startBake("default/libNoD", ["--list"])
     expect($mystring.include?("* testL2A")).to be == true
     expect($mystring.include?("* testL2B")).to be == true
     expect($mystring.include?("* testL2C")).to be == true
   end
    
   it 'should provide config names with description' do
-    Bake.options = Options.new(["--list", "-m", "spec/testdata/desc/main1"])
-    expect { Bake.options.parse_options() }.to raise_error(SystemExit)
+    Bake.startBake("desc/main1", ["--list"])
     expect($mystring.include?("No configuration with a DefaultToolchain found")).to be == false
     expect($mystring.include?("* test1: Bla")).to be == true
     expect($mystring.include?("* test2:")).to be == true
@@ -90,8 +87,7 @@ describe "Option Parser" do
   end
   
   it 'should not provide config names' do
-    Bake.options = Options.new(["--show_configs", "-m", "spec/testdata/desc/main2"])
-    expect { Bake.options.parse_options() }.to raise_error(SystemExit)
+    Bake.startBake("desc/main2", ["--list"])
     expect($mystring.include?("* test")).to be == false
     expect($mystring.include?("No configuration with a DefaultToolchain found")).to be == true
   end  

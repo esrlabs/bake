@@ -231,26 +231,24 @@ module Bake
       end
         
       @project_files = []
-      
       configs = loadProjMeta(mainMeta)
       @loadedConfigs = {}
       @loadedConfigs[Bake.options.main_project_name] = configs
-      
-      if (Bake.options.build_config == "" and configs[0].parent.default == "")
-        ConfigNames.print(configs, nil, mainMeta)
-      end
-      
-      config, Bake.options.build_config = getFullProject(configs,Bake.options.build_config, true)
-      @referencedConfigs = {}
-      @referencedConfigs[Bake.options.main_project_name] = [config]
+
+      if not showConfigNames?        
+        config, Bake.options.build_config = getFullProject(configs,Bake.options.build_config, true)
+        @referencedConfigs = {}
+        @referencedConfigs[Bake.options.main_project_name] = [config]
         
-      if config.defaultToolchain == nil
-        Bake.formatter.printError("Main project configuration must contain DefaultToolchain", config)
-        ExitHelper.exit(1)
+        validateDependencies(config)
+        @depsPending = config.dependency
+        
+        if Bake.options.build_config != "" and config.defaultToolchain == nil
+          Bake.formatter.printError("Main project configuration must contain DefaultToolchain", config)
+          ExitHelper.exit(1)
+        end        
       end
       
-      validateDependencies(config)
-      @depsPending = config.dependency
     end
     
     def checkRoots()
@@ -300,29 +298,59 @@ module Bake
       end
     end
 
-    def load(adaptConfigs)
-      @adaptConfigs = adaptConfigs
-      
-      @loader = Loader.new
-      cache = CacheAccess.new()
-      @referencedConfigs = cache.load_cache unless Bake.options.nocache
-
-      # cache invalid or forced to reload
-      if @referencedConfigs.nil?
-        loadMainMeta
-        checkRoots
-        while dep = @depsPending.shift
-          loadMeta(dep)
-        end
-       
-        filterSteps
+    def defaultConfigName
+      @loadedConfigs[Bake.options.main_project_name].first.parent.default
+    end
         
-        cache.write_cache(@project_files, @referencedConfigs)
+    def showConfigNames?
+      Bake.options.showConfigs or (Bake.options.build_config == "" and defaultConfigName == "")
+    end
+
+    def printConfigNames
+      mainConfigName = Bake.options.build_config != "" ? Bake.options.build_config : defaultConfigName 
+      configs = @loadedConfigs[Bake.options.main_project_name]
+      foundValidConfig = false
+      configs.each do |c|
+        config, tmp = getFullProject(configs, c.name, c.name == mainConfigName)
+        next if config.defaultToolchain.nil?
+        Kernel.print "* #{config.name}"
+        Kernel.print " (default)" if config.name == defaultConfigName
+        Kernel.print ": #{config.description.text}" if config.description
+        Kernel.print "\n"
+        foundValidConfig = true
       end
-      
+     
+      Bake.formatter.printWarning("No configuration with a DefaultToolchain found", Bake.options.main_dir+"/Project.meta") unless foundValidConfig
+      ExitHelper.exit(0)
     end
     
+    def load(adaptConfigs)
+      @adaptConfigs = adaptConfigs
+      @loader = Loader.new
+      if not Bake.options.showConfigs
+        cache = CacheAccess.new()
+        @referencedConfigs = cache.load_cache unless Bake.options.nocache
+        # cache invalid or forced to reload
+        if @referencedConfigs.nil?
+          loadMainMeta
+          printConfigNames if showConfigNames? # if neither config name nor default is set, list the configs with DefaultToolchain
+          checkRoots
+          while dep = @depsPending.shift
+            loadMeta(dep)
+          end
+          filterSteps
+          cache.write_cache(@project_files, @referencedConfigs)
+        else
+          if showConfigNames?
+            loadMainMeta # needed because in cache only needed configs are stored
+            printConfigNames
+          end
+        end
+      else
+        loadMainMeta # "--list" specified
+        printConfigNames
+      end 
+    end
     
   end
-
 end
