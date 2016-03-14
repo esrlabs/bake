@@ -90,9 +90,6 @@ describe "Kill process" do
     Bake.startKillTest("testCompile", self)
     
     expect($mystring.include?"Compiling src/a.cpp").to be == true
-    expect($mystring.include?"Compiling src/b.cpp").to be == true
-    expect($mystring.include?"Compiling src/c.cpp").to be == true
-    expect($mystring.include?"Compiling src/d.cpp").to be == true
     expect($mystring.include?"Compiling src/e.cpp").to be == false
   end  
 
