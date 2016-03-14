@@ -14,10 +14,10 @@ describe "Lint" do
   
   it 'lint installed' do
     begin
-      `lint-nt.exe2 -v`
+      `lint-nt.exe -v`
       $lintInstalled = true
     rescue Exception
-      if not $ci_running
+      if not Bake.ciRunning?
         fail "lint not installed" # fail only once on non lint systems
       end
     end

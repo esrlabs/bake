@@ -23,7 +23,7 @@ describe "Hacks" do
   end
   
   it 'lintpipe' do
-    if Utils::OS.windows?
+    if Utils::OS.windows? and not Bake.ciRunning?
       expect(File.exists?("spec/testdata/hacks/main/test_lib_lib_lintout.xml")).to be == false
       expect(File.exists?("spec/testdata/hacks/main/test_main_testLintPipe_lintout.xml")).to be == false
     

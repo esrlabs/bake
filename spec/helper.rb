@@ -1,19 +1,24 @@
-begin
-  require 'simplecov'
-  require 'coveralls'
-  SimpleCov.start do
-    add_filter 'spec'
+module Bake
+  def self.ciRunning?
+    ENV["CI_RUNNING"] == "YES"
   end
-  Coveralls.wear_merged!
+end
+
+begin
+  if Bake.ciRunning?
+    require 'simplecov'
+    require 'coveralls'
+    SimpleCov.start do
+      add_filter 'spec'
+    end
+    Coveralls.wear_merged!
+  end
 rescue LoadError
 end
 
 require 'tempfile'
 require 'common/cleanup'
 require 'tocxx'
-
-require 'options'
-
 
 module Bake
 
@@ -67,7 +72,7 @@ module Bake
       ExitHelper.reset_exit_code
       Bake::clean_testdata
       
-      puts $mystring      
+      #puts $mystring      
     end
 
   end

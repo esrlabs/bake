@@ -7,16 +7,13 @@ begin
 rescue LoadError
 end
 
-SPEC_PATTERN ='spec/**/ci_spec.rb'
+SPEC_PATTERN ='spec/**/*_spec.rb'
 
 def new_rspec
   require 'rspec/core/rake_task'
   desc "Run specs"
   RSpec::Core::RakeTask.new() do |t|
     t.pattern = SPEC_PATTERN
-    if $travis
-      t.rspec_opts = "spec/options.rb"
-    end
   end
 end
 
@@ -53,7 +50,7 @@ task :spec do
 end
 
 task :travis do
-  $travis = true
+  ENV["CI_RUNNING"] = "YES"
   Rake::Task["test:spec"].invoke
   begin    
     Rake::Task["coveralls:push"].invoke
@@ -62,6 +59,6 @@ task :travis do
 end 
 
 task :appveyor do
-  $travis = true
+  ENV["CI_RUNNING"] = "YES"
   Rake::Task["test:spec"].invoke
 end 

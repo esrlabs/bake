@@ -27,7 +27,7 @@ describe "compiler" do
       `dcc`
       $dccInstalled = true
     rescue Exception
-      if not $ci_running
+      if not Bake.ciRunning?
         fail "dcc not installed" # fail only once on non dcc systems
       end
     end
