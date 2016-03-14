@@ -53,7 +53,7 @@ describe "Lint" do
   end  
   
   it 'lint one file' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "-f", "maina"])
       expect($mystring.split("Module:").length).to be == 2
     end
@@ -102,7 +102,7 @@ describe "Lint" do
   end   
   
   it 'lint minmax neg' do
-    if Utils::OS.windows?
+    if $lintInstalled
       Bake.startBake("stop/main", ["test1", "--lint", "-p", "main", "--lint_min", "2", "--lint_max", "1"])
       expect($mystring.split("Module:").length).to be == 1
       expect($mystring.include?("Info: No files to lint")).to be == true

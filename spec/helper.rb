@@ -67,7 +67,7 @@ module Bake
       ExitHelper.reset_exit_code
       Bake::clean_testdata
       
-      #puts $mystring      
+      puts $mystring      
     end
 
   end
