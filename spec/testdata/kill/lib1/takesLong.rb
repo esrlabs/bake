@@ -5,12 +5,12 @@ STDOUT.puts "FIRST"
 STDERR.puts "first"
 STDOUT.flush
 STDERR.flush
-sleep 1.5
+sleep 7.5
 STDOUT.puts "SECOND"
 STDERR.puts "second"
 STDOUT.flush
 STDERR.flush
-sleep 1.5
+sleep 7.5
 STDOUT.puts "THIRD"
 STDERR.puts "third"
 STDOUT.flush

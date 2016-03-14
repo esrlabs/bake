@@ -22,7 +22,7 @@ module Bake
     test.expect(clientSocket.nil?).to test.be == false
      
     t = Thread.new {
-      sleep 1
+      sleep 5
       clientSocket.send("X",0) # triggers abort
     }
      

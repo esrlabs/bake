@@ -1,1 +1,1 @@
-sleep 0.6
+sleep 3.5
