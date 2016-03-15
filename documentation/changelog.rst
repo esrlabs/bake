@@ -1,6 +1,18 @@
 Changelog
 =========
 
+March 15, 2016 - bake-toolkit 2.17.1
+    * Bugfix: configs with inherited DefaultToolchains were not listed on command line (via "--list")
+    * Changed: if build config name was omitted on commandline, a default config is specified and this default config has no DefaultToolchain, bake lists all possible build configs (same as "--list")
+    * Added: warning if sources files were compiled several times for one binary
+
+March 15, 2015 - Eclipse plugin 1.7.0
+    * Bugfix: config names written in inverted commas or with special characters were not recognized by "Select bake Config" menu
+    * Removed: multi-console option, which was rarely used and not working correctly anymore with latest Eclipse version
+    * Added: option to disable/enable console scroll-lock/word-wrap when starting a build
+    * Cosmetic: config names are now displayed in "Select bake Config" in the same order as in Project.meta
+    * Cosmetic: bake console does not open automatically anymore when starting Eclipse
+
 February 26, 2016 - bake-toolkit 2.16.1
     * Added: experimental bundle feature
     * Changed: "--threads" now deprected, use "-j" instead
