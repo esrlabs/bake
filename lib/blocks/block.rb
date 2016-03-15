@@ -70,7 +70,7 @@ module Bake
       end
       
       def getCompileBlocks()
-        @mainSteps.select { |m| Compile === m }
+        mainSteps.select { |m| Compile === m }
       end
       
       def convPath(dir, elem=nil, warnIfLocal=false)

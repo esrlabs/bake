@@ -85,7 +85,7 @@ module Bake
           (childs + [@block]).each do |b|
             Dir.chdir(b.projectDir) do
               b.getCompileBlocks.each do |c|
-                allSources += c.calcSources(true, true).map! { |s| File.expand_path(s) }
+                allSources += c.calcSources(true, true).map { |s| File.expand_path(s) }
               end
             end
           end
