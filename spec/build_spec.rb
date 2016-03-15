@@ -288,7 +288,19 @@ describe "Building" do
     expect($mystring.include?("echo main")).to be == true
     expect($mystring.include?("echo main2")).to be == false
   end
-    
+  
+  it 'warning if source compiled more than once' do
+    Bake.startBake("simple/main", ["test_doubleSource", "--link_only"])
+    expect($mystring.include?("Source compiled more than once")).to be == true
+    expect($mystring.include?("spec/testdata/simple/main/src/x.cpp")).to be == true
+  end
+
+  it 'warning if source compiled more than once link-only' do
+    Bake.startBake("simple/main", ["test_doubleSource", "--link-only"])
+    expect($mystring.include?("Source compiled more than once")).to be == true
+    expect($mystring.include?("spec/testdata/simple/main/src/x.cpp")).to be == true
+  end
+      
 end
 
 end

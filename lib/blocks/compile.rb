@@ -347,7 +347,8 @@ module Bake
         end
       end
       
-      def calcSources(cleaning = false)
+      def calcSources(cleaning = false, keep = false)
+        return @source_files if @source_files and not @source_files.empty?
         Dir.chdir(@projectDir) do
           @source_files = []
       
@@ -405,24 +406,9 @@ module Bake
             end
           end
         end
-        return (not @source_files.empty?)
+        @source_files
       end
         
-      def getSubBlocks(b, method)
-        b.send(method).each do |child_b|
-          if not @otherBlocks.include?child_b
-            @otherBlocks << child_b
-            getSubBlocks(child_b, method)
-          end
-        end
-      end
-      
-      def getBlocks(method)
-        @otherBlocks = []
-        getSubBlocks(@block, method)
-        return @otherBlocks
-      end      
-
       def mapInclude(inc, orgBlock)
         
         if inc.name == "___ROOTS___"

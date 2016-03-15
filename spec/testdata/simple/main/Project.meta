@@ -39,5 +39,16 @@ Project {
       }
     }
   }
-
+  
+  LibraryConfig test_doubleSource_lib {
+    Files "src/x.cpp"
+  }
+  
+  ExecutableConfig test_doubleSource {
+    Files "src/x.cpp"
+    Dependency lib, config: test_ok
+    Dependency config: test_doubleSource_lib
+    DefaultToolchain GCC
+  }
+  
 }

@@ -44,18 +44,6 @@ module Bake
         end
       end
       
-      def depHasError(block)
-        return false if block.circularCheck
-        block.circularCheck = true
-        block.dependencies.each do |dep|
-          subBlock, name = Blocks::ALL_BLOCKS[dep]
-          return true unless subBlock.result
-          return true if depHasError(subBlock)
-        end
-        
-        return false
-      end
-
       def ignore?
         Bake.options.prepro
       end
@@ -90,9 +78,22 @@ module Bake
             
       def execute
         Dir.chdir(@projectDir) do
-          Blocks::ALL_BLOCKS.each { |n,b| b.circularCheck = false }
-          return false if depHasError(@block)
-          
+          childs = getBlocks(:childs)
+          return false if childs.any? { |b| b.result == false }
+            
+          allSources = []
+          (childs + [@block]).each do |b|
+            Dir.chdir(b.projectDir) do
+              b.getCompileBlocks.each do |c|
+                allSources += c.calcSources(true, true).map! { |s| File.expand_path(s) }
+              end
+            end
+          end
+          duplicateSources = allSources.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
+          duplicateSources.each do |d|
+            Bake.formatter.printWarning("Source compiled more than once: #{d}") 
+          end
+                    
           libs, linker_libs_array = LibElements.calc_linker_lib_string(@block, @tcs)
           
           cmdLineCheck = false

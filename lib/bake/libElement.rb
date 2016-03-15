@@ -52,7 +52,7 @@ module Bake
       prefix = nil
 
       if block.library 
-        if (not block.library.compileBlock.objects.empty?) or block.library.compileBlock.calcSources(true)
+        if (not block.library.compileBlock.objects.empty?) or not block.library.compileBlock.calcSources(true, true).empty?
           adaptedPath, prefix = adaptPath(block.library.archive_name, block, prefix)
           @@linker_libs_array << adaptedPath
           @@source_libraries << adaptedPath

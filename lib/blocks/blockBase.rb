@@ -198,8 +198,22 @@ module Bake
         end
         incList
       end      
+
+      def getSubBlocks(b, method)
+        b.send(method).each do |child_b|
+          if not @otherBlocks.include?child_b
+            @otherBlocks << child_b
+            getSubBlocks(child_b, method)
+          end
+        end
+      end
       
+      def getBlocks(method)
+        @otherBlocks = []
+        getSubBlocks(@block, method)
+        return @otherBlocks
+      end 
+            
     end
-    
   end
 end

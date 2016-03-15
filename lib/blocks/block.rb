@@ -16,7 +16,7 @@ module Bake
     class Block
 
       attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :warnConvValid
-      attr_accessor :visited, :inDeps, :result, :circularCheck
+      attr_accessor :visited, :inDeps, :result
 
       def startupSteps
         @startupSteps ||= []
@@ -56,7 +56,6 @@ module Bake
       
       def initialize(config, referencedConfigs)
         @inDeps = false
-        @circularCheck
         @visited = false
         @library = nil
         @config = config
@@ -68,6 +67,10 @@ module Bake
         @result = true
         
         @lib_elements = Bake::LibElements.calcLibElements(self)
+      end
+      
+      def getCompileBlocks()
+        @mainSteps.select { |m| Compile === m }
       end
       
       def convPath(dir, elem=nil, warnIfLocal=false)
