@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Visual Studio &mdash; bake 2.17.0 documentation</title>
+    <title>How to debug in Eclipse &mdash; bake 2.17.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -30,9 +30,9 @@
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
     <link rel="top" title="bake 2.17.0 documentation" href="../../index.html" />
-    <link rel="up" title="IDE Support" href="../ide_integrations.html" />
-    <link rel="next" title="How to install bake Visual Studio integration" href="vs_install.html" />
-    <link rel="prev" title="How to debug in Eclipse" href="../eclipse/how_to_debug_in_eclipse.html" />
+    <link rel="up" title="Eclipse" href="eclipse.html" />
+    <link rel="next" title="Visual Studio" href="../vs/vs.html" />
+    <link rel="prev" title="How to create a new project in Eclipse" href="how_to_create_a_new_project_in_eclipse.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -96,7 +96,13 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Visual Studio</a></li>
+<li><a class="reference internal" href="#">How to debug in Eclipse</a><ul>
+<li><a class="reference internal" href="#compile-with-debug-information">1. Compile with debug information</a></li>
+<li><a class="reference internal" href="#create-a-debug-configuration-for-a-c-application">2. Create a debug configuration for a C++ application</a></li>
+<li><a class="reference internal" href="#add-path-mapping">3. Add path mapping</a></li>
+<li><a class="reference internal" href="#now-you-can-debug-your-code">4. Now you can debug your code</a></li>
+</ul>
+</li>
 </ul>
 </ul>
 </li>
@@ -106,11 +112,11 @@
               
                 
   <li>
-    <a href="../eclipse/how_to_debug_in_eclipse.html" title="Previous Chapter: How to debug in Eclipse"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; How to debug ...</span>
+    <a href="how_to_create_a_new_project_in_eclipse.html" title="Previous Chapter: How to create a new project in Eclipse"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; How to create...</span>
     </a>
   </li>
   <li>
-    <a href="vs_install.html" title="Next Chapter: How to install bake Visual Studio integration"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">How to instal... &raquo;</span>
+    <a href="../vs/vs.html" title="Next Chapter: Visual Studio"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Visual Studio &raquo;</span>
     </a>
   </li>
               
@@ -138,15 +144,37 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="visual-studio">
-<h1>Visual Studio<a class="headerlink" href="#visual-studio" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="vs_install.html">How to install bake Visual Studio integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_used_bake_in_vs.html">How to use bake in Visual Studio</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_create_vs_projects.html">How to create VS-Projects using bake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_debug_in_vs.html">How to Debug in Visual Studio</a></li>
-</ul>
+  <div class="section" id="how-to-debug-in-eclipse">
+<h1>How to debug in Eclipse<a class="headerlink" href="#how-to-debug-in-eclipse" title="Permalink to this headline">¶</a></h1>
+<p>The following example is made with Eclipse Mars, <strong>Cygwin</strong>, <strong>gcc</strong> and <strong>gdb</strong>. However, the same applies to all other compilers and
+environments, too.</p>
+<div class="section" id="compile-with-debug-information">
+<h2>1. Compile with debug information<a class="headerlink" href="#compile-with-debug-information" title="Permalink to this headline">¶</a></h2>
+<p>Don&#8217;t forget this. Otherwise sources symbols cannot not mapped.</p>
+<img alt="../../_images/debug_flag.png" src="../../_images/debug_flag.png" />
+</div>
+<div class="section" id="create-a-debug-configuration-for-a-c-application">
+<h2>2. Create a debug configuration for a C++ application<a class="headerlink" href="#create-a-debug-configuration-for-a-c-application" title="Permalink to this headline">¶</a></h2>
+<p>This options can be found under Run-&gt;Debug Configurations... or click on the arrow next to the green spider.</p>
+<img alt="../../_images/debug_app.png" src="../../_images/debug_app.png" />
+<div class="line-block">
+<div class="line">Choose a suitable name and the executable.</div>
+</div>
+</div>
+<div class="section" id="add-path-mapping">
+<h2>3. Add path mapping<a class="headerlink" href="#add-path-mapping" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/debug_path.png" src="../../_images/debug_path.png" />
+<img alt="../../_images/debug_map.png" src="../../_images/debug_map.png" />
+<div class="line-block">
+<div class="line">Note that this must be done if the compiler uses different paths than Eclipse. In this example I have used gcc under Cygwin,</div>
+<div class="line">which typically uses &#8220;/cygdrive/c&#8221; for &#8220;c:\&#8221;. I always mount &#8220;c:\&#8221; to &#8220;/c&#8221;.</div>
+<div class="line"><br /></div>
+<div class="line">Also note, that my Eclipse changes &#8220;/c&#8221; to &#8220;\c&#8221; in the dialog box automatically, but it works nevertheless.</div>
+</div>
+</div>
+<div class="section" id="now-you-can-debug-your-code">
+<h2>4. Now you can debug your code<a class="headerlink" href="#now-you-can-debug-your-code" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/debug_debug.png" src="../../_images/debug_debug.png" />
 </div>
 </div>
 

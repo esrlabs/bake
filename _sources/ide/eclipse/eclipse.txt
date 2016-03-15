@@ -9,6 +9,7 @@ Eclipse
     how_to_convert_existing_cdt_workspace
     how_to_create_a_workspace_in_eclipse
     how_to_create_a_new_project_in_eclipse
+    how_to_debug_in_eclipse
 
 Syntax highlighting
 *******************
