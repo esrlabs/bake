@@ -138,7 +138,7 @@ module Bake
           addSteps(block, block.startupSteps,  config.startupSteps)
           addSteps(block, block.exitSteps,  config.exitSteps)
           
-          if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
+          if not Bake.options.prepro and not Bake.options.lint and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
             addSteps(block, block.preSteps,  config.preSteps)
             addSteps(block, block.postSteps, config.postSteps)
           end
@@ -146,7 +146,7 @@ module Bake
           if Bake.options.docu
             block.mainSteps << Blocks::Docu.new(config, @configTcMap[config])
           elsif Metamodel::CustomConfig === config
-            if not Bake.options.linkOnly and not Bake.options.prepro and not Bake.options.lint and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
+            if not Bake.options.prepro and not Bake.options.lint and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
               addSteps(block, block.mainSteps, config) if config.step
             end 
           elsif Bake.options.conversion_info

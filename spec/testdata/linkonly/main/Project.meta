@@ -1,0 +1,10 @@
+Project {
+
+  ExecutableConfig test_ok {
+    Files "src/x.cpp"
+    Dependency libLib
+    Dependency libMake
+    DefaultToolchain GCC
+  }
+  
+}

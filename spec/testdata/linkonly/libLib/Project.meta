@@ -1,0 +1,7 @@
+Project default: test_ok {
+
+  LibraryConfig test_ok {
+    Files "src/y.cpp"
+  }
+
+}
