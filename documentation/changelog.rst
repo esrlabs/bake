@@ -1,6 +1,9 @@
 Changelog
 =========
 
+April 6, 2016 - bake-toolkit 2.17.2
+    * Bugfix: "--link-only" option has ignored libraries from makefiles
+
 March 15, 2016 - bake-toolkit 2.17.1
     * Bugfix: configs with inherited DefaultToolchains were not listed on command line (via "--list")
     * Changed: if build config name was omitted on commandline, a default config is specified and this default config has no DefaultToolchain, bake lists all possible build configs (same as "--list")
