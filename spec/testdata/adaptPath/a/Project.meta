@@ -1,0 +1,10 @@
+Project {
+
+  CustomConfig test {
+    PreSteps {
+      CommandLine "echo org"
+    }
+    DefaultToolchain GCC
+  }
+
+}

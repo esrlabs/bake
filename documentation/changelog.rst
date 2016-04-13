@@ -1,6 +1,9 @@
 Changelog
 =========
 
+April 13, 2016 - bake-toolkit 2.17.3
+    * Bugfix: Commands injected by adapt feature were executed in wrong directory
+
 April 6, 2016 - bake-toolkit 2.17.2
     * Bugfix: "--link-only" option has ignored libraries from makefiles
 

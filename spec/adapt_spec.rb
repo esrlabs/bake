@@ -900,7 +900,18 @@ describe "Adapt" do
     Bake.startBake("adapt/main", ["test_dep0", "-v3"])
     expect($mystring.include?("adapt config filename has been changed, reloading meta information")).to be == false
   end 
-        
+
+  it 'adapt filename changed' do
+    Bake.startBake("adaptPath/a", ["test", "--adapt", "b"])
+    pos1 = $mystring.index("part1")
+    pos2 = $mystring.index("adaptPath/a",pos1)
+    pos3 = $mystring.index("part2",pos2)
+    expect(0   <pos1).to be == true
+    expect(pos1<pos2).to be == true
+    expect(pos2<pos3).to be == true
+  end 
+
+
 end
 
 end

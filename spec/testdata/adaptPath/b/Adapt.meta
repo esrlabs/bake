@@ -1,0 +1,11 @@
+Adapt {
+
+  CustomConfig test, project: __ALL__, type: extend {
+    PreSteps {
+      CommandLine "echo part1"
+      CommandLine "pwd"
+      CommandLine "echo part2"
+    }
+  }
+
+}
