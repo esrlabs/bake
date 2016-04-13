@@ -1,0 +1,8 @@
+Project {
+
+  LibraryConfig test {
+    Files "src/*"
+    DefaultToolchain GCC
+  }
+
+}

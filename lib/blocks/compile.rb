@@ -341,6 +341,14 @@ module Bake
           type = get_source_type(source)
           if not type.nil?
             object = get_object_file(source)
+            if @objects.include?object
+              @object_files.each do |k,v|
+                if (v == object) # will be found exactly once
+                  Bake.formatter.printError("Source files '#{k}' and '#{source}' would result in the same object file", source)
+                  raise SystemCommandFailed.new  
+                end
+              end
+            end
             @object_files[source] = object
             @objects << object
           end

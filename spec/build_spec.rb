@@ -12,6 +12,15 @@ module Bake
 
 describe "Building" do
   
+  it 'sameObj' do
+    expect(File.exists?("spec/testdata/sameObj/main/build_test/main.exe")).to be == false
+    
+    Bake.startBake("sameObj/main", ["test"])
+
+    expect($mystring.include?("Source files 'src/x.c' and 'src/x.cpp' would result in the same object file")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+  
   it 'workspace' do
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == false
     
