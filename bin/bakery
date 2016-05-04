@@ -12,6 +12,8 @@ puts "-- bakery #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}
 STDOUT.sync = true
 STDERR.sync = true
 
+$stars = "************************************************"
+
 require 'bake/toolchain/colorizing_formatter'
 require 'bake/options/options'
 require 'tocxx'
@@ -23,14 +25,14 @@ require 'common/ext/stdout'
 require 'common/cleanup'
 
 module Bake
- 
+
   @options = BakeryOptions.new(ARGV)
   bakeOptions = Options.new([])
   @options.parse_options(bakeOptions)
 
   env = nil
   begin
-    loader = BakeryLoader.new 
+    loader = BakeryLoader.new
     env = loader.load(@options.collection_dir+"/Collection.meta")
   rescue SystemExit => e
     raise e
@@ -38,11 +40,11 @@ module Bake
     puts e
     puts e.backtrace
     ExitHelper.exit(1)
-  end 
+  end
 
-  
-  if @options.collection_name.empty? 
-    puts "Please specify a collection name. Possible values are:"      
+
+  if @options.collection_name.empty?
+    puts "Please specify a collection name. Possible values are:"
     env.find(:class => BakeryModel::Collection).each { |e|
       puts "* " + e.name
     }
@@ -57,20 +59,20 @@ module Bake
     cols[0].collections.each do |cRef|
       alreadyProcessed = false
       @colsAll.each do |ca|
-        alreadyProcessed = true if ca.name == cRef.name 
+        alreadyProcessed = true if ca.name == cRef.name
       end
       getCollections(env, cRef.name) unless alreadyProcessed
     end
-  end  
-  
+  end
+
   @toBuild = []
   @colsAll = []
   getCollections(env, @options.collection_name)
-  
+
   maxRuns = @toBuild.length
   currentRun = 0
-  failedRuns = 0
-  
+  failedRuns = []
+
   passedParams = []
   excludeParam = false
   wasMinus = false
@@ -92,13 +94,13 @@ module Bake
       end
     end
     passedParams << x
-  end  
-  
+  end
+
   if @options.socket != 0
     Bake::IDEInterface.instance.connect(@options.socket)
   end
 
-  msg1 = "* bakery "
+  msg1 = "bakery "
 
   exitValue = 0
   abort = false
@@ -108,12 +110,12 @@ module Bake
     pRel = File.rel_from_to_project(Dir.pwd, p, false)
     pRel = "." if pRel.empty?
     cmd = (["-m", pRel, "-b", bp.conf] + passedParams)
-    cmdWithNum = "* bakery #{currentRun} of #{maxRuns}: bake " + cmd.join(" ") + " *"
-    puts "\n************************************************";
+    cmdWithNum = "bakery #{currentRun} of #{maxRuns}: bake " + cmd.join(" ")
+    puts "\n#{$stars}"
     Bake.formatter.printInfo(cmdWithNum)
-    puts "************************************************";
-   
-    
+    puts $stars
+
+
     runOk = false
     begin
       Bake.options = Options.new(cmd)
@@ -126,49 +128,50 @@ module Bake
     rescue Exception => e
       puts e.message
     end
-    
+
     Bake::cleanup
     ExitHelper.reset_exit_code
-      
+
     if runOk == false
       exitValue = 1
-      failedRuns += 1
+      failedRuns << "bake " + cmd.join(" ")
       if @options.error
-        msg1 << "aborted, "
+        msg1 << "aborted"
         abort = true
         break
       end
     end
   end
-  
+
   print "\n"
 
   if not abort
-    if failedRuns > 0
-      msg1 << "summary: #{failedRuns} of #{maxRuns} builds failed, "
+    if failedRuns.length > 0
+      msg1 << "summary: #{failedRuns.length} of #{maxRuns} builds failed"
     else
-      msg1 << "summary: #{maxRuns-failedRuns} of #{maxRuns} builds ok, "
+      msg1 << "summary: #{maxRuns} of #{maxRuns} builds ok"
     end
   else
   end
 
   timeEnd = Time.now
   timeDiff = timeEnd - $timeStart
-  msg1 << "time: %02d:%02d minutes *" % [timeDiff/60, timeDiff%60]
-  
-  stars = ""
-  msg1.length.times { stars << "*" }
-
-  if failedRuns == 0
-    Bake.formatter.printSuccess(stars)
-    Bake.formatter.printSuccess(msg1)
-    Bake.formatter.printSuccess(stars)
-  else
-    Bake.formatter.printError(stars)
-    Bake.formatter.printError(msg1)
-    Bake.formatter.printError(stars)
+  failedRuns.each_with_index do |f,i|
+    msg1 << "\n#{i+1}: #{f}"
   end
-  
+  msg1 << "\ntime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60]
+
+
+  if failedRuns.length == 0
+    Bake.formatter.printSuccess($stars)
+    Bake.formatter.printSuccess(msg1)
+    Bake.formatter.printSuccess($stars)
+  else
+    Bake.formatter.printError($stars)
+    Bake.formatter.printError(msg1)
+    Bake.formatter.printError($stars)
+  end
+
   Bake::IDEInterface.instance.disconnect()
 
   ExitHelper.exit(exitValue)
