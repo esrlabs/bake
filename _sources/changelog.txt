@@ -1,6 +1,10 @@
 Changelog
 =========
 
+May 4, 2016 - bake-toolkit 2.17.4
+    * Bugfix: bakery returned 1 for successful builds
+    * Changed: bakery now lists all failed unit tests at the end
+
 April 13, 2016 - bake-toolkit 2.17.3
     * Bugfix: Commands injected by adapt feature were executed in wrong directory
     * Bugfix: Added an error if two sources would result in the same object file
@@ -31,7 +35,7 @@ February 11, 2016 - bake-toolkit 2.15.0
     * Added: Merged configs are printed out when running bake with --debug
     * Added: info output if "path magic" hides local pathes for IncludeDir
     * Bugfix: fixed passing arguments from bakery to bake
-    
+
 January 14, 2016 - bake-toolkit 2.14.0
     * Added: possibility to change configs via command line, e.g. changing compiler, see "adapt" docu page
     * Changed: extending configs in a Project.meta file made more generic, see "derive" docu page
@@ -47,9 +51,9 @@ December 23, 2015 - bake-toolkit 2.13.0
     * Added: option to omit -b when executing the bakery
     * Added: bakery now searches recursively for bake projects
     * Changed: some commandline arguments changed, deprecated arguments still supported
-        
+
       ==================  =======================
-      New argument        Deprecated argument                    
+      New argument        Deprecated argument
       ==================  =======================
       --do                --include_filter
       --omit              --exclude_filter
@@ -140,7 +144,7 @@ March 30, 2015 - bake-toolkit 2.4.3
     * Added: Set command in Project.meta has now an env attribute to store variables also in system environment which makes them accessible from user scripts
     * Added: GCC_ENV toolchain (uses environment variables)
     * Added: Improved MSVC support
-March 16, 2015 - VS plugin 1.0.1 
+March 16, 2015 - VS plugin 1.0.1
     * Added: Support for VS2013
 March 12, 2015 - bake-toolkit 2.3.4
     * Changed: Clang command is now "clang" per default instead of llvm-gcc
@@ -178,7 +182,7 @@ January 15, 2015 - bake-toolkit 2.0.10
     * Changed: if no default project is specified, possible build configs are shown on command line again like in bake 1.x
 January 7, 2015 - bake-toolkit 2.0.3
     * Changed: default configuration is chosen if configuration name is omitted. This applies to command line as well as to Dependency definitions, e.g.:
-        * Project.meta 
+        * Project.meta
 
             .. code-block:: console
 
@@ -188,7 +192,7 @@ January 7, 2015 - bake-toolkit 2.0.3
 
             .. code-block:: console
 
-                User@Host:~$ bake -m bla/myProj 
+                User@Host:~$ bake -m bla/myProj
 
         .. note::
 
@@ -200,7 +204,7 @@ January 7, 2015 - bake-toolkit 2.0.3
         Example:
 
         .. code-block:: console
-        
+
             Dependency canDriver, config: C1
             Dependency canDriver, config: C2
 
@@ -208,7 +212,7 @@ January 7, 2015 - bake-toolkit 2.0.3
         To reference a config of the current project, omit the project name, e.g.:
 
         .. code-block:: console
-        
+
             Dependency config: C3
 
         To build a single project, you can still use -p command line argument:
@@ -239,7 +243,7 @@ January 7, 2015 - bake-toolkit 2.0.3
 
                 ExternalLibrary "bspCoreZ6/$(MainConfigName)_$(MainProjectName)/src/coreZ6/startup/startupCode.o", search:false
 
-            This refers to the old output directory. Change it or if you want to support old and new bake versions, 
+            This refers to the old output directory. Change it or if you want to support old and new bake versions,
             write a PreStep which copies the file from the new location to the old one.
 
     * Changed: with -f a pattern can be specified, not only a single file. All files matching this string will be compiled.
@@ -262,20 +266,20 @@ January 7, 2015 - bake-toolkit 2.0.3
         =======================    ==========================================================================    ===========
         Compiler command           $(ti_home)/ccsv5/tools/compiler/tms470/bin/cl470                              ti_cl
 
-        Compiler flags             -mv7A8 -g --include_path="#{ti_home}/ccsv5/tools/compiler/tms470/include" 
-                                   --diag_warning=225 -me --abi=eabi --code_state=32 --preproc_with_compile   
+        Compiler flags             -mv7A8 -g --include_path="#{ti_home}/ccsv5/tools/compiler/tms470/include"
+                                   --diag_warning=225 -me --abi=eabi --code_state=32 --preproc_with_compile
 
         Archiver command           $(ti_home)/ccsv5/tools/compiler/tms470/bin/ar470                               ti_ar
 
         Linker command             $(ti_home)/ccsv5/tools/compiler/tms470/bin/cl470                               ti_cl
 
-        Linker flags               -mv7A8 -g --diag_warning=225 -me --abi=eabi --code_state=32 -z 
-                                   --warn_sections -i"$(ti_home)/ccsv5/tools/compiler/tms470/lib" 
-                                   -i"$(ti_home)/ccsv5/tools/compiler/tms470/include" 
+        Linker flags               -mv7A8 -g --diag_warning=225 -me --abi=eabi --code_state=32 -z
+                                   --warn_sections -i"$(ti_home)/ccsv5/tools/compiler/tms470/lib"
+                                   -i"$(ti_home)/ccsv5/tools/compiler/tms470/include"
 
-        Linker lib prefix flags    -lDebug/configPkg/linker.cmd 
+        Linker lib prefix flags    -lDebug/configPkg/linker.cmd
         =======================    ==========================================================================    ===========
-        
+
     * Bugfix: variables in add and remove attributes of Flags now work as intended
     * Bugfix: output folder was not created if no sources are specified for LibraryConfig and ExecutableConfig.
     * Bugfix: "-p" was not forwarded in bakery.
