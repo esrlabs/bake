@@ -1,15 +1,15 @@
-bake 2.17.3
+bake 2.17.4
 ==========================================
 bake, building software **fast** and **easy**!
 
 =======================================            =======================================
-\                                                  \ 
+\                                                  \
 =======================================            =======================================
 .. image:: _static/bake_tagcloud.png               **Start to bake**
 
                                                    .. toctree::
                                                         :maxdepth: 2
-                                                        
+
                                                         why_bake/why_bake
                                                         install/install_bake
                                                         quickstart/quickstart
@@ -22,7 +22,7 @@ bake, building software **fast** and **easy**!
                                                         known_issues
                                                         changelog
                                                         license
-														
+
                                                    .. toctree::
                                                         :maxdepth: 1
 
