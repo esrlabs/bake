@@ -3,12 +3,12 @@ require 'common/ext/rtext'
 module Bake
 
   class MergeConfig
-  
+
     def initialize(child, parent)
       @child = child
       @parent = parent
     end
-    
+
     def self.clone(obj)
       if obj.is_a?(Metamodel::ModelElement)
         cloneModelElement(obj)
@@ -18,7 +18,7 @@ module Bake
         obj # no clone, should not happen
       end
     end
-    
+
     def self.cloneModelElement(obj)
       cpy = obj.class.new
       cpy.file_name = obj.file_name
@@ -36,14 +36,14 @@ module Bake
       end
       cpy
     end
-    
-   
+
+
     def replace()
       @child.class.ecore.eAllReferences.each do |f|
         next unless @parent.class.ecore.eAllReferences.include?f
         next unless f.containment
         childData = @child.getGeneric(f.name)
-        if Metamodel::ModelElement === childData 
+        if Metamodel::ModelElement === childData
           @parent.setGeneric(f.name,childData) if !childData.nil?
         elsif Array === childData
           if !childData.empty?
@@ -56,7 +56,7 @@ module Bake
         end
       end
     end
-    
+
     def hasSubNodes(elem)
       elem.class.ecore.eAllReferences.each do |f|
         next unless f.containment
@@ -68,31 +68,35 @@ module Bake
     end
 
     def sameAttr(childData, parentData)
-      childData.class.ecore.eAllAttributes.all? { |a| 
+      childData.class.ecore.eAllAttributes.all? { |a|
         a.eAnnotations.each do |x| x.details.each do |y|
           return true if (y.key == :internal and y.value == true)
         end; end
         a.name == "line_number" || (not childData.eIsSet(a.name)) || (childData.getGeneric(a.name) == parentData.getGeneric(a.name))
       }
     end
-    
+
     def removeChilds(childElem, parentElem)
       return if childElem.nil? or parentElem.nil?
-      
+
       childElem.class.ecore.eAllReferences.each do |f|
         next unless f.containment
-        childData = childElem.getGeneric(f.name)
-        parentData = parentElem.getGeneric(f.name)
+        begin
+          childData = childElem.getGeneric(f.name)
+          parentData = parentElem.getGeneric(f.name)
+        rescue Exception => ex
+          next # how to check fast if f.name is valid?
+        end
         next if childData.nil? or parentData.nil?
         if (Array === childData)
           if !parentData.empty? && !childData.empty?
             childData.each do |c|
-              cN = hasSubNodes(c)    
+              cN = hasSubNodes(c)
               toRemove = []
               parentData.each do |p|
                 next if p.class != c.class
                 if (not cN)
-                  if sameAttr(c, p)  
+                  if sameAttr(c, p)
                     toRemove << p
                   end
                 else
@@ -116,24 +120,24 @@ module Bake
         end
       end
     end
-    
+
     def extendAttributes(childData, parentData)
-       parentData.class.ecore.eAllAttributes.each do |a| 
+       parentData.class.ecore.eAllAttributes.each do |a|
          childData.setGeneric(a.name, parentData.getGeneric(a.name)) if !childData.eIsSet(a.name) && parentData.eIsSet(a.name)
        end
      end
-     
+
      def extend(child, parent)
        (parent.class.ecore.eAllReferences & child.class.ecore.eAllReferences).each do |f|
          next unless f.containment
          parentData = parent.getGeneric(f.name)
          next if parentData.nil? or (Array === parentData && parentData.empty?)
          childData = child.getGeneric(f.name)
-           
+
          if Array === parentData
            if f.name == "compiler"
              extendedParentData = []
-             parentData.each do |p| 
+             parentData.each do |p|
                c = childData.find { |c| p.ctype == c.ctype }
                if c
                  extendAttributes(c, p)
@@ -144,7 +148,7 @@ module Bake
                end
              end
              restOfChildData = childData.find_all { |c| parentData.find {|p| p.ctype != c.ctype } }
-             child.setGeneric(f.name, extendedParentData + restOfChildData)  
+             child.setGeneric(f.name, extendedParentData + restOfChildData)
            else
              child.setGeneric(f.name, parentData + childData)
            end
@@ -157,17 +161,17 @@ module Bake
            end
          end
        end
-     end    
-    
+     end
+
      def copyChildToParent(c, p)
        (p.class.ecore.eAllReferences & c.class.ecore.eAllReferences).each do |f|
          next unless f.containment
          childData = c.getGeneric(f.name)
          next if childData.nil? || (Array === childData && childData.empty?)
          p.setGeneric(f.name, childData)
-       end        
+       end
      end
-     
+
     def merge(type)
       s = StringIO.new
       ser = RText::Serializer.new(Language)
@@ -178,7 +182,7 @@ module Bake
         s.puts "\n>>>> parent <<<<"
         ser.serialize(@parent, s)
       end
-      
+
       if (type == :remove)
         removeChilds(@child, @parent)
       elsif (type == :replace)
@@ -197,9 +201,9 @@ module Bake
         puts "#{s.string}"
       end
 
-            
+
     end
-  
+
   end
 
 end

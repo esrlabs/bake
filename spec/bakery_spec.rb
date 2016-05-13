@@ -13,44 +13,44 @@ module Bake
 describe "bake" do
 
   it 'collection double' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b double`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b double --adapt nols`
     puts str
     expect(str.include?("found more than once")).to be == true
   end
 
   it 'collection empty' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main gugu`
+    str = `ruby bin/bakery -m spec/testdata/root1/main gugu --adapt nols`
     puts str
     expect(str.include?("0 of 0 builds ok")).to be == true
   end
 
   it 'collection onlyExclude' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b gigi`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b gigi --adapt nols`
     puts str
     expect(str.include?("0 of 0 builds ok")).to be == true
 
   end
 
   it 'collection working' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main gaga -w spec/testdata/root1 -w spec/testdata/root2`
+    str = `ruby bin/bakery -m spec/testdata/root1/main gaga -w spec/testdata/root1 -w spec/testdata/root2 --adapt nols`
     puts str
     expect(str.include?("1 of 3 builds failed")).to be == true
   end
 
   it 'two collection names without -b' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main gaga gigi -w spec/testdata/root1 -w spec/testdata/root2`
+    str = `ruby bin/bakery -m spec/testdata/root1/main gaga gigi -w spec/testdata/root1 -w spec/testdata/root2 --adapt nols`
     puts str
     expect(str.include?("1 of 3 builds failed")).to be == false
   end
 
   it 'two collection names with -b' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b gaga -b gigi -w spec/testdata/root1 -w spec/testdata/root2`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b gaga -b gigi -w spec/testdata/root1 -w spec/testdata/root2 --adapt nols`
     puts str
     expect(str.include?("1 of 3 builds failed")).to be == false
   end
 
   it 'collection parse params' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b gaga -w spec/testdata/root1 -w spec/testdata/root2 -v2 -a black --ignore-cache -r -c`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b gaga -w spec/testdata/root1 -w spec/testdata/root2 -v2 -a black --ignore-cache -r -c --adapt nols`
     puts str
     expect(str.include?(" -r")).to be == true
     expect(str.include?(" -a black")).to be == true
@@ -61,27 +61,27 @@ describe "bake" do
   end
 
   it 'collection wrong' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b wrong -w spec/testdata/root1 -w spec/testdata/root2 -r`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b wrong -w spec/testdata/root1 -w spec/testdata/root2 -r --adapt nols`
     puts str
     expect(str.include?("bakery aborted")).to be == true
     expect(str.include?("must contain DefaultToolchain")).to be == true
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b wrong -w spec/testdata/root1 -w spec/testdata/root2`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b wrong -w spec/testdata/root1 -w spec/testdata/root2 --adapt nols`
     puts str
     expect(str.include?("1 of 1 builds failed")).to be == true
   end
 
   it 'collection error' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b error -w spec/testdata/root1 -w spec/testdata/root2 -r`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b error -w spec/testdata/root1 -w spec/testdata/root2 -r --adapt nols`
     puts str
     expect(str.include?("bakery aborted")).to be == true
     expect(str.include?("Error: system command failed")).to be == false
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b error -w spec/testdata/root1 -w spec/testdata/root2`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b error -w spec/testdata/root1 -w spec/testdata/root2 --adapt nols`
     puts str
     expect(str.include?("1 of 1 builds failed")).to be == true
   end
 
   it 'collection ref without -b' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r --adapt nols`
     puts str
     expect(str.include?("3 of 3 builds ok")).to be == true
     expect(str.include?("root1/lib1 -b test")).to be == true
@@ -90,7 +90,7 @@ describe "bake" do
   end
 
   it 'collection ref with -b' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r --adapt nols`
     puts str
     expect(str.include?("3 of 3 builds ok")).to be == true
     expect(str.include?("root1/lib1 -b test")).to be == true
@@ -99,25 +99,25 @@ describe "bake" do
   end
 
   it 'collection only ref to itself' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b Nothing -w spec/testdata/root1 -w spec/testdata/root2 -r`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Nothing -w spec/testdata/root1 -w spec/testdata/root2 -r --adapt nols`
     puts str
     expect(str.include?("0 of 0 builds ok")).to be == true
   end
 
   it 'collection invalid ref' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b InvalidRef -w spec/testdata/root1 -w spec/testdata/root2 -r`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b InvalidRef -w spec/testdata/root1 -w spec/testdata/root2 -r --adapt nols`
     puts str
     expect(str.include?("Collection Wrong not found")).to be == true
   end
 
   it 'collection option ok' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r --list`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r --list --adapt nols`
     puts str
     expect(str.include?("3 of 3 builds ok")).to be == true
   end
 
   it 'collection option not ok' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 --lint_min`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 --lint_min --adapt nols`
     puts str
     expect(str.include?("Argument for option --lint_min missing")).to be == true
   end
