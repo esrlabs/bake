@@ -12,17 +12,17 @@ require 'fileutils'
 module Bake
 
 describe "Config Change" do
-  
+
   def fixConfigs
     x = File.read("spec/testdata/configchanged/main/Project.meta")
     x.gsub!("Flags add: \"-DGAGA\"", "# TEST")
     File.write("spec/testdata/configchanged/main/Project.meta", x)
-    
+
     x = File.read("spec/testdata/configchanged/lib/Project.meta")
     x.gsub!("Flags add: \"-DGUGU\"", "# TEST")
     File.write("spec/testdata/configchanged/lib/Project.meta", x)
   end
-  
+
   before(:all) do
     ENV["CXX"] = "g++"
     ENV["AR"] = "ar"
@@ -34,7 +34,7 @@ describe "Config Change" do
     $noCleanTestData = false
     fixConfigs
   end
-  
+
   before(:each) do
     sleep 1.1 # needed for timestamp tests
   end
@@ -44,13 +44,13 @@ describe "Config Change" do
     expect($mystring.include?("main.exe")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
-  
+
   it 'Again Build GCC_ENV' do
     Bake.startBake("configchanged/main", ["Debug"])
     expect($mystring.include?("main.exe")).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
-  
+
   it 'Change Compiler Flags GCC_ENV' do
     ENV["CXXFLAGS"] = "-DGAGA"
     Bake.startBake("configchanged/main", ["Debug"])
@@ -68,9 +68,9 @@ describe "Config Change" do
     expect($mystring.include?("Linking build_Debug/main.exe")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
-  
+
   it 'Change Linker Flags GCC_ENV' do
-    ENV["LDFLAGS"] = "-static"
+    ENV["LDFLAGS"] = "-L gaga"
     Bake.startBake("configchanged/main", ["Debug"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("Creating build_lib_main_Debug/liblib.a")).to be == false
@@ -89,7 +89,7 @@ describe "Config Change" do
     expect($mystring.include?("main.exe")).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
- 
+
   it 'Touch config files GCC' do
     FileUtils.touch("spec/testdata/configchanged/main/Project.meta")
     FileUtils.touch("spec/testdata/configchanged/lib/Project.meta")
@@ -121,13 +121,13 @@ describe "Config Change" do
     expect($mystring.include?("Linking build_Test/main.exe")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
-  
+
   it 'Again Build 2 GCC' do
     Bake.startBake("configchanged/main", ["Test"])
     expect($mystring.include?("main.exe")).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
-    
+
 end
 
 end
