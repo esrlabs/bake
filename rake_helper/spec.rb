@@ -11,6 +11,7 @@ SPEC_PATTERN ='spec/**/*_spec.rb'
 
 puts "Creating dummy libs"
 `gcc -r -c rake_helper/dummy.c -o rake_helper/dummy.a`
+FileUtils.mkdir_p("spec/testdata/merge/main/lib")
 FileUtils.cp("rake_helper/dummy.a", "spec/testdata/merge/main/lib/libL1_1.a")
 FileUtils.cp("rake_helper/dummy.a", "spec/testdata/merge/main/lib/libL1_2.a")
 FileUtils.cp("rake_helper/dummy.a", "spec/testdata/merge/main/lib/libL2_1.a")
