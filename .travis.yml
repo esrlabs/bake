@@ -1,16 +1,24 @@
 language: ruby
-rvm:
- - "1.9.3"
- - "2.2"
+
+matrix:
+    include:
+        - os: linux
+          rvm:
+              - "1.9.3"
+              - "2.0.0"
+        - os: osx
+          sudo: required
+          rvm:
+              - "1.9.3"
 
 install:
- - sudo gem install coveralls --no-ri --no-rdoc
- - sudo gem install simplecov --no-ri --no-rdoc
- - sudo gem install rtext -v 0.8.1 --no-ri --no-rdoc
- - sudo gem install rgen -v 0.8.0 --no-ri --no-rdoc
- - sudo gem install highline -v ">= 1.6.0" --no-ri --no-rdoc
- - sudo gem install colored --no-ri --no-rdoc
- - sudo gem install rspec --no-ri --no-rdoc
+ - gem install coveralls --no-ri --no-rdoc
+ - gem install simplecov --no-ri --no-rdoc
+ - gem install rtext -v 0.8.1 --no-ri --no-rdoc
+ - gem install rgen -v 0.8.0 --no-ri --no-rdoc
+ - gem install highline -v ">= 1.6.0" --no-ri --no-rdoc
+ - gem install colored --no-ri --no-rdoc
+ - gem install rspec --no-ri --no-rdoc
 
 os:
  - linux
