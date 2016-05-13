@@ -3,13 +3,12 @@ language: ruby
 matrix:
     include:
         - os: linux
-          rvm:
-              - "1.9.3"
-              - "2.0.0"
+          rvm: "1.9.3"
+        - os: linux
+          rvm: "2.0.0"
         - os: osx
           sudo: required
-          rvm:
-              - "1.9.3"
+          rvm: "1.9.3"
 
 install:
  - gem install coveralls --no-ri --no-rdoc
@@ -19,9 +18,5 @@ install:
  - gem install highline -v ">= 1.6.0" --no-ri --no-rdoc
  - gem install colored --no-ri --no-rdoc
  - gem install rspec --no-ri --no-rdoc
-
-os:
- - linux
- - osx
 
 script: rake travis
