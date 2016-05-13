@@ -18,6 +18,8 @@ matrix:
         - os: osx
           sudo: required
           rvm: "2.2.1"
+    allow_failures:
+        - os: osx
 
 install:
  - gem install coveralls --no-ri --no-rdoc
