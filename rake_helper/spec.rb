@@ -7,7 +7,20 @@ begin
 rescue LoadError
 end
 
-SPEC_PATTERN ='spec/**/build_spec.rb'
+SPEC_PATTERN ='spec/**/*_spec.rb'
+
+puts "Creating dummy libs"
+`gcc -r -c rake_helper/dummy.c -o rake_helper/dummy.a`
+FileUtils.cp("rake_helper/dummy.a", "spec/testdata/merge/main/lib/libL1_1.a")
+FileUtils.cp("rake_helper/dummy.a", "spec/testdata/merge/main/lib/libL1_2.a")
+FileUtils.cp("rake_helper/dummy.a", "spec/testdata/merge/main/lib/libL2_1.a")
+FileUtils.cp("rake_helper/dummy.a", "spec/testdata/merge/main/lib/libL2_2.a")
+FileUtils.cp("rake_helper/dummy.a", "spec/testdata/merge/main/lib/libL3_1.a")
+FileUtils.cp("rake_helper/dummy.a", "spec/testdata/merge/main/lib/libL3_2.a")
+FileUtils.cp("rake_helper/dummy.a", "spec/testdata/merge/main/lib/libL5_1.a")
+FileUtils.cp("rake_helper/dummy.a", "spec/testdata/merge/main/lib/libL5_2.a")
+FileUtils.cp("rake_helper/dummy.a", "spec/testdata/cache/main/makefile/dummy.a")
+puts "Dummy libs created"
 
 def new_rspec
   require 'rspec/core/rake_task'

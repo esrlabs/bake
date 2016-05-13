@@ -18,3 +18,6 @@ dummy_main*/
 **/obj/*
 **/_build/doctrees/*
 coverage/*
+rake_helper/dummy.a
+spec/testdata/cache/main/makefile/dummy.a
+spec/testdata/merge/main/lib/*.a
