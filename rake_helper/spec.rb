@@ -7,7 +7,7 @@ begin
 rescue LoadError
 end
 
-SPEC_PATTERN ='spec/**/*_spec.rb'
+SPEC_PATTERN ='spec/**/build_spec.rb'
 
 def new_rspec
   require 'rspec/core/rake_task'
@@ -52,13 +52,13 @@ end
 task :travis do
   ENV["CI_RUNNING"] = "YES"
   Rake::Task["test:spec"].invoke
-  begin    
+  begin
     Rake::Task["coveralls:push"].invoke
   rescue Exception
   end
-end 
+end
 
 task :appveyor do
   ENV["CI_RUNNING"] = "YES"
   Rake::Task["test:spec"].invoke
-end 
+end
