@@ -4,13 +4,13 @@ rvm:
  - "2.2"
 
 install:
- - gem install coveralls
- - gem install simplecov
- - gem install rtext -v 0.8.1
- - gem install rgen -v 0.8.0
- - gem install highline -v ">= 1.6.0"
- - gem install colored
- - gem install rspec
+ - sudo gem install coveralls
+ - sudo gem install simplecov
+ - sudo gem install rtext -v 0.8.1
+ - sudo gem install rgen -v 0.8.0
+ - sudo gem install highline -v ">= 1.6.0"
+ - sudo gem install colored
+ - sudo gem install rspec
 
 os:
  - linux
