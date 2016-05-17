@@ -70,7 +70,7 @@ describe "Config Change" do
   end
 
   it 'Change Linker Flags GCC_ENV' do
-    ENV["LDFLAGS"] = "-L gaga"
+    ENV["LDFLAGS"] = "-L src"
     Bake.startBake("configchanged/main", ["Debug"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("Creating build_lib_main_Debug/liblib.a")).to be == false
