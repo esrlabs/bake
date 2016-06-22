@@ -36,7 +36,7 @@ describe "Deps" do
     expect($mystring.include?("Building 5 of 6: p6 (Debug)")).to be == true
     expect($mystring.include?("Building 6 of 6: p1 (Debug2)")).to be == true
     expect($mystring.include?("g++ -o build_Debug_p1_Debug2/p2.exe build_Debug_p1_Debug2/src/main.o ../p3/build_Debug_p1_Debug2/libp3.a -L../p5/")).to be == true
-    expect($mystring.include?("g++ -o build_Debug2/p1.exe build_Debug2/src/main.o ../p3/build_Debug_p1_Debug2/libp3.a -L../p5/")).to be == true
+    expect($mystring.include?("g++ -o build_Debug2/p1.exe build_Debug2/src/main.o -L../p5/ ../p3/build_Debug_p1_Debug2/libp3.a")).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
 

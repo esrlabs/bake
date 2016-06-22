@@ -1,0 +1,12 @@
+Project {
+
+  LibraryConfig test {
+    Files "*.c"
+    ExternalLibrary "exP6a"
+    ExternalLibrary "exP6b"
+    Dependency p7, config: test
+    ExternalLibrary "exP6c"
+    ExternalLibrary "exP6d"
+  }
+
+}

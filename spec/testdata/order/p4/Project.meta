@@ -1,0 +1,13 @@
+Project {
+
+  ExecutableConfig test {
+    Files "*.c"
+    ExternalLibrary "exP4a"
+    Dependency p5, config: test
+    ExternalLibrary "exP4b"
+    Dependency p6, config: test
+    ExternalLibrary "exP4c"
+    DefaultToolchain GCC
+  }
+
+}

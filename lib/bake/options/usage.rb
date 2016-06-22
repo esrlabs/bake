@@ -1,7 +1,7 @@
 module Bake
 
   class Usage
-  
+
     def self.show
       puts "\nUsage: bake [options]"
       puts " [-b] <name>              Config name of main project"
@@ -43,14 +43,16 @@ module Bake
       puts " --bundle <dir>           Bundles the output (experimental, description will follow)"
       puts " --writeCC2J <name>       Writes compiler command into a json file (experimental!)"
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
+      puts " --link-2-17              Using link order of libraries which was used until bake 2.17"
+
       puts ""
       puts " --version                Print version."
       puts " --doc                    Open documentation in browser"
       puts " -h, --help               Print this help."
       puts " --license                Print the license."
       puts ""
-      puts " --debug                  Print out backtraces in some cases - used only for debugging bake."      
-      ExitHelper.exit(0)      
+      puts " --debug                  Print out backtraces in some cases - used only for debugging bake."
+      ExitHelper.exit(0)
     end
 
   end

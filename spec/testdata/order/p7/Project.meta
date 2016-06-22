@@ -1,0 +1,8 @@
+Project {
+
+  LibraryConfig test {
+    Files "*.c"
+    ExternalLibrary "exP7"
+  }
+
+}

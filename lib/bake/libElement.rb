@@ -1,7 +1,7 @@
 module Bake
-  
+
   class LibElement
-    
+
     LIB = 1
     USERLIB = 2
     LIB_WITH_PATH = 3
@@ -9,15 +9,15 @@ module Bake
     DEPENDENCY = 5
 
     attr_reader :type, :value
-    
+
     def initialize(type, value)
       @type = type
       @value = value
     end
   end
-  
-  class LibElements  
-      
+
+  class LibElements
+
     def self.calc_linker_lib_string(block, tcs)
       @@lib_path_set = []
       @@dep_set = Set.new
@@ -25,16 +25,25 @@ module Bake
       @@projectDir = block.projectDir
       @@source_libraries = []
       @@linker_libs_array = []
-      
+
       collect_recursive(block)
-      
-      if @@linker[:LIST_MODE] and not @@lib_path_set.empty?
-        @@linker_libs_array << (@@linker[:LIB_PATH_FLAG] + @@lib_path_set.join(","));
+
+      if Bake.options.oldLinkOrder
+        if @@linker[:LIST_MODE] and not @@lib_path_set.empty?
+          @@linker_libs_array << (@@linker[:LIB_PATH_FLAG] + @@lib_path_set.join(","));
+        end
+      else
+        @@source_libraries.reverse!
+        @@lib_path_set.reverse!
+        if @@linker[:LIST_MODE] and not @@lib_path_set.empty?
+          @@linker_libs_array.unshift (@@linker[:LIB_PATH_FLAG] + @@lib_path_set.join(","));
+        end
+        @@linker_libs_array.reverse!
       end
-      
-      return [@@source_libraries, @@linker_libs_array] 
+
+      return [@@source_libraries, @@linker_libs_array]
     end
-    
+
     def self.adaptPath(path, block, prefix)
       adaptedPath = path
       if not File.is_absolute?(path)
@@ -44,23 +53,31 @@ module Bake
       #adaptedPath = "\"" + adaptedPath + "\"" if adaptedPath.include?(" ")
       [adaptedPath, prefix]
     end
-    
-    def self.collect_recursive(block)
-      return if @@dep_set.include?block
-      @@dep_set << block
-        
-      prefix = nil
 
-      if block.library 
+    def self.addOwnLib(block)
+      if block.library
         if (not block.library.compileBlock.objects.empty?) or not block.library.compileBlock.calcSources(true, true).empty?
           adaptedPath, prefix = adaptPath(block.library.archive_name, block, prefix)
           @@linker_libs_array << adaptedPath
           @@source_libraries << adaptedPath
         end
       end
-     
-      block.lib_elements.each do |elem|
-       
+    end
+
+    def self.collect_recursive(block)
+      return if @@dep_set.include?block
+      @@dep_set << block
+
+      prefix = nil
+
+      if Bake.options.oldLinkOrder
+        addOwnLib(block)
+        elems = block.lib_elements
+      else
+        elems = block.lib_elements.reverse
+      end
+
+      elems.each do |elem|
         case elem.type
         when LibElement::LIB
           @@linker_libs_array << "#{@@linker[:LIB_FLAG]}#{elem.value}"
@@ -71,10 +88,29 @@ module Bake
           @@linker_libs_array <<  adaptedPath
         when LibElement::SEARCH_PATH
           adaptedPath, prefix = adaptPath(elem.value, block, prefix)
-          if not @@lib_path_set.include?adaptedPath
-            @@lib_path_set << adaptedPath
-            @@linker_libs_array << "#{@@linker[:LIB_PATH_FLAG]}#{adaptedPath}" if @@linker[:LIST_MODE] == false
+          lpf = "#{@@linker[:LIB_PATH_FLAG]}#{adaptedPath}"
+
+          if not Bake.options.oldLinkOrder
+            if not @@lib_path_set.include?adaptedPath
+              @@lib_path_set << adaptedPath
+              @@linker_libs_array << lpf if @@linker[:LIST_MODE] == false
+            end
           end
+
+          if not Bake.options.oldLinkOrder
+            # must be moved to the end, so delete it...
+            ind1 = @@lib_path_set.index(adaptedPath)
+            ind2 = @@linker_libs_array.index(lpf)
+            @@lib_path_set.delete_at(ind1)      if not ind1.nil?
+            @@linker_libs_array.delete_at(ind2) if not ind2.nil?
+          end
+
+          if (not Bake.options.oldLinkOrder) or (not @@lib_path_set.include?adaptedPath)
+            # end place it at the end again
+            @@lib_path_set << adaptedPath
+            @@linker_libs_array << lpf if @@linker[:LIST_MODE] == false
+          end
+
         when LibElement::DEPENDENCY
           if Blocks::ALL_BLOCKS.include?elem.value
             bb = Blocks::ALL_BLOCKS[elem.value]
@@ -84,16 +120,19 @@ module Bake
           end
         end
       end
-    end      
-    
-    
-    
-    
+
+      addOwnLib(block) if not Bake.options.oldLinkOrder
+
+    end
+
+
+
+
     def self.calcLibElements(block)
       lib_elements = [] # value = array pairs [type, name/path string]
-      
+
       block.config.libStuff.each do |l|
-        
+
         if (Metamodel::UserLibrary === l)
           ln = l.name
           ls = nil
@@ -120,16 +159,16 @@ module Bake
           else
             ln = ls + "/" + ln unless ls.nil?
             lib_elements << LibElement.new(LibElement::LIB_WITH_PATH, ln)
-          end        
+          end
         elsif (Metamodel::Dependency === l)
           lib_elements << LibElement.new(LibElement::DEPENDENCY, l.name+","+l.config)
         end
-        
+
       end
-    
+
       return lib_elements
-    end      
-     
+    end
+
   end
-  
+
 end

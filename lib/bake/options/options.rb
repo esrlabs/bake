@@ -15,35 +15,36 @@ module Bake
   def self.options=(options)
     @@options = options
   end
-    
+
   class Options < Parser
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
     attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename, :bundleDir # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
-    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro # Boolean
+    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro, :oldLinkOrder # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verbose
     attr_reader :consoleOutput_fullnames, :consoleOutput_visualStudio
-    
+
 
     def initialize(argv)
       super(argv)
 
+      @oldLinkOrder = false
       @conversion_info = false
       @envToolchain = false
       @analyze = false
       @eclipseOrder = false
       @showConfigs = false
       @consoleOutput_fullnames = false
-      @consoleOutput_visualStudio = false           
+      @consoleOutput_visualStudio = false
       @prepro = false
       @stopOnFirstError = false
       @verbose = 1
       @vars = {}
       @build_config = ""
       @main_dir = nil
-      @project = nil      
+      @project = nil
       @filename = nil
       @cc2j_filename = nil
       @clean = false
@@ -68,7 +69,7 @@ module Bake
       @main_project_name = ""
       @adapt = []
       @bundleDir = nil
-      
+
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| set_main_dir(x)                         })
       add_option(["-p"                                           ], lambda { |x| @project = x                            })
@@ -84,22 +85,22 @@ module Bake
       add_option(["--lint"                                       ], lambda {     @lint = true                            })
       add_option(["--lint-min",           "--lint_min"           ], lambda { |x| @lint_min = String === x ? x.to_i : x   })
       add_option(["--lint-max",           "--lint_max"           ], lambda { |x| @lint_max = String === x ? x.to_i : x   })
-                                                                                                                         
-      add_option(["--create"                                     ], lambda { |x| Bake::Create.proj(x)                    })     
-      add_option(["--conversion-info",    "--conversion_info"    ], lambda {     @conversion_info = true                 }) 
-                                                                                                                         
+
+      add_option(["--create"                                     ], lambda { |x| Bake::Create.proj(x)                    })
+      add_option(["--conversion-info",    "--conversion_info"    ], lambda {     @conversion_info = true                 })
+
       add_option(["--generate-doc",       "--docu"               ], lambda {     @docu = true                            })
-             
-      add_option(["--adapt"                                      ], lambda { |x| set_adapt(x)                            })     
-                                                                                                                    
+
+      add_option(["--adapt"                                      ], lambda { |x| set_adapt(x)                            })
+
       add_option(["-v0"                                          ], lambda {     @verbose = 0                            })
       add_option(["-v1"                                          ], lambda {     @verbose = 1                            })
       add_option(["-v2"                                          ], lambda {     @verbose = 2                            })
       add_option(["-v3"                                          ], lambda {     @verbose = 3                            })
-        
+
       add_option(["--debug"                                      ], lambda {     @debug = true                           })
       add_option(["--set"                                        ], lambda { |x| set_set(x)                              })
-        
+
       add_option(["--clobber"                                    ], lambda {     @clobber = true; @clean = true          })
       add_option(["--ignore-cache",       "--ignore_cache"       ], lambda {     @nocache = true                         })
       add_option(["-j",                   "--threads"            ], lambda { |x| set_threads(x)                          })
@@ -110,7 +111,7 @@ module Bake
       add_option(["--omit",               "--exclude_filter"     ], lambda { |x| @exclude_filter << x                    })
       add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })
       add_option(["--bundle"                                     ], lambda { |x| set_bundle_dir(x)                       })
-                                                                 
+
       add_option(["-h",                   "--help"               ], lambda {     Bake::Usage.show                        })
 
       add_option(["--incs-and-defs",      "--show_incs_and_defs" ], lambda {     @show_includes_and_defines = true       })
@@ -120,10 +121,12 @@ module Bake
       add_option(["--version"                                    ], lambda {     ExitHelper.exit(0)                      })
       add_option(["--list",               "--show_configs"       ], lambda {     @showConfigs = true                     })
       add_option(["--writeCC2J"                                  ], lambda { |x| @cc2j_filename = x.gsub(/[\\]/,'/')     })
+      add_option(["--link-2-17",          "--link_2_17"          ], lambda {     @oldLinkOrder = true                    })
+
 
       # hidden
       add_option(["--visualStudio"                               ], lambda {     @consoleOutput_visualStudio = true      })
-            
+
       # deprecated and not replaced by new command
       add_option(["--show_include_paths"                         ], lambda {     @show_includes = true                   })
 
@@ -136,19 +139,19 @@ module Bake
       @roots = @def_roots if @roots.length == 0
       @roots.uniq!
       @adapt.uniq!
-      
+
       if @project
         if @project.split(',').length > 2
           Bake.formatter.printError("Error: only one comma allowed for -p")
           ExitHelper.exit(1)
         end
       end
-      
+
       if @conversion_info
         if @rebuild
           Bake.formatter.printError("Error: --conversion-info and --rebuild not allowed at the same time")
           ExitHelper.exit(1)
-        end 
+        end
         if @clean
           Bake.formatter.printError("Error: --conversion-info and -c not allowed at the same time")
           ExitHelper.exit(1)
@@ -174,7 +177,7 @@ module Bake
           ExitHelper.exit(1)
         end
       end
-      
+
       if @linkOnly
         if @rebuild
           Bake.formatter.printError("Error: --link-only and --rebuild not allowed at the same time")
@@ -200,13 +203,13 @@ module Bake
           ExitHelper.exit(1)
         end
       end
-           
+
       if @lint and @docu
         Bake.formatter.printError("Error: --lint and --docu not allowed at the same time")
         ExitHelper.exit(1)
       end
     end
-    
+
     def check_valid_dir(dir)
      if not File.exists?(dir)
         Bake.formatter.printError("Error: Directory #{dir} does not exist")
@@ -215,8 +218,8 @@ module Bake
       if not File.directory?(dir)
         Bake.formatter.printError("Error: #{dir} is not a directory")
         ExitHelper.exit(1)
-      end      
-    end    
+      end
+    end
 
     def set_build_config(config)
       if not @build_config.empty?
@@ -225,30 +228,30 @@ module Bake
       end
       @build_config = config
     end
-    
+
     def set_main_dir(dir)
       check_valid_dir(dir)
       @main_dir = File.expand_path(dir.gsub(/[\\]/,'/'))
       @main_project_name = File::basename(@main_dir)
       @def_roots = calc_def_roots(@main_dir)
     end
-    
+
     def set_bundle_dir(dir)
       d = File.expand_path(dir.gsub(/[\\]/,'/'))
       Bake::Bundle.instance.setOutputDir(d)
     end
-    
-    
+
+
     def set_root(dir)
       check_valid_dir(dir)
       r = File.expand_path(dir.gsub(/[\\]/,'/'))
       @roots << r if not @roots.include?r
     end
-    
+
     def set_adapt(name)
       @adapt << name if not @adapt.include?name
     end
-        
+
     def set_threads(num)
       @threads = String === num ? num.to_i : num
       if @threads <= 0
@@ -256,7 +259,7 @@ module Bake
         ExitHelper.exit(1)
       end
     end
-    
+
     def set_set(str)
       ar = str.split("=")
       if not str.include?"=" or ar[0].length == 0
@@ -265,7 +268,7 @@ module Bake
       end
       @vars[ar[0]] = ar[1..-1].join("=")
     end
-    
+
   end
 
 end
