@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tips and Tricks &mdash; bake 2.18.0 documentation</title>
+    <title>The link order &mdash; bake 2.18.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -30,8 +30,9 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="top" title="bake 2.18.0 documentation" href="../index.html" />
-    <link rel="next" title="The Bakery" href="the_bakery.html" />
-    <link rel="prev" title="How to Debug in Visual Studio" href="../ide/vs/how_to_debug_in_vs.html" />
+    <link rel="up" title="Concepts" href="concepts.html" />
+    <link rel="next" title="Syntax" href="../syntax/syntax.html" />
+    <link rel="prev" title="The build hierarchy" href="build_hierarchy.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -70,11 +71,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Tips and Tricks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Tips and Tricks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -95,9 +96,9 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Tips and Tricks</a><ul>
-<li><a class="reference internal" href="#unnecessary-includes">Unnecessary includes</a></li>
-<li><a class="reference internal" href="#symlinks-and-junctions">Symlinks and junctions</a></li>
+<li><a class="reference internal" href="#">The link order</a><ul>
+<li><a class="reference internal" href="#example">Example:</a></li>
+<li><a class="reference internal" href="#same-example-but-with-external-libraries">Same example but with external libraries:</a></li>
 </ul>
 </li>
 </ul>
@@ -109,11 +110,11 @@
               
                 
   <li>
-    <a href="../ide/vs/how_to_debug_in_vs.html" title="Previous Chapter: How to Debug in Visual Studio"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; How to Debug ...</span>
+    <a href="build_hierarchy.html" title="Previous Chapter: The build hierarchy"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; The build hie...</span>
     </a>
   </li>
   <li>
-    <a href="the_bakery.html" title="Next Chapter: The Bakery"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">The Bakery &raquo;</span>
+    <a href="../syntax/syntax.html" title="Next Chapter: Syntax"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Syntax &raquo;</span>
     </a>
   </li>
               
@@ -141,39 +142,86 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="tips-and-tricks">
-<h1>Tips and Tricks<a class="headerlink" href="#tips-and-tricks" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="the_bakery.html">The Bakery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="static_code_analysis.html">Static Code Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_use_bake_with_cygwin.html">How to use bake with cygwin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="the_clang.html">Clang Analyze</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bundle.html">Bundle projects</a></li>
-</ul>
-</div>
-<div class="section" id="unnecessary-includes">
-<h2>Unnecessary includes<a class="headerlink" href="#unnecessary-includes" title="Permalink to this headline">¶</a></h2>
-<p>If a library or executable is successfully build with &#8220;-v&#8221;, unnecessary includes are printed out:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">Info: Include to ../sub1/include/ seems to be unnecessary</span>
-<span class="go">Info: Include to ../sub2/include/ seems to be unnecessary</span>
+  <div class="section" id="the-link-order">
+<h1>The link order<a class="headerlink" href="#the-link-order" title="Permalink to this headline">¶</a></h1>
+<p>The link order depends on the order of library definitions and dependencies in the Project.meta files.</p>
+<p>In general, if a library X depends on a library Y, the library X must be linked before Y.</p>
+<div class="section" id="example">
+<h2>Example:<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Project A:</span>
+
+<span class="go">Dependency B</span>
+<span class="go">Dependency C</span>
 </pre></div>
 </div>
-<p>This features depends on the compiler dependency files. For projects with assembler files, the list might be incorrect.
-However, remove the IncludeDir statements from the Project.meta and check it out.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Project B:</span>
+
+<span class="go">Dependency D</span>
+</pre></div>
 </div>
-<div class="section" id="symlinks-and-junctions">
-<h2>Symlinks and junctions<a class="headerlink" href="#symlinks-and-junctions" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>It is possible to use symlinks (Linux) or junctions (Windows) when working with git. Best practice:</dt>
-<dd><ul class="first last simple">
-<li>Link all used projects into _one_ directory (e.g. from application repository and basis software repository).</li>
-<li>Use this directory when working with bake, Eclipse, etc.</li>
-<li>Specify &#8220;-w &lt;absolute_path_to_working_dir&gt;.</li>
-<li>To sync/commit from/to svn, use the original directories created by git.</li>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Project C:</span>
+
+<span class="go">Dependency D</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Project D:</span>
+</pre></div>
+</div>
+<p>The link order will be</p>
+<ul class="simple">
+<li>Objects of A</li>
+<li>B</li>
+<li>C</li>
+<li>D</li>
 </ul>
-</dd>
-</dl>
+</div>
+<div class="section" id="same-example-but-with-external-libraries">
+<h2>Same example but with external libraries:<a class="headerlink" href="#same-example-but-with-external-libraries" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Project A:</span>
+
+<span class="go">ExternalLibrary a1</span>
+<span class="go">Dependency B</span>
+<span class="go">ExternalLibrary a2</span>
+<span class="go">Dependency C</span>
+<span class="go">ExternalLibrary a3</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Project B:</span>
+
+<span class="go">ExternalLibrary b1</span>
+<span class="go">Dependency D</span>
+<span class="go">ExternalLibrary b2</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Project C:</span>
+
+<span class="go">ExternalLibrary c1</span>
+<span class="go">Dependency D</span>
+<span class="go">ExternalLibrary c2</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Project D:</span>
+
+<span class="go">ExternalLibrary d1</span>
+<span class="go">ExternalLibrary d2</span>
+</pre></div>
+</div>
+<p>The link order will be</p>
+<ul class="simple">
+<li>Objects of A</li>
+<li>a1</li>
+<li>B</li>
+<li>b1</li>
+<li>b2</li>
+<li>a2</li>
+<li>C</li>
+<li>c1</li>
+<li>D</li>
+<li>d1</li>
+<li>d2</li>
+<li>c2</li>
+<li>a3</li>
+</ul>
 </div>
 </div>
 

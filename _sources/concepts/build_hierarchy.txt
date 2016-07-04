@@ -20,7 +20,7 @@ The main project has dependencies to the projects A, B and C:
 
     .. image:: ../_static/bake_build_hierachy.png
         :width: 100 %
-        :scale: 50 %
+        :scale: 75 %
 
 Steps are executed bottom-up. If one step fails, all steps above won't be executed.
 

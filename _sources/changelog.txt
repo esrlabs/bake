@@ -1,6 +1,18 @@
 Changelog
 =========
 
+June 22, 2016 - bake-toolkit 2.18.0
+    * Bugfix: order if linker libs fixed. For compatibility, a new command line flag "--link-2-17" to get the old behaviour was added.
+
+      ======================================  ======================================
+      Example
+      ======================================  ======================================
+      Dependencies                            A->B->D and A->C->D
+      New correct link order                  A, B, C, D
+      Old wrong link order (--link-2-17)      A, B, D, C
+      ======================================  ======================================
+
+
 May 4, 2016 - bake-toolkit 2.17.4
     * Bugfix: bakery returned 1 for successful builds
     * Changed: bakery now lists all failed unit tests at the end
@@ -43,8 +55,10 @@ January 14, 2016 - bake-toolkit 2.14.0
     * Changed: libraries from makefiles are linked now after other libraries defined from the same config
     * Added: IncludeDir now possible for CustomConfigs
     * Bugfix: --abs-paths now works with --incs-and-defs
+
 December 23, 2015 - bake-toolkit 2.13.1
     * Bugfix: merging configs was extremely slow in 2.12.2 and 2.13.0
+
 December 23, 2015 - bake-toolkit 2.13.0
     * Bugfix: It was possible that the archiver and linker were called for --prepro and --link-only builds
     * Added: possibility to specify minimum and maximum required bake version in Project.meta file
