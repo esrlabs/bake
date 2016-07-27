@@ -6,7 +6,7 @@ module Bake
   BUILD_PASSED = 0
   BUILD_FAILED = 1
   BUILD_ABORTED = 2
-  
+
   module Blocks
 
     CC2J = []
@@ -21,15 +21,15 @@ module Bake
       def startupSteps
         @startupSteps ||= []
       end
-        
+
       def preSteps
         @preSteps ||= []
       end
-      
+
       def mainSteps
         @mainSteps ||= []
-      end      
-      
+      end
+
       def postSteps
         @postSteps ||= []
       end
@@ -37,7 +37,7 @@ module Bake
       def exitSteps
         @exitSteps ||= []
       end
-      
+
       def dependencies
         @dependencies ||= []
       end
@@ -45,15 +45,15 @@ module Bake
       def childs
         @childs ||= []
       end
-      
+
       def parents
         @parents ||= []
       end
-            
+
       def set_library(library)
         @library = library
       end
-      
+
       def initialize(config, referencedConfigs)
         @inDeps = false
         @visited = false
@@ -65,14 +65,14 @@ module Bake
         @projectDir = config.get_project_dir
         @@block_counter = 0
         @result = true
-        
+
         @lib_elements = Bake::LibElements.calcLibElements(self)
       end
-      
+
       def getCompileBlocks()
         mainSteps.select { |m| Compile === m }
       end
-      
+
       def convPath(dir, elem=nil, warnIfLocal=false)
          if dir.respond_to?("name")
            d = dir.name
@@ -80,16 +80,16 @@ module Bake
          else
            d = dir
          end
-                  
+
          @warnConvValid = false
-         
+
          return d if Bake.options.no_autodir
-         
+
          inc = d.split("/")
          res = nil
          if (inc[0] == @projectName)
            res = inc[1..-1].join("/") # within self
-           res = "." if res == "" 
+           res = "." if res == ""
          elsif @referencedConfigs.include?(inc[0])
            dirOther = @referencedConfigs[inc[0]].first.parent.get_project_dir
            res = File.rel_from_to_project(@projectDir, dirOther, false)
@@ -110,19 +110,19 @@ module Bake
                Bake.formatter.printInfo("\"..\" in path name found", elem)
              end
            end
-           
+
            if res.nil? # relative from self as last resort
              warnIfLocal = false # no path magic -> no warning
-             res = d 
+             res = d
            end
          end
-         
+
          @warnConvValid = File.exists?(@projectDir + "/" + d) if warnIfLocal # only warn if path magic hides local path
-            
+
          res
-       end      
-      
-      
+       end
+
+
       def self.block_counter
         @@block_counter += 1
       end
@@ -130,7 +130,7 @@ module Bake
       def self.reset_block_counter
         @@block_counter = 0
       end
-      
+
       def self.set_num_projects(num)
         @@num_projects = num
       end
@@ -150,10 +150,25 @@ module Bake
             Bake.formatter.printError("Error: #{ex1.message}")
             puts ex1.backtrace if Bake.options.debug
           end
-        end 
-        
+        end
+
         if Bake::IDEInterface.instance.get_abort
           raise AbortException.new
+        end
+
+        # needed for ctrl-c in Cygwin console
+        #####################################
+        # additionally, the user has to enable raw mode of Cygwin console: "stty raw".
+        # raw mode changes the signals into raw characters.
+        # original problem: Cygwin is compiled with broken control handler config,
+        # which might not be changed due to backward compatibility.
+        # the control handler works only with programs compiled under Cygwin, which is
+        # not true for Windows RubyInstaller packages.
+        while IO.select([$stdin],nil,nil,0) do
+          nextChar = $stdin.sysread(1)
+          if nextChar == "\x03"
+            raise AbortException.new
+          end
         end
 
         return @result
@@ -167,27 +182,27 @@ module Bake
         end
         return depResult
       end
-      
+
       def callSteps(method)
-        
+
         preSteps.each do |step|
           @result = executeStep(step, method) if @result
           return false if not @result and Bake.options.stopOnFirstError
         end
-        
+
         mainSteps.each do |step|
           @result = executeStep(step, method) if @result
           return false if not @result and Bake.options.stopOnFirstError
         end
-        
+
         postSteps.each do |step|
           @result = executeStep(step, method) if @result
           return false if not @result and Bake.options.stopOnFirstError
         end
-        
-        return @result        
+
+        return @result
       end
-      
+
       def execute
         if (@inDeps)
           if Bake.options.verbose >= 1
@@ -198,16 +213,16 @@ module Bake
 
         return true if (@visited)
         @visited = true
-   
+
         @inDeps = true
         depResult = callDeps(:execute)
         @inDeps = false
         return false if not depResult and Bake.options.stopOnFirstError
-        
+
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
-        
+
         if Bake.options.verbose >= 1
-          Bake.formatter.printAdditionalInfo "**** Building #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"     
+          Bake.formatter.printAdditionalInfo "**** Building #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
 
         @result = callSteps(:execute)
@@ -220,65 +235,65 @@ module Bake
 
         depResult = callDeps(:clean)
         return false if not depResult and Bake.options.stopOnFirstError
-        
+
         if Bake.options.verbose >= 2
-          Bake.formatter.printAdditionalInfo "**** Cleaning #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"     
+          Bake.formatter.printAdditionalInfo "**** Cleaning #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
-        
+
         @result = callSteps(:clean)
-        
+
         if Bake.options.clobber
           Dir.chdir(@projectDir) do
-            if File.exist?".bake" 
+            if File.exist?".bake"
               puts "Deleting folder .bake" if Bake.options.verbose >= 2
               FileUtils.rm_rf(".bake")
             end
-          end          
+          end
         end
-        
+
         return (depResult && @result)
       end
-      
+
       def startup
         return true if (@visited)
         @visited = true
 
         depResult = callDeps(:startup)
-                
-        if Bake.options.verbose >= 1 and not startupSteps.empty? 
-          Bake.formatter.printAdditionalInfo "**** Starting up #{@projectName} (#{@configName}) ****"     
+
+        if Bake.options.verbose >= 1 and not startupSteps.empty?
+          Bake.formatter.printAdditionalInfo "**** Starting up #{@projectName} (#{@configName}) ****"
         end
-        
+
         startupSteps.each do |step|
           @result = executeStep(step, :startupStep) && @result
         end
-        
+
         return (depResult && @result)
-      end      
+      end
 
       def exits
         return true if (@visited)
         @visited = true
-      
+
         depResult = callDeps(:exits)
-        
+
         if Bake.options.verbose >= 1 and not exitSteps.empty?
-          Bake.formatter.printAdditionalInfo "**** Exiting #{@projectName} (#{@configName}) ****"     
+          Bake.formatter.printAdditionalInfo "**** Exiting #{@projectName} (#{@configName}) ****"
         end
-        
+
         exitSteps.each do |step|
           @result = executeStep(step, :exitStep) && @result
         end
-        
-        return (depResult && @result)
-      end      
 
-                  
+        return (depResult && @result)
+      end
+
+
     end
-    
-    
-    
+
+
+
   end
-  
-  
+
+
 end
