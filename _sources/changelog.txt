@@ -1,6 +1,11 @@
 Changelog
 =========
 
+July 28, 2016 - bake-toolkit 2.19.0
+    * Changed: default output dir is now build/<something> instead of build_<something>
+    * Added: listening to raw character 0x3 on stdin to abort bake/bakery (needed for some Cygwin installations)
+    * Internal: switching from rgen 0.8.0 to rgen 0.8.1 (which should have no functional impact)
+
 June 22, 2016 - bake-toolkit 2.18.0
     * Bugfix: order if linker libs fixed. For compatibility, a new command line flag "--link-2-17" to get the old behaviour was added.
 

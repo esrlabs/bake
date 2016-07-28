@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use bake with cygwin &mdash; bake 2.18.0 documentation</title>
+    <title>How to use bake with cygwin &mdash; bake 2.19.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.18.0',
+        VERSION:     '2.19.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake 2.18.0 documentation" href="../index.html" />
+    <link rel="top" title="bake 2.19.0 documentation" href="../index.html" />
     <link rel="up" title="Tips and Tricks" href="tips_and_tricks.html" />
     <link rel="next" title="Clang Analyze" href="the_clang.html" />
     <link rel="prev" title="Static Code Analysis" href="static_code_analysis.html" />
@@ -169,6 +169,17 @@ This is only necessary if you have ruby installed in our Cygwin environment.</p>
 <blockquote>
 <div><a class="reference internal image-reference" href="../_images/cygwin_tty.png"><img alt="../_images/cygwin_tty.png" src="../_images/cygwin_tty.png" style="width: 70.0%;" /></a>
 <p>&#8220;tty&#8221; must be added to the CYGWIN system variable.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Switch to raw mode</p>
+<blockquote>
+<div><p>The ctrl-c handler in Cygwin only works for programs compiled with the correct Cygwin libs. This does not apply to
+most ruby installations. Hitting ctrl-c may interrupt the compiler, but bake does not get this signal.</p>
+<p>You can set the Cygwin console to raw mode:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">stty raw</span>
+</pre></div>
+</div>
+<p>Now bake can read ctrl-c as raw character on stdin. Bake will abort after all subprocesses - like the running compilation steps - have returned.</p>
 </div></blockquote>
 </li>
 <li><p class="first">Start the build</p>

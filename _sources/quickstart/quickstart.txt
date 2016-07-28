@@ -33,17 +33,17 @@ Quickstart
        `-- src
             `-- main.cpp
 
-                     
+
 #. Build the project.
     .. code-block:: console
 
-        User@Host:~/my_project$ bake 
+        User@Host:~/my_project$ bake
         -- bake 2.10.3, ruby 2.1.2p95, platform x86_64-darwin13.0 --
         Info: cache not found, reloading meta information
         Loading /Users/NiCoretti/my_project/Project.meta
         **** Building 1 of 1: my_project (main) ****
         Compiling src/main.cpp
-        Linking build_main/my_project.exe
+        Linking build/main/my_project.exe
 
         Building done.
 
@@ -57,9 +57,9 @@ Quickstart
         -- bake 2.10.3, ruby 2.1.2p95, platform x86_64-darwin13.0 --
         **** Building 1 of 1: my_project (main) ****
 
-        g++ -c -MD -MF build_main/src/main.d -Iinclude -o build_main/src/main.o src/main.cpp
+        g++ -c -MD -MF build/main/src/main.d -Iinclude -o build/main/src/main.o src/main.cpp
 
-        g++ -o build_main/my_project.exe build_main/src/main.o
+        g++ -o build/main/my_project.exe build/main/src/main.o
 
         Building done.
 
