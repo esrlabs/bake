@@ -55,8 +55,8 @@ describe "Config Change" do
     ENV["CXXFLAGS"] = "-DGAGA"
     Bake.startBake("configchanged/main", ["Debug"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
-    expect($mystring.include?("Creating build_lib_main_Debug/liblib.a")).to be == true
-    expect($mystring.include?("Linking build_Debug/main.exe")).to be == true
+    expect($mystring.include?("Creating build/lib_main_Debug/liblib.a")).to be == true
+    expect($mystring.include?("Linking build/Debug/main.exe")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -64,8 +64,8 @@ describe "Config Change" do
     ENV["ARFLAGS"] = "-s"
     Bake.startBake("configchanged/main", ["Debug"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
-    expect($mystring.include?("Creating build_lib_main_Debug/liblib.a")).to be == true
-    expect($mystring.include?("Linking build_Debug/main.exe")).to be == true
+    expect($mystring.include?("Creating build/lib_main_Debug/liblib.a")).to be == true
+    expect($mystring.include?("Linking build/Debug/main.exe")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -73,8 +73,8 @@ describe "Config Change" do
     ENV["LDFLAGS"] = "-L src"
     Bake.startBake("configchanged/main", ["Debug"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
-    expect($mystring.include?("Creating build_lib_main_Debug/liblib.a")).to be == false
-    expect($mystring.include?("Linking build_Debug/main.exe")).to be == true
+    expect($mystring.include?("Creating build/lib_main_Debug/liblib.a")).to be == false
+    expect($mystring.include?("Linking build/Debug/main.exe")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -105,8 +105,8 @@ describe "Config Change" do
     File.write("spec/testdata/configchanged/main/Project.meta", x)
     Bake.startBake("configchanged/main", ["Test"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
-    expect($mystring.include?("Creating build_lib_main_Test/liblib.a")).to be == true
-    expect($mystring.include?("Linking build_Test/main.exe")).to be == true
+    expect($mystring.include?("Creating build/lib_main_Test/liblib.a")).to be == true
+    expect($mystring.include?("Linking build/Test/main.exe")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -117,8 +117,8 @@ describe "Config Change" do
     File.write("spec/testdata/configchanged/lib/Project.meta", x)
     Bake.startBake("configchanged/main", ["Test"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
-    expect($mystring.include?("Creating build_lib_main_Test/liblib.a")).to be == true
-    expect($mystring.include?("Linking build_Test/main.exe")).to be == true
+    expect($mystring.include?("Creating build/lib_main_Test/liblib.a")).to be == true
+    expect($mystring.include?("Linking build/Test/main.exe")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 

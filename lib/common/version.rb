@@ -1,11 +1,11 @@
 module Bake
   class Version
     def self.number
-      "2.18.0"
+      "2.19.0"
     end
   end
 
-  expectedRGen = "0.8.0"
+  expectedRGen = "0.8.1"
   expectedRText = "0.8.1"
 
   begin

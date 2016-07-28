@@ -28,8 +28,8 @@ describe "VarSubst" do
     expect(($mystring.include?"ConfigName_lib1 testsub")).to be == true
     expect(($mystring.include?"ConfigName_main test")).to be == true
 
-    expect(($mystring.include?"OutputDir_lib1 build_testsub_main_test")).to be == true
-    expect(($mystring.include?"OutputDir_main build_test")).to be == true
+    expect(($mystring.include?"OutputDir_lib1 build/testsub_main_test")).to be == true
+    expect(($mystring.include?"OutputDir_main build/test")).to be == true
 
     expect(($mystring.include?"ArtifactName_lib1 this.name\n")).to be == true
     expect(($mystring.include?"ArtifactName_main main.exe")).to be == true
@@ -88,20 +88,20 @@ describe "VarSubst" do
     expect(($mystring.include?"Substitute variable '$(OutputDir,main,fasel)' with empty string, because config fasel not found for project main")).to be == true
     expect(($mystring.include?"Substitute variable '$(OutputDir,bla,fasel)' with empty string, because project bla not found")).to be == true
     
-    expect(($mystring.include?"from testSub1 1: ../main/build_test1")).to be == true
-    expect(($mystring.include?"from testSub1 2: ../main/build_testLib1_main_test1")).to be == true
-    expect(($mystring.include?"from testSub1 3: build_testSub1_main_test1")).to be == true
-    expect(($mystring.include?"from testSub1 4: build_testSub2_main_test1")).to be == true
+    expect(($mystring.include?"from testSub1 1: ../main/build/test1")).to be == true
+    expect(($mystring.include?"from testSub1 2: ../main/build/testLib1_main_test1")).to be == true
+    expect(($mystring.include?"from testSub1 3: build/testSub1_main_test1")).to be == true
+    expect(($mystring.include?"from testSub1 4: build/testSub2_main_test1")).to be == true
 
-    expect(($mystring.include?"from testLib1 1: build_test1")).to be == true
-    expect(($mystring.include?"from testLib1 2: build_testLib1_main_test1")).to be == true
-    expect(($mystring.include?"from testLib1 3: ../lib/build_testSub1_main_test1")).to be == true
-    expect(($mystring.include?"from testLib1 4: ../lib/build_testSub2_main_test1")).to be == true
+    expect(($mystring.include?"from testLib1 1: build/test1")).to be == true
+    expect(($mystring.include?"from testLib1 2: build/testLib1_main_test1")).to be == true
+    expect(($mystring.include?"from testLib1 3: ../lib/build/testSub1_main_test1")).to be == true
+    expect(($mystring.include?"from testLib1 4: ../lib/build/testSub2_main_test1")).to be == true
     
-    expect(($mystring.include?"from test1 1: build_test1")).to be == true
-    expect(($mystring.include?"from test1 2: build_testLib1_main_test1")).to be == true
-    expect(($mystring.include?"from test1 3: ../lib/build_testSub1_main_test1")).to be == true
-    expect(($mystring.include?"from test1 4: ../lib/build_testSub2_main_test1")).to be == true
+    expect(($mystring.include?"from test1 1: build/test1")).to be == true
+    expect(($mystring.include?"from test1 2: build/testLib1_main_test1")).to be == true
+    expect(($mystring.include?"from test1 3: ../lib/build/testSub1_main_test1")).to be == true
+    expect(($mystring.include?"from test1 4: ../lib/build/testSub2_main_test1")).to be == true
     
     expect(($mystring.include?"from test1 b1: XX")).to be == true
     expect(($mystring.include?"from test1 b2: XX")).to be == true

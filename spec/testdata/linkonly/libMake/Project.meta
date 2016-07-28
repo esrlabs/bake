@@ -1,7 +1,7 @@
 Project default: test_make {
 
   CustomConfig test_make {
-    Makefile "makefile", lib: "build_test_lib/liblibMake.a"
+    Makefile "makefile", lib: "build/test_lib/liblibMake.a"
   }
   
   LibraryConfig test_lib {

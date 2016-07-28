@@ -205,7 +205,7 @@ describe "Adapt" do
     if not RUBY_PLATFORM =~ /darwin/
       Bake.startBake("adapt/main", ["test_lin0", "--rebuild", "-v2", "--adapt", "lin_remove_ok"])
       expect($mystring.include?(".dld")).to be == false
-      expect(File.exists?("spec/testdata/adapt/main/build_test_lin0/main.exe")).to be == true
+      expect(File.exists?("spec/testdata/adapt/main/build/test_lin0/main.exe")).to be == true
     end
   end
 
@@ -213,7 +213,7 @@ describe "Adapt" do
     if not RUBY_PLATFORM =~ /darwin/
       Bake.startBake("adapt/main", ["test_lin1", "--rebuild", "-v2", "--adapt", "lin_remove_ok"])
        expect($mystring.include?(".dld")).to be == false
-       expect(File.exists?("spec/testdata/adapt/main/build_test_lin1/main.exe")).to be == true
+       expect(File.exists?("spec/testdata/adapt/main/build/test_lin1/main.exe")).to be == true
     end
   end
 
@@ -639,13 +639,13 @@ describe "Adapt" do
   it 'DefaultToolchain replace 0' do
     Bake.startBake("adapt/main", ["test_dtool0", "--rebuild", "--adapt",  "dtool_replace", "-v2"])
     expect($mystring.include?("-FLAG")).to be == false
-    expect($mystring.include?("build_test_dtool0")).to be == true
+    expect($mystring.include?("build/test_dtool0")).to be == true
   end
 
   it 'DefaultToolchain replace 2' do
     Bake.startBake("adapt/main", ["test_dtool2", "--rebuild", "--adapt",  "dtool_replace", "-v2"])
     expect($mystring.include?("-FLAG")).to be == false
-    expect($mystring.include?("build_test_dtool2")).to be == true
+    expect($mystring.include?("build/test_dtool2")).to be == true
   end
 
 

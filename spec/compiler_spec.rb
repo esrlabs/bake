@@ -89,7 +89,7 @@ describe "compiler" do
   it 'dcc dep' do
     if $dccInstalled
       `dcc`
-      depStr = File.read("spec/testdata/compiler/dcc/build_test/src/main.d.bake")
+      depStr = File.read("spec/testdata/compiler/dcc/build/test/src/main.d.bake")
       expect(depStr.include?("inc1.h")).to be == true
       expect(depStr.include?("inc 2.h")).to be == true
     end

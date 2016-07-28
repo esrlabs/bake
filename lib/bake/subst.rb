@@ -3,17 +3,17 @@ require 'pathname'
 module Bake
 
   class Subst
-  
+
     # this is done lazy because usually there is no need to calculate that
     def self.lazyPathes
       return unless @@lazy
-      
+
       cppCmd = @@toolchain[:COMPILER][:CPP][:COMMAND]
       cCmd = @@toolchain[:COMPILER][:C][:COMMAND]
       asmCmd = @@toolchain[:COMPILER][:ASM][:COMMAND]
       archiverCmd = @@toolchain[:ARCHIVER][:COMMAND]
       linkerCmd = @@toolchain[:LINKER][:COMMAND]
-        
+
       if @@config.toolchain
         linkerCmd = @@config.toolchain.linker.command if @@config.toolchain.linker and @@config.toolchain.linker.command != ""
         archiverCmd = @@config.toolchain.archiver.command if @@config.toolchain.linker and @@config.toolchain.archiver.command != ""
@@ -28,32 +28,32 @@ module Bake
             end
           end
         end
-      end 
-      
-      @@cppExe      = File.which(cppCmd) 
+      end
+
+      @@cppExe      = File.which(cppCmd)
       @@cExe        = File.which(cCmd)
       @@asmExe      = File.which(asmCmd)
       @@archiverExe = File.which(archiverCmd)
       @@linkerExe   = File.which(linkerCmd)
-      
+
       @@lazy = false
     end
-    
+
     def self.itute(config, projName, isMainProj, toolchain, loadedConfig, configTcMap)
       @@lazy = true
       @@config = config
       @@toolchain = toolchain
       @@loadedConfig = loadedConfig
       @@configTcMap = configTcMap
-      
+
       @@configName = config.name
       @@projDir = config.parent.get_project_dir
       @@projName = projName
       @@resolvedVars = 0
       @@configFilename = config.file_name
-      
+
       @@artifactName = ""
-      if Metamodel::ExecutableConfig === config || Metamodel::LibraryConfig === config 
+      if Metamodel::ExecutableConfig === config || Metamodel::LibraryConfig === config
         if not config.artifactName.nil?
           @@artifactName = config.artifactName.name
         else
@@ -64,20 +64,20 @@ module Bake
           end
         end
       end
-      
+
       if isMainProj
         @@userVarMap = {}
       else
         @@userVarMap = @@userVarMapMain.clone
       end
-      
+
       config.set.each do |s|
-     
+
         if (s.value != "" and s.cmd != "")
           Bake.formatter.printError("value and cmd attributes must be used exclusively", s)
           ExitHelper.exit(1)
         end
-        
+
         if (s.value != "")
           setName = substString(s.name, s)
           if (setName.empty?)
@@ -103,32 +103,32 @@ module Bake
             Bake.formatter.printWarning("Command not successful, variable #{s.name} will be set to \"\" (#{consoleOutput.chomp}).", s)
             @@userVarMap[s.name] = ""
             ENV[s.name] = "" if s.env
-          end          
+          end
         end
-        
+
       end
-      
+
       @@userVarMapMain = @@userVarMap.clone if isMainProj
-     
+
       3.times {
         subst(config);
         substToolchain(toolchain)
       }
-      
+
       @@resolvedVars = 0
-      lastFoundInVar = -1 
+      lastFoundInVar = -1
       100.times do
         subst(config)
         break if @@resolvedVars == 0 or (@@resolvedVars >= lastFoundInVar and lastFoundInVar >= 0)
-        lastFoundInVar = @@resolvedVars 
-      end      
+        lastFoundInVar = @@resolvedVars
+      end
       if (@@resolvedVars > 0)
         Bake.formatter.printError("Cyclic variable substitution detected", config.file_name)
         ExitHelper.exit(1)
       end
-      
+
     end
-    
+
     def self.substString(str, elem=nil)
       substStr = ""
       posSubst = 0
@@ -147,18 +147,18 @@ module Bake
           end
           next
         end
-        
+
         substStr << str[posSubst..posStart-1] if posStart>0
-      
+
         @@resolvedVars += 1
         var = str[posStart+2..posEnd-1]
 
         splittedVar = var.split(",")
-        
+
         if Bake.options.vars.has_key?(var)
-          substStr << Bake.options.vars[var]  
+          substStr << Bake.options.vars[var]
         elsif @@userVarMap.has_key?(var)
-          substStr << @@userVarMap[var]       
+          substStr << @@userVarMap[var]
         elsif var == "MainConfigName"
           substStr << Bake.options.build_config
         elsif var == "MainProjectName"
@@ -191,9 +191,9 @@ module Bake
               end
               if not out_dir
                 if out_proj_name == Bake.options.main_project_name and out_conf_name == Bake.options.build_config
-                  out_dir = "build_" + Bake.options.build_config
+                  out_dir = "build/" + Bake.options.build_config
                 else
-                  out_dir = "build_" + out_conf_name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+                  out_dir = "build/" + out_conf_name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
                 end
               end
               out_dir = substString(out_dir, elem)
@@ -260,13 +260,13 @@ module Bake
             end
           end
         end
-      
+
         posSubst = posEnd + 1
       end
       substStr << str[posSubst..-1]
       substStr
     end
-    
+
     def self.substToolchain(elem)
       if Hash === elem
         elem.each do |k, e|
@@ -286,25 +286,25 @@ module Bake
         end
       end
     end
-    
+
     def self.subst(elem)
       elem.class.ecore.eAllAttributes_derived.each do |a|
         next if a.name == "file_name" or a.name == "line_number"
         return if Metamodel::Set === elem.class
         return if Metamodel::DefaultToolchain === elem
         return if Metamodel::Toolchain === elem.class
-        next if a.eType.name != "EString" 
+        next if a.eType.name != "EString"
         substStr = substString(elem.getGeneric(a.name), elem)
         elem.setGeneric(a.name, substStr)
       end
-    
+
       childsRefs = elem.class.ecore.eAllReferences.select{|r| r.containment}
       childsRefs.each do |c|
         elem.getGenericAsArray(c.name).each { |child| subst(child) }
-      end     
+      end
     end
-  
+
   end
-  
+
 end
 
