@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The main project &mdash; bake 2.19.0 documentation</title>
+    <title>The build hierarchy &mdash; bake 2.19.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -32,7 +32,7 @@
     <link rel="top" title="bake 2.19.0 documentation" href="../index.html" />
     <link rel="up" title="Concepts" href="concepts.html" />
     <link rel="next" title="The link order" href="link_order.html" />
-    <link rel="prev" title="The Project.meta file" href="the_project_meta_file.html" />
+    <link rel="prev" title="The main project" href="the_main_project.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -96,10 +96,9 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">The main project</a><ul>
-<li><a class="reference internal" href="#advantages">Advantages</a></li>
+<li><a class="reference internal" href="#">The build hierarchy</a><ul>
+<li><a class="reference internal" href="#build-graph">Build graph</a></li>
 <li><a class="reference internal" href="#example">Example</a></li>
-<li><a class="reference internal" href="#output-directory">Output directory</a></li>
 </ul>
 </li>
 </ul>
@@ -111,7 +110,7 @@
               
                 
   <li>
-    <a href="the_project_meta_file.html" title="Previous Chapter: The Project.meta file"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; The Project.m...</span>
+    <a href="the_main_project.html" title="Previous Chapter: The main project"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; The main project</span>
     </a>
   </li>
   <li>
@@ -143,100 +142,45 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="the-main-project">
-<h1>The main project<a class="headerlink" href="#the-main-project" title="Permalink to this headline">¶</a></h1>
-<p>The concept of the main project is different to many other build systems like Eclipse CDT.
-In these build systems everything which is needed for a project is configured in the project itself.
-In bake the main project can predefine stuff for all subprojects.
-The main project can have a DefaultToolchain definition, which is valid for all projects and files referenced by the main project. Subprojects can overwrite or adjust these definitions.</p>
-<p>Projects are always built in context of the main project.</p>
-<p>To build a project, you have to specify</p>
-<blockquote>
-<div><ul class="simple">
-<li>the main project</li>
-<li>the config of the main project which references the project to build</li>
-<li>the (sub)project to build if applicable</li>
+  <div class="section" id="the-build-hierarchy">
+<h1>The build hierarchy<a class="headerlink" href="#the-build-hierarchy" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="build-graph">
+<h2>Build graph<a class="headerlink" href="#build-graph" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Depending on the contents of the Project.meta files, a build graph will be generated:</dt>
+<dd><ul class="first last simple">
+<li>An ExecutableConfig usually specifies files to compile, dependencies to other projects and linker stuff.</li>
+<li>A LibraryConfig usually specifies files to compile and archive.</li>
+<li>A CustomConfig usually defines a custom step.</li>
 </ul>
-</div></blockquote>
-<div class="section" id="advantages">
-<h2>Advantages<a class="headerlink" href="#advantages" title="Permalink to this headline">¶</a></h2>
-<p>Reducing the number of build configurations (toolchain settings like debug or release flags can be set outside of the project)
-Most projects do not have any compiler definitions anymore
-Only flags which must be used or flags which must not be used have to be specified in the projects
-Changing compiler definitions for all projects can be done easily in the main project build configuration</p>
+</dd>
+</dl>
+<p>Every config type can be equipped with pre and post steps like shell commands or makefiles.</p>
+<p>All these steps will be combined to a build graph.</p>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Project.meta of Main (Debug and Release)</th>
-<th class="head">Project.meta of Sub (only one build config!)</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><div class="first last highlight-python"><div class="highlight"><pre>Project {
-
-    ExecutableConfig Debug {
-        Dependency Sub, config: Lib
-        Files &quot;**/*.cpp&quot;
-        IncludeDir &quot;include&quot;
-        DefaultToolchain GCC {
-            Compiler CPP {
-                Flags &quot;... whatever -debug_info&quot;
-                Define &quot;DEBUG&quot;
-            }
-        }
-    }
-
-    ExecutableConfig Release {
-        Dependency Sub, config: Lib
-        Files &quot;**/*.cpp&quot;
-        IncludeDir &quot;include&quot;
-        DefaultToolchain GCC {
-            Compiler CPP {
-                Flags &quot;... whatever -optimize&quot;
-                Define &quot;NDEBUG&quot;
-            }
-        }
-    }
-}
-</pre></div>
-</div>
-</td>
-<td><div class="first last highlight-python"><div class="highlight"><pre>Project {
-
-    LibraryConfig Lib {
-        Files &quot;**/*.cpp&quot;
-        IncludeDir &quot;include&quot;
-    }
-
-}
-</pre></div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">A main project must have a DefaultToolchain - but it&#8217;s allowed to leave that definition empty.</p>
-</div>
-</div>
-<div class="section" id="output-directory">
-<h2>Output directory<a class="headerlink" href="#output-directory" title="Permalink to this headline">¶</a></h2>
-<p>A project in a specific build configuration can be build in different contexts.
-That&#8217;s why the output directory of a project cannot be simply the build configuration name of the project to avoid inconsistencies.
-Therefore the output directory names are.</p>
+<p>The main project has dependencies to the projects A, B and C:</p>
 <blockquote>
-<div><ul class="simple">
-<li>Main project: $(MainConfigName) like in regular Eclipse CDT builds</li>
-<li>Subprojects: $(MainConfigName)_$(MainProjectName) instead of the config name of the subproject</li>
-</ul>
+<div><a class="reference internal image-reference" href="../_images/bake_build_hierachy.png"><img alt="../_images/bake_build_hierachy.png" src="../_images/bake_build_hierachy.png" style="width: 75.0%;" /></a>
 </div></blockquote>
+<p>Steps are executed bottom-up. If one step fails, all steps above won&#8217;t be executed.</p>
+<dl class="docutils">
+<dt>If e.g.</dt>
+<dd><ul class="first last simple">
+<li>PreStepMain 2 fails</li>
+<li>at least one file of library B does not compile</li>
+</ul>
+</dd>
+<dt>then</dt>
+<dd><ul class="first last simple">
+<li>library B will not be created</li>
+<li>files of the main project will not be compiled</li>
+<li>main project will not be linked</li>
+<li>post step of main project will not be executed</li>
+</ul>
+</dd>
+</dl>
 </div>
 </div>
 

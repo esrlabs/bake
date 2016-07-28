@@ -6,7 +6,6 @@ test_main/
 test_p1/
 wrongConfig_main/
 test/
-build_*
 build/
 rel_test*
 test1/
