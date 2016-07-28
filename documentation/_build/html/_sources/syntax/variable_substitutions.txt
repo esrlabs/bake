@@ -4,14 +4,14 @@ bake allows you to use pre defined and/or user defined variables in your Project
 Defined variables then can be used using the following syntax:
 
 .. code-block:: console
-    
+
    $(MyIncludes)
 
 The variable MyIncludes will be substitued by its value, therefore a real life usage would look
 something like this:
 
 .. code-block:: console
-    
+
    IncludeDir "$(MyIncludes)"
 
 User defined variables
@@ -22,17 +22,17 @@ There are two ways to create user defined variables.
 #. The variable is defined with the `--set` command line option:
 
 .. code-block:: console
- 
+
     User@Host:~$ bake ... --set MyVar="Hello world!"
 
 #. THe variable is defined directly in the Project.meta file.
 
 .. code-block:: console
 
-    Set MyVar, value: "Hello world!"              
+    Set MyVar, value: "Hello world!"
 
 
-Pre defined bake environment variables 
+Pre defined bake environment variables
 **************************************
 
 ========================================    ===============================================     ========================================
@@ -50,12 +50,12 @@ Variable                                    Description                         
                                             directory
 
 *$(MainProjectDir)*                         Evaluates to the full path of the root projec       C:/Root/Main
-                                            directory                                           
+                                            directory
 
-*$(OutputDir)*                              Evaluates to the full path of the output            build_lib_bootloader_Debug
+*$(OutputDir)*                              Evaluates to the full path of the output            build/lib_bootloader_Debug
                                             directory of the current config
 
-*$(OutputDir,projName,confName)*            Evaluates to the output dir of a specific           build_lib_some_Debug
+*$(OutputDir,projName,confName)*            Evaluates to the output dir of a specific           build/lib_some_Debug
                                             config
 
 *$(ArtifactName)*                           Evaluates to the artifact.                          bootloader_1.0.elf
@@ -89,12 +89,12 @@ Variable                                    Description                         
                                             of the current platform
 ========================================    ===============================================     ========================================
 
-.. tip:: 
+.. tip::
 
     It is also possible to retrieve arbitrary an *environment variable* using the following syntax:
 
     .. code-block:: console
-        
+
         $(EnvironmentVariable)
 
     Evaluates to the Environment with the specified name, if the specified environment variable does not exists
@@ -105,7 +105,7 @@ Variable                                    Description                         
     Equal variables in the main config
 
     ========================================    ========================================
-    Variable                                    Is equal to 
+    Variable                                    Is equal to
     ========================================    ========================================
     $(MainConfigName)                           $(ConfigName)
 
@@ -124,7 +124,7 @@ It is also possible to nest variables.
 Example:
 
 .. code-block:: console
-    
+
     $(OutputDir,$(TheProject),$(TheConfig))
     $(ABC$(DEF)GH)
 
@@ -134,7 +134,7 @@ Auto-adjustment of paths to existing projects
 .. warning::
 
     If paths to other projects are needed, e.g. to "bootloaderUpdater", don't write a hard coded relative path like this:
-    
+
     .. code-block:: text
 
         CommandLine "../bootloaderUpdater/tools/PrimaryBootloader2Include.exe
@@ -156,7 +156,7 @@ or:
 
 
 bake recognizes that the first part of the path is a valid project name and calculates the relative path to the project automatically.
-If you have the special case that the referenced project is contained in an other workspace root, you can use the 
+If you have the special case that the referenced project is contained in an other workspace root, you can use the
 `-w` parameter or you define a `roots.bake`.
 
 .. note::
@@ -170,6 +170,6 @@ If you have the special case that the referenced project is contained in an othe
     * ExternalLibrarySearchPath
 
     * UserLibrary
-      
+
     * CommandLine
 
