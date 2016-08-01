@@ -1,6 +1,9 @@
 Changelog
 =========
 
+August 1, 2016 - bake-toolkit 2.19.1
+    * Bugfix: made the new "listening to raw character 0x3" more robust
+
 July 28, 2016 - bake-toolkit 2.19.0
     * Changed: default output dir is now build/<something> instead of build_<something>
     * Added: listening to raw character 0x3 on stdin to abort bake/bakery (needed for some Cygwin installations)

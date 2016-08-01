@@ -164,12 +164,17 @@ module Bake
         # which might not be changed due to backward compatibility.
         # the control handler works only with programs compiled under Cygwin, which is
         # not true for Windows RubyInstaller packages.
-        while IO.select([$stdin],nil,nil,0) do
-          nextChar = $stdin.sysread(1)
-          if nextChar == "\x03"
-            raise AbortException.new
+        ctrl_c_found = false
+        begin
+          while IO.select([$stdin],nil,nil,0) do
+            nextChar = $stdin.sysread(1)
+            if nextChar == "\x03"
+              ctrl_c_found = true
+            end
           end
+        rescue Exception => e
         end
+        raise AbortException.new if ctrl_c_found
 
         return @result
       end
