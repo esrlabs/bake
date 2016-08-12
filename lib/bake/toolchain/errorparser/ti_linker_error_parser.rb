@@ -12,7 +12,7 @@ module Bake
 
     def scan_lines(consoleOutput, proj_dir)
       res = []
-      consoleOutput.each_line do |l|
+      consoleOutput[0].each_line do |l|
         l.rstrip!
         d = ErrorDesc.new
         if l != "<Linking>" then
