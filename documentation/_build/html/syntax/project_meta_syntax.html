@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Syntax of the Project.meta file &mdash; bake 2.19.1 documentation</title>
+    <title>The Syntax of the Project.meta file &mdash; bake 2.19.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.19.1',
+        VERSION:     '2.19.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake 2.19.1 documentation" href="../index.html" />
+    <link rel="top" title="bake 2.19.2 documentation" href="../index.html" />
     <link rel="up" title="Syntax" href="syntax.html" />
     <link rel="next" title="Variables in Project.meta" href="variable_substitutions.html" />
     <link rel="prev" title="Syntax" href="syntax.html" />
@@ -183,16 +183,16 @@ z-index: 100;
  }
  .help {
     color:blue
- } 
+ }
 .showRadio {
     font-weight:bold;color:blue;text-decoration:overline underline
- } 
+ }
 .hideRadio {
     color:#AAAAFF;
- } 
+ }
 .mycomment {
     color:green
- }   
+ }
 </style>
 
 
@@ -217,7 +217,7 @@ z-index: 100;
 &nbsp; <span class="showRadio" onMouseover="showExecutableConfig()" onMouseout="notip()" id="executableConfig">ExecutableConfig</span> |
               <span class="hideRadio" onMouseover="showLibraryConfig()" onMouseout="notip()" id="libraryConfig">LibraryConfig</span> |
               <span class="hideRadio" onMouseover="showCustomConfig()" onMouseout="notip()" id="customConfig">CustomConfig</span> &#60;name&#62;, <span class="help" onMouseover="showExtends()" onMouseout="notip()">extends</span>: &#60;parent(s)&#62; {<br><br>
-			  
+
 			  <span><span style="background-color:#EEEEEE;" class="show">
 &nbsp; &nbsp; <span class="mycomment"># Valid for all config types</span><br><br>
 &nbsp; &nbsp; <span class="help" onMouseover="showDescription()" onMouseout="notip()">Description</span>  &#60;text&#62;<br>
@@ -237,8 +237,8 @@ z-index: 100;
 										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
 										  <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
 										  <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>										  
-&nbsp; &nbsp; &nbsp; }<br>										  
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
+&nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCommandLine()" onMouseout="notip()">CommandLine</span> &#60;line&#62;,
 										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
 										  <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
@@ -277,17 +277,17 @@ z-index: 100;
 
 
 &nbsp; &nbsp; <span class="help" onMouseover="showToolchainProject()" onMouseout="notip()">Toolchain</span> <span class="help" onMouseover="showOutputDir()" onMouseout="notip()">outputDir</span>: &#60;dir&#62; {<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C, 
-                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br> 
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C,
+                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showArchiver()" onMouseout="notip()">Archiver</span>
-                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br> 
+                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLinker()" onMouseout="notip()">Linker</span>
-                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br> 
+                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPrefixFlags()" onMouseout="notip()">LibPrefixFlags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPostfixFlags()" onMouseout="notip()">LibPostfixFlags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
@@ -324,8 +324,8 @@ z-index: 100;
 										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
                                           <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
                                           <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>										  
-&nbsp; &nbsp; }<br>										  										  						
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
+&nbsp; &nbsp; }<br>
 							</span>
                             <span style="background-color:#DDDDDD;" id="commandline_part"  class="hide">&#60;line&#62;,
                             <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
@@ -397,8 +397,8 @@ function showExecutableConfig() {
   document.getElementById('executableConfig').className="showRadio"
   document.getElementById('libraryConfig').className="hideRadio"
   document.getElementById('customConfig').className="hideRadio"
-  
-  str = 'This is the main config of an application. This is the only config type which has dependencies.'
+
+  str = 'This is usually the main config of an application.'
   ddrivetip("ExecutableConfig", "No","0..n","-",str)
 }
 
@@ -409,7 +409,7 @@ function showLibraryConfig() {
   document.getElementById('executableConfig').className="hideRadio"
   document.getElementById('libraryConfig').className="showRadio"
   document.getElementById('customConfig').className="hideRadio"
-  
+
   str = 'This config is used for a source library. The library will be linked automatically to the executable.'
   ddrivetip("LibraryConfig", "No","0..n","-",str)
 }
@@ -421,13 +421,13 @@ function showCustomConfig() {
   document.getElementById('executableConfig').className="hideRadio"
   document.getElementById('libraryConfig').className="hideRadio"
   document.getElementById('customConfig').className="showRadio"
-  
+
   str = 'This config is used for special projects, e.g. for Makefile projects.<br>'+
     'It is valid to leave a CustomConfig completely empty - nothing will be done in that case.'
   ddrivetip("CustomConfig", "No","0..n","-",str)
 }
 
-function showExternalLibrary() {   
+function showExternalLibrary() {
   str = 'Every config can specify libs which have to be linked to the executable.<br>'+
     'It\'s possible to add a path, e.g.:<br>'+
     '<i> &nbsp; &nbsp; ExternalLibrary "xy/z/ab"</i><br>'+
@@ -436,7 +436,7 @@ function showExternalLibrary() {
   ddrivetip("ExternalLibrary", "No","0..n","-",str)
 }
 
-function showExternalLibrarySearch() {   
+function showExternalLibrarySearch() {
   str = 'If the attribute "search: false" is specified, the lib will not be searched but linked with the full name, e.g.<br>'+
     '<i> &nbsp; &nbsp; ExternalLibrary "xy/z/libpq.a", search: false</i><br>'+
 	'will link "xy/z/libpq.a" to the executable.<br>'+
@@ -444,7 +444,7 @@ function showExternalLibrarySearch() {
   ddrivetip("search", "No","-","true",str)
 }
 
-function showUserLibrary() {   
+function showUserLibrary() {
   str = 'A user library will be linked <i>before</i> any other libraries or objects to the executable.<br>'+
     'It is also possible to specify an object file.<br>'+
 	'The library will be searched like an ExternalLibrary, but with the full name, e.g.<br>'+
@@ -455,78 +455,78 @@ function showUserLibrary() {
   ddrivetip("UserLibrary", "No","0..n","-",str)
 }
 
-function showExternalLibrarySearchPath() {   
+function showExternalLibrarySearchPath() {
   str = 'The linker looks for libraries in search paths.<br>'+
     'Search paths can be defined implicitly by ExternalLibrary/UserLibrary or explicitly by this tag.'
   ddrivetip("ExternalLibrarySearchPath", "No","0..n","-",str)
 }
 
-function showPreSteps() {   
+function showPreSteps() {
   str = 'PreSteps are executed before compiling files of the project.<br>'+
     'The number of steps are not limited.<br>'+
 	'If a step fails, all further steps of the project will be skipped.'
   ddrivetip("PreSteps", "No","0..1","-",str)
 }
 
-function showPostSteps() {   
+function showPostSteps() {
   str = 'PostSteps are executed after the main task of the project, e.g. linking an executable.<br>'+
     'The number of steps are not limited.<br>'+
 	'If a step fails, all further steps of the project will be skipped.'
   ddrivetip("PostSteps", "No","0..1","-",str)
 }
 
-function showStartupSteps() {   
+function showStartupSteps() {
   str = 'StartupSteps of ALL projects are executed before building the first project.<br>'+
     'The number of steps are not limited.'
   ddrivetip("StartupSteps", "No","0..1","-",str)
 }
 
-function showExitSteps() {   
+function showExitSteps() {
   str = 'ExitSteps of ALL projects are executed after building complete workspace even if the build has failed.<br>'+
     'The number of steps are not limited.'
   ddrivetip("ExitSteps", "No","0..1","-",str)
 }
 
-function showStepDefault() {   
+function showStepDefault() {
   str = 'Specifies if a step will be executed by default.<br>'+
     'Disabling a step by default is useful if the step shall not be executed every build, e.g. special steps for releasing a software or some kind of developer test steps.'
   ddrivetip("default", "No","-","on",str)
 }
 
-function showStepFilter() {   
+function showStepFilter() {
   str = 'A step can be switched on or off explicitly regardless of the "default" attribute with the command line options<br>'+
 	'<i> &nbsp; &nbsp; --do &#60;filter name&#62;</i><br>'+
 	'<i> &nbsp; &nbsp; --omit &#60;filter name&#62;</i><br>'
   ddrivetip("filter", "No","-","-",str)
 }
 
-function showValidExitCodes() {   
+function showValidExitCodes() {
   str = 'Define it as an array, e.g.:<br>'+
     '..., validExitCodes: [200,201,202]'
   ddrivetip("validExitCodes", "No","-","[0]",str)
 }
 
 
-function getMakefileDesc() {   
+function getMakefileDesc() {
   return 'Makefile to be started, e.g.:<br>'+
 	'<i> &nbsp; &nbsp; Makefile "subDir/makefile"</i><br>'
 }
 
-function showMakefile() {   
+function showMakefile() {
   ddrivetip("Makefile", "No","0..n","-",getMakefileDesc())
 }
 
-function showMakefileLib() {   
+function showMakefileLib() {
   str = 'If the result of the makefile is a library which shall be linked to the executable, name it here.'
   ddrivetip("lib", "No","-","-",str)
 }
 
-function showMakefileTarget() {   
+function showMakefileTarget() {
   str = 'The target of the makefile.'
   ddrivetip("target", "No","-","all",str)
 }
 
-function showMakefilePathTo() {   
+function showMakefilePathTo() {
   str = 'Comma separated list, e.g. "common, abc, xy".<br>'+
     'The makefile can use variables like $(PATH_TO_common). This is very useful if paths to other projects are needed in the makefile.<br>'+
 	'Remember that more than one workspace root can exist and a hardcoded "../common" is not reliable in that case.<br>'+
@@ -539,8 +539,8 @@ function showMakefilePathTo() {
   ddrivetip("pathTo", "No","-","-",str)
 }
 
-function showMakefileFlags() {  
-	  ddrivetip("Flags", "No","0..n","-j","Additional makefile flags.")  
+function showMakefileFlags() {
+	  ddrivetip("Flags", "No","0..n","-j","Additional makefile flags.")
 }
 
 function getCommandLineDesc() {
@@ -549,8 +549,8 @@ function getCommandLineDesc() {
 	'<i> &nbsp; &nbsp; CommandLine "echo Hello world!"</i><br>'
 }
 
-function showCommandLine() {   
-  ddrivetip("CommandLine", "No","0..n","-",getCommandLineDesc())  
+function showCommandLine() {
+  ddrivetip("CommandLine", "No","0..n","-",getCommandLineDesc())
 }
 
 
@@ -560,24 +560,24 @@ function showEclipseOrder() {
   'If true, files are compiled in alphabetical order within a folder, '+
   'but the folders are sorted in reverse alphabetical order.<br>'+
   'This is only used for backward compatibility.'
-  ddrivetip("eclipseOrder", "No","-","false",str)  
+  ddrivetip("eclipseOrder", "No","-","false",str)
 }
 
-function showOutputDir() {   
+function showOutputDir() {
   str = 'Specifies the output folder.<p>'+
     'Use always relative paths, not absolute paths due to portability.<p>'+
     'Use always "/" and not "\\".<p>'+
     'If the first part of the path is equal to a project name, it is used as a shortcut to this project root. <br>'+
     'To avoid this magic, use something like this: <br>'+
     '<i> &nbsp; &nbsp; IncludeDir "./abc/include"</i><br>'
-  ddrivetip("outputdir", "No","0..1","-",str)  
+  ddrivetip("outputdir", "No","0..1","-",str)
 }
 
 function showExtends() {
-	ddrivetip("extends", "No","0..1","-","Inherit settings from parent config(s).<br>For more information see docu page 'Derive configs'.") 
+	ddrivetip("extends", "No","0..1","-","Inherit settings from parent config(s).<br>For more information see docu page 'Derive configs'.")
 }
 
-function showFiles() {   
+function showFiles() {
   str = 'Specifies the files to build.<br>'+
     'It\'s valid to specify a single file, e.g.<br>'+
 	'<i> &nbsp; &nbsp; Files "src/abc/def.asm"</i><br>'+
@@ -586,16 +586,16 @@ function showFiles() {
 	'which builds all files with the ending ".cpp" in all subdirectories.<br>'+
 	'Note: ".." is not allowed in the file path. All files must be located within the project.<br>'+
 	'Note: if patterns are used, Flags and Define are ignored.'
-  ddrivetip("Files", "No","0..n","-",str)  
+  ddrivetip("Files", "No","0..n","-",str)
 }
 
-function showExcludeFiles() {   
+function showExcludeFiles() {
   str = 'Used to ignore files or directories.<br>'+
     'ExcludeFiles has higher priority than Files.'
-  ddrivetip("ExcludeFiles", "No","0..n","-",str)  
+  ddrivetip("ExcludeFiles", "No","0..n","-",str)
 }
 
-function showIncludeDir() {   
+function showIncludeDir() {
   str = 'Specifies the include directories for the assembler, C and C++ compiler.<p>'+
     'Use always relative paths, not absolute paths due to portability.<p>'+
     'Use always "/" and not "\\".<p>'+
@@ -607,31 +607,31 @@ function showIncludeDir() {
     'To include directories of the current project, the project name can be omitted like this:<br>'+
 	'<i> &nbsp; &nbsp; IncludeDir "include"</i><br>'+
     '<i> &nbsp; &nbsp; IncludeDir "generated/include"</i><br>'
-  ddrivetip("IncludeDir", "No","0..n","-",str)  
+  ddrivetip("IncludeDir", "No","0..n","-",str)
 }
 
-function showInherit() {   
+function showInherit() {
   str = 'Inherits the include to all projects, which depend on this project.'
-  ddrivetip("inherit", "No","0..1","false",str)  
+  ddrivetip("inherit", "No","0..1","false",str)
 }
 
-function showInfix() {   
+function showInfix() {
   str = 'Injects the include path to all childs, either at the front (e.g. for mocking code) or at the end.'
-  ddrivetip("inject", "No","0..1","-",str)  
+  ddrivetip("inject", "No","0..1","-",str)
 }
 
-function showSet() {   
+function showSet() {
   str = 'Sets a variable for this and all dependent projects.<br>'+
   'The variable can be a simple value or the result of a cmd, e.g. \"cat myVar.txt\".'
-	ddrivetip("Set", "No","0..n","-",str)  
+	ddrivetip("Set", "No","0..n","-",str)
 }
 
-function showEnv() {   
+function showEnv() {
   str = 'Stores the variable also in system environment, which makes it available in everything which is executed by bake, e.g. in Pre- and PostSteps.'
-    ddrivetip("env", "No","-","false",str)  
+    ddrivetip("env", "No","-","false",str)
 }
 
-function showDependency() {   
+function showDependency() {
   str = 'Specifies another project to be built before this project.<br>'+
     'The archive, linker libs and search paths are imported from this project to the this project automatically.<br>'+
     'If you omit the project, the current project will be used.<br>'+
@@ -639,28 +639,28 @@ function showDependency() {
     '<b>Examples:</b><br>'+
     '&nbsp;&nbsp; <i>Dependency gtest, config: lib<br>'+
     '&nbsp;&nbsp; Dependency "my/folder/proj"</i>'
-	ddrivetip("Dependency", "No","0..n","-",str)  
+	ddrivetip("Dependency", "No","0..n","-",str)
 }
 
-function showDependencyConfig() {   
+function showDependencyConfig() {
   str = 'Config name of the project to build.'
-	ddrivetip("config", "Yes","-","-",str)  
+	ddrivetip("config", "Yes","-","-",str)
 }
 
-function showLinkerScript() {   
+function showLinkerScript() {
   str = 'Specifies the name including path of the linker script.'
-  ddrivetip("Dependency", "No","0..1","-",str)  
+  ddrivetip("Dependency", "No","0..1","-",str)
 }
 
-function showMapFile() {   
+function showMapFile() {
   str = 'A mapfile will be written by the linker.'
-  ddrivetip("MapFile", "No","0..1","If name attribute is omitted: $(OutputDir)/$(ArtifactNameBase).map",str)  
+  ddrivetip("MapFile", "No","0..1","If name attribute is omitted: $(OutputDir)/$(ArtifactNameBase).map",str)
 }
 
-function showArtifactName() {   
+function showArtifactName() {
   str = 'The artifact name inclusive file ending.<br>'+
     'The artifact will be placed in the output directory.'
-  ddrivetip("ArtifactName","No","0..1","Executable: project name + toolchain dependent file ending. Library: 'lib' + project name + '.a'",str)  
+  ddrivetip("ArtifactName","No","0..1","Executable: project name + toolchain dependent file ending. Library: 'lib' + project name + '.a'",str)
 }
 
 function showMakefileCustom() {
@@ -668,7 +668,7 @@ function showMakefileCustom() {
   document.getElementById('commandline_part').className="hide"
   document.getElementById('makefile').className="showRadio"
   document.getElementById('commandline').className="hideRadio"
-  ddrivetip("Makefile", "No","0..1 - Either Makefile or CommandLine","-",getMakefileDesc())  
+  ddrivetip("Makefile", "No","0..1 - Either Makefile or CommandLine","-",getMakefileDesc())
 }
 
 function showCommandlineCustom() {
@@ -676,13 +676,13 @@ function showCommandlineCustom() {
   document.getElementById('commandline_part').className="showInline"
   document.getElementById('makefile').className="hideRadio"
   document.getElementById('commandline').className="showRadio"
-  ddrivetip("CommandLine", "No","0..1 - Either Makefile or CommandLine","-",getCommandLineDesc())  
+  ddrivetip("CommandLine", "No","0..1 - Either Makefile or CommandLine","-",getCommandLineDesc())
 }
 
 function flagExample() {
 	return  "<br>For removing flags use regular expressions which can be interpreted by ruby.<br>"+
 	"Regex options for start and stop string are automatically added in order to avoid substring matches.<br><br>"+
-	"Flag strings are always splitted at spaces and computed individually.<br><br>"+	
+	"Flag strings are always splitted at spaces and computed individually.<br><br>"+
 	"<b>Examples:</b><br>"+
 	"&nbsp;&nbsp; <i>Flags \"-x -y\"</i> overwrites the inherited flags<br><br>"+
 	"&nbsp;&nbsp; <i>Flags add: \"-x -y\"</i> adds -x and -y if not exist<br><br>"+
@@ -691,99 +691,99 @@ function flagExample() {
 	"&nbsp;&nbsp; <i>Flags remove: \"-x\", add: \"-y\"</i><br><br>"+
 	"&nbsp;&nbsp; To remove -g followed by any string, e.g. -g3, the command is:<br>"+
 	"&nbsp;&nbsp; <i>Flags remove: \"-g.*\"</i><br>"+
-	"&nbsp;&nbsp; An inherited flag string \"-abc -g3 -xy\" will end up in \"-abc -xy\"."  
+	"&nbsp;&nbsp; An inherited flag string \"-abc -g3 -xy\" will end up in \"-abc -xy\"."
 }
 
 
-function showToolchainProject() {   
+function showToolchainProject() {
   str = 'Toolchain adaptions for a project.'
-  ddrivetip("Toolchain", "No","0..1","The DefaultToolchain settings from the main project",str)  
+  ddrivetip("Toolchain", "No","0..1","The DefaultToolchain settings from the main project",str)
 }
 
-function showDefaultToolchain() {   
+function showDefaultToolchain() {
   str = 'Settings which are valid for all projects and files unless they will be overwritten.<br>'+
     'The attribute "basedOn" specifies the basic toolchain configuration provided by bake, e.g. "GCC", "Diab", etc.'
-  ddrivetip("DefaultToolchain", "In main project","0..1","-",str)  
+  ddrivetip("DefaultToolchain", "In main project","0..1","-",str)
 }
 
-function showFilesFlags() {  
-  ddrivetip("Flags", "No","0..n","Flags from project","Flags from the project can be overwritten, extended or (partly) removed.<br>"+flagExample())  
+function showFilesFlags() {
+  ddrivetip("Flags", "No","0..n","Flags from project","Flags from the project can be overwritten, extended or (partly) removed.<br>"+flagExample())
 }
 
-function showFilesDefine() {  
-  ddrivetip("Define", "No","0..n","-","Defines which are valid only for a specific file.")  
+function showFilesDefine() {
+  ddrivetip("Define", "No","0..n","-","Defines which are valid only for a specific file.")
 }
 
-function showFlags() {  
-  ddrivetip("Flags", "No","0..n","Flags from DefaultToolchain","Flags from the DefaultToolchain can be overwritten, extended or (partly) removed.<br>"+flagExample())  
+function showFlags() {
+  ddrivetip("Flags", "No","0..n","Flags from DefaultToolchain","Flags from the DefaultToolchain can be overwritten, extended or (partly) removed.<br>"+flagExample())
 }
 
-function showDefine() {  
-  ddrivetip("Define", "No","0..n","-","Defines valid for all files in the project.")  
+function showDefine() {
+  ddrivetip("Define", "No","0..n","-","Defines valid for all files in the project.")
 }
 
-function showLibPrefixFlags() {  
+function showLibPrefixFlags() {
   ddrivetip("LibPrefixFlags", "No","0..n","-","Linker libs can be prefixed if needed, e.g. with \"-Wl,--whole-archive\".")
 }
 
-function showLibPostfixFlags() {  
+function showLibPostfixFlags() {
   ddrivetip("LibPostfixFlags", "No","0..n","-","Linker libs can be postfixed if needed, e.g. with \"-Wl,--no-whole-archive\".")
 }
 
-function showCompiler() {  
-  ddrivetip("Compiler", "No","0..3 (for each compiler type: ASM, CPP, C)","-","Flags and defines can be specified independently for each compiler type.")  
+function showCompiler() {
+  ddrivetip("Compiler", "No","0..3 (for each compiler type: ASM, CPP, C)","-","Flags and defines can be specified independently for each compiler type.")
 }
 
-function showArchiver() {  
-  ddrivetip("Archiver", "No","0..1","-","Settings for the archiver.")  
+function showArchiver() {
+  ddrivetip("Archiver", "No","0..1","-","Settings for the archiver.")
 }
 
-function showLinker() {  
-  ddrivetip("Linker", "No","0..1","-","Makes sense only for ExecutableConfigs.")  
+function showLinker() {
+  ddrivetip("Linker", "No","0..1","-","Makes sense only for ExecutableConfigs.")
 }
 
-function showLintPolicy() {  
-  ddrivetip("LintPolicy", "No","0..n","-","lnt-file - but it can be used for any other command line option for Lint.")  
+function showLintPolicy() {
+  ddrivetip("LintPolicy", "No","0..n","-","lnt-file - but it can be used for any other command line option for Lint.")
 }
 
-function showDocu() {  
-  ddrivetip("Docu", "No","0..1","-","Command to build the documentation. e.g.:<br>doxygen main.cfg")  
+function showDocu() {
+  ddrivetip("Docu", "No","0..1","-","Command to build the documentation. e.g.:<br>doxygen main.cfg")
 }
 
-function showDefaultFlags() {  
-  ddrivetip("Flags", "No","0..n","-","Default flags.")  
+function showDefaultFlags() {
+  ddrivetip("Flags", "No","0..n","-","Default flags.")
 }
 
-function showDefaultDefine() {  
-  ddrivetip("Define", "No","0..n","-","Defines which are valid for all files.")  
+function showDefaultDefine() {
+  ddrivetip("Define", "No","0..n","-","Defines which are valid for all files.")
 }
 
-function showInternalDefines() {  
-  ddrivetip("InternalDefines", "No","0..1","-","File with list of compiler internal defines.<br>One define per line.<br>Empty lines and comments with # are allowed.")  
+function showInternalDefines() {
+  ddrivetip("InternalDefines", "No","0..1","-","File with list of compiler internal defines.<br>One define per line.<br>Empty lines and comments with # are allowed.")
 }
 
-function showInternalIncludes() {  
-  ddrivetip("InternalIncludes", "No","0..1","-","File with list of compiler internal include folders.<br>One folder per line.<br>Empty lines and comments with # are allowed.")  
+function showInternalIncludes() {
+  ddrivetip("InternalIncludes", "No","0..1","-","File with list of compiler internal include folders.<br>One folder per line.<br>Empty lines and comments with # are allowed.")
 }
 
-function showDefaultCompiler() {  
-  ddrivetip("Compiler", "No","0..3 (for each compiler type: ASM, CPP, C)","-","Default compiler settings.")  
+function showDefaultCompiler() {
+  ddrivetip("Compiler", "No","0..3 (for each compiler type: ASM, CPP, C)","-","Default compiler settings.")
 }
 
-function showDefaultArchiver() {  
-  ddrivetip("Archiver", "No","0..1","-","Default settings for the archiver.")  
+function showDefaultArchiver() {
+  ddrivetip("Archiver", "No","0..1","-","Default settings for the archiver.")
 }
 
-function showDefaultLinker() {  
-  ddrivetip("Linker", "No","0..1","-","Default settings for the linker.")  
+function showDefaultLinker() {
+  ddrivetip("Linker", "No","0..1","-","Default settings for the linker.")
 }
 
-function showDefaultLintPolicy() {  
-  ddrivetip("LintPolicy", "No","0..n","-","lnt-file - but it can be used for any other command line option for Lint.")  
+function showDefaultLintPolicy() {
+  ddrivetip("LintPolicy", "No","0..n","-","lnt-file - but it can be used for any other command line option for Lint.")
 }
 
-function showCommand() {  
-  ddrivetip("command", "No","-","Depending on toolchain, e.g. \"gcc\"","Change command, e.g. \"$(PATH_TO_EXE)/gcc_speciale.exe\"")  
+function showCommand() {
+  ddrivetip("command", "No","-","Depending on toolchain, e.g. \"gcc\"","Change command, e.g. \"$(PATH_TO_EXE)/gcc_speciale.exe\"")
 }
 
 

@@ -1,6 +1,12 @@
 Changelog
 =========
 
+August 12, 2016 - bake-toolkit 2.19.2
+    * Bugfix: fixed TI linker error parser
+
+August 4, 2016 - Eclipse plugin 1.7.1
+    * Bugfix: error markers may not created correctly if projects had "^" in the name
+
 August 1, 2016 - bake-toolkit 2.19.1
     * Bugfix: made the new "listening to raw character 0x3" more robust
 
