@@ -18,7 +18,7 @@ module Bake
 
   class Options < Parser
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
-    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename, :bundleDir # String
+    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename, :bundleDir, :buildDirDelimiter # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro, :oldLinkOrder # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
@@ -30,6 +30,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
+      @buildDirDelimiter = "/"
       @oldLinkOrder = false
       @conversion_info = false
       @envToolchain = false
@@ -122,6 +123,7 @@ module Bake
       add_option(["--list",               "--show_configs"       ], lambda {     @showConfigs = true                     })
       add_option(["--writeCC2J"                                  ], lambda { |x| @cc2j_filename = x.gsub(/[\\]/,'/')     })
       add_option(["--link-2-17",          "--link_2_17"          ], lambda {     @oldLinkOrder = true                    })
+      add_option(["--flat-build-dir",     "--flat_build_dir"     ], lambda {     @buildDirDelimiter = "_"                })
 
 
       # hidden

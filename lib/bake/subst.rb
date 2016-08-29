@@ -191,9 +191,9 @@ module Bake
               end
               if not out_dir
                 if out_proj_name == Bake.options.main_project_name and out_conf_name == Bake.options.build_config
-                  out_dir = "build/" + Bake.options.build_config
+                  out_dir = "build" + Bake.options.buildDirDelimiter + Bake.options.build_config
                 else
-                  out_dir = "build/" + out_conf_name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+                  out_dir = "build" + Bake.options.buildDirDelimiter + out_conf_name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
                 end
               end
               out_dir = substString(out_dir, elem)
