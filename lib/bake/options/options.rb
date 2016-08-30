@@ -113,6 +113,7 @@ module Bake
       add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })
       add_option(["--bundle"                                     ], lambda { |x| Bake::Usage.bundle                      })
       add_option(["--bundle"                                     ], lambda {     Bake::Usage.bundle                      })
+#      add_option(["--bundle"                                     ], lambda { |x| set_bundle_dir(x)                       })
 
       add_option(["-h",                   "--help"               ], lambda {     Bake::Usage.show                        })
 
