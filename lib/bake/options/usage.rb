@@ -40,7 +40,7 @@ module Bake
       puts " --adapt <name>           Specifies an adapt project to manipulate the configs (can be used multiple times)"
       puts " --incs-and-defs          Used by IDEs plugins"
       puts " --conversion-info        Prints infos for an external tool which converts bake configs for other build systems"
-      puts " --bundle <dir>           Bundles the output (experimental, description will follow)"
+#      puts " --bundle <dir>           Bundles the output (experimental, description will follow)"
       puts " --writeCC2J <name>       Writes compiler command into a json file (experimental!)"
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
       puts " --link-2-17              DEPRECATED: Using link order of libraries which was used until bake 2.17"
@@ -54,6 +54,11 @@ module Bake
       puts ""
       puts " --debug                  Print out backtraces in some cases - used only for debugging bake."
       ExitHelper.exit(0)
+    end
+
+    def self.bundle
+      puts "\nOption --bundle not supported anymore, please contact the author via github if still needed."
+      ExitHelper.exit(1)
     end
 
   end

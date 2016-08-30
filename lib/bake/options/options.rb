@@ -111,7 +111,8 @@ module Bake
       add_option(["--do",                 "--include_filter"     ], lambda { |x| @include_filter << x                    })
       add_option(["--omit",               "--exclude_filter"     ], lambda { |x| @exclude_filter << x                    })
       add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })
-      add_option(["--bundle"                                     ], lambda { |x| set_bundle_dir(x)                       })
+      add_option(["--bundle"                                     ], lambda { |x| Bake::Usage.bundle                      })
+      add_option(["--bundle"                                     ], lambda {     Bake::Usage.bundle                      })
 
       add_option(["-h",                   "--help"               ], lambda {     Bake::Usage.show                        })
 
