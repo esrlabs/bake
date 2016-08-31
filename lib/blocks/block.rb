@@ -15,7 +15,7 @@ module Bake
 
     class Block
 
-      attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :warnConvValid
+      attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :warnConvValid, :prebuild
       attr_accessor :visited, :inDeps, :result
 
       def startupSteps
@@ -54,8 +54,9 @@ module Bake
         @library = library
       end
 
-      def initialize(config, referencedConfigs)
+      def initialize(config, referencedConfigs, prebuild)
         @inDeps = false
+        @prebuild = prebuild
         @visited = false
         @library = nil
         @config = config
@@ -227,8 +228,11 @@ module Bake
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
 
         if Bake.options.verbose >= 1
-          Bake.formatter.printAdditionalInfo "**** Building #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
+          typeStr = @prebuild ? "Skipping" : "Building"
+          Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
+
+        return depResult if @prebuild
 
         @result = callSteps(:execute)
         return (depResult && @result)
@@ -242,8 +246,11 @@ module Bake
         return false if not depResult and Bake.options.stopOnFirstError
 
         if Bake.options.verbose >= 2
-          Bake.formatter.printAdditionalInfo "**** Cleaning #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
+          typeStr = @prebuild ? "Skipping" : "Cleaning"
+          Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
+
+        return depResult if @prebuild
 
         @result = callSteps(:clean)
 

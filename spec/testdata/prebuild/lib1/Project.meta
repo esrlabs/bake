@@ -1,0 +1,13 @@
+Project default: test {
+
+  LibraryConfig test {
+    Files "src/lib1a.cpp"
+  }
+
+  CustomConfig testPre {
+    Prebuild {
+      Except lib2, config: testa
+    }
+  }
+
+}

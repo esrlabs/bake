@@ -40,15 +40,15 @@ module Bake
 
   class SystemCommandFailed < Exception
   end
-  
+
   class ToCxx
-    
+
     @@linkBlock = 0
 
     def self.linkBlock
       @@linkBlock = 1
     end
-    
+
     def initialize
       @configTcMap = {}
     end
@@ -58,7 +58,7 @@ module Bake
         configs.each do |config|
           tcs = Utils.deep_copy(@defaultToolchain)
           @configTcMap[config] = tcs
-        end  
+        end
       end
     end
 
@@ -66,23 +66,23 @@ module Bake
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
           integrateToolchain(@configTcMap[config], config.toolchain)
-        end  
+        end
       end
     end
-        
+
     def substVars
       Subst.itute(@mainConfig, Bake.options.main_project_name, true, @configTcMap[@mainConfig], @loadedConfig, @configTcMap)
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
-          if config != @mainConfig 
+          if config != @mainConfig
             Subst.itute(config, projName, false, @configTcMap[config], @loadedConfig, @configTcMap)
-          end 
-        end  
+          end
+        end
       end
     end
-    
 
-    
+
+
     def addSteps(block, blockSteps, configSteps)
       Array(configSteps.step).each do |step|
         if Bake::Metamodel::Makefile === step
@@ -102,20 +102,56 @@ module Bake
             block.childs << blockRef
             blockRef.parents << block
             break
-          end  
+          end
         end
       end
-    end    
+    end
+
+    def calcPrebuildBlocks
+      @loadedConfig.referencedConfigs.each do |projName, configs|
+        configs.each do |config|
+          if config.prebuild
+            @prebuild ||= {}
+            config.prebuild.except.each do |except|
+              pName = projName
+              if not except.name.empty?
+                if not @loadedConfig.referencedConfigs.keys.include? except.name
+                  Bake.formatter.printWarning("Warning: prebuild project #{except.name} not found")
+                  next
+                end
+                pName = except.name
+              end
+              if except.config != "" && !@loadedConfig.referencedConfigs[pName].any? {|config| config.name == except.config}
+                Bake.formatter.printWarning("Warning: prebuild config #{except.config} of project #{pName} not found")
+                next
+              end
+
+              if not @prebuild.include?pName
+                @prebuild[pName] = [except.config]
+              else
+                @prebuild[pName] << except.config
+              end
+            end
+          end
+        end
+      end
+    end
 
     def makeBlocks
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
-          block = Blocks::Block.new(config, @loadedConfig.referencedConfigs)
+
+          prebuild = !@prebuild.nil?
+          if @prebuild and @prebuild.has_key?projName
+            prebuild = false if (@prebuild[projName].include?"" or @prebuild[projName].include?config.name)
+          end
+
+          block = Blocks::Block.new(config, @loadedConfig.referencedConfigs, prebuild)
           Blocks::ALL_BLOCKS[config.qname] = block
         end
       end
     end
-    
+
     def makeGraph
         @loadedConfig.referencedConfigs.each do |projName, configs|
           configs.each do |config|
@@ -129,26 +165,26 @@ module Bake
           block.parents.uniq!
         end
     end
-    
+
     def convert2bb
       @loadedConfig.referencedConfigs.each do |projName, configs|
         configs.each do |config|
           block = Blocks::ALL_BLOCKS[config.qname]
-          
+
           addSteps(block, block.startupSteps,  config.startupSteps)
           addSteps(block, block.exitSteps,  config.exitSteps)
-          
+
           if not Bake.options.prepro and not Bake.options.lint and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
             addSteps(block, block.preSteps,  config.preSteps)
             addSteps(block, block.postSteps, config.postSteps)
           end
-          
+
           if Bake.options.docu
             block.mainSteps << Blocks::Docu.new(config, @configTcMap[config])
           elsif Metamodel::CustomConfig === config
             if not Bake.options.prepro and not Bake.options.lint and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
               addSteps(block, block.mainSteps, config) if config.step
-            end 
+            end
           elsif Bake.options.conversion_info
             block.mainSteps << Blocks::Convert.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config])
           elsif Bake.options.lint
@@ -167,7 +203,7 @@ module Bake
           end
 
 
-                    
+
         end
       end
     end
@@ -181,11 +217,11 @@ module Bake
         if Bake.options.debug
           puts ex.message
           puts ex.backtrace
-        end 
+        end
         return false
       end
     end
-    
+
     def callBlocks(startBlocks, method, ignoreStopOnFirstError = false)
       Blocks::ALL_BLOCKS.each {|name,block| block.visited = false; block.result = true;  block.inDeps = false }
       Blocks::Block.reset_block_counter
@@ -198,7 +234,7 @@ module Bake
       end
       return result
     end
-    
+
     def calcStartBlocks
       startProjectName = nil
       startConfigName = nil
@@ -233,9 +269,9 @@ module Bake
         startBlocks = [Blocks::ALL_BLOCKS[Bake.options.main_project_name+","+Bake.options.build_config]]
         Blocks::Block.set_num_projects(Blocks::ALL_BLOCKS.length)
       end
-     return startBlocks       
+     return startBlocks
     end
-    
+
     def doit()
 
       taskType = "Building"
@@ -253,19 +289,19 @@ module Bake
         taskType = "Rebuilding"
       elsif Bake.options.clean
         taskType = "Cleaning"
-      end      
-      
-      begin      
+      end
+
+      begin
         al = AdaptConfig.new
         adaptConfigs = al.load()
-        
+
         @loadedConfig = Config.new
         @loadedConfig.load(adaptConfigs)
-        
+
         taskType = "Analyzing" if Bake.options.analyze
-                  
+
         @mainConfig = @loadedConfig.referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
-  
+
         if Bake.options.lint
           @defaultToolchain = Utils.deep_copy(Bake::Toolchain::Provider["Lint"])
         else
@@ -276,7 +312,7 @@ module Bake
             ExitHelper.exit(1)
           end
 
-          # The flag "-FS" must only be set for VS2013 and above          
+          # The flag "-FS" must only be set for VS2013 and above
           ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = ""
           if basedOn == "MSVC"
             begin
@@ -296,33 +332,36 @@ module Bake
               ExitHelper.exit(1)
             end
           end
-          
+
           @defaultToolchain = Utils.deep_copy(basedOnToolchain)
           Bake.options.envToolchain = true if (basedOn.include?"_ENV")
         end
         integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
-          
+
         # todo: cleanup this hack
         Bake.options.analyze = @defaultToolchain[:COMPILER][:CPP][:COMPILE_FLAGS].include?"analyze"
         Bake.options.eclipseOrder = @mainConfig.defaultToolchain.eclipseOrder
-        
+
         createBaseTcsForConfig
         substVars
         createTcsForConfig
-        
+
         @@linkBlock = 0
-        
+
+        @prebuild = nil
+        calcPrebuildBlocks if Bake.options.prebuild
+
         makeBlocks
         makeGraph
         convert2bb
-        
+
         Blocks::Show.includes if Bake.options.show_includes
         Blocks::Show.includesAndDefines(@mainConfig, @configTcMap[@mainConfig]) if Bake.options.show_includes_and_defines
-        
+
         startBlocks = calcStartBlocks
 
         Bake::IDEInterface.instance.set_build_info(@mainConfig.parent.name, @mainConfig.name, Blocks::ALL_BLOCKS.length)
-        
+
         ideAbort = false
         begin
           result = callBlocks(startBlocks, :startup, true)
@@ -335,21 +374,21 @@ module Bake
             if not Bake.options.stopOnFirstError or result
               result = callBlocks(startBlocks, :execute) && result
             end
-          end      
+          end
         rescue AbortException
           ideAbort = true
         end
         result = callBlocks(startBlocks, :exits, true) && result
-        
+
         if ideAbort
           Bake.formatter.printError("\n#{taskType} aborted.")
           ExitHelper.set_exit_code(1)
           return
         end
-        
+
         if Bake.options.cc2j_filename
           Blocks::BlockBase.prepareOutput(Bake.options.cc2j_filename)
-          File.open(Bake.options.cc2j_filename, 'w') do |f|  
+          File.open(Bake.options.cc2j_filename, 'w') do |f|
             f.puts "["
             noComma = Blocks::CC2J.length - 1
             Blocks::CC2J.each_with_index do |c, index|
@@ -361,7 +400,7 @@ module Bake
             f.puts "]"
           end
         end
-              
+
         if result == false
           Bake.formatter.printError("\n#{taskType} failed.")
           ExitHelper.set_exit_code(1)
@@ -376,7 +415,7 @@ module Bake
       rescue SystemExit
         Bake.formatter.printError("\n#{taskType} failed.") if ExitHelper.exit_code != 0
       end
-      
+
     end
 
     def connect()

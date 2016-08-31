@@ -1,0 +1,68 @@
+Project {
+
+  LibraryConfig testa {
+    Files "src/maina.cpp"
+  }
+
+  ExecutableConfig test {
+    Dependency config: testa
+    Dependency lib1
+    Dependency lib2, config: testa
+    Dependency lib2, config: testb
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+    PreSteps {
+      CommandLine "echo PRESTEP"
+    }
+  }
+
+  CustomConfig testPre1 {
+    Dependency config: test
+    Prebuild {
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig testPre2 {
+    Dependency config: test
+    Prebuild {
+      Except
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig testPre3 {
+    Dependency config: test
+    Prebuild {
+      Except lib2
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig testPre4 {
+    Dependency config: test
+    Prebuild {
+      Except lib2, config: testa
+      Except config: test
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig testPre5 {
+    Dependency config: test
+    Dependency lib1, config: testPre
+    Prebuild {
+      Except config: test
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig testPre6 {
+    Prebuild {
+      Except testWrong
+      Except config: testWrong
+    }
+    DefaultToolchain GCC
+  }
+
+}

@@ -1,0 +1,11 @@
+Project {
+
+  LibraryConfig testa {
+    Files "src/lib2a.cpp"
+  }
+
+  LibraryConfig testb {
+    Files "src/lib2b.cpp"
+  }
+
+}

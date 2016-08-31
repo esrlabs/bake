@@ -15,7 +15,7 @@ module Bake
         def fragment_ref=(fref)
           @fname = fref.fragment.location
         end
-        
+
         def file_name
           @fname
         end
@@ -50,11 +50,11 @@ module Bake
       class InternalIncludes < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
       end
-      
+
       class InternalDefines < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
       end
-  
+
       class Archiver < ModelElement
         has_attr 'command', String, :defaultValueLiteral => ""
         contains_many 'flags', Flags, 'parent'
@@ -77,12 +77,12 @@ module Bake
 
       class LintPolicy < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
-      end      
-      
+      end
+
       class Docu < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
-      end 
-         
+      end
+
       class DefaultToolchain < ModelElement
         has_attr 'basedOn', String, :defaultValueLiteral => ""
         has_attr 'outputDir', String, :defaultValueLiteral => ""
@@ -103,7 +103,7 @@ module Bake
         contains_many 'lintPolicy', LintPolicy, 'parent'
         contains_one 'docu', Docu, 'parent'
       end
-      
+
       class Person < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'email', String, :defaultValueLiteral => ""
@@ -112,12 +112,12 @@ module Bake
       class Description < ModelElement
         has_attr 'text', String, :defaultValueLiteral => ""
       end
-      
+
       class RequiredBakeVersion < ModelElement
         has_attr 'minimum', String, :defaultValueLiteral => ""
         has_attr 'maximum', String, :defaultValueLiteral => ""
       end
-      
+
       class Responsible < ModelElement
         contains_many "person", Person, 'parent'
       end
@@ -141,7 +141,7 @@ module Bake
 
       class LibStuff < ModelElement
       end
-      
+
       class ExternalLibrary < LibStuff
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'search', Boolean, :defaultValueLiteral => "true"
@@ -154,12 +154,21 @@ module Bake
       class UserLibrary < LibStuff
         has_attr 'name', String, :defaultValueLiteral => ""
       end
-      
+
       class Dependency < LibStuff
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'config', String, :defaultValueLiteral => ""
       end
-    
+
+      class Except < ModelElement
+        has_attr 'name', String, :defaultValueLiteral => ""
+        has_attr 'config', String, :defaultValueLiteral => ""
+      end
+
+      class Prebuild < ModelElement
+        contains_many 'except', Except, 'parent'
+      end
+
       class Step < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'default', String, :defaultValueLiteral => "on"
@@ -188,11 +197,11 @@ module Bake
       class ExitSteps < ModelElement
         contains_many 'step', Step, 'parent'
       end
-      
+
       class StartupSteps < ModelElement
         contains_many 'step', Step, 'parent'
       end
-      
+
       class LinkerScript < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
       end
@@ -200,17 +209,17 @@ module Bake
       class MapFile < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
       end
-      
+
       class ArtifactName < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
-      end 
-      
+      end
+
       class Set < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'value', String, :defaultValueLiteral => ""
         has_attr 'cmd', String, :defaultValueLiteral => ""
         has_attr 'env', Boolean, :defaultValueLiteral => "false"
-      end  
+      end
 
       class BaseConfig_INTERNAL < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
@@ -227,27 +236,28 @@ module Bake
         contains_one 'toolchain', Toolchain, 'parent'
         contains_many 'set', Set, 'parent'
         contains_many 'includeDir', IncludeDir, 'parent'
-        
+        contains_many 'prebuild', Prebuild, 'parent'
+
         module ClassModule
           def ident
             s = file_name.split("/")
             s[s.length-2] + "/" + name
-          end         
+          end
         end
-                
+
       end
-      
+
       class BuildConfig_INTERNAL < BaseConfig_INTERNAL
         contains_many 'files', Files, 'parent'
         contains_many 'excludeFiles', ExcludeFiles, 'parent'
         contains_one 'artifactName', ArtifactName, 'parent'
-      end      
-      
+      end
+
       class ExecutableConfig < BuildConfig_INTERNAL
         contains_one 'linkerScript', LinkerScript, 'parent'
         contains_one 'mapFile', MapFile, 'parent'
       end
-      
+
       class LibraryConfig < BuildConfig_INTERNAL
       end
 
@@ -261,21 +271,21 @@ module Bake
         contains_one 'requiredBakeVersion', RequiredBakeVersion, 'parent'
         contains_one 'responsible', Responsible, 'parent'
         contains_many 'config', BaseConfig_INTERNAL, 'parent'
-        
+
         module ClassModule
            def name
             splitted = file_name.split("/")
             x = splitted[splitted.length-2]
             x
-          end         
+          end
         end
-                
+
       end
 
      class Adapt < ModelElement
        contains_many 'config', BaseConfig_INTERNAL, 'parent'
      end
-      
+
   end
 
 end
