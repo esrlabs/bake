@@ -24,7 +24,7 @@ describe "Building" do
   it 'workspace' do
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == false
 
-    Bake.startBake("cache/main", ["-b", "test", "-v2", "--flat-build-dir"])
+    Bake.startBake("cache/main", ["-b", "test", "-v2", "--build_"])
 
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == true
 
@@ -37,7 +37,7 @@ describe "Building" do
   it 'single lib' do
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == false
 
-    Bake.startBake("cache/main", ["-p", "lib1", "-b", "test", "--flat-build-dir"])
+    Bake.startBake("cache/main", ["-p", "lib1", "-b", "test", "--build_"])
 
     expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/this.name")).to be == true
     expect(File.exists?("spec/testdata/cache/main/build_test/main.exe")).to be == false

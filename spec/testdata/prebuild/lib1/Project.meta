@@ -2,6 +2,8 @@ Project default: test {
 
   LibraryConfig test {
     Files "src/lib1a.cpp"
+    Dependency lib2, config: testa
+    Dependency lib2, config: testb
   }
 
   CustomConfig testPre {
