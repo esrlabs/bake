@@ -8,7 +8,6 @@ Tips and Tricks
     static_code_analysis
     how_to_use_bake_with_cygwin
     the_clang
-    bundle
 
 
 Unnecessary includes

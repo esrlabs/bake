@@ -1,6 +1,11 @@
 Changelog
 =========
 
+August 31, 2016 - bake-toolkit 2.20.0
+    * Changed: removed the *bundle* feature, replace by *prebuild* feature
+    * Added: commandline option *--build_* to enable the old outputdir behaviour: *build_* instead of *build/*
+    * Added: Print out more info when loading Project.metas in verbosity level 3
+
 August 12, 2016 - bake-toolkit 2.19.2
     * Bugfix: fixed TI linker error parser
 
