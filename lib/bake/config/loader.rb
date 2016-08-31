@@ -5,18 +5,18 @@ module Bake
 
   class Config
     attr_reader :referencedConfigs
-    
+
     def getFullProjectInternal(configs, configname, isMain) # note: configs is never empty
-      
+
       if (configname == "")
         if configs[0].parent.default != ""
           configname = configs[0].parent.default
         else
-          Bake.formatter.printError("No default config specified", configs[0].file_name) 
+          Bake.formatter.printError("No default config specified", configs[0].file_name)
           ExitHelper.exit(1)
         end
       end
-      
+
       config = nil
       configs.each do |c|
         if c.name == configname
@@ -26,13 +26,13 @@ module Bake
           end
           config = c
         end
-      end 
-      
+      end
+
       if not config
         Bake.formatter.printError("Config '#{configname}' not found", configs[0].file_name)
         ExitHelper.exit(1)
       end
-      
+
       if config.extends != ""
         config.extends.split(",").map {|ex| ex.strip}.reverse.each do |ex|
           if (ex != "")
@@ -41,10 +41,10 @@ module Bake
           end
         end
       end
-      
+
       [config, configname]
     end
-    
+
     def getFullProject(configs, configname, isMain)
       config, configname = getFullProjectInternal(configs, configname, isMain)
 
@@ -57,7 +57,7 @@ module Bake
           end
         end
       end
-      
+
       [config, configname]
     end
 
@@ -77,7 +77,7 @@ module Bake
         end
       end
     end
-        
+
     def checkVerFormat(ver)
       return true if ver.empty?
       return false if ver.length > 3
@@ -94,18 +94,18 @@ module Bake
       Bake.formatter.printError("Not compatible with installed bake version: #{text1 + text2 + text3}", reqVersion)
       ExitHelper.exit(1)
     end
-    
+
     def checkVer(reqVersion)
       return if reqVersion.nil?
       min = reqVersion.minimum.split(".")
       max = reqVersion.maximum.split(".")
       cur = Bake::Version.number.split(".")
-      
+
       if !checkVerFormat(min) or !checkVerFormat(max)
         Bake.formatter.printError("Version must be <major>.<minor>.<patch> whereas minor and patch are optional and all numbers >= 0.", reqVersion)
         ExitHelper.exit(1)
       end
-      
+
       [min,max,cur].each { |arr| arr.map! {|x| x.to_i} }
       min.each_with_index do |v,i|
         break if v < cur[i]
@@ -116,16 +116,16 @@ module Bake
         bailOutVer(reqVersion) if v < cur[i]
       end
     end
-    
+
     def loadProjMeta(filename)
-      
+
       Bake::Configs::Checks.symlinkCheck(filename)
-      
+
       @project_files << filename
       f = @loader.load(filename)
 
       config = nil
-      
+
       if f.root_elements.length != 1 or not Metamodel::Project === f.root_elements[0]
         Bake.formatter.printError("Config file must have exactly one 'Project' element as root element", filename)
         ExitHelper.exit(1)
@@ -134,25 +134,25 @@ module Bake
 
       reqVersion = proj.getRequiredBakeVersion
       checkVer(reqVersion)
-     
+
       configs = proj.getConfig
       Bake::Configs::Checks::commonMetamodelCheck(configs, filename)
-      
+
       configs.each do |c|
         if not c.project.empty?
-          Bake.formatter.printError("Attribute 'project' must only be used in adapt config.",c) 
+          Bake.formatter.printError("Attribute 'project' must only be used in adapt config.",c)
           ExitHelper.exit(1)
         end
         if not c.type.empty?
-          Bake.formatter.printError("Attribute 'type' must only be used in adapt config.",c) 
+          Bake.formatter.printError("Attribute 'type' must only be used in adapt config.",c)
           ExitHelper.exit(1)
         end
       end
-      
+
       configs
     end
-    
-    
+
+
     def validateDependencies(config)
       config.dependency.each do |dep|
         if dep.name.include?"$" or dep.config.include?"$"
@@ -170,23 +170,27 @@ module Bake
         ExitHelper.exit(1)
       end
       dep_path, dismiss, dep_name = dep_subbed.rpartition("/")
-      
+
       # file not loaded yet
       if not @loadedConfigs.include?dep_name
-        
+
+        if Bake.options.verbose >= 3
+          puts "First referenced by #{dep.parent.parent.name} (#{dep.parent.name}):"
+        end
+
         pmeta_filenames = []
-          
+
         @potentialProjs.each do |pp|
-          if pp.include?("/" + dep_subbed + "/Project.meta") or pp == (dep_subbed + "/Project.meta") 
+          if pp.include?("/" + dep_subbed + "/Project.meta") or pp == (dep_subbed + "/Project.meta")
             pmeta_filenames << pp
           end
         end
-  
+
         if pmeta_filenames.empty?
           Bake.formatter.printError("#{dep.name}/Project.meta not found", dep)
           ExitHelper.exit(1)
         end
-        
+
         if pmeta_filenames.length > 1
           Bake.formatter.printWarning("Project #{dep.name} exists more than once", dep)
           chosen = " (chosen)"
@@ -195,7 +199,7 @@ module Bake
             chosen = ""
           end
         end
-        
+
         @loadedConfigs[dep_name] = loadProjMeta(pmeta_filenames[0])
       else
         folder = @loadedConfigs[dep_name][0].get_project_dir
@@ -203,54 +207,57 @@ module Bake
           Bake.formatter.printError("Cannot load #{dep.name}, because #{folder} already loaded", dep)
           ExitHelper.exit(1)
         end
-        
+
       end
-            
+
       # get config
+      if Bake.options.verbose >= 3
+        puts "  #{dep_name} #{dep.config.empty? ? "<default>" : "("+dep.config+")"} referenced by #{dep.parent.parent.name} (#{dep.parent.name})"
+      end
       config, dep.config = getFullProject(@loadedConfigs[dep_name], dep.config, false)
       dep.name = dep_name
-      
+
       # config not referenced yet
       if not @referencedConfigs.include?dep_name
-        @referencedConfigs[dep_name] = [config] 
+        @referencedConfigs[dep_name] = [config]
       elsif @referencedConfigs[dep_name].index { |c| c.name == dep.config } == nil
         @referencedConfigs[dep_name] << config
       else
         return
       end
-      
+
       validateDependencies(config)
       @depsPending += config.dependency
     end
-    
+
     def loadMainMeta()
       mainMeta = Bake.options.main_dir+"/Project.meta"
       if not File.exist?(mainMeta)
         Bake.formatter.printError("Error: #{mainMeta} not found")
         ExitHelper.exit(1)
       end
-        
+
       @project_files = []
       configs = loadProjMeta(mainMeta)
       @loadedConfigs = {}
       @loadedConfigs[Bake.options.main_project_name] = configs
 
-      if not showConfigNames?        
+      if not showConfigNames?
         config, Bake.options.build_config = getFullProject(configs,Bake.options.build_config, true)
         @referencedConfigs = {}
         @referencedConfigs[Bake.options.main_project_name] = [config]
-        
+
         validateDependencies(config)
         @depsPending = config.dependency
-        
+
         if Bake.options.build_config != "" and config.defaultToolchain == nil
           Bake.formatter.printError("Main project configuration must contain DefaultToolchain", config)
           ExitHelper.exit(1)
-        end        
+        end
       end
-      
+
     end
-    
+
     def checkRoots()
       @potentialProjs = []
       Bake.options.roots.each do |r|
@@ -260,30 +267,30 @@ module Bake
         r = r+"/**{,/*/**}/Project.meta"
         @potentialProjs.concat(Dir.glob(r).sort)
       end
-      
+
       @potentialProjs = @potentialProjs.uniq
     end
-    
-    
+
+
     def filterStep(step, globalFilterStr)
-      
+
       # 1st prio: explicit single filter
-      if step.filter != "" 
+      if step.filter != ""
         return true if  Bake.options.exclude_filter.include?step.filter
         return false if Bake.options.include_filter.include?step.filter
-      end 
+      end
 
       # 2nd prio: explicit global filter
       if globalFilterStr != nil
         return true if  Bake.options.exclude_filter.include?globalFilterStr
         return false if Bake.options.include_filter.include?globalFilterStr
-      end      
+      end
 
       # 3nd prio: default
       return true if step.default == "off"
-      false      
+      false
     end
-        
+
     def filterSteps
       @referencedConfigs.each do |projName, configs|
         configs.each do |config|
@@ -301,13 +308,13 @@ module Bake
     def defaultConfigName
       @loadedConfigs[Bake.options.main_project_name].first.parent.default
     end
-        
+
     def showConfigNames?
       Bake.options.showConfigs or (Bake.options.build_config == "" and defaultConfigName == "")
     end
 
     def printConfigNames
-      mainConfigName = Bake.options.build_config != "" ? Bake.options.build_config : defaultConfigName 
+      mainConfigName = Bake.options.build_config != "" ? Bake.options.build_config : defaultConfigName
       configs = @loadedConfigs[Bake.options.main_project_name]
       foundValidConfig = false
       configs.each do |c|
@@ -319,11 +326,11 @@ module Bake
         Kernel.print "\n"
         foundValidConfig = true
       end
-     
+
       Bake.formatter.printWarning("No configuration with a DefaultToolchain found", Bake.options.main_dir+"/Project.meta") unless foundValidConfig
       ExitHelper.exit(0)
     end
-    
+
     def load(adaptConfigs)
       @adaptConfigs = adaptConfigs
       @loader = Loader.new
@@ -349,8 +356,8 @@ module Bake
       else
         loadMainMeta # "--list" specified
         printConfigNames
-      end 
+      end
     end
-    
+
   end
 end
