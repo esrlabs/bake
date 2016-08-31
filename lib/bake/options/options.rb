@@ -129,7 +129,7 @@ module Bake
       add_option(["--list",               "--show_configs"       ], lambda {     @showConfigs = true                     })
       add_option(["--writeCC2J"                                  ], lambda { |x| @cc2j_filename = x.gsub(/[\\]/,'/')     })
       add_option(["--link-2-17",          "--link_2_17"          ], lambda {     @oldLinkOrder = true                    })
-      add_option(["--flat-build-dir",     "--flat_build_dir"     ], lambda {     @buildDirDelimiter = "_"                })
+      add_option(["--build_",                                    ], lambda {     @buildDirDelimiter = "_"                })
 
 
       # hidden

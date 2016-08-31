@@ -44,7 +44,7 @@ module Bake
       puts " --writeCC2J <name>       Writes compiler command into a json file (experimental!)"
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
       puts " --link-2-17              DEPRECATED: Using link order of libraries which was used until bake 2.17"
-      puts " --flat-build-dir         DEPRECATED: build directories will be build_<name> instead of build/<name>"
+      puts " --build_                 DEPRECATED: build directories will be build_<name> instead of build/<name>"
 
       puts ""
       puts " --version                Print version."
