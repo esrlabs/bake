@@ -256,13 +256,28 @@ module Bake
       class ExecutableConfig < BuildConfig_INTERNAL
         contains_one 'linkerScript', LinkerScript, 'parent'
         contains_one 'mapFile', MapFile, 'parent'
+        module ClassModule
+          def color
+            "green"
+          end
+        end
       end
 
       class LibraryConfig < BuildConfig_INTERNAL
+        module ClassModule
+          def color
+            "cyan"
+          end
+        end
       end
 
       class CustomConfig < BaseConfig_INTERNAL
         contains_one 'step', Step, 'parent'
+        module ClassModule
+          def color
+            "red"
+          end
+        end
       end
 
       class Project < ModelElement

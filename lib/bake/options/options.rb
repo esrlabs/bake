@@ -18,7 +18,7 @@ module Bake
 
   class Options < Parser
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
-    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename, :bundleDir, :buildDirDelimiter # String
+    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename, :bundleDir, :buildDirDelimiter, :dot # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro, :oldLinkOrder, :prebuild # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
@@ -30,6 +30,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
+      @dot = nil
       @prebuild = false
       @buildDirDelimiter = "/"
       @oldLinkOrder = false
@@ -109,6 +110,7 @@ module Bake
       add_option(["--socket"                                     ], lambda { |x| @socket = String === x ? x.to_i : x     })
       add_option(["--toolchain-info",     "--toolchain_info"     ], lambda { |x| ToolchainInfo.showToolchain(x)          })
       add_option(["--toolchain-names",    "--toolchain_names"    ], lambda {     ToolchainInfo.showToolchainList         })
+      add_option(["--dot",                                       ], lambda { |x| @dot = x                                })
       add_option(["--do",                 "--include_filter"     ], lambda { |x| @include_filter << x                    })
       add_option(["--omit",               "--exclude_filter"     ], lambda { |x| @exclude_filter << x                    })
       add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })

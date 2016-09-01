@@ -30,6 +30,7 @@ module Bake
       puts " --socket <num>           Set SOCKET for sending errors, receiving commands, etc. - used by e.g. Eclipse."
       puts " --toolchain-info <name>  Prints default values of a toolchain."
       puts " --toolchain-names        Prints available toolchains."
+      puts " --dot <filename>         Creates a .dot file of the config dependencies."
       puts " --do <name>              Includes steps with this filter name (can be used multiple times)."
       puts "                          'PRE', 'POST', 'STARTUP' or 'EXIT' includes all according steps."
       puts " --omit <name>            Excludes steps with this filter name (can be used multiple times)."
