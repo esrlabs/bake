@@ -3,17 +3,18 @@ Project {
   Responsible {
     Person "TBD", email: "TBD@TBD.com"
   }
-  
+
   LibraryConfig testMultiFile {
     Files "**/*.cpp"
   }
-  
+
   LibraryConfig testsub {
     Files "**/lib1.cpp"
     IncludeDir "include"
     ArtifactName "this.name"
     PreSteps {
       CommandLine "echo PRELIB1"
+      CommandLine "echo ToolchainName_lib1 $(ToolchainName)", default: off, filter: var
       CommandLine "echo MainConfigName_lib1 $(MainConfigName)", default: off, filter: var
       CommandLine "echo MainProjectName_lib1 $(MainProjectName)", default: off, filter: var
       CommandLine "echo ConfigName_lib1 $(ConfigName)", default: off, filter: var
@@ -28,8 +29,8 @@ Project {
     PostSteps {
       CommandLine "echo POSTLIB1"
       CommandLine "echo LIB$(var1)"
-      CommandLine "echo LIB$(var2)"      
-      CommandLine "echo LIB$(var3)"      
+      CommandLine "echo LIB$(var2)"
+      CommandLine "echo LIB$(var3)"
     }
     Set var1, value: V1lib
     Set var3, value: V3lib

@@ -45,6 +45,7 @@ module Bake
       @@toolchain = toolchain
       @@loadedConfig = loadedConfig
       @@configTcMap = configTcMap
+      @@toolchainName = config.defaultToolchain.basedOn if isMainProj
 
       @@configName = config.name
       @@projDir = config.parent.get_project_dir
@@ -167,6 +168,8 @@ module Bake
           substStr << Bake.options.main_dir
         elsif var == "ConfigName"
          substStr << @@configName
+        elsif var == "ToolchainName" and defined?@@toolchainName
+         substStr << @@toolchainName
         elsif var == "ProjectName"
           substStr << @@projName
         elsif var == "ProjectDir"

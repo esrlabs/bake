@@ -21,6 +21,7 @@ Project {
       CommandLine "echo PREMAIN"
       Makefile "makefile/makefile", lib: "makefile/dummy.a"
       CommandLine "echo PRELIB1"
+      CommandLine "echo ToolchainName_main $(ToolchainName)", default: off, filter: var
       CommandLine "echo MainConfigName_main $(MainConfigName)", default: off, filter: var
       CommandLine "echo MainProjectName_main $(MainProjectName)", default: off, filter: var
       CommandLine "echo ConfigName_main $(ConfigName)", default: off, filter: var
