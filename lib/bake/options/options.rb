@@ -20,7 +20,7 @@ module Bake
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
     attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename, :bundleDir, :buildDirDelimiter, :dot # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
-    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro, :oldLinkOrder, :prebuild # Boolean
+    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :compileOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro, :oldLinkOrder, :prebuild # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verbose
@@ -60,6 +60,7 @@ module Bake
       @show_includes = false
       @show_includes_and_defines = false
       @linkOnly = false
+      @compileOnly = false
       @no_autodir = false
       @threads = 8
       @lint_min = 0
@@ -84,6 +85,7 @@ module Bake
       add_option(["--rebuild"                                    ], lambda {     @rebuild = true                         })
       add_option(["--prepro"                                     ], lambda {     @prepro = true                          })
       add_option(["--link-only",          "--link_only"          ], lambda {     @linkOnly = true;                       })
+      add_option(["--compile-only",       "--compile_only"       ], lambda {     @compileOnly = true;                    })
       add_option(["--no-autodir",         "--no_autodir"         ], lambda {     @no_autodir = true                      })
       add_option(["--lint"                                       ], lambda {     @lint = true                            })
       add_option(["--lint-min",           "--lint_min"           ], lambda { |x| @lint_min = String === x ? x.to_i : x   })
@@ -174,6 +176,10 @@ module Bake
           Bake.formatter.printError("Error: --conversion-info and --linkOnly not allowed at the same time")
           ExitHelper.exit(1)
         end
+        if @compileOnly
+          Bake.formatter.printError("Error: --conversion-info and --compileOnly not allowed at the same time")
+          ExitHelper.exit(1)
+        end
         if @lint
           Bake.formatter.printError("Error: --conversion-info and --lint not allowed at the same time")
           ExitHelper.exit(1)
@@ -201,6 +207,21 @@ module Bake
           Bake.formatter.printError("Error: --link-only and --prepro not allowed at the same time")
           ExitHelper.exit(1)
         end
+        if @filename
+          Bake.formatter.printError("Error: --link-only and --filename not allowed at the same time")
+          ExitHelper.exit(1)
+        end
+      end
+
+      if @compileOnly
+        if @linkOnly
+          Bake.formatter.printError("Error: --compile-only and --link-only not allowed at the same time")
+          ExitHelper.exit(1)
+        end
+        if @filename
+          Bake.formatter.printError("Error: --compile-only and --filename not allowed at the same time")
+          ExitHelper.exit(1)
+        end
       end
 
       if @prepro
@@ -218,6 +239,9 @@ module Bake
         Bake.formatter.printError("Error: --lint and --docu not allowed at the same time")
         ExitHelper.exit(1)
       end
+
+      @filename = "." if @compileOnly
+
     end
 
     def check_valid_dir(dir)

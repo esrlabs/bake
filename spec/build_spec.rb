@@ -11,7 +11,7 @@ require 'fileutils'
 module Bake
 
 describe "Building" do
-
+=begin
   it 'sameObj' do
     expect(File.exists?("spec/testdata/sameObj/main/build/test/main.exe")).to be == false
 
@@ -308,6 +308,42 @@ describe "Building" do
     Bake.startBake("simple/main", ["test_doubleSource", "--link-only"])
     expect($mystring.include?("Source compiled more than once")).to be == true
     expect($mystring.include?("spec/testdata/simple/main/src/x.cpp")).to be == true
+  end
+=end
+  it 'compileOnly' do
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/liblib1.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/lib1.a")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/main.exe")).to be == false
+
+    Bake.startBake("cache/main", ["-b", "testMultiFileExe", "--compile-only"])
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/lib1.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/liblib1.a")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/main.exe")).to be == false
+    expect(ExitHelper.exit_code).to be == 0
+
+    Bake.startBake("cache/main", ["-b", "testMultiFileExe", "-f", "multi.cpp", "-c"])
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/liblib1.o")).to be == false
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/lib1.a")).to be == false
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/main.exe")).to be == false
+    expect(ExitHelper.exit_code).to be == 0
+
+    Bake.startBake("cache/main", ["-b", "testMultiFileExe"])
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/lib1.o")).to be == true
+    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/liblib1.a")).to be == true
+    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/main.exe")).to be == true
+    expect(ExitHelper.exit_code).to be == 0
   end
 
 end

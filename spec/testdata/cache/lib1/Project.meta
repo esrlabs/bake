@@ -6,6 +6,7 @@ Project {
 
   LibraryConfig testMultiFile {
     Files "**/*.cpp"
+    IncludeDir "include"
   }
 
   LibraryConfig testsub {

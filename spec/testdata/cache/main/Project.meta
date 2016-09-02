@@ -8,6 +8,16 @@ Project {
 
   ExecutableConfig testMultiFile {
     Files "**/*.cpp"
+    IncludeDir "include"
+    IncludeDir "lib1/include"
+    Dependency lib1, config: testMultiFile
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig testMultiFileExe {
+    Files "**/multi.cpp"
+    IncludeDir "include"
+    IncludeDir "lib1/include"
     Dependency lib1, config: testMultiFile
     DefaultToolchain GCC
   }
