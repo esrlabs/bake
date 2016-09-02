@@ -5,71 +5,73 @@ module Bake
 
   class AdaptConfig
     attr_reader :referencedConfigs
-    
+
     @@filenames = []
-    
+
     def self.filenames
       @@filenames
-    end 
-    
+    end
+
     def loadProjMeta(filename, filenum)
-      
+
       Bake::Configs::Checks.symlinkCheck(filename)
-      
+
       f = @loader.load(filename)
-    
+
       if f.root_elements.length != 1 or not Metamodel::Adapt === f.root_elements[0]
         Bake.formatter.printError("Config file must have exactly one 'Adapt' element as root element", filename)
         ExitHelper.exit(1)
       end
-      
+
       adapt = f.root_elements[0]
       configs = adapt.getConfig
-      
+
       Bake::Configs::Checks::commonMetamodelCheck(configs, filename)
-      
+
       configs.each do |c|
         if not c.extends.empty?
-          Bake.formatter.printError("Attribute 'extends' must not be used in adapt config.",c) 
+          Bake.formatter.printError("Attribute 'extends' must not be used in adapt config.",c)
           ExitHelper.exit(1)
         end
         if c.name.empty?
-          Bake.formatter.printError("Configs must be named.",c) 
+          Bake.formatter.printError("Configs must be named.",c)
           ExitHelper.exit(1)
         end
         if c.project.empty?
-          Bake.formatter.printError("The corresponding project must be specified.",c) 
+          Bake.formatter.printError("The corresponding project must be specified.",c)
           ExitHelper.exit(1)
         end
         if not ["replace", "remove", "extend"].include?c.type
-          Bake.formatter.printError("Allowed types are 'replace', 'remove' and 'extend'.",c) 
+          Bake.formatter.printError("Allowed types are 'replace', 'remove' and 'extend'.",c)
           ExitHelper.exit(1)
         end
       end
-      
+
       configs
-    end    
-    
+    end
+
     def getPotentialAdaptionProjects()
       potentialAdapts = []
       Bake.options.roots.each do |r|
         if (r.length == 3 && r.include?(":/"))
           r = r + Bake.options.main_project_name # glob would not work otherwise on windows (ruby bug?)
-        end        
+        end
         Bake.options.adapt.each do |a|
-          fn = r+"/**{,/*/**}/#{a}/Adapt.meta"
+          adaptBaseName = a + "/Adapt.meta"
+          potentialAdapts << adaptBaseName  if File.exists?adaptBaseName
+          fn = r+"/**{,/*/**}/#{adaptBaseName}"
           potentialAdapts.concat(Dir.glob(fn).sort)
         end
       end
-      
+
       potentialAdapts.uniq
-    end    
-    
-    def chooseProjectFilenames(potentialAdapts)      
+    end
+
+    def chooseProjectFilenames(potentialAdapts)
       @@filenames = []
-        
-      Bake.options.adapt.each do |a|        
-        adapts = potentialAdapts.find_all { |p| p.include?(a+"/Adapt.meta") }        
+        p potentialAdapts
+      Bake.options.adapt.each do |a|
+        adapts = potentialAdapts.find_all { |p| p.include?(a+"/Adapt.meta") }
         if adapts.empty?
           Bake.formatter.printError("Adaption project #{a} not found")
           ExitHelper.exit(1)
@@ -85,27 +87,27 @@ module Bake
           end
         end
       end
-       
+
     end
-    
+
     def load()
       @@filenames = []
       return [] if Bake.options.adapt.empty?
-      
+
       @loader = Loader.new
-      
+
       potentialProjects = getPotentialAdaptionProjects()
       chooseProjectFilenames(potentialProjects)
-      
+
       configs = []
       @@filenames.each_with_index do |f,i|
         configs.concat(loadProjMeta(f, i+1))
       end
-      
-      return configs        
+
+      return configs
     end
-    
-    
+
+
   end
 
 end

@@ -15,7 +15,10 @@ module Bake
 describe "Adapt" do
 
   it 'Dep extend 0' do
-    Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_extend"])
+
+    absAdapt = File.expand_path("spec/testdata/adapt/adapt/dep/dep_extend")
+
+    Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", absAdapt])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
     expect($mystring.include?("Building 2 of 4: lib1 (test_ok)")).to be == true
     expect($mystring.include?("Building 3 of 4: lib3 (test_ok)")).to be == true
@@ -924,7 +927,6 @@ describe "Adapt" do
     expect(pos1<pos2).to be == true
     expect(pos2<pos3).to be == true
   end
-
 
 end
 

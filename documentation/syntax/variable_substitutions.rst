@@ -82,6 +82,8 @@ Variable                                    Description                         
 *$(LinkerPath)*                             Evaluates to the base path of the                   /usr/bin
                                             linker
 
+*$(ToolchainName)*                          Names of the used DefaultToolchain                  GCC
+
 *$(/)*                                      Evalutes to the directory path seperator of         Windows: \\, Other: /
                                             the current platform
 
