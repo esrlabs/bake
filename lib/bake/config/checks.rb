@@ -2,7 +2,7 @@ module Bake
   module Configs
 
     class Checks
-    
+
       def self.symlinkCheck(filename)
         dirOfProjMeta = File.dirname(filename)
         Dir.chdir(dirOfProjMeta) do
@@ -19,14 +19,14 @@ module Bake
           end
         end
       end
-      
+
       def self.commonMetamodelCheck(configs, filename)
-        
+
         if configs.length == 0
           Bake.formatter.printError("No config found", filename)
           ExitHelper.exit(1)
         end
-        
+
         configs.each do |config|
           if config.respond_to?("toolchain") and config.toolchain
             config.toolchain.compiler.each do |c|
@@ -36,26 +36,34 @@ module Bake
               end
             end
           end
-          
+
           config.includeDir.each do |inc|
             if not ["front", "back", ""].include?inc.inject
-              Bake.formatter.printError("inject of IncludeDir must be 'front' or 'back'", inc) 
+              Bake.formatter.printError("inject of IncludeDir must be 'front' or 'back'", inc)
               ExitHelper.exit(1)
             end
             if not ["front", "back", ""].include?inc.infix
-              Bake.formatter.printError("infix of IncludeDir must be 'front' or 'back'", inc) 
+              Bake.formatter.printError("infix of IncludeDir must be 'front' or 'back'", inc)
               ExitHelper.exit(1)
             end
             if (inc.infix != "" and inc.inject != "")
-              Bake.formatter.printError("IncludeDir must have inject OR infix (deprecated)", inc) 
+              Bake.formatter.printError("IncludeDir must have inject OR infix (deprecated)", inc)
               ExitHelper.exit(1)
             end
           end if config.respond_to?("includeDir")
+
+          config.dependency.each do |d|
+            if not ["front", "back", ""].include?d.inject
+              Bake.formatter.printError("inject of Dependency must be 'front' or 'back'", d)
+              ExitHelper.exit(1)
+            end
+          end
+
         end
-        
+
       end
-      
+
     end
-    
+
   end
 end

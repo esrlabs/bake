@@ -153,17 +153,59 @@ module Bake
     end
 
     def makeGraph
-        @loadedConfig.referencedConfigs.each do |projName, configs|
-          configs.each do |config|
-            block = Blocks::ALL_BLOCKS[config.qname]
-              addDependencies(block, config)
+      @loadedConfig.referencedConfigs.each do |projName, configs|
+        configs.each do |config|
+          block = Blocks::ALL_BLOCKS[config.qname]
+            addDependencies(block, config)
+        end
+      end
+      Blocks::ALL_BLOCKS.each do |name,block|
+        block.dependencies.uniq!
+        block.childs.uniq!
+        block.parents.uniq!
+      end
+
+      # inject dependencies
+      num_interations = 0
+      begin
+        if (num_interations > 0) and Bake.options.debug and Bake.options.verbose >= 3
+          puts "Inject dependencies, iteration #{num_interations}:"
+          Blocks::ALL_BLOCKS.each do |name,block|
+            puts block.config.qname
+            block.dependencies.each { |d| puts "- #{d}" }
           end
         end
+
+        counter = 0
         Blocks::ALL_BLOCKS.each do |name,block|
-          block.dependencies.uniq!
-          block.childs.uniq!
-          block.parents.uniq!
+          block.getBlocks(:parents).each do |b|
+            b.config.dependency.each do |d|
+              next if d.inject == ""
+
+              dqname = "#{d.name},#{d.config}"
+              next if name == dqname
+              next if block.dependencies.include? dqname
+              dblock = Blocks::ALL_BLOCKS[dqname]
+              counter += 1
+              newD = MergeConfig::cloneModelElement(d)
+              newD.setInject("")
+              ls = block.config.getLibStuff
+              dblock.parents << block
+
+              if d.inject == "front"
+                block.config.setLibStuff(ls.unshift(newD))
+                block.childs.unshift dblock
+                block.dependencies.unshift dqname
+              else
+                block.config.setLibStuff(ls + [newD])
+                block.childs << dblock
+                block.dependencies << dqname
+              end
+            end
+          end
         end
+        num_interations += 1
+      end while counter > 0
     end
 
     def makeDot

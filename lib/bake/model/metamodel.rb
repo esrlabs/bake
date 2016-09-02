@@ -158,6 +158,7 @@ module Bake
       class Dependency < LibStuff
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'config', String, :defaultValueLiteral => ""
+        has_attr 'inject', String, :defaultValueLiteral => ""
       end
 
       class Except < ModelElement

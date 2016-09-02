@@ -73,7 +73,8 @@ z-index: 100;
 &nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;, <span class="help" onMouseover="showInherit()" onMouseout="notip()">inherit</span>: true|false, <span class="help" onMouseover="showInfix()" onMouseout="notip()">inject</span>: front|back<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showSet()" onMouseout="notip()">Set</span> &#60;variable&#62;, value: &#60;value&#62; | cmd: &#60;line&#62;, <span class="help" onMouseover="showEnv()" onMouseout="notip()">env</span>: true|false<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showDependency()" onMouseout="notip()">Dependency</span> &#60;project&#62;,
-              <span class="help" onMouseover="showDependencyConfig()" onMouseout="notip()">config</span>: &#60;name&#62;<br>
+              <span class="help" onMouseover="showDependencyConfig()" onMouseout="notip()">config</span>: &#60;name&#62;,
+              <span class="help" onMouseover="showInjectDep()" onMouseout="notip()">inject</span>: front|back<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showExternalLibrary()" onMouseout="notip()">ExternalLibrary</span> &#60;lib&#62;,
                             <span class="help" onMouseover="showExternalLibrarySearch()" onMouseout="notip()">search</span>: true|false<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showUserLibrary()" onMouseout="notip()">UserLibrary</span> &#60;lib&#62;<br>
@@ -313,6 +314,11 @@ function showExternalLibrarySearchPath() {
   str = 'The linker looks for libraries in search paths.<br>'+
     'Search paths can be defined implicitly by ExternalLibrary/UserLibrary or explicitly by this tag.'
   ddrivetip("ExternalLibrarySearchPath", "No","0..n","-",str)
+}
+
+function showInjectDep() {
+  str = 'Injects the dependency to all sub-dependencies either at the front (e.g. for mocking code) or at the end.'
+  ddrivetip("inject", "No","0..1","-",str)
 }
 
 function showPreSteps() {

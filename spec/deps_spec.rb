@@ -41,8 +41,8 @@ describe "Deps" do
   end
 
   it 'circ deps' do
-    Bake.startBake("deps/p1", ["-b", "DebugCirc"])
-    expect($mystring.include?("Circular dependency found")).to be == true
+    Bake.startBake("deps/p1", ["-b", "DebugCirc", "-v3"])
+    expect($mystring.include?("circular dependency")).to be == true
   end
 
   it 'double dep explicit' do

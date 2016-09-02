@@ -1,0 +1,95 @@
+#      A -------
+#    /   \      \
+#   B     C     F (injected back by A)
+#   ^ \   / \
+#   |   D   G (injected front by C)
+#   |   |
+#    \- E (needs F and G)
+
+Project default: test2StepE{
+
+  ExecutableConfig testA {
+    Files "src/a.cpp"
+    DefaultToolchain GCC
+    Dependency config: testB
+    Dependency config: testC
+    Dependency config: testF, inject: back
+  }
+
+  LibraryConfig testB {
+    Files "src/b.cpp"
+    Dependency config: testD
+  }
+
+  LibraryConfig testC {
+    Files "src/c.cpp"
+    Dependency config: testD
+    Dependency config: testG, inject: front
+  }
+
+  LibraryConfig testD {
+    Files "src/d.cpp"
+    Dependency config: testE
+  }
+
+  LibraryConfig testE {
+    Files "src/e.cpp"
+    Dependency config: testB
+  }
+
+  LibraryConfig testF {
+    Files "src/f.cpp"
+    IncludeDir "include/F", inherit: true
+  }
+
+  LibraryConfig testG {
+    Files "src/g.cpp"
+    IncludeDir "include/G", inherit: true
+  }
+
+  #########################
+
+  ExecutableConfig testSimpleA {
+    Files "src/simpleA.cpp"
+    Dependency config: testSimpleB
+    Dependency config: testSimpleC, inject: front
+    DefaultToolchain GCC
+  }
+  LibraryConfig testSimpleB {
+    Files "src/simpleB.cpp"
+  }
+  LibraryConfig testSimpleC {
+    Files "src/simpleC.cpp"
+    IncludeDir "include/C", inherit: true
+  }
+
+
+  #########################
+
+  CustomConfig test2StepA {
+    Dependency config: test2StepC
+    Dependency config: test2StepB
+    Dependency config: test2StepD
+    DefaultToolchain GCC
+  }
+  CustomConfig test2StepB {
+    Dependency
+    Dependency config: test2StepB2, inject: front
+  }
+  CustomConfig test2StepC {
+    Dependency
+    Dependency config: test2StepF
+    Dependency config: test2StepC2, inject: front
+  }
+  CustomConfig test2StepD {
+    Dependency config: test2StepF
+    Dependency config: test2StepD2, inject: front
+  }
+  CustomConfig test2StepE
+  CustomConfig test2StepF
+  CustomConfig test2StepB2
+  CustomConfig test2StepC2
+  CustomConfig test2StepD2
+
+}
+

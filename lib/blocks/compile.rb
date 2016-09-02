@@ -6,24 +6,24 @@ require 'bake/toolchain/colorizing_formatter'
 require 'bake/config/loader'
 
 module Bake
-  
+
   module Blocks
-    
+
     class Compile < BlockBase
-      
+
       attr_reader :objects, :include_list
-      
+
       def initialize(block, config, referencedConfigs, tcs)
         super(block, config, referencedConfigs, tcs)
         @objects = []
         @object_files = {}
-        
+
         calcFileTcs
         calcIncludes
         calcDefines # not for files with changed tcs
         calcFlags   # not for files with changed tcs
       end
-   
+
       def get_object_file(source)
 
         # until now all OBJECT_FILE_ENDING are equal in all three types
@@ -31,23 +31,23 @@ module Bake
         return adaptedSource if File.is_absolute?source
         File.join([@output_dir, adaptedSource])
       end
-      
+
       def ignore?(type)
         Bake.options.linkOnly or (Bake.options.prepro and type == ASM)
       end
-      
+
       def needed?(source, object, type, dep_filename_conv)
         return "because analyzer toolchain is configured" if Bake.options.analyze
-        return "because prepro was specified and source is no assembler file" if Bake.options.prepro 
-        
+        return "because prepro was specified and source is no assembler file" if Bake.options.prepro
+
         return "because object does not exist" if not File.exist?(object)
         oTime = File.mtime(object)
-        
+
         return "because source is newer than object" if oTime < File.mtime(source)
-        
+
         if type != :ASM
           return "because dependency file does not exist" if not File.exist?(dep_filename_conv)
-          
+
           begin
             File.readlines(dep_filename_conv).map{|line| line.strip}.each do |dep|
               if not File.exist?(dep)
@@ -68,19 +68,19 @@ module Bake
             if Bake.options.debug
               puts "While reading #{dep_filename_conv}:"
               puts ex.message
-              puts ex.backtrace 
+              puts ex.backtrace
             end
             return "because dependency file could not be loaded"
           end
         end
-        
+
         false
       end
-      
+
       def calcCmdlineFile(object)
         object[0..-3] + ".cmdline"
       end
-      
+
       def calcDepFile(object, type)
         dep_filename = nil
         if type != :ASM
@@ -88,7 +88,7 @@ module Bake
         end
         dep_filename
       end
-      
+
       def calcDepFileConv(dep_filename)
         dep_filename + ".bake"
       end
@@ -100,16 +100,16 @@ module Bake
         end
         nil
       end
-                
+
       def compileFile(source)
         type = get_source_type(source)
         return if type.nil?
-        
+
         object = @object_files[source]
-        
+
         dep_filename = calcDepFile(object, type)
         dep_filename_conv = calcDepFileConv(dep_filename) if type != :ASM
-        
+
         cmdLineCheck = false
         cmdLineFile = calcCmdlineFile(object)
 
@@ -131,14 +131,14 @@ module Bake
         end
         includes = @include_array[type]
 
-        if Bake.options.prepro and compiler[:PREPRO_FLAGS] == "" 
+        if Bake.options.prepro and compiler[:PREPRO_FLAGS] == ""
           Bake.formatter.printError("Error: No preprocessor option available for " + source)
-          raise SystemCommandFailed.new 
+          raise SystemCommandFailed.new
         end
-                   
+
         cmd = Utils.flagSplit(compiler[:COMMAND], false)
         cmd += compiler[:COMPILE_FLAGS].split(" ")
-          
+
         if dep_filename
           cmd += @tcs[:COMPILER][type][:DEP_FLAGS].split(" ")
           if @tcs[:COMPILER][type][:DEP_FLAGS_FILENAME]
@@ -150,17 +150,17 @@ module Bake
               else
                 cmd[cmd.length-1] << dep_filename
               end
-              
+
             end
           end
         end
-             
+
         cmd += compiler[:PREPRO_FLAGS].split(" ") if Bake.options.prepro
         cmd += flags
         cmd += includes
         cmd += defines
-        
-        offlag = compiler[:OBJECT_FILE_FLAG]       
+
+        offlag = compiler[:OBJECT_FILE_FLAG]
         offlag = compiler[:PREPRO_FILE_FLAG] if compiler[:PREPRO_FILE_FLAG] and Bake.options.prepro
 
         if compiler[:OBJ_FLAG_SPACE]
@@ -168,7 +168,7 @@ module Bake
           cmd << object
         else
           if object.include?" "
-            cmd << offlag + "\"" + object + "\"" 
+            cmd << offlag + "\"" + object + "\""
           else
             cmd << offlag + object
           end
@@ -178,24 +178,24 @@ module Bake
         if Bake.options.cc2j_filename
           Blocks::CC2J << { :directory => @projectDir, :command => cmd, :file => source }
         end
-        
+
         if not (cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile))
           BlockBase.prepareOutput(object)
           BlockBase.writeCmdLineFile(cmd, cmdLineFile)
           success, consoleOutput = ProcessHelper.run(cmd, false, false)
-          
+
           outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
           incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
-     
+
           if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
             incList = Compile.read_depfile(dep_filename, @projectDir, @tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
-            Compile.write_depfile(incList, dep_filename_conv) 
+            Compile.write_depfile(incList, dep_filename_conv)
           end
           check_config_file
         end
-        
+
         Bake::Bundle.instance.addSource(source, @include_list, dep_filename_conv) if isMainProject?
-        
+
       end
 
       def self.read_depfile(dep_filename, projDir, singeLine)
@@ -206,7 +206,7 @@ module Bake
               splitted = line.split(": ")
               deps << splitted[1].gsub(/[\\]/,'/') if splitted.length > 1
             end
-          else          
+          else
             deps_string = File.read(dep_filename)
             deps_string = deps_string.gsub(/\\\n/,'')
             dep_splitted = deps_string.split(/([^\\]) /).each_slice(2).map(&:join)[2..-1]
@@ -218,7 +218,7 @@ module Bake
         end
         deps
       end
-      
+
       # todo: move to toolchain util file
       def self.write_depfile(deps, dep_filename_conv)
         if deps
@@ -238,30 +238,30 @@ module Bake
       def mutex
         @mutex ||= Mutex.new
       end
-      
+
       def execute
         Dir.chdir(@projectDir) do
-        
+
           calcSources
           calcObjects
 
           @incWarns.each do |x|
             Bake.formatter.printInfo("IncludeDir '#{x[0].name}' will be converted to '#{x[1]}' although local path exists. If not intended, use './#{x[0].name}'.", x[0])
           end if Bake.options.verbose >= 1
-          
+
           @error_strings = {}
-          
+
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|
             while source = jobs.get_next_or_nil do
-              
+
               if (jobs.failed and Bake.options.stopOnFirstError) or Bake::IDEInterface.instance.get_abort
                 break
               end
-              
+
               s = StringIO.new
               tmp = Thread.current[:stdout]
               Thread.current[:stdout] = s unless tmp
-                  
+
               result = false
               begin
                 compileFile(source)
@@ -273,22 +273,22 @@ module Bake
                   Bake.formatter.printError("Error: #{ex1.message}")
                   puts ex1.backtrace if Bake.options.debug
                 end
-              end 
-              
+              end
+
               jobs.set_failed if not result
-                
+
               Thread.current[:stdout] = tmp
-                  
+
               mutex.synchronize do
-                if s.string.length > 0 
+                if s.string.length > 0
                   if Bake.options.stopOnFirstError and not result
                     @error_strings[source] = s.string
                   else
                     puts s.string
                   end
                 end
-              end                  
-                  
+              end
+
             end
           end
           compileJobs.join
@@ -297,35 +297,35 @@ module Bake
           # if not sorted, it may be confusing when builing more than once and the order of the error appearances changes from build to build
           # (it is not deterministic which file compilation finishes first)
           @error_strings.sort.each {|es| puts es[1]}
-                      
+
           raise SystemCommandFailed.new if compileJobs.failed
-          
-          
+
+
         end
         return true
       end
-      
+
       def clean
         if Bake.options.filename or Bake.options.analyze
           Dir.chdir(@projectDir) do
             calcSources(true)
             @source_files.each do |source|
-              
+
               type = get_source_type(source)
               next if type.nil?
               object = get_object_file(source)
-              if File.exist?object 
+              if File.exist?object
                 puts "Deleting file #{object}" if Bake.options.verbose >= 2
                 FileUtils.rm_rf(object)
               end
               if not Bake.options.analyze
                 dep_filename = calcDepFile(object, type)
-                if dep_filename and File.exist?dep_filename 
+                if dep_filename and File.exist?dep_filename
                   puts "Deleting file #{dep_filename}" if Bake.options.verbose >= 2
                   FileUtils.rm_rf(dep_filename)
                 end
                 cmdLineFile = calcCmdlineFile(object)
-                if File.exist?cmdLineFile 
+                if File.exist?cmdLineFile
                   puts "Deleting file #{cmdLineFile}" if Bake.options.verbose >= 2
                   FileUtils.rm_rf(cmdLineFile)
                 end
@@ -335,7 +335,7 @@ module Bake
         end
         return true
       end
-      
+
       def calcObjects
         @source_files.each do |source|
           type = get_source_type(source)
@@ -345,7 +345,7 @@ module Bake
               @object_files.each do |k,v|
                 if (v == object) # will be found exactly once
                   Bake.formatter.printError("Source files '#{k}' and '#{source}' would result in the same object file", source)
-                  raise SystemCommandFailed.new  
+                  raise SystemCommandFailed.new
                 end
               end
             end
@@ -354,17 +354,17 @@ module Bake
           end
         end
       end
-      
+
       def calcSources(cleaning = false, keep = false)
         return @source_files if @source_files and not @source_files.empty?
         Dir.chdir(@projectDir) do
           @source_files = []
-      
+
           exclude_files = Set.new
           @config.excludeFiles.each do |p|
             Dir.glob(p.name).each {|f| exclude_files << f}
           end
-            
+
           source_files = Set.new
           @config.files.each do |sources|
             p = sources.name
@@ -372,7 +372,7 @@ module Bake
             if res.length == 0 and cleaning == false
               if not p.include?"*" and not p.include?"?"
                 Bake.formatter.printError("Source file '#{p}' not found", sources)
-                raise SystemCommandFailed.new  
+                raise SystemCommandFailed.new
               elsif Bake.options.verbose >= 1
                 Bake.formatter.printInfo("Source file pattern '#{p}' does not match to any file", sources)
               end
@@ -384,7 +384,7 @@ module Bake
               @source_files << f
             end
           end
-          
+
           if Bake.options.filename
             @source_files.keep_if do |source|
               source.include?Bake.options.filename
@@ -393,7 +393,7 @@ module Bake
               Bake.formatter.printInfo("#{Bake.options.filename} does not match to any source", @config)
             end
           end
-          
+
           if Bake.options.eclipseOrder # directories reverse order, files in directories in alphabetical order
             dirs = []
             filemap = {}
@@ -416,20 +416,20 @@ module Bake
         end
         @source_files
       end
-        
+
       def mapInclude(inc, orgBlock)
-        
+
         if inc.name == "___ROOTS___"
           return Bake.options.roots.map { |r| File.rel_from_to_project(@projectDir,r,false) }
         end
-        
+
         i = orgBlock.convPath(inc,nil,true)
         if orgBlock != @block
           if not File.is_absolute?(i)
             i = File.rel_from_to_project(@projectDir,orgBlock.config.parent.get_project_dir) + i
           end
         end
-        
+
         x = Pathname.new(i).cleanpath
         if orgBlock.warnConvValid
           @incWarns << [inc, x]
@@ -439,20 +439,20 @@ module Bake
 
       def calcIncludes
         @incWarns = []
-          
+
         @include_list = @config.includeDir.uniq.map do |dir|
           mapInclude(dir, @block)
         end
-        
-        getBlocks(:childs).each do |b|
+
+        @block.getBlocks(:childs).each do |b|
           b.config.includeDir.each do |inc|
             if inc.inherit == true
-              @include_list << mapInclude(inc, b)     
+              @include_list << mapInclude(inc, b)
             end
           end if b.config.respond_to?("includeDir")
         end
-        
-        getBlocks(:parents).each do |b|
+
+        @block.getBlocks(:parents).each do |b|
           if b.config.respond_to?("includeDir")
             include_list_front = []
             b.config.includeDir.each do |inc|
@@ -465,27 +465,27 @@ module Bake
               elsif inc.infix == "back"
                 @include_list << mapInclude(inc, b)
               end
-            end 
+            end
             @include_list = include_list_front + @include_list
           end
         end
 
         @include_list = @include_list.flatten.uniq
-        
+
         @include_array = {}
         [:CPP, :C, :ASM].each do |type|
           @include_array[type] = @include_list.map {|k| "#{@tcs[:COMPILER][type][:INCLUDE_PATH_FLAG]}#{k}"}
         end
       end
-      
+
       def getDefines(compiler)
         compiler[:DEFINES].map {|k| "#{compiler[:DEFINE_FLAG]}#{k}"}
       end
-      
+
       def getFlags(compiler)
         Bake::Utils::flagSplit(compiler[:FLAGS],true)
       end
-      
+
       def calcDefines
         @define_array = {}
         [:CPP, :C, :ASM].each do |type|
@@ -498,7 +498,7 @@ module Bake
           @flag_array[type] = getFlags(@tcs[:COMPILER][type])
         end
       end
-      
+
       def calcFileTcs
         @fileTcs = {}
         @config.files.each do |f|
@@ -510,20 +510,20 @@ module Bake
               err_res.line_number = f.line_number
               err_res.severity = ErrorParser::SEVERITY_WARNING
               err_res.message = "Toolchain settings not allowed for file patterns"
-              Bake::IDEInterface.instance.set_errors([err_res])                
+              Bake::IDEInterface.instance.set_errors([err_res])
             else
               @fileTcs[f.name] = integrateCompilerFile(Utils.deep_copy(@tcs),f)
             end
           end
         end
       end
-      
+
       def tcs4source(source)
         @fileTcs[source] || @tcs
-      end      
-      
-      
+      end
+
+
     end
-    
+
   end
 end

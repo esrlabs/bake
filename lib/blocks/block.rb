@@ -211,8 +211,8 @@ module Bake
 
       def execute
         if (@inDeps)
-          if Bake.options.verbose >= 1
-            Bake.formatter.printWarning("Circular dependency found including project #{@projectName} with config #{@configName}", @config)
+          if Bake.options.verbose >= 3
+            Bake.formatter.printWarning("While calculating next config, a circular dependency was found including project #{@projectName} with config #{@configName}", @config)
           end
           return true
         end
@@ -300,6 +300,20 @@ module Bake
         return (depResult && @result)
       end
 
+      def getSubBlocks(b, method)
+        b.send(method).each do |child_b|
+          if not @otherBlocks.include?child_b and not child_b == self
+            @otherBlocks << child_b
+            getSubBlocks(child_b, method)
+          end
+        end
+      end
+
+      def getBlocks(method)
+        @otherBlocks = []
+        getSubBlocks(self, method)
+        return @otherBlocks
+      end
 
     end
 
