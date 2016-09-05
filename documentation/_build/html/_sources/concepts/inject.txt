@@ -1,4 +1,4 @@
-Injecting and inheriting includes and dependencies
-**************************************************
+Injection and inheritance
+*************************
 
 bla bla bla

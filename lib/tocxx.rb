@@ -229,15 +229,37 @@ module Bake
             onlyConfigName = splitted[1] if splitted.length == 2
           end
 
-          foundProjs = Set.new
+          if onlyProjectName
+            if not @loadedConfig.referencedConfigs.include? onlyProjectName
+              Bake.formatter.printError("Error: project #{onlyProjectName} not found")
+              ExitHelper.exit(1)
+            end
+            if onlyConfigName
+              if not @loadedConfig.referencedConfigs[onlyProjectName].any? {|c| c.name == onlyConfigName}
+                Bake.formatter.printError("Error: project #{onlyProjectName} with config #{onlyConfigName} not found")
+                ExitHelper.exit(1)
+              end
+            end
+          end
+
+          foundProjs = {}
           @loadedConfig.referencedConfigs.each do |projName, configs|
             configs.each do |config|
               config.dependency.each do |d|
-                next if onlyProjectName and config.parent.name != onlyProjectName and d.name != onlyProjectName
-                next if onlyConfigName and config.name != onlyConfigName and d.config != onlyConfigName
+                if onlyProjectName
+                  next if config.parent.name != onlyProjectName && d.name != onlyProjectName
+                  if onlyConfigName
+                    leftSide  = config.name        == onlyConfigName && config.parent.name == onlyProjectName
+                    rightSide = d.config           == onlyConfigName && d.name             == onlyProjectName
+                    next if not leftSide and not rightSide
+                  end
+                end
                 file.write "  \"#{config.qname}\" -> \"#{d.name},#{d.config}\"\n"
-                foundProjs.add config.parent.name
-                foundProjs.add d.name
+
+                foundProjs[config.parent.name] = []           if not foundProjs.include? config.parent.name
+                foundProjs[config.parent.name] << config.name if not foundProjs[config.parent.name].include? config.name
+                foundProjs[d.name] = []        if not foundProjs.include? d.name
+                foundProjs[d.name] << d.config if not foundProjs[config.parent.name].include? d.config
               end
             end
           end
@@ -248,6 +270,7 @@ module Bake
             file.write "  subgraph cluster_#{projName} {\n"
             file.write "    label =\"#{projName}\"\n"
             configs.each do |config|
+              next if Bake.options.project and not foundProjs[projName].include? config.name
               file.write "    \"#{projName},#{config.name}\" [label = #{config.name}, style =  filled, fillcolor = #{config.color}]\n"
             end
             file.write "  }\n\n"

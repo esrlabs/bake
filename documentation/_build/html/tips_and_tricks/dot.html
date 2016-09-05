@@ -140,7 +140,30 @@
       
   <div class="section" id="generating-dot-graphs">
 <h1>Generating dot graphs<a class="headerlink" href="#generating-dot-graphs" title="Permalink to this headline">¶</a></h1>
-<p>bla bla bla</p>
+<p>In larger workspaces it&#8217;s often hard to understand the dependency structure. With bake you can generate a dot file (see <a class="reference external" href="http://www.graphviz.org">http://www.graphviz.org</a>):</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bake ... --dot &lt;dot filename&gt;</span>
+</pre></div>
+</div>
+<p>The dot file is a text file with all dependencies included. It is easy to render an image, e.g. with</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">tred &lt;dot filename&gt; | dot -Tpng -o &lt;png image filename&gt;</span>
+</pre></div>
+</div>
+<img alt="../_images/dot.png" src="../_images/dot.png" />
+<ul class="simple">
+<li>Projects are in rectangles</li>
+<li>Configs are in ellipses</li>
+<li>CustomConfigs are red</li>
+<li>ExecutableConfigs are green</li>
+<li>LibraryConfigs are cyan</li>
+</ul>
+<p>It is possible to generate only a part of the while graph with -p (same as for building only a part of the code). e.g.:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bake ... --dot &lt;dot filename&gt; -p lib2</span>
+<span class="go">bake ... --dot &lt;dot filename&gt; -p lib2,testa</span>
+</pre></div>
+</div>
+<p>Which results in:</p>
+<img alt="../_images/dotP.png" src="../_images/dotP.png" />
+<img alt="../_images/dotPC.png" src="../_images/dotPC.png" />
 </div>
 
 
