@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Derive configs &mdash; bake documentation</title>
+    <title>Prebuild configurations for distributions &mdash; bake documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -30,9 +30,9 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="top" title="bake documentation" href="../index.html" />
-    <link rel="up" title="Syntax" href="syntax.html" />
-    <link rel="next" title="Adapt configs" href="adapt_configs.html" />
-    <link rel="prev" title="Variables in Project.meta" href="variable_substitutions.html" />
+    <link rel="up" title="Concepts" href="concepts.html" />
+    <link rel="next" title="Injection and inheritance" href="inject.html" />
+    <link rel="prev" title="The link order" href="link_order.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -71,8 +71,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="syntax.html">Syntax</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Tips and Tricks</a></li>
@@ -96,10 +96,8 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Derive configs</a><ul>
-<li><a class="reference internal" href="#deriving-a-config">Deriving a config</a></li>
-<li><a class="reference internal" href="#inheritance-implications">Inheritance implications</a></li>
-<li><a class="reference internal" href="#multiple-inheritance">Multiple inheritance</a></li>
+<li><a class="reference internal" href="#">Prebuild configurations for distributions</a><ul>
+<li><a class="reference internal" href="#typical-workflow">Typical workflow</a></li>
 </ul>
 </li>
 </ul>
@@ -111,11 +109,11 @@
               
                 
   <li>
-    <a href="variable_substitutions.html" title="Previous Chapter: Variables in Project.meta"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Variables in ...</span>
+    <a href="link_order.html" title="Previous Chapter: The link order"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; The link order</span>
     </a>
   </li>
   <li>
-    <a href="adapt_configs.html" title="Next Chapter: Adapt configs"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Adapt configs &raquo;</span>
+    <a href="inject.html" title="Next Chapter: Injection and inheritance"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Injection and... &raquo;</span>
     </a>
   </li>
               
@@ -143,87 +141,46 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="derive-configs">
-<h1>Derive configs<a class="headerlink" href="#derive-configs" title="Permalink to this headline">¶</a></h1>
-<p>bake supports deriving configs, which allows you to put repetetive settings in a base config.</p>
-<div class="section" id="deriving-a-config">
-<h2>Deriving a config<a class="headerlink" href="#deriving-a-config" title="Permalink to this headline">¶</a></h2>
-<p>Derving a config in bake is pretty straight forward, and looks like this:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig A
-LibraryConfig    B, extends: A
-CustomConfig     C, extends: B
-ExecutableConfig D, extends: C
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The config type of the parent config does not matter, but only settings which are valid in BOTH configs will be inherited.
-In the example above D gets the dependencies from A, because &#8220;Dependency&#8221; is valid in all configs, but D does not get
-the &#8220;Files&#8221; from A and B, because &#8220;Files&#8221; is not valid in CustomConfig.</p>
-</div>
-</div>
-<div class="section" id="inheritance-implications">
-<h2>Inheritance implications<a class="headerlink" href="#inheritance-implications" title="Permalink to this headline">¶</a></h2>
-<p>In general it is very easy.</p>
+  <div class="section" id="prebuild-configurations-for-distributions">
+<h1>Prebuild configurations for distributions<a class="headerlink" href="#prebuild-configurations-for-distributions" title="Permalink to this headline">¶</a></h1>
+<p>This is a useful feature if you want to make a part of workspace available for third party without changing the configuration.</p>
+<p>There are two major use cases:</p>
 <ul class="simple">
-<li>Elements which can exist more than once (e.g. &#8220;Files&#8221;), are simply concatenated. First the parent elements, then the client elements.</li>
-<li>Elements which can exist only once:<ul>
-<li>if it exists in EITHER child OR parent, use this one</li>
-<li>is it exists in BOTH, attributes are merged (child attributes have high priority) and sub elements are inherited recursively</li>
+<li>Only a few projects shall be closed source (e.g. to hide some algorithms)</li>
+<li>Only a few projects shall be open source (e.g. if a supplier has integrate a library)</li>
 </ul>
-</li>
-</ul>
-<p>The following example</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig A {
-  Files &quot;x.cpp&quot;
-  Files &quot;y.cpp&quot;
-  ArtifactName &quot;z.exe&quot;
-  DefaultToolchain GCC {
-    Linker {
-      Flags &quot;-O3&quot;
-    }
-  }
-}
-ExecutableConfig B, extends: A {
-  Files &quot;z.cpp&quot;
-  IncludeDir &quot;inc&quot;
-  ArtifactName &quot;a.exe&quot;
-  DefaultToolchain Diab {
-    Compiler CPP {
-      Define &quot;TEST&quot;
-    }
-  }
-}
+<p>Both is possible with bake, but the current UI is optimized for the latter one.</p>
+<p>Add in the Project.meta the following code:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Prebuild {</span>
+<span class="go">  Except main, config: Debug</span>
+<span class="go">  Except newLib, config: Debug</span>
+<span class="go">  Except setup, config: Release</span>
+<span class="go">}</span>
 </pre></div>
 </div>
-<p>results implicitly in:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig B {
-  Files &quot;x.cpp&quot;
-  Files &quot;y.cpp&quot;
-  Files &quot;z.cpp&quot;
-  IncludeDir &quot;inc&quot;
-  ArtifactName &quot;a.exe&quot;
-  DefaultToolchain Diab {
-    Compiler CPP {
-      Define &quot;TEST&quot;
-    }
-    Linker {
-      Flags &quot;-O3&quot;
-    }
-  }
-}
+<p>It is possible to specify the Prebuild tags in all configurations, not only in the main configuration. Logically they will be merged.</p>
+<p>In the example above, no configurations will be built - except those three. The prebuild output is used directly.</p>
+<p>To reference a configuration of the same project, omit the project name, e.g.:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Except config: Base</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="multiple-inheritance">
-<h2>Multiple inheritance<a class="headerlink" href="#multiple-inheritance" title="Permalink to this headline">¶</a></h2>
-<p>It is possible to derive from several projects:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig A
-LibraryConfig    B
-ExecutableConfig C, extends: &quot;A, B&quot;
+<p>To reference all configuration of a project, omit the config name, e.g.:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Except newLib</span>
 </pre></div>
 </div>
-<p>&#8220;extends&#8221; defines a comma separated list. The merge will be performed with all parent configs.</p>
+<p>This prebuild behaviour must be explicitly turned on by using the following the command line argument:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">--prebuild</span>
+</pre></div>
+</div>
+<div class="section" id="typical-workflow">
+<h2>Typical workflow<a class="headerlink" href="#typical-workflow" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Compiling the workspace completely without prebuild feature.</li>
+<li>Executing a distribution script which copies all relevant files to a distribution directory.
+Make sure to add all header files of prebuild libraries if they are needed for other non-prebuild libraries.
+You may use the dependency files in the output directory for that script.</li>
+<li>In the distribution folder use &#8220;&#8211;prebuild&#8221; when compiling the workspace.</li>
+</ol>
 </div>
 </div>
 

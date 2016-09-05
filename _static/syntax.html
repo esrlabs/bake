@@ -143,7 +143,12 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLintPolicy()" onMouseout="notip()">LintPolicy</span> &#60;policy&#62;<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDocu()" onMouseout="notip()">Docu</span> &#60;cmdLine&#62;<br>
+&nbsp; &nbsp; }<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showPrebuild()" onMouseout="notip()">Prebuild</span> {<br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showExcept()" onMouseout="notip()">Except</span> &#60;project&#62;,
+              <span class="help" onMouseover="showExceptConfig()" onMouseout="notip()">config</span>: &#60;name&#62;<br>
 &nbsp; &nbsp; }<br></span><br>
+
 </span>
 
               <span id="libExe_part"><span class="show" style="background-color:#EEEEEE;">
@@ -541,6 +546,21 @@ function flagExample() {
 	"&nbsp;&nbsp; To remove -g followed by any string, e.g. -g3, the command is:<br>"+
 	"&nbsp;&nbsp; <i>Flags remove: \"-g.*\"</i><br>"+
 	"&nbsp;&nbsp; An inherited flag string \"-abc -g3 -xy\" will end up in \"-abc -xy\"."
+}
+
+function showPrebuild() {
+  str = 'If defined, all configs of the workspace will be skipped per default. Must be actived by the commandline option "--prebuild"'
+  ddrivetip("Prebuild", "No","0..1","No project/config is skipped",str)
+}
+
+function showExcept() {
+  str = 'Defines a project which shall not be skipped. If project name is omitted, the current project is used.'
+  ddrivetip("Except", "No","0..n","Every project is skipped",str)
+}
+
+function showExceptConfig() {
+  str = 'Defines a config which shall not be skipped. If omitted, all configs of the apprpriate project are not skipped.'
+  ddrivetip("Toolchain", "No","0..1","Every config is skipped",str)
 }
 
 

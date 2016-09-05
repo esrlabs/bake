@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Derive configs &mdash; bake documentation</title>
+    <title>Generating dot graphs &mdash; bake documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -30,9 +30,9 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="top" title="bake documentation" href="../index.html" />
-    <link rel="up" title="Syntax" href="syntax.html" />
-    <link rel="next" title="Adapt configs" href="adapt_configs.html" />
-    <link rel="prev" title="Variables in Project.meta" href="variable_substitutions.html" />
+    <link rel="up" title="Tips and Tricks" href="tips_and_tricks.html" />
+    <link rel="next" title="Performance" href="../performance/performance.html" />
+    <link rel="prev" title="Clang Analyze" href="the_clang.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -72,10 +72,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Tips and Tricks</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tips_and_tricks.html">Tips and Tricks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -96,12 +96,7 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Derive configs</a><ul>
-<li><a class="reference internal" href="#deriving-a-config">Deriving a config</a></li>
-<li><a class="reference internal" href="#inheritance-implications">Inheritance implications</a></li>
-<li><a class="reference internal" href="#multiple-inheritance">Multiple inheritance</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Generating dot graphs</a></li>
 </ul>
 </ul>
 </li>
@@ -111,11 +106,11 @@
               
                 
   <li>
-    <a href="variable_substitutions.html" title="Previous Chapter: Variables in Project.meta"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Variables in ...</span>
+    <a href="the_clang.html" title="Previous Chapter: Clang Analyze"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Clang Analyze</span>
     </a>
   </li>
   <li>
-    <a href="adapt_configs.html" title="Next Chapter: Adapt configs"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Adapt configs &raquo;</span>
+    <a href="../performance/performance.html" title="Next Chapter: Performance"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Performance &raquo;</span>
     </a>
   </li>
               
@@ -143,88 +138,32 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="derive-configs">
-<h1>Derive configs<a class="headerlink" href="#derive-configs" title="Permalink to this headline">¶</a></h1>
-<p>bake supports deriving configs, which allows you to put repetetive settings in a base config.</p>
-<div class="section" id="deriving-a-config">
-<h2>Deriving a config<a class="headerlink" href="#deriving-a-config" title="Permalink to this headline">¶</a></h2>
-<p>Derving a config in bake is pretty straight forward, and looks like this:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig A
-LibraryConfig    B, extends: A
-CustomConfig     C, extends: B
-ExecutableConfig D, extends: C
+  <div class="section" id="generating-dot-graphs">
+<h1>Generating dot graphs<a class="headerlink" href="#generating-dot-graphs" title="Permalink to this headline">¶</a></h1>
+<p>In larger workspaces it&#8217;s often hard to understand the dependency structure. With bake you can generate a dot file (see <a class="reference external" href="http://www.graphviz.org">http://www.graphviz.org</a>):</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bake ... --dot &lt;dot filename&gt;</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The config type of the parent config does not matter, but only settings which are valid in BOTH configs will be inherited.
-In the example above D gets the dependencies from A, because &#8220;Dependency&#8221; is valid in all configs, but D does not get
-the &#8220;Files&#8221; from A and B, because &#8220;Files&#8221; is not valid in CustomConfig.</p>
+<p>The dot file is a text file with all dependencies included. It is easy to render an image, e.g. with</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">tred &lt;dot filename&gt; | dot -Tpng -o &lt;png image filename&gt;</span>
+</pre></div>
 </div>
-</div>
-<div class="section" id="inheritance-implications">
-<h2>Inheritance implications<a class="headerlink" href="#inheritance-implications" title="Permalink to this headline">¶</a></h2>
-<p>In general it is very easy.</p>
+<img alt="../_images/dot.png" src="../_images/dot.png" />
 <ul class="simple">
-<li>Elements which can exist more than once (e.g. &#8220;Files&#8221;), are simply concatenated. First the parent elements, then the client elements.</li>
-<li>Elements which can exist only once:<ul>
-<li>if it exists in EITHER child OR parent, use this one</li>
-<li>is it exists in BOTH, attributes are merged (child attributes have high priority) and sub elements are inherited recursively</li>
+<li>Projects are rectangles</li>
+<li>Configs are ellipses</li>
+<li>CustomConfigs are red</li>
+<li>ExecutableConfigs are green</li>
+<li>LibraryConfigs are cyan</li>
 </ul>
-</li>
-</ul>
-<p>The following example</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig A {
-  Files &quot;x.cpp&quot;
-  Files &quot;y.cpp&quot;
-  ArtifactName &quot;z.exe&quot;
-  DefaultToolchain GCC {
-    Linker {
-      Flags &quot;-O3&quot;
-    }
-  }
-}
-ExecutableConfig B, extends: A {
-  Files &quot;z.cpp&quot;
-  IncludeDir &quot;inc&quot;
-  ArtifactName &quot;a.exe&quot;
-  DefaultToolchain Diab {
-    Compiler CPP {
-      Define &quot;TEST&quot;
-    }
-  }
-}
+<p>It&#8217;s possible to generate only a part of the whole graph with -p (same as for building only a part of the code). e.g.:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bake ... --dot &lt;dot filename&gt; -p lib2</span>
+<span class="go">bake ... --dot &lt;dot filename&gt; -p lib2,testa</span>
 </pre></div>
 </div>
-<p>results implicitly in:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig B {
-  Files &quot;x.cpp&quot;
-  Files &quot;y.cpp&quot;
-  Files &quot;z.cpp&quot;
-  IncludeDir &quot;inc&quot;
-  ArtifactName &quot;a.exe&quot;
-  DefaultToolchain Diab {
-    Compiler CPP {
-      Define &quot;TEST&quot;
-    }
-    Linker {
-      Flags &quot;-O3&quot;
-    }
-  }
-}
-</pre></div>
-</div>
-</div>
-<div class="section" id="multiple-inheritance">
-<h2>Multiple inheritance<a class="headerlink" href="#multiple-inheritance" title="Permalink to this headline">¶</a></h2>
-<p>It is possible to derive from several projects:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig A
-LibraryConfig    B
-ExecutableConfig C, extends: &quot;A, B&quot;
-</pre></div>
-</div>
-<p>&#8220;extends&#8221; defines a comma separated list. The merge will be performed with all parent configs.</p>
-</div>
+<p>Which results in:</p>
+<img alt="../_images/dotP.png" src="../_images/dotP.png" />
+<img alt="../_images/dotPC.png" src="../_images/dotPC.png" />
 </div>
 
 

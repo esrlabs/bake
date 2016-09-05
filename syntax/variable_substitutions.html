@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Variables in Project.meta &mdash; bake 2.19.2 documentation</title>
+    <title>Variables in Project.meta &mdash; bake documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.19.2',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake 2.19.2 documentation" href="../index.html" />
+    <link rel="top" title="bake documentation" href="../index.html" />
     <link rel="up" title="Syntax" href="syntax.html" />
     <link rel="next" title="Derive configs" href="derive_configs.html" />
     <link rel="prev" title="The Syntax of the Project.meta file" href="project_meta_syntax.html" />
@@ -97,10 +97,13 @@
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">Variables in Project.meta</a><ul>
+<li><a class="reference internal" href="#using-variables">Using variables</a></li>
 <li><a class="reference internal" href="#user-defined-variables">User defined variables</a></li>
-<li><a class="reference internal" href="#pre-defined-bake-environment-variables">Pre defined bake environment variables</a></li>
+<li><a class="reference internal" href="#predefined-bake-environment-variables">Predefined bake environment variables</a></li>
+<li><a class="reference internal" href="#environment-variables">Environment variables</a></li>
 <li><a class="reference internal" href="#nested-variables">Nested variables</a></li>
-<li><a class="reference internal" href="#auto-adjustment-of-paths-to-existing-projects">Auto-adjustment of paths to existing projects</a></li>
+<li><a class="reference internal" href="#complex-variables">Complex variables</a></li>
+<li><a class="reference internal" href="#notes-and-warnings">Notes and warnings</a></li>
 </ul>
 </li>
 </ul>
@@ -146,15 +149,24 @@
       
   <div class="section" id="variables-in-project-meta">
 <h1>Variables in Project.meta<a class="headerlink" href="#variables-in-project-meta" title="Permalink to this headline">¶</a></h1>
-<p>bake allows you to use pre defined and/or user defined variables in your Project.meta file.
-Defined variables then can be used using the following syntax:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>MyIncludes<span class="o">)</span>
+<p>bake allows you to use</p>
+<ul class="simple">
+<li>user defined</li>
+<li>predefined</li>
+<li>environment</li>
+</ul>
+<p>variables in your Project.meta file (in this priority). If a variable is not found, it will be evaluated to an empty string.</p>
+<div class="section" id="using-variables">
+<h2>Using variables<a class="headerlink" href="#using-variables" title="Permalink to this headline">¶</a></h2>
+<p>Variables can be used using the following syntax:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>ABC<span class="o">)</span>
 </pre></div>
 </div>
-<p>The variable MyIncludes will be substitued by its value, therefore a real life usage would look
+<p>The variable ABC will be substituted by its value, therefore a real life usage would look
 something like this:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">IncludeDir &quot;$(MyIncludes)&quot;</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">IncludeDir &quot;$(ABC)&quot;</span>
 </pre></div>
+</div>
 </div>
 <div class="section" id="user-defined-variables">
 <h2>User defined variables<a class="headerlink" href="#user-defined-variables" title="Permalink to this headline">¶</a></h2>
@@ -169,11 +181,13 @@ something like this:</p>
 <li>THe variable is defined directly in the Project.meta file.</li>
 </ol>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">Set MyVar, value: &quot;Hello world!&quot;</span>
+<span class="go">Set MyVar, cmd: &quot;ruby calcVar.rb&quot;</span>
 </pre></div>
 </div>
+<p>In the latter one the variable is set to the output of the command.</p>
 </div>
-<div class="section" id="pre-defined-bake-environment-variables">
-<h2>Pre defined bake environment variables<a class="headerlink" href="#pre-defined-bake-environment-variables" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="predefined-bake-environment-variables">
+<h2>Predefined bake environment variables<a class="headerlink" href="#predefined-bake-environment-variables" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="docutils">
 <colgroup>
 <col width="31%" />
@@ -265,31 +279,47 @@ archiver</td>
 linker</td>
 <td>/usr/bin</td>
 </tr>
-<tr class="row-odd"><td><em>$(/)</em></td>
+<tr class="row-odd"><td><em>$(ToolchainName)</em></td>
+<td>Names of the used DefaultToolchain</td>
+<td>GCC</td>
+</tr>
+<tr class="row-even"><td><em>$(/)</em></td>
 <td>Evalutes to the directory path seperator of
 the current platform</td>
 <td>Windows: \, Other: /</td>
 </tr>
-<tr class="row-even"><td><em>$(:)</em></td>
+<tr class="row-odd"><td><em>$(:)</em></td>
 <td>Evaluates to the path variable seperator
 of the current platform</td>
 <td>Windows: ;, Other: :</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p>It is also possible to retrieve arbitrary an <em>environment variable</em> using the following syntax:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>EnvironmentVariable<span class="o">)</span>
+</div>
+<div class="section" id="environment-variables">
+<h2>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>Usually used if system dependent stuff is needed like path to a specific tool etc.</p>
+</div>
+<div class="section" id="nested-variables">
+<h2>Nested variables<a class="headerlink" href="#nested-variables" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to nest variables.</p>
+<p>Example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>ABC<span class="k">$(</span>DEF<span class="k">)</span>GH<span class="o">)</span>
 </pre></div>
 </div>
-<p class="last">Evaluates to the Environment with the specified name, if the specified environment variable does not exists
-it will be substituted by an empty string.</p>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>Equal variables in the main config</p>
-<table border="1" class="last docutils">
+<div class="section" id="complex-variables">
+<h2>Complex variables<a class="headerlink" href="#complex-variables" title="Permalink to this headline">¶</a></h2>
+<p>bake supports one complex variable:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>OutputDir,<span class="k">$(</span>TheProject<span class="k">)</span>,<span class="k">$(</span>TheConfig<span class="k">)</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>This will evaluate to the output directory of a specific configuration.</p>
+</div>
+<div class="section" id="notes-and-warnings">
+<h2>Notes and warnings<a class="headerlink" href="#notes-and-warnings" title="Permalink to this headline">¶</a></h2>
+<p>Equal variables in the main config:</p>
+<table border="1" class="docutils">
 <colgroup>
 <col width="50%" />
 <col width="50%" />
@@ -308,52 +338,9 @@ it will be substituted by an empty string.</p>
 </tr>
 </tbody>
 </table>
-</div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Variables in Dependency definitions are not allowed!</p>
-</div>
-</div>
-<div class="section" id="nested-variables">
-<h2>Nested variables<a class="headerlink" href="#nested-variables" title="Permalink to this headline">¶</a></h2>
-<p>It is also possible to nest variables.</p>
-<p>Example:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>OutputDir,<span class="k">$(</span>TheProject<span class="k">)</span>,<span class="k">$(</span>TheConfig<span class="k">)</span><span class="o">)</span>
-<span class="gp">$</span><span class="o">(</span>ABC<span class="k">$(</span>DEF<span class="k">)</span>GH<span class="o">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="auto-adjustment-of-paths-to-existing-projects">
-<h2>Auto-adjustment of paths to existing projects<a class="headerlink" href="#auto-adjustment-of-paths-to-existing-projects" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p>If paths to other projects are needed, e.g. to &#8220;bootloaderUpdater&#8221;, don&#8217;t write a hard coded relative path like this:</p>
-<div class="last highlight-text"><div class="highlight"><pre>CommandLine &quot;../bootloaderUpdater/tools/PrimaryBootloader2Include.exe
-</pre></div>
-</div>
-</div>
-<p>If paths to other projects are needed, e.g. to &#8220;bootloaderUpdater&#8221; just reference it starting from the project folder.</p>
-<p>Example:</p>
-<div class="highlight-text"><div class="highlight"><pre>CommandLine &quot;bootloaderUpdater/tools/PrimaryBootloader2Include.exe
-</pre></div>
-</div>
-<p>or:</p>
-<div class="highlight-text"><div class="highlight"><pre>IncludeDir &quot;myProjectName/bootloaderUpdater/whatever&quot;
-</pre></div>
-</div>
-<p>bake recognizes that the first part of the path is a valid project name and calculates the relative path to the project automatically.
-If you have the special case that the referenced project is contained in an other workspace root, you can use the
-<cite>-w</cite> parameter or you define a <cite>roots.bake</cite>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>The path auto adjustment is applied for the following elements:</p>
-<ul class="last simple">
-<li>IncludeDir</li>
-<li>ExternalLibrary</li>
-<li>ExternalLibrarySearchPath</li>
-<li>UserLibrary</li>
-<li>CommandLine</li>
-</ul>
 </div>
 </div>
 </div>

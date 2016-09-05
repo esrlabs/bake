@@ -8,4 +8,4 @@ Syntax
     variable_substitutions
     derive_configs
     adapt_configs
-
+    auto_adjustment

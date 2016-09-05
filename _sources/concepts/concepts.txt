@@ -9,4 +9,6 @@ Concepts
     the_main_project
     build_hierarchy
     link_order
+    prebuild
+    inject
 

@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Derive configs &mdash; bake documentation</title>
+    <title>Auto-adjustment of paths to existing projects &mdash; bake documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -31,8 +31,8 @@
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="top" title="bake documentation" href="../index.html" />
     <link rel="up" title="Syntax" href="syntax.html" />
-    <link rel="next" title="Adapt configs" href="adapt_configs.html" />
-    <link rel="prev" title="Variables in Project.meta" href="variable_substitutions.html" />
+    <link rel="next" title="Commandline" href="../commandline/commandline.html" />
+    <link rel="prev" title="Adapt configs" href="adapt_configs.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -96,12 +96,7 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Derive configs</a><ul>
-<li><a class="reference internal" href="#deriving-a-config">Deriving a config</a></li>
-<li><a class="reference internal" href="#inheritance-implications">Inheritance implications</a></li>
-<li><a class="reference internal" href="#multiple-inheritance">Multiple inheritance</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Auto-adjustment of paths to existing projects</a></li>
 </ul>
 </ul>
 </li>
@@ -111,11 +106,11 @@
               
                 
   <li>
-    <a href="variable_substitutions.html" title="Previous Chapter: Variables in Project.meta"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Variables in ...</span>
+    <a href="adapt_configs.html" title="Previous Chapter: Adapt configs"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Adapt configs</span>
     </a>
   </li>
   <li>
-    <a href="adapt_configs.html" title="Next Chapter: Adapt configs"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Adapt configs &raquo;</span>
+    <a href="../commandline/commandline.html" title="Next Chapter: Commandline"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Commandline &raquo;</span>
     </a>
   </li>
               
@@ -143,87 +138,34 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="derive-configs">
-<h1>Derive configs<a class="headerlink" href="#derive-configs" title="Permalink to this headline">¶</a></h1>
-<p>bake supports deriving configs, which allows you to put repetetive settings in a base config.</p>
-<div class="section" id="deriving-a-config">
-<h2>Deriving a config<a class="headerlink" href="#deriving-a-config" title="Permalink to this headline">¶</a></h2>
-<p>Derving a config in bake is pretty straight forward, and looks like this:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig A
-LibraryConfig    B, extends: A
-CustomConfig     C, extends: B
-ExecutableConfig D, extends: C
+  <div class="section" id="auto-adjustment-of-paths-to-existing-projects">
+<h1>Auto-adjustment of paths to existing projects<a class="headerlink" href="#auto-adjustment-of-paths-to-existing-projects" title="Permalink to this headline">¶</a></h1>
+<p>If paths to other projects are needed, e.g. to &#8220;bootloaderUpdater&#8221;, don&#8217;t write a hard coded relative path like this:</p>
+<div class="highlight-text"><div class="highlight"><pre>CommandLine &quot;../bootloaderUpdater/tools/PrimaryBootloader2Include.exe
 </pre></div>
 </div>
+<p>If paths to other projects are needed, e.g. to &#8220;bootloaderUpdater&#8221; just reference it starting from the project folder.</p>
+<p>Example:</p>
+<div class="highlight-text"><div class="highlight"><pre>CommandLine &quot;bootloaderUpdater/tools/PrimaryBootloader2Include.exe
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-text"><div class="highlight"><pre>IncludeDir &quot;myProjectName/bootloaderUpdater/whatever&quot;
+</pre></div>
+</div>
+<p>bake recognizes that the first part of the path is a valid project name and calculates the relative path to the project automatically.
+If you have the special case that the referenced project is contained in an other workspace root, you can use the
+<cite>-w</cite> parameter or you define a <cite>roots.bake</cite>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The config type of the parent config does not matter, but only settings which are valid in BOTH configs will be inherited.
-In the example above D gets the dependencies from A, because &#8220;Dependency&#8221; is valid in all configs, but D does not get
-the &#8220;Files&#8221; from A and B, because &#8220;Files&#8221; is not valid in CustomConfig.</p>
-</div>
-</div>
-<div class="section" id="inheritance-implications">
-<h2>Inheritance implications<a class="headerlink" href="#inheritance-implications" title="Permalink to this headline">¶</a></h2>
-<p>In general it is very easy.</p>
-<ul class="simple">
-<li>Elements which can exist more than once (e.g. &#8220;Files&#8221;), are simply concatenated. First the parent elements, then the client elements.</li>
-<li>Elements which can exist only once:<ul>
-<li>if it exists in EITHER child OR parent, use this one</li>
-<li>is it exists in BOTH, attributes are merged (child attributes have high priority) and sub elements are inherited recursively</li>
+<p>The path auto adjustment is applied for the following elements:</p>
+<ul class="last simple">
+<li>IncludeDir</li>
+<li>ExternalLibrary</li>
+<li>ExternalLibrarySearchPath</li>
+<li>UserLibrary</li>
+<li>CommandLine</li>
 </ul>
-</li>
-</ul>
-<p>The following example</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig A {
-  Files &quot;x.cpp&quot;
-  Files &quot;y.cpp&quot;
-  ArtifactName &quot;z.exe&quot;
-  DefaultToolchain GCC {
-    Linker {
-      Flags &quot;-O3&quot;
-    }
-  }
-}
-ExecutableConfig B, extends: A {
-  Files &quot;z.cpp&quot;
-  IncludeDir &quot;inc&quot;
-  ArtifactName &quot;a.exe&quot;
-  DefaultToolchain Diab {
-    Compiler CPP {
-      Define &quot;TEST&quot;
-    }
-  }
-}
-</pre></div>
-</div>
-<p>results implicitly in:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig B {
-  Files &quot;x.cpp&quot;
-  Files &quot;y.cpp&quot;
-  Files &quot;z.cpp&quot;
-  IncludeDir &quot;inc&quot;
-  ArtifactName &quot;a.exe&quot;
-  DefaultToolchain Diab {
-    Compiler CPP {
-      Define &quot;TEST&quot;
-    }
-    Linker {
-      Flags &quot;-O3&quot;
-    }
-  }
-}
-</pre></div>
-</div>
-</div>
-<div class="section" id="multiple-inheritance">
-<h2>Multiple inheritance<a class="headerlink" href="#multiple-inheritance" title="Permalink to this headline">¶</a></h2>
-<p>It is possible to derive from several projects:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig A
-LibraryConfig    B
-ExecutableConfig C, extends: &quot;A, B&quot;
-</pre></div>
-</div>
-<p>&#8220;extends&#8221; defines a comma separated list. The merge will be performed with all parent configs.</p>
 </div>
 </div>
 
