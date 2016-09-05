@@ -1,18 +1,28 @@
 Variables in Project.meta
 =========================
-bake allows you to use pre defined and/or user defined variables in your Project.meta file.
-Defined variables then can be used using the following syntax:
+bake allows you to use
+
+- user defined
+- predefined
+- environment
+
+variables in your Project.meta file (in this priority). If a variable is not found, it will be evaluated to an empty string.
+
+Using variables
+***************
+
+Variables can be used using the following syntax:
 
 .. code-block:: console
 
-   $(MyIncludes)
+   $(ABC)
 
-The variable MyIncludes will be substitued by its value, therefore a real life usage would look
+The variable ABC will be substituted by its value, therefore a real life usage would look
 something like this:
 
 .. code-block:: console
 
-   IncludeDir "$(MyIncludes)"
+   IncludeDir "$(ABC)"
 
 User defined variables
 **********************
@@ -30,10 +40,12 @@ There are two ways to create user defined variables.
 .. code-block:: console
 
     Set MyVar, value: "Hello world!"
+    Set MyVar, cmd: "ruby calcVar.rb"
 
+In the latter one the variable is set to the output of the command.
 
-Pre defined bake environment variables
-**************************************
+Predefined bake environment variables
+*************************************
 
 ========================================    ===============================================     ========================================
 Variable                                    Description                                         Example
@@ -91,33 +103,10 @@ Variable                                    Description                         
                                             of the current platform
 ========================================    ===============================================     ========================================
 
-.. tip::
+Environment variables
+*********************
 
-    It is also possible to retrieve arbitrary an *environment variable* using the following syntax:
-
-    .. code-block:: console
-
-        $(EnvironmentVariable)
-
-    Evaluates to the Environment with the specified name, if the specified environment variable does not exists
-    it will be substituted by an empty string.
-
-.. note::
-
-    Equal variables in the main config
-
-    ========================================    ========================================
-    Variable                                    Is equal to
-    ========================================    ========================================
-    $(MainConfigName)                           $(ConfigName)
-
-    $(MainProjectName)                          $(ProjectName)
-    ========================================    ========================================
-
-.. warning::
-
-    Variables in Dependency definitions are not allowed!
-
+Usually used if system dependent stuff is needed like path to a specific tool etc.
 
 Nested variables
 ****************
@@ -127,51 +116,33 @@ Example:
 
 .. code-block:: console
 
-    $(OutputDir,$(TheProject),$(TheConfig))
     $(ABC$(DEF)GH)
 
 
-Auto-adjustment of paths to existing projects
-*********************************************
+Complex variables
+*****************
+
+bake supports one complex variable:
+
+.. code-block:: console
+
+    $(OutputDir,$(TheProject),$(TheConfig))
+
+This will evaluate to the output directory of a specific configuration.
+
+Notes and warnings
+******************
+
+Equal variables in the main config:
+
+========================================    ========================================
+Variable                                    Is equal to
+========================================    ========================================
+$(MainConfigName)                           $(ConfigName)
+
+$(MainProjectName)                          $(ProjectName)
+========================================    ========================================
+
 .. warning::
 
-    If paths to other projects are needed, e.g. to "bootloaderUpdater", don't write a hard coded relative path like this:
-
-    .. code-block:: text
-
-        CommandLine "../bootloaderUpdater/tools/PrimaryBootloader2Include.exe
-
-If paths to other projects are needed, e.g. to "bootloaderUpdater" just reference it starting from the project folder.
-
-Example:
-
-.. code-block:: text
-
-    CommandLine "bootloaderUpdater/tools/PrimaryBootloader2Include.exe
-
-or:
-
-.. code-block:: text
-
-    IncludeDir "myProjectName/bootloaderUpdater/whatever"
-
-
-
-bake recognizes that the first part of the path is a valid project name and calculates the relative path to the project automatically.
-If you have the special case that the referenced project is contained in an other workspace root, you can use the
-`-w` parameter or you define a `roots.bake`.
-
-.. note::
-
-    The path auto adjustment is applied for the following elements:
-
-    * IncludeDir
-
-    * ExternalLibrary
-
-    * ExternalLibrarySearchPath
-
-    * UserLibrary
-
-    * CommandLine
-
+    Variables in Dependency definitions are not allowed!

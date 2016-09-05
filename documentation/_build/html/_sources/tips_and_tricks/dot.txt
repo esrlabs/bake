@@ -15,13 +15,13 @@ The dot file is a text file with all dependencies included. It is easy to render
 
 .. image:: ../_static/dot.png
 
-- Projects are in rectangles
-- Configs are in ellipses
+- Projects are rectangles
+- Configs are ellipses
 - CustomConfigs are red
 - ExecutableConfigs are green
 - LibraryConfigs are cyan
 
-It is possible to generate only a part of the while graph with -p (same as for building only a part of the code). e.g.:
+It's possible to generate only a part of the whole graph with -p (same as for building only a part of the code). e.g.:
 
 .. code-block:: console
 

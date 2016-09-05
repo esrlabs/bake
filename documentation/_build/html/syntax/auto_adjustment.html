@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Syntax &mdash; bake documentation</title>
+    <title>Auto-adjustment of paths to existing projects &mdash; bake documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -30,8 +30,9 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="top" title="bake documentation" href="../index.html" />
-    <link rel="next" title="The Syntax of the Project.meta file" href="project_meta_syntax.html" />
-    <link rel="prev" title="Injection and inheritance" href="../concepts/inject.html" />
+    <link rel="up" title="Syntax" href="syntax.html" />
+    <link rel="next" title="Commandline" href="../commandline/commandline.html" />
+    <link rel="prev" title="Adapt configs" href="adapt_configs.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -71,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Syntax</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="syntax.html">Syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Tips and Tricks</a></li>
@@ -95,7 +96,7 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Syntax</a></li>
+<li><a class="reference internal" href="#">Auto-adjustment of paths to existing projects</a></li>
 </ul>
 </ul>
 </li>
@@ -105,11 +106,11 @@
               
                 
   <li>
-    <a href="../concepts/inject.html" title="Previous Chapter: Injection and inheritance"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Injection and...</span>
+    <a href="adapt_configs.html" title="Previous Chapter: Adapt configs"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Adapt configs</span>
     </a>
   </li>
   <li>
-    <a href="project_meta_syntax.html" title="Next Chapter: The Syntax of the Project.meta file"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">The Syntax of... &raquo;</span>
+    <a href="../commandline/commandline.html" title="Next Chapter: Commandline"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Commandline &raquo;</span>
     </a>
   </li>
               
@@ -137,38 +138,33 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="syntax">
-<h1>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="project_meta_syntax.html">The Syntax of the Project.meta file</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="project_meta_syntax.html#instructions-for-the-interactive-syntax-viewer">Instructions for the Interactive Syntax Viewer</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="variable_substitutions.html">Variables in Project.meta</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#using-variables">Using variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#user-defined-variables">User defined variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#predefined-bake-environment-variables">Predefined bake environment variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#environment-variables">Environment variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#nested-variables">Nested variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#complex-variables">Complex variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#notes-and-warnings">Notes and warnings</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="derive_configs.html">Derive configs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="derive_configs.html#deriving-a-config">Deriving a config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="derive_configs.html#inheritance-implications">Inheritance implications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="derive_configs.html#multiple-inheritance">Multiple inheritance</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="adapt_configs.html">Adapt configs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#effectiveness">Effectiveness</a></li>
-<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#occurrences">Occurrences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#types">Types</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="auto_adjustment.html">Auto-adjustment of paths to existing projects</a></li>
+  <div class="section" id="auto-adjustment-of-paths-to-existing-projects">
+<h1>Auto-adjustment of paths to existing projects<a class="headerlink" href="#auto-adjustment-of-paths-to-existing-projects" title="Permalink to this headline">¶</a></h1>
+<p>If paths to other projects are needed, e.g. to &#8220;bootloaderUpdater&#8221;, don&#8217;t write a hard coded relative path like this:</p>
+<div class="highlight-text"><div class="highlight"><pre>CommandLine &quot;../bootloaderUpdater/tools/PrimaryBootloader2Include.exe
+</pre></div>
+</div>
+<p>If paths to other projects are needed, e.g. to &#8220;bootloaderUpdater&#8221; just reference it starting from the project folder.</p>
+<p>Example:</p>
+<div class="highlight-text"><div class="highlight"><pre>CommandLine &quot;bootloaderUpdater/tools/PrimaryBootloader2Include.exe
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-text"><div class="highlight"><pre>IncludeDir &quot;myProjectName/bootloaderUpdater/whatever&quot;
+</pre></div>
+</div>
+<p>bake recognizes that the first part of the path is a valid project name and calculates the relative path to the project automatically.
+If you have the special case that the referenced project is contained in an other workspace root, you can use the
+<cite>-w</cite> parameter or you define a <cite>roots.bake</cite>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The path auto adjustment is applied for the following elements:</p>
+<ul class="last simple">
+<li>IncludeDir</li>
+<li>ExternalLibrary</li>
+<li>ExternalLibrarySearchPath</li>
+<li>UserLibrary</li>
+<li>CommandLine</li>
 </ul>
 </div>
 </div>
