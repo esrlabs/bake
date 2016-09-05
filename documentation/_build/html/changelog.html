@@ -142,15 +142,16 @@
 <dl class="docutils">
 <dt>September 5, 2016 - bake-toolkit 2.20.1</dt>
 <dd><ul class="first last simple">
-<li>Changed: removed the <em>bundle</em> feature, replace by <em>prebuild</em> feature</li>
-<li>Added: commandline option <em>&#8211;build_</em> to enable the old outputdir behaviour: <em>build_</em> instead of <em>build/</em></li>
-<li>Added: Print out more info when loading Project.metas in verbosity level 3</li>
 <li>Added: inject feature for dependencies</li>
 <li>Added: option to generate a dot graph file</li>
+<li>Added: <em>prebuild</em> feature for distribution builds</li>
+<li>Added: commandline option <em>&#8211;build_</em> to enable the old outputdir behaviour: <em>build_</em> instead of <em>build/</em></li>
+<li>Added: printing out more information when loading Project.metas in verbosity level 3</li>
 <li>Changed: circular dependency warning moved from verbosity level 1 to 3</li>
-<li>Added: ToolchainName is a variable now for Project.meta</li>
+<li>Added: ToolchainName is now a predefined variable for Project.meta</li>
 <li>Added: &#8211;compile-only option (which is equal to the workaround -f &#8221;.&#8221;)</li>
-<li>Bugfix: &#8211;adapt option accepts absolute paths now</li>
+<li>Bugfix: &#8211;adapt commandline option accepts absolute paths now</li>
+<li>Changed: removed the <em>bundle</em> feature</li>
 </ul>
 </dd>
 <dt>August 12, 2016 - bake-toolkit 2.19.2</dt>

@@ -2,15 +2,16 @@ Changelog
 =========
 
 September 5, 2016 - bake-toolkit 2.20.1
-    * Changed: removed the *bundle* feature, replace by *prebuild* feature
-    * Added: commandline option *--build_* to enable the old outputdir behaviour: *build_* instead of *build/*
-    * Added: Print out more info when loading Project.metas in verbosity level 3
     * Added: inject feature for dependencies
     * Added: option to generate a dot graph file
+    * Added: *prebuild* feature for distribution builds
+    * Added: commandline option *--build_* to enable the old outputdir behaviour: *build_* instead of *build/*
+    * Added: printing out more information when loading Project.metas in verbosity level 3
     * Changed: circular dependency warning moved from verbosity level 1 to 3
-    * Added: ToolchainName is a variable now for Project.meta
+    * Added: ToolchainName is now a predefined variable for Project.meta
     * Added: --compile-only option (which is equal to the workaround -f ".")
-    * Bugfix: --adapt option accepts absolute paths now
+    * Bugfix: --adapt commandline option accepts absolute paths now
+    * Changed: removed the *bundle* feature
 
 August 12, 2016 - bake-toolkit 2.19.2
     * Bugfix: fixed TI linker error parser

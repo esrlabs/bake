@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Injection and inheritance &mdash; bake documentation</title>
+    <title>Injection and inheritance of IncludeDir and Dependency &mdash; bake documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -96,7 +96,12 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Injection and inheritance</a></li>
+<li><a class="reference internal" href="#">Injection and inheritance of IncludeDir and Dependency</a><ul>
+<li><a class="reference internal" href="#inherit-includedir">Inherit IncludeDir</a></li>
+<li><a class="reference internal" href="#inject-includedir">Inject IncludeDir</a></li>
+<li><a class="reference internal" href="#inject-dependency">Inject Dependency</a></li>
+</ul>
+</li>
 </ul>
 </ul>
 </li>
@@ -138,9 +143,57 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="injection-and-inheritance">
-<h1>Injection and inheritance<a class="headerlink" href="#injection-and-inheritance" title="Permalink to this headline">¶</a></h1>
-<p>bla bla bla</p>
+  <div class="section" id="injection-and-inheritance-of-includedir-and-dependency">
+<h1>Injection and inheritance of IncludeDir and Dependency<a class="headerlink" href="#injection-and-inheritance-of-includedir-and-dependency" title="Permalink to this headline">¶</a></h1>
+<p>It is possible to inject and inherit &#8220;includes&#8221; and inject &#8220;dependencies&#8221;.</p>
+<div class="section" id="inherit-includedir">
+<h2>Inherit IncludeDir<a class="headerlink" href="#inherit-includedir" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">IncludeDir include, inherit: true</span>
+</pre></div>
+</div>
+<p>This is typically used to make include directories available to upper levels, e.g.:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> in MyLib/Project.meta
+<span class="go">LibraryConfig Lib {</span>
+<span class="go">  ...</span>
+<span class="go">  IncludeDir include, inherit: true</span>
+<span class="go">}</span>
+
+<span class="gp">#</span> in main/Project.meta
+<span class="go">ExecutableConfig Debug {</span>
+<span class="go">  ...</span>
+<span class="go">  Dependency MyLib, config: Lib</span>
+<span class="go">  # IncludeDir &quot;MyLib/include&quot; - not needed because this IncludeDir is inherited</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inject-includedir">
+<h2>Inject IncludeDir<a class="headerlink" href="#inject-includedir" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">IncludeDir &quot;mock/include&quot;, inject: front</span>
+</pre></div>
+</div>
+<p>&#8220;front&#8221; is used for mocking IncludeDirs, e.g. if a library shall include a mocked class instead of the original one in UnitTest context.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">IncludeDir include, inject: back</span>
+</pre></div>
+</div>
+<p>&#8220;back&#8221; is used if the lower levels do not know by themselves what to include. So this has to be configured from the outside, typically in the main project.</p>
+</div>
+<div class="section" id="inject-dependency">
+<h2>Inject Dependency<a class="headerlink" href="#inject-dependency" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Dependency MyLib, inject: front # or back</span>
+</pre></div>
+</div>
+<p>This is used if a component cannot have this dependency hard coded, because it shall not know the concrete implementation or the dependency is only used for unittesting.</p>
+<p>Example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">ExecutableConfig UnitTest {</span>
+<span class="go">  ...</span>
+<span class="go">  Dependency config: Lib</span>
+<span class="go">  Dependency googleTest, inject: front</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>In this example the config Lib depends on googleTest. If googleTest inherits an IncludeDir, this would be known by Lib.</p>
+</div>
 </div>
 
 
