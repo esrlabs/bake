@@ -69,7 +69,6 @@ module Bake
 
     def chooseProjectFilenames(potentialAdapts)
       @@filenames = []
-        p potentialAdapts
       Bake.options.adapt.each do |a|
         adapts = potentialAdapts.find_all { |p| p.include?(a+"/Adapt.meta") }
         if adapts.empty?
