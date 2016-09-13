@@ -65,4 +65,16 @@ Project {
     DefaultToolchain GCC
   }
 
+  ExecutableConfig testRemove {
+    Dependency config: testa
+    Dependency lib1
+    Dependency lib2, config: testa
+    Dependency lib2, config: testb
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+    Prebuild {
+      Except config: testRemove
+    }
+  }
+
 }

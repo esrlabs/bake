@@ -56,8 +56,10 @@ module Bake
 
     def self.addOwnLib(block)
       if block.library
-        if (not block.library.compileBlock.objects.empty?) or not block.library.compileBlock.calcSources(true, true).empty?
-          adaptedPath, prefix = adaptPath(block.library.archive_name, block, prefix)
+        adaptedPath, prefix = adaptPath(block.library.archive_name, block, prefix)
+        if (block.prebuild and File.exist?adaptedPath) or
+           (not block.library.compileBlock.objects.empty?) or
+           (not block.library.compileBlock.calcSources(true, true).empty?)
           @@linker_libs_array << adaptedPath
           @@source_libraries << adaptedPath
         end

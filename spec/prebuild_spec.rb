@@ -290,6 +290,22 @@ describe "Prebuilding" do
     expect(ExitHelper.exit_code).to be == 0
   end
 
+  it 'RemovedSources' do
+    srcDir = "spec/testdata/prebuild/lib1/src"
+    FileUtils.mv(srcDir+".tmp", srcDir) if File.exist?(srcDir+".tmp")
+
+    Bake.startBake("prebuild/main", ["testRemove"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect($mystring.include?("**** Building 4 of 5: lib1 (test) ****")).to be == true
+
+    FileUtils.mv(srcDir, srcDir+".tmp")
+
+    Bake.startBake("prebuild/main", ["testRemove", "--prebuild"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect($mystring.include?("**** Skipping 4 of 5: lib1 (test) ****")).to be == true
+
+    FileUtils.mv(srcDir+".tmp", srcDir)
+  end
 
 end
 
