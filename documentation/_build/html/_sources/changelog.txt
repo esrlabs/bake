@@ -1,6 +1,9 @@
 Changelog
 =========
 
+September 13, 2016 - bake-toolkit 2.20.2
+    * Bugfix: *prebuild* libs were not linked if all original sources were removed
+
 September 5, 2016 - bake-toolkit 2.20.1
     * Added: inject feature for dependencies
     * Added: option to generate a dot graph file
