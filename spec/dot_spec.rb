@@ -23,9 +23,9 @@ describe "Dot" do
     expect(content.include?"\"main,test\" -> \"lib2,testb\"").to be == true
     expect(content.include?"\"lib1,test\" -> \"lib2,testa\"").to be == true
     expect(content.include?"\"lib1,test\" -> \"lib2,testb\"").to be == true
-    expect(content.include?"subgraph cluster_main").to be == true
-    expect(content.include?"subgraph cluster_lib1").to be == true
-    expect(content.include?"subgraph cluster_lib2").to be == true
+    expect(content.include?"subgraph \"cluster_main\"").to be == true
+    expect(content.include?"subgraph \"cluster_lib1\"").to be == true
+    expect(content.include?"subgraph \"cluster_lib2\"").to be == true
   end
 
   it 'Only one project' do
@@ -39,9 +39,9 @@ describe "Dot" do
     expect(content.include?"\"main,test\" -> \"lib2,testb\"").to be == true
     expect(content.include?"\"lib1,test\" -> \"lib2,testa\"").to be == true
     expect(content.include?"\"lib1,test\" -> \"lib2,testb\"").to be == true
-    expect(content.include?"subgraph cluster_main").to be == true
-    expect(content.include?"subgraph cluster_lib1").to be == true
-    expect(content.include?"subgraph cluster_lib2").to be == true
+    expect(content.include?"subgraph \"cluster_main\"").to be == true
+    expect(content.include?"subgraph \"cluster_lib1\"").to be == true
+    expect(content.include?"subgraph \"cluster_lib2\"").to be == true
   end
 
   it 'Only one config' do
@@ -55,9 +55,9 @@ describe "Dot" do
     expect(content.include?"\"main,test\" -> \"lib2,testb\"").to be == true
     expect(content.include?"\"lib1,test\" -> \"lib2,testa\"").to be == false
     expect(content.include?"\"lib1,test\" -> \"lib2,testb\"").to be == false
-    expect(content.include?"subgraph cluster_main").to be == true
-    expect(content.include?"subgraph cluster_lib1").to be == true
-    expect(content.include?"subgraph cluster_lib2").to be == true
+    expect(content.include?"subgraph \"cluster_main\"").to be == true
+    expect(content.include?"subgraph \"cluster_lib1\"").to be == true
+    expect(content.include?"subgraph \"cluster_lib2\"").to be == true
   end
 
   it 'No dep to other project' do
@@ -71,9 +71,9 @@ describe "Dot" do
     expect(content.include?"\"main,test\" -> \"lib2,testb\"").to be == false
     expect(content.include?"\"lib1,test\" -> \"lib2,testa\"").to be == false
     expect(content.include?"\"lib1,test\" -> \"lib2,testb\"").to be == false
-    expect(content.include?"subgraph cluster_main").to be == true
-    expect(content.include?"subgraph cluster_lib1").to be == false
-    expect(content.include?"subgraph cluster_lib2").to be == false
+    expect(content.include?"subgraph \"cluster_main\"").to be == true
+    expect(content.include?"subgraph \"cluster_lib1\"").to be == false
+    expect(content.include?"subgraph \"cluster_lib2\"").to be == false
   end
 
 
