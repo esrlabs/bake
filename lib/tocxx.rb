@@ -217,7 +217,7 @@ module Bake
           file.write "# Example to show the graph: dot #{Bake.options.dot} -Tpng -o out.png\n"
           file.write "# Example to reduce the graph: tred #{Bake.options.dot} | dot -Tpng -o out.png\n\n"
 
-          file.write "digraph #{Bake.options.main_project_name}_#{Bake.options.build_config} {\n\n"
+          file.write "digraph \"#{Bake.options.main_project_name}_#{Bake.options.build_config}\" {\n\n"
 
           file.write "  concentrate = true\n\n"
 
@@ -267,11 +267,11 @@ module Bake
 
           @loadedConfig.referencedConfigs.each do |projName, configs|
             next if Bake.options.project and not foundProjs.include?projName
-            file.write "  subgraph cluster_#{projName} {\n"
+            file.write "  subgraph \"cluster_#{projName}\" {\n"
             file.write "    label =\"#{projName}\"\n"
             configs.each do |config|
               next if Bake.options.project and not foundProjs[projName].include? config.name
-              file.write "    \"#{projName},#{config.name}\" [label = #{config.name}, style =  filled, fillcolor = #{config.color}]\n"
+              file.write "    \"#{projName},#{config.name}\" [label = \"#{config.name}\", style =  filled, fillcolor = #{config.color}]\n"
             end
             file.write "  }\n\n"
           end
