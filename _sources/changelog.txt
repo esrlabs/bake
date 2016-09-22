@@ -1,6 +1,9 @@
 Changelog
 =========
 
+September 21, 2016 - bake-toolkit 2.20.3
+    * Bugfix: reading dependency files was broken for TI compiler, format is now auto-detected independent from compiler version
+
 September 13, 2016 - bake-toolkit 2.20.2
     * Bugfix: *prebuild* libs were not linked if all original sources were removed
 
