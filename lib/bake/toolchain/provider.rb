@@ -99,10 +99,9 @@ module Bake
           :DIR_FLAG => "-C",
           :CLEAN => "clean"
         },
-        
+
         :LINT_POLICY => [],
-        :DOCU => "",
-        :DEP_FILE_SINGLE_LINE => false
+        :DOCU => ""
       }
 
       def self.add(name, basedOn = nil)

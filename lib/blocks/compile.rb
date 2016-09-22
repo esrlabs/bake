@@ -188,7 +188,7 @@ module Bake
           incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
 
           if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
-            incList = Compile.read_depfile(dep_filename, @projectDir, @tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
+            incList = Compile.read_depfile(dep_filename, @projectDir) if incList.nil?
             Compile.write_depfile(incList, dep_filename_conv)
           end
           check_config_file
@@ -198,11 +198,12 @@ module Bake
 
       end
 
-      def self.read_depfile(dep_filename, projDir, singeLine)
+      def self.read_depfile(dep_filename, projDir)
         deps = []
         begin
-          if singeLine
-            File.readlines(dep_filename).each do |line|
+          deps_string = File.read(dep_filename)
+          if (deps_string.include?": ")
+            deps_string.each_line do |line|
               splitted = line.split(": ")
               deps << splitted[1].gsub(/[\\]/,'/') if splitted.length > 1
             end

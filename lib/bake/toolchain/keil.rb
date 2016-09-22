@@ -28,9 +28,7 @@ module Bake
     KeilChain[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]
     KeilChain[:COMPILER][:ASM][:COMMAND] = "armasm"
     KeilChain[:COMPILER][:ASM][:COMPILE_FLAGS] = ""
-      
-    KeilChain[:COMPILER][:DEP_FILE_SINGLE_LINE] = true
-      
+
     KeilChain[:ARCHIVER][:COMMAND] = "armar"
     KeilChain[:ARCHIVER][:ARCHIVE_FLAGS] = "--create"
 
@@ -41,9 +39,9 @@ module Bake
     KeilChain[:LINKER][:LIB_FLAG] = ""
     KeilChain[:LINKER][:LIB_PATH_FLAG] = "--userlibpath="
     KeilChain[:LINKER][:MAP_FILE_FLAG] = "--map --list="
-    KeilChain[:LINKER][:MAP_FILE_PIPE] = false   
-    KeilChain[:LINKER][:LIST_MODE] = true  
-      
+    KeilChain[:LINKER][:MAP_FILE_PIPE] = false
+    KeilChain[:LINKER][:LIST_MODE] = true
+
     keilCompilerErrorParser =                   KeilCompilerErrorParser.new
     KeilChain[:COMPILER][:C][:ERROR_PARSER] =   keilCompilerErrorParser
     KeilChain[:COMPILER][:CPP][:ERROR_PARSER] = keilCompilerErrorParser
