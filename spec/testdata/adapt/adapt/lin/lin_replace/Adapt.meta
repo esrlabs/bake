@@ -1,7 +1,7 @@
 Adapt {
-   
+
     ExecutableConfig __MAIN__, project: __MAIN__, type: replace {
       LinkerScript "ls/linkerscript2.dld"
   }
-  
+
 }

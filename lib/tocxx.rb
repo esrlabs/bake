@@ -390,6 +390,12 @@ module Bake
 
     def doit()
 
+      if Bake.options.show_includes or Bake.options.show_includes_and_defines
+        s = StringIO.new
+        tmp = Thread.current[:stdout]
+        Thread.current[:stdout] = s unless tmp
+      end
+
       taskType = "Building"
       if Bake.options.lint
         taskType = "Linting"
@@ -473,8 +479,15 @@ module Bake
 
         convert2bb
 
-        Blocks::Show.includes if Bake.options.show_includes
-        Blocks::Show.includesAndDefines(@mainConfig, @configTcMap[@mainConfig]) if Bake.options.show_includes_and_defines
+        if Bake.options.show_includes
+          Thread.current[:stdout] = tmp
+          Blocks::Show.includes
+        end
+
+        if Bake.options.show_includes_and_defines
+          Thread.current[:stdout] = tmp
+          Blocks::Show.includesAndDefines(@mainConfig, @configTcMap[@mainConfig])
+        end
 
         startBlocks = calcStartBlocks
 
@@ -505,18 +518,8 @@ module Bake
         end
 
         if Bake.options.cc2j_filename
-          Blocks::BlockBase.prepareOutput(Bake.options.cc2j_filename)
-          File.open(Bake.options.cc2j_filename, 'w') do |f|
-            f.puts "["
-            noComma = Blocks::CC2J.length - 1
-            Blocks::CC2J.each_with_index do |c, index|
-              cmd = c[:command].is_a?(Array) ? c[:command].join(' ') : c[:command]
-              f.puts "  { \"directory\": \"" + c[:directory] +  "\","
-              f.puts "    \"command\": \"" + cmd +  "\","
-              f.puts "    \"file\": \"" + c[:file] +  "\" }#{index == noComma ? "" : ","}"
-            end
-            f.puts "]"
-          end
+          require "json"
+          File.write(Bake.options.cc2j_filename, JSON.pretty_generate(Blocks::CC2J))
         end
 
         if result == false

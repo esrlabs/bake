@@ -7,10 +7,10 @@ Project {
       CommandLine "echo from testSub1 3: $(OutputDir, $(ProjectName),testSub1)"
       CommandLine "echo from testSub1 4: $(OutputDir,lib, testSub2  )"
     }
-  } 
+  }
 
   LibraryConfig testSub2 {
     IncludeDir "incLib"
-  } 
+  }
 
 }

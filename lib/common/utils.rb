@@ -1,17 +1,17 @@
 module Bake
-  
+
   module Utils
-  
+
     def self.flagSplit(str, removeQuotes)
       return [] if str == ""
       return [str] unless str.include?" "
-      
+
       hasQuote = false
       hasDoubleQuote = false
       hadQuote = false
       ar = []
       s = ""
-  
+
       str.split("").each do |i|
         hasDoubleQuote = !hasDoubleQuote if !hasQuote and i == '"'
         hasQuote = !hasQuote if !hasDoubleQuote and i == '\''
@@ -32,8 +32,8 @@ module Bake
       end
       ar << s if s.length > 0
       ar
-    end  
-  
+    end
+
     # Simple helper query the operating system we are running in
     module OS
 

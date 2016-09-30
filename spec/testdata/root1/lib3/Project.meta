@@ -6,5 +6,5 @@ Project {
     IncludeDir "lib1/include"
     IncludeDir "lib2/include"
   }
-  
+
 }

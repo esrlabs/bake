@@ -1,8 +1,8 @@
 Project  {
-	
+
 	CustomConfig test {
 		CommandLine "echo DONE"
 		DefaultToolchain GCC
 	}
-	
+
 }

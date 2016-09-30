@@ -14,12 +14,12 @@ Project {
         Flags "$(FORCE_ERROR_LINKER)"
       }
     }
-  } 
-  
+  }
+
   ExecutableConfig testDiabLint {
     Files "src/*.cpp"
     Dependency lib, config: testSub
     DefaultToolchain Diab
-  } 
+  }
 
 }

@@ -1,9 +1,9 @@
 Adapt {
-   
+
     ExecutableConfig __MAIN__, project: __MAIN__, type: replace {
       ExcludeFiles "src/nix.cpp"
       ExcludeFiles "src/nix2.cpp"
       ExcludeFiles "src/add2.cpp"
   }
-  
+
 }

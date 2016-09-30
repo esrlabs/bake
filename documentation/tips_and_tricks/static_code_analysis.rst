@@ -1,16 +1,16 @@
 Static Code Analysis
 ====================
 
-Static code analysis often is part or a pre step of the build, even though bake provides presteps which can be used to 
+Static code analysis often is part or a pre step of the build, even though bake provides presteps which can be used to
 add customized steps, we choose to add explicit support for static code analysis due to the fact that the analysis often
 depends on information well known by the build system (include pahts, compiler flags, etc.). Currently bake has  built in
-support for *Pc-Lint*. 
+support for *Pc-Lint*.
 
 Lint
 ****
 
-With bake you can lint LibraryConfigs, ExecutableConfigs, single files and the complete workspace (in this case the projects are linted separately). 
-The CPP Toolchain settings of the project are used regardless of the file type and file specific options. 
+With bake you can lint LibraryConfigs, ExecutableConfigs, single files and the complete workspace (in this case the projects are linted separately).
+The CPP Toolchain settings of the project are used regardless of the file type and file specific options.
 It is possible to specify lnt-files with LintPolicy, but you can add every other lint command line option as well.
 
 Basic Setup
@@ -76,15 +76,15 @@ bake only searches for lint-nt.exe
     If you have another lint command (e.g. because you are using flexe lint on unix)
     just create an symlink/alias which is called *lint-nt.exe*.
 
-Lint fails due to missing compiler includes and defines 
+Lint fails due to missing compiler includes and defines
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
     **Issue:**
-    Lint will fail if compiler internal includes and defines are missing. 
+    Lint will fail if compiler internal includes and defines are missing.
 
     **Solution:**
-       
+
     Lint comes with some helper files, handle this issue. In order to get a list of all needed
-    helper files e.g. for GCC, use the following command. 
+    helper files e.g. for GCC, use the following command.
 
     .. code-block:: console
 
@@ -96,14 +96,14 @@ Lint fails due to missing compiler includes and defines
 
         gcc-include-path.lnt, lint_cmac.h, lint_cppmac.h and size-options.lnt.
 
-    You can now add the needed includes and LintPolicies (.lnt files) to your bake 
+    You can now add the needed includes and LintPolicies (.lnt files) to your bake
     configuration.
 
 Lint error due to too many includes
 +++++++++++++++++++++++++++++++++++
 
     **Issue:**
-    In rare cases lint has problems if it has to open too many (include) files. 
+    In rare cases lint has problems if it has to open too many (include) files.
 
     **Solution:**
     You can use the *--lint-max* and the *--lint-min* options to get around this issue.

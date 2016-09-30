@@ -3,7 +3,7 @@
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 require 'common/version'
 
-puts "-- bake #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
+Bake::Version.printBakeVersion
 
 puts "Command \"bake-doc\" not supported anymore. Please use"
 puts "\"bake --doc\" to open the documentation in the browser OR"

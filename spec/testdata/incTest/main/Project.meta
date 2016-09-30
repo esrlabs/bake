@@ -1,5 +1,5 @@
 Project default: test {
-  
+
   CustomConfig test_inc {
     IncludeDir "main1", inject: front
   }
@@ -9,7 +9,7 @@ Project default: test {
 	IncludeDir "main3", inject: back
 	IncludeDir "main4"
     Dependency lib
-	Files "m.c"  
+	Files "m.c"
     DefaultToolchain GCC
   }
 
@@ -18,7 +18,7 @@ Project default: test {
 	IncludeDir "main2", inject: back
 	IncludeDir "main3", inject: front
 	IncludeDir "main4"
-	Files "m.c"  
+	Files "m.c"
     DefaultToolchain GCC
   }
 
@@ -29,7 +29,7 @@ Project default: test {
 	IncludeDir "main4", infix: back
 	IncludeDir "main4", infix: front
 	Dependency lib, config: test_main
-	Files "m.c"  
+	Files "m.c"
     DefaultToolchain GCC
   }
 

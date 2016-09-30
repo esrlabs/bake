@@ -1,7 +1,7 @@
 module Bake
   module Blocks
     class Show
-      
+
       def self.secureShow
         begin
           yield
@@ -14,8 +14,8 @@ module Bake
             raise e
           end
         end
-      end  
-      
+      end
+
       def self.includes
         secureShow {
         Blocks::ALL_COMPILE_BLOCKS.sort.each do |projName, blocks|
@@ -28,25 +28,25 @@ module Bake
               incs += block.include_list
             end
           end
-          
+
           incs.uniq.each { |inc| print "##{inc}" }
           print "\n"
         end
         ExitHelper.exit(0) }
       end
-      
+
       def self.readInternalIncludes(mainConfig, mainBlock, mainTcs)
         intIncs = []
         iinc = mainConfig.defaultToolchain.internalIncludes
         Dir.chdir(Bake.options.main_dir) do
           if (iinc)
-            
-            cppExe      = File.which(mainTcs[:COMPILER][:CPP][:COMMAND]) 
+
+            cppExe      = File.which(mainTcs[:COMPILER][:CPP][:COMMAND])
             cExe        = File.which(mainTcs[:COMPILER][:C][:COMMAND])
             asmExe      = File.which(mainTcs[:COMPILER][:ASM][:COMMAND])
             archiverExe = File.which(mainTcs[:ARCHIVER][:COMMAND])
             linkerExe   = File.which(mainTcs[:LINKER][:COMMAND])
-            
+
             iname = mainBlock.convPath(iinc)
             if iname != ""
               if not File.exists?(iname)
@@ -66,7 +66,7 @@ module Bake
         end
         return intIncs
       end
-      
+
       def self.readInternalDefines(mainConfig, mainBlock)
         intDefs = {:CPP => [], :C => [], :ASM => []}
         Dir.chdir(Bake.options.main_dir) do
@@ -85,15 +85,17 @@ module Bake
         end
         return intDefs
       end
-      
+
       def self.includesAndDefines(mainConfig, mainTcs)
+        json = true
         secureShow {
         mainBlock = Blocks::ALL_BLOCKS[Bake.options.main_project_name+","+Bake.options.build_config]
 
         intIncs = readInternalIncludes(mainConfig, mainBlock, mainTcs)
         intDefs = readInternalDefines(mainConfig, mainBlock)
 
-      
+
+        projs = {}
         Blocks::ALL_COMPILE_BLOCKS.sort.each do |projName, blocks|
 
           blockIncs = []
@@ -103,20 +105,33 @@ module Bake
               blockIncs += block.include_list.map { |i| File.expand_path(i, block.projectDir)  }
             else
               blockIncs += block.include_list
-            end            
+            end
             [:CPP, :C, :ASM].each { |type| blockDefs[type] += block.tcs[:COMPILER][type][:DEFINES] }
           end
-          
-          puts projName
-          puts " includes"
-          (blockIncs + intIncs).uniq.each { |i| puts "  #{i}" }
-          [:CPP, :C, :ASM].each do |type|
-            puts " #{type} defines"
-            (blockDefs[type] + intDefs[type]).uniq.each { |d| puts "  #{d}" }
+          if Bake.options.json
+            projs[projName] =
+              {  :includes => (blockIncs + intIncs).uniq,
+                 :cpp_defines => (blockDefs[:CPP] + intDefs[:CPP]).uniq,
+                 :c_defines => (blockDefs[:C] + intDefs[:C]).uniq,
+                 :asm_defines => (blockDefs[:ASM] + intDefs[:ASM]).uniq
+              }
+          else
+            puts projName
+            puts " includes"
+            (blockIncs + intIncs).uniq.each { |i| puts "  #{i}" }
+            [:CPP, :C, :ASM].each do |type|
+              puts " #{type} defines"
+              (blockDefs[type] + intDefs[type]).uniq.each { |d| puts "  #{d}" }
+            end
+            puts " done"
           end
-          puts " done"
-          
         end
+
+        if Bake.options.json
+          require "json"
+          puts JSON.pretty_generate(projs)
+        end
+
         ExitHelper.exit(0) }
       end
 

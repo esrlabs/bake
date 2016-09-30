@@ -36,8 +36,8 @@ The bake Eclipse integration plugin is available on a E.S.R.Labs update site. Pl
         :width: 100 %
         :scale: 50 %
 
-#. After successfull installation, restart Eclipse 
-   
+#. After successfull installation, restart Eclipse
+
     .. image:: ../../_static/Restart.png
         :width: 100 %
         :scale: 50 %

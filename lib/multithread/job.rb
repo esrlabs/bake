@@ -4,7 +4,7 @@ require 'thread'
 
 module Bake
   module Multithread
-    
+
     class Jobs
       def initialize(jobs, &block)
         nr_of_threads = [Bake.options.threads, jobs.length].min
@@ -16,14 +16,14 @@ module Bake
           end
         end
       end
-    
+
       def failed
         @failed ||= false
       end
       def set_failed
         @failed = true
       end
-      
+
       def get_next_or_nil
         the_next = nil
         mutex.synchronize {
@@ -38,7 +38,7 @@ module Bake
         @mutex ||= Mutex.new
       end
     end
-        
+
   end
 end
 

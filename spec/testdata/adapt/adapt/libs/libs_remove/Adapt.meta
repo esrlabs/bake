@@ -1,5 +1,5 @@
 Adapt {
-   
+
     ExecutableConfig __MAIN__, project: __MAIN__, type: remove {
     ExternalLibrary "exlibB"
     ExternalLibrary "exlibC"
@@ -8,5 +8,5 @@ Adapt {
     UserLibrary "userlibN"
     UserLibrary "userlibO"
   }
-  
+
 }

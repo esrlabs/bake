@@ -22,3 +22,4 @@ rake_helper/dummy.a
 spec/testdata/cache/main/makefile/dummy.a
 spec/testdata/merge/main/lib/*.a
 testdot.dot
+*.json

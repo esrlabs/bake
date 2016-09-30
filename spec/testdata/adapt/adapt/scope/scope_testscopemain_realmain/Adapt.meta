@@ -1,5 +1,5 @@
 Adapt {
-   
+
     ExecutableConfig test_scope_main, project: main, type: extend {
       Toolchain {
         Compiler CPP {
@@ -7,5 +7,5 @@ Adapt {
         }
       }
   }
-  
+
 }

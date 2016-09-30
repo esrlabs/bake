@@ -6,7 +6,7 @@ Project {
     Dependency "lib/deep/deeper"
     DefaultToolchain GCC
   }
-  
+
   ExecutableConfig testConflict {
     Files "main.cpp"
     Dependency lib

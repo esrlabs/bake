@@ -14,12 +14,12 @@ Project {
 	  }
 	}
   }
-  
+
   ExecutableConfig testVar {
     IncludeDir "A/include"
     DefaultToolchain GCC {
       InternalIncludes "other_inc.txt"
     }
-  }  
+  }
 
 }

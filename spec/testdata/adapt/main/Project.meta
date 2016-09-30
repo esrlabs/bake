@@ -6,12 +6,12 @@ Project {
     Dependency lib2, config: test_ok
     DefaultToolchain GCC
   }
-  
+
   ExecutableConfig test_dep0 {
     Files "src/main.cpp"
     DefaultToolchain GCC
   }
-  
+
   ExecutableConfig test_set0 {
     Files "src/main.cpp"
     PreSteps {
@@ -19,7 +19,7 @@ Project {
     }
     DefaultToolchain GCC
   }
-  
+
   ExecutableConfig test_set2 {
     Set VAR1, value: "VAR1"
     Set VAR2, value: "VAR2"
@@ -29,7 +29,7 @@ Project {
     }
     DefaultToolchain GCC
   }
-  
+
   ExecutableConfig test_art0 {
     Files "src/main.cpp"
     DefaultToolchain GCC
@@ -40,7 +40,7 @@ Project {
     ArtifactName "org.exe"
     DefaultToolchain GCC
   }
-  
+
   ExecutableConfig test_map0 {
     Files "src/main.cpp"
     DefaultToolchain GCC
@@ -51,7 +51,7 @@ Project {
     MapFile "$(OutputDir)/org.map"
     DefaultToolchain GCC
   }
-  
+
   ExecutableConfig test_lin0 {
     Files "src/main.cpp"
     Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
@@ -72,8 +72,8 @@ Project {
       }
     }
   }
-  
-  
+
+
   ExecutableConfig test_files0 {
     DefaultToolchain GCC
   }
@@ -82,8 +82,8 @@ Project {
     Files "src/main.cpp"
     Files "src/nix.cpp"
     DefaultToolchain GCC
-  }   
-  
+  }
+
   ExecutableConfig test_exfiles0 {
     Files "src/main.cpp"
     Files "src/nix.cpp"
@@ -102,7 +102,7 @@ Project {
     ExcludeFiles "src/doesNotExist.cpp"
     DefaultToolchain GCC
   }
-  
+
   ExecutableConfig test_inc0 {
     Files "src/main.cpp"
     DefaultToolchain GCC
@@ -113,8 +113,8 @@ Project {
     IncludeDir "include/a"
     IncludeDir "include/b"
     DefaultToolchain GCC
-  }  
-  
+  }
+
   ExecutableConfig test_libs0 {
     Files "src/main.cpp"
     DefaultToolchain GCC
@@ -129,11 +129,11 @@ Project {
     UserLibrary "userlibM"
     UserLibrary "userlibN"
     DefaultToolchain GCC
-  }  
-  
+  }
+
   CustomConfig test_steps0 {
     DefaultToolchain GCC
-  }  
+  }
 
   CustomConfig test_steps2 {
     StartupSteps {
@@ -154,23 +154,23 @@ Project {
     }
     CommandLine "echo STEP1"
     DefaultToolchain GCC
-  }  
-  
+  }
+
   ExecutableConfig test_tool0 {
     Files "src/main.cpp"
     Files "src/x.c"
     Files "src/y.s"
-    DefaultToolchain GCC    
+    DefaultToolchain GCC
   }
-  
+
   ExecutableConfig test_tool1 {
     Files "src/main.cpp"
     Files "src/x.c"
     Files "src/y.s"
     Toolchain
-    DefaultToolchain GCC    
+    DefaultToolchain GCC
   }
-  
+
   # archiver muss noch
   # outputdir, eclipseorder, lintpolicy, docu, basedOn
   ExecutableConfig test_tool2 {
@@ -199,28 +199,28 @@ Project {
       Linker {
         Flags add: "-LPATHA"
         Flags add: "-LPATHB"
-        LibPrefixFlags add: "-LPATHC"        
+        LibPrefixFlags add: "-LPATHC"
         LibPrefixFlags add: "-LPATHD"
         LibPostfixFlags add: "-LPATHE"
         LibPostfixFlags add: "-LPATHF"
       }
     }
-    DefaultToolchain GCC    
+    DefaultToolchain GCC
   }
-   
+
   LibraryConfig test_dtool0 {
     Files "src/main.cpp"
     Files "src/x.c"
     Files "src/y.s"
   }
-  
+
   LibraryConfig test_dtool1 {
     Files "src/main.cpp"
     Files "src/x.c"
     Files "src/y.s"
-    DefaultToolchain GCC    
-  }   
-  
+    DefaultToolchain GCC
+  }
+
     # archiver muss noch
   # outputdir, eclipseorder, lintpolicy, docu, basedOn
   LibraryConfig test_dtool2 {
@@ -232,10 +232,10 @@ Project {
         Flags add: "-FLAG1"
         Flags add: "-FLAG2"
       }
-      LintPolicy "LINT_POL1" 
+      LintPolicy "LINT_POL1"
       LintPolicy "LINT_POL2"
-      Docu "echo DOCUCMD_org" 
-    }   
+      Docu "echo DOCUCMD_org"
+    }
   }
 
   ExecutableConfig test_eclFalse {
@@ -253,11 +253,11 @@ Project {
     Files "src/add1.cpp"
     DefaultToolchain GCC
   }
-  
+
   LibraryConfig test_scope_lib {
     Files "src/add1.cpp"
   }
-  
+
   ExecutableConfig test_scope_main {
     Files "src/main.cpp"
     Dependency config: test_scope_lib
@@ -266,18 +266,18 @@ Project {
     Dependency lib2, config: test_ok
     DefaultToolchain GCC
   }
-  
+
   ExecutableConfig test_casca {
     Files "src/main.cpp"
     Files "src/nix.cpp"
     Dependency lib1, config: test_ok
-    Dependency lib1, config: test_other   
+    Dependency lib1, config: test_other
     DefaultToolchain GCC
   }
-  
+
   ExecutableConfig test_multi {
     Files "src/main.cpp"
     DefaultToolchain GCC
   }
-        
+
 }

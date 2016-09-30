@@ -3,7 +3,7 @@ How to use bake in Visual Studio
 
 #. Select a build configuration of the main project
 
-    Right click on the main project and select a bake build configuration. 
+    Right click on the main project and select a bake build configuration.
 
     .. image:: ../../_static/vs_select_config.png
         :width: 100 %

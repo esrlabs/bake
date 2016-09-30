@@ -1,8 +1,8 @@
 Adapt {
-   
+
     ExecutableConfig __MAIN__, project: __MAIN__, type: replace {
       Set VAR1, value: "VARNEW1"
       Set VAR3, value: "VARNEW3"
   }
-  
+
 }

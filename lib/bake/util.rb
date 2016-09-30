@@ -17,7 +17,7 @@ def adjustFlags(orgStr, flags)
     if f.overwrite != ""
       orgSplitted = Bake::Utils::flagSplit(f.overwrite, false)
     end
-    
+
     if f.remove != ""
       rmSplitted = Bake::Utils::flagSplit(f.remove, false)
       orgSplitted.delete_if {|o| rmSplitted.any? { |r|
@@ -29,30 +29,30 @@ def adjustFlags(orgStr, flags)
         end
       }}
     end
-    
+
     if f.add != ""
       Bake::Utils::flagSplit(f.add, false).each do |a|
         orgSplitted << a unless orgSplitted.any? { |o| o==a }
       end
     end
-    
+
   end
-  
+
   orgSplitted.join(" ")
 end
 
 def integrateToolchain(tcs, toolchain)
   return tcs unless toolchain
-  
+
   tcs[:OUTPUT_DIR] = toolchain.outputDir if toolchain.outputDir != ""
   integrateLinker(tcs, toolchain.linker) if toolchain.respond_to?"linker"
   integrateArchiver(tcs, toolchain.archiver)
-  toolchain.compiler.each do |c| 
+  toolchain.compiler.each do |c|
     integrateCompiler(tcs, c, c.ctype)
   end
   integrateLintPolicy(tcs, toolchain.lintPolicy)
   integrateDocu(tcs, toolchain.docu) if toolchain.docu
-end  
+end
 
 def integrateLintPolicy(tcs, policies)
   policies.each do |d|
@@ -67,15 +67,15 @@ end
 def integrateLinker(tcs, linker)
   return tcs unless linker
   tcs[:LINKER][:COMMAND] = linker.command if linker.command != ""
-  tcs[:LINKER][:FLAGS] = adjustFlags(tcs[:LINKER][:FLAGS], linker.flags) 
-  tcs[:LINKER][:LIB_PREFIX_FLAGS] = adjustFlags(tcs[:LINKER][:LIB_PREFIX_FLAGS], linker.libprefixflags) 
-  tcs[:LINKER][:LIB_POSTFIX_FLAGS] = adjustFlags(tcs[:LINKER][:LIB_POSTFIX_FLAGS], linker.libpostfixflags) 
+  tcs[:LINKER][:FLAGS] = adjustFlags(tcs[:LINKER][:FLAGS], linker.flags)
+  tcs[:LINKER][:LIB_PREFIX_FLAGS] = adjustFlags(tcs[:LINKER][:LIB_PREFIX_FLAGS], linker.libprefixflags)
+  tcs[:LINKER][:LIB_POSTFIX_FLAGS] = adjustFlags(tcs[:LINKER][:LIB_POSTFIX_FLAGS], linker.libpostfixflags)
 end
 
 def integrateArchiver(tcs, archiver)
   return tcs unless archiver
   tcs[:ARCHIVER][:COMMAND] = archiver.command if archiver.command != ""
-  tcs[:ARCHIVER][:FLAGS] = adjustFlags(tcs[:ARCHIVER][:FLAGS], archiver.flags) 
+  tcs[:ARCHIVER][:FLAGS] = adjustFlags(tcs[:ARCHIVER][:FLAGS], archiver.flags)
 end
 
 def integrateCompiler(tcs, compiler, type)
@@ -103,11 +103,11 @@ def sanitize_filename(filename)
    # get only the filename, not the whole path
    name.gsub! /^.*(\\|\/)/, ''
 
-   # Finally, replace all non alphanumeric, underscore 
+   # Finally, replace all non alphanumeric, underscore
    # or periods with underscore
    # name.gsub! /[^\w\.\-]/, '_'
-   # Basically strip out the non-ascii alphabets too 
-   # and replace with x. 
+   # Basically strip out the non-ascii alphabets too
+   # and replace with x.
    # You don't want all _ :)
    name.gsub!(/[^0-9A-Za-z.\-]/, 'x')
   end
@@ -116,7 +116,7 @@ end
 def searchRootsFile(dir)
   rootsFile = dir+"/roots.bake"
   return rootsFile if File.exist?(rootsFile)
-  
+
   parent = File.dirname(dir)
   return searchRootsFile(parent) if parent != dir
 

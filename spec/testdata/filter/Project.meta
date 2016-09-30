@@ -34,7 +34,7 @@ Project {
       CommandLine "echo test done", default: off, filter: "FILTER"
     }
   }
-  
+
   CustomConfig MultipleSteps {
     DefaultToolchain GCC
     PreSteps {
@@ -50,7 +50,7 @@ Project {
       CommandLine "echo test post4", default: on, filter: "FILTER"
     }
   }
-  
+
   CustomConfig FilterMain {
     DefaultToolchain GCC
     PreSteps {
@@ -60,6 +60,6 @@ Project {
     PostSteps {
       CommandLine "echo POSTFILTER", default: off, filter: "FILTER2"
     }
-  }  
+  }
 
 }

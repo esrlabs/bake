@@ -11,7 +11,7 @@ require 'fileutils'
 module Bake
 
 describe "Default" do
-  
+
   it 'lib explicit config' do
     Bake.startBake("default/libD", ["--rebuild", "testL1A"])
     expect($mystring.include?("libD (testL1A)")).to be == true
@@ -32,22 +32,22 @@ describe "Default" do
     expect($mystring.include?("* testL2B")).to be == true
     expect($mystring.include?("* testL2C")).to be == true
     expect(ExitHelper.exit_code).to be == 0
-  end  
+  end
 
   it 'main sub default config' do
     Bake.startBake("default/mainD", ["--rebuild"])
     expect($mystring.include?("libD (testL1B)")).to be == true
     expect($mystring.include?("mainD (test2)")).to be == true
     expect(ExitHelper.exit_code).to be == 0
-  end   
-  
+  end
+
   it 'sub no default config' do
     Bake.startBake("default/mainD", ["--rebuild", "test1"])
     expect($mystring.include?("mainD/Project.meta")).to be == true
     expect($mystring.include?("libNoD/Project.meta")).to be == true
     expect($mystring.include?("No default config")).to be == true
     expect(ExitHelper.exit_code).to be > 0
-  end  
+  end
 
   it 'main ref itself per default' do
     Bake.startBake("default/mainD", ["--rebuild", "test3"])
@@ -55,8 +55,8 @@ describe "Default" do
     expect($mystring.include?("mainD (test2)")).to be == true
     expect($mystring.include?("mainD (test3)")).to be == true
     expect(ExitHelper.exit_code).to be == 0
-  end  
-  
+  end
+
 end
 
 end

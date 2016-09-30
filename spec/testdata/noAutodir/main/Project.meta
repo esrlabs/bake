@@ -6,5 +6,5 @@ Project {
 	IncludeDir "sub/include"
 	DefaultToolchain GCC
   }
-  
+
 }

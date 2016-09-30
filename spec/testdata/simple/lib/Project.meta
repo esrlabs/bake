@@ -2,6 +2,7 @@ Project {
 
   LibraryConfig test_ok {
     Files "src/y.cpp"
+    Files "src/z.cpp"
   }
 
 }

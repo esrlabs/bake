@@ -2,7 +2,7 @@ require 'blocks/has_execute_command'
 
 module Bake
   module Blocks
-    
+
     class Makefile
       include HasExecuteCommand
 
@@ -10,7 +10,7 @@ module Bake
       MAKE_FILE_FLAG = "-f"
       MAKE_DIR_FLAG = "-C"
       MAKE_CLEAN = "clean"
-      
+
       def initialize(config, referencedConfigs, block)
         @config = config
         @projectDir = config.get_project_dir
@@ -24,25 +24,25 @@ module Bake
 
         block.lib_elements << LibElement.new(LibElement::LIB_WITH_PATH, config.lib) if config.lib != ""
       end
-      
+
       def calcCommandLine
         @commandLine = remove_empty_strings_and_join([
           MAKE_COMMAND, @target,
           @flags,
           MAKE_DIR_FLAG,  File.dirname(@makefile),
           MAKE_FILE_FLAG, File.basename(@makefile),
-          @path_to])        
+          @path_to])
       end
-      
+
       def calcCleanLine
         @cleanLine = remove_empty_strings_and_join([
           MAKE_COMMAND, MAKE_CLEAN,
-          @flags, 
+          @flags,
           MAKE_DIR_FLAG,  File.dirname(@makefile),
           MAKE_FILE_FLAG, File.basename(@makefile),
-          @path_to]) 
-      end      
-      
+          @path_to])
+      end
+
       def calcPathTo(referencedConfigs)
         @path_to = ""
         if @config.pathTo != ""
@@ -71,14 +71,14 @@ module Bake
           pathHash.each { |k,v| path_to_array << "PATH_TO_#{k}=#{v}" }
           @path_to = path_to_array.join(" ")
         end
-        
+
       end
-      
+
       def execute
         return true if Bake.options.linkOnly
         return executeCommand(@commandLine, nil, @config.validExitCodes)
        end
-       
+
       def startupStep
         return true if Bake.options.linkOnly
         return executeCommand(@commandLine, nil, @config.validExitCodes)
@@ -88,13 +88,13 @@ module Bake
         return true if Bake.options.linkOnly
         return executeCommand(@commandLine, nil, @config.validExitCodes)
       end
-            
+
       def clean
         return true if Bake.options.linkOnly
         return executeCommand(@cleanLine, "No rule to make target 'clean'.", @config.validExitCodes) unless Bake.options.filename
       end
-    
+
     end
-    
+
   end
 end

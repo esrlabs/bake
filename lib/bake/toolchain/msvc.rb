@@ -44,8 +44,8 @@ module Bake
     MSVCChain[:LINKER][:MAP_FILE_FLAG] = "-map:"
     MSVCChain[:LINKER][:MAP_FILE_PIPE] = false
     MSVCChain[:LINKER][:SCRIPT] = "Linkerscript option not supported for MSVC"
-    
-    
+
+
     msvcCompilerErrorParser =                   MSVCCompilerErrorParser.new
     MSVCChain[:COMPILER][:C][:ERROR_PARSER] =   msvcCompilerErrorParser
     MSVCChain[:COMPILER][:CPP][:ERROR_PARSER] = msvcCompilerErrorParser

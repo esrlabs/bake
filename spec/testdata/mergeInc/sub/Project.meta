@@ -5,5 +5,5 @@ Project {
     }
 
     LibraryConfig testApplication, extends: test
-	
+
 }

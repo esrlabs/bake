@@ -3,7 +3,7 @@ Project {
   LibraryConfig testLib {
     Files "src/lib.cpp"
   }
-  
+
   ExecutableConfig test {
     IncludeDir include
     Dependency config: testLib

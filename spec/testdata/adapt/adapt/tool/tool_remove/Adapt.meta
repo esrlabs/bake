@@ -1,5 +1,5 @@
 Adapt {
-   
+
     ExecutableConfig __MAIN__, project: __MAIN__, type: remove {
       Toolchain {
         Compiler CPP {
@@ -10,5 +10,5 @@ Adapt {
         Linker
       }
   }
-  
+
 }

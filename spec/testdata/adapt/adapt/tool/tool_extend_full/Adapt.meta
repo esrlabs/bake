@@ -1,5 +1,5 @@
 Adapt {
-   
+
   ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
     Toolchain {
       Compiler CPP {
@@ -23,12 +23,12 @@ Adapt {
       Linker {
         Flags add: "-LPATHA0"
         Flags add: "-LPATHB"
-        LibPrefixFlags add: "-LPATHC0"        
+        LibPrefixFlags add: "-LPATHC0"
         LibPrefixFlags add: "-LPATHD"
         LibPostfixFlags add: "-LPATHE0"
         LibPostfixFlags add: "-LPATHF"
       }
     }
   }
-  
+
 }

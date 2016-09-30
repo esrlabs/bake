@@ -9,5 +9,5 @@ Project {
     Dependency lib2
     DefaultToolchain GCC
   }
-  
+
 }

@@ -3,7 +3,7 @@ Project {
   LibraryConfig test_ok {
     Files "src/l1.cpp"
   }
-  
+
     LibraryConfig test_other {
     Files "src/l1_other.cpp"
   }

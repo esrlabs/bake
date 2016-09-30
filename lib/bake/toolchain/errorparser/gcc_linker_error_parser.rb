@@ -20,7 +20,7 @@ module Bake
         d.message = l
         if l.length == 0
           d.severity = SEVERITY_OK
-        elsif l.include?" Warning:" 
+        elsif l.include?" Warning:"
           d.severity = SEVERITY_WARNING
         else
           d.severity = SEVERITY_ERROR

@@ -6,5 +6,5 @@ Project {
     Dependency libMake
     DefaultToolchain GCC
   }
-  
+
 }

@@ -12,7 +12,7 @@ Project {
     ExternalLibrary "b.lib"
     ExternalLibrary "lib2/c.lib"
     ExternalLibrary "lib3/d.lib", search: false
-  
+
     DefaultToolchain Keil
   }
 

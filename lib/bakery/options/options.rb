@@ -11,15 +11,15 @@ module Bake
 
     def initialize(argv)
       super(argv)
-      
+
       @collection_name = ""
-      @collection_dir = nil      
+      @collection_dir = nil
       @color = nil
       @error = false
       @roots = []
       @socket = 0
       @def_roots = []
-            
+
       add_option(["-b", ""      ], lambda { |x| set_collection_name(x)                  })
       add_option(["-m"          ], lambda { |x| set_collection_dir(x)                   })
       add_option(["-r"          ], lambda {     @error = true                           })
@@ -28,7 +28,7 @@ module Bake
       add_option(["--socket"    ], lambda { |x| @socket = String === x ? x.to_i : x     })
       add_option(["-h", "--help"], lambda {     usage; ExitHelper.exit(0)               })
     end
-    
+
     def usage
       puts "\nUsage: bake <name> [options]"
       puts " [-b] <name>     Name of the collection to build."
@@ -39,17 +39,17 @@ module Bake
       puts " -w <root>       Add a workspace root (can be used multiple times)."
       puts "                 If no root is specified, the parent directory of Collection.meta is added automatically."
       puts " --socket <num>  Set socket for sending errors, receiving commands, etc. - used by e.g. Eclipse."
-      puts "Note: all parameters except -b, -m and -h will be passed to bake - see bake help for more options." 
+      puts "Note: all parameters except -b, -m and -h will be passed to bake - see bake help for more options."
     end
-  
+
     def parse_options(bakeOptions)
       parse_internal(true, bakeOptions)
       set_collection_dir(Dir.pwd) if @collection_dir.nil?
       if @roots.length == 0
-        @roots = @def_roots 
+        @roots = @def_roots
       end
     end
-    
+
     def check_valid_dir(dir)
      if not File.exists?(dir)
         Bake.formatter.printError("Error: Directory #{dir} does not exist")
@@ -58,17 +58,17 @@ module Bake
       if not File.directory?(dir)
         Bake.formatter.printError("Error: #{dir} is not a directory")
         ExitHelper.exit(1)
-      end      
+      end
     end
-    
+
     def set_collection_name(collection_name)
       if not @collection_name.empty?
         Bake.formatter.printError("Error: Cannot set collection name '#{collection_name}', because collection name is already set to '#{@collection_name}'")
         ExitHelper.exit(1)
-      end      
+      end
       @collection_name = collection_name
     end
-    
+
     def set_collection_dir(dir)
       check_valid_dir(dir)
       @collection_dir = File.expand_path(dir.gsub(/[\\]/,'/'))
@@ -81,7 +81,7 @@ module Bake
       @roots << r if not @roots.include?r
     end
 
-  
+
   end
 
 end

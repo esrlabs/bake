@@ -18,20 +18,20 @@ module Bake
     attr_accessor :build_config
     attr_accessor :adapt_filenames
   end
-  
+
   class CacheAccess
       attr_reader :cacheFilename
-  
+
       def initialize()
         if Bake.options.build_config == ""
           @cacheFilename = Bake.options.main_dir+"/.bake/Default.Project.meta.cache"
         else
           @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta." + sanitize_filename(Bake.options.build_config) + ".cache"
         end
-        
+
         FileUtils.mkdir_p(File.dirname(@cacheFilename))
       end
-      
+
       def load_cache
         cache = nil
         begin
@@ -40,19 +40,19 @@ module Bake
             cacheTime = File.mtime(@cacheFilename)
             contents = File.open(@cacheFilename, "rb") {|io| io.read }
             cache = Marshal.load(contents)
-            
+
             if cache.version != Version.number
               Bake.formatter.printInfo("Info: cache version ("+cache.version+") does not match to bake version ("+Version.number+"), reloading meta information")
               cache = nil
             end
-              
+
             if cache != nil
               if cache.cache_file != @cacheFilename
                 Bake.formatter.printInfo("Info: cache filename changed, reloading meta information")
                 cache = nil
               end
             end
-            
+
             if cache != nil
               cache.files.each do |c|
                 if (not File.exists?(c))
@@ -63,7 +63,7 @@ module Bake
                 end
               end
             end
-            
+
             if cache != nil
               cache.referencedConfigs.each do |pname,configs|
                 configs.each do |config|
@@ -73,9 +73,9 @@ module Bake
                     cache = nil
                   end
                 end
-              end  
+              end
             end
-              
+
             if cache != nil
               cache.files.each do |c|
                 if File.mtime(c) > cacheTime + 1
@@ -85,14 +85,14 @@ module Bake
                 end
               end
             end
-            
+
             if (cache != nil)
               if (not AdaptConfig.filenames.eql?(cache.adapt_filenames))
                 Bake.formatter.printInfo("Info: adapt config filenames have been changed, reloading meta information")
                 cache = nil
               end
             end
-            
+
             if (cache != nil and not AdaptConfig.filenames.empty?)
               AdaptConfig.filenames.each do |f|
                 adaptTime = File.mtime(f)
@@ -101,7 +101,7 @@ module Bake
                   cache = nil
                 end
               end
-            end            
+            end
 
             if cache != nil
               if cache.workspace_roots.length == Bake.options.roots.length
@@ -110,27 +110,27 @@ module Bake
                     cache = nil
                     break
                   end
-                end  
+                end
               else
                 cache = nil
               end
               Bake.formatter.printInfo("Info: specified roots differ from cached roots, reloading meta information") if cache.nil?
             end
-            
+
             if cache != nil
               if (not Bake.options.include_filter.eql?(cache.include_filter)) or (not Bake.options.exclude_filter.eql?(cache.exclude_filter))
                 cache = nil
                 Bake.formatter.printInfo("Info: specified filters differ from cached filters, reloading meta information")
               end
-            end 
-            
+            end
+
             if cache != nil
               if (not Bake.options.no_autodir.eql?(cache.no_autodir))
                 cache = nil
                 Bake.formatter.printInfo("Info: no_autodir option differs in cache, reloading meta information")
               end
             end
-            
+
           else
             Bake.formatter.printInfo("Info: cache not found, reloading meta information")
           end
@@ -141,8 +141,8 @@ module Bake
             puts e.backtrace
           end
           cache = nil
-        end      
-        
+        end
+
         if cache != nil
           Bake.formatter.printInfo("Info: cache is up-to-date, loading cached meta information") if Bake.options.verbose >= 3
           Bake.options.build_config = cache.build_config if Bake.options.build_config == ""
@@ -151,7 +151,7 @@ module Bake
 
         return nil
       end
-      
+
       def write_cache(project_files, referencedConfigs)
         cache = Cache.new
         cache.referencedConfigs = referencedConfigs
@@ -172,9 +172,8 @@ module Bake
         File.open(@cacheFilename, 'wb') {|file| file.write(bbdump) }
         Bake.options.nocache = false
       end
-      
+
   end
-  
- 
+
+
 end
-  

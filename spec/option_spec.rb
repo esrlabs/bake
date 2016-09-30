@@ -16,7 +16,7 @@ describe "Option Parser" do
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("Usage:")).to be == true
     expect(ExitHelper.exit_code).to be == 0
-  end    
+  end
   it 'should provide a help flag with --help' do
     Bake.options = Options.new(["--help"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
@@ -30,7 +30,7 @@ describe "Option Parser" do
     expect($mystring.include?("Available toolchains:")).to be == true
     expect($mystring.include?("Diab")).to be == true
   end
-  
+
   it 'should provide a flag for printing tool options' do
     Bake.options = Options.new(["--toolchain-info"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
@@ -39,7 +39,7 @@ describe "Option Parser" do
     Bake.options = Options.new(["--toolchain-info", "blah"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("Toolchain not available")).to be == true
-    
+
     Bake.options = Options.new(["--toolchain-info", "Diab"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.split("SOURCE_FILE_ENDINGS").length).to be == 4 # included 3 times
@@ -49,14 +49,14 @@ describe "Option Parser" do
     Bake.options = Options.new([])
     Bake.options.parse_options()
     expect(Bake.options.threads).to be == 8 # default
-    
+
     Bake.options = Options.new(["-j"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect($mystring.include?("Argument for option -j missing")).to be == true
 
     Bake.options = Options.new(["-j", "aaaaah"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
-    
+
     Bake.options = Options.new(["-j", "2"])
     Bake.options.parse_options()
     expect(Bake.options.threads).to be == 2
@@ -75,7 +75,7 @@ describe "Option Parser" do
     expect($mystring.include?("* testL2B")).to be == true
     expect($mystring.include?("* testL2C")).to be == true
   end
-   
+
   it 'should provide config names with description' do
     Bake.startBake("desc/main1", ["--list"])
     expect($mystring.include?("No configuration with a DefaultToolchain found")).to be == false
@@ -85,12 +85,12 @@ describe "Option Parser" do
     expect($mystring.include?("* test3:")).to be == false
     expect($mystring.include?("* test4 (default): Fasel")).to be == true
   end
-  
+
   it 'should not provide config names' do
     Bake.startBake("desc/main2", ["--list"])
     expect($mystring.include?("* test")).to be == false
     expect($mystring.include?("No configuration with a DefaultToolchain found")).to be == true
-  end  
+  end
 
   it 'should provide a license' do
     Bake.options = Options.new(["--license"])
@@ -99,7 +99,7 @@ describe "Option Parser" do
     expect($mystring.include?("lake")).to be == true
     expect($mystring.include?("cxxproject")).to be == true
   end
-  
+
 end
 
 end

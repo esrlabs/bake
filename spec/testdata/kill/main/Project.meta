@@ -11,7 +11,7 @@ Project {
     Dependency lib2, config: dummy
     DefaultToolchain GCC
   }
-  
+
   LibraryConfig testCmd {
     Dependency lib1, config: testCmd
     Dependency lib2, config: dummy
@@ -23,23 +23,23 @@ Project {
     Dependency lib2, config: dummy
     DefaultToolchain GCC
   }
-  
+
   LibraryConfig testCompile {
     Dependency lib1, config: testCompile
     Dependency lib2, config: dummy
     DefaultToolchain GCC
-  }  
-  
+  }
+
   LibraryConfig testArchive {
     Dependency lib1, config: testArchive
     Dependency lib2, config: dummy
     DefaultToolchain GCC
-  }  
-  
+  }
+
   LibraryConfig testLink {
     Dependency lib1, config: testLink
     Dependency lib2, config: dummy
     DefaultToolchain GCC
-  }    
+  }
 
 }

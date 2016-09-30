@@ -1,10 +1,10 @@
 Adapt {
-   
+
     LibraryConfig __MAIN__, project: __MAIN__, type: extend {
       DefaultToolchain {
         Compiler CPP {
           Define "XX=YY"
-        }        
+        }
       }
-    }  
+    }
 }

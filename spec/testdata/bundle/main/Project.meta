@@ -1,11 +1,11 @@
 Project default: test {
-	
+
   ExecutableConfig test {
     Files "src/main.cpp"
     IncludeDir "lib1/include"
     Dependency lib1
     Dependency lib2
     DefaultToolchain GCC
-  }	
-	
+  }
+
 }

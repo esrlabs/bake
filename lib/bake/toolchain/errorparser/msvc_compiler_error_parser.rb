@@ -20,13 +20,13 @@ module Bake
         next if (filterLine == 1 and l.include?"Assembling: ")
         if (filterLine <= 2 and l.include?"Microsoft (R)")
           filterLine = 1
-          next 
+          next
         end
         next if (filterLine == 2 and l.include?"Copyright (C)")
         next if (filterLine == 3 and l.strip.empty?)
         next if (filterLine == 4 and not l.include?" : " and l.include?".") # the source file
         filterLine = 100
-        
+
         if l.include?@incEng
           includeList << l[@incEng.length..-1].strip
           next
@@ -35,7 +35,7 @@ module Bake
           includeList << l[@incGer.length..-1].strip
           next
         end
-        
+
         d = ErrorDesc.new
         scan_res = l.gsub(/\r\n?/, "").scan(@error_expression)
         lFull = l

@@ -40,7 +40,7 @@ Project {
 	Dependency lib2, config: testRel
 	DefaultToolchain GCC, outputDir: "testVar/$(MainProjectName)/$(ProjectName)/testOutVar"
   }
-  
+
   ExecutableConfig testTcAbs {
     Files "**/*.cpp"
 	Set AbsMain, cmd: "ruby getAbs.rb MAIN"
@@ -48,7 +48,7 @@ Project {
 	Dependency lib2, config: testTcAbs
 	DefaultToolchain GCC
 	Toolchain outputDir: "$(AbsMain)"
-  }  
+  }
 
   ExecutableConfig testDtcAbs {
     Files "**/*.cpp"
@@ -60,14 +60,14 @@ Project {
       CommandLine "echo from main 1: $(OutputDir,$(ProjectName),$(ConfigName))"
       CommandLine "echo from main 2: $(OutputDir,lib1,testRel)"
     }
-	
-  }  
-  
+
+  }
+
   ExecutableConfig testDtcAbsDD {
     Files "**/*.cpp"
     Dependency lib1, config: testRel
 	Dependency lib2, config: testRel
 	DefaultToolchain GCC, outputDir: "T:/testOutDirE"
-  }  
+  }
 }
 

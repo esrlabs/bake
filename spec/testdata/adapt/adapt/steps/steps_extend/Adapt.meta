@@ -1,5 +1,5 @@
 Adapt {
-   
+
     CustomConfig __MAIN__, project: __MAIN__, type: extend {
       StartupSteps {
         CommandLine "echo STARTUP2"
@@ -19,5 +19,5 @@ Adapt {
       }
       CommandLine "echo STEP2"
   }
-  
+
 }

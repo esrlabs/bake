@@ -11,7 +11,7 @@ Project {
 	  }
 	}
   }
-  
+
   LibraryConfig test2 {
     IncludeDir "B/include"
 	DefaultToolchain GCC

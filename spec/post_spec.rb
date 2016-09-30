@@ -11,7 +11,7 @@ require 'fileutils'
 module Bake
 
 describe "Post" do
-  
+
   it 'do not execute on error' do
     Bake.startBake("post/main", [])
 

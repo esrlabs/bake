@@ -1,9 +1,9 @@
 module Bake
-  
+
   module Blocks
-  
+
     module HasExecuteCommand
-      
+
       def executeCommand(commandLine, ignoreStr=nil, exitCodeArray = [0])
         puts commandLine if Bake.options.verbose >= 1
         puts "(executed in '#{@projectDir}')" if Bake.options.verbose >= 3
@@ -17,7 +17,7 @@ module Bake
           puts e.message
           puts e.backtrace if Bake.options.debug
         end
-          
+
         if (cmd_result == false and (not ignoreStr or not output.include?ignoreStr))
           Bake.formatter.printError("Command \"#{commandLine}\" failed", @config)
           puts "(executed in '#{@projectDir}')" if Bake.options.verbose >= 3
@@ -25,8 +25,8 @@ module Bake
         end
         return cmd_result
       end
-          
+
     end
-    
+
   end
 end

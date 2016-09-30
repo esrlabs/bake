@@ -18,7 +18,7 @@ Project {
         Define "D6"
       }
     }
-  } 
+  }
 
   ExecutableConfig test1 {
     IncludeDir "incMainA"
@@ -52,6 +52,6 @@ Project {
         Define "D4"
       }
     }
-  } 
+  }
 
 }

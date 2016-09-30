@@ -5,5 +5,5 @@ Project {
         IncludeDir "include", inherit: true
         Files "src/x.cpp"
     }
-    
+
 }

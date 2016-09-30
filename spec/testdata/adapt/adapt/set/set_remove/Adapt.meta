@@ -1,8 +1,8 @@
 Adapt {
-   
+
     ExecutableConfig __MAIN__, project: __MAIN__, type: remove {
       Set VAR1
       Set VAR3
   }
-  
+
 }

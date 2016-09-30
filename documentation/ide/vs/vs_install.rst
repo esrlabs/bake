@@ -35,7 +35,7 @@ VS 2010
 *******
 
 The plugin is available on a E.S.R.Labs server.
-Download `Visual Studio 2010 bake plugin <http://www.esrlabs.com/vs-plugins/bake/bake%20Visual%20Studio%20Extension%202010.vsix>`_, 
+Download `Visual Studio 2010 bake plugin <http://www.esrlabs.com/vs-plugins/bake/bake%20Visual%20Studio%20Extension%202010.vsix>`_,
 double click the file and install it.
 
     .. image:: ../../_static/vs_2010_install.png

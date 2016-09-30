@@ -38,7 +38,7 @@ module Bake
     CLANG_CHAIN[:LINKER][:EXE_FLAG] = "-o"
     CLANG_CHAIN[:LINKER][:LIB_FLAG] = "-l"
     CLANG_CHAIN[:LINKER][:LIB_PATH_FLAG] = "-L"
-      
-    CLANG_CHAIN[:LINKER][:ERROR_PARSER] = GCCLinkerErrorParser.new      
+
+    CLANG_CHAIN[:LINKER][:ERROR_PARSER] = GCCLinkerErrorParser.new
   end
 end

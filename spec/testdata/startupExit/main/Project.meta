@@ -35,7 +35,7 @@ Project {
     }
     DefaultToolchain GCC
   }
-  
+
   CustomConfig test4 {
     StartupSteps {
       CommandLine "ruby exit3", validExitCodes: [1,2,3]

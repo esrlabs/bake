@@ -8,8 +8,6 @@ require 'common/version'
 STDOUT.sync = true
 STDERR.sync = true
 
-puts "-- bake #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
-
 require 'tocxx'
 require 'socket'
 
@@ -21,7 +19,7 @@ module Bake
       Bake.formatter.printError("Error: Ruby 1.8 not supported anymore. Use Ruby 1.9 or greater.")
       ExitHelper.exit(1)
     end
-    
+
     Bake.options = Options.new(ARGV)
     Bake.options.parse_options
 
@@ -29,7 +27,7 @@ module Bake
     tocxx.connect()
     tocxx.doit()
     tocxx.disconnect()
-    
+
   rescue SystemExit => e
     earlyExit = e
     begin
@@ -40,7 +38,9 @@ module Bake
 
   timeEnd = Time.now
   timeDiff = timeEnd - $timeStart
-  Bake.formatter.printInfo("\nTime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60])
-  
+  if Bake.options.printTime
+    Bake.formatter.printInfo("\nTime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60])
+  end
+
   raise earlyExit if earlyExit
 end

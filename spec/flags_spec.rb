@@ -16,14 +16,14 @@ module Bake
     attr_accessor :overwrite
     attr_accessor :add
     attr_accessor :remove
-    
+
     def initialize(o,a,r)
       @overwrite = o
       @add = a
       @remove = r
     end
   end
-  
+
 describe "Flags" do
 
   it 'overwrite' do
@@ -45,7 +45,7 @@ describe "Flags" do
     orgStr = "-x -y -z"
     expect(adjustFlags(orgStr,[df])).to be == "-x -y -z -f -g"
   end
-  
+
   it 'add2' do
     df = DummyFlags.new("","-f -x -g","")
     df2 = DummyFlags.new("","-f -h","")
@@ -72,7 +72,7 @@ describe "Flags" do
     orgStr = "-x -y -z"
     expect(adjustFlags(orgStr,[df,df1,df2])).to be == "-c -h -e"
   end
- 
+
 
 end
 

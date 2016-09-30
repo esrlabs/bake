@@ -1,7 +1,15 @@
 module Bake
   class Version
     def self.number
-      "2.20.4"
+      "2.21.0"
+    end
+
+    def self.printBakeVersion(ry = "")
+      puts "-- bake#{ry} #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
+    end
+
+    def self.printBakeryVersion()
+      printBakeVersion("ry")
     end
   end
 

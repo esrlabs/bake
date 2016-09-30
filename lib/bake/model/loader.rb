@@ -16,18 +16,18 @@ require 'bake/options/options'
 module Bake
 
   class Loader
-  
+
     attr_reader :model
-  
+
     def initialize
       @env = RGen::Environment.new
-    
+
       fcm = RGen::Util::FileCacheMap.new(".bake", ".cache")
       fcm.version_info = Version.number
       @DumpFileCache = RGen::Fragment::DumpFileCache.new(fcm)
       @model = RGen::Fragment::FragmentedModel.new(:env => @env)
     end
-    
+
     def load_internal(filename, silent = false)
       silent = false if Bake.options.debug
       loader = RText::DefaultLoader.new(
@@ -53,48 +53,48 @@ module Bake
           puts "Loading #{fragment.location}" unless silent
         else
           Bake.formatter.printError("Error: Could not load #{fragment.location}")
-          ExitHelper.exit(1)     
+          ExitHelper.exit(1)
         end
       })
-    
+
       frag = @model.fragments[0]
       @model.remove_fragment(frag)
       frag
     end
-    
-    
+
+
     def load(filename)
       sumErrors = 0
 
       if not File.exists?filename
         Bake.formatter.printError("Error: #{filename} does not exist")
-        ExitHelper.exit(1) 
+        ExitHelper.exit(1)
       end
-      
+
       frag = nil
       if not Bake.options.nocache
         frag = load_internal(filename) # regular load
         frag = nil if frag.root_elements.length > 0 and filename != frag.root_elements[0].file_name
       end
-      
+
       if frag.nil?
         def @DumpFileCache.load(fragment)
           :invalid
         end
         frag = load_internal(filename, !Bake.options.nocache)
       end
-    
+
       frag.data[:problems].each do |p|
         Bake.formatter.printError(p.message, p.file, p.line)
       end
-      
+
       if frag.data[:problems].length > 0
-        ExitHelper.exit(1) 
+        ExitHelper.exit(1)
       end
-      
+
       return frag
-    
+
     end
-  
+
   end
 end

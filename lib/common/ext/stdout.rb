@@ -21,7 +21,7 @@ class ThreadOut
       @out.puts stuff
     end
   end
-  
+
   def print(stuff='')
     if Thread.current[:stdout] then
       Thread.current[:stdout].puts stuff

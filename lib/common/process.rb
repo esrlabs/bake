@@ -24,7 +24,7 @@ module Bake
             tmp.encode!('UTF-8',  :invalid => :replace, :undef => :replace, :replace => '')
             tmp.encode!('binary', :invalid => :replace, :undef => :replace, :replace => '')
             output << tmp
-            
+
             print tmp if immediateOutput
           end
         end
@@ -34,11 +34,11 @@ module Bake
         # how to "break" the loop.
         # This problem occurs on Windows command shell and Cygwin.
       end
-      
+
       begin
         rd.close
       rescue
-      end 
+      end
       pid, status = Process.wait2(pid)
       @@pid = nil
       @@rd = nil
@@ -46,7 +46,7 @@ module Bake
       exitCodeArray = [0] if exitCodeArray.empty?
       [(exitCodeArray.include?status.exitstatus), output]
     end
-       
+
     def self.killProcess(force) # do not kill compile processes or implement rd and pid array if really needed
       begin
         @@rd.close
@@ -59,7 +59,7 @@ module Bake
       @@rd = nil
       @@pid = nil
     end
-    
+
   end
 
 end

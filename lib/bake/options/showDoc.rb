@@ -12,9 +12,9 @@ module Bake
       else
         puts "Please open #{link} manually in your browser."
       end
-      
+
       ExitHelper.exit(0)
     end
-    
+
   end
 end

@@ -6,7 +6,7 @@ Project {
 	  Docu "echo Docu_of_$(ProjectName)"
 	}
   }
-  
+
   LibraryConfig testoverwriteDefault {
     Dependency lib1, config: testself
 	Toolchain {
@@ -16,18 +16,18 @@ Project {
 	  Docu "echo Docu_of_$(ProjectName)"
 	}
   }
-  
+
   LibraryConfig testonlySub {
     Dependency lib1, config: testself
 	DefaultToolchain GCC
   }
-  
+
   LibraryConfig testbrokenLib {
     Toolchain {
 	  Docu "kaputt"
 	}
   }
-  
+
   LibraryConfig testbroken {
     Dependency config: testbrokenLib
     DefaultToolchain GCC

@@ -1,8 +1,17 @@
+require 'common/version'
+
 module Bake
 
   class Usage
 
+    def self.version
+      Bake::Version.printBakeVersion
+      ExitHelper.exit(0)
+    end
+
+
     def self.show
+      Bake::Version.printBakeVersion
       puts "\nUsage: bake [options]"
       puts " [-b] <name>              Config name of main project"
       puts " -m <dir>                 Directory of main project (default is current directory)."
@@ -40,17 +49,19 @@ module Bake
       puts " --no-autodir             Disable auto completion of paths like in IncludeDir"
       puts " --set <key>=<value>      Sets a variable. Overwrites variables defined in Project.metas (can be used multiple times)."
       puts " --adapt <name>           Specifies an adapt project to manipulate the configs (can be used multiple times)"
-      puts " --incs-and-defs          Used by IDEs plugins"
+      puts " --incs-and-defs=json     Prints includes and defines of all projects in json format"
+      puts " --incs-and-defs=bake     Used by IDEs plugins"
       puts " --conversion-info        Prints infos for an external tool which converts bake configs for other build systems"
 #      puts " --bundle <dir>           Bundles the output (experimental, description will follow)"
       puts " --prebuild               Does not build configs which are marked as 'prebuild', this feature is used for distributions."
-      puts " --writeCC2J <name>       Writes compiler command into a json file (experimental!)"
+      puts " --compilation-db [<fn>]  Writes compilation information into filename fn in json format, default for fn is compilation-db.json"
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
       puts " --link-2-17              DEPRECATED: Using link order of libraries which was used until bake 2.17"
       puts " --build_                 DEPRECATED: build directories will be build_<name> instead of build/<name>"
 
       puts ""
       puts " --version                Print version."
+      puts " --time                   Print elapsed time at the end."
       puts " --doc                    Open documentation in browser"
       puts " -h, --help               Print this help."
       puts " --license                Print the license."

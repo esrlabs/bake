@@ -13,7 +13,7 @@ module Bake
           ::File.dirname(comp.file_name)
         end
       end
-      
+
       module BaseConfig_INTERNAL::ClassModule
         def qname
           @qname ||= parent.name + "," + name
@@ -21,7 +21,7 @@ module Bake
         def dependency
           libStuff.find_all { |l| Dependency === l }
         end
-      end      
-      
+      end
+
   end
 end

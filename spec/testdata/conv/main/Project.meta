@@ -1,7 +1,7 @@
 Project {
 
   LibraryConfig lib
-  
+
   ExecutableConfig test {
     Dependency config: lib
     Dependency sub
@@ -9,6 +9,6 @@ Project {
     Dependency gmock
     Dependency sub2
     DefaultToolchain GCC
-  }  
+  }
 
 }

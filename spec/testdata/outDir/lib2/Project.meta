@@ -9,10 +9,10 @@ Project {
     Files "**/*.cpp"
 	Set AbsLib2, cmd: "ruby ../main/getAbs.rb LIB2"
 	Toolchain outputDir: "$(AbsLib2)"
-  }  
-  
+  }
+
   LibraryConfig testRel {
     Files "**/*.cpp"
-  }  
-  
+  }
+
 }

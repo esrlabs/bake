@@ -1,6 +1,6 @@
 module Bake
   class ToolchainInfo
-    
+
     def self.printHash(x, level)
       x.each do |k,v|
         if Hash === v
@@ -25,15 +25,15 @@ module Bake
         puts "Toolchain not available"
       else
         printHash(tcs, 0)
-      end 
+      end
       ExitHelper.exit(0)
     end
-    
+
     def self.showToolchainList()
       puts "Available toolchains:"
       Bake::Toolchain::Provider.list.keys.each { |c| puts "* #{c}" }
       ExitHelper.exit(0)
     end
-    
+
   end
 end

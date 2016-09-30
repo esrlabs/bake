@@ -4,5 +4,5 @@ Project default: test {
     CommandLine "echo __$(ProjectDir)__"
     DefaultToolchain GCC
   }
-  
+
 }

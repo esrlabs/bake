@@ -36,10 +36,10 @@ module Bake
 
     module Project::ClassModule
       def isFound
-        @isFound ||= false 
+        @isFound ||= false
       end
       def found
-        @isFound = true 
+        @isFound = true
       end
     end
 

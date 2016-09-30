@@ -23,7 +23,7 @@ module Bake
       }
     },
     :unlabled_arguments => proc {|c|
-      if c.name == "Compiler" or c.name == "CompilerAdaptions" 
+      if c.name == "Compiler" or c.name == "CompilerAdaptions"
         ["ctype"]
       elsif c.name == "Define"
         ["str"]

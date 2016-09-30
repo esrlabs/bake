@@ -11,7 +11,7 @@ require 'fileutils'
 module Bake
 
 describe "StartupExit" do
-  
+
   it 'passed' do
     Bake.startBake("startupExit/main", ["-b", "test1"])
 
@@ -23,7 +23,7 @@ describe "StartupExit" do
 
     expect($mystring.include?("LIB_MAIN")).to be == true
     expect($mystring.include?("MAIN_MAIN")).to be == true
-          
+
     expect($mystring.include?("LIB_EXIT1")).to be == true
     expect($mystring.include?("LIB_EXIT2")).to be == true
     expect($mystring.include?("MAIN_EXIT1")).to be == true
@@ -41,7 +41,7 @@ describe "StartupExit" do
 
     expect($mystring.include?("LIB_MAIN")).to be == true
     expect($mystring.include?("MAIN_MAIN")).to be == true
-          
+
     expect($mystring.include?("LIB_EXIT1")).to be == true
     expect($mystring.include?("LIB_EXIT2")).to be == true
     expect($mystring.include?("MAIN_EXIT1")).to be == true
@@ -59,7 +59,7 @@ describe "StartupExit" do
 
     expect($mystring.include?("LIB_MAIN")).to be == false
     expect($mystring.include?("MAIN_MAIN")).to be == false
-          
+
     expect($mystring.include?("LIB_EXIT1")).to be == true
     expect($mystring.include?("LIB_EXIT2")).to be == true
     expect($mystring.include?("MAIN_EXIT1")).to be == true
@@ -86,7 +86,7 @@ describe "StartupExit" do
     expect($mystring.include?("MAIN_EXIT1")).to be == true
     expect($mystring.include?("MAIN_EXIT2")).to be == true
   end
-          
+
 end
 
 end

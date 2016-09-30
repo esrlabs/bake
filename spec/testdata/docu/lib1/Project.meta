@@ -7,5 +7,5 @@ Project {
 	  Docu "echo Docu_of_$(ConfigName)"
 	}
   }
-  
+
 }

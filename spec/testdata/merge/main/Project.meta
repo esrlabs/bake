@@ -7,11 +7,11 @@ Project {
 	IncludeDir "Inc1_1"
 	IncludeDir "Inc1_2"
     Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
-    
+
 	PreSteps {
       CommandLine "echo **$(ArtifactName)**"
 	}
-	
+
     DefaultToolchain GCC
     Toolchain {
 	  Compiler CPP {
@@ -25,7 +25,7 @@ Project {
 	ArtifactName "testE1.exe"
 	MapFile "$(OutputDir)/testE1.map"
   }
-  
+
   ExecutableConfig testE2, extends: testE1 {
 	Files "src/main.cpp"
     Files "**/*L2*"
@@ -57,7 +57,7 @@ Project {
     ExcludeFiles "**/*L3ex*"
 	IncludeDir "Inc3_1"
 	IncludeDir "Inc3_2"
-	
+
     Toolchain
     DefaultToolchain GCC
 	LinkerScript "ls/linkerscript3.dld"
@@ -66,7 +66,7 @@ Project {
   }
 
   ExecutableConfig testE4 {
-  }  
+  }
 
   ExecutableConfig testE5, extends: testE4 {
 	Files "src/main.cpp"
@@ -74,7 +74,7 @@ Project {
   	IncludeDir "Inc5_1"
 	IncludeDir "Inc5_2"
     Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
-    
+
 	DefaultToolchain GCC
     Toolchain {
 	  Compiler CPP {
@@ -87,12 +87,12 @@ Project {
 	LinkerScript "ls/linkerscript5.dld"
 	ArtifactName "testE5.exe"
 	MapFile "$(OutputDir)/testE5.map"
-  }  
+  }
 
   ExecutableConfig testE6, extends: testE1 {
-  }  
-  
-  
+  }
+
+
 
 
 
@@ -114,7 +114,7 @@ Project {
 	ExternalLibrary "lib/L1_1"
 	ExternalLibrarySearchPath blah1
 	ExternalLibrary "lib/libL1_2.a", search: false
-  
+
     Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
     DefaultToolchain GCC {
 	  Compiler CPP {
@@ -125,7 +125,7 @@ Project {
 	  }
 	}
   }
-  
+
   LibraryConfig testL2, extends: testL1 {
     Dependency depL2_1, config: lib
     Dependency depL2_2, config: lib
@@ -143,7 +143,7 @@ Project {
 	UserLibrary "lib/libL2_1.a"
 	ExternalLibrarySearchPath blah2
 	UserLibrary "lib/libL2_2.a"
-	
+
     DefaultToolchain GCC {
 	  Compiler CPP {
 	    Define "def2"
@@ -174,19 +174,19 @@ Project {
       CommandLine "echo Post3_2"
     }
 
-  
+
 	ExternalLibrary "lib/L3_1"
 	ExternalLibrarySearchPath blah3
-	ExternalLibrary "lib/libL3_2.a", search: false  
-  
+	ExternalLibrary "lib/libL3_2.a", search: false
+
     DefaultToolchain GCC {
 	}
 
   }
-  
+
 
   LibraryConfig testL4 {
-  }  
+  }
 
   LibraryConfig testL5, extends: testL4 {
     Dependency depL5_1, config: lib
@@ -202,21 +202,21 @@ Project {
       CommandLine "echo Post5_2"
     }
 
-  
+
 	ExternalLibrary "lib/L5_1"
 	ExternalLibrarySearchPath blah5
-	ExternalLibrary "lib/libL5_2.a", search: false  
-  
+	ExternalLibrary "lib/libL5_2.a", search: false
+
     DefaultToolchain GCC {
 	  Compiler CPP {
 	    Define "def5"
 	  }
 	}
 
-  }  
+  }
 
   LibraryConfig testL6, extends: testL1 {
-  }  
+  }
 
   ExecutableConfig testL3E, extends: testL3 {
 	Files "src/main.cpp"
@@ -227,22 +227,22 @@ Project {
   ExecutableConfig testL6E, extends: testL6 {
 	Files "src/main.cpp"
   }
-  
-  
+
+
   CustomConfig testC1 {
 	CommandLine "echo C1"
   }
-  
+
   CustomConfig testC2, extends: testC1 {
 	CommandLine "echo C2"
 	DefaultToolchain GCC
   }
-  
+
   CustomConfig testC3, extends: testC2 {
 	CommandLine "echo C3"
 	DefaultToolchain GCC
   }
-  
+
   CustomConfig testC4
 
   CustomConfig testC5, extends: testC4 {
@@ -253,23 +253,23 @@ Project {
   CustomConfig testC6, extends: testC1 {
 	DefaultToolchain GCC
   }
-  
+
   ExecutableConfig testC5E, extends: testC5 {
 	DefaultToolchain GCC
-  }  
-  
+  }
+
   CustomConfig testC7, extends: testL1 {
 	CommandLine "echo testC7"
 	DefaultToolchain GCC
-  }  
-  
+  }
+
   CustomConfig ParentKaputt, extends: dasGibtsDochGarNicht {
 	DefaultToolchain GCC
-  }  
-  
-  
+  }
+
+
   # explicit merge toolchain stuff
-  
+
   ExecutableConfig testTC1 {
     Files "src/main.cpp"
     DefaultToolchain Diab {
@@ -284,11 +284,11 @@ Project {
       }
     }
   }
-  
+
   ExecutableConfig testTC2, extends: testTC1 {
     DefaultToolchain GCC
   }
-  
+
   ExecutableConfig testTC3, extends: testTC1 {
     DefaultToolchain GCC {
       Compiler CPP {
@@ -297,7 +297,7 @@ Project {
       }
     }
   }
-  
+
   ExecutableConfig testTC4, extends: testTC1 {
     DefaultToolchain GCC {
       Compiler CPP {
@@ -305,7 +305,7 @@ Project {
       }
     }
   }
-  
+
   ExecutableConfig testTC5, extends: testTC1 {
     DefaultToolchain GCC {
       Compiler CPP {
@@ -313,31 +313,31 @@ Project {
       }
     }
   }
-  
+
   ExecutableConfig testTC6, extends: testTC1 {
     DefaultToolchain GCC {
       Compiler CPP, command: "com1"
     }
   }
-  
+
   ExecutableConfig testTC7, extends: testTC6 {
     DefaultToolchain GCC {
       Compiler CPP
     }
   }
-  
+
   LibraryConfig testTC10 {
     Files "src/dummy.c"
     DefaultToolchain GCC {
       Archiver command: "com1"
     }
   }
-  
+
   LibraryConfig testTC11, extends: testTC10 {
     DefaultToolchain GCC {
     }
   }
-  
+
   LibraryConfig testTC12, extends: testTC10 {
     DefaultToolchain GCC {
       Archiver {
@@ -345,7 +345,7 @@ Project {
       }
     }
   }
-  
+
   LibraryConfig testTC13, extends: testTC12 {
     DefaultToolchain GCC {
       Archiver command: "com2" {
@@ -353,18 +353,18 @@ Project {
       }
     }
   }
-  
+
   ExecutableConfig testTC20 {
     DefaultToolchain GCC {
       Linker command: "com1"
     }
   }
-  
+
   ExecutableConfig testTC21, extends: testTC20 {
     DefaultToolchain GCC {
     }
   }
-  
+
   ExecutableConfig testTC22, extends: testTC20 {
     DefaultToolchain GCC {
       Linker {
@@ -372,7 +372,7 @@ Project {
       }
     }
   }
-  
+
   ExecutableConfig testTC23, extends: testTC22 {
     DefaultToolchain GCC {
       Linker command: "com2" {
@@ -389,7 +389,7 @@ Project {
       InternalIncludes "intdef.txt"
     }
   }
-  
+
   ExecutableConfig testTC31, extends: testTC30 {
     DefaultToolchain GCC, outputDir: "testEFG" {
       Docu "nix da"
@@ -397,7 +397,7 @@ Project {
       InternalIncludes "intdef2.txt"
     }
  }
-  
+
   ExecutableConfig testTC32, extends: testTC30 {
     DefaultToolchain GCC
   }
@@ -408,7 +408,7 @@ Project {
       CommandLine "echo XtestMultiBase1Base2X"
     }
   }
-  
+
   ExecutableConfig testMultiBase1Base1 {
     PreSteps {
       CommandLine "echo XtestMultiBase1Base1X"
@@ -434,7 +434,7 @@ Project {
     }
   }
 
-  
+
 }
 
 

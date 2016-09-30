@@ -13,7 +13,7 @@ Instructions for the Interactive Syntax Viewer
 
 .. note::
     Specify the paths always relative to the current project root, but keep the variable substitution in Project.meta in mind.
-    
+
     * Use double quotes (") if the strings have spaces or slashes.
 
     * Use hash marks (#) for comments.

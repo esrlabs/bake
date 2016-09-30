@@ -12,7 +12,7 @@ Project default: test1 {
     }
     DefaultToolchain GCC
   }
-  
+
    CustomConfig test2 {
     StartupSteps {
       CommandLine "echo LIB_STARTUP1"

@@ -33,12 +33,12 @@ module Bake
 
     GreenHillsChain[:LINKER][:COMMAND] = "cxppc" # ??
     GreenHillsChain[:LINKER][:SCRIPT] = "-T" # -T file.ld
-    GreenHillsChain[:LINKER][:USER_LIB_FLAG] = "-l" # user lib not supported? same as lib... 
+    GreenHillsChain[:LINKER][:USER_LIB_FLAG] = "-l" # user lib not supported? same as lib...
     GreenHillsChain[:LINKER][:EXE_FLAG] = "-o"
     GreenHillsChain[:LINKER][:LIB_FLAG] = "-l"
     GreenHillsChain[:LINKER][:LIB_PATH_FLAG] = "-L"
     GreenHillsChain[:LINKER][:MAP_FILE_FLAG] = "-map=" # -map=filename
-    GreenHillsChain[:LINKER][:MAP_FILE_PIPE] = false   
+    GreenHillsChain[:LINKER][:MAP_FILE_PIPE] = false
     GreenHillsChain[:LINKER][:OUTPUT_ENDING] = ".elf"
 
     GreenHillsCompilerErrorParser =                   GreenHillsCompilerErrorParser.new

@@ -16,7 +16,7 @@ Add debug flags to the MSVC toolchain:
             Flags "-Debug"
         }
     }
-                
+
 Start Visual Studio with e.g. a batch file shown below and choose the appropriate solution. If you don't have a solution yet, check out How to create a solution / projects in Visual Studio.
 
 .. code-block:: console

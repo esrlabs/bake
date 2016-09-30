@@ -15,6 +15,6 @@ module Bake
     })
 
     LintChain[:COMPILER][:CPP][:ERROR_PARSER] = LintErrorParser.new
-      
+
   end
 end

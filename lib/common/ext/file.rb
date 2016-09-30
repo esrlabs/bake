@@ -12,57 +12,57 @@ class File
   def self.rel_from_to_project(from,to,endWithSlash = true)
 
     return nil if from.nil? or to.nil?
-    
+
     toSplitted = to.split('/')
     fromSplitted = from.split('/')
-    
+
     max = [toSplitted.length, fromSplitted.length].min
-    
-    
+
+
     return nil if max < 1
-    
+
     i = 0
-    
+
     # path letter in windows may be case different
     toIsWindowsAbs = false
     if toSplitted[0].length > 1 and fromSplitted[0].length > 1
       toIsWindowsAbs = toSplitted[0][1] == ':'
       i = 1  if toIsWindowsAbs and fromSplitted[0][1] == ':' and toSplitted[0][0].downcase == fromSplitted[0][0].downcase
     end
-    
+
     if (toIsWindowsAbs and i==0)
       res = to
-      res += "/" if endWithSlash 
-      return res	  
+      res += "/" if endWithSlash
+      return res
     end
-    
+
     while i < max
-        break if toSplitted[i] != fromSplitted[i] 
+        break if toSplitted[i] != fromSplitted[i]
       i += 1
     end
     j = i
-    
+
     res = []
     while i < fromSplitted.length
       res << ".."
       i += 1
     end
-    
+
     while j < toSplitted.length
       res << toSplitted[j]
       j += 1
     end
-    
+
     if res.length == 0
       return ""
     end
-    
+
     res = res.join('/')
-    res += "/" if endWithSlash 
+    res += "/" if endWithSlash
     res
   end
 
-  
+
   def self.add_prefix(prefix, file)
     if not prefix or is_absolute?(file)
       file
@@ -79,10 +79,10 @@ class File
         exe = File.join(path, "#{cmd}#{ext}")
         if File.executable?(exe) && !File.directory?(exe)
           return File.dirname(exe.gsub(/[\\]/,'/'))
-        end 
+        end
       }
     end
     return ""
   end
-  
+
 end

@@ -7,7 +7,7 @@ Project {
       CommandLine "echo STEP2"
     }
   }
-  
+
   LibraryConfig testPreMake {
     PreSteps {
       CommandLine "echo STEP1"
@@ -15,7 +15,7 @@ Project {
       CommandLine "echo STEP2"
     }
   }
-  
+
   CustomConfig testCmd {
     PreSteps {
       CommandLine "echo STEP1"
@@ -25,7 +25,7 @@ Project {
       CommandLine "echo STEP2"
     }
   }
-  
+
   CustomConfig testMake {
     PreSteps {
       CommandLine "echo STEP1"
@@ -34,8 +34,8 @@ Project {
     PostSteps {
       CommandLine "echo STEP2"
     }
-  }  
-  
+  }
+
   LibraryConfig testCompile {
     PreSteps {
       CommandLine "echo STEP1"
@@ -61,7 +61,7 @@ Project {
       Archiver command: "ruby archive.rb"
     }
   }
-  
+
   ExecutableConfig testLink {
     Files "src/a.cpp"
     PreSteps {
@@ -73,6 +73,6 @@ Project {
     Toolchain {
       Linker command: "ruby link.rb"
     }
-  }  
+  }
 
 }

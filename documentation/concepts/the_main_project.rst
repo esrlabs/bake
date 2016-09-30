@@ -37,8 +37,8 @@ Project.meta of Main (Debug and Release)         Project.meta of Sub (only one b
 Output directory
 ****************
 
-A project in a specific build configuration can be build in different contexts. 
-That's why the output directory of a project cannot be simply the build configuration name of the project to avoid inconsistencies. 
+A project in a specific build configuration can be build in different contexts.
+That's why the output directory of a project cannot be simply the build configuration name of the project to avoid inconsistencies.
 Therefore the output directory names are.
 
     * Main project: $(MainConfigName) like in regular Eclipse CDT builds

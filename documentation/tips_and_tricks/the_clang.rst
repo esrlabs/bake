@@ -7,15 +7,15 @@ invoking the compiler, the Clang Analyzer will be called.
 Imagine you have a workspace with the following "main" project:
 
     .. code-block:: console
-        
+
 		Project {
           ...
           ExecutableConfig Debug {
             ...
-            DefaultToolchain GCC  
+            DefaultToolchain GCC
           }
         }
-		
+
 Either edit this Project.meta or create a new "analyze" project:
 
     .. code-block:: console

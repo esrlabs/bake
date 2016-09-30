@@ -11,9 +11,9 @@ module Bake
 #                    ^
 #              detected during:
 #                instantiation of ...
-    
+
 #   dblink: WARNING: 10 problems were encountered while processing debug information, see "Debug/xy.dle" for details.
-    
+
     def initialize()
       @error_expression = /ld: (.+)/
     end

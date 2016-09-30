@@ -176,7 +176,8 @@ module Bake
         cmd << source
 
         if Bake.options.cc2j_filename
-          Blocks::CC2J << { :directory => @projectDir, :command => cmd, :file => source }
+          cmdJson = cmd.is_a?(Array) ? cmd.join(' ') : cmd
+          Blocks::CC2J << { :directory => @projectDir, :command => cmdJson, :file => source }
         end
 
         if not (cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile))

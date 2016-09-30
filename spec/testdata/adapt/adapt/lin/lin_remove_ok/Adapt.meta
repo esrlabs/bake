@@ -1,7 +1,7 @@
 Adapt {
-   
+
     ExecutableConfig __MAIN__, project: __MAIN__, type: remove {
       LinkerScript "ls/linkerscript1.dld"
   }
-  
+
 }

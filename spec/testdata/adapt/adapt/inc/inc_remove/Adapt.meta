@@ -1,8 +1,8 @@
 Adapt {
-   
+
     ExecutableConfig __MAIN__, project: __MAIN__, type: remove {
       IncludeDir "include/b"
       IncludeDir "include/c"
   }
-  
+
 }

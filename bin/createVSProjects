@@ -5,7 +5,7 @@ require "securerandom"
 require "vs/options"
 require 'common/version'
 
-puts "-- bake #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
+Bake::Version.printBakeVersion
 
 module Bake
 
@@ -29,17 +29,17 @@ end
 @options = VsOptions.new(ARGV)
 @options.parse_options
 
-version = "13.00" 
+version = "13.00"
 toolset = "v120"
 if @options.version == "2010"
-  version = "11.00" 
+  version = "11.00"
   toolset = "v100"
 elsif @options.version == "2012"
-  version = "12.00" 
+  version = "12.00"
   toolset = "v110"
 end
 
-	
+
 slnFilename = @options.roots[0] + "/" + File.basename(@options.roots[0]) + ".sln"
 appendProjects = (File.exist?(slnFilename) and @options.rewriteSolution)
 
@@ -50,7 +50,7 @@ projects = {}
   Dir.glob(r + "/**/Project.meta").each do |m|
     projects[File.basename(File.dirname(m))] = [File.dirname(m), SecureRandom.uuid.upcase]
   end
-end  
+end
 
 #if not @options.rewriteProjects
 #  projects.delete_if { |k,v| File.exist?(v[PATH]+"/"+k+".vcxproj") or File.exist?(v[PATH]+"/"+k+".vcxproj.filters") }
@@ -67,7 +67,7 @@ if not @options.rewriteSolution
     x = line.match(pattern)
     projects.delete(x[1]) if x
   end
-end  
+end
 
 if projects.length == 0
   puts "Nothing to do."
@@ -76,8 +76,8 @@ end
 
 if not @options.rewriteSolution
 
-  puts "Adding new projects to " + slnFilename + "... "    
-  File.open(slnFilename, 'w') do |f|  
+  puts "Adding new projects to " + slnFilename + "... "
+  File.open(slnFilename, 'w') do |f|
 
     addedProjects = false
     slnText.each_line do |line|
@@ -85,7 +85,7 @@ if not @options.rewriteSolution
         writeProjects(f,projects)
 	    addedProjects = true
       end
-	
+
 	  f.puts line
 
       if line.include?"postSolution"
@@ -94,11 +94,11 @@ if not @options.rewriteSolution
 	end
 
   end
-  
+
 else
 
-  puts "Rewriting " + slnFilename + "... "  
-  File.open(slnFilename, 'w') do |f|  
+  puts "Rewriting " + slnFilename + "... "
+  File.open(slnFilename, 'w') do |f|
     f.puts "Microsoft Visual Studio Solution File, Format Version " + version
 
 	writeProjects(f,projects)
@@ -108,24 +108,24 @@ else
     f.puts "		bake|Win32 = bake|Win32"
     f.puts "	EndGlobalSection"
     f.puts "	GlobalSection(ProjectConfigurationPlatforms) = postSolution"
-    
+
 	writeCfg(f,projects)
-	
+
     f.puts "	EndGlobalSection"
     f.puts "	GlobalSection(SolutionProperties) = preSolution"
     f.puts "		HideSolutionNode = FALSE"
     f.puts "	EndGlobalSection"
     f.puts "EndGlobal"
   end
-  
+
 end
 
 projects.each do |k,v|
 
   filename = v[PATH] + "/" + k + ".vcxproj"
   puts "Writing " + filename + "... "
-  File.open(filename, 'w') do |f|  
-  
+  File.open(filename, 'w') do |f|
+
     f.puts "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
     f.puts "<Project DefaultTargets=\"Build\" ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">"
     f.puts "  <ItemGroup Label=\"ProjectConfigurations\">"
@@ -150,32 +150,32 @@ projects.each do |k,v|
     f.puts "  <ImportGroup Label=\"PropertySheets\" Condition=\"'$(Configuration)|$(Platform)'=='bake|Win32'\">"
     f.puts "    <Import Project=\"$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props\" Condition=\"exists('$(UserRootDir)\\Microsoft.Cpp.$(Platform).user.props')\" Label=\"LocalAppDataPlatform\" />"
     f.puts "  </ImportGroup>"
-	
-	
+
+
     f.puts "  <ItemGroup>"
 	Dir.chdir(v[PATH]) do
 	  files = Dir.glob("**/*")
 	  files.each do |item|
 	    if (item[0..5] != ".bake") and not File.directory?(item)
-          f.puts "    <None Include=\"" + item + "\" />"	
+          f.puts "    <None Include=\"" + item + "\" />"
 		end
 	  end
 	end
     f.puts "  </ItemGroup>"
-	
+
     f.puts "  <Import Project=\"$(VCTargetsPath)\\Microsoft.Cpp.targets\" />"
     f.puts "</Project>"
-  
+
   end
 
   filename = filename + ".filters"
-  puts "Writing " + filename + "... "  
-  File.open(filename, 'w') do |f|  
+  puts "Writing " + filename + "... "
+  File.open(filename, 'w') do |f|
 
     f.puts "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
     f.puts "<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">"
 
-    fileList = []    
+    fileList = []
 	f.puts "  <ItemGroup>"
 	Dir.chdir(v[PATH]) do
 	  files = Dir.glob("**/*")
@@ -190,7 +190,7 @@ projects.each do |k,v|
 	  end
 	end
     f.puts "  </ItemGroup>"
-  
+
     f.puts "  <ItemGroup>"
 	fileList.each do |i|
 	  if File.dirname(i) != "."
@@ -202,11 +202,11 @@ projects.each do |k,v|
 	  end
 	end
     f.puts "  </ItemGroup>"
-	
+
     f.puts "</Project>"
-  
-  end  
-  
+
+  end
+
 end
 
 puts "Finished."

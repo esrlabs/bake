@@ -1,5 +1,5 @@
 Project default: test {
-  
+
   LibraryConfig test {
     IncludeDir "f/include"
     Files "src/i.cpp"

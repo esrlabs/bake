@@ -18,5 +18,5 @@ Project {
 	ExternalLibrary "sub"
 	DefaultToolchain GCC
   }
-  
+
 }

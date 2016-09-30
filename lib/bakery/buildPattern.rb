@@ -20,5 +20,5 @@ module Bake
       self.getId == comparee.getId
     end
   end
-  
+
 end

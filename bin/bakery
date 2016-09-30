@@ -7,7 +7,7 @@ require 'common/version'
 
 require 'common/utils'
 
-puts "-- bakery #{Bake::Version.number}, ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}, platform #{RUBY_PLATFORM} --"
+Bake::Version.printBakeryVersion
 
 STDOUT.sync = true
 STDERR.sync = true

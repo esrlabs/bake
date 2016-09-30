@@ -18,9 +18,9 @@ module Bake
 
   class Options < Parser
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
-    attr_reader :main_dir, :project, :filename, :main_project_name, :cc2j_filename, :bundleDir, :buildDirDelimiter, :dot # String
+    attr_reader :main_dir, :project, :filename, :main_project_name, :bundleDir, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
-    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :compileOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro, :oldLinkOrder, :prebuild # Boolean
+    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :compileOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verbose
@@ -32,6 +32,7 @@ module Bake
 
       @dot = nil
       @prebuild = false
+      @printTime = false
       @buildDirDelimiter = "/"
       @oldLinkOrder = false
       @conversion_info = false
@@ -50,6 +51,7 @@ module Bake
       @project = nil
       @filename = nil
       @cc2j_filename = nil
+      @json = false
       @clean = false
       @clobber = false
       @lint = false
@@ -124,14 +126,17 @@ module Bake
       add_option(["--prebuild"                                   ], lambda {     @prebuild = true                        })
 
       add_option(["-h",                   "--help"               ], lambda {     Bake::Usage.show                        })
+      add_option(["--time",                                      ], lambda {     @printTime = true                       })
 
       add_option(["--incs-and-defs",      "--show_incs_and_defs" ], lambda {     @show_includes_and_defines = true       })
+      add_option(["--incs-and-defs=bake",                        ], lambda {     @show_includes_and_defines = true       })
+      add_option(["--incs-and-defs=json"                         ], lambda { @show_includes_and_defines=true; @json=true })
       add_option(["--license",            "--show_license"       ], lambda {     License.show                            })
       add_option(["--doc",                "--show_doc"           ], lambda {     Doc.show                                })
 
-      add_option(["--version"                                    ], lambda {     ExitHelper.exit(0)                      })
+      add_option(["--version"                                    ], lambda {     Bake::Usage.version                     })
       add_option(["--list",               "--show_configs"       ], lambda {     @showConfigs = true                     })
-      add_option(["--writeCC2J"                                  ], lambda { |x| @cc2j_filename = x.gsub(/[\\]/,'/')     })
+      add_option(["--compilation-db"                             ], lambda { |x,dummy| @cc2j_filename = (x ? x : "compilation-db.json" )})
       add_option(["--link-2-17",          "--link_2_17"          ], lambda {     @oldLinkOrder = true                    })
       add_option(["--build_",                                    ], lambda {     @buildDirDelimiter = "_"                })
 

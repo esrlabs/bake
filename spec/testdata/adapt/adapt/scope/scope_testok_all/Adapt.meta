@@ -1,5 +1,5 @@
 Adapt {
-   
+
     ExecutableConfig test_ok, project: __ALL__, type: extend {
       Toolchain {
         Compiler CPP {
@@ -7,5 +7,5 @@ Adapt {
         }
       }
   }
-  
+
 }
