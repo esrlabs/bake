@@ -51,7 +51,7 @@ It is possible to mix the keywords with reals project or config names.
 
 Occurrences
 ***********
-    
+
 You can specify more configs in one adapt file and you can specify more than one adapt file:
 
 .. code-block:: text
@@ -95,7 +95,7 @@ Type: remove
 ------------
 
 If parent elements can be found which matches to the child elements, they will be removed.
- 
+
 Example project config:
 
 .. code-block:: text

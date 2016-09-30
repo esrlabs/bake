@@ -7,7 +7,7 @@ How to get help
 .. code-block:: console
 
     User@Host:~$ bake -h
-    
+
 The most important options
 **************************
 
@@ -15,10 +15,10 @@ The most important options
 
 #. *-m* the main project directory (default is current directory)
 
-#. *-p* the project to build (if not specified, the main project will be built with all dependencies) 
+#. *-p* the project to build (if not specified, the main project will be built with all dependencies)
 
    .. note::
-    
+
         All configs of the project will be built, which is usually just one config, but if you have more than one config of the project in the workspace, use a comma separator.
 
 Examples
@@ -67,7 +67,7 @@ Assuming mainProj has several configs really included in the build (which is unc
 Building a project which has more than one root
 -----------------------------------------------
 Assuming code has been checked out into two roots, the console supports ansi colors, you want to stop on first error and build only the project bspAbc.
-   
+
     .. code-block:: console
 
         User@Host:~$ bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc
@@ -99,9 +99,9 @@ Workspace roots can be defined in a file called "roots.bake", which will be sear
 Example:
 
     .. code-block:: console
-	
+
         ../..
         C:/another/root # comments written like this
         something/else
-	
+
 If -w and roots.bake are not specified, the default workspace root is the parent directory of the main project.

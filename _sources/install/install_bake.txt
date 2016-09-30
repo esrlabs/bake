@@ -2,7 +2,7 @@ Install bake
 ============
 
 bake is a `ruby gem <https://rubygems.org/>`_. It runs with `Ruby <https://www.ruby-lang.org/en/>`_ **>= 1.9**.
-bake and its depedencies can be found on `rubygems <https://rubygems.org/gems/bake-toolkit/>`_, which is configured as ruby source per default. 
+bake and its depedencies can be found on `rubygems <https://rubygems.org/gems/bake-toolkit/>`_, which is configured as ruby source per default.
 
 .. attention::
 
@@ -16,14 +16,14 @@ Installing bake is very easy!
 
 #. Istall the bake gem.
 
-    .. code-block:: console 
+    .. code-block:: console
 
         User@Host:~$ gem install bake-toolkit
 
 Example
 -------
 
-.. code-block:: console 
+.. code-block:: console
 
     User@Host:~$ ruby -v                    # (Check if an apropriate ruby version is installed)
     ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0]
@@ -62,7 +62,7 @@ Known Issues
 The installation does not start
 -------------------------------
 **Issue:**
-The installation of the bake gem does not start. 
+The installation of the bake gem does not start.
 (This is often caused by a password protected internat proxy.)
 
 
@@ -74,17 +74,17 @@ The installation of the bake gem does not start.
 
 Invalid Language Settings
 -------------------------
-*Issue:** 
-The error parsers in bake assume English language. 
+*Issue:**
+The error parsers in bake assume English language.
 
 **Solution:**
-        
+
 Adjust your language settings e.g by setting the environment variable **LC_ALL**.
 
 Example:
 
     ..  code-block:: console
-        
+
         LC_ALL=en_US
 
 .. note::
