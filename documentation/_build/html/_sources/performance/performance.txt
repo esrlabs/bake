@@ -12,7 +12,7 @@ Test-System                 *CPU:*           Intel Xeon W3520 (4x 2.67 GHz)
                             *RAM:*           4 GB
 
                             *OS :*           Windows XP
-                            
+
                             *HDD:*           Raid
 
 Test-Application            ~200 projects
@@ -51,12 +51,12 @@ Test-System                 *CPU:*           Intel Xeon W3520 (4x 2.67 GHz)
                             *RAM:*           4 GB
 
                             *OS :*           Windows XP
-                            
+
                             *HDD:*           Raid
 
 Test-Application            ~100 projects
 ---------------------       ---------------------------------------------------------------------------------
-Ruby-Version                \- 
+Ruby-Version                \-
 ---------------------       ---------------------------------------------------------------------------------
 Tests-Runs                  \-
 =====================       ==============   ================================================================
@@ -80,7 +80,7 @@ Test-System                 *CPU:*           Intel Xeon W3520 (4x 2.67 GHz)
                             *RAM:*           4 GB
 
                             *OS :*           Windows XP
-                            
+
                             *HDD:*           Raid
 
 Test-Application            ~200 projects

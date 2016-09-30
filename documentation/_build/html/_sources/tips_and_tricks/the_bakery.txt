@@ -19,7 +19,7 @@ Examples:
     .. code-block:: console
 
         bakery -b AllUnitTests
-        
+
     It is possible to omit *-b*:
 
     .. code-block:: console
@@ -27,7 +27,7 @@ Examples:
         bakery AllUnitTests
 
     Clean all unittests:
-    
+
     .. code-block:: console
 
         bakery -b AllUnitTests -c

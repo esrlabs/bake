@@ -2,7 +2,7 @@ How to convert existing CDT workspaces
 ======================================
 You only need to convert your workspace if CDT is still used to build your projects and the `Project.meta` files do not exist yet.
 Only one developer in a team has to convert the workspace only once!
-Conversion means, that Project.meta files are generated and filled with the informationen from the `.project` and `.cproject` 
+Conversion means, that Project.meta files are generated and filled with the informationen from the `.project` and `.cproject`
 files. bake does not read the `.project` and `.cproject` files, only the `Project.meta` files.
 
 The converter is an export wizard, which can be found under `File->Export` or in the context menu of the Project Explorer
@@ -24,8 +24,8 @@ The converter is an export wizard, which can be found under `File->Export` or in
         * Remove the projects from your workspace in Eclipse (but do not delete the contents from your disk)
         * Import the projects again via the bake import wizard to generate wrapper files for Eclipse
         * Commit the change to your source control system
-                   
-.. warning:: 
+
+.. warning::
     Do not commit these `.projec`t and `.cproject` files anymore. Instead, commit the changes in `Project.meta` files.
-    You still need `.cproject` and `.project` files for working under Eclipse, 
+    You still need `.cproject` and `.project` files for working under Eclipse,
     that's why you have to import the projects again via the bake import wizard.

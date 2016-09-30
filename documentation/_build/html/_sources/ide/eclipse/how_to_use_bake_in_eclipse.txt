@@ -9,8 +9,8 @@ The menu items described on this page only appear in the C/C++ perspective.
 Select a build configuration of the main project
 ************************************************
 
-#. Right click on the main project and select a bake build configuration. 
-  
+#. Right click on the main project and select a bake build configuration.
+
     .. image:: ../../_static/FirstSelect.png
         :width: 100 %
         :scale: 50 %
@@ -38,14 +38,14 @@ Select a build configuration of the main project
 Adjust includes and defines for CDT
 ***********************************
 s you might have already seen, a new menu item for the main project is enabled now: Adjust includes and defines for CDT.
-All CDT features work out-of-the-box except those about the `#include` and `#define` statements e.g. auto-completion of includes. 
+All CDT features work out-of-the-box except those about the `#include` and `#define` statements e.g. auto-completion of includes.
 To import the includes and defines into the CDT .cproject files, simply click on this menu item.
 
-Compiler internal includes and defines must be specified in InternalInclude and InternalDefine files. 
-See "Syntax" help page how to set the name of these files. Note, that the variables CPPPath, CPath, ASMPath, 
+Compiler internal includes and defines must be specified in InternalInclude and InternalDefine files.
+See "Syntax" help page how to set the name of these files. Note, that the variables CPPPath, CPath, ASMPath,
 ArchiverPath and LinkerPath can be used in these files.
 
-Adjusting can take between a few seconds and a minute depending on the size of the workspace and the number of 
+Adjusting can take between a few seconds and a minute depending on the size of the workspace and the number of
 project settings which have to be written.
 
 Build/Clean Projects/Files

@@ -18,7 +18,7 @@ Derving a config in bake is pretty straight forward, and looks like this:
 .. note::
 
     The config type of the parent config does not matter, but only settings which are valid in BOTH configs will be inherited.
-    In the example above D gets the dependencies from A, because "Dependency" is valid in all configs, but D does not get 
+    In the example above D gets the dependencies from A, because "Dependency" is valid in all configs, but D does not get
     the "Files" from A and B, because "Files" is not valid in CustomConfig.
 
 
@@ -29,7 +29,7 @@ In general it is very easy.
 
 - Elements which can exist more than once (e.g. "Files"), are simply concatenated. First the parent elements, then the client elements.
 - Elements which can exist only once:
- 
+
   - if it exists in EITHER child OR parent, use this one
   - is it exists in BOTH, attributes are merged (child attributes have high priority) and sub elements are inherited recursively
 
@@ -57,7 +57,7 @@ The following example
         }
       }
     }
-    
+
 results implicitly in:
 
 .. code-block:: text
@@ -77,7 +77,7 @@ results implicitly in:
         }
       }
     }
-    
+
 
 Multiple inheritance
 ********************
@@ -89,6 +89,5 @@ It is possible to derive from several projects:
     ExecutableConfig A
     LibraryConfig    B
     ExecutableConfig C, extends: "A, B"
-    
+
 "extends" defines a comma separated list. The merge will be performed with all parent configs.
- 

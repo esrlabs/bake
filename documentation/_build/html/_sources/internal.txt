@@ -11,9 +11,9 @@ send
 
 Header
 ^^^^^^
-    
+
     .. code-block:: console
-	
+
         1 Byte: Type
         4 Byte: Length (used to discard the paket if type is unknown to the listening application)
 
@@ -30,7 +30,7 @@ Error packet (type 0x01)
 
 Starting build packet (type 0x0A)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    
+
     .. code-block:: console
 
         4 Byte: Length project name

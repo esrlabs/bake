@@ -1,6 +1,11 @@
 Changelog
 =========
 
+September 30, 2016 - bake-toolkit 2.21.0
+    * Changed: version and time infos are suppressed now per default. Version can be seen with --help or --version, time can be seen with --time.
+    * Changed: option --writeCC2J renamed to --compilation-db, which has the default filename compilation-db.json now.
+    * Added: option --incs-and-defs=json prints infos about includes and defines of all projects in json format.
+
 September 28, 2016 - bake-toolkit 2.20.4
     * Bugfix: fixed auto-detected of dependency files
 

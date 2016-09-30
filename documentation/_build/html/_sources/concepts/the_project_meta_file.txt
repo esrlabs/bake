@@ -18,7 +18,7 @@ Project.meta file of Main project                     Project.meta file of Sub p
 .. literalinclude:: ../_static/PMetaMain.meta         .. literalinclude:: ../_static/PMetaSub.meta
 =============================================         =============================================
 
-Let's assume that Main and Sub are located in the same workspace root. 
+Let's assume that Main and Sub are located in the same workspace root.
 To build the executable, bake can be called from the Main directory.
 
     .. code-block:: console
