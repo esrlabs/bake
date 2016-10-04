@@ -46,6 +46,7 @@ module Bake
       puts " --omit <name>            Excludes steps with this filter name (can be used multiple times)."
       puts "                          'PRE', 'POST', 'STARTUP' or 'EXIT' excludes all according steps."
       puts " --abs-paths              Compiler prints absolute filename paths instead of relative paths."
+      puts " --Wparse                 The error parser result is also taken into account, not only the return value of compiler, archiver and linker."
       puts " --no-autodir             Disable auto completion of paths like in IncludeDir"
       puts " --set <key>=<value>      Sets a variable. Overwrites variables defined in Project.metas (can be used multiple times)."
       puts " --adapt <name>           Specifies an adapt project to manipulate the configs (can be used multiple times)"

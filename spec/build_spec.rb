@@ -346,6 +346,16 @@ describe "Building" do
     expect(ExitHelper.exit_code).to be == 0
   end
 
+  it 'with wparse' do
+    Bake.startBake("set", ["value", "--Wparse"])
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'without wparse' do
+    Bake.startBake("set", ["value"])
+    expect(ExitHelper.exit_code).to be == 0
+  end
+
 end
 
 end

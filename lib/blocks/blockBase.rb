@@ -193,7 +193,7 @@ module Bake
         if hasError and not errorPrinted
           Bake.formatter.printError("System command failed", @projectDir)
         end
-        if hasError or errorPrinted
+        if hasError or (Bake.options.wparse and errorPrinted)
           raise SystemCommandFailed.new
         end
         incList

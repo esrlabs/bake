@@ -20,7 +20,8 @@ module Bake
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
     attr_reader :main_dir, :project, :filename, :main_project_name, :bundleDir, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
-    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :linkOnly, :compileOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json # Boolean
+    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines # Boolean
+    attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
     attr_reader :verbose
@@ -30,6 +31,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
+      @wparse = false
       @dot = nil
       @prebuild = false
       @printTime = false
@@ -124,6 +126,7 @@ module Bake
 # OLD flag renamed in case someone uses this feature
       add_option(["--bundleDeprecated"                           ], lambda { |x| set_bundle_dir(x)                       })
       add_option(["--prebuild"                                   ], lambda {     @prebuild = true                        })
+      add_option(["--Wparse"                                     ], lambda {     @wparse = true                          })
 
       add_option(["-h",                   "--help"               ], lambda {     Bake::Usage.show                        })
       add_option(["--time",                                      ], lambda {     @printTime = true                       })
