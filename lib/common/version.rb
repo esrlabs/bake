@@ -13,8 +13,8 @@ module Bake
     end
   end
 
-  expectedRGen = "0.8.1"
-  expectedRText = "0.8.1"
+  expectedRGen = "0.8.2"
+  expectedRText = "0.9.0"
 
   begin
     gem "rgen", "=#{expectedRGen}"
