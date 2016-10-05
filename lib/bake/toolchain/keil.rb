@@ -29,6 +29,8 @@ module Bake
     KeilChain[:COMPILER][:ASM][:COMMAND] = "armasm"
     KeilChain[:COMPILER][:ASM][:COMPILE_FLAGS] = ""
 
+    KeilChain[:COMPILER][:DEP_FILE_SINGLE_LINE] = true
+
     KeilChain[:ARCHIVER][:COMMAND] = "armar"
     KeilChain[:ARCHIVER][:ARCHIVE_FLAGS] = "--create"
 

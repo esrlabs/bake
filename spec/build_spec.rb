@@ -11,7 +11,7 @@ require 'fileutils'
 module Bake
 
 describe "Building" do
-=begin
+
   it 'sameObj' do
     expect(File.exists?("spec/testdata/sameObj/main/build/test/main.exe")).to be == false
 
@@ -309,7 +309,7 @@ describe "Building" do
     expect($mystring.include?("Source compiled more than once")).to be == true
     expect($mystring.include?("spec/testdata/simple/main/src/x.cpp")).to be == true
   end
-=end
+
   it 'compileOnly' do
     expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == false
     expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == false

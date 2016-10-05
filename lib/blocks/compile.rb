@@ -189,7 +189,7 @@ module Bake
           incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
 
           if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
-            incList = Compile.read_depfile(dep_filename, @projectDir) if incList.nil?
+            incList = Compile.read_depfile(dep_filename, @projectDir, @tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
             Compile.write_depfile(incList, dep_filename_conv)
           end
           check_config_file
@@ -199,22 +199,23 @@ module Bake
 
       end
 
-      def self.read_depfile(dep_filename, projDir)
+      def self.read_depfile(dep_filename, projDir, singleLine)
         deps = []
         begin
-          deps_string = File.read(dep_filename)
-          if not (deps_string.include?" \\\n")
-            deps_string.each_line do |line|
+          if singleLine
+            File.readlines(dep_filename).each do |line|
               splitted = line.split(": ")
               deps << splitted[1].gsub(/[\\]/,'/') if splitted.length > 1
             end
           else
+            deps_string = File.read(dep_filename)
             deps_string = deps_string.gsub(/\\\n/,'')
             dep_splitted = deps_string.split(/([^\\]) /).each_slice(2).map(&:join)[2..-1]
             deps = dep_splitted.map { |d| d.gsub(/[\\] /,' ').gsub(/[\\]/,'/').strip }.delete_if {|d| d == "" }
           end
-        rescue Exception
+        rescue Exception => ex1
           Bake.formatter.printWarning("Could not read '#{dep_filename}'", projDir)
+          puts ex1.message if Bake.options.debug
           return nil
         end
         deps

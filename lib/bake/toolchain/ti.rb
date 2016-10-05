@@ -26,6 +26,8 @@ module Bake
     TiChain[:COMPILER][:ASM] = Utils.deep_copy(TiChain[:COMPILER][:C])
     TiChain[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]
 
+    TiChain[:COMPILER][:DEP_FILE_SINGLE_LINE] = true
+
     TiChain[:ARCHIVER][:COMMAND] = "ti_ar"
     TiChain[:ARCHIVER][:ARCHIVE_FLAGS] = "r"
 

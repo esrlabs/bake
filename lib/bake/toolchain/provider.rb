@@ -101,6 +101,7 @@ module Bake
         },
 
         :LINT_POLICY => [],
+        :DEP_FILE_SINGLE_LINE => false,
         :DOCU => ""
       }
 

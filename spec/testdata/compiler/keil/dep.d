@@ -5,4 +5,3 @@ Debug/A/B.o: A/VoiceManagerService.h
 Debug/A/B.o: ../C/D/Service.h
 Debug/A/B.o: ../C/D/os/Handler.h
 
-

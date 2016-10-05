@@ -95,19 +95,46 @@ describe "compiler" do
     end
   end
 
-  it 'keil deps - no single line' do
-    path = "spec/testdata/compiler/keil"
-    incList = Blocks::Compile.read_depfile("#{path}/dep.d", "DIR")
-    Blocks::Compile.write_depfile(incList, "#{path}/test_conv_dep.d")
+  it 'dcc deps - regular' do
+    path = "spec/testdata/compiler/dcc"
+    incList = Blocks::Compile.read_depfile("#{path}/dep.d", "DIR", false)
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    FileUtils.identical?("#{path}/test.d.bake","#{path}/dep.ref")
+  end
 
-    str = File.read("#{path}/test_conv_dep.d").split("\n")
-    expect(str.include?("A/B.h")).to be == true
-    expect(str.include?("c:/Program Files (x86)/Keilv1234/ARM/ARMCC/bin/../include/stdint.h")).to be == true
-    expect(str.include?("../C/D/util/Utils.h")).to be == true
-    expect(str.include?("A/VoiceManagerService.h")).to be == true
-    expect(str.include?("../C/D/Service.h")).to be == true
-    expect(str.include?("../C/D/os/Handler.h")).to be == true
-    expect(str.length).to be == 6
+  it 'dcc deps - oneline' do
+    path = "spec/testdata/compiler/dcc"
+    incList = Blocks::Compile.read_depfile("#{path}/dep_oneline.d", "DIR", false)
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    FileUtils.identical?("#{path}/test.d.bake","#{path}/dep_oneline.ref")
+  end
+
+  it 'dcc deps - noline' do
+    path = "spec/testdata/compiler/dcc"
+    incList = Blocks::Compile.read_depfile("#{path}/dep_noline.d", "DIR", false)
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    FileUtils.identical?("#{path}/test.d.bake","#{path}/dep_noline.ref")
+  end
+
+  it 'keil deps - regular' do
+    path = "spec/testdata/compiler/keil"
+    incList = Blocks::Compile.read_depfile("#{path}/dep.d", "DIR", true)
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    FileUtils.identical?("#{path}/test.d.bake","#{path}/dep.ref")
+  end
+
+  it 'keil deps - oneline' do
+    path = "spec/testdata/compiler/keil"
+    incList = Blocks::Compile.read_depfile("#{path}/dep_oneline.d", "DIR", true)
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    FileUtils.identical?("#{path}/test.d.bake","#{path}/dep_oneline.ref")
+  end
+
+  it 'keil deps - noline' do
+    path = "spec/testdata/compiler/keil"
+    incList = Blocks::Compile.read_depfile("#{path}/dep_noline.d", "DIR", true)
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    FileUtils.identical?("#{path}/test.d.bake","#{path}/dep_noline.ref")
   end
 
   it 'keil libs - list mode' do
