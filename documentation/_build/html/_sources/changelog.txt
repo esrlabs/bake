@@ -1,6 +1,11 @@
 Changelog
 =========
 
+October 5, 2016 - bake-toolkit 2.22.0
+    * Changed: when building, only the return value of the compiler is taken into account, not the result of the error parser anymore. Old behaviour can be switched on by command line argument.
+    * Bugfix: again fixed reading of dependency files, added several unittests.
+    * Internal: based on new rtext 0.9.0 and rgen 0.8.2 now.
+
 September 30, 2016 - bake-toolkit 2.21.0
     * Changed: version and time infos are suppressed now per default. Version can be seen with --help or --version, time can be seen with --time.
     * Changed: option --writeCC2J renamed to --compilation-db, which has the default filename compilation-db.json now.
