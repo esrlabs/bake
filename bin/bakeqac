@@ -1,0 +1,148 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.dirname(__FILE__)+"/../lib")
+
+require "bakeqac/options/options"
+require 'bake/toolchain/colorizing_formatter'
+require 'bake/options/options'
+require 'common/process'
+require 'common/utils'
+
+module Bake
+
+###### PREREQUISITE 1: BAKEQAC OPTIONS ######
+
+  @options = BakeqacOptions.new(ARGV)
+  bakeOptions = Options.new([])
+  @options.parse_options(bakeOptions)
+
+###### PREREQUISITE 2: BAKE OPTIONS ######
+
+  passedParams = []
+  excludeParam = false
+  wasMinus = false
+  ARGV.each do |x|
+    if ["--c++11", "--c++14", "--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacfilter"].include?x
+      excludeParam = true
+      next
+    end
+    if excludeParam
+      excludeParam = false
+      next
+    end
+    passedParams << x
+  end
+  passedParams << "--rebuild" unless passedParams.include?"--rebuild"
+  passedParams << "--compile-only" if (passedParams & ["--compile-only", "--compile_only", "-f"]).empty?
+  passedParams << "--filter-paths" unless passedParams.include?"--filter-paths"
+
+  success = true
+
+###### STEP 1: CREATE ######
+
+  if (!@options.qacstep.nil? and @options.qacstep.include?"create") or
+     ( @options.qacstep.nil? and !File.exist?(@options.qacdata))
+
+    cmd = ["qacli", "admin", "--qaf-project-config", "--qaf-project", @options.qacdata]
+    @options.cct.each {|c| cmd << "--cct" << c }
+    cmd << "--rcf" << @options.rcf
+    cmd << "--acf" << @options.acf
+
+    puts "bakeqac: creating database..."
+
+    success, consoleOutput = ProcessHelper.run(cmd, true)
+
+  end
+
+###### STEP 2: BUILD ######
+
+  if success and (@options.qacstep.nil? or @options.qacstep.include?"build")
+    cmd = ["qacli", "analyze", "-P", @options.qacdata, "-b"]
+
+    begin
+      devMode = File.exist?"c:/Projekte/git/bake/bin/bake"
+    rescue Exception
+      devMode = false
+    end
+
+    if devMode
+      bcmd = "ruby c:/Projekte/git/bake/bin/bake "
+    else
+      bcmd = (Utils::OS.windows? ? "cmd /c bake.bat " : "bake ")
+    end
+
+    bcmd += passedParams.join(" ")
+    cmd << bcmd
+
+    puts "bakeqac: building and analyzing files..."
+
+    success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
+
+    filter = []
+    endFound = false
+    consoleOutput.each_line do |line|
+      scan_res = line.scan(/Project path: ([a-zA-Z]{0,1})(:{0,1})(.*)/)
+      if scan_res.length > 0
+        filter << (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/").strip)
+      elsif !endFound
+        puts line if @options.qacfilter
+        if line.start_with?("Rebuilding ")
+          endFound = true
+          success = true if line.include?("Rebuilding done") # don't know why the return value is 2 in this case...
+        end
+      end
+    end
+
+    File.open("#{@options.qacdata}/filter.txt", "w+") do |f|
+      f.puts(filter)
+    end
+
+  end
+
+
+###### STEP 3: RESULT ######
+
+  if success and (@options.qacstep.nil? or @options.qacstep.include?"result")
+
+    puts "bakeqac: printing results..."
+
+    filter = []
+    File.open("#{@options.qacdata}/filter.txt", "r") do |f|
+      f.each_line { |line| filter << line.strip }
+    end
+
+    if @options.qacfilter
+      filter.delete_if { |f| (f.end_with? "/gtest") or (f.end_with? "/gmock") }
+    end
+
+    cmd = ["qacli", "view", "-P", @options.qacdata, "-m", "STDOUT"]
+    success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
+
+    if success && @options.qacfilter
+      foundFile = false
+      consoleOutput.each_line do |line|
+        line.strip!
+        foundFile = false if line.empty? or line.include? " ======= Results for "
+        scan_res = line.scan(/\/\/ ======= Results for ([a-zA-Z]{0,1})(:{0,1})(.*)/)
+        if scan_res.length > 0
+          converted_line = (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/"))
+          filter.each do |fil|
+            if converted_line.include?fil
+              foundFile = true
+              break
+            end
+          end
+        end
+        puts line if foundFile and not line.include?"QAC++ Deep Flow Static Analyser"
+      end
+    end
+
+  end
+
+###### DONE ######
+
+  exit(success ? 0 : 1)
+
+end
+
+

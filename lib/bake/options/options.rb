@@ -20,7 +20,7 @@ module Bake
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
     attr_reader :main_dir, :project, :filename, :main_project_name, :bundleDir, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
-    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines # Boolean
+    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse # Boolean
     attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
     attr_reader :vars # map
@@ -31,6 +31,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
+      @projectPaths = false
       @wparse = false
       @dot = nil
       @prebuild = false
@@ -97,6 +98,7 @@ module Bake
 
       add_option(["--create"                                     ], lambda { |x| Bake::Create.proj(x)                    })
       add_option(["--conversion-info",    "--conversion_info"    ], lambda {     @conversion_info = true                 })
+      add_option(["--filter-paths"                               ], lambda {     @projectPaths = true                    })
 
       add_option(["--generate-doc",       "--docu"               ], lambda {     @docu = true                            })
 

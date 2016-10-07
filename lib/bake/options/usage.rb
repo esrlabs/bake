@@ -59,14 +59,11 @@ module Bake
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
       puts " --link-2-17              DEPRECATED: Using link order of libraries which was used until bake 2.17"
       puts " --build_                 DEPRECATED: build directories will be build_<name> instead of build/<name>"
-
-      puts ""
       puts " --version                Print version."
       puts " --time                   Print elapsed time at the end."
       puts " --doc                    Open documentation in browser"
       puts " -h, --help               Print this help."
       puts " --license                Print the license."
-      puts ""
       puts " --debug                  Print out backtraces in some cases - used only for debugging bake."
       ExitHelper.exit(0)
     end

@@ -7,6 +7,12 @@ require 'bake/toolchain/errorparser/gcc_linker_error_parser'
 module Bake
   module Toolchain
 
+    def self.getGccVersion
+      gccVersionStr = `g++ --version`
+      splitted = gccVersionStr.split("\n")[0].split(" ")
+      return splitted[splitted.length-1].split(".")
+    end
+
     GCCChain = Provider.add("GCC")
 
     GCCChain[:COMPILER][:CPP].update({

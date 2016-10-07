@@ -231,6 +231,7 @@ module Bake
           typeStr = @prebuild ? "Skipping" : "Building"
           Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
+        puts "Project path: #{@projectDir}" if Bake.options.projectPaths
 
         return depResult if @prebuild
 

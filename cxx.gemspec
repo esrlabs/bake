@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency("colored", "=1.2")
   s.add_development_dependency("simplecov")
   s.add_development_dependency("coveralls")
-  s.executables = ["bake", "bakery", "createVSProjects", "bake-doc"]
+  s.executables = ["bake", "bakery", "createVSProjects", "bake-doc", "bake-qac"]
   s.licenses    = ['MIT']
   s.required_ruby_version = '>= 1.9'
 end
