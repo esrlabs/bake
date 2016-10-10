@@ -127,7 +127,7 @@ module Bake
         if scan_res.length > 0
           converted_line = (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/"))
           filter.each do |fil|
-            if converted_line.include?fil
+            if converted_line.include?fil and not converted_line.include?(fil+"/test/") and not converted_line.include?(fil+"/mock/")
               foundFile = true
               break
             end
