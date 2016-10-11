@@ -12,7 +12,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
-      @cVersion = "-c++"
+      @cVersion = "-C++"
       @c11 = false
       @acf = nil
       @rcf = nil
