@@ -1,0 +1,11 @@
+Project {
+
+  ExecutableConfig test_template {
+    Dependency lib
+    Dependency gtest
+    Files "**/*.cpp"
+    IncludeDir "include"
+    DefaultToolchain GCC
+  }
+
+}

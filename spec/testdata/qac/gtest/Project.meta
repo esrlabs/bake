@@ -1,0 +1,7 @@
+Project default: test_lib {
+
+  LibraryConfig test_lib {
+    Files "src/gtest.cpp"
+  }
+
+}
