@@ -32,18 +32,22 @@ module Bake
       add_option(["--qacstep"   ], lambda { |x| @qacstep = x                 })
       add_option(["--qacfilter" ], lambda { |x| @qacfilter = (x == "on")     })
       add_option(["-h", "--help"], lambda {     usage; ExitHelper.exit(0)    })
+      add_option(["--version"   ], lambda {     Bake::Version.printBakeqacVersion; ExitHelper.exit(0)    })
+
     end
 
     def usage
       puts "\nUsage: bakeqac [options]"
       puts " --c++11          Uses C++11 rules, available for GCC 4.7 and higher."
       puts " --c++14          Uses C++14 rules, available for GCC 4.9 and higher."
-      puts " --cct <file>     Sets a specific compiler compatibility template, otherwise $(QAC_HOME)/config/cct/<platform>.ctt will be used."
+      puts " --cct <file>     Sets a specific compiler compatibility template, otherwise $(QAC_HOME)/config/cct/<platform>.ctt will be used. Can be defined multiple times."
       puts " --rcf <file>     Sets a specific rule config file, otherwise $(QAC_RULE) will be used. If not set, $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf will be used."
       puts " --acf <file>     Sets a specific analysis config file, otherwise $(QAC_HOME)/config/acf/default.acf will be used."
       puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/qacdata."
       puts " --qacstep create|build|result   Steps can be ORed. Per default create is done if qacdata does not exist, build and result are done if previous steps were successful."
       puts " --qacfilter on|off   If off, output will be printed immediately and unfiltered, default is on to reduce noise."
+      puts " --version        Print version."
+      puts " -h, --help       Print this help."
       puts "Note: all parameters from bake apply also here. Note, that --rebuild and --compily-only will be added to the internal bake call automatically."
       puts "Note: works only for GCC 4.1 and above"
     end

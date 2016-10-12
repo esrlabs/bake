@@ -1,5 +1,5 @@
-Tips and Tricks
-===============
+Additional features
+===================
 
 .. toctree::
     :maxdepth: 1
@@ -9,6 +9,7 @@ Tips and Tricks
     how_to_use_bake_with_cygwin
     the_clang
     dot
+    qac
 
 
 Unnecessary includes
