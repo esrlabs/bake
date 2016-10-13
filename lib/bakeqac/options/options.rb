@@ -5,7 +5,7 @@ require 'bake/toolchain/gcc'
 module Bake
 
   class BakeqacOptions < Parser
-    attr_reader :rcf, :acf, :qacdata, :qacstep  # String
+    attr_reader :rcf, :acf, :qacdata, :qacstep, :qac_home  # String
     attr_reader :c11, :c14, :qacfilter # Boolean
     attr_reader :cct # Array
 
@@ -44,7 +44,7 @@ module Bake
       puts " --rcf <file>     Sets a specific rule config file, otherwise $(QAC_RULE) will be used. If not set, $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf will be used."
       puts " --acf <file>     Sets a specific analysis config file, otherwise $(QAC_HOME)/config/acf/default.acf will be used."
       puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/qacdata."
-      puts " --qacstep create|build|result   Steps can be ORed. Per default create is done if qacdata does not exist, build and result are done if previous steps were successful."
+      puts " --qacstep create|build|result   Steps can be ORed. Per default all steps will be executed."
       puts " --qacfilter on|off   If off, output will be printed immediately and unfiltered, default is on to reduce noise."
       puts " --version        Print version."
       puts " -h, --help       Print this help."
@@ -63,49 +63,52 @@ module Bake
     def parse_options(bakeOptions)
       parse_internal(true, bakeOptions)
 
+      if not ENV["QAC_HOME"]
+        Bake.formatter.printError("Error: specify the environment variable QAC_HOME.")
+      end
+
+      @qac_home = ENV["QAC_HOME"].gsub(/\\/,"/")
+      @qac_home = qac_home[0, qac_home.length-1] if qac_home.end_with?"/"
+
       if @cct.empty?
-        if ENV["QAC_HOME"]
 
-          gccVersion = Bake::Toolchain::getGccVersion
-          if gccVersion.length < 2
-            Bake.formatter.printError("Error: could not determine GCC version.")
-            ExitHelper.exit(1)
-          end
-
-          if RUBY_PLATFORM =~ /mingw/
-            plStr = "w64-mingw32"
-          elsif RUBY_PLATFORM =~ /cygwin/
-            plStr = "pc-cygwin"
-          else
-            plStr = "generic-linux"
-          end
-
-          cttStr = "GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-i686-#{plStr}#{@cVersion}.cct"
-          @cct << (ENV["QAC_HOME"] + "/config/cct/#{cttStr}")
-
-        else
-          Bake.formatter.printError("Error: specify either the environment variable QAC_HOME or set --cct.")
+        gccVersion = Bake::Toolchain::getGccVersion
+        if gccVersion.length < 2
+          Bake.formatter.printError("Error: could not determine GCC version.")
           ExitHelper.exit(1)
+        end
+
+        if RUBY_PLATFORM =~ /mingw/
+          plStr = "w64-mingw32"
+        elsif RUBY_PLATFORM =~ /cygwin/
+          plStr = "pc-cygwin"
+        else
+          plStr = "generic-linux"
+        end
+
+        while (@cct.empty? or gccVersion[0]>=5)
+          @cct = [qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-i686-#{plStr}#{@cVersion}.cct"]
+          break if File.exist?@cct[0]
+          @cct = [qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-x86_64-#{plStr}#{@cVersion}.cct"]
+          break if File.exist?@cct[0]
+          if gccVersion[1]>0
+            gccVersion[1] -= 1
+          else
+            gccVersion[0] -= 1
+            gccVersion[1] = 20
+          end
         end
       end
 
       if @acf.nil?
-        if ENV["QAC_HOME"]
-          @acf = ENV["QAC_HOME"] + "/config/acf/default.acf"
-        else
-          Bake.formatter.printError("Error: specify either the environment variable QAC_HOME or set --acf.")
-          ExitHelper.exit(1)
-        end
+        @acf = qac_home + "/config/acf/default.acf"
       end
 
       if @rcf.nil?
         if ENV["QAC_RCF"]
-          @rcf = ENV["QAC_RCF"]
-        elsif ENV["QAC_HOME"]
-          @rcf  = ENV["QAC_HOME"] + "/config/rcf/mcpp-1_5_1-en_US.rcf"
+          @rcf = ENV["QAC_RCF"].gsub(/\\/,"/")
         else
-          Bake.formatter.printError("Error: specify either the environment variable QAC_RULE, QAC_HOME or set --rfc.")
-          ExitHelper.exit(1)
+          @rcf  = qac_home + "/config/rcf/mcpp-1_5_1-en_US.rcf"
         end
       end
 

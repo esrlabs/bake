@@ -40,10 +40,9 @@ module Bake
 
 ###### STEP 1: CREATE ######
 
-  if (!@options.qacstep.nil? and @options.qacstep.include?"create") or
-     ( @options.qacstep.nil? and !File.exist?(@options.qacdata))
+  if (@options.qacstep.nil? or @options.qacstep.include?"create")
 
-    cmd = ["qacli", "admin", "--qaf-project-config", "--qaf-project", @options.qacdata]
+    cmd = [@options.qac_home+"/common/bin/qacli", "admin", "--qaf-project-config", "--qaf-project", @options.qacdata]
     @options.cct.each {|c| cmd << "--cct" << c }
     cmd << "--rcf" << @options.rcf
     cmd << "--acf" << @options.acf
@@ -51,13 +50,14 @@ module Bake
     puts "bakeqac: creating database..."
 
     success, consoleOutput = ProcessHelper.run(cmd, true)
+    puts consoleOutput if !success
 
   end
 
 ###### STEP 2: BUILD ######
 
   if success and (@options.qacstep.nil? or @options.qacstep.include?"build")
-    cmd = ["qacli", "analyze", "-P", @options.qacdata, "-b"]
+    cmd = [@options.qac_home+"/common/bin/qacli", "analyze", "-P", @options.qacdata, "-b"]
 
     begin
       devMode = File.exist?"c:/Projekte/git/bake/bin/bake"
@@ -78,6 +78,7 @@ module Bake
 
     success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
 
+    filterOutput = []
     filter = []
     endFound = false
     consoleOutput.each_line do |line|
@@ -85,16 +86,23 @@ module Bake
       if scan_res.length > 0
         filter << (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/").strip)
       elsif !endFound
-        puts line if @options.qacfilter
+        filterOutput << line if @options.qacfilter
         if line.start_with?("Rebuilding ")
-          endFound = true
+         endFound = true
           success = true if line.include?("Rebuilding done") # don't know why the return value is 2 in this case...
         end
       end
     end
 
-    File.open("#{@options.qacdata}/filter.txt", "w+") do |f|
-      f.puts(filter)
+    if @options.qacfilter
+      if success
+        puts filterOutput
+        File.open("#{@options.qacdata}/filter.txt", "w+") do |f|
+          f.puts(filter)
+        end
+      else
+        puts consoleOutput
+      end
     end
 
   end
@@ -107,33 +115,37 @@ module Bake
     puts "bakeqac: printing results..."
 
     filter = []
-    File.open("#{@options.qacdata}/filter.txt", "r") do |f|
-      f.each_line { |line| filter << line.strip }
-    end
 
     if @options.qacfilter
+      File.open("#{@options.qacdata}/filter.txt", "r") do |f|
+        f.each_line { |line| filter << line.strip }
+      end
       filter.delete_if { |f| (f.end_with? "/gtest") or (f.end_with? "/gmock") }
     end
 
-    cmd = ["qacli", "view", "-P", @options.qacdata, "-m", "STDOUT"]
+    cmd = [@options.qac_home+"/common/bin/qacli", "view", "-P", @options.qacdata, "-m", "STDOUT"]
     success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
 
-    if success && @options.qacfilter
-      foundFile = false
-      consoleOutput.each_line do |line|
-        line.strip!
-        foundFile = false if line.empty? or line.include? " ======= Results for "
-        scan_res = line.scan(/\/\/ ======= Results for ([a-zA-Z]{0,1})(:{0,1})(.*)/)
-        if scan_res.length > 0
-          converted_line = (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/"))
-          filter.each do |fil|
-            if converted_line.include?fil and not converted_line.include?(fil+"/test/") and not converted_line.include?(fil+"/mock/")
-              foundFile = true
-              break
+    if @options.qacfilter
+      if success
+        foundFile = false
+        consoleOutput.each_line do |line|
+          line.strip!
+          foundFile = false if line.empty? or line.include? " ======= Results for "
+          scan_res = line.scan(/\/\/ ======= Results for ([a-zA-Z]{0,1})(:{0,1})(.*)/)
+          if scan_res.length > 0
+            converted_line = (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/"))
+            filter.each do |fil|
+              if converted_line.include?fil and not converted_line.include?(fil+"/test/") and not converted_line.include?(fil+"/mock/")
+                foundFile = true
+                break
+              end
             end
           end
+          puts line if foundFile and not line.include?"QAC++ Deep Flow Static Analyser"
         end
-        puts line if foundFile and not line.include?"QAC++ Deep Flow Static Analyser"
+      else
+        puts consoleOutput
       end
     end
 
