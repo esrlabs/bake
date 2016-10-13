@@ -1,8 +1,8 @@
 Changelog
 =========
 
-October ?, 2016 - bake-toolkit 2.23.0
-    * Added: QAC
+October 13, 2016 - bake-toolkit 2.23.2
+    * Added: bakeqac, see documentation.
 
 October 5, 2016 - bake-toolkit 2.22.0
     * Changed: when building, only the return value of the compiler is taken into account, not the result of the error parser anymore. Old behaviour can be switched on by command line argument.

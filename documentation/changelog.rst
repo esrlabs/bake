@@ -1,7 +1,7 @@
 Changelog
 =========
 
-October 13, 2016 - bake-toolkit 2.23.1
+October 13, 2016 - bake-toolkit 2.23.2
     * Added: bakeqac, see documentation.
 
 October 5, 2016 - bake-toolkit 2.22.0
