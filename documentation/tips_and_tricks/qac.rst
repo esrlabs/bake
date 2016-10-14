@@ -30,7 +30,7 @@ simply write:
 
 bake will automatically do these three steps. If one of the steps fails, the consecutive steps will be dismissed.
 
-You can also enforce the first step or execute only the second and/or third step, etc.:
+You can also choose certain steps (can be combined with "|"):
 
 .. code-block:: console
 

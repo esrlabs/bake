@@ -10,7 +10,7 @@ module Bake
     def self.getGccVersion
       gccVersionStr = `g++ --version`
       splitted = gccVersionStr.split("\n")[0].split(" ")
-      return splitted[splitted.length-1].split(".")
+      return splitted[splitted.length-1].split(".").map { |v| v.to_i }
     end
 
     GCCChain = Provider.add("GCC")
