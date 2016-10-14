@@ -140,24 +140,34 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>October 14, 2016 - bake-toolkit 2.23.6</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: qac license refused error now really shown.</li>
+<li>Changed: QAC_RCF environment variable not supported anymore. Instead a file qac.rcf will be searched upwards from bake main project folder.</li>
+<li>Changed: qac messages reformatted, MISRA rule now completely shown. For plain qac style use &#8211;qacnoformat.</li>
+<li>Added: number of qac messages are printed at the end.</li>
+<li>Added: bakeqac now supports -a &lt;color&gt; like bake.</li>
+<li>Added: with &#8211;qacretry &lt;seconds&gt; a retry timeout can be specified if license is refused, default is no retry.</li>
+</ul>
+</dd>
 <dt>October 14, 2016 - bake-toolkit 2.23.5</dt>
 <dd><ul class="first last simple">
-<li>Bugfix: qac cct auto detection fixed</li>
-<li>Bugfix: &#8211;prepro option fixed</li>
+<li>Bugfix: qac cct auto detection fixed.</li>
+<li>Bugfix: &#8211;prepro option fixed.</li>
 </ul>
 </dd>
 <dt>October 14, 2016 - bake-toolkit 2.23.4</dt>
 <dd><ul class="first last simple">
-<li>Bugfix: qac during analyse step license error not detected properly</li>
+<li>Bugfix: qac during analyse step license error not detected properly.</li>
 </ul>
 </dd>
 <dt>October 13, 2016 - bake-toolkit 2.23.3</dt>
 <dd><ul class="first last simple">
-<li>Bugfix: improved auto detection of cct for qac</li>
-<li>Bugfix: print qac output in case of error</li>
-<li>Changed: QAC_HOME can end now with a slash</li>
-<li>Changed: qacli call now relative to QAC_HOME</li>
-<li>Changed: qac create will now be done regardless if qacdata exists</li>
+<li>Bugfix: improved auto detection of cct for qac.</li>
+<li>Bugfix: print qac output in case of error.</li>
+<li>Changed: QAC_HOME can end now with a slash.</li>
+<li>Changed: qacli call now relative to QAC_HOME.</li>
+<li>Changed: qac create will now be done regardless if qacdata exists.</li>
 </ul>
 </dd>
 <dt>October 13, 2016 - bake-toolkit 2.23.2</dt>
