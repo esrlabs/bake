@@ -1,6 +1,10 @@
 Changelog
 =========
 
+October 14, 2016 - bake-toolkit 2.23.5
+    * Bugfix: qac cct auto detection fixed
+    * Bugfix: --prepro option fixed
+
 October 14, 2016 - bake-toolkit 2.23.4
     * Bugfix: qac during analyse step license error not detected properly
 
