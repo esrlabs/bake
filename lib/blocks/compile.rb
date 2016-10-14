@@ -33,7 +33,7 @@ module Bake
       end
 
       def ignore?(type)
-        Bake.options.linkOnly or (Bake.options.prepro and type == ASM)
+        Bake.options.linkOnly or (Bake.options.prepro and type == :ASM)
       end
 
       def needed?(source, object, type, dep_filename_conv)
