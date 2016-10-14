@@ -78,10 +78,13 @@ module Bake
 
     success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
 
+    # more complex because qacli returns with !=0 if a file could not be parsed, we want to ignore that
     filterOutput = []
     filter = []
     endFound = false
+    licenseError = false
     consoleOutput.each_line do |line|
+      licenseError = true if line.include?"License refused"
       scan_res = line.scan(/Project path: ([a-zA-Z]{0,1})(:{0,1})(.*)/)
       if scan_res.length > 0
         filter << (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/").strip)
@@ -93,6 +96,8 @@ module Bake
         end
       end
     end
+
+    success = false if licenseError
 
     if @options.qacfilter
       if success

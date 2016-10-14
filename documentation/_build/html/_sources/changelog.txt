@@ -1,6 +1,16 @@
 Changelog
 =========
 
+October 14, 2016 - bake-toolkit 2.23.4
+    * Bugfix: qac during analyse step license error not detected properly
+
+October 13, 2016 - bake-toolkit 2.23.3
+    * Bugfix: improved auto detection of cct for qac
+    * Bugfix: print qac output in case of error
+    * Changed: QAC_HOME can end now with a slash
+    * Changed: qacli call now relative to QAC_HOME
+    * Changed: qac create will now be done regardless if qacdata exists
+
 October 13, 2016 - bake-toolkit 2.23.2
     * Added: bakeqac, see documentation.
 

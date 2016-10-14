@@ -28,7 +28,7 @@ simply write:
 
     bakeqac <options>
 
-bake will automatically do these three steps. Per default, the first one will only done if the folder qacdata does not exist. If one of the steps fails, the consecutive steps will be dismissed.
+bake will automatically do these three steps. If one of the steps fails, the consecutive steps will be dismissed.
 
 You can also enforce the first step or execute only the second and/or third step, etc.:
 
