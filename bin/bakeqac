@@ -16,13 +16,17 @@ module Bake
   bakeOptions = Options.new([])
   @options.parse_options(bakeOptions)
 
+  success = false
+  consoleOutput = ""
+  licenseError = false
+
 ###### PREREQUISITE 2: BAKE OPTIONS ######
 
   passedParams = []
   excludeParam = false
   wasMinus = false
   ARGV.each do |x|
-    if ["--c++11", "--c++14", "--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacfilter"].include?x
+    if ["--c++11", "--c++14", "--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacfilter", "--qacnoformat", "--qacretry"].include?x
       excludeParam = true
       next
     end
@@ -76,15 +80,22 @@ module Bake
 
     puts "bakeqac: building and analyzing files..."
 
-    success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
+    timeStart = Time.now
+    loop do
+      success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
+      licenseError = false
+      consoleOutput.each_line do |line|
+        licenseError = true if line.include?"License Refused"
+      end
+      break unless (@options.qacfilter and licenseError and (@options.qacretry > (Time.now - timeStart)))
+      puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
+    end
 
-    # more complex because qacli returns with !=0 if a file could not be parsed, we want to ignore that
+
     filterOutput = []
     filter = []
     endFound = false
-    licenseError = false
     consoleOutput.each_line do |line|
-      licenseError = true if line.include?"License refused"
       scan_res = line.scan(/Project path: ([a-zA-Z]{0,1})(:{0,1})(.*)/)
       if scan_res.length > 0
         filter << (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/").strip)
@@ -96,7 +107,6 @@ module Bake
         end
       end
     end
-
     success = false if licenseError
 
     if @options.qacfilter
@@ -129,12 +139,31 @@ module Bake
     end
 
     cmd = [@options.qac_home+"/common/bin/qacli", "view", "-P", @options.qacdata, "-m", "STDOUT"]
-    success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
+    if not @options.qacnoformat
+      cmd += ["-f", "%?u==0%(MSG: %:---- %)%F(%l,%c): (%r:%N)%t%?v%(\n%v%)"]
+    end
+
+    timeStart = Time.now
+    loop do
+      success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
+      licenseError = false
+      consoleOutput.each_line do |line|
+        licenseError = true if line.include?"License Refused"
+      end
+      break unless (@options.qacfilter and licenseError and (@options.qacretry > (Time.now - timeStart)))
+      puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
+    end
+
 
     if @options.qacfilter
+      numberOfMessages = 0
       if success
         foundFile = false
         consoleOutput.each_line do |line|
+          if line.include?"License Refused"
+            puts line
+            next
+          end
           line.strip!
           foundFile = false if line.empty? or line.include? " ======= Results for "
           scan_res = line.scan(/\/\/ ======= Results for ([a-zA-Z]{0,1})(:{0,1})(.*)/)
@@ -147,8 +176,20 @@ module Bake
               end
             end
           end
-          puts line if foundFile and not line.include?"QAC++ Deep Flow Static Analyser"
+          if foundFile
+            if not line.include?"QAC++ Deep Flow Static Analyser"
+              if (!@options.qacnoformat && line.start_with?("MSG: ")) || (@options.qacnoformat && line.include?(": Msg("))
+                Bake.formatter.printWarning(line)
+                numberOfMessages += 1
+              elsif scan_res.length > 0
+                Bake.formatter.printAdditionalInfo(line)
+              else
+                Bake.formatter.printInfo(line)
+              end
+            end
+          end
         end
+        Bake.formatter.printSuccess("\n**** Number of messages: #{numberOfMessages} ****")
       else
         puts consoleOutput
       end

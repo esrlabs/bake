@@ -1,19 +1,27 @@
 Changelog
 =========
 
+October 14, 2016 - bake-toolkit 2.23.6
+    * Bugfix: qac license refused error now really shown.
+    * Changed: QAC_RCF environment variable not supported anymore. Instead a file qac.rcf will be searched upwards from bake main project folder.
+    * Changed: qac messages reformatted, MISRA rule now completely shown. For plain qac style use --qacnoformat.
+    * Added: number of qac messages are printed at the end.
+    * Added: bakeqac now supports -a <color> like bake.
+    * Added: with --qacretry <seconds> a retry timeout can be specified if license is refused, default is no retry.
+
 October 14, 2016 - bake-toolkit 2.23.5
-    * Bugfix: qac cct auto detection fixed
-    * Bugfix: --prepro option fixed
+    * Bugfix: qac cct auto detection fixed.
+    * Bugfix: --prepro option fixed.
 
 October 14, 2016 - bake-toolkit 2.23.4
-    * Bugfix: qac during analyse step license error not detected properly
+    * Bugfix: qac during analyse step license error not detected properly.
 
 October 13, 2016 - bake-toolkit 2.23.3
-    * Bugfix: improved auto detection of cct for qac
-    * Bugfix: print qac output in case of error
-    * Changed: QAC_HOME can end now with a slash
-    * Changed: qacli call now relative to QAC_HOME
-    * Changed: qac create will now be done regardless if qacdata exists
+    * Bugfix: improved auto detection of cct for qac.
+    * Bugfix: print qac output in case of error.
+    * Changed: QAC_HOME can end now with a slash.
+    * Changed: qacli call now relative to QAC_HOME.
+    * Changed: qac create will now be done regardless if qacdata exists.
 
 October 13, 2016 - bake-toolkit 2.23.2
     * Added: bakeqac, see documentation.

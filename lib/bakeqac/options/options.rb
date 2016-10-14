@@ -6,12 +6,14 @@ module Bake
 
   class BakeqacOptions < Parser
     attr_reader :rcf, :acf, :qacdata, :qacstep, :qac_home  # String
-    attr_reader :c11, :c14, :qacfilter # Boolean
+    attr_reader :c11, :c14, :qacfilter, :qacnoformat # Boolean
     attr_reader :cct # Array
+    attr_reader :qacretry # int
 
     def initialize(argv)
       super(argv)
 
+      @main_dir = nil
       @cVersion = "-C++"
       @c11 = false
       @acf = nil
@@ -21,8 +23,12 @@ module Bake
       @qacdata = "qacdata"
       @qacstep = nil
       @qacfilter = true
+      @qacnoformat = false
+      @qacretry = 0
 
       add_option(["-b", ""      ], lambda { |x| setDefault(x)                })
+      add_option(["-a"          ], lambda { |x| Bake.formatter.setColorScheme(x.to_sym) })
+      add_option(["-m"          ], lambda { |x| set_main_dir(x)              })
       add_option(["--c++11"     ], lambda {     @cVersion = "-c++11"         })
       add_option(["--c++14"     ], lambda {     @cVersion = "-c++14"         })
       add_option(["--cct"       ], lambda { |x| @cct << x.gsub(/\\/,"/")     })
@@ -31,6 +37,8 @@ module Bake
       add_option(["--qacdata"   ], lambda { |x| @qacdata = x.gsub(/\\/,"/")  })
       add_option(["--qacstep"   ], lambda { |x| @qacstep = x                 })
       add_option(["--qacfilter" ], lambda { |x| @qacfilter = (x == "on")     })
+      add_option(["--qacretry"  ], lambda { |x| @qacretry = x.to_i           })
+      add_option(["--qacnoformat" ], lambda { @qacnoformat = true            })
       add_option(["-h", "--help"], lambda {     usage; ExitHelper.exit(0)    })
       add_option(["--version"   ], lambda {     Bake::Version.printBakeqacVersion; ExitHelper.exit(0)    })
 
@@ -46,9 +54,10 @@ module Bake
       puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/qacdata."
       puts " --qacstep create|build|result   Steps can be ORed. Per default all steps will be executed."
       puts " --qacfilter on|off   If off, output will be printed immediately and unfiltered, default is on to reduce noise."
+      puts " --qacretry <seconds>   If build or result step fail due to refused license, the step will be retried until timeout. Works only if qacfilter is not off."
       puts " --version        Print version."
       puts " -h, --help       Print this help."
-      puts "Note: all parameters from bake apply also here. Note, that --rebuild and --compily-only will be added to the internal bake call automatically."
+      puts "Note: all parameters from bake apply also here. Note, that --rebuild and --compile-only will be added to the internal bake call automatically."
       puts "Note: works only for GCC 4.1 and above"
     end
 
@@ -60,8 +69,35 @@ module Bake
       @default = x
     end
 
+    def check_valid_dir(dir)
+     if not File.exists?(dir)
+        Bake.formatter.printError("Error: Directory #{dir} does not exist")
+        ExitHelper.exit(1)
+      end
+      if not File.directory?(dir)
+        Bake.formatter.printError("Error: #{dir} is not a directory")
+        ExitHelper.exit(1)
+      end
+    end
+
+    def set_main_dir(dir)
+      check_valid_dir(dir)
+      @main_dir = File.expand_path(dir.gsub(/[\\]/,'/'))
+    end
+
+    def searchRcfFile(dir)
+      rcfFile = dir+"/qac.rcf"
+      return rcfFile if File.exist?(rcfFile)
+
+      parent = File.dirname(dir)
+      return searchRcfFile(parent) if parent != dir
+
+      return nil
+    end
+
     def parse_options(bakeOptions)
       parse_internal(true, bakeOptions)
+      set_main_dir(Dir.pwd) if @main_dir.nil?
 
       if not ENV["QAC_HOME"]
         Bake.formatter.printError("Error: specify the environment variable QAC_HOME.")
@@ -105,8 +141,9 @@ module Bake
       end
 
       if @rcf.nil?
-        if ENV["QAC_RCF"]
-          @rcf = ENV["QAC_RCF"].gsub(/\\/,"/")
+        rfcInDir = searchRcfFile(@main_dir)
+        if rfcInDir
+          @rcf = rfcInDir.gsub(/[\\]/,'/')
         else
           @rcf  = qac_home + "/config/rcf/mcpp-1_5_1-en_US.rcf"
         end
