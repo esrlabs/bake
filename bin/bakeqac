@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'fileutils'
+
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 
 require "bakeqac/options/options"
@@ -26,7 +28,7 @@ module Bake
   excludeParam = false
   wasMinus = false
   ARGV.each do |x|
-    if ["--c++11", "--c++14", "--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacfilter", "--qacnoformat", "--qacretry"].include?x
+    if ["--c++11", "--c++14", "--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacfilter", "--qacnoformat", "--qacunittest", "--qacretry"].include?x
       excludeParam = true
       next
     end
@@ -41,12 +43,20 @@ module Bake
   passedParams << "--filter-paths" unless passedParams.include?"--filter-paths"
 
   success = true
+  FileUtils::mkdir_p @options.qacdata
+
+###### PREREQUISITE 3: QACLI LOCATION ######
+
+qaExe = [@options.qac_home+"/common/bin/qacli"]
+if @options.qacunittest
+  qaExe = ["ruby", File.dirname(__FILE__)+"/../spec/bin/qactester.rb"]
+end
 
 ###### STEP 1: CREATE ######
 
-  if (@options.qacstep.nil? or @options.qacstep.include?"create")
+  if (@options.qacstep.nil? or @options.qacstep.include?"admin")
 
-    cmd = [@options.qac_home+"/common/bin/qacli", "admin", "--qaf-project-config", "--qaf-project", @options.qacdata]
+    cmd = qaExe + ["admin", "--qaf-project-config", "--qaf-project", @options.qacdata]
     @options.cct.each {|c| cmd << "--cct" << c }
     cmd << "--rcf" << @options.rcf
     cmd << "--acf" << @options.acf
@@ -60,8 +70,8 @@ module Bake
 
 ###### STEP 2: BUILD ######
 
-  if success and (@options.qacstep.nil? or @options.qacstep.include?"build")
-    cmd = [@options.qac_home+"/common/bin/qacli", "analyze", "-P", @options.qacdata, "-b"]
+  if success and (@options.qacstep.nil? or @options.qacstep.include?"analyze")
+    cmd = qaExe + ["analyze", "-P", @options.qacdata, "-b"]
 
     begin
       devMode = File.exist?"c:/Projekte/git/bake/bin/bake"
@@ -91,7 +101,7 @@ module Bake
       puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
     end
 
-
+    success = false # we have to parse the output, qacli returns always an error here...
     filterOutput = []
     filter = []
     endFound = false
@@ -125,37 +135,38 @@ module Bake
 
 ###### STEP 3: RESULT ######
 
-  if success and (@options.qacstep.nil? or @options.qacstep.include?"result")
+  if success and (@options.qacstep.nil? or @options.qacstep.include?"view")
 
     puts "bakeqac: printing results..."
 
     filter = []
 
-    if @options.qacfilter
+    useFilter = File.exist?("#{@options.qacdata}/filter.txt") && @options.qacfilter
+
+    if useFilter
       File.open("#{@options.qacdata}/filter.txt", "r") do |f|
         f.each_line { |line| filter << line.strip }
       end
       filter.delete_if { |f| (f.end_with? "/gtest") or (f.end_with? "/gmock") }
     end
 
-    cmd = [@options.qac_home+"/common/bin/qacli", "view", "-P", @options.qacdata, "-m", "STDOUT"]
+    cmd = qaExe + ["view", "-P", @options.qacdata, "-m", "STDOUT"]
     if not @options.qacnoformat
       cmd += ["-f", "%?u==0%(MSG: %:---- %)%F(%l,%c): (%r:%N)%t%?v%(\n%v%)"]
     end
 
     timeStart = Time.now
     loop do
-      success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
+      success, consoleOutput = ProcessHelper.run(cmd, !useFilter)
       licenseError = false
       consoleOutput.each_line do |line|
         licenseError = true if line.include?"License Refused"
       end
-      break unless (@options.qacfilter and licenseError and (@options.qacretry > (Time.now - timeStart)))
+      break unless (useFilter and licenseError and (@options.qacretry > (Time.now - timeStart)))
       puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
     end
 
-
-    if @options.qacfilter
+    if useFilter
       numberOfMessages = 0
       if success
         foundFile = false

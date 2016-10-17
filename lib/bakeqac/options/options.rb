@@ -6,7 +6,7 @@ module Bake
 
   class BakeqacOptions < Parser
     attr_reader :rcf, :acf, :qacdata, :qacstep, :qac_home  # String
-    attr_reader :c11, :c14, :qacfilter, :qacnoformat # Boolean
+    attr_reader :c11, :c14, :qacfilter, :qacnoformat, :qacunittest # Boolean
     attr_reader :cct # Array
     attr_reader :qacretry # int
 
@@ -14,7 +14,7 @@ module Bake
       super(argv)
 
       @main_dir = nil
-      @cVersion = "-C++"
+      @cVersion = ""
       @c11 = false
       @acf = nil
       @rcf = nil
@@ -24,6 +24,7 @@ module Bake
       @qacstep = nil
       @qacfilter = true
       @qacnoformat = false
+      @qacunittest = false
       @qacretry = 0
 
       add_option(["-b", ""      ], lambda { |x| setDefault(x)                })
@@ -39,6 +40,7 @@ module Bake
       add_option(["--qacfilter" ], lambda { |x| @qacfilter = (x == "on")     })
       add_option(["--qacretry"  ], lambda { |x| @qacretry = x.to_i           })
       add_option(["--qacnoformat" ], lambda { @qacnoformat = true            })
+      add_option(["--qacunittest" ], lambda { @qacunittest = true            })
       add_option(["-h", "--help"], lambda {     usage; ExitHelper.exit(0)    })
       add_option(["--version"   ], lambda {     Bake::Version.printBakeqacVersion; ExitHelper.exit(0)    })
 
@@ -49,10 +51,10 @@ module Bake
       puts " --c++11          Uses C++11 rules, available for GCC 4.7 and higher."
       puts " --c++14          Uses C++14 rules, available for GCC 4.9 and higher."
       puts " --cct <file>     Sets a specific compiler compatibility template, otherwise $(QAC_HOME)/config/cct/<platform>.ctt will be used. Can be defined multiple times."
-      puts " --rcf <file>     Sets a specific rule config file, otherwise $(QAC_RULE) will be used. If not set, $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf will be used."
+      puts " --rcf <file>     Sets a specific rule config file, otherwise qac.rcf will be searched up to root. If not found, $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf will be used."
       puts " --acf <file>     Sets a specific analysis config file, otherwise $(QAC_HOME)/config/acf/default.acf will be used."
       puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/qacdata."
-      puts " --qacstep create|build|result   Steps can be ORed. Per default all steps will be executed."
+      puts " --qacstep admin|analyze|view   Steps can be ORed. Per default all steps will be executed."
       puts " --qacfilter on|off   If off, output will be printed immediately and unfiltered, default is on to reduce noise."
       puts " --qacretry <seconds>   If build or result step fail due to refused license, the step will be retried until timeout. Works only if qacfilter is not off."
       puts " --version        Print version."
@@ -101,13 +103,22 @@ module Bake
 
       if not ENV["QAC_HOME"]
         Bake.formatter.printError("Error: specify the environment variable QAC_HOME.")
+        ExitHelper.exit(1)
+      end
+
+      if !@qacstep.nil?
+        @qacstep.split("|").each do |s|
+          if not ["admin", "analyze", "view"].include?s
+            Bake.formatter.printError("Error: incorrect qacstep name.")
+            ExitHelper.exit(1)
+          end
+        end
       end
 
       @qac_home = ENV["QAC_HOME"].gsub(/\\/,"/")
       @qac_home = qac_home[0, qac_home.length-1] if qac_home.end_with?"/"
 
       if @cct.empty?
-
         gccVersion = Bake::Toolchain::getGccVersion
         if gccVersion.length < 2
           Bake.formatter.printError("Error: could not determine GCC version.")
@@ -123,9 +134,9 @@ module Bake
         end
 
         while (@cct.empty? or gccVersion[0]>=5)
-          @cct = [qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-i686-#{plStr}#{@cVersion}.cct"]
+          @cct = [qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-i686-#{plStr}-C++#{@cVersion}.cct"]
           break if File.exist?@cct[0]
-          @cct = [qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-x86_64-#{plStr}#{@cVersion}.cct"]
+          @cct = [qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-x86_64-#{plStr}-C++#{@cVersion}.cct"]
           break if File.exist?@cct[0]
           if gccVersion[1]>0
             gccVersion[1] -= 1

@@ -45,6 +45,8 @@ module Bake
       r.each { |f| FileUtils.rm_rf(f) }
       r = Dir.glob("**/qacdata")
       r.each { |f| FileUtils.rm_rf(f) }
+      r = Dir.glob("**/testQacData")
+      r.each { |f| FileUtils.rm_rf(f) }
     end
   end
 
