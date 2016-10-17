@@ -13,7 +13,7 @@ You can use QACPP from command line:
     qacli view -P qacdata -m STDOUT
 
 - The first command creates the qac database. This is needed only once.
-- The second command builds the files.
+- The second command builds and analyzes the files.
 - The third command prints out the result.
 
 To make it easier, bake toolkit provides *bakeqac*. Instead of writing
@@ -34,8 +34,8 @@ You can also choose certain steps (can be combined with "|"):
 
 .. code-block:: console
 
-    bakeqac <options> --qacstep create|build|result
-    bakeqac <options> --qacstep build
+    bakeqac <options> --qacstep admin|analyze|view
+    bakeqac <options> --qacstep admin
     etc.
 
 Step 1: create
@@ -103,3 +103,13 @@ Results are also filtered in this step if not specified otherwise:
 - Only results from files within used bake projects will be shown (which does not apply to e.g. compiler libraries). To narrow the results, use the *-p* option.
 - Files from subfolders test and mock will be filtered out.
 - Files from projects gtest and gmock will be filtered out.
+
+todo
+----
+
+qacnoformat
+qacretry
+qac.rcf
+number of messages
+cct auto detection
+ansi color

@@ -1,6 +1,12 @@
 Changelog
 =========
 
+October 17, 2016 - bake-toolkit 2.23.7
+    * Changed: renamed qac build steps from create, build and result to admin, analyze and view (the original qac names).
+    * Bugfix: qac view step might have been executed although build has been failed.
+    * Bugfix: qac view step with never executed analyze step might have been crashed.
+    * Bugfix: qac C++11 and C++14 switch were broken.
+
 October 14, 2016 - bake-toolkit 2.23.6
     * Bugfix: qac license refused error now really shown.
     * Changed: QAC_RCF environment variable not supported anymore. Instead a file qac.rcf will be searched upwards from bake main project folder.

@@ -140,6 +140,14 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>October 17, 2016 - bake-toolkit 2.23.7</dt>
+<dd><ul class="first last simple">
+<li>Changed: renamed qac build steps from create, build and result to admin, analyze and view (the original qac names).</li>
+<li>Bugfix: qac view step might have been executed although build has been failed.</li>
+<li>Bugfix: qac view step with never executed analyze step might have been crashed.</li>
+<li>Bugfix: qac C++11 and C++14 switch were broken.</li>
+</ul>
+</dd>
 <dt>October 14, 2016 - bake-toolkit 2.23.6</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: qac license refused error now really shown.</li>
