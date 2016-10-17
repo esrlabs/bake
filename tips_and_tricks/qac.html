@@ -101,6 +101,7 @@
 <li><a class="reference internal" href="#step-1-create">Step 1: create</a></li>
 <li><a class="reference internal" href="#step-2-build">Step 2: build</a></li>
 <li><a class="reference internal" href="#step-3-result">Step 3: result</a></li>
+<li><a class="reference internal" href="#todo">todo</a></li>
 </ul>
 </li>
 </ul>
@@ -156,7 +157,7 @@
 </div>
 <ul class="simple">
 <li>The first command creates the qac database. This is needed only once.</li>
-<li>The second command builds the files.</li>
+<li>The second command builds and analyzes the files.</li>
 <li>The third command prints out the result.</li>
 </ul>
 <p>To make it easier, bake toolkit provides <em>bakeqac</em>. Instead of writing</p>
@@ -169,8 +170,8 @@
 </div>
 <p>bake will automatically do these three steps. If one of the steps fails, the consecutive steps will be dismissed.</p>
 <p>You can also choose certain steps (can be combined with &#8220;|&#8221;):</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacstep create|build|result</span>
-<span class="go">bakeqac &lt;options&gt; --qacstep build</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacstep admin|analyze|view</span>
+<span class="go">bakeqac &lt;options&gt; --qacstep admin</span>
 <span class="go">etc.</span>
 </pre></div>
 </div>
@@ -229,6 +230,15 @@
 <li>Files from subfolders test and mock will be filtered out.</li>
 <li>Files from projects gtest and gmock will be filtered out.</li>
 </ul>
+</div>
+<div class="section" id="todo">
+<h2>todo<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
+<p>qacnoformat
+qacretry
+qac.rcf
+number of messages
+cct auto detection
+ansi color</p>
 </div>
 </div>
 
