@@ -23,5 +23,5 @@ spec/testdata/cache/main/makefile/dummy.a
 spec/testdata/merge/main/lib/*.a
 testdot.dot
 *.json
-qacdata
+.qacdata
 *.stamp

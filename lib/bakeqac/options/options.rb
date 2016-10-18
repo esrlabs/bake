@@ -20,7 +20,7 @@ module Bake
       @rcf = nil
       @cct = []
       @default = nil
-      @qacdata = "qacdata"
+      @qacdata = ".qacdata"
       @qacstep = nil
       @qacfilter = true
       @qacnoformat = false
@@ -53,7 +53,7 @@ module Bake
       puts " --cct <file>     Sets a specific compiler compatibility template, otherwise $(QAC_HOME)/config/cct/<platform>.ctt will be used. Can be defined multiple times."
       puts " --rcf <file>     Sets a specific rule config file, otherwise qac.rcf will be searched up to root. If not found, $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf will be used."
       puts " --acf <file>     Sets a specific analysis config file, otherwise $(QAC_HOME)/config/acf/default.acf will be used."
-      puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/qacdata."
+      puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/.qacdata."
       puts " --qacstep admin|analyze|view   Steps can be ORed. Per default all steps will be executed."
       puts " --qacfilter on|off   If off, output will be printed immediately and unfiltered, default is on to reduce noise."
       puts " --qacretry <seconds>   If build or result step fail due to refused license, the step will be retried until timeout. Works only if qacfilter is not off."

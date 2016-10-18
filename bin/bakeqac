@@ -43,7 +43,6 @@ module Bake
   passedParams << "--filter-paths" unless passedParams.include?"--filter-paths"
 
   success = true
-  FileUtils::mkdir_p @options.qacdata
 
 ###### PREREQUISITE 3: QACLI LOCATION ######
 
@@ -62,7 +61,7 @@ end
     cmd << "--acf" << @options.acf
 
     puts "bakeqac: creating database..."
-
+    FileUtils.rm_rf @options.qacdata
     success, consoleOutput = ProcessHelper.run(cmd, true)
     puts consoleOutput if !success
 
@@ -71,6 +70,8 @@ end
 ###### STEP 2: BUILD ######
 
   if success and (@options.qacstep.nil? or @options.qacstep.include?"analyze")
+    FileUtils::mkdir_p @options.qacdata
+
     cmd = qaExe + ["analyze", "-P", @options.qacdata, "-b"]
 
     begin
@@ -95,11 +96,12 @@ end
       success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
       licenseError = false
       consoleOutput.each_line do |line|
-        licenseError = true if line.include?"License Refused"
+        licenseError = true if (line.include?("License Refused") && !line.include?("License Refused: C:"))
       end
-      break unless (@options.qacfilter and licenseError and (@options.qacretry > (Time.now - timeStart)))
+      break unless (@options.qacfilter and licenseError and (@options.qacretry >= (Time.now - timeStart)))
       puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
     end
+    puts "License refused, retry timeout over -> failure." if (@options.qacretry > 0 && licenseError && @options.qacfilter)
 
     success = false # we have to parse the output, qacli returns always an error here...
     filterOutput = []
@@ -136,11 +138,11 @@ end
 ###### STEP 3: RESULT ######
 
   if success and (@options.qacstep.nil? or @options.qacstep.include?"view")
+    FileUtils::mkdir_p @options.qacdata
 
     puts "bakeqac: printing results..."
 
     filter = []
-
     useFilter = File.exist?("#{@options.qacdata}/filter.txt") && @options.qacfilter
 
     if useFilter
@@ -160,21 +162,18 @@ end
       success, consoleOutput = ProcessHelper.run(cmd, !useFilter)
       licenseError = false
       consoleOutput.each_line do |line|
-        licenseError = true if line.include?"License Refused"
+        licenseError = true if (line.include?("License Refused") && !line.include?("License Refused: C:"))
       end
-      break unless (useFilter and licenseError and (@options.qacretry > (Time.now - timeStart)))
+      break unless (useFilter and licenseError and (@options.qacretry >= (Time.now - timeStart)))
       puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
     end
+    puts "License refused, retry timeout over -> failure." if (@options.qacretry > 0 && licenseError && useFilter)
 
     if useFilter
       numberOfMessages = 0
-      if success
+      if success && !licenseError
         foundFile = false
         consoleOutput.each_line do |line|
-          if line.include?"License Refused"
-            puts line
-            next
-          end
           line.strip!
           foundFile = false if line.empty? or line.include? " ======= Results for "
           scan_res = line.scan(/\/\/ ======= Results for ([a-zA-Z]{0,1})(:{0,1})(.*)/)
