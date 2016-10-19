@@ -169,9 +169,11 @@ end
     end
     puts "License refused, retry timeout over -> failure." if (@options.qacretry > 0 && licenseError && useFilter)
 
+    success = false if licenseError
+
     if useFilter
       numberOfMessages = 0
-      if success && !licenseError
+      if success
         foundFile = false
         consoleOutput.each_line do |line|
           line.strip!

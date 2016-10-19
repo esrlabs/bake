@@ -48,7 +48,6 @@ module Bake
 
 describe "Qac" do
 
-=begin
   it 'qac installed' do
     begin
       `qacli --version`
@@ -357,7 +356,6 @@ describe "Qac" do
     expect(exit_code).to be == 0
   end
 
-
   it 'newformat' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "new_format"
@@ -445,7 +443,7 @@ describe "Qac" do
     expect($mystring.include?("Filtered out 2")).to be == true
     expect($mystring.include?("rspec/lib1/bla")).to be == true
     expect($mystring.include?("rspec/lib2/bla")).to be == true
-    expect(exit_code).to be == 0
+    expect(exit_code).to be > 0
   end
 
   it 'no license view c' do
@@ -460,8 +458,7 @@ describe "Qac" do
     expect($mystring.include?("rspec/lib2/bla")).to be == false
     expect(exit_code).to be == 0
   end
-=end
-  # qacretry
+
   it 'no license analyze retry' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "no_license_analyze"
@@ -474,6 +471,61 @@ describe "Qac" do
     expect($mystring.include?("rspec/lib1/bla")).to be == true
     expect($mystring.include?("rspec/lib2/bla")).to be == false
     expect(exit_code).to be == 0
+  end
+
+  it 'no license view retry' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "no_license_view"
+    ENV["QAC_RETRY"] = Time.now.to_i.to_s
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacretry", "10"]) # after 5s the license is available
+    expect($mystring.split("License refused, retry").length).to be > 3
+    expect($mystring.split("License refused, retry").length).to be < 10
+    expect($mystring.include?("Filtered out 1")).to be == false
+    expect($mystring.include?("Filtered out 2")).to be == false
+    expect($mystring.include?("rspec/lib1/bla")).to be == true
+    expect($mystring.include?("rspec/lib2/bla")).to be == false
+    expect(exit_code).to be == 0
+  end
+
+  it 'no license view c retry' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "no_license_view_c"
+    ENV["QAC_RETRY"] = Time.now.to_i.to_s
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacretry", "10"]) # after 5s the license is available
+    expect($mystring.split("License refused, retry").length).to be == 1
+    expect($mystring.include?("Filtered out 1")).to be == false
+    expect($mystring.include?("Filtered out 2")).to be == false
+    expect($mystring.include?("rspec/lib1/bla")).to be == true
+    expect($mystring.include?("rspec/lib2/bla")).to be == false
+    expect(exit_code).to be == 0
+  end
+
+  it 'no license analyze retry timeout' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "no_license_analyze"
+    ENV["QAC_RETRY"] = Time.now.to_i.to_s
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacretry", "3"]) # after 5s the license is available
+    expect($mystring.split("License refused, retry").length).to be > 3
+    expect($mystring.include?("License refused, retry timeout")).to be == true
+    expect($mystring.include?("Filtered out 1")).to be == true
+    expect($mystring.include?("Filtered out 2")).to be == false
+    expect($mystring.include?("rspec/lib1/bla")).to be == false
+    expect($mystring.include?("rspec/lib2/bla")).to be == false
+    expect(exit_code).to be > 0
+  end
+
+  it 'no license view retry timeout' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "no_license_view"
+    ENV["QAC_RETRY"] = Time.now.to_i.to_s
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacretry", "3"]) # after 5s the license is available
+    expect($mystring.split("License refused, retry").length).to be > 3
+    expect($mystring.include?("License refused, retry timeout")).to be == true
+    expect($mystring.include?("Filtered out 1")).to be == false
+    expect($mystring.include?("Filtered out 2")).to be == true
+    expect($mystring.include?("rspec/lib1/bla")).to be == true
+    expect($mystring.include?("rspec/lib2/bla")).to be == true
+    expect(exit_code).to be > 0
   end
 
 end
