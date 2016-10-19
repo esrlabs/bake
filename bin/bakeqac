@@ -172,8 +172,9 @@ end
     success = false if licenseError
 
     if useFilter
-      numberOfMessages = 0
       if success
+        # 1. filter
+        filteredLines = []
         foundFile = false
         consoleOutput.each_line do |line|
           line.strip!
@@ -188,20 +189,50 @@ end
               end
             end
           end
-          if foundFile
-            if not line.include?"QAC++ Deep Flow Static Analyser"
-              if (!@options.qacnoformat && line.start_with?("MSG: ")) || (@options.qacnoformat && line.include?(": Msg("))
-                Bake.formatter.printWarning(line)
-                numberOfMessages += 1
-              elsif scan_res.length > 0
-                Bake.formatter.printAdditionalInfo(line)
-              else
-                Bake.formatter.printInfo(line)
-              end
+          filteredLines << line if foundFile && !line.include?("QAC++ Deep Flow Static Analyser")
+        end
+
+        # 2. sort
+        sortedLines = []
+        linesOfFile = {}
+        lineNum = 0
+        currentMessage = []
+        filteredLines.each do |line|
+          if line.include? " ======= Results for "
+            lineNum = 0
+            linesOfFile.sort.each { |lineNr, s| sortedLines += s }
+            linesOfFile = {}
+            sortedLines << line
+          else
+            if (!@options.qacnoformat && line.start_with?("MSG: ")) || (@options.qacnoformat && line.include?(": Msg("))
+              lineScan = line.scan(/[^\(]*\((\d*)/)
+              lineNum = lineScan[0][0].to_i if lineScan.length > 0
             end
+            if linesOfFile.has_key?lineNum
+              currentMessage = linesOfFile[lineNum]
+            else
+              currentMessage = []
+              linesOfFile[lineNum] = currentMessage
+            end
+            currentMessage << line
+          end
+        end
+        linesOfFile.sort.each { |lineNr, s| sortedLines += s }
+
+        # 3. print
+        numberOfMessages = 0
+        sortedLines.each do |line|
+          if (!@options.qacnoformat && line.start_with?("MSG: ")) || (@options.qacnoformat && line.include?(": Msg("))
+            Bake.formatter.printWarning(line)
+            numberOfMessages += 1
+          elsif line.include? " ======= Results for "
+            Bake.formatter.printAdditionalInfo(line)
+          else
+            Bake.formatter.printInfo(line)
           end
         end
         Bake.formatter.printSuccess("\n**** Number of messages: #{numberOfMessages} ****")
+
       else
         puts consoleOutput
       end

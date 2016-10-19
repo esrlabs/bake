@@ -62,7 +62,7 @@ describe "Qac" do
   it 'integration test' do
     if $qacInstalled
 
-      exit_code = Bake.startBakeqac("qac/main", ["test_template"])
+      exit_code = Bake.startBakeqac("qac/main", ["test_template", "--qacretry", "60"])
 
       $mystring.gsub!(/\\/,"/")
 

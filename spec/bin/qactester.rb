@@ -98,11 +98,12 @@ when "new_format"
     puts
     puts "Filtered out 2."
     puts "// ======= Results for rspec/lib1/bla.cpp"
-    puts "MSG: rspec/lib1/bla.cpp(1,1): (MCPP Rule 100:1234) FORMAT: #{getParam('-f') == 'unknown' ? 'old' : 'new'}"
-    puts "MSG: rspec/lib1/bla.cpp(1,1): (MCPP Rule 100:1234) Dummy"
-    puts "---- rspec/lib1/bla.cpp(1,1): (MCPP Rule 100:1234) Included from here"
-    puts "MSG: rspec/lib1/bla.cpp(1,1): (MCPP Rule 100:1234) Dummy"
-    puts "MSG: rspec/lib1/bla.cpp(1,1): QAC++ Deep Flow Static Analyser"
+    puts "MSG: rspec/lib1/bla.cpp(14,1): (MCPP Rule 100:1234) Dummy"
+    puts "---- rspec/lib1/bla.cpp(2,1): (MCPP Rule 100:1234) Included from here"
+    puts "MSG: rspec/lib1/bla.cpp(13,1): (MCPP Rule 100:1234) FORMAT: #{getParam('-f') == 'unknown' ? 'old' : 'new'}"
+    puts "MSG: rspec/lib1/bla.cpp(14,1): (MCPP Rule 100:1234) Dummy"
+    puts "MSG: rspec/lib1/bla.cpp(13,1): QAC++ Deep Flow Static Analyser"
+    puts "// ======= Results for rspec/lib2/nothing.cpp"
     puts "// ======= Results for rspec/lib2/bla.cpp"
     puts "MSG: rspec/lib2/bla.cpp(1,1): (MCPP Rule 100:1234) Dummy"
     puts "// ======= Results for rspec/lib3/bla.cpp"
@@ -120,7 +121,6 @@ when "new_format"
     puts "// ======= Results for rspec/gtest/bla.cpp"
     puts "MSG: rspec/gtest/bla.cpp(1,1): (MCPP Rule 100:1234) Dummy"
   end
-
 
   when "no_license_analyze"
     case step
