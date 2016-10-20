@@ -93,7 +93,7 @@ The output will be filtered per default (QAC internal warnings) . To get unfilte
 
 .. code-block:: console
 
-    bakeqac <options> --qacfilter off
+    bakeqac <options> --qacnofilter
 
 Step 3: result
 --------------
@@ -107,10 +107,11 @@ Results are also filtered in this step if not specified otherwise:
 todo
 ----
 
-qacnoformat
+qacrawformat -> qacnoformat
 qacretry
 qac.rcf
 number of messages
 cct auto detection
 ansi color
 qacdoc
+qacfilter off -> qacnofilter

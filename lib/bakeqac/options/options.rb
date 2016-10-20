@@ -28,23 +28,23 @@ module Bake
       @qacretry = 0
       @qacdoc = false
 
-      add_option(["-b", ""      ], lambda { |x| setDefault(x)                })
-      add_option(["-a"          ], lambda { |x| Bake.formatter.setColorScheme(x.to_sym) })
-      add_option(["-m"          ], lambda { |x| set_main_dir(x)              })
-      add_option(["--c++11"     ], lambda {     @cVersion = "-c++11"         })
-      add_option(["--c++14"     ], lambda {     @cVersion = "-c++14"         })
-      add_option(["--cct"       ], lambda { |x| @cct << x.gsub(/\\/,"/")     })
-      add_option(["--rcf"       ], lambda { |x| @rcf = x.gsub(/\\/,"/")      })
-      add_option(["--acf"       ], lambda { |x| @acf = x.gsub(/\\/,"/")      })
-      add_option(["--qacdata"   ], lambda { |x| @qacdata = x.gsub(/\\/,"/")  })
-      add_option(["--qacstep"   ], lambda { |x| @qacstep = x                 })
-      add_option(["--qacfilter" ], lambda { |x| @qacfilter = (x == "on")     })
-      add_option(["--qacretry"  ], lambda { |x| @qacretry = x.to_i           })
-      add_option(["--qacnoformat" ], lambda { @qacnoformat = true            })
-      add_option(["--qacunittest" ], lambda { @qacunittest = true            })
-      add_option(["--qacdoc"    ], lambda { @qacdoc = true                    })
-      add_option(["-h", "--help"], lambda {     usage; ExitHelper.exit(0)    })
-      add_option(["--version"   ], lambda {     Bake::Version.printBakeqacVersion; ExitHelper.exit(0)    })
+      add_option(["-b", ""                         ], lambda { |x| setDefault(x)                })
+      add_option(["-a"                             ], lambda { |x| Bake.formatter.setColorScheme(x.to_sym) })
+      add_option(["-m"                             ], lambda { |x| set_main_dir(x)              })
+      add_option(["--c++11"                        ], lambda {     @cVersion = "-c++11"         })
+      add_option(["--c++14"                        ], lambda {     @cVersion = "-c++14"         })
+      add_option(["--cct"                          ], lambda { |x| @cct << x.gsub(/\\/,"/")     })
+      add_option(["--rcf"                          ], lambda { |x| @rcf = x.gsub(/\\/,"/")      })
+      add_option(["--acf"                          ], lambda { |x| @acf = x.gsub(/\\/,"/")      })
+      add_option(["--qacdata"                      ], lambda { |x| @qacdata = x.gsub(/\\/,"/")  })
+      add_option(["--qacstep"                      ], lambda { |x| @qacstep = x                 })
+      add_option(["--qacnofilter"                  ], lambda { @qacfilter = false               })
+      add_option(["--qacretry"                     ], lambda { |x| @qacretry = x.to_i           })
+      add_option(["--qacnoformat", "--qacrawformat"], lambda { @qacnoformat = true              })
+      add_option(["--qacunittest"                  ], lambda { @qacunittest = true              })
+      add_option(["--qacdoc"                       ], lambda { @qacdoc = true                   })
+      add_option(["-h", "--help"                   ], lambda { usage; ExitHelper.exit(0)        })
+      add_option(["--version"                      ], lambda { Bake::Version.printBakeqacVersion; ExitHelper.exit(0)    })
 
     end
 
@@ -57,8 +57,9 @@ module Bake
       puts " --acf <file>     Set a specific analysis config file, otherwise $(QAC_HOME)/config/acf/default.acf will be used."
       puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/.qacdata."
       puts " --qacstep admin|analyze|view   Steps can be ORed. Per default all steps will be executed."
-      puts " --qacfilter on|off   If off, output will be printed immediately and unfiltered, default is on to reduce noise."
-      puts " --qacretry <seconds>   If build or result step fail due to refused license, the step will be retried until timeout. Works only if qacfilter is not off."
+      puts " --qacnofilter    Output will be printed immediately and unfiltered. Per default filters are used to reduce noise."
+      puts " --qacrawformat   Raw QAC output (with incomplete MISRA rules!)."
+      puts " --qacretry <seconds>   If build or result step fail due to refused license, the step will be retried until timeout. Works only without qacnofilter."
       puts " --qacdoc         Print link to HTML help page for every warning if found."
       puts " --version        Print version."
       puts " -h, --help       Print this help."

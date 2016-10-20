@@ -28,7 +28,7 @@ module Bake
   excludeParam = false
   wasMinus = false
   ARGV.each do |x|
-    if ["--c++11", "--c++14", "--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacfilter", "--qacnoformat", "--qacunittest", "--qacretry", "--qacdoc"].include?x
+    if ["--c++11", "--c++14", "--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacnofilter", "--qacnoformat", "--qacrawformat", "--qacunittest", "--qacretry", "--qacdoc"].include?x
       excludeParam = true
       next
     end

@@ -233,7 +233,7 @@ describe "Qac" do
   it 'steps_qacdata' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "steps_qacdata"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacfilter", "off"])
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacnofilter"])
     expect($mystring.include?("admin: *.qacdata*")).to be == true
     expect($mystring.include?("analyze: *.qacdata*")).to be == true
     expect($mystring.include?("view: *.qacdata*")).to be == true
@@ -243,7 +243,7 @@ describe "Qac" do
   it 'steps_qacdataUser' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "steps_qacdata"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacdata", "\"testQacData\\bla\"", "--qacfilter", "off"])
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacdata", "\"testQacData\\bla\"", "--qacnofilter"])
     expect($mystring.include?("admin: *testQacData/bla*")).to be == true
     expect($mystring.include?("analyze: *testQacData/bla*")).to be == true
     expect($mystring.include?("view: *testQacData/bla*")).to be == true
@@ -390,7 +390,7 @@ describe "Qac" do
   it 'no filter' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "new_format"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacfilter off"])
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacnofilter"])
     expect($mystring.include?("rspec/lib1")).to be == true
     expect($mystring.include?("rspec/lib2")).to be == true
     expect($mystring.include?("rspec/lib3")).to be == true
@@ -409,7 +409,7 @@ describe "Qac" do
   it 'no filter.txt' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "new_format"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacfilter on", "--qacstep view"])
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacnofilter", "--qacstep view"])
     expect($mystring.include?("rspec/lib1")).to be == true
     expect($mystring.include?("rspec/lib2")).to be == true
     expect($mystring.include?("rspec/lib3")).to be == true
