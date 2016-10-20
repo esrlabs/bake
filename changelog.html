@@ -140,12 +140,23 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>October 20, 2016 - bake-toolkit 2.23.8</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: qac: &#8220;License Refused&#8221; for *.c Files not treated as an error anymore, which was a problem for &#8220;&#8211;qacretry&#8221;.</li>
+<li>Changed: qac: default qacdata folder is now &#8221;.qacdata&#8221;</li>
+<li>Changed: qac: warnings are now sorted by line numbers per file</li>
+<li>Changed: qac: &#8220;&#8211;qacfilter off|on&#8221; (default on) was changed to &#8220;&#8211;qacnofilter&#8221; (if skipped, filters are active)</li>
+<li>Changed: qac: &#8220;&#8211;qacnoformat was reanmed to &#8220;&#8211;qacrawformat&#8221;</li>
+<li>Cosmetic: qac: if license retry timeout is reached, an additional info is printed.</li>
+<li>Added: qac: With &#8211;qacdoc a link to the appropriate documentation page is printed for every warning.</li>
+</ul>
+</dd>
 <dt>October 17, 2016 - bake-toolkit 2.23.7</dt>
 <dd><ul class="first last simple">
 <li>Changed: renamed qac build steps from create, build and result to admin, analyze and view (the original qac names).</li>
 <li>Bugfix: qac view step might have been executed although build has been failed.</li>
 <li>Bugfix: qac view step with never executed analyze step might have been crashed.</li>
-<li>Bugfix: qac C++11 and C++14 switch were broken.</li>
+<li>Bugfix: qac C++11 and C++14 switches were broken.</li>
 </ul>
 </dd>
 <dt>October 14, 2016 - bake-toolkit 2.23.6</dt>

@@ -97,11 +97,13 @@
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">QACPP</a><ul>
-<li><a class="reference internal" href="#without-bake">Without bake</a></li>
-<li><a class="reference internal" href="#step-1-create">Step 1: create</a></li>
-<li><a class="reference internal" href="#step-2-build">Step 2: build</a></li>
-<li><a class="reference internal" href="#step-3-result">Step 3: result</a></li>
-<li><a class="reference internal" href="#todo">todo</a></li>
+<li><a class="reference internal" href="#without-bakeqac">Without bakeqac</a></li>
+<li><a class="reference internal" href="#with-bakeqac">With bakeqac</a></li>
+<li><a class="reference internal" href="#step-1-admin">Step 1: admin</a></li>
+<li><a class="reference internal" href="#step-2-analyze">Step 2: analyze</a></li>
+<li><a class="reference internal" href="#step-3-view">Step 3: view</a></li>
+<li><a class="reference internal" href="#additional-options">Additional options</a></li>
+<li><a class="reference internal" href="#example-output">Example output</a></li>
 </ul>
 </li>
 </ul>
@@ -147,28 +149,32 @@
       
   <div class="section" id="qacpp">
 <h1>QACPP<a class="headerlink" href="#qacpp" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="without-bake">
-<h2>Without bake<a class="headerlink" href="#without-bake" title="Permalink to this headline">¶</a></h2>
-<p>You can use QACPP from command line:</p>
+<p>bakeqac is a convenience wrapper for QACPP with some nice features.</p>
+<div class="section" id="without-bakeqac">
+<h2>Without bakeqac<a class="headerlink" href="#without-bakeqac" title="Permalink to this headline">¶</a></h2>
+<p>QACPP can be called directly from command line:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">qacli admin --qaf-project-config --qaf-project qacdata --cct &lt;cct&gt; --rcf &lt;rcf&gt; --acf &lt;acf&gt;</span>
 <span class="go">qacli analyze -P qacdata -b &lt;bake call&gt;</span>
 <span class="go">qacli view -P qacdata -m STDOUT</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li>The first command creates the qac database. This is needed only once.</li>
+<li>The first command creates the qac project database.</li>
 <li>The second command builds and analyzes the files.</li>
-<li>The third command prints out the result.</li>
+<li>The third command prints out the result unfiltered.</li>
 </ul>
-<p>To make it easier, bake toolkit provides <em>bakeqac</em>. Instead of writing</p>
+</div>
+<div class="section" id="with-bakeqac">
+<h2>With bakeqac<a class="headerlink" href="#with-bakeqac" title="Permalink to this headline">¶</a></h2>
+<p>Instead of writing</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bake &lt;options&gt;</span>
 </pre></div>
 </div>
-<p>simply write:</p>
+<p>for regular build, simply write:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt;</span>
 </pre></div>
 </div>
-<p>bake will automatically do these three steps. If one of the steps fails, the consecutive steps will be dismissed.</p>
+<p>bakeqac will automatically do the three steps mentioned above. If one of these steps fails, the consecutive steps will be dismissed.</p>
 <p>You can also choose certain steps (can be combined with &#8220;|&#8221;):</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacstep admin|analyze|view</span>
 <span class="go">bakeqac &lt;options&gt; --qacstep admin</span>
@@ -176,26 +182,26 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="step-1-create">
-<h2>Step 1: create<a class="headerlink" href="#step-1-create" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-1-admin">
+<h2>Step 1: admin<a class="headerlink" href="#step-1-admin" title="Permalink to this headline">¶</a></h2>
 <p>You have to set the environment variable QAC_HOME, e.g. to <em>c:\tools\prqa\PRQA-Framework-2.1.0</em>. If not specified otherwise, cct, rcf and acf will be automatically chosen.</p>
 <ul>
 <li><p class="first">Configuration compiler template (cct): Only GCC is supported. bakeqac tries to get the platform and the GCC version and calculates the path to the right cct file. To overwrite this behaviour, specify one or more ccts:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --cct &lt;first&gt; --cct &lt;second&gt;</span>
 </pre></div>
 </div>
-<p>Alternativly, you can add</p>
+<p>Alternatively, you can add</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --c++11</span>
 <span class="go">bakeqac &lt;options&gt; --c++14</span>
 </pre></div>
 </div>
-<p>to enforce bake choosing the C++11 or C++14 toolchain.</p>
+<p>to enforce bakeqac choosing the C++11 or C++14 toolchain.</p>
 </li>
 <li><p class="first">Rule configuration file (rcf): Can be specified with:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --rcf &lt;rcf&gt;</span>
 </pre></div>
 </div>
-<p>If not specified, bakeqac searches for qac.rcf upwards from bake main project folder. If also not found, bake uses $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf.</p>
+<p>If not specified, bakeqac searches for qac.rcf upwards from bake main project folder. If also not found, bakeqac uses $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf.</p>
 </li>
 <li><p class="first">Analysis configuration file (acf): Can be specified with:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --acf &lt;acf&gt;</span>
@@ -203,42 +209,57 @@
 </div>
 <p>If not specified, $(QAC_HOME)/config/acf/default.acf will be used.</p>
 </li>
-<li><p class="first">You can also specify the qacdata folder, default is <em>qacdata</em>:</p>
+<li><p class="first">You can also specify the qacdata folder, default is <em>.qacdata</em>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacdata anotherFolder</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
-<div class="section" id="step-2-build">
-<h2>Step 2: build<a class="headerlink" href="#step-2-build" title="Permalink to this headline">¶</a></h2>
-<p>Use exactly the same options as for bake. A few things have to be mentioned:</p>
+<div class="section" id="step-2-analyze">
+<h2>Step 2: analyze<a class="headerlink" href="#step-2-analyze" title="Permalink to this headline">¶</a></h2>
+<p>This is the main step. Use exactly the same options for bakeqac as for bake. A few things have to be mentioned:</p>
 <ul class="simple">
 <li><em>&#8211;compile-only</em> will be automatically added</li>
 <li><em>&#8211;rebuild</em> will be automatically added</li>
 </ul>
-<p>The output will be filtered per default (QAC internal warnings) . To get unfiltered output, write:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacfilter off</span>
+<p>The output will be filtered per default (e.g. some warnings) . To get unfiltered output, write:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacnofilter</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="step-3-result">
-<h2>Step 3: result<a class="headerlink" href="#step-3-result" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-3-view">
+<h2>Step 3: view<a class="headerlink" href="#step-3-view" title="Permalink to this headline">¶</a></h2>
 <p>Results are also filtered in this step if not specified otherwise:</p>
 <ul class="simple">
-<li>Only results from files within used bake projects will be shown (which does not apply to e.g. compiler libraries). To narrow the results, use the <em>-p</em> option.</li>
+<li>Only results from compiled bake projects will be shown (which does not apply to e.g. compiler libraries). To narrow the results, use the <em>-p</em> option.</li>
 <li>Files from subfolders test and mock will be filtered out.</li>
 <li>Files from projects gtest and gmock will be filtered out.</li>
 </ul>
+<p>bakeqac slightly reformats the output (originally the violated MISRA rule numbers are printed out incomplete). To switch back to raw format, use:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacrawformat</span>
+</pre></div>
 </div>
-<div class="section" id="todo">
-<h2>todo<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
-<p>qacnoformat
-qacretry
-qac.rcf
-number of messages
-cct auto detection
-ansi color</p>
+<p>To get additional links to the appropriate documentation pages use:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacdoc</span>
+</pre></div>
+</div>
+<p>Colored output is also supported similar to bake:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; -a &lt;color_scheme&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="additional-options">
+<h2>Additional options<a class="headerlink" href="#additional-options" title="Permalink to this headline">¶</a></h2>
+<p>QACPP needs a license. If floating licenses are not available, bakeqac can retry to checkout them:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacretry &lt;seconds&gt;</span>
+</pre></div>
+</div>
+<p>Step 2 and 3 are retried until timeout is reached.</p>
+</div>
+<div class="section" id="example-output">
+<h2>Example output<a class="headerlink" href="#example-output" title="Permalink to this headline">¶</a></h2>
+<img alt="../_images/misra.png" src="../_images/misra.png" />
 </div>
 </div>
 
