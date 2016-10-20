@@ -1,6 +1,15 @@
 Changelog
 =========
 
+October 20, 2016 - bake-toolkit 2.23.8
+    * Bugfix: qac: "License Refused" for \*.c Files not treated as an error anymore, which was a problem for "--qacretry".
+    * Changed: qac: default qacdata folder is now ".qacdata"
+    * Changed: qac: warnings are now sorted by line numbers per file
+    * Changed: qac: "--qacfilter off|on" (default on) was changed to "--qacnofilter" (if skipped, filters are active)
+    * Changed: qac: "--qacnoformat was reanmed to "--qacrawformat"
+    * Cosmetic: qac: if license retry timeout is reached, an additional info is printed.
+    * Added: qac: With --qacdoc a link to the appropriate documentation page is printed for every warning.
+
 October 17, 2016 - bake-toolkit 2.23.7
     * Changed: renamed qac build steps from create, build and result to admin, analyze and view (the original qac names).
     * Bugfix: qac view step might have been executed although build has been failed.
