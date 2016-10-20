@@ -6,7 +6,7 @@ module Bake
 
   class BakeqacOptions < Parser
     attr_reader :rcf, :acf, :qacdata, :qacstep, :qac_home  # String
-    attr_reader :c11, :c14, :qacfilter, :qacnoformat, :qacunittest # Boolean
+    attr_reader :c11, :c14, :qacfilter, :qacnoformat, :qacunittest, :qacdoc # Boolean
     attr_reader :cct # Array
     attr_reader :qacretry # int
 
@@ -26,6 +26,7 @@ module Bake
       @qacnoformat = false
       @qacunittest = false
       @qacretry = 0
+      @qacdoc = false
 
       add_option(["-b", ""      ], lambda { |x| setDefault(x)                })
       add_option(["-a"          ], lambda { |x| Bake.formatter.setColorScheme(x.to_sym) })
@@ -41,6 +42,7 @@ module Bake
       add_option(["--qacretry"  ], lambda { |x| @qacretry = x.to_i           })
       add_option(["--qacnoformat" ], lambda { @qacnoformat = true            })
       add_option(["--qacunittest" ], lambda { @qacunittest = true            })
+      add_option(["--qacdoc"    ], lambda { @qacdoc = true                    })
       add_option(["-h", "--help"], lambda {     usage; ExitHelper.exit(0)    })
       add_option(["--version"   ], lambda {     Bake::Version.printBakeqacVersion; ExitHelper.exit(0)    })
 
@@ -48,15 +50,16 @@ module Bake
 
     def usage
       puts "\nUsage: bakeqac [options]"
-      puts " --c++11          Uses C++11 rules, available for GCC 4.7 and higher."
-      puts " --c++14          Uses C++14 rules, available for GCC 4.9 and higher."
-      puts " --cct <file>     Sets a specific compiler compatibility template, otherwise $(QAC_HOME)/config/cct/<platform>.ctt will be used. Can be defined multiple times."
-      puts " --rcf <file>     Sets a specific rule config file, otherwise qac.rcf will be searched up to root. If not found, $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf will be used."
-      puts " --acf <file>     Sets a specific analysis config file, otherwise $(QAC_HOME)/config/acf/default.acf will be used."
+      puts " --c++11          Use C++11 rules, available for GCC 4.7 and higher."
+      puts " --c++14          Use C++14 rules, available for GCC 4.9 and higher."
+      puts " --cct <file>     Set a specific compiler compatibility template, otherwise $(QAC_HOME)/config/cct/<platform>.ctt will be used. Can be defined multiple times."
+      puts " --rcf <file>     Set a specific rule config file, otherwise qac.rcf will be searched up to root. If not found, $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf will be used."
+      puts " --acf <file>     Set a specific analysis config file, otherwise $(QAC_HOME)/config/acf/default.acf will be used."
       puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/.qacdata."
       puts " --qacstep admin|analyze|view   Steps can be ORed. Per default all steps will be executed."
       puts " --qacfilter on|off   If off, output will be printed immediately and unfiltered, default is on to reduce noise."
       puts " --qacretry <seconds>   If build or result step fail due to refused license, the step will be retried until timeout. Works only if qacfilter is not off."
+      puts " --qacdoc         Print link to HTML help page for every warning if found."
       puts " --version        Print version."
       puts " -h, --help       Print this help."
       puts "Note: all parameters from bake apply also here. Note, that --rebuild and --compile-only will be added to the internal bake call automatically."

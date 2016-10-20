@@ -28,7 +28,7 @@ module Bake
   excludeParam = false
   wasMinus = false
   ARGV.each do |x|
-    if ["--c++11", "--c++14", "--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacfilter", "--qacnoformat", "--qacunittest", "--qacretry"].include?x
+    if ["--c++11", "--c++14", "--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacfilter", "--qacnoformat", "--qacunittest", "--qacretry", "--qacdoc"].include?x
       excludeParam = true
       next
     end
@@ -154,7 +154,7 @@ end
 
     cmd = qaExe + ["view", "-P", @options.qacdata, "-m", "STDOUT"]
     if not @options.qacnoformat
-      cmd += ["-f", "%?u==0%(MSG: %:---- %)%F(%l,%c): (%r:%N)%t%?v%(\n%v%)"]
+      cmd += ["-f", "%?u==0%(MSG: %:trc: %)%F(%l,%c): (%r:%N)%t%?v%(\n%v%)"]
     end
 
     timeStart = Time.now
@@ -221,17 +221,29 @@ end
 
         # 3. print
         numberOfMessages = 0
-        sortedLines.each do |line|
-          if (!@options.qacnoformat && line.start_with?("MSG: ")) || (@options.qacnoformat && line.include?(": Msg("))
-            Bake.formatter.printWarning(line)
-            numberOfMessages += 1
-          elsif line.include? " ======= Results for "
-            Bake.formatter.printAdditionalInfo(line)
-          else
-            Bake.formatter.printInfo(line)
+        Dir.chdir(@options.qac_home) do
+          sortedLines.each do |line|
+            if (!@options.qacnoformat && line.start_with?("MSG: ")) || (@options.qacnoformat && line.include?(": Msg("))
+              Bake.formatter.printWarning(line)
+              if @options.qacdoc
+                errorNumScan = line.scan(/[^\(]*\([^\(]*\([^:]*:(\d*)/)
+                if errorNumScan.length > 0
+                  errorNum = errorNumScan[0][0].to_i
+                  htmlFiles = Dir.glob("components/qacpp*/doc-en_US/messages/%04d.html" % errorNum) + Dir.glob("components/mcpp*/doc-en_US/messages/%04d.html" % errorNum)
+                  htmlFiles.each do |htmlFile|
+                    puts "doc: #{File.expand_path(htmlFile)}"
+                  end
+                end
+              end
+              numberOfMessages += 1
+            elsif line.include? " ======= Results for "
+              Bake.formatter.printAdditionalInfo(line)
+            else
+              Bake.formatter.printInfo(line)
+            end
           end
+          Bake.formatter.printSuccess("\n**** Number of messages: #{numberOfMessages} ****")
         end
-        Bake.formatter.printSuccess("\n**** Number of messages: #{numberOfMessages} ****")
 
       else
         puts consoleOutput

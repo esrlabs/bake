@@ -62,7 +62,7 @@ describe "Qac" do
   it 'integration test' do
     if $qacInstalled
 
-      exit_code = Bake.startBakeqac("qac/main", ["test_template", "--qacretry", "60"])
+      exit_code = Bake.startBakeqac("qac/main", ["test_template", "--qacretry", "60", "--qacdoc"])
 
       $mystring.gsub!(/\\/,"/")
 
@@ -76,6 +76,8 @@ describe "Qac" do
 
       expect($mystring.include?("spec/testdata/qac/main/mock/src/mock.cpp")).to be == false
       expect($mystring.include?("spec/testdata/qac/gtest/src/gtest.cpp")).to be == false
+
+      expect($mystring.include?("doc: ")).to be == true
 
       expect(exit_code).to be == 0
     end

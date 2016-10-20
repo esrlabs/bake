@@ -113,3 +113,4 @@ qac.rcf
 number of messages
 cct auto detection
 ansi color
+qacdoc
