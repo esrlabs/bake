@@ -351,7 +351,7 @@ describe "Qac" do
   it 'oldformat' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "old_format"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacnoformat"])
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "-b", "Dummy", "--qacrawformat"])
 
     expect($mystring.include?("FORMAT: old")).to be == true
     expect($mystring.include?("Number of messages: 4")).to be == true

@@ -1,6 +1,10 @@
 Changelog
 =========
 
+October 25, 2016 - bake-toolkit 2.23.9
+    * Bugfix: qac: command line options not correctly handed over to bake (bakeqac has been aborted in this case).
+
+
 October 20, 2016 - bake-toolkit 2.23.8
     * Bugfix: qac: "License Refused" for \*.c Files not treated as an error anymore, which was a problem for "--qacretry".
     * Changed: qac: default qacdata folder is now ".qacdata"
