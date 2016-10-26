@@ -65,7 +65,21 @@ end
     puts "bakeqac: creating database..."
     FileUtils.rm_rf @options.qacdata
     success, consoleOutput = ProcessHelper.run(cmd, true)
-    puts consoleOutput if !success
+
+    if success
+      cctFilename = @options.qacdata+"/prqa/config/"+File.basename(@options.cct[0])
+      if File.exist?cctFilename
+        File.open(cctFilename, 'a') do |f|
+          f << "-coderegex='s/__attribute__\\s*\\(.*\\)//'\n"
+          f << "-d __cdecl=\n"
+          f << "-d _cdecl=\n"
+          f << "-d _thiscall=\n"
+          f << "-d __stdcall=\n"
+        end
+      end
+    else
+      puts consoleOutput
+    end
 
   end
 
@@ -95,15 +109,15 @@ end
 
     timeStart = Time.now
     loop do
-      success, consoleOutput = ProcessHelper.run(cmd, !@options.qacfilter)
+      success, consoleOutput = ProcessHelper.run(cmd, false)
       licenseError = false
       consoleOutput.each_line do |line|
         licenseError = true if (line.include?("License Refused") && !line.include?("License Refused: C:"))
       end
-      break unless (@options.qacfilter and licenseError and (@options.qacretry >= (Time.now - timeStart)))
+      break unless (licenseError and (@options.qacretry >= (Time.now - timeStart)))
       puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
     end
-    puts "License refused, retry timeout over -> failure." if (@options.qacretry > 0 && licenseError && @options.qacfilter)
+    puts "License refused, retry timeout over -> failure." if (@options.qacretry > 0 && licenseError)
 
     success = false # we have to parse the output, qacli returns always an error here...
     filterOutput = []
@@ -114,9 +128,9 @@ end
       if scan_res.length > 0
         filter << (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/").strip)
       elsif !endFound
-        filterOutput << line if @options.qacfilter
+        filterOutput << line
         if line.start_with?("Rebuilding ")
-         endFound = true
+          endFound = true
           success = true if line.include?("Rebuilding done") # don't know why the return value is 2 in this case...
         end
       end
@@ -130,8 +144,10 @@ end
           f.puts(filter)
         end
       else
-        puts consoleOutput
+        puts consoleOutput # error
       end
+    else
+      puts consoleOutput # no filter
     end
 
   end
@@ -161,15 +177,15 @@ end
 
     timeStart = Time.now
     loop do
-      success, consoleOutput = ProcessHelper.run(cmd, !useFilter)
+      success, consoleOutput = ProcessHelper.run(cmd, false)
       licenseError = false
       consoleOutput.each_line do |line|
         licenseError = true if (line.include?("License Refused") && !line.include?("License Refused: C:"))
       end
-      break unless (useFilter and licenseError and (@options.qacretry >= (Time.now - timeStart)))
+      break unless (licenseError and (@options.qacretry >= (Time.now - timeStart)))
       puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
     end
-    puts "License refused, retry timeout over -> failure." if (@options.qacretry > 0 && licenseError && useFilter)
+    puts "License refused, retry timeout over -> failure." if (@options.qacretry > 0 && licenseError)
 
     success = false if licenseError
 
@@ -246,10 +262,11 @@ end
           end
           Bake.formatter.printSuccess("\n**** Number of messages: #{numberOfMessages} ****")
         end
-
       else
-        puts consoleOutput
+        puts consoleOutput # error
       end
+    else
+      puts consoleOutput # no filter
     end
 
   end

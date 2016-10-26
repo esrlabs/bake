@@ -59,7 +59,7 @@ module Bake
       puts " --qacstep admin|analyze|view   Steps can be ORed. Per default all steps will be executed."
       puts " --qacnofilter    Output will be printed immediately and unfiltered. Per default filters are used to reduce noise."
       puts " --qacrawformat   Raw QAC output (with incomplete MISRA rules!)."
-      puts " --qacretry <seconds>   If build or result step fail due to refused license, the step will be retried until timeout. Works only without qacnofilter."
+      puts " --qacretry <seconds>   If build or result step fail due to refused license, the step will be retried until timeout."
       puts " --qacdoc         Print link to HTML help page for every warning if found."
       puts " --version        Print version."
       puts " -h, --help       Print this help."

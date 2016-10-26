@@ -57,11 +57,11 @@ when "steps_failureView"
 
 
 when "steps_qacdata"
-  puts "Rebuilding done." if step == "analyze"
 
   qacDir = getParam("-P")
   qacDir = getParam("--qaf-project") if qacDir =="unknown"
   puts "#{step}: *#{qacDir}*"
+  puts "Rebuilding done." if step == "analyze"
 
 when "config_files"
   getParams("--cct").each do |p|
