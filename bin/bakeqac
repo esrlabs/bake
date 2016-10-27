@@ -75,6 +75,13 @@ end
           f << "-d _cdecl=\n"
           f << "-d _thiscall=\n"
           f << "-d __stdcall=\n"
+
+          if @options.cct_append
+            File.open(@options.cct_append, 'r') do |a|
+              a.each_line { |line| f << line }
+            end
+          end
+
         end
       end
     else
@@ -201,7 +208,7 @@ end
           if scan_res.length > 0
             converted_line = (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/"))
             filter.each do |fil|
-              if converted_line.include?fil and not converted_line.include?(fil+"/test/") and not converted_line.include?(fil+"/mock/")
+              if converted_line.include?(fil+"/") and not converted_line.include?(fil+"/test/") and not converted_line.include?(fil+"/mock/") and not converted_line.include?(fil+"/.qacdata/")
                 foundFile = true
                 break
               end

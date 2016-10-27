@@ -1,6 +1,12 @@
 Changelog
 =========
 
+October 26, 2016 - bake-toolkit 2.23.12
+    * Bugfix: qac: now also files from .qacdata folder are filtered out.
+    * Bugfix: qac: modules were not be filtered out correctly, e.g. swcAbcd was not filtered out if swcAbc was compiled.
+    * Removed: qac: qac.rcf will not be searched anymore (most probably this feature was never used).
+    * Added: qac: qac.cct will be searched up to root; if found, the content will be appended to the original cct unless specified otherwise.
+
 October 26, 2016 - bake-toolkit 2.23.9
     * Bugfix: qac: command line options not correctly handed over to bake (bakeqac has been aborted in this case).
     * Bugfix: qac: On some systems some warnings were not suppressed. Added a few defines to cct which hopefully fixes this.

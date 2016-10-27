@@ -64,11 +64,17 @@ when "steps_qacdata"
   puts "Rebuilding done." if step == "analyze"
 
 when "config_files"
-  getParams("--cct").each do |p|
+  ccts = getParams("--cct")
+  ccts.each do |p|
     puts "#{p} - CCT"
   end
   puts "#{getParam("--rcf")} - RCF"
   puts "#{getParam("--acf")} - ACF"
+
+  qacDir = getParam("-P")
+  qacDir = getParam("--qaf-project") if qacDir =="unknown"
+  FileUtils::mkdir_p qacDir+"/prqa/config"
+  FileUtils::touch qacDir+"/prqa/config/" + File.basename(ccts[0])
 
 when "old_format"
   case step

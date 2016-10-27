@@ -282,14 +282,17 @@ describe "Qac" do
     expect(exit_code).to be == 0
   end
 
-  it 'rcf_file' do
+  it 'cct_file' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "config_files"
-    FileUtils.cp("spec/testdata/qac/_qac.rcf", "spec/testdata/qac/qac.rcf")
+    FileUtils.cp("spec/testdata/qac/_qac.cct", "spec/testdata/qac/qac.cct")
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin"])
-    expect($mystring.include?("qac/qac.rcf - RCF")).to be == true
+    expect($mystring.include?("++.cct - CCT")).to be == true
+    ccts = Dir.glob(".qacdata/**/*.cct")
+    data = File.read(ccts[0])
+    expect(data.include?("Hello")).to be == true
     expect(exit_code).to be == 0
-    FileUtils.rm_f("spec/testdata/qac/qac.rcf")
+    FileUtils.rm_f("spec/testdata/qac/qac.cct")
   end
 
   it 'cct user_1' do

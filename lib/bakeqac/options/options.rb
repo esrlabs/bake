@@ -5,7 +5,7 @@ require 'bake/toolchain/gcc'
 module Bake
 
   class BakeqacOptions < Parser
-    attr_reader :rcf, :acf, :qacdata, :qacstep, :qac_home  # String
+    attr_reader :rcf, :acf, :qacdata, :qacstep, :qac_home, :cct_append  # String
     attr_reader :c11, :c14, :qacfilter, :qacnoformat, :qacunittest, :qacdoc # Boolean
     attr_reader :cct # Array
     attr_reader :qacretry # int
@@ -13,6 +13,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
+      @cct_append = nil
       @main_dir = nil
       @cVersion = ""
       @c11 = false
@@ -52,8 +53,10 @@ module Bake
       puts "\nUsage: bakeqac [options]"
       puts " --c++11          Use C++11 rules, available for GCC 4.7 and higher."
       puts " --c++14          Use C++14 rules, available for GCC 4.9 and higher."
-      puts " --cct <file>     Set a specific compiler compatibility template, otherwise $(QAC_HOME)/config/cct/<platform>.ctt will be used. Can be defined multiple times."
-      puts " --rcf <file>     Set a specific rule config file, otherwise qac.rcf will be searched up to root. If not found, $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf will be used."
+      puts " --cct <file>     Set a specific compiler compatibility template, can be defined multiple times."
+      puts "                  If not specified, $(QAC_HOME)/config/cct/<platform>.ctt will be used and additionally"
+      puts "                  a file named qac.cct will be searched up to root and also used if found."
+      puts " --rcf <file>     Set a specific rule config file. If not specified, $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf will be used."
       puts " --acf <file>     Set a specific analysis config file, otherwise $(QAC_HOME)/config/acf/default.acf will be used."
       puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/.qacdata."
       puts " --qacstep admin|analyze|view   Steps can be ORed. Per default all steps will be executed."
@@ -91,12 +94,12 @@ module Bake
       @main_dir = File.expand_path(dir.gsub(/[\\]/,'/'))
     end
 
-    def searchRcfFile(dir)
-      rcfFile = dir+"/qac.rcf"
-      return rcfFile if File.exist?(rcfFile)
+    def searchCctFile(dir)
+      cctFile = dir+"/qac.cct"
+      return cctFile if File.exist?(cctFile)
 
       parent = File.dirname(dir)
-      return searchRcfFile(parent) if parent != dir
+      return searchCctFile(parent) if parent != dir
 
       return nil
     end
@@ -149,6 +152,9 @@ module Bake
             gccVersion[1] = 20
           end
         end
+
+        cctInDir = searchCctFile(@main_dir)
+        @cct_append = cctInDir.gsub(/[\\]/,'/') if cctInDir
       end
 
       if @acf.nil?
@@ -156,12 +162,7 @@ module Bake
       end
 
       if @rcf.nil?
-        rfcInDir = searchRcfFile(@main_dir)
-        if rfcInDir
-          @rcf = rfcInDir.gsub(/[\\]/,'/')
-        else
-          @rcf  = qac_home + "/config/rcf/mcpp-1_5_1-en_US.rcf"
-        end
+        @rcf  = qac_home + "/config/rcf/mcpp-1_5_1-en_US.rcf"
       end
 
     end

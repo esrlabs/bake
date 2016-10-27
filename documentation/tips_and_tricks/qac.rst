@@ -63,13 +63,16 @@ You have to set the environment variable QAC_HOME, e.g. to *c:\\tools\\prqa\\PRQ
 
   to enforce bakeqac choosing the C++11 or C++14 toolchain.
 
+  If --cct is not used, bakeqac uses a built-in cct file as mentioned above. Additionally, it searched for a file named qac.cct up to root and appends the content to the original cct file.
+  This may be used to add additional configuration parameters which are compiler independent, e.q. "-n 1234" suppresses warning 1234.
+
 - Rule configuration file (rcf): Can be specified with:
 
   .. code-block:: console
 
       bakeqac <options> --rcf <rcf>
 
-  If not specified, bakeqac searches for qac.rcf upwards from bake main project folder. If also not found, bakeqac uses $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf.
+  If not specified, bakeqac uses $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf.
 
 - Analysis configuration file (acf): Can be specified with:
 
