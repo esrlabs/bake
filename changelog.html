@@ -140,6 +140,21 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>October 26, 2016 - bake-toolkit 2.23.12</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: qac: now also files from .qacdata folder are filtered out.</li>
+<li>Bugfix: qac: modules were not be filtered out correctly, e.g. swcAbcd was not filtered out if swcAbc was compiled.</li>
+<li>Removed: qac: qac.rcf will not be searched anymore (most probably this feature was never used).</li>
+<li>Added: qac: qac.cct will be searched up to root; if found, the content will be appended to the original cct unless specified otherwise.</li>
+</ul>
+</dd>
+<dt>October 26, 2016 - bake-toolkit 2.23.9</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: qac: command line options not correctly handed over to bake (bakeqac has been aborted in this case).</li>
+<li>Bugfix: qac: On some systems some warnings were not suppressed. Added a few defines to cct which hopefully fixes this.</li>
+<li>Bugfix: qac: &#8211;qacretry did not work with &#8211;qacnofilter.</li>
+</ul>
+</dd>
 <dt>October 20, 2016 - bake-toolkit 2.23.8</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: qac: &#8220;License Refused&#8221; for *.c Files not treated as an error anymore, which was a problem for &#8220;&#8211;qacretry&#8221;.</li>
