@@ -193,10 +193,11 @@ module Bake
                 out_dir = @@configTcMap[config][:OUTPUT_DIR]
               end
               if not out_dir
+                qacPart = Bake.options.qac ? (".qac" + Bake.options.buildDirDelimiter) : ""
                 if out_proj_name == Bake.options.main_project_name and out_conf_name == Bake.options.build_config
-                  out_dir = "build" + Bake.options.buildDirDelimiter + Bake.options.build_config
+                  out_dir = "build" + Bake.options.buildDirDelimiter + qacPart + Bake.options.build_config
                 else
-                  out_dir = "build" + Bake.options.buildDirDelimiter + out_conf_name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+                  out_dir = "build" + Bake.options.buildDirDelimiter + qacPart + out_conf_name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
                 end
               end
               out_dir = substString(out_dir, elem)

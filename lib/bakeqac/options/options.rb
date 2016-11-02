@@ -6,13 +6,14 @@ module Bake
 
   class BakeqacOptions < Parser
     attr_reader :rcf, :acf, :qacdata, :qacstep, :qac_home, :cct_append  # String
-    attr_reader :c11, :c14, :qacfilter, :qacnoformat, :qacunittest, :qacdoc # Boolean
+    attr_reader :c11, :c14, :qacfilter, :qacnoformat, :qacunittest, :qacdoc, :cct_patch # Boolean
     attr_reader :cct # Array
     attr_reader :qacretry # int
 
     def initialize(argv)
       super(argv)
 
+      @cct_patch = false
       @cct_append = nil
       @main_dir = nil
       @cVersion = ""
@@ -37,6 +38,7 @@ module Bake
       add_option(["--cct"                          ], lambda { |x| @cct << x.gsub(/\\/,"/")     })
       add_option(["--rcf"                          ], lambda { |x| @rcf = x.gsub(/\\/,"/")      })
       add_option(["--acf"                          ], lambda { |x| @acf = x.gsub(/\\/,"/")      })
+      add_option(["--qaccctpatch"                  ], lambda { @cct_patch = true                })
       add_option(["--qacdata"                      ], lambda { |x| @qacdata = x.gsub(/\\/,"/")  })
       add_option(["--qacstep"                      ], lambda { |x| @qacstep = x                 })
       add_option(["--qacnofilter"                  ], lambda { @qacfilter = false               })
@@ -58,6 +60,7 @@ module Bake
       puts "                  a file named qac.cct will be searched up to root and also used if found."
       puts " --rcf <file>     Set a specific rule config file. If not specified, $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf will be used."
       puts " --acf <file>     Set a specific analysis config file, otherwise $(QAC_HOME)/config/acf/default.acf will be used."
+      puts " --qaccctpatch    If specified, some adaptions to cct are made. Might improve the result - no guarantee."
       puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/.qacdata."
       puts " --qacstep admin|analyze|view   Steps can be ORed. Per default all steps will be executed."
       puts " --qacnofilter    Output will be printed immediately and unfiltered. Per default filters are used to reduce noise."

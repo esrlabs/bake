@@ -47,7 +47,7 @@ module Bake
   end
 
 describe "Qac" do
-
+=begin
   it 'qac installed' do
     begin
       `qacli --version`
@@ -82,7 +82,7 @@ describe "Qac" do
       expect(exit_code).to be == 0
     end
   end
-
+=end
   it 'version' do
     exit_code = Bake.startBakeqac("qac/main", ["--version"])
     expect($mystring.include?("-- bakeqac")).to be == true
@@ -291,8 +291,21 @@ describe "Qac" do
     ccts = Dir.glob(".qacdata/**/*.cct")
     data = File.read(ccts[0])
     expect(data.include?("Hello")).to be == true
+  expect(data.include?("-d _cdecl")).to be == false
     expect(exit_code).to be == 0
     FileUtils.rm_f("spec/testdata/qac/qac.cct")
+  end
+
+  it 'cct_file' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "config_files"
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--qaccctpatch"])
+    expect($mystring.include?("++.cct - CCT")).to be == true
+    ccts = Dir.glob(".qacdata/**/*.cct")
+    data = File.read(ccts[0])
+    expect(data.include?("Hello")).to be == false
+    expect(data.include?("-d _cdecl")).to be == true
+    expect(exit_code).to be == 0
   end
 
   it 'cct user_1' do

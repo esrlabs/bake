@@ -10,6 +10,9 @@ require 'bake/options/options'
 require 'common/process'
 require 'common/utils'
 
+STDOUT.sync = true
+STDERR.sync = true
+
 module Bake
 
 ###### PREREQUISITE 1: BAKEQAC OPTIONS ######
@@ -28,7 +31,7 @@ module Bake
   excludeParam = false
   wasMinus = false
   ARGV.each do |x|
-    if ["--c++11", "--c++14", "--qacnofilter", "--qacnoformat", "--qacrawformat", "--qacunittest", "--qacdoc"].include?x
+    if ["--c++11", "--c++14", "--qacnofilter", "--qacnoformat", "--qacrawformat", "--qacunittest", "--qacdoc", "--qaccctpatch"].include?x
       excludeParam = false
       next
     elsif ["--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacretry"].include?x
@@ -43,6 +46,7 @@ module Bake
   passedParams << "--rebuild" unless passedParams.include?"--rebuild"
   passedParams << "--compile-only" if (passedParams & ["--compile-only", "--compile_only", "-f"]).empty?
   passedParams << "--filter-paths" unless passedParams.include?"--filter-paths"
+  passedParams << "--qac" unless passedParams.include?"--qac"
 
   success = true
 
@@ -70,11 +74,14 @@ end
       cctFilename = @options.qacdata+"/prqa/config/"+File.basename(@options.cct[0])
       if File.exist?cctFilename
         File.open(cctFilename, 'a') do |f|
-          f << "-coderegex='s/__attribute__\\s*\\(.*\\)//'\n"
-          f << "-d __cdecl=\n"
-          f << "-d _cdecl=\n"
-          f << "-d _thiscall=\n"
-          f << "-d __stdcall=\n"
+
+          if @options.cct_patch
+            f << "-coderegex='s/__attribute__\\s*\\(.*\\)//'\n"
+            f << "-d __cdecl=\n"
+            f << "-d _cdecl=\n"
+            f << "-d _thiscall=\n"
+            f << "-d __stdcall=\n"
+          end
 
           if @options.cct_append
             File.open(@options.cct_append, 'r') do |a|

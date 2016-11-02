@@ -1,6 +1,11 @@
 Changelog
 =========
 
+November 3, 2016 - bake-toolkit 2.23.13
+    * Bugfix: qac: output was not synced immediately to the console on some systems."
+    * Changed: qac: patching of cct introduced with 2.23.9 now opt-in via command line argument --qaccctpatch.
+    * Changed: qac: default build output directory is now "build/.qac/" instead of "build/".
+
 October 26, 2016 - bake-toolkit 2.23.12
     * Bugfix: qac: now also files from .qacdata folder are filtered out.
     * Bugfix: qac: modules were not be filtered out correctly, e.g. swcAbcd was not filtered out if swcAbc was compiled.

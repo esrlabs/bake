@@ -99,10 +99,13 @@ module Bake
         if @tcs[:OUTPUT_DIR] != nil
           p = @block.convPath(@tcs[:OUTPUT_DIR])
           @output_dir = p
-        elsif isMainProject?
-          @output_dir = "build" + Bake.options.buildDirDelimiter + Bake.options.build_config
         else
-          @output_dir = "build" + Bake.options.buildDirDelimiter + @config.name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+          qacPart = Bake.options.qac ? (".qac" + Bake.options.buildDirDelimiter) : ""
+          if isMainProject?
+            @output_dir = "build" + Bake.options.buildDirDelimiter + qacPart + Bake.options.build_config
+          else
+            @output_dir = "build" + Bake.options.buildDirDelimiter + qacPart + @config.name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+          end
         end
       end
 
