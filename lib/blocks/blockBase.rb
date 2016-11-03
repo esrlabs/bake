@@ -202,6 +202,26 @@ module Bake
         incList
       end
 
+
+      def cleanProjectDir
+        Dir.chdir(@projectDir) do
+          if File.exist?@output_dir
+            puts "Deleting folder #{@output_dir}" if Bake.options.verbose >= 2
+            FileUtils.rm_rf(@output_dir)
+
+            if (@tcs[:OUTPUT_DIR] == nil) && (Bake.options.buildDirDelimiter == "/") # in this case all builds are placed in a "build" folder
+              buildDir = File.dirname(@output_dir)
+              if (File.basename(buildDir) == "build") && (Dir.entries(buildDir).size == 2)# double check if it's really "build" and check if it's empty (except "." and "..")
+                puts "Deleting folder #{@buildDir}" if Bake.options.verbose >= 2
+                FileUtils.rm_rf(buildDir)
+              end
+            end
+
+          end
+        end unless Bake.options.filename
+        return true
+      end
+
     end
   end
 end

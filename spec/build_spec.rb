@@ -356,6 +356,30 @@ describe "Building" do
     expect(ExitHelper.exit_code).to be == 0
   end
 
+  it 'clean build dir if only one project was build' do
+    Bake.startBake("simple/main", ["test_ok"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect(File.exists?("spec/testdata/simple/main/build/test_ok")).to be == true
+    expect(File.exists?("spec/testdata/simple/main/build/test_ok2")).to be == false
+
+    Bake.startBake("simple/main", ["test_ok2"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect(File.exists?("spec/testdata/simple/main/build/test_ok")).to be == true
+    expect(File.exists?("spec/testdata/simple/main/build/test_ok2")).to be == true
+
+    Bake.startBake("simple/main", ["test_ok", "-c"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect(File.exists?("spec/testdata/simple/main/build/test_ok")).to be == false
+    expect(File.exists?("spec/testdata/simple/main/build/test_ok2")).to be == true
+
+    Bake.startBake("simple/main", ["test_ok2", "-c"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect(File.exists?("spec/testdata/simple/main/build/test_ok")).to be == false
+    expect(File.exists?("spec/testdata/simple/main/build/test_ok2")).to be == false
+    expect(File.exists?("spec/testdata/simple/main/build")).to be == false
+  end
+
+
 end
 
 end

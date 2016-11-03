@@ -47,7 +47,7 @@ module Bake
   end
 
 describe "Qac" do
-=begin
+
   it 'qac installed' do
     begin
       `qacli --version`
@@ -82,7 +82,7 @@ describe "Qac" do
       expect(exit_code).to be == 0
     end
   end
-=end
+
   it 'version' do
     exit_code = Bake.startBakeqac("qac/main", ["--version"])
     expect($mystring.include?("-- bakeqac")).to be == true
