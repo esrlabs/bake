@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.dirname(__FILE__)+"/../lib")
+require "bakeclean/options/options"
+require "fileutils"
+
+$options = Bake::BakecleanOptions.new(ARGV)
+$options.parse_options()
+
+def remove(folder)
+  if File.exist?folder
+    puts folder
+    FileUtils.rm_rf(folder) unless $options.preview
+  end
+end
+
+puts $options.preview ? "*** Preview ***" : "***  Deleting ***"
+
+bakes = Dir.glob("**/.bake")
+bakes.each do |b|
+  remove(b)
+  projectDir = File.dirname(b)
+  remove(projectDir+"/build")
+
+  builds = Dir.glob(projectDir + "/build_*")
+  builds.each do |build|
+    remove(build)
+  end
+
+end
+
+exit(0)

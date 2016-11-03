@@ -6,6 +6,7 @@ November 3, 2016 - bake-toolkit 2.23.13
     * Changed: qac: patching of cct introduced with 2.23.9 now opt-in via command line argument --qaccctpatch.
     * Changed: qac: default build output directory is now "build/.qac/" instead of "build/".
     * Changed: if default build folder is used, the parent folder "build" will be also removed when the project is cleaned and the "build" folder will become empty
+    * Added: bakeclean script to delete all .bake, .bake/../build and .bake/../build_* folders
 
 October 26, 2016 - bake-toolkit 2.23.12
     * Bugfix: qac: now also files from .qacdata folder are filtered out.

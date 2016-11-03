@@ -140,6 +140,15 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>November 3, 2016 - bake-toolkit 2.23.13</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: qac: output was not synced immediately to the console on some systems.&#8221;</li>
+<li>Changed: qac: patching of cct introduced with 2.23.9 now opt-in via command line argument &#8211;qaccctpatch.</li>
+<li>Changed: qac: default build output directory is now &#8220;build/.qac/&#8221; instead of &#8220;build/&#8221;.</li>
+<li>Changed: if default build folder is used, the parent folder &#8220;build&#8221; will be also removed when the project is cleaned and the &#8220;build&#8221; folder will become empty</li>
+<li>Added: bakeclean script to delete all .bake, .bake/../build and .bake/../build_* folders</li>
+</ul>
+</dd>
 <dt>October 26, 2016 - bake-toolkit 2.23.12</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: qac: now also files from .qacdata folder are filtered out.</li>

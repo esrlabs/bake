@@ -10,6 +10,7 @@ Additional features
     the_clang
     dot
     qac
+    bakeclean
 
 
 Unnecessary includes

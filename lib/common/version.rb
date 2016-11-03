@@ -15,6 +15,10 @@ module Bake
     def self.printBakeqacVersion()
       printBakeVersion("qac")
     end
+
+    def self.printBakecleanVersion()
+      printBakeVersion("clean")
+    end
   end
 
   expectedRGen = "0.8.2"

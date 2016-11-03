@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Additional features &mdash; bake documentation</title>
+    <title>bakeclean &mdash; bake documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -30,8 +30,9 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="top" title="bake documentation" href="../index.html" />
-    <link rel="next" title="The Bakery" href="the_bakery.html" />
-    <link rel="prev" title="How to Debug in Visual Studio" href="../ide/vs/how_to_debug_in_vs.html" />
+    <link rel="up" title="Additional features" href="tips_and_tricks.html" />
+    <link rel="next" title="Performance" href="../performance/performance.html" />
+    <link rel="prev" title="QACPP" href="qac.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -74,7 +75,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Additional features</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tips_and_tricks.html">Additional features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -95,11 +96,7 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Additional features</a><ul>
-<li><a class="reference internal" href="#unnecessary-includes">Unnecessary includes</a></li>
-<li><a class="reference internal" href="#symlinks-and-junctions">Symlinks and junctions</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">bakeclean</a></li>
 </ul>
 </ul>
 </li>
@@ -109,11 +106,11 @@
               
                 
   <li>
-    <a href="../ide/vs/how_to_debug_in_vs.html" title="Previous Chapter: How to Debug in Visual Studio"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; How to Debug ...</span>
+    <a href="qac.html" title="Previous Chapter: QACPP"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; QACPP</span>
     </a>
   </li>
   <li>
-    <a href="the_bakery.html" title="Next Chapter: The Bakery"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">The Bakery &raquo;</span>
+    <a href="../performance/performance.html" title="Next Chapter: Performance"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Performance &raquo;</span>
     </a>
   </li>
               
@@ -141,41 +138,14 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="additional-features">
-<h1>Additional features<a class="headerlink" href="#additional-features" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="the_bakery.html">The Bakery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="static_code_analysis.html">Static Code Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_use_bake_with_cygwin.html">How to use bake with cygwin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="the_clang.html">Clang Analyze</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dot.html">Generating dot graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qac.html">QACPP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bakeclean.html">bakeclean</a></li>
-</ul>
-</div>
-<div class="section" id="unnecessary-includes">
-<h2>Unnecessary includes<a class="headerlink" href="#unnecessary-includes" title="Permalink to this headline">¶</a></h2>
-<p>If a library or executable is successfully build with &#8220;-v&#8221;, unnecessary includes are printed out:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">Info: Include to ../sub1/include/ seems to be unnecessary</span>
-<span class="go">Info: Include to ../sub2/include/ seems to be unnecessary</span>
-</pre></div>
-</div>
-<p>This features depends on the compiler dependency files. For projects with assembler files, the list might be incorrect.
-However, remove the IncludeDir statements from the Project.meta and check it out.</p>
-</div>
-<div class="section" id="symlinks-and-junctions">
-<h2>Symlinks and junctions<a class="headerlink" href="#symlinks-and-junctions" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>It is possible to use symlinks (Linux) or junctions (Windows) when working with git. Best practice:</dt>
-<dd><ul class="first last simple">
-<li>Link all used projects into _one_ directory (e.g. from application repository and basis software repository).</li>
-<li>Use this directory when working with bake, Eclipse, etc.</li>
-<li>Specify &#8220;-w &lt;absolute_path_to_working_dir&gt;.</li>
-<li>To sync/commit from/to svn, use the original directories created by git.</li>
-</ul>
-</dd>
-</dl>
+  <div class="section" id="bakeclean">
+<h1>bakeclean<a class="headerlink" href="#bakeclean" title="Permalink to this headline">¶</a></h1>
+<p>With bakeclean you can cleanup your workspace from .bake, .bake/../build and .bake/../build_* folders.</p>
+<p>Folders are searched recursively from current working directory. Call it without any parameter to start the procedure.</p>
+<p>To preview the deleted folders, use &#8220;&#8211;preview&#8221; as argument. The filesystem will not be changed in preview mode.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Folders will be deleted without any warning. They will be deleted even if they are not empty.d.</p>
 </div>
 </div>
 
