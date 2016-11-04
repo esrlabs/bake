@@ -241,7 +241,7 @@ describe "Building" do
     Bake.startBake("cache/main", ["testMapEmpty", "-v2"])
     expect($mystring.include?("> build/testMapEmpty/main.map")).to be == true
     expect(File.exist?("spec/testdata/cache/main/build/testMapEmpty/main.map")).to be == true
-    expect(Exit Helper.exit_code).to be == 0
+    expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'MapFileDada' do
