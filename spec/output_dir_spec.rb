@@ -13,7 +13,7 @@ module Bake
 describe "OutputDir" do
 
   def doesExist(prefix, main, lib1, lib2, should)
-    expect(File.exists?(prefix+"/"+main+"/main.exe")).to be == should
+    expect(File.exists?(prefix+"/"+main+"/main"+Bake::Toolchain.outputEnding)).to be == should
     expect(File.exists?(prefix+"/"+main+"/src/a.o")).to be == should
     expect(File.exists?(prefix+"/"+lib1+"/liblib1.a")).to be == should
     expect(File.exists?(prefix+"/"+lib1+"/src/b.o")).to be == should

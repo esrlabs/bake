@@ -8,6 +8,7 @@ November 4, 2016 - bake-toolkit 2.24.0
     * Changed: if default build folder is used, the parent folder "build" will be also removed when the project is cleaned and the "build" folder will become empty
     * Added: bakeclean script to delete all .bake, .bake/../build and .bake/../build_* folders
     * Added: prebuild feature now uses objects instead of the library if objects exist.
+    * Changed: Default executable file ending on non-Windows systems now "" (except Diab and Greenhills, which are always ".elf").
 
 October 26, 2016 - bake-toolkit 2.23.12
     * Bugfix: qac: now also files from .qacdata folder are filtered out.

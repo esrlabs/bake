@@ -44,6 +44,11 @@ describe "compiler" do
     end
   end
 
+  it 'dcc link-only' do
+    Bake.startBake("compiler/dcc", ["test", "--link-only"])
+    expect($mystring.include?("dcc.elf")).to be == true
+  end
+
   it 'dcc build' do
     if $dccInstalled
       Bake.startBake("compiler/dcc", ["test"])

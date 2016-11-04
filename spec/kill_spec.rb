@@ -102,7 +102,7 @@ describe "Kill process" do
   it 'Link' do
     Bake.startKillTest("testLink", self)
 
-    expect($mystring.include?"lib1.exe").to be == true
+    expect($mystring.include?"lib1"+Bake::Toolchain.outputEnding).to be == true
   end
 
 end

@@ -59,7 +59,7 @@ module Bake
           @@artifactName = config.artifactName.name
         else
           if Metamodel::ExecutableConfig === config
-            @@artifactName = projName+toolchain[:LINKER][:OUTPUT_ENDING]
+            @@artifactName = projName+Bake::Toolchain.outputEnding(toolchain)
           elsif Metamodel::LibraryConfig === config
             @@artifactName = "lib#{projName}.a"
           end

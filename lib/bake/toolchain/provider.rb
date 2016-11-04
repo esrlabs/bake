@@ -1,6 +1,13 @@
 module Bake
   module Toolchain
 
+    def self.outputEnding(tcs = nil)
+      if tcs && tcs[:LINKER][:OUTPUT_ENDING] != ""
+        return tcs[:LINKER][:OUTPUT_ENDING]
+      end
+      Bake::Utils::OS.windows? ? ".exe" : ""
+    end
+
     class Provider
       @@settings = {}
       @@default = {
@@ -86,7 +93,7 @@ module Bake
           :FLAGS => "",
           :MAP_FILE_FLAG => "",
           :MAP_FILE_PIPE => true,
-          :OUTPUT_ENDING => ".exe", # or .elf
+          :OUTPUT_ENDING => "", # if empty, .exe is used on Windows, otherwise no ending
           :ERROR_PARSER => nil,
           :LIST_MODE => false
         },

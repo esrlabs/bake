@@ -24,7 +24,7 @@ module Bake
         if not @config.artifactName.nil? and @config.artifactName.name != ""
           baseFilename = @config.artifactName.name
         else
-          baseFilename = "#{@projectName}#{@tcs[:LINKER][:OUTPUT_ENDING]}"
+          baseFilename = "#{@projectName}#{Bake::Toolchain.outputEnding(@tcs)}"
         end
         @exe_name ||= File.join([@output_dir, baseFilename])
       end

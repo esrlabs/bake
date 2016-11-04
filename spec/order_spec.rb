@@ -24,12 +24,12 @@ describe "Order" do
 
   it 'order of libs 2' do # p4->p5->p7, p4->p6->p7
     Bake.startBake("order/p4", ["test"])
-    expect($mystring.include?("build/test/p4.exe build/test/dummy.o -lexP4a ../p5/build/test_p4_test/libp5.a -lexP5a -lexP5b -lexP5c -lexP5d -lexP4b ../p6/build/test_p4_test/libp6.a -lexP6a -lexP6b ../p7/build/test_p4_test/libp7.a -lexP7 -lexP6c -lexP6d -lexP4c")).to be == true
+    expect($mystring.include?("build/test/p4"+Bake::Toolchain.outputEnding+" build/test/dummy.o -lexP4a ../p5/build/test_p4_test/libp5.a -lexP5a -lexP5b -lexP5c -lexP5d -lexP4b ../p6/build/test_p4_test/libp6.a -lexP6a -lexP6b ../p7/build/test_p4_test/libp7.a -lexP7 -lexP6c -lexP6d -lexP4c")).to be == true
   end
 
   it 'old order of libs 2' do # p4->p5->p7, p4->p6->p7
     Bake.startBake("order/p4", ["test", "--link-2-17"])
-    expect($mystring.include?("build/test/p4.exe build/test/dummy.o -lexP4a ../p5/build/test_p4_test/libp5.a -lexP5a -lexP5b ../p7/build/test_p4_test/libp7.a -lexP7 -lexP5c -lexP5d -lexP4b ../p6/build/test_p4_test/libp6.a -lexP6a -lexP6b -lexP6c -lexP6d -lexP4c")).to be == true
+    expect($mystring.include?("build/test/p4"+Bake::Toolchain.outputEnding+" build/test/dummy.o -lexP4a ../p5/build/test_p4_test/libp5.a -lexP5a -lexP5b ../p7/build/test_p4_test/libp7.a -lexP7 -lexP5c -lexP5d -lexP4b ../p6/build/test_p4_test/libp6.a -lexP6a -lexP6b -lexP6c -lexP6d -lexP4c")).to be == true
   end
 
 end

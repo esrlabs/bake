@@ -22,8 +22,8 @@ describe "Deps" do
     expect($mystring.include?("Building 4 of 6: p2 (Debug)")).to be == true
     expect($mystring.include?("Building 5 of 6: p6 (Debug)")).to be == true
     expect($mystring.include?("Building 6 of 6: p1 (Debug)")).to be == true
-    expect($mystring.include?("g++ -o build/Debug_p1_Debug/p2.exe build/Debug_p1_Debug/src/main.o ../p3/build/Debug_p1_Debug/libp3.a -L../p5/")).to be == true
-    expect($mystring.include?("g++ -o build/Debug/p1.exe build/Debug/src/main.o ../p3/build/Debug_p1_Debug/libp3.a -L../p5/")).to be == false
+    expect($mystring.include?("g++ -o build/Debug_p1_Debug/p2"+Bake::Toolchain.outputEnding+" build/Debug_p1_Debug/src/main.o ../p3/build/Debug_p1_Debug/libp3.a -L../p5/")).to be == true
+    expect($mystring.include?("g++ -o build/Debug/p1"+Bake::Toolchain.outputEnding+" build/Debug/src/main.o ../p3/build/Debug_p1_Debug/libp3.a -L../p5/")).to be == false
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
 
@@ -35,8 +35,8 @@ describe "Deps" do
     expect($mystring.include?("Building 4 of 6: p2 (Debug)")).to be == true
     expect($mystring.include?("Building 5 of 6: p6 (Debug)")).to be == true
     expect($mystring.include?("Building 6 of 6: p1 (Debug2)")).to be == true
-    expect($mystring.include?("g++ -o build/Debug_p1_Debug2/p2.exe build/Debug_p1_Debug2/src/main.o ../p3/build/Debug_p1_Debug2/libp3.a -L../p5/")).to be == true
-    expect($mystring.include?("g++ -o build/Debug2/p1.exe build/Debug2/src/main.o -L../p5/ ../p3/build/Debug_p1_Debug2/libp3.a")).to be == true
+    expect($mystring.include?("g++ -o build/Debug_p1_Debug2/p2"+Bake::Toolchain.outputEnding+" build/Debug_p1_Debug2/src/main.o ../p3/build/Debug_p1_Debug2/libp3.a -L../p5/")).to be == true
+    expect($mystring.include?("g++ -o build/Debug2/p1"+Bake::Toolchain.outputEnding+" build/Debug2/src/main.o -L../p5/ ../p3/build/Debug_p1_Debug2/libp3.a")).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
 

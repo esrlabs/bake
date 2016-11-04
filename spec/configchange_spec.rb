@@ -41,13 +41,13 @@ describe "Config Change" do
 
   it 'Regular Build GCC_ENV' do
     Bake.startBake("configchanged/main", ["Debug", "--rebuild"])
-    expect($mystring.include?("main.exe")).to be == true
+    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'Again Build GCC_ENV' do
     Bake.startBake("configchanged/main", ["Debug"])
-    expect($mystring.include?("main.exe")).to be == false
+    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -56,7 +56,7 @@ describe "Config Change" do
     Bake.startBake("configchanged/main", ["Debug"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
     expect($mystring.include?("Creating build/lib_main_Debug/liblib.a")).to be == true
-    expect($mystring.include?("Linking build/Debug/main.exe")).to be == true
+    expect($mystring.include?("Linking build/Debug/main"+Bake::Toolchain.outputEnding)).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -65,7 +65,7 @@ describe "Config Change" do
     Bake.startBake("configchanged/main", ["Debug"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("Creating build/lib_main_Debug/liblib.a")).to be == true
-    expect($mystring.include?("Linking build/Debug/main.exe")).to be == true
+    expect($mystring.include?("Linking build/Debug/main"+Bake::Toolchain.outputEnding)).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -74,19 +74,19 @@ describe "Config Change" do
     Bake.startBake("configchanged/main", ["Debug"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == false
     expect($mystring.include?("Creating build/lib_main_Debug/liblib.a")).to be == false
-    expect($mystring.include?("Linking build/Debug/main.exe")).to be == true
+    expect($mystring.include?("Linking build/Debug/main"+Bake::Toolchain.outputEnding)).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'Regular Build GCC' do
     Bake.startBake("configchanged/main", ["Test", "--rebuild"])
-    expect($mystring.include?("main.exe")).to be == true
+    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'Again Build GCC' do
     Bake.startBake("configchanged/main", ["Test"])
-    expect($mystring.include?("main.exe")).to be == false
+    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -94,7 +94,7 @@ describe "Config Change" do
     FileUtils.touch("spec/testdata/configchanged/main/Project.meta")
     FileUtils.touch("spec/testdata/configchanged/lib/Project.meta")
     Bake.startBake("configchanged/main", ["Test"])
-    expect($mystring.include?("main.exe")).to be == false
+    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -106,7 +106,7 @@ describe "Config Change" do
     Bake.startBake("configchanged/main", ["Test"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
     expect($mystring.include?("Creating build/lib_main_Test/liblib.a")).to be == true
-    expect($mystring.include?("Linking build/Test/main.exe")).to be == true
+    expect($mystring.include?("Linking build/Test/main"+Bake::Toolchain.outputEnding)).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -118,13 +118,13 @@ describe "Config Change" do
     Bake.startBake("configchanged/main", ["Test"])
     expect($mystring.include?("Compiling src/x.cpp")).to be == true
     expect($mystring.include?("Creating build/lib_main_Test/liblib.a")).to be == true
-    expect($mystring.include?("Linking build/Test/main.exe")).to be == true
+    expect($mystring.include?("Linking build/Test/main"+Bake::Toolchain.outputEnding)).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'Again Build 2 GCC' do
     Bake.startBake("configchanged/main", ["Test"])
-    expect($mystring.include?("main.exe")).to be == false
+    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
 

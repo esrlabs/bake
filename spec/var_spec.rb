@@ -35,7 +35,7 @@ describe "VarSubst" do
     expect(($mystring.include?"OutputDir_main build/test")).to be == true
 
     expect(($mystring.include?"ArtifactName_lib1 this.name\n")).to be == true
-    expect(($mystring.include?"ArtifactName_main main.exe")).to be == true
+    expect(($mystring.include?"ArtifactName_main main"+Bake::Toolchain.outputEnding)).to be == true
 
     expect(($mystring.include?"ArtifactNameBase_lib1 this\n")).to be == true
     expect(($mystring.include?"ArtifactNameBase_main main")).to be == true

@@ -29,7 +29,7 @@ describe "Prebuilding" do
     expect($mystring.split("**** Building 5 of 6: main (test) ****").length).to be == 2
     expect($mystring.split("echo PRESTEP").length).to be == 2
     expect($mystring.split("Compiling src/main.cpp").length).to be == 2
-    expect($mystring.split("Linking build/test_main_testPre1/main.exe").length).to be == 2
+    expect($mystring.split("Linking build/test_main_testPre1/main"+Bake::Toolchain.outputEnding).length).to be == 2
     expect($mystring.split("**** Building 6 of 6: main (testPre1) ****").length).to be == 2
 
     expect($mystring.split("**** Using 1 of 6: main (testa) ****").length).to be == 1
@@ -59,7 +59,7 @@ describe "Prebuilding" do
     expect($mystring.split("**** Building 5 of 6: main (test) ****").length).to be == 2
     expect($mystring.split("echo PRESTEP").length).to be == 2
     expect($mystring.split("Compiling src/main.cpp").length).to be == 2
-    expect($mystring.split("Linking build/test_main_testPre1/main.exe").length).to be == 2
+    expect($mystring.split("Linking build/test_main_testPre1/main"+Bake::Toolchain.outputEnding).length).to be == 2
     expect($mystring.split("**** Building 6 of 6: main (testPre1) ****").length).to be == 2
 
     expect($mystring.split("**** Using 1 of 6: main (testa) ****").length).to be == 2
@@ -91,7 +91,7 @@ describe "Prebuilding" do
     expect($mystring.split("**** Building 5 of 6: main (test) ****").length).to be == 2
     expect($mystring.split("echo PRESTEP").length).to be == 2
     expect($mystring.split("Compiling src/main.cpp").length).to be == 2
-    expect($mystring.split("Linking build/test_main_testPre2/main.exe").length).to be == 2
+    expect($mystring.split("Linking build/test_main_testPre2/main"+Bake::Toolchain.outputEnding).length).to be == 2
     expect($mystring.split("**** Building 6 of 6: main (testPre2) ****").length).to be == 2
 
     expect($mystring.split("**** Using 1 of 6: main (testa) ****").length).to be == 1
@@ -122,7 +122,7 @@ describe "Prebuilding" do
     expect($mystring.split("echo PRESTEP").length).to be == 3
     expect($mystring.split("Compiling src/main.cpp").length).to be == 2
     expect($mystring.split("**** Building 6 of 6: main (testPre2) ****").length).to be == 3
-    expect($mystring.split("Linking build/test_main_testPre2/main.exe").length).to be == 2
+    expect($mystring.split("Linking build/test_main_testPre2/main"+Bake::Toolchain.outputEnding).length).to be == 2
 
     expect($mystring.split("**** Using 1 of 6: main (testa) ****").length).to be == 1
     expect($mystring.split("**** Using 2 of 6: lib2 (testa) ****").length).to be == 2
@@ -153,7 +153,7 @@ describe "Prebuilding" do
     expect($mystring.split("**** Building 5 of 6: main (test) ****").length).to be == 2
     expect($mystring.split("echo PRESTEP").length).to be == 2
     expect($mystring.split("Compiling src/main.cpp").length).to be == 2
-    expect($mystring.split("Linking build/test_main_testPre3/main.exe").length).to be == 2
+    expect($mystring.split("Linking build/test_main_testPre3/main"+Bake::Toolchain.outputEnding).length).to be == 2
     expect($mystring.split("**** Building 6 of 6: main (testPre3) ****").length).to be == 2
 
     expect($mystring.split("**** Using 1 of 6: main (testa) ****").length).to be == 1
@@ -183,7 +183,7 @@ describe "Prebuilding" do
     expect($mystring.split("**** Building 5 of 6: main (test) ****").length).to be == 2
     expect($mystring.split("echo PRESTEP").length).to be == 2
     expect($mystring.split("Compiling src/main.cpp").length).to be == 2
-    expect($mystring.split("Linking build/test_main_testPre3/main.exe").length).to be == 2
+    expect($mystring.split("Linking build/test_main_testPre3/main"+Bake::Toolchain.outputEnding).length).to be == 2
     expect($mystring.split("**** Building 6 of 6: main (testPre3) ****").length).to be == 2
 
     expect($mystring.split("**** Using 1 of 6: main (testa) ****").length).to be == 2
@@ -215,7 +215,7 @@ describe "Prebuilding" do
     expect($mystring.split("**** Building 5 of 6: main (test) ****").length).to be == 2
     expect($mystring.split("echo PRESTEP").length).to be == 2
     expect($mystring.split("Compiling src/main.cpp").length).to be == 2
-    expect($mystring.split("Linking build/test_main_testPre4/main.exe").length).to be == 2
+    expect($mystring.split("Linking build/test_main_testPre4/main"+Bake::Toolchain.outputEnding).length).to be == 2
     expect($mystring.split("**** Building 6 of 6: main (testPre4) ****").length).to be == 2
 
     expect($mystring.split("**** Using 1 of 6: main (testa) ****").length).to be == 1
@@ -245,7 +245,7 @@ describe "Prebuilding" do
     expect($mystring.split("**** Building 5 of 6: main (test) ****").length).to be == 3
     expect($mystring.split("echo PRESTEP").length).to be == 3
     expect($mystring.split("Compiling src/main.cpp").length).to be == 2
-    expect($mystring.split("Linking build/test_main_testPre4/main.exe").length).to be == 2
+    expect($mystring.split("Linking build/test_main_testPre4/main"+Bake::Toolchain.outputEnding).length).to be == 2
     expect($mystring.split("**** Building 6 of 6: main (testPre4) ****").length).to be == 2
 
     expect($mystring.split("**** Using 1 of 6: main (testa) ****").length).to be == 2
@@ -272,7 +272,7 @@ describe "Prebuilding" do
     expect($mystring.split("**** Building 5 of 7: main (test) ****").length).to be == 2
     expect($mystring.split("echo PRESTEP").length).to be == 2
     expect($mystring.split("Compiling src/main.cpp").length).to be == 2
-    expect($mystring.split("Linking build/test_main_testPre5/main.exe").length).to be == 2
+    expect($mystring.split("Linking build/test_main_testPre5/main"+Bake::Toolchain.outputEnding).length).to be == 2
     expect($mystring.split("**** Using 6 of 7: lib1 (testPre) ****").length).to be == 2
     expect($mystring.split("**** Using 7 of 7: main (testPre5) ****").length).to be == 2
     expect($mystring.split("Rebuilding failed.").length).to be == 2

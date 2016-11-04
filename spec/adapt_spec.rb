@@ -118,13 +118,13 @@ describe "Adapt" do
 
   it 'ArtifactName remove 0' do
     Bake.startBake("adapt/main", ["test_art0", "--rebuild", "-v2", "--adapt", "art_remove_ok"])
-    expect($mystring.include?("main.exe")).to be == true
+    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
 
   it 'ArtifactName remove 1 ok' do
     Bake.startBake("adapt/main", ["test_art1", "--rebuild", "-v2", "--adapt", "art_remove_ok"])
-    expect($mystring.include?("main.exe")).to be == true
+    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
 
@@ -208,7 +208,7 @@ describe "Adapt" do
     if not RUBY_PLATFORM =~ /darwin/
       Bake.startBake("adapt/main", ["test_lin0", "--rebuild", "-v2", "--adapt", "lin_remove_ok"])
       expect($mystring.include?(".dld")).to be == false
-      expect(File.exists?("spec/testdata/adapt/main/build/test_lin0/main.exe")).to be == true
+      expect(File.exists?("spec/testdata/adapt/main/build/test_lin0/main"+Bake::Toolchain.outputEnding)).to be == true
     end
   end
 
@@ -216,7 +216,7 @@ describe "Adapt" do
     if not RUBY_PLATFORM =~ /darwin/
       Bake.startBake("adapt/main", ["test_lin1", "--rebuild", "-v2", "--adapt", "lin_remove_ok"])
        expect($mystring.include?(".dld")).to be == false
-       expect(File.exists?("spec/testdata/adapt/main/build/test_lin1/main.exe")).to be == true
+       expect(File.exists?("spec/testdata/adapt/main/build/test_lin1/main"+Bake::Toolchain.outputEnding)).to be == true
     end
   end
 
