@@ -194,17 +194,19 @@ module Bake
         preSteps.each do |step|
           @result = executeStep(step, method) if @result
           return false if not @result and Bake.options.stopOnFirstError
-        end
+        end unless @prebuild
 
         mainSteps.each do |step|
-          @result = executeStep(step, method) if @result
+          if !@prebuild || (Library === step)
+            @result = executeStep(step, method) if @result
+          end
           return false if not @result and Bake.options.stopOnFirstError
         end
 
         postSteps.each do |step|
           @result = executeStep(step, method) if @result
           return false if not @result and Bake.options.stopOnFirstError
-        end
+        end unless @prebuild
 
         return @result
       end
@@ -228,12 +230,10 @@ module Bake
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
 
         if Bake.options.verbose >= 1
-          typeStr = @prebuild ? "Skipping" : "Building"
+          typeStr = @prebuild ? "Using" : "Building"
           Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
         puts "Project path: #{@projectDir}" if Bake.options.projectPaths
-
-        return depResult if @prebuild
 
         @result = callSteps(:execute)
         return (depResult && @result)
@@ -247,11 +247,9 @@ module Bake
         return false if not depResult and Bake.options.stopOnFirstError
 
         if Bake.options.verbose >= 2
-          typeStr = @prebuild ? "Skipping" : "Cleaning"
+          typeStr = @prebuild ? "Checking" : "Cleaning"
           Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
-
-        return depResult if @prebuild
 
         @result = callSteps(:clean)
 
