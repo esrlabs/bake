@@ -47,7 +47,7 @@ describe "Config Change" do
 
   it 'Again Build GCC_ENV' do
     Bake.startBake("configchanged/main", ["Debug"])
-    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == false
+    expect($mystring.include?("Debug/main"+Bake::Toolchain.outputEnding)).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -86,7 +86,7 @@ describe "Config Change" do
 
   it 'Again Build GCC' do
     Bake.startBake("configchanged/main", ["Test"])
-    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == false
+    expect($mystring.include?("Test/main"+Bake::Toolchain.outputEnding)).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -94,7 +94,7 @@ describe "Config Change" do
     FileUtils.touch("spec/testdata/configchanged/main/Project.meta")
     FileUtils.touch("spec/testdata/configchanged/lib/Project.meta")
     Bake.startBake("configchanged/main", ["Test"])
-    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == false
+    expect($mystring.include?("Test/main"+Bake::Toolchain.outputEnding)).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -124,7 +124,7 @@ describe "Config Change" do
 
   it 'Again Build 2 GCC' do
     Bake.startBake("configchanged/main", ["Test"])
-    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == false
+    expect($mystring.include?("Test/main"+Bake::Toolchain.outputEnding)).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
 

@@ -241,7 +241,7 @@ describe "Building" do
     Bake.startBake("cache/main", ["testMapEmpty", "-v2"])
     expect($mystring.include?("> build/testMapEmpty/main.map")).to be == true
     expect(File.exist?("spec/testdata/cache/main/build/testMapEmpty/main.map")).to be == true
-    expect(ExitHelper.exit_code).to be == 0
+    expect(Exit Helper.exit_code).to be == 0
   end
 
   it 'MapFileDada' do
@@ -253,12 +253,12 @@ describe "Building" do
 
   it 'LibHasError_noLink' do
     Bake.startBake("errors/main", ["testWrong"])
-    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == false
+    expect($mystring.include?("testWrong/main"+Bake::Toolchain.outputEnding)).to be == false
   end
 
   it 'ExeHasError_noLink' do
     Bake.startBake("errors/main", ["testWrong2"])
-    expect($mystring.include?("main"+Bake::Toolchain.outputEnding)).to be == false
+    expect($mystring.include?("testWrong2/main"+Bake::Toolchain.outputEnding)).to be == false
   end
 
   it 'assembler' do
@@ -266,7 +266,7 @@ describe "Building" do
 
     expect($mystring.include?("a.S")).to be == true
     expect($mystring.include?("main.cpp")).to be == true
-    expect($mystring.include?("assembler.")).to be == true
+    expect($mystring.include?("test/assembler"+Bake::Toolchain.outputEnding)).to be == true
 
     Bake.startBake("assembler", ["test"])
 

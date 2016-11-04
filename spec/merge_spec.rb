@@ -107,7 +107,7 @@ describe "Merging Configs" do
   it 'libs (all)' do
     Bake.startBake("merge/main", ["testL3E", "--rebuild", "-v2"])
 
-    posExe  = $mystring.index("main"+Bake::Toolchain.outputEnding)
+    posExe  = $mystring.index("testL3E/main"+Bake::Toolchain.outputEnding)
     pos1  = $mystring.index("-Llib",posExe)
     pos2  = $mystring.index("L1_1",posExe)
     pos3  = $mystring.index("blah1",posExe)
@@ -134,7 +134,7 @@ describe "Merging Configs" do
   it 'libs (child)' do
     Bake.startBake("merge/main", ["testL5E", "--rebuild", "-v2"])
 
-    posExe  = $mystring.index("main"+Bake::Toolchain.outputEnding)
+    posExe  = $mystring.index("testL5E/main"+Bake::Toolchain.outputEnding)
     pos1  = $mystring.index("-Llib",posExe)
     pos2  = $mystring.index("L5_1",posExe)
     pos3  = $mystring.index("blah5",posExe)
@@ -148,7 +148,7 @@ describe "Merging Configs" do
   it 'libs (parent)' do
     Bake.startBake("merge/main", ["testL6E", "--rebuild", "-v2"])
 
-    posExe  = $mystring.index("main"+Bake::Toolchain.outputEnding)
+    posExe  = $mystring.index("testL6E/main"+Bake::Toolchain.outputEnding)
     pos1  = $mystring.index("-Llib",posExe)
     pos2  = $mystring.index("L1_1",posExe)
     pos3  = $mystring.index("blah1",posExe)

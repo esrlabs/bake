@@ -17,8 +17,8 @@ matrix:
 install:
  - gem install coveralls --no-ri --no-rdoc
  - gem install simplecov --no-ri --no-rdoc
- - gem install rtext -v 0.8.1 --no-ri --no-rdoc
- - gem install rgen -v 0.8.1 --no-ri --no-rdoc
+ - gem install rtext -v 0.9.0 --no-ri --no-rdoc
+ - gem install rgen -v 0.8.2 --no-ri --no-rdoc
  - gem install highline -v ">= 1.6.0" --no-ri --no-rdoc
  - gem install colored --no-ri --no-rdoc
  - gem install rspec --no-ri --no-rdoc
