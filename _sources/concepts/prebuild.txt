@@ -43,6 +43,7 @@ This prebuild behaviour must be explicitly turned on by using the following the 
 
     --prebuild
 
+Note, that if objects files exist, the library will be built from existing object files (glob for *.o in appropriate build folder). If only the archive exists, the archive will be used without building it.
 
 Typical workflow
 ----------------
