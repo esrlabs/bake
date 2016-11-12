@@ -4,7 +4,7 @@ This readme provides information about how to update and contribute to the bake 
 First things first:
 *******************
 
-The bake documentation is wirtten in the .rst format and genrated using sphinx.
+The bake documentation is written in the .rst format and generated using sphinx.
 (All necessary information about .rst can be found on the sphinx website)
 
     Some links:
@@ -14,14 +14,14 @@ The bake documentation is wirtten in the .rst format and genrated using sphinx.
     * http://openalea.gforge.inria.fr/doc/openalea/doc/_build/html/source/sphinx/rest_syntax.html
 
 
-Basic Setup for writting and gernating the bake documenation
+Basic Setup for writing and generating the bake documentation
 ============================================================
 
 * Install python 3.X (https://www.python.org/)
-    * Do it they way of your choice  brew, package manager, windowws installer, you name it!
+    * Do it they way of your choice  brew, package manager, Windows installer, you name it!
 
 * Install Sphinx
-    * I recomend installing sphinx using the python package management system (pip)
+    * I recommend installing sphinx using the python package management system (pip)
         * pip should be part of your python installation
 
     Example:
@@ -45,14 +45,14 @@ How to generate the bake documentation
 1. Navigate to the documentation directory
 
     Example:
-        $ cd bake/documenation
+        $ cd bake/documentation
 
-2. generate the documenation
+2. generate the documentation
 
     Example:
 
         $ make html
 
-3. Check out the documenation
+3. Check out the documentation
 
-    Docu can now be found in /bake/documenation/_build/html
+    Documentation can now be found in /bake/documenation/_build/html
