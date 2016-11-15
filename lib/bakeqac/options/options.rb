@@ -135,12 +135,24 @@ module Bake
           ExitHelper.exit(1)
         end
 
-        if RUBY_PLATFORM =~ /mingw/
+        plStr = nil
+        gccPlatform = Bake::Toolchain::getGccPlatform
+        if gccPlatform.include?"mingw"
           plStr = "w64-mingw32"
-        elsif RUBY_PLATFORM =~ /cygwin/
+        elsif gccPlatform.include?"cygwin"
           plStr = "pc-cygwin"
-        else
+        elsif gccPlatform.include?"linux"
           plStr = "generic-linux"
+        end
+
+        if plStr.nil? # fallback
+          if RUBY_PLATFORM =~ /mingw/
+            plStr = "w64-mingw32"
+          elsif RUBY_PLATFORM =~ /cygwin/
+            plStr = "pc-cygwin"
+          else
+            plStr = "generic-linux"
+          end
         end
 
         while (@cct.empty? or gccVersion[0]>=5)

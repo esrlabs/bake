@@ -13,6 +13,10 @@ module Bake
       return splitted[splitted.length-1].split(".").map { |v| v.to_i }
     end
 
+    def self.getGccPlatform
+      `g++ -dumpmachine`
+    end
+
     GCCChain = Provider.add("GCC")
 
     GCCChain[:COMPILER][:CPP].update({
