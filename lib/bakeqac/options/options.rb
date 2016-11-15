@@ -155,10 +155,10 @@ module Bake
             gccVersion[1] = 20
           end
         end
-
-        cctInDir = searchCctFile(@main_dir)
-        @cct_append = cctInDir.gsub(/[\\]/,'/') if cctInDir
       end
+
+      cctInDir = searchCctFile(@main_dir)
+      @cct_append = cctInDir.gsub(/[\\]/,'/') if cctInDir
 
       if @acf.nil?
         @acf = qac_home + "/config/acf/default.acf"
