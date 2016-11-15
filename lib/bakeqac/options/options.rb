@@ -111,7 +111,7 @@ module Bake
       parse_internal(true, bakeOptions)
       set_main_dir(Dir.pwd) if @main_dir.nil?
 
-      if not ENV["QAC_HOME"]
+      if !ENV["QAC_HOME"] || ENV["QAC_HOME"].empty?
         Bake.formatter.printError("Error: specify the environment variable QAC_HOME.")
         ExitHelper.exit(1)
       end
