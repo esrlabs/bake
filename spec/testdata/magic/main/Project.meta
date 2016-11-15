@@ -1,0 +1,8 @@
+Project {
+  LibraryConfig test {
+    Files "src/main.cpp"
+    IncludeDir "lib2/include"
+    Dependency lib2
+    DefaultToolchain GCC
+  }
+}

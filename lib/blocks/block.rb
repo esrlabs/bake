@@ -15,7 +15,7 @@ module Bake
 
     class Block
 
-      attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :warnConvValid, :prebuild
+      attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :prebuild
       attr_accessor :visited, :inDeps, :result
 
       def startupSteps
@@ -82,45 +82,55 @@ module Bake
            d = dir
          end
 
-         @warnConvValid = false
-
          return d if Bake.options.no_autodir
 
          inc = d.split("/")
-         res = nil
-         if (inc[0] == @projectName)
-           res = inc[1..-1].join("/") # within self
-           res = "." if res == ""
-         elsif @referencedConfigs.include?(inc[0])
-           dirOther = @referencedConfigs[inc[0]].first.parent.get_project_dir
-           res = File.rel_from_to_project(@projectDir, dirOther, false)
-           postfix = inc[1..-1].join("/")
-           res = res + "/" + postfix if postfix != ""
-         else
-           if (inc[0] != "..")
-             return d if File.exists?(@projectDir + "/" + d) # e.g. "include"
-             # check if dir exists without Project.meta entry
-             Bake.options.roots.each do |r|
-               absIncDir = r+"/"+d
-               if File.exists?(absIncDir)
-                 res = File.rel_from_to_project(@projectDir,absIncDir,false)
-               end
-             end
-           else
-             if elem and Bake.options.verbose >= 2
-               Bake.formatter.printInfo("\"..\" in path name found", elem)
-             end
-           end
-
-           if res.nil? # relative from self as last resort
-             warnIfLocal = false # no path magic -> no warning
-             res = d
+         if (inc[0] == "..") # very simple check, but should be okay for 99.9 % of the cases
+           if elem and Bake.options.verbose >= 2
+             Bake.formatter.printInfo("path starts with \"..\"", elem)
            end
          end
 
-         @warnConvValid = File.exists?(@projectDir + "/" + d) if warnIfLocal # only warn if path magic hides local path
+         res = []
 
-         res
+         if (inc[0] == @projectName) # prio 1: the real path magic
+           resPathMagic = inc[1..-1].join("/") # within self
+           resPathMagic = "." if resPathMagic == ""
+           res << resPathMagic
+         elsif @referencedConfigs.include?(inc[0])
+           dirOther = @referencedConfigs[inc[0]].first.parent.get_project_dir
+           resPathMagic = File.rel_from_to_project(@projectDir, dirOther, false)
+           postfix = inc[1..-1].join("/")
+           resPathMagic = resPathMagic + "/" + postfix if postfix != ""
+           resPathMagic = "." if resPathMagic == ""
+           res << resPathMagic
+         end
+
+         if File.exists?(@projectDir + "/" + d) # prio 2: local, e.g. "include"
+           res << d
+         end
+
+         # prioo 3: check if dir exists without Project.meta entry
+         Bake.options.roots.each do |r|
+           absIncDir = r+"/"+d
+           if File.exists?(absIncDir)
+             res << File.rel_from_to_project(@projectDir,absIncDir,false)
+           end
+         end
+
+         return d if res.empty? # prio 4: fallback, no path found
+
+         res = res.map{ |r| Pathname.new(r).cleanpath.to_s }.uniq
+
+         if warnIfLocal && res.length > 1
+           if elem and Bake.options.verbose >= 2
+             Bake.formatter.printInfo("#{d} matches several paths:", elem)
+             puts "  #{res[0]} (chosen)"
+             res[1..-1].each { |r| puts "  #{r}" }
+           end
+         end
+
+         res[0]
        end
 
 

@@ -49,6 +49,7 @@ module Bake
       if not File.is_absolute?(path)
         prefix ||= File.rel_from_to_project(@@projectDir,block.projectDir)
         adaptedPath = prefix + path if prefix
+        adaptedPath = Pathname.new(adaptedPath).cleanpath.to_s
       end
       #adaptedPath = "\"" + adaptedPath + "\"" if adaptedPath.include?(" ")
       [adaptedPath, prefix]

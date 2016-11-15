@@ -247,10 +247,6 @@ module Bake
           calcSources
           calcObjects
 
-          @incWarns.each do |x|
-            Bake.formatter.printInfo("IncludeDir '#{x[0].name}' will be converted to '#{x[1]}' although local path exists. If not intended, use './#{x[0].name}'.", x[0])
-          end if Bake.options.verbose >= 1
-
           @error_strings = {}
 
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|
@@ -432,16 +428,10 @@ module Bake
           end
         end
 
-        x = Pathname.new(i).cleanpath
-        if orgBlock.warnConvValid
-          @incWarns << [inc, x]
-        end
-        x
+        Pathname.new(i).cleanpath
       end
 
       def calcIncludes
-        @incWarns = []
-
         @include_list = @config.includeDir.uniq.map do |dir|
           mapInclude(dir, @block)
         end

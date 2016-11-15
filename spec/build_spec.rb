@@ -379,6 +379,15 @@ describe "Building" do
     expect(File.exists?("spec/testdata/simple/main/build")).to be == false
   end
 
+  it 'ambigious include dir' do
+    Bake.startBake("magic/main", ["test", "-w", "spec/testdata/magic/r1", "-w", "spec/testdata/magic/r2", "-v2"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect($mystring.include?("Info: lib2/include matches several paths")).to be == true
+    expect($mystring.include?("  ../r1/lib2/include (chosen)")).to be == true
+    expect($mystring.include?("  lib2/include")).to be == true
+    expect($mystring.include?("  ../r2/lib2/include")).to be == true
+    expect($mystring.include?("-I../r1/lib2/include")).to be == true
+  end
 
 end
 
