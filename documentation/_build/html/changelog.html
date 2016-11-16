@@ -140,9 +140,17 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>November 16, 2016 - bake-toolkit 2.24.1</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: qac.cct was not appended if &#8211;cct is used.</li>
+<li>Bugfix: qac: abort if QAC_HOME is set to empty string.</li>
+<li>Bugfix: qac: improved recognition of gcc platform.</li>
+<li>Changed: improved warning if the path in IncludeDir matches to several folders (warning will be shown in verbosity level 2 and above).</li>
+</ul>
+</dd>
 <dt>November 7, 2016 - bake-toolkit 2.24.0</dt>
 <dd><ul class="first last simple">
-<li>Bugfix: qac: output was not synced immediately to the console on some systems.&#8221;</li>
+<li>Bugfix: qac: output was not synced immediately to the console on some systems.</li>
 <li>Changed: qac: patching of cct introduced with 2.23.9 now opt-in via command line argument: &#8211;qaccctpatch.</li>
 <li>Changed: qac: default build output directory is now &#8220;build/.qac/&#8221; instead of &#8220;build/&#8221; (which does not overwrite regular build output anymore).</li>
 <li>Changed: if default build folder is used, the parent folder &#8220;build&#8221; will be also removed when the project is cleaned if the &#8220;build&#8221; folder will become empty.</li>

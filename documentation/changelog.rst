@@ -2,10 +2,10 @@ Changelog
 =========
 
 November 16, 2016 - bake-toolkit 2.24.1
-    * Bugfix: qac.cct was not appended if --cct was used.
+    * Bugfix: qac.cct was not appended if --cct is used.
     * Bugfix: qac: abort if QAC_HOME is set to empty string.
     * Bugfix: qac: improved recognition of gcc platform.
-    * Changed: improved warning if the path in IncludeDir would match to several locations (warning will be shown in verbosity level 2 and above).
+    * Changed: improved warning if the path in IncludeDir matches to several folders (warning will be shown in verbosity level 2 and above).
 
 November 7, 2016 - bake-toolkit 2.24.0
     * Bugfix: qac: output was not synced immediately to the console on some systems.
