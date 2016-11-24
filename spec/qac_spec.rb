@@ -21,16 +21,28 @@ module Bake
   def self.getCct(cVersion = "")
     gccVersion = Bake::Toolchain::getGccVersion
 
-    if RUBY_PLATFORM =~ /mingw/
+    plStr = nil
+    gccPlatform = Bake::Toolchain::getGccPlatform
+    if gccPlatform.include?"mingw"
       plStr = "w64-mingw32"
-    elsif RUBY_PLATFORM =~ /cygwin/
+    elsif gccPlatform.include?"cygwin"
       plStr = "pc-cygwin"
-    else
+    elsif gccPlatform.include?"linux"
       plStr = "generic-linux"
     end
 
+    if plStr.nil? # fallback
+      if RUBY_PLATFORM =~ /mingw/
+        plStr = "w64-mingw32"
+      elsif RUBY_PLATFORM =~ /cygwin/
+        plStr = "pc-cygwin"
+      else
+        plStr = "generic-linux"
+      end
+    end
+
     cct = ""
-    while (cct == "" or gccVersion[0]>=5)
+    while (cct == "" or gccVersion[0]>=4)
       cct = "config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-i686-#{plStr}-C++#{cVersion}.cct"
       break if File.exist?cct[0]
       cct = "config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-x86_64-#{plStr}-C++#{cVersion}.cct"
@@ -234,9 +246,12 @@ describe "Qac" do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "steps_qacdata"
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacnofilter"])
-    expect($mystring.include?("admin: *.qacdata*")).to be == true
-    expect($mystring.include?("analyze: *.qacdata*")).to be == true
-    expect($mystring.include?("view: *.qacdata*")).to be == true
+    admin = $mystring.match(/admin:.*spec\/testdata\/qac\/main\/\.qacdata\*/)
+    analyze = $mystring.match(/analyze:.*spec\/testdata\/qac\/main\/\.qacdata\*/)
+    view = $mystring.match(/view:.*spec\/testdata\/qac\/main\/\.qacdata\*/)
+    expect(admin && admin.length > 0).to be == true
+    expect(analyze && analyze.length > 0).to be == true
+    expect(view && view.length > 0).to be == true
     expect(exit_code).to be == 0
   end
 
@@ -288,7 +303,7 @@ describe "Qac" do
     FileUtils.cp("spec/testdata/qac/_qac.cct", "spec/testdata/qac/qac.cct")
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin"])
     expect($mystring.include?("++.cct - CCT")).to be == true
-    ccts = Dir.glob(".qacdata/**/*.cct")
+    ccts = Dir.glob("spec/testdata/qac/main/.qacdata/**/*.cct")
     data = File.read(ccts[0])
     expect(data.include?("Hello")).to be == true
   expect(data.include?("-d _cdecl")).to be == false
@@ -301,7 +316,7 @@ describe "Qac" do
     ENV["QAC_UT"] = "config_files"
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--qaccctpatch"])
     expect($mystring.include?("++.cct - CCT")).to be == true
-    ccts = Dir.glob(".qacdata/**/*.cct")
+    ccts = Dir.glob("spec/testdata/qac/main/.qacdata/**/*.cct")
     data = File.read(ccts[0])
     expect(data.include?("Hello")).to be == false
     expect(data.include?("-d _cdecl")).to be == true

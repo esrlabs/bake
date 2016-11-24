@@ -1,6 +1,11 @@
 Changelog
 =========
 
+November 24, 2016 - bake-toolkit 2.24.2
+    * Bugfix: qac: fixed recognition of platform for cygwin with gcc >= 5.0
+    * Bugfix: qac: default folder of qacdata is not <main project>/.qacdata instead of <working dir>/.qacdata
+    * Bugfix: qac: workaround for "qacli admin": retry up to 10 times if cip file is empty (getting compiler data)
+
 November 16, 2016 - bake-toolkit 2.24.1
     * Bugfix: qac.cct was not appended if --cct is used.
     * Bugfix: qac: abort if QAC_HOME is set to empty string.

@@ -1,10 +1,6 @@
 require 'fileutils'
-FileUtils::mkdir_p ".qacdata"
 
 testcase = ENV["QAC_UT"]
-
-step = "unknown"
-["admin", "analyze", "view"].each { |s| step = s if ARGV.include?s }
 
 def getParam(flag)
   ARGV.each_with_index do |v,i|
@@ -20,6 +16,17 @@ def getParams(flag)
   end
   return res
 end
+
+qacDir = getParam("-P")
+qacDir = getParam("--qaf-project") if qacDir =="unknown"
+
+if qacDir != "unknown"
+  FileUtils::mkdir_p "#{qacDir}/cip"
+  `echo test > #{qacDir}/cip/gcc.cip`
+end
+
+step = "unknown"
+["admin", "analyze", "view"].each { |s| step = s if ARGV.include?s }
 
 def checkLicense
   timeStart = ENV["QAC_RETRY"].to_i

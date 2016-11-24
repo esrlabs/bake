@@ -22,7 +22,7 @@ module Bake
       @rcf = nil
       @cct = []
       @default = nil
-      @qacdata = ".qacdata"
+      @qacdata = nil
       @qacstep = nil
       @qacfilter = true
       @qacnoformat = false
@@ -109,7 +109,9 @@ module Bake
 
     def parse_options(bakeOptions)
       parse_internal(true, bakeOptions)
+
       set_main_dir(Dir.pwd) if @main_dir.nil?
+      @qacdata = "#{@main_dir}/.qacdata" if @qacdata.nil?
 
       if !ENV["QAC_HOME"] || ENV["QAC_HOME"].empty?
         Bake.formatter.printError("Error: specify the environment variable QAC_HOME.")
@@ -155,7 +157,7 @@ module Bake
           end
         end
 
-        while (@cct.empty? or gccVersion[0]>=5)
+        while (@cct.empty? or gccVersion[0]>=4)
           @cct = [qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-i686-#{plStr}-C++#{@cVersion}.cct"]
           break if File.exist?@cct[0]
           @cct = [qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-x86_64-#{plStr}-C++#{@cVersion}.cct"]

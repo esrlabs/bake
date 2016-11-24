@@ -67,8 +67,24 @@ end
     cmd << "--acf" << @options.acf
 
     puts "bakeqac: creating database..."
-    FileUtils.rm_rf @options.qacdata
-    success, consoleOutput = ProcessHelper.run(cmd, true)
+
+    cipCounter = 0
+    loop do
+      FileUtils.rm_rf @options.qacdata
+      success, consoleOutput = ProcessHelper.run(cmd, true)
+      break if not success
+
+      cips = Dir.glob(@options.qacdata + "/**/*.cip")
+      break if !cips.empty? && File.size?(cips[0]) > 0 # this is the regular case
+
+      cipCounter += 1
+      if cipCounter < 10
+        puts "cip file does not exist or is empty, trying again..."
+      else
+        success = false
+        break
+      end
+    end
 
     if success
       cctFilename = @options.qacdata+"/prqa/config/"+File.basename(@options.cct[0])
