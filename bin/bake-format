@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+require 'bake/bake_format'
+begin
+  if ARGV.size == 2
+    indent = '    '
+    input = ARGV[0]
+    output = ARGV[1]
+  elsif ARGV.size == 3
+    indent = ARGV[0]
+    indent = indent.split('=')
+    raise 'indent must have =' unless indent.size == 2
+    raise 'indent must start with --indent' unless indent.first == '--indent'
+    indent = indent.last
+    input = ARGV[1]
+    output = ARGV[2]
+  else
+    raise 'cannot understand'
+  end
+rescue
+  puts [
+    "Usage: #{__FILE__} [--ident=string] input output",
+    "  --indent=string, ident default to tab.",
+    "    you can escape a tab in bash by ctrl-vTAB with sourrounding \" e.g. \"--input=    \"",
+    "  input, filename or '-' for stdin",
+    "  output, filename, '-' for stdout, '--' for same as input file"
+  ].join("\n")
+  exit 1
+end
+
+data =
+  if input == '-'
+    STDIN.read
+  else
+    File.read(input)
+  end
+
+out =
+  if output == '-'
+    STDOUT
+  elsif output == '--'
+    out = input == STDIN ? STDOUT : File.open(input, 'w')
+  else
+    File.open(output, 'w')
+  end
+
+bake_format(data, out, indent)
