@@ -1,11 +1,16 @@
-require 'bake/bake_format'
+require 'format/bake_format'
+
 describe 'bake_format' do
-  it 'should replace leading whitespace with the correct identation and final newline' do
+  it 'should replace leading whitespace with the correct indentation and final newline' do
     input = "test {\ntest2\n}"
     output = StringIO.new
     bake_format(input, output, "    ")
     puts output
     expect(output.string).to eq("test {\n    test2\n}\n")
+  end
+
+  it 'default indentation are two spaces' do
+    # todo: missing tests of root script
   end
 
   it 'should close the output resource' do

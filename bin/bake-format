@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'bake/bake_format'
+require 'format/bake_format'
 begin
   if ARGV.size == 2
-    indent = '    '
+    indent = '  '
     input = ARGV[0]
     output = ARGV[1]
   elsif ARGV.size == 3
