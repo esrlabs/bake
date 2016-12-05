@@ -72,9 +72,15 @@ end
     loop do
       FileUtils.rm_rf @options.qacdata
       success, consoleOutput = ProcessHelper.run(cmd, true)
-      break if not success
 
+      puts "Temporary debug output:"
+
+      break if not success
       cips = Dir.glob(@options.qacdata + "/**/*.cip")
+
+      p cips
+      puts (!cips.empty?)
+      puts (!File.size?(cips[0]).nil?)
       break if (!cips.empty?) && (!File.size?(cips[0]).nil?) # this is the regular case, note: "size?" returns nil if empty or not existing
 
       cipCounter += 1
