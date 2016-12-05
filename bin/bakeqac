@@ -75,7 +75,7 @@ end
       break if not success
 
       cips = Dir.glob(@options.qacdata + "/**/*.cip")
-      break if !cips.empty? && File.size?(cips[0]) > 0 # this is the regular case
+      break if (!cips.empty?) && (!File.size?(cips[0]).nil?) # this is the regular case, note: "size?" returns nil if empty or not existing
 
       cipCounter += 1
       if cipCounter < 10
