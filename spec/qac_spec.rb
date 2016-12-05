@@ -561,6 +561,79 @@ describe "Qac" do
     expect(exit_code).to be > 0
   end
 
+  it 'without default' do
+
+    if File.exist?("spec/testdata/qac/config/ProjectOrg.meta")
+      FileUtils.mv("spec/testdata/qac/config/Project.meta", "spec/testdata/qac/config/Project2.meta")
+      FileUtils.mv("spec/testdata/qac/config/ProjectOrg.meta", "spec/testdata/qac/config/Project.meta")
+    end
+
+    exit_code = Bake.startBake("qac/config", ["test"])
+    expect($mystring.split("NORMAL").length).to be == 3
+    expect($mystring.split("CHANGED").length).to be == 1
+    exit_code = Bake.startBake("qac/config", ["test"])
+    expect($mystring.split("NORMAL").length).to be == 5
+    expect($mystring.split("CHANGED").length).to be == 1
+    exit_code = Bake.startBake("qac/config", ["test", "--qac"])
+    expect($mystring.split("NORMAL").length).to be == 5
+    expect($mystring.split("CHANGED").length).to be == 3
+    exit_code = Bake.startBake("qac/config", ["test", "--qac"])
+    expect($mystring.split("NORMAL").length).to be == 5
+    expect($mystring.split("CHANGED").length).to be == 5
+
+    FileUtils.mv("spec/testdata/qac/config/Project.meta", "spec/testdata/qac/config/ProjectOrg.meta")
+    FileUtils.mv("spec/testdata/qac/config/Project2.meta", "spec/testdata/qac/config/Project.meta")
+    sleep 2
+    FileUtils.touch("spec/testdata/qac/config/Project.meta")
+
+    exit_code = Bake.startBake("qac/config", ["test"])
+    expect($mystring.split("NORMAL").length).to be == 7
+    expect($mystring.split("CHANGED").length).to be == 5
+    exit_code = Bake.startBake("qac/config", ["test"])
+    expect($mystring.split("NORMAL").length).to be == 9
+    expect($mystring.split("CHANGED").length).to be == 5
+    exit_code = Bake.startBake("qac/config", ["test", "--qac"])
+    expect($mystring.split("NORMAL").length).to be == 11
+    expect($mystring.split("CHANGED").length).to be == 5
+    exit_code = Bake.startBake("qac/config", ["test", "--qac"])
+    expect($mystring.split("NORMAL").length).to be == 13
+    expect($mystring.split("CHANGED").length).to be == 5
+
+    FileUtils.mv("spec/testdata/qac/config/Project.meta", "spec/testdata/qac/config/Project2.meta")
+    FileUtils.mv("spec/testdata/qac/config/ProjectOrg.meta", "spec/testdata/qac/config/Project.meta")
+    sleep 2
+    FileUtils.touch("spec/testdata/qac/config/Project.meta")
+
+    exit_code = Bake.startBake("qac/config", ["test"])
+    expect($mystring.split("NORMAL").length).to be == 15
+    expect($mystring.split("CHANGED").length).to be == 5
+    exit_code = Bake.startBake("qac/config", ["test"])
+    expect($mystring.split("NORMAL").length).to be == 17
+    expect($mystring.split("CHANGED").length).to be == 5
+    exit_code = Bake.startBake("qac/config", ["test", "--qac"])
+    expect($mystring.split("NORMAL").length).to be == 17
+    expect($mystring.split("CHANGED").length).to be == 7
+    exit_code = Bake.startBake("qac/config", ["test", "--qac"])
+    expect($mystring.split("NORMAL").length).to be == 17
+    expect($mystring.split("CHANGED").length).to be == 9
+
+  end
+
+  it 'with default' do
+    exit_code = Bake.startBake("qac/default", ["test"])
+    expect($mystring.split("NORMAL").length).to be == 3
+    expect($mystring.split("CHANGED").length).to be == 1
+    exit_code = Bake.startBake("qac/config", ["test"])
+    expect($mystring.split("NORMAL").length).to be == 5
+    expect($mystring.split("CHANGED").length).to be == 1
+    exit_code = Bake.startBake("qac/config", ["test", "--qac"])
+    expect($mystring.split("NORMAL").length).to be == 5
+    expect($mystring.split("CHANGED").length).to be == 3
+    exit_code = Bake.startBake("qac/config", ["test", "--qac"])
+    expect($mystring.split("NORMAL").length).to be == 5
+    expect($mystring.split("CHANGED").length).to be == 5
+  end
+
 end
 
 end

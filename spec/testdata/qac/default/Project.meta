@@ -1,0 +1,13 @@
+Project default: test {
+
+  CustomConfig test {
+    CommandLine "echo NORMAL"
+    DefaultToolchain GCC
+  }
+
+  CustomConfig testQac {
+    CommandLine "echo CHANGED"
+    DefaultToolchain GCC
+  }
+
+}

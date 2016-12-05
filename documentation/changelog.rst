@@ -1,6 +1,10 @@
 Changelog
 =========
 
+December 5, 2016 - bake-toolkit 2.24.3
+    * Added: qac: if "<mainConfigName>Qac" is found in main project, it will be used instead of "<mainConfigName>"
+    * Added: First version of bake-format script, thanks to gizmomogwai
+
 November 24, 2016 - bake-toolkit 2.24.2
     * Bugfix: qac: fixed recognition of platform for cygwin with gcc >= 5.0
     * Bugfix: qac: default folder of qacdata is now <main project>/.qacdata instead of <working dir>/.qacdata

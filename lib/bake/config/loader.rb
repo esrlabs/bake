@@ -17,6 +17,17 @@ module Bake
         end
       end
 
+      if isMain
+        if Bake.options.qac
+          configs.each do |c|
+            if c.name == (configname + "Qac")
+              configname = configname + "Qac"
+              break
+            end
+          end
+        end
+      end
+
       config = nil
       configs.each do |c|
         if c.name == configname
@@ -242,8 +253,11 @@ module Bake
       @loadedConfigs = {}
       @loadedConfigs[Bake.options.main_project_name] = configs
 
+
       if not showConfigNames?
+
         config, Bake.options.build_config = getFullProject(configs,Bake.options.build_config, true)
+
         @referencedConfigs = {}
         @referencedConfigs[Bake.options.main_project_name] = [config]
 

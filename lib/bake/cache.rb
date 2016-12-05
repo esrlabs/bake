@@ -23,12 +23,12 @@ module Bake
       attr_reader :cacheFilename
 
       def initialize()
+        qacStr = Bake.options.qac ? "Qac" : ""
         if Bake.options.build_config == ""
-          @cacheFilename = Bake.options.main_dir+"/.bake/Default.Project.meta.cache"
+          @cacheFilename = Bake.options.main_dir+"/.bake/Default" + qacStr + ".Project.meta.cache"
         else
-          @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta." + sanitize_filename(Bake.options.build_config) + ".cache"
+          @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta." + sanitize_filename(Bake.options.build_config) + qacStr + ".cache"
         end
-
         FileUtils.mkdir_p(File.dirname(@cacheFilename))
       end
 
@@ -145,7 +145,7 @@ module Bake
 
         if cache != nil
           Bake.formatter.printInfo("Info: cache is up-to-date, loading cached meta information") if Bake.options.verbose >= 3
-          Bake.options.build_config = cache.build_config if Bake.options.build_config == ""
+          Bake.options.build_config = cache.build_config
           return cache.referencedConfigs
         end
 

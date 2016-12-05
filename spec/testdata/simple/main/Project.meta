@@ -1,5 +1,5 @@
 Project {
-
+  
   ExecutableConfig test_ok {
     Files "src/x.cpp"
     Dependency lib, config: test_ok
@@ -9,9 +9,9 @@ Project {
     }
     DefaultToolchain GCC
   }
-
+  
   ExecutableConfig test_ok2, extends: test_ok
-
+  
   ExecutableConfig test_compileError {
     Files "src/x.cpp"
     Dependency lib, config: test_ok
@@ -21,7 +21,7 @@ Project {
       }
     }
   }
-
+  
   ExecutableConfig test_archiveError {
     Files "src/x.cpp"
     Dependency lib, config: test_ok
@@ -31,7 +31,7 @@ Project {
       }
     }
   }
-
+  
   ExecutableConfig test_linkError {
     Files "src/x.cpp"
     Dependency lib, config: test_ok
@@ -41,16 +41,16 @@ Project {
       }
     }
   }
-
+  
   LibraryConfig test_doubleSource_lib {
     Files "src/x.cpp"
   }
-
+  
   ExecutableConfig test_doubleSource {
     Files "src/x.cpp"
     Dependency lib, config: test_ok
     Dependency config: test_doubleSource_lib
     DefaultToolchain GCC
   }
-
+  
 }

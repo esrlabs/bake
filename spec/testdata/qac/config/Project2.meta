@@ -1,0 +1,8 @@
+Project {
+
+  CustomConfig test {
+    CommandLine "echo NORMAL"
+    DefaultToolchain GCC
+  }
+
+}
