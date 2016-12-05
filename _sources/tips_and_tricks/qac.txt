@@ -142,6 +142,11 @@ QACPP needs a license. If floating licenses are not available, bakeqac can retry
 
 Step 2 and 3 are retried until timeout is reached.
 
+Notes
+-----
+
+If "<mainConfigName>Qac" is found in main project, it will be used instead of "<mainConfigName>. This is useful if the unit test has to be built different to MISRA.
+
 Example output
 --------------
 
