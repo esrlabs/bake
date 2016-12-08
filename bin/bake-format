@@ -21,8 +21,8 @@ begin
   end
 rescue
   puts [
-    "Usage: #{__FILE__} [--ident=string] input output",
-    "  --indent=string, ident defaults to two spaces.",
+    "Usage: #{__FILE__} [--indent=string] input output",
+    "  --indent=string, indent defaults to two spaces.",
     "    Note, you can escape a tab in bash by ctrl-vTAB with sourrounding \" e.g. \"--input=    \"",
     "  input, filename or '-' for stdin",
     "  output, filename, '-' for stdout, '--' for same as input file"

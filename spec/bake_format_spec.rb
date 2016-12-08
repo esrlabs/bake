@@ -9,13 +9,20 @@ describe 'bake_format' do
     expect(output.string).to eq("test {\n    test2\n}\n")
   end
 
-  it 'default indentation are two spaces' do
-    # todo: missing tests of root script
+  it 'default indentation of the bake-format tool are two spaces' do
+    output = `bin/bake-format spec/testdata/format.txt -`
+    expect(output).to eq("test {\n\n  test2\n}\n")
   end
 
   it 'should close the output resource' do
     output = StringIO.new
     bake_format("test", output, "    ")
     expect(output.closed?).to be true
+  end
+
+  it "should not indent empty lines" do
+    output = StringIO.new
+    bake_format("test {\n\n}", output, "    ")
+    expect(output.string).to eq("test {\n\n}\n")
   end
 end

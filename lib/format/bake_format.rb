@@ -13,7 +13,7 @@ def bake_format(data, output, indent)
       else
         indent * indent_level
       end
-    output.puts(prefix + l)
+    output.puts((prefix + l).rstrip)
   end
   output.close
 end
