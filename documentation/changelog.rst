@@ -1,6 +1,11 @@
 Changelog
 =========
 
+December ?, 2016 - bake-toolkit 2.24.?
+    * Bugfix: qac: workaround cip.......... TODO
+    * Bugfix: qac: adapted parser to new GCC version string
+    * Cosmetic: Adapt.meta files are also cached now
+
 December 5, 2016 - bake-toolkit 2.24.3
     * Added: qac: if "<mainConfigName>Qac" is found in main project, it will be used instead of "<mainConfigName>"
     * Added: First version of bake-format script, thanks to gizmomogwai

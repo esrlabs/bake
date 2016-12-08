@@ -54,7 +54,7 @@ module Bake
     end
 
     def createBaseTcsForConfig
-      @loadedConfig.referencedConfigs.each do |projName, configs|
+      @referencedConfigs.each do |projName, configs|
         configs.each do |config|
           tcs = Utils.deep_copy(@defaultToolchain)
           @configTcMap[config] = tcs
@@ -63,7 +63,7 @@ module Bake
     end
 
     def createTcsForConfig
-      @loadedConfig.referencedConfigs.each do |projName, configs|
+      @referencedConfigs.each do |projName, configs|
         configs.each do |config|
           integrateToolchain(@configTcMap[config], config.toolchain)
         end
@@ -71,11 +71,11 @@ module Bake
     end
 
     def substVars
-      Subst.itute(@mainConfig, Bake.options.main_project_name, true, @configTcMap[@mainConfig], @loadedConfig, @configTcMap)
-      @loadedConfig.referencedConfigs.each do |projName, configs|
+      Subst.itute(@mainConfig, Bake.options.main_project_name, true, @configTcMap[@mainConfig], @referencedConfigs, @configTcMap)
+      @referencedConfigs.each do |projName, configs|
         configs.each do |config|
           if config != @mainConfig
-            Subst.itute(config, projName, false, @configTcMap[config], @loadedConfig, @configTcMap)
+            Subst.itute(config, projName, false, @configTcMap[config], @referencedConfigs, @configTcMap)
           end
         end
       end
@@ -86,16 +86,16 @@ module Bake
     def addSteps(block, blockSteps, configSteps)
       Array(configSteps.step).each do |step|
         if Bake::Metamodel::Makefile === step
-          blockSteps << Blocks::Makefile.new(step, @loadedConfig.referencedConfigs, block)
+          blockSteps << Blocks::Makefile.new(step, @referencedConfigs, block)
         elsif Bake::Metamodel::CommandLine === step
-          blockSteps << Blocks::CommandLine.new(step, @loadedConfig.referencedConfigs)
+          blockSteps << Blocks::CommandLine.new(step, @referencedConfigs)
         end
       end if configSteps
     end
 
     def addDependencies(block, config)
       config.dependency.each do |dep|
-        @loadedConfig.referencedConfigs[dep.name].each do |configRef|
+        @referencedConfigs[dep.name].each do |configRef|
           if configRef.name == dep.config
             block.dependencies << configRef.qname if not Bake.options.project# and not Bake.options.filename
             blockRef = Blocks::ALL_BLOCKS[configRef.qname]
@@ -108,20 +108,20 @@ module Bake
     end
 
     def calcPrebuildBlocks
-      @loadedConfig.referencedConfigs.each do |projName, configs|
+      @referencedConfigs.each do |projName, configs|
         configs.each do |config|
           if config.prebuild
             @prebuild ||= {}
             config.prebuild.except.each do |except|
               pName = projName
               if not except.name.empty?
-                if not @loadedConfig.referencedConfigs.keys.include? except.name
+                if not @referencedConfigs.keys.include? except.name
                   Bake.formatter.printWarning("Warning: prebuild project #{except.name} not found")
                   next
                 end
                 pName = except.name
               end
-              if except.config != "" && !@loadedConfig.referencedConfigs[pName].any? {|config| config.name == except.config}
+              if except.config != "" && !@referencedConfigs[pName].any? {|config| config.name == except.config}
                 Bake.formatter.printWarning("Warning: prebuild config #{except.config} of project #{pName} not found")
                 next
               end
@@ -138,7 +138,7 @@ module Bake
     end
 
     def makeBlocks
-      @loadedConfig.referencedConfigs.each do |projName, configs|
+      @referencedConfigs.each do |projName, configs|
         configs.each do |config|
 
           prebuild = !@prebuild.nil?
@@ -146,14 +146,14 @@ module Bake
             prebuild = false if (@prebuild[projName].include?"" or @prebuild[projName].include?config.name)
           end
 
-          block = Blocks::Block.new(config, @loadedConfig.referencedConfigs, prebuild)
+          block = Blocks::Block.new(config, @referencedConfigs, prebuild)
           Blocks::ALL_BLOCKS[config.qname] = block
         end
       end
     end
 
     def makeGraph
-      @loadedConfig.referencedConfigs.each do |projName, configs|
+      @referencedConfigs.each do |projName, configs|
         configs.each do |config|
           block = Blocks::ALL_BLOCKS[config.qname]
             addDependencies(block, config)
@@ -230,12 +230,12 @@ module Bake
           end
 
           if onlyProjectName
-            if not @loadedConfig.referencedConfigs.include? onlyProjectName
+            if not @referencedConfigs.include? onlyProjectName
               Bake.formatter.printError("Error: project #{onlyProjectName} not found")
               ExitHelper.exit(1)
             end
             if onlyConfigName
-              if not @loadedConfig.referencedConfigs[onlyProjectName].any? {|c| c.name == onlyConfigName}
+              if not @referencedConfigs[onlyProjectName].any? {|c| c.name == onlyConfigName}
                 Bake.formatter.printError("Error: project #{onlyProjectName} with config #{onlyConfigName} not found")
                 ExitHelper.exit(1)
               end
@@ -243,7 +243,7 @@ module Bake
           end
 
           foundProjs = {}
-          @loadedConfig.referencedConfigs.each do |projName, configs|
+          @referencedConfigs.each do |projName, configs|
             configs.each do |config|
               config.dependency.each do |d|
                 if onlyProjectName
@@ -265,7 +265,7 @@ module Bake
           end
           file.write "\n"
 
-          @loadedConfig.referencedConfigs.each do |projName, configs|
+          @referencedConfigs.each do |projName, configs|
             next if Bake.options.project and not foundProjs.include?projName
             file.write "  subgraph \"cluster_#{projName}\" {\n"
             file.write "    label =\"#{projName}\"\n"
@@ -283,7 +283,7 @@ module Bake
     end
 
     def convert2bb
-      @loadedConfig.referencedConfigs.each do |projName, configs|
+      @referencedConfigs.each do |projName, configs|
         configs.each do |config|
           block = Blocks::ALL_BLOCKS[config.qname]
 
@@ -302,18 +302,18 @@ module Bake
               addSteps(block, block.mainSteps, config) if config.step
             end
           elsif Bake.options.conversion_info
-            block.mainSteps << Blocks::Convert.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config])
+            block.mainSteps << Blocks::Convert.new(block, config, @referencedConfigs, @configTcMap[config])
           elsif Bake.options.lint
-            block.mainSteps << Blocks::Lint.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config])
+            block.mainSteps << Blocks::Lint.new(block, config, @referencedConfigs, @configTcMap[config])
           else
-            compile = Blocks::Compile.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config])
+            compile = Blocks::Compile.new(block, config, @referencedConfigs, @configTcMap[config])
             (Blocks::ALL_COMPILE_BLOCKS[projName] ||= []) << compile
             block.mainSteps << compile
             if not Bake.options.filename and not Bake.options.analyze
               if Metamodel::LibraryConfig === config
-                block.mainSteps << Blocks::Library.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
+                block.mainSteps << Blocks::Library.new(block, config, @referencedConfigs, @configTcMap[config], compile)
               else
-                block.mainSteps << Blocks::Executable.new(block, config, @loadedConfig.referencedConfigs, @configTcMap[config], compile)
+                block.mainSteps << Blocks::Executable.new(block, config, @referencedConfigs, @configTcMap[config], compile)
               end
             end
           end
@@ -414,15 +414,29 @@ module Bake
       end
 
       begin
-        al = AdaptConfig.new
-        adaptConfigs = al.load()
 
-        @loadedConfig = Config.new
-        @loadedConfig.load(adaptConfigs)
+        if Bake.options.showConfigs
+          al = AdaptConfig.new
+          adaptConfigs = al.load()
+          Config.new.printConfigs(adaptConfigs)
+        else
+          cache = CacheAccess.new()
+          @referencedConfigs = cache.load_cache unless Bake.options.nocache
+
+          if @referencedConfigs.nil?
+            al = AdaptConfig.new
+            adaptConfigs = al.load()
+
+            @loadedConfig = Config.new
+            @referencedConfigs = @loadedConfig.load(adaptConfigs)
+
+            cache.write_cache(@referencedConfigs, adaptConfigs)
+          end
+        end
 
         taskType = "Analyzing" if Bake.options.analyze
 
-        @mainConfig = @loadedConfig.referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
+        @mainConfig = @referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
 
         if Bake.options.lint
           @defaultToolchain = Utils.deep_copy(Bake::Toolchain::Provider["Lint"])

@@ -39,11 +39,11 @@ module Bake
       @@lazy = false
     end
 
-    def self.itute(config, projName, isMainProj, toolchain, loadedConfig, configTcMap)
+    def self.itute(config, projName, isMainProj, toolchain, referencedConfigs, configTcMap)
       @@lazy = true
       @@config = config
       @@toolchain = toolchain
-      @@loadedConfig = loadedConfig
+      @@referencedConfigs = referencedConfigs
       @@configTcMap = configTcMap
       @@toolchainName = config.defaultToolchain.basedOn if isMainProj
 
@@ -182,8 +182,8 @@ module Bake
             out_proj_name = splittedVar[1].strip
             out_conf_name = splittedVar[2].strip
           end
-          if @@loadedConfig.referencedConfigs.has_key?out_proj_name
-            configs = @@loadedConfig.referencedConfigs[out_proj_name]
+          if @@referencedConfigs.has_key?out_proj_name
+            configs = @@referencedConfigs[out_proj_name]
             config = configs.select {|c| c.name == out_conf_name }.first
             if config
                out_dir = nil

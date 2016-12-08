@@ -900,22 +900,22 @@ describe "Adapt" do
     Bake.startBake("adapt/main", ["test_dep0", "-v3"])
     $mystring.clear
     Bake.startBake("adapt/main", ["test_dep0", "--adapt", "dep_extend", "-v3"])
-    expect($mystring.include?("adapt config filenames have been changed, reloading meta information")).to be == true
+    expect($mystring.include?("adapts flags have been changed, reloading meta information")).to be == true
     $mystring.clear
     Bake.startBake("adapt/main", ["test_dep0", "--adapt", "dep_extend", "-v3"])
-    expect($mystring.include?("adapt config filenames have been changed, reloading meta information")).to be == false
+    expect($mystring.include?("adapts flags have been changed, reloading meta information")).to be == false
     $mystring.clear
     Bake.startBake("adapt/main", ["test_dep0", "--adapt", "dep_remove", "-v3"])
-    expect($mystring.include?("adapt config filenames have been changed, reloading meta information")).to be == true
+    expect($mystring.include?("adapts flags have been changed, reloading meta information")).to be == true
     $mystring.clear
     Bake.startBake("adapt/main", ["test_dep0", "--adapt", "dep_remove", "-v3"])
-    expect($mystring.include?("adapt config filenames have been changed, reloading meta information")).to be == false
+    expect($mystring.include?("adapts flags have been changed, reloading meta information")).to be == false
     $mystring.clear
     Bake.startBake("adapt/main", ["test_dep0", "-v3"])
-    expect($mystring.include?("adapt config filenames have been changed, reloading meta information")).to be == true
+    expect($mystring.include?("adapts flags have been changed, reloading meta information")).to be == true
     $mystring.clear
     Bake.startBake("adapt/main", ["test_dep0", "-v3"])
-    expect($mystring.include?("adapt config filename has been changed, reloading meta information")).to be == false
+    expect($mystring.include?("adapts flags have been changed, reloading meta information")).to be == false
   end
 
   it 'adapt filename changed' do

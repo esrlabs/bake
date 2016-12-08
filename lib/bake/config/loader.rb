@@ -132,7 +132,6 @@ module Bake
 
       Bake::Configs::Checks.symlinkCheck(filename)
 
-      @project_files << filename
       f = @loader.load(filename)
 
       config = nil
@@ -248,7 +247,6 @@ module Bake
         ExitHelper.exit(1)
       end
 
-      @project_files = []
       configs = loadProjMeta(mainMeta)
       @loadedConfigs = {}
       @loadedConfigs[Bake.options.main_project_name] = configs
@@ -345,32 +343,24 @@ module Bake
       ExitHelper.exit(0)
     end
 
+    def printConfigs(adaptConfigs)
+      @adaptConfigs = adaptConfigs
+      @loader = Loader.new
+      loadMainMeta # note.in cache only needed configs are stored
+      printConfigNames
+    end
+
     def load(adaptConfigs)
       @adaptConfigs = adaptConfigs
       @loader = Loader.new
-      if not Bake.options.showConfigs
-        cache = CacheAccess.new()
-        @referencedConfigs = cache.load_cache unless Bake.options.nocache
-        # cache invalid or forced to reload
-        if @referencedConfigs.nil?
-          loadMainMeta
-          printConfigNames if showConfigNames? # if neither config name nor default is set, list the configs with DefaultToolchain
-          checkRoots
-          while dep = @depsPending.shift
-            loadMeta(dep)
-          end
-          filterSteps
-          cache.write_cache(@project_files, @referencedConfigs)
-        else
-          if showConfigNames?
-            loadMainMeta # needed because in cache only needed configs are stored
-            printConfigNames
-          end
-        end
-      else
-        loadMainMeta # "--list" specified
-        printConfigNames
+      loadMainMeta
+      printConfigNames if showConfigNames? # if neither config name nor default is set, list the configs with DefaultToolchain
+      checkRoots
+      while dep = @depsPending.shift
+        loadMeta(dep)
       end
+      filterSteps
+      return @referencedConfigs
     end
 
   end

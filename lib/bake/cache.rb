@@ -8,7 +8,8 @@ module Bake
 
   class Cache
     attr_accessor :referencedConfigs
-    attr_accessor :files # project_files
+    attr_accessor :adaptConfigs
+    attr_accessor :adaptStrings
     attr_accessor :cache_file
     attr_accessor :version
     attr_accessor :workspace_roots
@@ -54,47 +55,33 @@ module Bake
             end
 
             if cache != nil
-              cache.files.each do |c|
-                if (not File.exists?(c))
-                  Bake.options.nocache = true
-                  Bake.formatter.printInfo("Info: cached meta file #{c} renamed or deleted, reloading meta information")
-                  cache = nil
-                  break
-                end
-              end
-            end
-
-            if cache != nil
               cache.referencedConfigs.each do |pname,configs|
                 configs.each do |config|
                   if not File.exists?(config.file_name)
                     Bake.options.nocache = true
                     Bake.formatter.printInfo("Info: cached meta file #{config.file_name} renamed or deleted, reloading meta information")
                     cache = nil
+                    break
+                  elsif File.mtime(config.file_name) > cacheTime + 1
+                    Bake.formatter.printInfo("Info: #{c} has been changed, reloading meta information")
+                    cache = nil
+                    break
                   end
                 end
               end
             end
 
-            if cache != nil
-              cache.files.each do |c|
-                if File.mtime(c) > cacheTime + 1
-                  Bake.formatter.printInfo("Info: #{c} has been changed, reloading meta information")
-                  cache = nil
-                  break
-                end
-              end
-            end
-
             if (cache != nil)
-              if (not AdaptConfig.filenames.eql?(cache.adapt_filenames))
-                Bake.formatter.printInfo("Info: adapt config filenames have been changed, reloading meta information")
+              if (cache.adaptStrings.length != Bake.options.adapt.length) ||
+                (cache.adaptStrings.any? { |a| !Bake.options.adapt.include?(a) }) ||
+                  (Bake.options.adapt.any? { |a| !cache.adaptStrings.include?(a) })
+                Bake.formatter.printInfo("Info: adapts flags have been changed, reloading meta information")
                 cache = nil
               end
             end
 
-            if (cache != nil and not AdaptConfig.filenames.empty?)
-              AdaptConfig.filenames.each do |f|
+            if (cache != nil)
+              cache.adapt_filenames.each do |f|
                 adaptTime = File.mtime(f)
                 if adaptTime > cacheTime + 1
                   Bake.formatter.printInfo("Info: #{f} has been changed, reloading meta information")
@@ -152,10 +139,11 @@ module Bake
         return nil
       end
 
-      def write_cache(project_files, referencedConfigs)
+      def write_cache(referencedConfigs, adaptConfigs)
         cache = Cache.new
         cache.referencedConfigs = referencedConfigs
-        cache.files = project_files
+        cache.adaptStrings = Bake.options.adapt
+        cache.adaptConfigs = adaptConfigs
         cache.cache_file = @cacheFilename
         cache.version = Version.number
         cache.include_filter = Bake.options.include_filter
