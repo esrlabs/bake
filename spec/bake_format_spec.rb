@@ -24,5 +24,9 @@ describe 'bake_format' do
     output = StringIO.new
     bake_format("test {\n\n}", output, "    ")
     expect(output.string).to eq("test {\n\n}\n")
+
+    output = StringIO.new
+    bake_format("test {\n\n}", output, "\t")
+    expect(output.string).to eq("test {\n\n}\n")
   end
 end
