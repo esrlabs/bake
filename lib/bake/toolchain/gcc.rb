@@ -7,10 +7,16 @@ require 'bake/toolchain/errorparser/gcc_linker_error_parser'
 module Bake
   module Toolchain
 
+    def self.getGccRawVersionInfo
+      `g++ --version`
+    end
+
     def self.getGccVersion
-      gccVersionStr = `g++ --version`
+      gccVersionStr = getGccRawVersionInfo()
       splitted = gccVersionStr.split("\n")[0].split(" ")
-      return splitted[splitted.length-1].split(".").map { |v| v.to_i }
+      vSubstr = splitted[splitted.length-1]
+      vSubstr = splitted[splitted.length-2] if ((!vSubstr.include?".") && (splitted.length >= 2))
+      return vSubstr.split(".").map { |v| v.to_i }
     end
 
     def self.getGccPlatform

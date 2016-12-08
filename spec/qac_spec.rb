@@ -60,6 +60,29 @@ module Bake
 
 describe "Qac" do
 
+  it 'gcc version test' do
+    $oldGccVersion = Bake::Toolchain.method(:getGccRawVersionInfo)
+
+    module Bake::Toolchain
+      def self.getGccRawVersionInfo
+        "g++ (Uhu 5.4.0-etc) 5.4.0 20160101\nbla bla bla Inc."
+      end
+    end
+    expect(Bake::Toolchain::getGccVersion).to be == [5,4,0]
+    module Bake::Toolchain
+      def self.getGccRawVersionInfo
+        "g++.exe (GCC) 4.8.2\nbla bla bla Inc."
+      end
+    end
+    expect(Bake::Toolchain::getGccVersion).to be == [4,8,2]
+
+    module Bake::Toolchain
+      def self.getGccRawVersionInfo
+        $oldGccVersion.call()
+      end
+    end
+  end
+
   it 'qac installed' do
     begin
       `qacli --version`
