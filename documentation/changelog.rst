@@ -2,9 +2,13 @@ Changelog
 =========
 
 December ?, 2016 - bake-toolkit 2.24.?
-    * Bugfix: qac: workaround cip.......... TODO
+
     * Bugfix: qac: adapted parser to new GCC version string
     * Cosmetic: Adapt.meta files are also cached now
+    * IncludeDir, Dependency calc
+    * -p inject Dependency problem
+    * report feature for qac
+    * cip bug workaround from 2.24.2 does not work, added some debug output to get more infos
 
 December 5, 2016 - bake-toolkit 2.24.3
     * Added: qac: if "<mainConfigName>Qac" is found in main project, it will be used instead of "<mainConfigName>"
