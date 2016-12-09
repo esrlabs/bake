@@ -431,18 +431,23 @@ module Bake
         Pathname.new(i).cleanpath
       end
 
-      def calcIncludes
-        @include_list = @config.includeDir.uniq.map do |dir|
-          mapInclude(dir, @block)
+      def calcIncludesInternal(block)
+        @blocksRead << block
+        block.config.baseElement.each do |be|
+          if Metamodel::IncludeDir === be
+            @include_list << mapInclude(be, block) if be.inherit == true || block == @block
+          elsif Metamodel::Dependency === be
+            childBlock = block.depToBlock[be.name + "," + be.config]
+            calcIncludesInternal(childBlock) if !@blocksRead.include?(childBlock)
+          end
         end
+      end
 
-        @block.getBlocks(:childs).each do |b|
-          b.config.includeDir.each do |inc|
-            if inc.inherit == true
-              @include_list << mapInclude(inc, b)
-            end
-          end if b.config.respond_to?("includeDir")
-        end
+      def calcIncludes
+
+        @blocksRead = Set.new
+        @include_list = []
+        calcIncludesInternal(@block) # includeDir and child dependencies with inherit: true
 
         @block.getBlocks(:parents).each do |b|
           if b.config.respond_to?("includeDir")

@@ -389,6 +389,13 @@ describe "Building" do
     expect($mystring.include?("-I../r1/lib2/include")).to be == true
   end
 
+  it 'include order' do
+    Bake.startBake("includeOrder/main", ["test1", "-v2"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect($mystring.include?("-IM1 -IB21 -IB22 -IB11 -IB12 -IB31 -IB32 -IM2")).to be == true
+  end
+
+
 end
 
 end

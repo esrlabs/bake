@@ -1,0 +1,35 @@
+Project {
+
+
+  CustomConfig testBase1 {
+    IncludeDir "B11", inherit: true
+    Dependency config: testBase3
+    IncludeDir "B12", inherit: true
+  }
+
+  CustomConfig testBase2 {
+    IncludeDir "B21", inherit: true
+    IncludeDir "B22", inherit: true
+    Dependency config: testBase1
+  }
+
+  CustomConfig testBase3 {
+    Dependency config: testBase2
+    IncludeDir "B31", inherit: true
+    Dependency config: testBase1
+    IncludeDir "B32", inherit: true
+  }
+
+  # expected: -IM1 -IB21 -IB22 -IB11 -IB12 -IB31 -IB32 -IM2
+  ExecutableConfig test1 {
+    IncludeDir "M1"
+    Dependency config: testBase3
+    IncludeDir "M2"
+
+    Files "src/main.cpp"
+
+    DefaultToolchain GCC
+  }
+
+
+}

@@ -132,14 +132,17 @@ module Bake
         has_attr 'name', String, :defaultValueLiteral => ""
       end
 
-      class IncludeDir < ModelElement
+      class BaseElement < ModelElement
+      end
+
+      class IncludeDir < BaseElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'infix', String, :defaultValueLiteral => ""
         has_attr 'inject', String, :defaultValueLiteral => ""
         has_attr 'inherit', Boolean, :defaultValueLiteral => "false"
       end
 
-      class LibStuff < ModelElement
+      class LibStuff < BaseElement
       end
 
       class ExternalLibrary < LibStuff
@@ -232,11 +235,10 @@ module Bake
         contains_one 'preSteps', PreSteps, 'parent'
         contains_one 'postSteps', PostSteps, 'parent'
         contains_one 'exitSteps', ExitSteps, 'parent'
-        contains_many 'libStuff', LibStuff, 'parent'
+        contains_many 'baseElement', BaseElement, 'parent'
         contains_one 'defaultToolchain', DefaultToolchain, 'parent'
         contains_one 'toolchain', Toolchain, 'parent'
         contains_many 'set', Set, 'parent'
-        contains_many 'includeDir', IncludeDir, 'parent'
         contains_many 'prebuild', Prebuild, 'parent'
 
         module ClassModule

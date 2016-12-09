@@ -100,6 +100,7 @@ module Bake
             block.dependencies << configRef.qname if not Bake.options.project# and not Bake.options.filename
             blockRef = Blocks::ALL_BLOCKS[configRef.qname]
             block.childs << blockRef
+            block.depToBlock[dep.name + "," + dep.config] = blockRef
             blockRef.parents << block
             break
           end
@@ -189,18 +190,20 @@ module Bake
               counter += 1
               newD = MergeConfig::cloneModelElement(d)
               newD.setInject("")
-              ls = block.config.getLibStuff
+              ls = block.config.getBaseElement
               dblock.parents << block
 
               if d.inject == "front"
-                block.config.setLibStuff(ls.unshift(newD))
+                block.config.setBaseElement(ls.unshift(newD))
                 block.childs.unshift dblock
                 block.dependencies.unshift dqname
               else
-                block.config.setLibStuff(ls + [newD])
+                block.config.setBaseElement(ls + [newD])
                 block.childs << dblock
                 block.dependencies << dqname
               end
+              block.depToBlock[d.name + "," + d.config] = dblock
+
             end
           end
         end

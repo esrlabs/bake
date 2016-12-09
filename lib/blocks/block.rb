@@ -50,6 +50,10 @@ module Bake
         @parents ||= []
       end
 
+      def depToBlock
+        @depToBlock ||= {}
+      end
+
       def set_library(library)
         @library = library
       end
