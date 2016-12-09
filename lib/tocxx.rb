@@ -166,6 +166,7 @@ module Bake
         block.parents.uniq!
       end
 
+
       # inject dependencies
       num_interations = 0
       begin
@@ -184,9 +185,9 @@ module Bake
               next if d.inject == ""
 
               dqname = "#{d.name},#{d.config}"
-              next if name == dqname
-              next if block.dependencies.include? dqname
               dblock = Blocks::ALL_BLOCKS[dqname]
+              next if name == dqname
+              next if block.childs.include? dblock
               counter += 1
               newD = MergeConfig::cloneModelElement(d)
               newD.setInject("")
@@ -196,11 +197,11 @@ module Bake
               if d.inject == "front"
                 block.config.setBaseElement(ls.unshift(newD))
                 block.childs.unshift dblock
-                block.dependencies.unshift dqname
+                block.dependencies.unshift dqname if not Bake.options.project
               else
                 block.config.setBaseElement(ls + [newD])
                 block.childs << dblock
-                block.dependencies << dqname
+                block.dependencies << dqname if not Bake.options.project
               end
               block.depToBlock[d.name + "," + d.config] = dblock
 
