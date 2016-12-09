@@ -316,6 +316,86 @@ end
 
   end
 
+###### STEP 4a: REPORT SCRIPT CHECK (OPTIONAL) ######
+
+  if success and !@options.qacstep.nil? and @options.qacstep.include?("report")
+
+    puts "bakeqac: preparing reports..."
+
+    # check if adapted
+    scriptsAdapted = true
+    [@options.qac_home+"/report_plugins/Rule_Compliance_Report.py", @options.qac_home+"/report_plugins/Suppressions_Report.py"].each do |script|
+      if !File.exist?script
+        puts "Error: script #{script} not found"
+        success = false
+        break
+      end
+
+      foundVersion = false
+      File.open(script, "r").each_line do |line|
+        scan_res = line.scan(/v(\d+\.\d+): Adapted.+_Report\.py/)
+        if scan_res.length > 0
+          puts "Info: script #{script} has version \"#{scan_res[0][0]}\""
+          foundVersion = true
+          break
+        end
+      end
+      puts "Info: script #{script} not adapted" if foundVersion == false
+
+    end
+
+  end
+
+###### STEP 4b: REPORT SUR (OPTIONAL) ######
+
+  if success and !@options.qacstep.nil? and @options.qacstep.include?("report")
+    FileUtils::mkdir_p @options.qacdata
+
+    puts "bakeqac: generating SUR report..."
+
+    cmd = qaExe + ["report", "-P", @options.qacdata, "-t", "SUR"]
+
+    timeStart = Time.now
+    loop do
+      success, consoleOutput = ProcessHelper.run(cmd, false)
+      licenseError = false
+      consoleOutput.each_line do |line|
+        licenseError = true if (line.include?("License Refused") && !line.include?("License Refused: C:"))
+      end
+      break unless (licenseError and (@options.qacretry >= (Time.now - timeStart)))
+      puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
+    end
+    puts "License refused, retry timeout over -> failure." if (@options.qacretry > 0 && licenseError)
+
+    success = false if licenseError
+
+    if useFilter
+      if success
+        puts consoleOutput # okay
+      else
+        puts consoleOutput # error
+      end
+    else
+      puts consoleOutput # no filter
+    end
+
+  end
+
+###### STEP 4c: REPORT RCR (OPTIONAL) ######
+
+  if success and !@options.qacstep.nil? and @options.qacstep.include?("report")
+    FileUtils::mkdir_p @options.qacdata
+
+    puts "bakeqac: generating RCR report..."
+
+    cmd = qaExe + ["report", "-P", @options.qacdata, "-t", "RCR"]
+
+    success, consoleOutput = ProcessHelper.run(cmd, false)
+    puts consoleOutput
+
+  end
+
+
 ###### DONE ######
 
   exit(success ? 0 : 1)
