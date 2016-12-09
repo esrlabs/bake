@@ -15,6 +15,15 @@ STDERR.sync = true
 
 module Bake
 
+def self.printCip()
+  cips = Dir.glob(@options.qacdata + "/**/*.cip")
+  if !cips.empty?
+    puts "Temporary debug output to find a highly sporadic bug regarding cip file, sorry for spam:"
+    puts "cip file name: #{cips[0]}"
+    puts "cip file size: #{File.size?(cips[0])}"
+  end
+end
+
 ###### PREREQUISITE 1: BAKEQAC OPTIONS ######
 
   @options = BakeqacOptions.new(ARGV)
@@ -73,14 +82,11 @@ end
       FileUtils.rm_rf @options.qacdata
       success, consoleOutput = ProcessHelper.run(cmd, true)
 
-      puts "Temporary debug output:"
-
       break if not success
-      cips = Dir.glob(@options.qacdata + "/**/*.cip")
 
-      p cips
-      puts (!cips.empty?)
-      puts (!File.size?(cips[0]).nil?)
+      printCip()
+
+      cips = Dir.glob(@options.qacdata + "/**/*.cip")
       break if (!cips.empty?) && (!File.size?(cips[0]).nil?) # this is the regular case, note: "size?" returns nil if empty or not existing
 
       cipCounter += 1
@@ -186,6 +192,7 @@ end
       puts consoleOutput # no filter
     end
 
+    printCip()
   end
 
 
@@ -304,6 +311,8 @@ end
     else
       puts consoleOutput # no filter
     end
+
+    printCip()
 
   end
 
