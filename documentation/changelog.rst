@@ -1,14 +1,15 @@
 Changelog
 =========
 
-December ?, 2016 - bake-toolkit 2.24.?
-
-    * Bugfix: qac: adapted parser to new GCC version string
-    * Cosmetic: Adapt.meta files are also cached now
-    * IncludeDir, Dependency calc
-    * -p inject Dependency problem
-    * report feature for qac
-    * cip bug workaround from 2.24.2 does not work, added some debug output to get more infos
+December 15, 2016 - bake-toolkit 2.25.0
+    * Changed (!): before this version, all "IncludeDir"s were evaluated prior to the "Dependency"s to calculate the include path string for the compiler. Now the line order
+      is taken into account. To get the same include path string as in 2.24.x, shift all "IncludeDir"s in front of the first "Dependency".
+    * Added: it is possible to mark an IncludeDir with "system: true", which means that e.g. for gcc "-isystem" is used instead of "-I". Very useful for third party libs.
+    * Bugfix: qac: adapted parser to new gcc version strings. On some machines an incorrect CCT was chosen.
+    * Bugfix: when building with "-p <projectname>", bake has not only built <projectname>, but also all injected dependencies of <projectname>, which was not intended.
+    * Added: qac: additional step to generate reports, activate it manually with "--qacstep report", see documentation.
+    * Cosmetic: Adapt.meta files are also cached now.
+    * Temporary: cip bug workaround from 2.24.2 does not work, added some debug output to get more infos - sorry for the spam - will be removed soon.
 
 December 5, 2016 - bake-toolkit 2.24.3
     * Added: qac: if "<mainConfigName>Qac" is found in main project, it will be used instead of "<mainConfigName>"

@@ -13,10 +13,12 @@ QACPP can be called directly from command line:
     qacli admin --qaf-project-config --qaf-project qacdata --cct <cct> --rcf <rcf> --acf <acf>
     qacli analyze -P qacdata -b <bake call>
     qacli view -P qacdata -m STDOUT
+    qacli report -P qacdata -t SUR # or -t RCR. Please also note, that the "view" is not necessary to generate the reports.
 
 - The first command creates the qac project database.
 - The second command builds and analyzes the files.
 - The third command prints out the result unfiltered.
+- The forth command generates reports. You may replace the python scripts in PRQA to adapt the output.
 
 With bakeqac
 ------------
@@ -33,13 +35,13 @@ for regular build, simply write:
 
     bakeqac <options>
 
-bakeqac will automatically do the three steps mentioned above. If one of these steps fails, the consecutive steps will be dismissed.
+bakeqac will automatically do the first three steps mentioned above. If one of these steps fails, the consecutive steps will be dismissed.
 
 You can also choose certain steps (can be combined with "|"):
 
 .. code-block:: console
 
-    bakeqac <options> --qacstep admin|analyze|view
+    bakeqac <options> --qacstep admin|analyze|view|report
     bakeqac <options> --qacstep admin
     etc.
 
@@ -130,6 +132,11 @@ Colored output is also supported similar to bake:
 
     bakeqac <options> -a <color_scheme>
 
+Step 4: report
+--------------
+
+Reports about the warnings and suppressed warnings are be generated.
+
 
 Additional options
 ------------------
@@ -140,7 +147,7 @@ QACPP needs a license. If floating licenses are not available, bakeqac can retry
 
     bakeqac <options> --qacretry <seconds>
 
-Step 2 and 3 are retried until timeout is reached.
+Steps "analyze" and "view" are retried until timeout is reached.
 
 Notes
 -----
