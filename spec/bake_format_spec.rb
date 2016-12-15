@@ -1,3 +1,4 @@
+require 'helper'
 require 'format/bake_format'
 
 describe 'bake_format' do
@@ -5,12 +6,11 @@ describe 'bake_format' do
     input = "test {\ntest2\n}"
     output = StringIO.new
     bake_format(input, output, "    ")
-    puts output
     expect(output.string).to eq("test {\n    test2\n}\n")
   end
 
   it 'default indentation of the bake-format tool are two spaces' do
-    output = `bin/bake-format spec/testdata/format.txt -`
+    output = `ruby #{File.dirname(__FILE__)}/../bin/bake-format spec/testdata/format.txt -`
     expect(output).to eq("test {\n\n  test2\n}\n")
   end
 
