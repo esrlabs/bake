@@ -102,6 +102,7 @@
 <li><a class="reference internal" href="#step-1-admin">Step 1: admin</a></li>
 <li><a class="reference internal" href="#step-2-analyze">Step 2: analyze</a></li>
 <li><a class="reference internal" href="#step-3-view">Step 3: view</a></li>
+<li><a class="reference internal" href="#step-4-report">Step 4: report</a></li>
 <li><a class="reference internal" href="#additional-options">Additional options</a></li>
 <li><a class="reference internal" href="#notes">Notes</a></li>
 <li><a class="reference internal" href="#example-output">Example output</a></li>
@@ -157,12 +158,14 @@
 <div class="highlight-console"><div class="highlight"><pre><span class="go">qacli admin --qaf-project-config --qaf-project qacdata --cct &lt;cct&gt; --rcf &lt;rcf&gt; --acf &lt;acf&gt;</span>
 <span class="go">qacli analyze -P qacdata -b &lt;bake call&gt;</span>
 <span class="go">qacli view -P qacdata -m STDOUT</span>
+<span class="go">qacli report -P qacdata -t SUR # or -t RCR. Please also note, that the &quot;view&quot; is not necessary to generate the reports.</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>The first command creates the qac project database.</li>
 <li>The second command builds and analyzes the files.</li>
 <li>The third command prints out the result unfiltered.</li>
+<li>The forth command generates reports. You may replace the python scripts in PRQA to adapt the output.</li>
 </ul>
 </div>
 <div class="section" id="with-bakeqac">
@@ -175,9 +178,9 @@
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt;</span>
 </pre></div>
 </div>
-<p>bakeqac will automatically do the three steps mentioned above. If one of these steps fails, the consecutive steps will be dismissed.</p>
+<p>bakeqac will automatically do the first three steps mentioned above. If one of these steps fails, the consecutive steps will be dismissed.</p>
 <p>You can also choose certain steps (can be combined with &#8220;|&#8221;):</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacstep admin|analyze|view</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacstep admin|analyze|view|report</span>
 <span class="go">bakeqac &lt;options&gt; --qacstep admin</span>
 <span class="go">etc.</span>
 </pre></div>
@@ -252,13 +255,17 @@ This may be used to add additional configuration parameters which are compiler i
 </pre></div>
 </div>
 </div>
+<div class="section" id="step-4-report">
+<h2>Step 4: report<a class="headerlink" href="#step-4-report" title="Permalink to this headline">¶</a></h2>
+<p>Reports about the warnings and suppressed warnings are be generated.</p>
+</div>
 <div class="section" id="additional-options">
 <h2>Additional options<a class="headerlink" href="#additional-options" title="Permalink to this headline">¶</a></h2>
 <p>QACPP needs a license. If floating licenses are not available, bakeqac can retry to checkout them:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacretry &lt;seconds&gt;</span>
 </pre></div>
 </div>
-<p>Step 2 and 3 are retried until timeout is reached.</p>
+<p>Steps &#8220;analyze&#8221; and &#8220;view&#8221; are retried until timeout is reached.</p>
 </div>
 <div class="section" id="notes">
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
