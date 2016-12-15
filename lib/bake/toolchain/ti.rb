@@ -15,6 +15,7 @@ module Bake
       :DEFINE_FLAG => "--define=",
       :OBJECT_FILE_FLAG => "--output_file=",
       :INCLUDE_PATH_FLAG => "--include_path=",
+      :SYSTEM_INCLUDE_PATH_FLAG => "--include_path=",
       :COMPILE_FLAGS => "-c ",
       :DEP_FLAGS => "--preproc_dependency=",
       :DEP_FLAGS_SPACE => false

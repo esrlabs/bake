@@ -30,7 +30,7 @@ module Bake
       :DEFINE_FLAG => "-D",
       :OBJECT_FILE_FLAG => "-o",
       :OBJ_FLAG_SPACE => true,
-      :INCLUDE_PATH_FLAG => "-I",
+      :SYSTEM_INCLUDE_PATH_FLAG => "-isystem",
       :COMPILE_FLAGS => "-c ",
       :DEP_FLAGS => "-MD -MF",
       :DEP_FLAGS_SPACE => true,

@@ -11,7 +11,6 @@ module Bake
       :OBJECT_FILE_FLAG => "-o",
       :OBJ_FLAG_SPACE => true,
       :OBJECT_FILE_ENDING => ".plist",
-      :INCLUDE_PATH_FLAG => "-I",
       :COMPILE_FLAGS => "-cc1 -analyze -analyzer-output=plist ",
       :DEP_FLAGS => "",
       :DEP_FLAGS_FILENAME  => false,

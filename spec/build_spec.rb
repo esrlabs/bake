@@ -395,6 +395,11 @@ describe "Building" do
     expect($mystring.include?("-IM1 -IB21 -IB22 -IB11 -IB12 -IB31 -IB32 -IM2")).to be == true
   end
 
+  it 'system include' do
+    Bake.startBake("systemInclude/main", ["test", "-v2"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect($mystring.include?("-Wall -Iinclude/a -isysteminclude/b -isysteminclude/c -isysteminclude/d -o")).to be == true
+  end
 
 end
 

@@ -140,6 +140,7 @@ module Bake
         has_attr 'infix', String, :defaultValueLiteral => ""
         has_attr 'inject', String, :defaultValueLiteral => ""
         has_attr 'inherit', Boolean, :defaultValueLiteral => "false"
+        has_attr 'system', Boolean, :defaultValueLiteral => "false"
       end
 
       class LibStuff < BaseElement
@@ -162,6 +163,7 @@ module Bake
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'config', String, :defaultValueLiteral => ""
         has_attr 'inject', String, :defaultValueLiteral => ""
+        has_attr 'system', Boolean, :defaultValueLiteral => "false"
       end
 
       class Except < ModelElement

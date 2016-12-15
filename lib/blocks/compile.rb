@@ -17,6 +17,7 @@ module Bake
         super(block, config, referencedConfigs, tcs)
         @objects = []
         @object_files = {}
+        @system_includes = Set.new
 
         calcFileTcs
         calcIncludes
@@ -435,7 +436,11 @@ module Bake
         @blocksRead << block
         block.config.baseElement.each do |be|
           if Metamodel::IncludeDir === be
-            @include_list << mapInclude(be, block) if be.inherit == true || block == @block
+            if be.inherit == true || block == @block
+              mappedInc = mapInclude(be, block)
+              @include_list << mappedInc
+              @system_includes << mappedInc if be.system
+            end
           elsif Metamodel::Dependency === be
             childBlock = block.depToBlock[be.name + "," + be.config]
             calcIncludesInternal(childBlock) if !@blocksRead.include?(childBlock)
@@ -447,20 +452,21 @@ module Bake
 
         @blocksRead = Set.new
         @include_list = []
+        @system_includes = Set.new
         calcIncludesInternal(@block) # includeDir and child dependencies with inherit: true
 
         @block.getBlocks(:parents).each do |b|
           if b.config.respond_to?("includeDir")
             include_list_front = []
             b.config.includeDir.each do |inc|
-              if inc.inject == "front"
-                include_list_front << mapInclude(inc, b)
-              elsif inc.inject == "back"
-                @include_list << mapInclude(inc, b)
-              elsif inc.infix == "front"
-                include_list_front << mapInclude(inc, b)
-              elsif inc.infix == "back"
-                @include_list << mapInclude(inc, b)
+              if inc.inject == "front" || inc.infix == "front"
+                mappedInc = mapInclude(inc, b)
+                include_list_front << mappedInc
+                @system_includes << mappedInc if inc.system
+              elsif inc.inject == "back" || inc.infix == "back"
+                mappedInc = mapInclude(inc, b)
+                @include_list << mappedInc
+                @system_includes << mappedInc if inc.system
               end
             end
             @include_list = include_list_front + @include_list
@@ -471,7 +477,13 @@ module Bake
 
         @include_array = {}
         [:CPP, :C, :ASM].each do |type|
-          @include_array[type] = @include_list.map {|k| "#{@tcs[:COMPILER][type][:INCLUDE_PATH_FLAG]}#{k}"}
+          @include_array[type] = @include_list.map do |k|
+            if @system_includes.include?(k)
+              "#{@tcs[:COMPILER][type][:SYSTEM_INCLUDE_PATH_FLAG]}#{k}"
+            else
+              "#{@tcs[:COMPILER][type][:INCLUDE_PATH_FLAG]}#{k}"
+            end
+          end
         end
       end
 

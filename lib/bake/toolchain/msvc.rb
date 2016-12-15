@@ -14,7 +14,6 @@ module Bake
       :DEFINE_FLAG => "-D",
       :OBJECT_FILE_FLAG => "-Fo",
       :OBJ_FLAG_SPACE => false,
-      :INCLUDE_PATH_FLAG => "-I",
       :COMPILE_FLAGS => "-c -EHsc $(MSVC_FORCE_SYNC_PDB_WRITES)",
       :DEP_FLAGS_FILENAME => false,
       :DEP_FLAGS => "-showIncludes",
