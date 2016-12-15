@@ -355,29 +355,8 @@ end
 
     cmd = qaExe + ["report", "-P", @options.qacdata, "-t", "SUR"]
 
-    timeStart = Time.now
-    loop do
-      success, consoleOutput = ProcessHelper.run(cmd, false)
-      licenseError = false
-      consoleOutput.each_line do |line|
-        licenseError = true if (line.include?("License Refused") && !line.include?("License Refused: C:"))
-      end
-      break unless (licenseError and (@options.qacretry >= (Time.now - timeStart)))
-      puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
-    end
-    puts "License refused, retry timeout over -> failure." if (@options.qacretry > 0 && licenseError)
-
-    success = false if licenseError
-
-    if useFilter
-      if success
-        puts consoleOutput # okay
-      else
-        puts consoleOutput # error
-      end
-    else
-      puts consoleOutput # no filter
-    end
+    success, consoleOutput = ProcessHelper.run(cmd, false)
+    puts consoleOutput
 
   end
 
@@ -396,7 +375,7 @@ end
   end
 
 
-#### TODO: unittest for report, license behaviour, retry
+#### TODO: unittest for report
 
 
 ###### DONE ######
