@@ -1,0 +1,7 @@
+Project default: test {
+
+  CustomConfig test {
+    IncludeDir "a", inherit: true
+  }
+
+}

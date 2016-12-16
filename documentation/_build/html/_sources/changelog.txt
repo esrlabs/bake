@@ -1,6 +1,10 @@
 Changelog
 =========
 
+December 16, 2016 - bake-toolkit 2.25.1
+    * Bugfix: a null pointer exception could occur in 2.25.0, which happened in a complex scenario with multiple dependencies to a default config which extends another config with dependencies.
+      Luckily, this bugfix goes along with a small performance improvement when loading uncached meta files.
+
 December 15, 2016 - bake-toolkit 2.25.0
     * Changed (!): before this version, all "IncludeDir"s were evaluated prior to the "Dependency"s to calculate the include path string for the compiler. Now the line order
       is taken into account. To get the same include path string as in 2.24.x, shift all "IncludeDir"s in front of the first "Dependency".

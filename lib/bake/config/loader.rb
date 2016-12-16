@@ -6,8 +6,11 @@ module Bake
   class Config
     attr_reader :referencedConfigs
 
-    def getFullProjectInternal(configs, configname, isMain) # note: configs is never empty
+    def initialize()
+      @fullProjects = {}
+    end
 
+    def resolveConfigName(configs, configname)
       if (configname == "")
         if configs[0].parent.default != ""
           configname = configs[0].parent.default
@@ -16,6 +19,12 @@ module Bake
           ExitHelper.exit(1)
         end
       end
+      return configname
+    end
+
+    def getFullProjectInternal(configs, configname, isMain) # note: configs is never empty
+
+      configname = resolveConfigName(configs, configname)
 
       if isMain
         if Bake.options.qac
@@ -56,9 +65,15 @@ module Bake
       [config, configname]
     end
 
-    def getFullProject(configs, configname, isMain)
-      config, configname = getFullProjectInternal(configs, configname, isMain)
+    def getFullProject(projName, configs, configname, isMain)
 
+      configname = resolveConfigName(configs, configname)
+
+      if @fullProjects.has_key?(projName + "," + configname)
+        return @fullProjects[projName + "," + configname]
+      end
+
+      config, configname = getFullProjectInternal(configs, configname, isMain)
 
       # check if config has to be manipulated
       @adaptConfigs.each do |c|
@@ -69,6 +84,7 @@ module Bake
         end
       end
 
+      @fullProjects[projName + "," + configname] = [config, configname]
       [config, configname]
     end
 
@@ -219,12 +235,11 @@ module Bake
         end
 
       end
-
       # get config
       if Bake.options.verbose >= 3
         puts "  #{dep_name} #{dep.config.empty? ? "<default>" : "("+dep.config+")"} referenced by #{dep.parent.parent.name} (#{dep.parent.name})"
       end
-      config, dep.config = getFullProject(@loadedConfigs[dep_name], dep.config, false)
+      config, dep.config = getFullProject(dep_name, @loadedConfigs[dep_name], dep.config, false)
       dep.name = dep_name
 
       # config not referenced yet
@@ -254,7 +269,7 @@ module Bake
 
       if not showConfigNames?
 
-        config, Bake.options.build_config = getFullProject(configs,Bake.options.build_config, true)
+        config, Bake.options.build_config = getFullProject(Bake.options.main_project_name, configs,Bake.options.build_config, true)
 
         @referencedConfigs = {}
         @referencedConfigs[Bake.options.main_project_name] = [config]
@@ -330,7 +345,7 @@ module Bake
       configs = @loadedConfigs[Bake.options.main_project_name]
       foundValidConfig = false
       configs.each do |c|
-        config, tmp = getFullProject(configs, c.name, c.name == mainConfigName)
+        config, tmp = getFullProject(Bake.options.main_project_name, configs, c.name, c.name == mainConfigName)
         next if config.defaultToolchain.nil?
         Kernel.print "* #{config.name}"
         Kernel.print " (default)" if config.name == defaultConfigName
@@ -359,6 +374,7 @@ module Bake
       while dep = @depsPending.shift
         loadMeta(dep)
       end
+
       filterSteps
       return @referencedConfigs
     end

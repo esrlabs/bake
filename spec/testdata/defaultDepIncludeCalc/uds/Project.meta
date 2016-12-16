@@ -1,0 +1,13 @@
+Project default: test {
+
+
+  CustomConfig testBase {
+    Dependency lib
+    IncludeDir "b", inherit: true
+  }
+
+  CustomConfig test, extends: testBase {
+    IncludeDir "c", inherit: true
+  }
+
+}

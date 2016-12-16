@@ -1,0 +1,36 @@
+Project {
+
+  LibraryConfig test1 {
+    Files "src/main.cpp"
+    Dependency uds, config: test
+    Dependency uds
+    IncludeDir "d"
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test2 {
+    Files "src/main.cpp"
+    Dependency uds
+    Dependency uds, config: test
+    IncludeDir "d"
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test3 {
+    Files "src/main.cpp"
+    Dependency uds, config: test
+    Dependency uds, config: test
+    IncludeDir "d"
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test4 {
+    Files "src/main.cpp"
+    Dependency uds
+    Dependency uds
+    IncludeDir "d"
+    DefaultToolchain GCC
+  }
+
+
+}
