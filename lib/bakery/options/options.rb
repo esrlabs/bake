@@ -45,9 +45,8 @@ module Bake
     def parse_options(bakeOptions)
       parse_internal(true, bakeOptions)
       set_collection_dir(Dir.pwd) if @collection_dir.nil?
-      if @roots.length == 0
-        @roots = @def_roots
-      end
+      @roots += @def_roots
+      @roots.uniq!
     end
 
     def check_valid_dir(dir)

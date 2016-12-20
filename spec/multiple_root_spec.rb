@@ -45,11 +45,11 @@ describe "Multiple root" do
     expect($mystring.split("Error: Directory spec/testdata/GIBTS_DOCH_GAR_NICHT does not exist").length).to be == 2
   end
 
-  it 'auto root overwritten wrong' do
+  it 'auto root overwritten wrong (but roots.bake is taken)' do
     expect(File.exists?("spec/testdata/root1/mainAutoRoot/build/test/mainAutoRoot"+Bake::Toolchain.outputEnding)).to be == false
     Bake.startBake("root1/mainAutoRoot", ["test", "-w", "spec/testdata/root1", "--adapt", "nols"])
-    expect($mystring.include?("Error: lib2")).to be == true
-    expect(File.exists?("spec/testdata/root1/mainAutoRoot/build/test/mainAutoRoot"+Bake::Toolchain.outputEnding)).to be == false
+    expect($mystring.include?("Building done")).to be == true
+    expect(File.exists?("spec/testdata/root1/mainAutoRoot/build/test/mainAutoRoot"+Bake::Toolchain.outputEnding)).to be == true
   end
 
   it 'auto root overwritten right' do

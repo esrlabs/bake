@@ -160,7 +160,7 @@ module Bake
       Bake::Bundle.instance.cleanup()
       parse_internal(false)
       set_main_dir(Dir.pwd) if @main_dir.nil?
-      @roots = @def_roots if @roots.length == 0
+      @roots += @def_roots
       @roots.uniq!
       @adapt.uniq!
 

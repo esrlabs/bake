@@ -140,6 +140,12 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>December 20, 2016 - bake-toolkit 2.26.0</dt>
+<dd><ul class="first last simple">
+<li>Changed: before this version, &#8220;-w&#8221; command line args (which define the workspace roots) have overwritten roots.bake file. Now these roots will be
+merged. First &#8220;-w&#8221;, then roots.bake. Note: this will not break current builds.</li>
+</ul>
+</dd>
 <dt>December 16, 2016 - bake-toolkit 2.25.1</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: a null pointer exception could occur in 2.25.0, which happened in a complex scenario with multiple dependencies to a default config which extends another config with dependencies.

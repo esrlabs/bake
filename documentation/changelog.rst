@@ -1,6 +1,10 @@
 Changelog
 =========
 
+December 20, 2016 - bake-toolkit 2.26.0
+    * Changed: before this version, "-w" command line args (which define the workspace roots) have overwritten roots.bake file. Now these roots will be
+      merged. First "-w", then roots.bake. Note: this will not break current builds.
+
 December 16, 2016 - bake-toolkit 2.25.1
     * Bugfix: a null pointer exception could occur in 2.25.0, which happened in a complex scenario with multiple dependencies to a default config which extends another config with dependencies.
       Luckily, this bugfix goes along with a small performance improvement when loading uncached meta files.
