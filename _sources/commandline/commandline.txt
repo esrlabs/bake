@@ -104,4 +104,6 @@ Example:
         C:/another/root # comments written like this
         something/else
 
+If -w and roots.bake are specified, they will be merged. First -w, then roots.bake.
+
 If -w and roots.bake are not specified, the default workspace root is the parent directory of the main project.
