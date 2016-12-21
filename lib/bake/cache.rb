@@ -63,7 +63,7 @@ module Bake
                     cache = nil
                     break
                   elsif File.mtime(config.file_name) > cacheTime + 1
-                    Bake.formatter.printInfo("Info: #{c} has been changed, reloading meta information")
+                    Bake.formatter.printInfo("Info: #{config.file_name} has been changed, reloading meta information")
                     cache = nil
                     break
                   end
