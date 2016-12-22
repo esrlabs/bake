@@ -16,7 +16,8 @@ module Bake
       :OBJECT_FILE_FLAG => "-o",
       :OBJ_FLAG_SPACE => true,
       :COMPILE_FLAGS => "-c ",
-      :DEP_FLAGS => "-MD -MF ", # empty space at the end is important!
+      :DEP_FLAGS => "-MD -MF",
+      :DEP_FLAGS_SPACE => true,
       :ERROR_PARSER => gccCompilerErrorParser
     })
 
