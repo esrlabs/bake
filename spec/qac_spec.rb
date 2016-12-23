@@ -520,8 +520,8 @@ describe "Qac" do
     ENV["QAC_UT"] = "no_license_analyze"
     ENV["QAC_RETRY"] = Time.now.to_i.to_s
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacretry", "10"]) # after 5s the license is available
-    expect($mystring.split("License refused, retry").length).to be > 3
-    expect($mystring.split("License refused, retry").length).to be < 10
+    expect($mystring.split("License refused").length).to be > 3
+    expect($mystring.split("License refused").length).to be < 10
     expect($mystring.include?("Filtered out 1")).to be == false
     expect($mystring.include?("Filtered out 2")).to be == false
     expect($mystring.include?("rspec/lib1/bla")).to be == true
@@ -534,8 +534,8 @@ describe "Qac" do
     ENV["QAC_UT"] = "no_license_view"
     ENV["QAC_RETRY"] = Time.now.to_i.to_s
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacretry", "10"]) # after 5s the license is available
-    expect($mystring.split("License refused, retry").length).to be > 3
-    expect($mystring.split("License refused, retry").length).to be < 10
+    expect($mystring.split("License refused").length).to be > 3
+    expect($mystring.split("License refused").length).to be < 10
     expect($mystring.include?("Filtered out 1")).to be == false
     expect($mystring.include?("Filtered out 2")).to be == false
     expect($mystring.include?("rspec/lib1/bla")).to be == true
@@ -548,7 +548,7 @@ describe "Qac" do
     ENV["QAC_UT"] = "no_license_view_c"
     ENV["QAC_RETRY"] = Time.now.to_i.to_s
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacretry", "10"]) # after 5s the license is available
-    expect($mystring.split("License refused, retry").length).to be == 1
+    expect($mystring.split("License refused").length).to be == 1
     expect($mystring.include?("Filtered out 1")).to be == false
     expect($mystring.include?("Filtered out 2")).to be == false
     expect($mystring.include?("rspec/lib1/bla")).to be == true
@@ -561,8 +561,8 @@ describe "Qac" do
     ENV["QAC_UT"] = "no_license_analyze"
     ENV["QAC_RETRY"] = Time.now.to_i.to_s
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacretry", "3"]) # after 5s the license is available
-    expect($mystring.split("License refused, retry").length).to be > 3
-    expect($mystring.include?("License refused, retry timeout")).to be == true
+    expect($mystring.split("License refused").length).to be > 3
+    expect($mystring.include?("Retry timeout")).to be == true
     expect($mystring.include?("Filtered out 1")).to be == true
     expect($mystring.include?("Filtered out 2")).to be == false
     expect($mystring.include?("rspec/lib1/bla")).to be == false
@@ -575,8 +575,8 @@ describe "Qac" do
     ENV["QAC_UT"] = "no_license_view"
     ENV["QAC_RETRY"] = Time.now.to_i.to_s
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacretry", "3"]) # after 5s the license is available
-    expect($mystring.split("License refused, retry").length).to be > 3
-    expect($mystring.include?("License refused, retry timeout")).to be == true
+    expect($mystring.split("License refused").length).to be > 3
+    expect($mystring.include?("Retry timeout")).to be == true
     expect($mystring.include?("Filtered out 1")).to be == false
     expect($mystring.include?("Filtered out 2")).to be == true
     expect($mystring.include?("rspec/lib1/bla")).to be == true

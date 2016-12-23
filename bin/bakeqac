@@ -24,6 +24,20 @@ def self.printCip()
   end
 end
 
+def self.cipSize()
+  cips = Dir.glob(@options.qacdata + "/**/*.cip")
+  if !cips.empty?
+    s = File.size?(cips[0])
+    if s.nil? || s == 0
+      puts "cip file empty: #{cips[0]}"
+      return 0
+    end
+    return s
+  end
+  puts "cip file does not exist!"
+  return 0
+end
+
 ###### PREREQUISITE 1: BAKEQAC OPTIONS ######
 
   @options = BakeqacOptions.new(ARGV)
@@ -33,6 +47,7 @@ end
   success = false
   consoleOutput = ""
   licenseError = false
+  cSize = 1
 
 ###### PREREQUISITE 2: BAKE OPTIONS ######
 
@@ -153,13 +168,21 @@ end
     loop do
       success, consoleOutput = ProcessHelper.run(cmd, false)
       licenseError = false
+
       consoleOutput.each_line do |line|
-        licenseError = true if (line.include?("License Refused") && !line.include?("License Refused: C:"))
+        if (line.include?("License Refused") && !line.include?("License Refused: C:"))
+          licenseError = true
+          puts "License refused!"
+          break
+        end
       end
-      break unless (licenseError and (@options.qacretry >= (Time.now - timeStart)))
-      puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
+
+      cSize = cipSize()
+
+      break unless ((@options.qacretry >= (Time.now - timeStart)) && (cSize == 0 || licenseError))
+      puts "Retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
     end
-    puts "License refused, retry timeout over -> failure." if (@options.qacretry > 0 && licenseError)
+    puts "Retry timeout over -> failure." if (@options.qacretry > 0 && (cSize == 0 || licenseError))
 
     success = false # we have to parse the output, qacli returns always an error here...
     filterOutput = []
@@ -177,7 +200,7 @@ end
         end
       end
     end
-    success = false if licenseError
+    success = false if (cSize == 0 || licenseError)
 
     if @options.qacfilter
       if success
@@ -222,15 +245,23 @@ end
     loop do
       success, consoleOutput = ProcessHelper.run(cmd, false)
       licenseError = false
-      consoleOutput.each_line do |line|
-        licenseError = true if (line.include?("License Refused") && !line.include?("License Refused: C:"))
-      end
-      break unless (licenseError and (@options.qacretry >= (Time.now - timeStart)))
-      puts "License refused, retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
-    end
-    puts "License refused, retry timeout over -> failure." if (@options.qacretry > 0 && licenseError)
 
-    success = false if licenseError
+      consoleOutput.each_line do |line|
+        if (line.include?("License Refused") && !line.include?("License Refused: C:"))
+          licenseError = true
+          puts "License refused!"
+          break
+        end
+      end
+
+      cSize = cipSize()
+
+      break unless ((@options.qacretry >= (Time.now - timeStart)) && (cSize == 0 || licenseError))
+      puts "Retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
+    end
+    puts "Retry timeout over -> failure." if (@options.qacretry > 0 && (cSize == 0 || licenseError))
+
+    success = false if (cSize == 0 || licenseError)
 
     if useFilter
       if success
