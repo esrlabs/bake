@@ -385,7 +385,6 @@ Project {
     Files "src/main.cpp"
     DefaultToolchain GCC, outputDir: "testABC" {
       Docu "blah fasel"
-      LintPolicy "intdef.txt"
       InternalIncludes "intdef.txt"
     }
   }
@@ -393,7 +392,6 @@ Project {
   ExecutableConfig testTC31, extends: testTC30 {
     DefaultToolchain GCC, outputDir: "testEFG" {
       Docu "nix da"
-      LintPolicy "intdef2.txt"
       InternalIncludes "intdef2.txt"
     }
  }

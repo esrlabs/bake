@@ -6,8 +6,6 @@ Adapt {
         Flags add: "-FLAG10"
         Flags add: "-FLAG2"
       }
-      LintPolicy "LINT_POL10"
-      LintPolicy "LINT_POL2"
       Docu "echo DOCUCMD_new"
     }
   }

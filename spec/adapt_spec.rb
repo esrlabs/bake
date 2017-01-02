@@ -699,23 +699,6 @@ describe "Adapt" do
     expect($mystring.index("add1.cpp")).to be < $mystring.index("main.cpp")
   end
 
-  it 'Lint extend 1' do
-    Bake.startBake("adapt/main", ["test_dtool1", "--rebuild", "--adapt",  "dtool_extend", "-v2", "--lint"])
-    expect($mystring.include?("LINT_POL10 LINT_POL2")).to be == true
-    expect($mystring.include?("LINT_POL1 ")).to be == false
-  end
-
-  it 'Lint extend 2' do
-    Bake.startBake("adapt/main", ["test_dtool2", "--rebuild", "--adapt",  "dtool_extend", "-v2", "--lint"])
-    expect($mystring.include?("LINT_POL1 LINT_POL2 LINT_POL10 LINT_POL2")).to be == true
-  end
-
-  it 'Lint replace 2' do
-    Bake.startBake("adapt/main", ["test_dtool2", "--rebuild", "--adapt",  "dtool_replace", "-v2", "--lint"])
-    expect($mystring.include?("LINT_POL3")).to be == true
-    expect($mystring.include?("LINT_POL2")).to be == false
-  end
-
   it 'BasedOn new' do
     Bake.startBake("adapt/main", ["test_dtool1", "--rebuild", "--adapt",  "based_new", "-v2"])
     expect($mystring.include?("dcc")).to be == true

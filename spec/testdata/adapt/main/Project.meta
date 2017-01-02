@@ -171,8 +171,6 @@ Project {
     DefaultToolchain GCC
   }
 
-  # archiver muss noch
-  # outputdir, eclipseorder, lintpolicy, docu, basedOn
   ExecutableConfig test_tool2 {
     Files "src/main.cpp"
     Files "src/x.c"
@@ -221,8 +219,6 @@ Project {
     DefaultToolchain GCC
   }
 
-    # archiver muss noch
-  # outputdir, eclipseorder, lintpolicy, docu, basedOn
   LibraryConfig test_dtool2 {
     Files "src/main.cpp"
     Files "src/x.c"
@@ -232,8 +228,6 @@ Project {
         Flags add: "-FLAG1"
         Flags add: "-FLAG2"
       }
-      LintPolicy "LINT_POL1"
-      LintPolicy "LINT_POL2"
       Docu "echo DOCUCMD_org"
     }
   }

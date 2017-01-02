@@ -24,7 +24,6 @@ require 'blocks/compile'
 require 'blocks/convert'
 require 'blocks/library'
 require 'blocks/executable'
-require 'blocks/lint'
 require 'blocks/convert'
 require 'blocks/docu'
 
@@ -294,7 +293,7 @@ module Bake
           addSteps(block, block.startupSteps,  config.startupSteps)
           addSteps(block, block.exitSteps,  config.exitSteps)
 
-          if not Bake.options.prepro and not Bake.options.lint and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
+          if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
             addSteps(block, block.preSteps,  config.preSteps)
             addSteps(block, block.postSteps, config.postSteps)
           end
@@ -302,13 +301,11 @@ module Bake
           if Bake.options.docu
             block.mainSteps << Blocks::Docu.new(config, @configTcMap[config])
           elsif Metamodel::CustomConfig === config
-            if not Bake.options.prepro and not Bake.options.lint and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
+            if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
               addSteps(block, block.mainSteps, config) if config.step
             end
           elsif Bake.options.conversion_info
             block.mainSteps << Blocks::Convert.new(block, config, @referencedConfigs, @configTcMap[config])
-          elsif Bake.options.lint
-            block.mainSteps << Blocks::Lint.new(block, config, @referencedConfigs, @configTcMap[config])
           else
             compile = Blocks::Compile.new(block, config, @referencedConfigs, @configTcMap[config])
             (Blocks::ALL_COMPILE_BLOCKS[projName] ||= []) << compile
@@ -401,9 +398,7 @@ module Bake
       end
 
       taskType = "Building"
-      if Bake.options.lint
-        taskType = "Linting"
-      elsif Bake.options.conversion_info
+      if Bake.options.conversion_info
         taskType = "Showing conversion infos"
       elsif Bake.options.docu
         taskType = "Generating documentation"
@@ -442,40 +437,37 @@ module Bake
 
         @mainConfig = @referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
 
-        if Bake.options.lint
-          @defaultToolchain = Utils.deep_copy(Bake::Toolchain::Provider["Lint"])
-        else
-          basedOn =  @mainConfig.defaultToolchain.basedOn
-          basedOnToolchain = Bake::Toolchain::Provider[basedOn]
-          if basedOnToolchain.nil?
-            Bake.formatter.printError("DefaultToolchain based on unknown compiler '#{basedOn}'", @mainConfig.defaultToolchain)
-            ExitHelper.exit(1)
-          end
+        basedOn =  @mainConfig.defaultToolchain.basedOn
+        basedOnToolchain = Bake::Toolchain::Provider[basedOn]
+        if basedOnToolchain.nil?
+          Bake.formatter.printError("DefaultToolchain based on unknown compiler '#{basedOn}'", @mainConfig.defaultToolchain)
+          ExitHelper.exit(1)
+        end
 
-          # The flag "-FS" must only be set for VS2013 and above
-          ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = ""
-          if basedOn == "MSVC"
-            begin
-              res = `cl.exe 2>&1`
-              raise Exception.new unless $?.success?
-              scan_res = res.scan(/ersion (\d+).(\d+).(\d+)/)
-              if scan_res.length > 0
-                ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = "-FS" if scan_res[0][0].to_i >= 18 # 18 is the compiler major version in VS2013
-              else
-                Bake.formatter.printError("Could not read MSVC version")
-                ExitHelper.exit(1)
-              end
-            rescue SystemExit
-              raise
-            rescue Exception => e
-              Bake.formatter.printError("Could not detect MSVC compiler")
+        # The flag "-FS" must only be set for VS2013 and above
+        ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = ""
+        if basedOn == "MSVC"
+          begin
+            res = `cl.exe 2>&1`
+            raise Exception.new unless $?.success?
+            scan_res = res.scan(/ersion (\d+).(\d+).(\d+)/)
+            if scan_res.length > 0
+              ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = "-FS" if scan_res[0][0].to_i >= 18 # 18 is the compiler major version in VS2013
+            else
+              Bake.formatter.printError("Could not read MSVC version")
               ExitHelper.exit(1)
             end
+          rescue SystemExit
+            raise
+          rescue Exception => e
+            Bake.formatter.printError("Could not detect MSVC compiler")
+            ExitHelper.exit(1)
           end
-
-          @defaultToolchain = Utils.deep_copy(basedOnToolchain)
-          Bake.options.envToolchain = true if (basedOn.include?"_ENV")
         end
+
+        @defaultToolchain = Utils.deep_copy(basedOnToolchain)
+        Bake.options.envToolchain = true if (basedOn.include?"_ENV")
+
         integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
 
         # todo: cleanup this hack

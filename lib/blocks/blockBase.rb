@@ -166,11 +166,7 @@ module Bake
                 console_output = console_output_VS
               end
 
-              if Bake.options.lint
-                # ignore error output
-              else
-                ret = error_descs.any? { |e| e.severity == ErrorParser::SEVERITY_ERROR }
-              end
+              ret = error_descs.any? { |e| e.severity == ErrorParser::SEVERITY_ERROR }
 
               console_output.gsub!(/[\r]/, "")
               Bake.formatter.format(console_output, error_descs, error_parser) unless console_output.empty?
@@ -191,7 +187,7 @@ module Bake
 
       def process_result(cmd, console_output, error_parser, alternate, reason, success)
         hasError = (success == false)
-        printCmd(cmd, alternate, reason, (hasError and not Bake.options.lint))
+        printCmd(cmd, alternate, reason, hasError)
         errorPrinted, incList = process_console_output(console_output, error_parser)
         if hasError and not errorPrinted
           Bake.formatter.printError("System command failed", @projectDir)

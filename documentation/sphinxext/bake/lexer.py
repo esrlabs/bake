@@ -47,7 +47,6 @@ class BakeLexer(RegexLexer):
                  (r'\bIncludeDir\b', Name.Class),
                  (r'\bLibPrefixFlags\b', Name.Class),
                  (r'\bLibPostfixFlags\b', Name.Class),
-                 (r'\bLintPolicy\b', Name.Class),
                  (r'\bDocu\b', Name.Class),
                  (r'\bInternalIncludes\b', Name.Class),
                  (r'\bDefine\b', Name.Class),

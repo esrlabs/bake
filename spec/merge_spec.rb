@@ -494,16 +494,10 @@ describe "Merging Configs" do
     expect($mystring.include?("nix da")).to be == false
   end
 
-  it 'toolchain lint merge' do
-    Bake.startBake("merge/main", ["testTC31", "--rebuild", "-v2", "--lint"])
-    expect($mystring.include?("intdef.txt")).to be == true
-    expect($mystring.include?("intdef2.txt")).to be == true
-  end
-
   it 'toolchain docu derive' do
-    Bake.startBake("merge/main", ["testTC32", "--rebuild", "-v2", "--lint"])
-    expect($mystring.include?("intdef.txt")).to be == true
-    expect($mystring.include?("intdef2.txt")).to be == false
+    Bake.startBake("merge/main", ["testTC32", "--incs-and-defs=bake"])
+    expect($mystring.include?("HARHAR")).to be == true
+    expect($mystring.include?("Oooooh")).to be == false
   end
 
   it 'toolchain internal includes no merge' do

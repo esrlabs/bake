@@ -110,7 +110,6 @@ module Bake
           :CLEAN => "clean"
         },
 
-        :LINT_POLICY => [],
         :DEP_FILE_SINGLE_LINE => false,
         :DOCU => ""
       }
@@ -137,7 +136,7 @@ module Bake
       end
 
       def self.list
-        return @@settings.delete_if {|x| x.include?"Lint" }
+        return @@settings
       end
 
     end
@@ -147,7 +146,6 @@ end
 
 require 'bake/toolchain/diab'
 require 'bake/toolchain/gcc'
-require 'bake/toolchain/lint'
 require 'bake/toolchain/clang'
 require 'bake/toolchain/clang_analyze'
 require 'bake/toolchain/ti'

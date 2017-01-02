@@ -5,17 +5,4 @@ LibraryConfig testDepHeader {
   DefaultToolchain GCC
 }
 
-LibraryConfig testLintPipe {
-  Dependency lib
-  Files "src/main.cpp"
-  DefaultToolchain GCC {
-  LintPolicy "-os($(MainProjectDir)/test_$(ProjectName)_$(ConfigName)_lintout.xml)"
-  LintPolicy "-v"
-  LintPolicy "+xml(doc)"
-  LintPolicy "-format=<message><file>%f</file> <line>%l</line> <type>%t</type> <code>%n</code> <desc>%m</desc></message>"
-  LintPolicy "-format_specific= "
-  LintPolicy "-pragma(message)"
-  }
-}
-
 }

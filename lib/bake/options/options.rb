@@ -21,8 +21,8 @@ module Bake
     attr_reader :main_dir, :project, :filename, :main_project_name, :bundleDir, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac # Boolean
-    attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :lint, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse # Boolean
-    attr_reader :threads, :socket, :lint_min, :lint_max # Fixnum
+    attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse # Boolean
+    attr_reader :threads, :socket # Fixnum
     attr_reader :vars # map
     attr_reader :verbose
     attr_reader :consoleOutput_fullnames, :consoleOutput_visualStudio
@@ -58,7 +58,6 @@ module Bake
       @json = false
       @clean = false
       @clobber = false
-      @lint = false
       @docu = false
       @debug = false
       @rebuild = false
@@ -69,8 +68,6 @@ module Bake
       @compileOnly = false
       @no_autodir = false
       @threads = 8
-      @lint_min = 0
-      @lint_max = -1
       @roots = []
       @socket = 0
       @include_filter = []
@@ -93,9 +90,6 @@ module Bake
       add_option(["--link-only",          "--link_only"          ], lambda {     @linkOnly = true;                       })
       add_option(["--compile-only",       "--compile_only"       ], lambda {     @compileOnly = true;                    })
       add_option(["--no-autodir",         "--no_autodir"         ], lambda {     @no_autodir = true                      })
-      add_option(["--lint"                                       ], lambda {     @lint = true                            })
-      add_option(["--lint-min",           "--lint_min"           ], lambda { |x| @lint_min = String === x ? x.to_i : x   })
-      add_option(["--lint-max",           "--lint_max"           ], lambda { |x| @lint_max = String === x ? x.to_i : x   })
 
       add_option(["--create"                                     ], lambda { |x| Bake::Create.proj(x)                    })
       add_option(["--conversion-info",    "--conversion_info"    ], lambda {     @conversion_info = true                 })
@@ -192,10 +186,6 @@ module Bake
           Bake.formatter.printError("Error: --conversion-info and --compileOnly not allowed at the same time")
           ExitHelper.exit(1)
         end
-        if @lint
-          Bake.formatter.printError("Error: --conversion-info and --lint not allowed at the same time")
-          ExitHelper.exit(1)
-        end
         if @docu
           Bake.formatter.printError("Error: --conversion-info and --docu not allowed at the same time")
           ExitHelper.exit(1)
@@ -245,11 +235,6 @@ module Bake
           Bake.formatter.printError("Error: --prepro and -c not allowed at the same time")
           ExitHelper.exit(1)
         end
-      end
-
-      if @lint and @docu
-        Bake.formatter.printError("Error: --lint and --docu not allowed at the same time")
-        ExitHelper.exit(1)
       end
 
       @filename = "." if @compileOnly

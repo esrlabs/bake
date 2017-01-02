@@ -16,10 +16,4 @@ Project {
     }
   }
 
-  ExecutableConfig testDiabLint {
-    Files "src/*.cpp"
-    Dependency lib, config: testSub
-    DefaultToolchain Diab
-  }
-
 }

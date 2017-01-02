@@ -120,7 +120,6 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPostfixFlags()" onMouseout="notip()">LibPostfixFlags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showInternalIncludes()" onMouseout="notip()">InternalIncludes</span> &#60;file&#62;<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultLintPolicy()" onMouseout="notip()">LintPolicy</span> &#60;policy&#62;<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDocu()" onMouseout="notip()">Docu</span> &#60;cmdLine&#62;<br>
 &nbsp; &nbsp; }<br>
 
@@ -141,7 +140,6 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPrefixFlags()" onMouseout="notip()">LibPrefixFlags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPostfixFlags()" onMouseout="notip()">LibPostfixFlags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
 &nbsp; &nbsp; &nbsp; }<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLintPolicy()" onMouseout="notip()">LintPolicy</span> &#60;policy&#62;<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDocu()" onMouseout="notip()">Docu</span> &#60;cmdLine&#62;<br>
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showPrebuild()" onMouseout="notip()">Prebuild</span> {<br>
@@ -616,10 +614,6 @@ function showLinker() {
   ddrivetip("Linker", "No","0..1","-","Makes sense only for ExecutableConfigs.")
 }
 
-function showLintPolicy() {
-  ddrivetip("LintPolicy", "No","0..n","-","lnt-file - but it can be used for any other command line option for Lint.")
-}
-
 function showDocu() {
   ddrivetip("Docu", "No","0..1","-","Command to build the documentation. e.g.:<br>doxygen main.cfg")
 }
@@ -650,10 +644,6 @@ function showDefaultArchiver() {
 
 function showDefaultLinker() {
   ddrivetip("Linker", "No","0..1","-","Default settings for the linker.")
-}
-
-function showDefaultLintPolicy() {
-  ddrivetip("LintPolicy", "No","0..n","-","lnt-file - but it can be used for any other command line option for Lint.")
 }
 
 function showCommand() {
