@@ -1,3 +1,5 @@
+.. _adapt_reference:
+
 Adapt configs
 =============
 

@@ -1,8 +1,9 @@
 Changelog
 =========
 
-January x, 2017 - bake-toolkit 2.27.0
-    * Added: local adapt (todo: docu)
+January 2, 2017 - bake-toolkit 2.27.0
+    * Added: local *Adapt* with conditions (e.g. toolchain), see :ref:`adapt_reference`.
+    * Changed: qac: cip workaround slightly adapted, removed temporary debug output.
 
 December 23, 2016 - bake-toolkit 2.26.1
     * Changed: qac: next try to add a workaround for the cip file bug.
