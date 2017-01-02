@@ -21,7 +21,7 @@ Adapt toolchain: GCC, os: Windows, mainProject: main1, mainConfig: test {
 Adapt toolchain: GCC, os: Linux, mainProject: main1, mainConfig: test {
   CustomConfig __ALL__, project: __ALL__, type: extend {
     PreSteps {
-      CommandLine "echo Linux ADAPT1 $(ProjectName) $(ConfigName)"
+      CommandLine "echo LINUX ADAPT1 $(ProjectName) $(ConfigName)"
     }
   }
 }
