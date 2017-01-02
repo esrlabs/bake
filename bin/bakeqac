@@ -15,27 +15,53 @@ STDERR.sync = true
 
 module Bake
 
-def self.printCip()
-  cips = Dir.glob(@options.qacdata + "/**/*.cip")
-  if !cips.empty?
-    puts "Temporary debug output to find a highly sporadic bug regarding cip file, sorry for spam:"
-    puts "cip file name: #{cips[0]}"
-    puts "cip file size: #{File.size?(cips[0])}"
-  end
-end
+@@cipFileSize = 1
 
-def self.cipSize()
+def self.checkCipSize()
   cips = Dir.glob(@options.qacdata + "/**/*.cip")
   if !cips.empty?
     s = File.size?(cips[0])
-    if s.nil? || s == 0
-      puts "cip file empty: #{cips[0]}"
-      return 0
+    s = 0 if s.nil?
+    if s < @@cipFileSize
+      puts "cip file too small: #{cips[0]} has #{s} bytes"
+      return false
     end
-    return s
+    @@cipFileSize = s
+    return true
   end
   puts "cip file does not exist!"
-  return 0
+  return false
+end
+
+def self.executeQacli(cmd, immediateOutput = false)
+  timeStart = Time.now
+  cSizeCheck = true
+  licenseError = false
+  consoleOutput = ""
+  success = false
+
+  loop do
+    success, consoleOutput = ProcessHelper.run(cmd, immediateOutput)
+    licenseError = false
+
+    consoleOutput.each_line do |line|
+      if (line.include?("License Refused") && !line.include?("License Refused: C:"))
+        licenseError = true
+        puts "License refused!"
+        break
+      end
+    end
+
+    cSizeCheck = checkCipSize()
+
+    break unless ((@options.qacretry >= (Time.now - timeStart)) && (!cSizeCheck || licenseError))
+    puts "Retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
+  end
+  checkError = !cSizeCheck || licenseError
+  puts "Retry timeout over -> failure." if @options.qacretry > 0 && checkError
+
+  success = false if checkError
+  return [success, consoleOutput, checkError]
 end
 
 ###### PREREQUISITE 1: BAKEQAC OPTIONS ######
@@ -43,11 +69,7 @@ end
   @options = BakeqacOptions.new(ARGV)
   bakeOptions = Options.new([])
   @options.parse_options(bakeOptions)
-
   success = false
-  consoleOutput = ""
-  licenseError = false
-  cSize = 1
 
 ###### PREREQUISITE 2: BAKE OPTIONS ######
 
@@ -92,26 +114,8 @@ end
 
     puts "bakeqac: creating database..."
 
-    cipCounter = 0
-    loop do
-      FileUtils.rm_rf @options.qacdata
-      success, consoleOutput = ProcessHelper.run(cmd, true)
-
-      break if not success
-
-      printCip()
-
-      cips = Dir.glob(@options.qacdata + "/**/*.cip")
-      break if (!cips.empty?) && (!File.size?(cips[0]).nil?) # this is the regular case, note: "size?" returns nil if empty or not existing
-
-      cipCounter += 1
-      if cipCounter < 10
-        puts "cip file does not exist or is empty, trying again..."
-      else
-        success = false
-        break
-      end
-    end
+    FileUtils.rm_rf @options.qacdata
+    success, consoleOutput, checkError = executeQacli(cmd, true)
 
     if success
       cctFilename = @options.qacdata+"/prqa/config/"+File.basename(@options.cct[0])
@@ -137,7 +141,6 @@ end
     else
       puts consoleOutput
     end
-
   end
 
 ###### STEP 2: BUILD ######
@@ -164,43 +167,26 @@ end
 
     puts "bakeqac: building and analyzing files..."
 
-    timeStart = Time.now
-    loop do
-      success, consoleOutput = ProcessHelper.run(cmd, false)
-      licenseError = false
-
-      consoleOutput.each_line do |line|
-        if (line.include?("License Refused") && !line.include?("License Refused: C:"))
-          licenseError = true
-          puts "License refused!"
-          break
-        end
-      end
-
-      cSize = cipSize()
-
-      break unless ((@options.qacretry >= (Time.now - timeStart)) && (cSize == 0 || licenseError))
-      puts "Retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
-    end
-    puts "Retry timeout over -> failure." if (@options.qacretry > 0 && (cSize == 0 || licenseError))
-
+    success, consoleOutput, checkError = executeQacli(cmd)
     success = false # we have to parse the output, qacli returns always an error here...
-    filterOutput = []
-    filter = []
-    endFound = false
-    consoleOutput.each_line do |line|
-      scan_res = line.scan(/Project path: ([a-zA-Z]{0,1})(:{0,1})(.*)/)
-      if scan_res.length > 0
-        filter << (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/").strip)
-      elsif !endFound
-        filterOutput << line
-        if line.start_with?("Rebuilding ")
-          endFound = true
-          success = true if line.include?("Rebuilding done") # don't know why the return value is 2 in this case...
+
+    if !checkError
+      filterOutput = []
+      filter = []
+      endFound = false
+      consoleOutput.each_line do |line|
+        scan_res = line.scan(/Project path: ([a-zA-Z]{0,1})(:{0,1})(.*)/)
+        if scan_res.length > 0
+          filter << (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/").strip)
+        elsif !endFound
+          filterOutput << line
+          if line.start_with?("Rebuilding ")
+            endFound = true
+            success = true if line.include?("Rebuilding done") # don't know why the return value is 2 in this case...
+          end
         end
       end
     end
-    success = false if (cSize == 0 || licenseError)
 
     if @options.qacfilter
       if success
@@ -214,8 +200,6 @@ end
     else
       puts consoleOutput # no filter
     end
-
-    printCip()
   end
 
 
@@ -241,27 +225,7 @@ end
       cmd += ["-f", "%?u==0%(MSG: %:trc: %)%F(%l,%c): (%r:%N)%t%?v%(\n%v%)"]
     end
 
-    timeStart = Time.now
-    loop do
-      success, consoleOutput = ProcessHelper.run(cmd, false)
-      licenseError = false
-
-      consoleOutput.each_line do |line|
-        if (line.include?("License Refused") && !line.include?("License Refused: C:"))
-          licenseError = true
-          puts "License refused!"
-          break
-        end
-      end
-
-      cSize = cipSize()
-
-      break unless ((@options.qacretry >= (Time.now - timeStart)) && (cSize == 0 || licenseError))
-      puts "Retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
-    end
-    puts "Retry timeout over -> failure." if (@options.qacretry > 0 && (cSize == 0 || licenseError))
-
-    success = false if (cSize == 0 || licenseError)
+    success, consoleOutput, checkError = executeQacli(cmd)
 
     if useFilter
       if success
@@ -342,9 +306,6 @@ end
     else
       puts consoleOutput # no filter
     end
-
-    printCip()
-
   end
 
 ###### STEP 4a: REPORT SCRIPT CHECK (OPTIONAL) ######
