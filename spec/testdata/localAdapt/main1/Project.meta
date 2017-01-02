@@ -1,0 +1,69 @@
+Project default: test {
+  CustomConfig test {
+    Dependency lib
+  }
+
+  CustomConfig test2 {
+    Dependency lib
+    DefaultToolchain GCC
+  }
+
+}
+
+Adapt toolchain: GCC, os: Windows, mainProject: main1, mainConfig: test {
+  CustomConfig __ALL__, project: __ALL__, type: extend {
+    PreSteps {
+      CommandLine "echo WINDOWS ADAPT1 $(ProjectName) $(ConfigName)"
+    }
+  }
+}
+
+Adapt toolchain: GCC, os: Linux, mainProject: main1, mainConfig: test {
+  CustomConfig __ALL__, project: __ALL__, type: extend {
+    PreSteps {
+      CommandLine "echo Linux ADAPT1 $(ProjectName) $(ConfigName)"
+    }
+  }
+}
+
+Adapt toolchain: GCC, os: Mac, mainProject: main1, mainConfig: test {
+  CustomConfig __ALL__, project: __ALL__, type: extend {
+    PreSteps {
+      CommandLine "echo MAC ADAPT1 $(ProjectName) $(ConfigName)"
+    }
+  }
+}
+
+Adapt {
+  CustomConfig __ALL__, project: __ALL__, type: extend {
+    PreSteps {
+      CommandLine "echo ADAPT2 $(ProjectName) $(ConfigName)"
+    }
+  }
+}
+
+Adapt toolchain: GCC {
+  CustomConfig __ALL__, project: lib, type: extend {
+    PreSteps {
+      CommandLine "echo ADAPT3 $(ProjectName) $(ConfigName)"
+    }
+  }
+}
+
+Adapt toolchain: Wrong {
+  CustomConfig __ALL__, project: __ALL__, type: extend {
+    PreSteps {
+      CommandLine "echo ADAPT4 $(ProjectName) $(ConfigName)"
+    }
+  }
+}
+
+Adapt
+
+Adapt {
+  CustomConfig __ALL__, project: __THIS__, type: extend {
+    PreSteps {
+      CommandLine "echo ADAPT5 $(ProjectName) $(ConfigName)"
+    }
+  }
+}

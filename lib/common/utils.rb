@@ -1,3 +1,5 @@
+require 'rbconfig'
+
 module Bake
 
   module Utils
@@ -39,7 +41,26 @@ module Bake
 
       # Is it windows
       def OS.windows?
-        (RUBY_PLATFORM =~ /cygwin|mswin|mingw|bccwin|wince|emx/) != nil
+        (RUBY_PLATFORM =~ /cygwin|mswin|msys|mingw|bccwin|wince|emx|emc/) != nil
+      end
+
+      def OS.name
+        @os ||= (
+          host_os = RbConfig::CONFIG['host_os']
+          case host_os
+          when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
+            "Windows"
+          when /darwin|mac os/
+            "Mac"
+          when /linux/
+            "Linux"
+          when /solaris|bsd/
+            "Unix"
+          else
+            Bake.formatter.printError("Unknown OS: #{host_os.inspect}")
+            ExitHelper.exit(1)
+          end
+        )
       end
 
     end

@@ -18,15 +18,19 @@ module Bake
 
       f = @loader.load(filename)
 
-      if f.root_elements.length != 1 or not Metamodel::Adapt === f.root_elements[0]
-        Bake.formatter.printError("Config file must have exactly one 'Adapt' element as root element", filename)
+      if f.root_elements.any? { |re| ! Metamodel::Adapt === re }
+        Bake.formatter.printError("Config file must have only 'Adapt' elements as roots", filename)
         ExitHelper.exit(1)
       end
 
-      adapt = f.root_elements[0]
-      configs = adapt.getConfig
+      configs = []
+      f.root_elements.each { |re| configs.concat(re.getConfig) }
+      AdaptConfig::checkSyntax(configs, filename)
+      configs
+    end
 
-      Bake::Configs::Checks::commonMetamodelCheck(configs, filename)
+    def self.checkSyntax(configs, filename)
+      Bake::Configs::Checks::commonMetamodelCheck(configs, filename, true)
 
       configs.each do |c|
         if not c.extends.empty?
@@ -46,8 +50,6 @@ module Bake
           ExitHelper.exit(1)
         end
       end
-
-      configs
     end
 
     def getPotentialAdaptionProjects()

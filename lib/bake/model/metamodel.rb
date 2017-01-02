@@ -285,6 +285,14 @@ module Bake
         end
       end
 
+      class Adapt < ModelElement
+        has_attr 'toolchain', String, :defaultValueLiteral => ""
+        has_attr 'os', String, :defaultValueLiteral => ""
+        has_attr 'mainProject', String, :defaultValueLiteral => ""
+        has_attr 'mainConfig', String, :defaultValueLiteral => ""
+        contains_many 'config', BaseConfig_INTERNAL, 'parent'
+      end
+
       class Project < ModelElement
         has_attr 'default', String, :defaultValueLiteral => ""
         contains_one 'description', Description, 'parent'
@@ -301,10 +309,6 @@ module Bake
         end
 
       end
-
-     class Adapt < ModelElement
-       contains_many 'config', BaseConfig_INTERNAL, 'parent'
-     end
 
   end
 

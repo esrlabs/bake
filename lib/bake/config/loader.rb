@@ -1,5 +1,6 @@
 require 'bake/model/loader'
 require 'bake/config/checks'
+require 'adapt/config/loader'
 
 module Bake
 
@@ -8,6 +9,9 @@ module Bake
 
     def initialize()
       @fullProjects = {}
+      @defaultToolchainName = ""
+      @mainProjectName = ""
+      @mainConfigName = ""
     end
 
     def resolveConfigName(configs, configname)
@@ -79,6 +83,18 @@ module Bake
       @adaptConfigs.each do |c|
        if c.project == config.parent.name or (isMain and c.project == "__MAIN__") or c.project == "__ALL__"
           if c.name == config.name or (isMain and c.name == "__MAIN__") or c.name == "__ALL__"
+
+            if isMain
+              @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
+              @mainProjectName = config.parent.name
+              @mainConfigName = config.name
+            end
+
+            next if c.parent.toolchain != "" && c.parent.toolchain != @defaultToolchainName
+            next if c.parent.os != "" && c.parent.os != Utils::OS.name
+            next if c.parent.mainProject != "" && c.parent.mainProject != @mainProjectName
+            next if c.parent.mainConfig != "" && c.parent.mainConfig != @mainConfigName
+
             MergeConfig.new(c, config).merge(c.type.to_sym)
           end
         end
@@ -152,11 +168,12 @@ module Bake
 
       config = nil
 
-      if f.root_elements.length != 1 or not Metamodel::Project === f.root_elements[0]
+      projRoots = f.root_elements.select { |re| Metamodel::Project === re }
+      if projRoots.length != 1
         Bake.formatter.printError("Config file must have exactly one 'Project' element as root element", filename)
         ExitHelper.exit(1)
       end
-      proj = f.root_elements[0]
+      proj = projRoots[0]
 
       reqVersion = proj.getRequiredBakeVersion
       checkVer(reqVersion)
@@ -172,6 +189,18 @@ module Bake
         if not c.type.empty?
           Bake.formatter.printError("Attribute 'type' must only be used in adapt config.",c)
           ExitHelper.exit(1)
+        end
+      end
+
+      adaptRoots = f.root_elements.select { |re| Metamodel::Adapt === re }
+      if adaptRoots.length > 0
+        adaptRoots.each do |adapt|
+          adaptConfigs = adapt.getConfig
+          AdaptConfig.checkSyntax(adaptConfigs, filename)
+          adaptConfigs.each do |ac|
+            ac.project = proj.name if ac.project == "__THIS__"
+          end
+          @adaptConfigs.concat(adaptConfigs)
         end
       end
 

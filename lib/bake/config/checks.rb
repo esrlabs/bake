@@ -20,9 +20,9 @@ module Bake
         end
       end
 
-      def self.commonMetamodelCheck(configs, filename)
+      def self.commonMetamodelCheck(configs, filename, isAdapt = false)
 
-        if configs.length == 0
+        if configs.length == 0 && !isAdapt
           Bake.formatter.printError("No config found", filename)
           ExitHelper.exit(1)
         end

@@ -1,9 +1,12 @@
 Changelog
 =========
 
+January x, 2017 - bake-toolkit 2.27.0
+    * Added: local adapt (todo: docu)
+
 December 23, 2016 - bake-toolkit 2.26.1
-    * Changed: qac: next try to add a workaround for the cip file bug..
-    * Cosmetic: possible wrong message when reloading metas ("corrupt" instead of "changed")
+    * Changed: qac: next try to add a workaround for the cip file bug.
+    * Cosmetic: fixed possible wrong message when reloading metas ("corrupt" instead of "changed")
 
 December 20, 2016 - bake-toolkit 2.26.0
     * Changed: before this version, "-w" command line args (which define the workspace roots) have overwritten roots.bake file. Now these roots will be
