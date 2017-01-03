@@ -33,7 +33,7 @@ def self.checkCipSize()
   return false
 end
 
-def self.executeQacli(cmd, immediateOutput = false)
+def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
   timeStart = Time.now
   cSizeCheck = true
   licenseError = false
@@ -41,7 +41,8 @@ def self.executeQacli(cmd, immediateOutput = false)
   success = false
 
   loop do
-    success, consoleOutput = ProcessHelper.run(cmd, immediateOutput)
+    FileUtils.rm_rf @options.qacdata if adminStepAndImmediateOutput
+    success, consoleOutput = ProcessHelper.run(cmd, adminStepAndImmediateOutput)
     licenseError = false
 
     consoleOutput.each_line do |line|
@@ -114,7 +115,6 @@ end
 
     puts "bakeqac: creating database..."
 
-    FileUtils.rm_rf @options.qacdata
     success, consoleOutput, checkError = executeQacli(cmd, true)
 
     if success
