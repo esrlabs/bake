@@ -4,8 +4,8 @@ module Bake
 
     module HasExecuteCommand
 
-      def executeCommand(commandLine, ignoreStr=nil, exitCodeArray = [0])
-        puts commandLine if Bake.options.verbose >= 1
+      def executeCommand(commandLine, ignoreStr=nil, exitCodeArray = [0], echo = "on")
+        puts commandLine if (Bake.options.verbose >= 1 && echo != "off") || Bake.options.verbose >= 3
         puts "(executed in '#{@projectDir}')" if Bake.options.verbose >= 3
         cmd_result = false
         output = ""

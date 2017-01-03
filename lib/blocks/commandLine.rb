@@ -14,17 +14,17 @@ module Bake
 
       def execute
         return true if Bake.options.linkOnly
-        return executeCommand(@commandLine, nil, @config.validExitCodes)
+        return executeCommand(@commandLine, nil, @config.validExitCodes, @config.echo)
       end
 
       def startupStep
         return true if Bake.options.linkOnly
-        return executeCommand(@commandLine, nil, @config.validExitCodes)
+        return executeCommand(@commandLine, nil, @config.validExitCodes, @config.echo)
       end
 
       def exitStep
         return true if Bake.options.linkOnly
-        return executeCommand(@commandLine, nil, @config.validExitCodes)
+        return executeCommand(@commandLine, nil, @config.validExitCodes, @config.echo)
       end
 
       def clean
