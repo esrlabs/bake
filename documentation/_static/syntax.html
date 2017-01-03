@@ -65,7 +65,9 @@ z-index: 100;
 &nbsp; <span class="mycomment"># 0..n configs</span><br>
 &nbsp; <span class="showRadio" onMouseover="showExecutableConfig()" onMouseout="notip()" id="executableConfig">ExecutableConfig</span> |
               <span class="hideRadio" onMouseover="showLibraryConfig()" onMouseout="notip()" id="libraryConfig">LibraryConfig</span> |
-              <span class="hideRadio" onMouseover="showCustomConfig()" onMouseout="notip()" id="customConfig">CustomConfig</span> &#60;name&#62;, <span class="help" onMouseover="showExtends()" onMouseout="notip()">extends</span>: &#60;parent(s)&#62; {<br><br>
+              <span class="hideRadio" onMouseover="showCustomConfig()" onMouseout="notip()" id="customConfig">CustomConfig</span> &#60;name&#62;,
+              <span class="help" onMouseover="showExtends()" onMouseout="notip()">extends</span>: &#60;parent(s)&#62;,
+              <span class="help" onMouseover="showPrivate()" onMouseout="notip()">private</span>: true|false {<br><br>
 
 			  <span><span style="background-color:#EEEEEE;" class="show">
 &nbsp; &nbsp; <span class="mycomment"># Valid for all config types</span><br><br>
@@ -85,12 +87,14 @@ z-index: 100;
 										  <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
 										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
 										  <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
+										  <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
 										  <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCommandLine()" onMouseout="notip()">CommandLine</span> &#60;line&#62;,
 										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
 										  <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
+										  <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
 										  <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62;<br>
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showPostSteps()" onMouseout="notip()">PostSteps</span> {<br>
@@ -175,6 +179,7 @@ z-index: 100;
 										  <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
 										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
                                           <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
+                                          <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
                                           <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; }<br>
@@ -182,6 +187,7 @@ z-index: 100;
                             <span style="background-color:#DDDDDD;" id="commandline_part"  class="hide">&#60;line&#62;,
                             <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
                             <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
+                            <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
                             <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62;
                             </span>
 &nbsp; &nbsp; <br></span><br></span>
@@ -343,6 +349,11 @@ function showStepDefault() {
   ddrivetip("default", "No","-","on",str)
 }
 
+function showEcho() {
+  str = 'On means the command line is shown in output, off means the command line is not shown.'
+  ddrivetip("echo", "No","-","on",str)
+}
+
 function showStepFilter() {
   str = 'A step can be switched on or off explicitly regardless of the "default" attribute with the command line options<br>'+
 	'<i> &nbsp; &nbsp; --do &#60;filter name&#62;</i><br>'+
@@ -425,6 +436,10 @@ function showOutputDir() {
 
 function showExtends() {
 	ddrivetip("extends", "No","0..1","-","Inherit settings from parent config(s).<br>For more information see docu page 'Derive configs'.")
+}
+
+function showPrivate() {
+    ddrivetip("private", "No","0..1","false","If true, the config cannot be referenced directly outside of this project.")
 }
 
 function showFiles() {

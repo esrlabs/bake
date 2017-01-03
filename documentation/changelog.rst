@@ -1,8 +1,12 @@
 Changelog
 =========
 
-January 3, 2017 - bake-toolkit 2.27.1
+January 3, 2017 - bake-toolkit 2.28.0
+    * Added: private flag for configs (cannot be referenced directly from outside of the project).
+    * Added: attribute "echo: off" for CommandLine and Makefile.
+    * Added: "--file-list" shows all files and headers of the projects.
     * Removed: lint support.
+    * Bugfix: environment variables (specified with "Set") can now be set individually for different configs.
     * Changed: qac: again slightly modified cip workaround.
 
 January 2, 2017 - bake-toolkit 2.27.0

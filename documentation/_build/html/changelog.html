@@ -140,7 +140,17 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
-<dt>January x, 2017 - bake-toolkit 2.27.0</dt>
+<dt>January 3, 2017 - bake-toolkit 2.28.0</dt>
+<dd><ul class="first last simple">
+<li>Added: private flag for configs (cannot be referenced directly from outside of the project).</li>
+<li>Added: attribute &#8220;echo: off&#8221; for CommandLine and Makefile.</li>
+<li>Added: &#8220;&#8211;file-list&#8221; shows all files and headers of the projects.</li>
+<li>Removed: lint support.</li>
+<li>Bugfix: environment variables (specified with &#8220;Set&#8221;) can now be set individually for different configs.</li>
+<li>Changed: qac: again slightly modified cip workaround.</li>
+</ul>
+</dd>
+<dt>January 2, 2017 - bake-toolkit 2.27.0</dt>
 <dd><ul class="first last simple">
 <li>Added: local <em>Adapt</em> with conditions (e.g. toolchain), see <a class="reference internal" href="syntax/adapt_configs.html#adapt-reference"><span>Adapt configs</span></a>.</li>
 <li>Changed: qac: cip workaround slightly adapted, removed temporary debug output.</li>

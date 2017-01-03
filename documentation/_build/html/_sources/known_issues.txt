@@ -5,5 +5,3 @@ Known Issues
     * Workaround 1: Clean the project.
     * Workaround 2: Delete the archive/executable manually.
     * Workaround 3: Touch, edit, create another source file.
-
-* Issue: Lint output not shown during linting (has to be refactored)
