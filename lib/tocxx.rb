@@ -22,9 +22,9 @@ require 'blocks/commandLine'
 require 'blocks/makefile'
 require 'blocks/compile'
 require 'blocks/convert'
+require 'blocks/fileList'
 require 'blocks/library'
 require 'blocks/executable'
-require 'blocks/convert'
 require 'blocks/docu'
 
 require 'set'
@@ -299,7 +299,7 @@ module Bake
           addSteps(block, block.startupSteps,  config.startupSteps)
           addSteps(block, block.exitSteps,  config.exitSteps)
 
-          if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
+          if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.file_list and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
             addSteps(block, block.preSteps,  config.preSteps)
             addSteps(block, block.postSteps, config.postSteps)
           end
@@ -307,9 +307,11 @@ module Bake
           if Bake.options.docu
             block.mainSteps << Blocks::Docu.new(config, @configTcMap[config])
           elsif Metamodel::CustomConfig === config
-            if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
+            if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.file_list and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
               addSteps(block, block.mainSteps, config) if config.step
             end
+          elsif Bake.options.file_list
+            block.mainSteps << Blocks::FileList.new(block, config, @referencedConfigs, @configTcMap[config])
           elsif Bake.options.conversion_info
             block.mainSteps << Blocks::Convert.new(block, config, @referencedConfigs, @configTcMap[config])
           else
@@ -404,7 +406,9 @@ module Bake
       end
 
       taskType = "Building"
-      if Bake.options.conversion_info
+      if Bake.options.file_list
+        taskType = "Showing file list"
+      elsif Bake.options.conversion_info
         taskType = "Showing conversion infos"
       elsif Bake.options.docu
         taskType = "Generating documentation"

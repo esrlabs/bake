@@ -19,7 +19,7 @@ module Bake
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
     attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
-    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac # Boolean
+    attr_reader :file_list, :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse # Boolean
     attr_reader :threads, :socket # Fixnum
     attr_reader :vars # map
@@ -39,6 +39,7 @@ module Bake
       @buildDirDelimiter = "/"
       @oldLinkOrder = false
       @conversion_info = false
+      @file_list = false
       @envToolchain = false
       @analyze = false
       @eclipseOrder = false
@@ -91,6 +92,7 @@ module Bake
 
       add_option(["--create"                                     ], lambda { |x| Bake::Create.proj(x)                    })
       add_option(["--conversion-info",    "--conversion_info"    ], lambda {     @conversion_info = true                 })
+      add_option(["--file-list",          "--file_list"          ], lambda {     @file_list = true                       })
       add_option(["--filter-paths"                               ], lambda {     @projectPaths = true                    })
       add_option(["--qac"                                        ], lambda {     @qac = true                             })
 
@@ -157,7 +159,11 @@ module Bake
         end
       end
 
-      if @conversion_info
+      if @conversion_info || @file_list
+        if @conversion_info && @file_list
+          Bake.formatter.printError("Error: --conversion-info and --file-list not allowed at the same time")
+          ExitHelper.exit(1)
+        end
         if @rebuild
           Bake.formatter.printError("Error: --conversion-info and --rebuild not allowed at the same time")
           ExitHelper.exit(1)
@@ -180,10 +186,6 @@ module Bake
         end
         if @docu
           Bake.formatter.printError("Error: --conversion-info and --docu not allowed at the same time")
-          ExitHelper.exit(1)
-        end
-        if not @project
-          Bake.formatter.printError("Error: --conversion-info must be used with -p")
           ExitHelper.exit(1)
         end
       end

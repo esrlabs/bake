@@ -49,6 +49,7 @@ module Bake
       puts " --incs-and-defs=json     Prints includes and defines of all projects in json format"
       puts " --incs-and-defs=bake     Used by IDEs plugins"
       puts " --conversion-info        Prints infos for an external tool which converts bake configs for other build systems"
+      puts " --file-list              Prints all files which will be built"
       puts " --prebuild               Does not build configs which are marked as 'prebuild', this feature is used for distributions."
       puts " --compilation-db [<fn>]  Writes compilation information into filename fn in json format, default for fn is compilation-db.json"
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
