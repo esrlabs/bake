@@ -1,0 +1,17 @@
+Project {
+
+  CustomConfig test_ok {
+    Dependency lib, config: test_public
+    Dependency config: test_private
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test_nok {
+    Dependency lib, config: test_private
+    Dependency config: test_private
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test_private, private: true
+
+}

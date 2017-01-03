@@ -96,6 +96,12 @@ module Bake
       config.dependency.each do |dep|
         @referencedConfigs[dep.name].each do |configRef|
           if configRef.name == dep.config
+
+            if configRef.private && configRef.parent.name != config.parent.name
+              Bake.formatter.printError("#{config.parent.name} (#{config.name}) depends on #{configRef.parent.name} (#{configRef.name}) which is private.", configRef)
+              ExitHelper.exit(1)
+            end
+
             block.dependencies << configRef.qname if not Bake.options.project# and not Bake.options.filename
             blockRef = Blocks::ALL_BLOCKS[configRef.qname]
             block.childs << blockRef

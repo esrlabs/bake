@@ -226,6 +226,7 @@ module Bake
         has_attr 'extends', String, :defaultValueLiteral => ""
         has_attr 'type', String, :defaultValueLiteral => ""
         has_attr 'project', String, :defaultValueLiteral => ""
+        has_attr 'private', Boolean, :defaultValueLiteral => "false"
         contains_one 'description', Description, 'parent'
         contains_one 'startupSteps', StartupSteps, 'parent'
         contains_one 'preSteps', PreSteps, 'parent'

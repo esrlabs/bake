@@ -1,0 +1,9 @@
+Project {
+
+  CustomConfig test_public {
+    Dependency config: test_private
+  }
+
+  CustomConfig test_private, private: true
+
+}
