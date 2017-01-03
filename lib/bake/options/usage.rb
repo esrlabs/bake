@@ -49,7 +49,6 @@ module Bake
       puts " --incs-and-defs=json     Prints includes and defines of all projects in json format"
       puts " --incs-and-defs=bake     Used by IDEs plugins"
       puts " --conversion-info        Prints infos for an external tool which converts bake configs for other build systems"
-#      puts " --bundle <dir>           Bundles the output (experimental, description will follow)"
       puts " --prebuild               Does not build configs which are marked as 'prebuild', this feature is used for distributions."
       puts " --compilation-db [<fn>]  Writes compilation information into filename fn in json format, default for fn is compilation-db.json"
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
@@ -62,11 +61,6 @@ module Bake
       puts " --license                Print the license."
       puts " --debug                  Print out backtraces in some cases - used only for debugging bake."
       ExitHelper.exit(0)
-    end
-
-    def self.bundle
-      puts "\nOption --bundle not supported anymore, please contact the author via github if still needed."
-      ExitHelper.exit(1)
     end
 
   end

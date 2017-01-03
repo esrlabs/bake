@@ -104,8 +104,6 @@ module Bake
             check_config_file()
           end
 
-          Bake::Bundle.instance.addLib(@archive_name, isMainProject? ? @config : nil)
-
           return success
         end
       end

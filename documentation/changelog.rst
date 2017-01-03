@@ -3,6 +3,7 @@ Changelog
 
 January 3, 2017 - bake-toolkit 2.27.1
     * Removed: lint support.
+    * Changed: qac: again slightly modified cip workaround.
 
 January 2, 2017 - bake-toolkit 2.27.0
     * Added: local *Adapt* with conditions (e.g. toolchain), see :ref:`adapt_reference`.

@@ -153,8 +153,6 @@ module Bake
             check_config_file()
           end
 
-          Bake::Bundle.instance.addBinary(@exe_name, @linker_script, isMainProject? ? @config : nil)
-
           return success
         end
       end

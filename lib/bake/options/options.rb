@@ -5,7 +5,6 @@ require 'bake/options/showLicense'
 require 'bake/options/showDoc'
 require 'bake/options/usage'
 require 'bake/options/create'
-require 'bake/bundle'
 
 module Bake
 
@@ -18,7 +17,7 @@ module Bake
 
   class Options < Parser
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
-    attr_reader :main_dir, :project, :filename, :main_project_name, :bundleDir, :buildDirDelimiter, :dot, :cc2j_filename # String
+    attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse # Boolean
@@ -75,7 +74,6 @@ module Bake
       @def_roots = []
       @main_project_name = ""
       @adapt = []
-      @bundleDir = nil
 
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| set_main_dir(x)                         })
@@ -118,11 +116,6 @@ module Bake
       add_option(["--do",                 "--include_filter"     ], lambda { |x| @include_filter << x                    })
       add_option(["--omit",               "--exclude_filter"     ], lambda { |x| @exclude_filter << x                    })
       add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })
-      add_option(["--bundle"                                     ], lambda { |x| Bake::Usage.bundle                      })
-      add_option(["--bundle"                                     ], lambda {     Bake::Usage.bundle                      })
-#      add_option(["--bundle"                                     ], lambda { |x| set_bundle_dir(x)                       })
-# OLD flag renamed in case someone uses this feature
-      add_option(["--bundleDeprecated"                           ], lambda { |x| set_bundle_dir(x)                       })
       add_option(["--prebuild"                                   ], lambda {     @prebuild = true                        })
       add_option(["--Wparse"                                     ], lambda {     @wparse = true                          })
 
@@ -151,7 +144,6 @@ module Bake
     end
 
     def parse_options()
-      Bake::Bundle.instance.cleanup()
       parse_internal(false)
       set_main_dir(Dir.pwd) if @main_dir.nil?
       @roots += @def_roots
@@ -266,12 +258,6 @@ module Bake
       @main_project_name = File::basename(@main_dir)
       @def_roots = calc_def_roots(@main_dir)
     end
-
-    def set_bundle_dir(dir)
-      d = File.expand_path(dir.gsub(/[\\]/,'/'))
-      Bake::Bundle.instance.setOutputDir(d)
-    end
-
 
     def set_root(dir)
       check_valid_dir(dir)

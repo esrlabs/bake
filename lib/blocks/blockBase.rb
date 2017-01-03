@@ -1,5 +1,3 @@
-require 'bake/bundle'
-
 module Bake
   module Blocks
 

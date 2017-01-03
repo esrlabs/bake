@@ -196,8 +196,6 @@ module Bake
           check_config_file
         end
 
-        Bake::Bundle.instance.addSource(source, @include_list, dep_filename_conv) if isMainProject?
-
       end
 
       def self.read_depfile(dep_filename, projDir, singleLine)
