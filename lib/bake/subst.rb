@@ -85,7 +85,10 @@ module Bake
             Bake.formatter.printWarning("Name of variable must not be empty - variable will be ignored", s)
           else
             @@userVarMap[s.name] = substString(s.value, s)
-            ENV[s.name] = @@userVarMap[s.name] if s.env
+            if s.env
+              ENV[s.name] = @@userVarMap[s.name]
+              config.setEnvVar(s.name, @@userVarMap[s.name])
+            end
           end
         else
           cmd_result = false
@@ -95,7 +98,10 @@ module Bake
               cmd = [substString(s.cmd, s)]
               cmd_result, consoleOutput = ProcessHelper.run(cmd)
               @@userVarMap[s.name] = consoleOutput.chomp
-              ENV[s.name] = @@userVarMap[s.name] if s.env
+              if s.env
+                ENV[s.name] = @@userVarMap[s.name]
+                config.setEnvVar(s.name, @@userVarMap[s.name])
+              end
             end
           rescue Exception=>e
             consoleOutput = e.message
@@ -103,7 +109,10 @@ module Bake
           if (cmd_result == false)
             Bake.formatter.printWarning("Command not successful, variable #{s.name} will be set to \"\" (#{consoleOutput.chomp}).", s)
             @@userVarMap[s.name] = ""
-            ENV[s.name] = "" if s.env
+            if s.env
+              ENV[s.name] = ""
+              config.setEnvVar(s.name, "")
+            end
           end
         end
 

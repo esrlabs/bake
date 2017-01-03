@@ -27,6 +27,15 @@ module Bake
         def includeDir
           baseElement.find_all { |l| IncludeDir === l }
         end
+        def setEnvVar(name, value)
+          @envVar ||= {}
+          @envVar[name] = value
+        end
+        def writeEnvVars()
+          @envVar.each do |name, value|
+            ENV[name] = value
+          end if defined?(@envVar)
+        end
       end
 
   end

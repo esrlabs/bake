@@ -1,0 +1,30 @@
+Project {
+  CustomConfig test_C1 {
+    Set E1, value: "val1", env: true
+    PreSteps {
+      CommandLine "echo From bake: $(E1)", echo: off
+      CommandLine "ruby printEnv.rb", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test_C2 {
+    Set E1, value: "val2", env: true
+    PreSteps {
+      CommandLine "echo From bake: $(E1)", echo: off
+      CommandLine "ruby printEnv.rb", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test_C3 {
+    Dependency config: test_C1
+    Dependency config: test_C2
+    Makefile "makefile", echo: off
+    PostSteps {
+      CommandLine "echo echo on", echo: on
+      CommandLine "echo echo wrong", echo: wrong
+    }
+    DefaultToolchain GCC
+  }
+}

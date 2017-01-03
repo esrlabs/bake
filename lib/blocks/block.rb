@@ -205,6 +205,8 @@ module Bake
 
       def callSteps(method)
 
+        @config.writeEnvVars()
+
         preSteps.each do |step|
           @result = executeStep(step, method) if @result
           return false if not @result and Bake.options.stopOnFirstError
