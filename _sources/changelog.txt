@@ -1,6 +1,9 @@
 Changelog
 =========
 
+January 4, 2017 - bake-toolkit 2.28.1
+    * Bugfix: Build does not break anymore if "LintPolicy" is still defined in Project.meta. Now only a warning is printed out.
+
 January 3, 2017 - bake-toolkit 2.28.0
     * Added: private flag for configs (cannot be referenced directly from outside of the project).
     * Added: attribute "echo: off" for CommandLine and Makefile.
