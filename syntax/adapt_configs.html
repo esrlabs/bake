@@ -113,6 +113,7 @@
 <li><a class="reference internal" href="#type-replace">Type: replace</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#wildcards">Wildcards</a></li>
 </ul>
 </li>
 </ul>
@@ -346,6 +347,23 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
 </pre></div>
 </div>
 <p>This removes all &#8220;Files&#8221; and the &#8220;DefaultToolchain&#8221; from the original config regardless their attributes and replaces them by the elements of the <em>Adapt</em> config.</p>
+</div>
+</div>
+<div class="section" id="wildcards">
+<h2>Wildcards<a class="headerlink" href="#wildcards" title="Permalink to this headline">¶</a></h2>
+<p>The &#8220;*&#8221; wildcard is allowed:</p>
+<div class="highlight-text"><div class="highlight"><pre>Adapt mainProject: HERE, mainConfig: HERE ... {
+  SomeConfig HERE, project: HERE ... {
+    ....
+  }
+}
+</pre></div>
+</div>
+<p>Example (the configs of the Adapt are applied if the main config name starts with &#8220;UnitTest&#8221;):</p>
+<div class="highlight-text"><div class="highlight"><pre>Adapt mainConfig: &quot;UnitTest*&quot; {
+  ...
+}
+</pre></div>
 </div>
 </div>
 </div>

@@ -106,6 +106,9 @@ z-index: 100;
 &nbsp; &nbsp; <span class="help" onMouseover="showExitSteps()" onMouseout="notip()">ExitSteps</span> {<br>
 &nbsp; &nbsp; &nbsp; <span class="mycomment"># Same as for PreSteps</span><br>
 &nbsp; &nbsp; }<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showCleanSteps()" onMouseout="notip()">CleanSteps</span> {<br>
+&nbsp; &nbsp; &nbsp; <span class="mycomment"># Same as for PreSteps</span><br>
+&nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showDefaultToolchain()" onMouseout="notip()">DefaultToolchain</span> &#60;basedOn&#62;, <span class="help" onMouseover="showOutputDir()" onMouseout="notip()">outputDir</span>: &#60;dir&#62;, <span class="help" onMouseover="showEclipseOrder()" onMouseout="notip()">eclipseOrder</span>: true|false {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C,
                                           <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
@@ -341,6 +344,13 @@ function showExitSteps() {
   str = 'ExitSteps of ALL projects are executed after building complete workspace even if the build has failed.<br>'+
     'The number of steps are not limited.'
   ddrivetip("ExitSteps", "No","0..1","-",str)
+}
+
+function showCleanSteps() {
+  str = 'CleanSteps are executed when calling bake with "-c" or "--rebuild".<br>'+
+    'The number of steps are not limited.<br>'+
+    'If a step fails, all further steps will be skipped.'
+  ddrivetip("CleanSteps", "No","0..1","-",str)
 }
 
 function showStepDefault() {

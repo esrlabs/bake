@@ -231,3 +231,24 @@ Example:
     }
 
 This removes all "Files" and the "DefaultToolchain" from the original config regardless their attributes and replaces them by the elements of the *Adapt* config.
+
+Wildcards
+---------
+
+The "*" wildcard is allowed:
+
+.. code-block:: text
+
+    Adapt mainProject: HERE, mainConfig: HERE ... {
+      SomeConfig HERE, project: HERE ... {
+        ....
+      }
+    }
+
+Example (the configs of the Adapt are applied if the main config name starts with "UnitTest"):
+
+.. code-block:: text
+
+    Adapt mainConfig: "UnitTest*" {
+      ...
+    }
