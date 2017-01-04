@@ -35,6 +35,14 @@ module Bake
                 ExitHelper.exit(1)
               end
             end
+            config.toolchain.lintPolicy.each do |l|
+              Bake.formatter.printWarning("Lint support was removed. Please delete LintPolicy from Project.meta.", l)
+            end
+          end
+          if config.respond_to?("defaultToolchain") and config.defaultToolchain
+            config.defaultToolchain.lintPolicy.each do |l|
+              Bake.formatter.printWarning("Lint support was removed. Please delete LintPolicy from Project.meta.", l)
+            end
           end
 
           config.includeDir.each do |inc|
