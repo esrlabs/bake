@@ -1,0 +1,168 @@
+Project default: test_Lib {
+  LibraryConfig test_Lib {
+    Files "nosources/src/**/*.cpp"
+    Files "generated/src/**/*.cpp"
+  }
+  CustomConfig test {
+    Dependency config: test_Lib
+    DefaultToolchain GCC
+  }
+}
+
+Adapt toolchain: GCC {
+    LibraryConfig test_Lib, project: com, type: remove {
+        Files "generated/src/**/*.cpp"
+   }
+}
+
+Adapt mainProject: "co*" {
+    LibraryConfig test_Lib, project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard01", echo: off
+        }
+   }
+}
+
+Adapt mainProject: "o*" {
+    LibraryConfig test_Lib, project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard02", echo: off
+        }
+   }
+}
+
+Adapt mainProject: "om" {
+    LibraryConfig test_Lib, project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard03", echo: off
+        }
+   }
+}
+
+Adapt mainProject: "*om" {
+    LibraryConfig test_Lib, project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard04", echo: off
+        }
+   }
+}
+
+###################
+
+Adapt mainConfig: "tes*" {
+    LibraryConfig test_Lib, project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard05", echo: off
+        }
+   }
+}
+
+Adapt mainConfig: "es*" {
+    LibraryConfig test_Lib, project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard06", echo: off
+        }
+   }
+}
+
+Adapt mainConfig: "est" {
+    LibraryConfig test_Lib, project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard07", echo: off
+        }
+   }
+}
+
+Adapt mainConfig: "*est" {
+    LibraryConfig test_Lib, project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard08", echo: off
+        }
+   }
+}
+
+###################
+
+Adapt {
+    LibraryConfig "te*t", project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard09", echo: off
+        }
+   }
+}
+
+Adapt {
+    LibraryConfig "es*", project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard10", echo: off
+        }
+   }
+}
+
+Adapt {
+    LibraryConfig "est", project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard11", echo: off
+        }
+   }
+}
+
+Adapt {
+    LibraryConfig "*est", project: __THIS__, type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard12", echo: off
+        }
+   }
+}
+
+###################
+
+Adapt {
+    LibraryConfig test, project: "co*", type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard13", echo: off
+        }
+   }
+}
+
+Adapt {
+    LibraryConfig test, project: "o*", type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard14", echo: off
+        }
+   }
+}
+
+Adapt {
+    LibraryConfig test, project: "om", type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard15", echo: off
+        }
+   }
+}
+
+Adapt {
+    LibraryConfig test, project: "c*om", type: extend {
+        PreSteps {
+          CommandLine "echo Wildcard16", echo: off
+        }
+   }
+}
+
+###################
+
+Adapt mainConfig: test, mainProject: "__THIS__" {
+    LibraryConfig test, project: com, type: extend {
+        PreSteps {
+          CommandLine "echo And1", echo: off
+        }
+   }
+}
+
+Adapt mainConfig: test, mainProject: "wrong" {
+    LibraryConfig test, project: com, type: extend {
+        PreSteps {
+          CommandLine "echo And2", echo: off
+        }
+   }
+}

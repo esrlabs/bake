@@ -49,6 +49,38 @@ describe "Local Adapt" do
     expect($mystring.include?("ADAPT5 main1")).to be == true
   end
 
+  it 'conditions are anded' do
+    Bake.startBake("localAdapt/com", ["test"])
+    expect($mystring.include?("And1")).to be == true
+    expect($mystring.include?("And2")).to be == false
+  end
+
+  it 'read main data before using it for adapt' do
+    Bake.startBake("localAdapt/com", ["test"])
+    expect($mystring.include?("nosources/src")).to be == true
+    expect($mystring.include?("generated/src")).to be == false
+  end
+
+  it 'wildcards' do
+    Bake.startBake("localAdapt/com", ["test"])
+    expect($mystring.include?("Wildcard01")).to be == true
+    expect($mystring.include?("Wildcard02")).to be == false
+    expect($mystring.include?("Wildcard03")).to be == false
+    expect($mystring.include?("Wildcard04")).to be == true
+    expect($mystring.include?("Wildcard05")).to be == true
+    expect($mystring.include?("Wildcard06")).to be == false
+    expect($mystring.include?("Wildcard07")).to be == false
+    expect($mystring.include?("Wildcard08")).to be == true
+    expect($mystring.include?("Wildcard09")).to be == true
+    expect($mystring.include?("Wildcard10")).to be == false
+    expect($mystring.include?("Wildcard11")).to be == false
+    expect($mystring.include?("Wildcard12")).to be == true
+    expect($mystring.include?("Wildcard13")).to be == true
+    expect($mystring.include?("Wildcard14")).to be == false
+    expect($mystring.include?("Wildcard15")).to be == false
+    expect($mystring.include?("Wildcard16")).to be == true
+  end
+
 end
 
 end

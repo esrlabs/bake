@@ -79,10 +79,20 @@ module Bake
 
       config, configname = getFullProjectInternal(configs, configname, isMain)
 
+      if isMain
+        @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
+        @mainProjectName = config.parent.name
+        @mainConfigName = config.name
+      end
+
       # check if config has to be manipulated
       @adaptConfigs.each do |c|
-       if c.project == config.parent.name or (isMain and c.project == "__MAIN__") or c.project == "__ALL__"
-          if c.name == config.name or (isMain and c.name == "__MAIN__") or c.name == "__ALL__"
+
+      projPattern = /\A#{c.project.gsub("*", "(\\w*)")}\z/
+      confPattern = /\A#{c.name.gsub("*", "(\\w*)")}\z/
+
+       if projPattern.match(config.parent.name) or (isMain and c.project == "__MAIN__") or c.project == "__ALL__"
+          if confPattern.match(config.name) or (isMain and c.name == "__MAIN__") or c.name == "__ALL__"
 
             if isMain
               @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
@@ -90,10 +100,13 @@ module Bake
               @mainConfigName = config.name
             end
 
-            next if c.parent.toolchain != "" && c.parent.toolchain != @defaultToolchainName
-            next if c.parent.os != "" && c.parent.os != Utils::OS.name
-            next if c.parent.mainProject != "" && c.parent.mainProject != @mainProjectName
-            next if c.parent.mainConfig != "" && c.parent.mainConfig != @mainConfigName
+            conditionProjPattern = /\A#{c.parent.mainProject.gsub("*", "(\\w*)")}\z/
+            conditionConfPattern = /\A#{c.parent.mainConfig.gsub("*", "(\\w*)")}\z/
+
+            next if c.parent.toolchain != ""   && c.parent.toolchain != @defaultToolchainName
+            next if c.parent.os != ""          && c.parent.os != Utils::OS.name
+            next if c.parent.mainProject != "" && !conditionProjPattern.match(@mainProjectName)
+            next if c.parent.mainConfig !=  "" && !conditionConfPattern.match(@mainConfigName)
 
             MergeConfig.new(c, config).merge(c.type.to_sym)
           end
@@ -195,6 +208,7 @@ module Bake
       adaptRoots = f.root_elements.select { |re| Metamodel::Adapt === re }
       if adaptRoots.length > 0
         adaptRoots.each do |adapt|
+          adapt.mainProject = @mainProjectName if adapt.mainProject == "__THIS__"
           adaptConfigs = adapt.getConfig
           AdaptConfig.checkSyntax(adaptConfigs, filename)
           adaptConfigs.each do |ac|

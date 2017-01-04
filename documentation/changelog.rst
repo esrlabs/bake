@@ -3,6 +3,8 @@ Changelog
 
 January 4, 2017 - bake-toolkit 2.29.0
     * Added: CleanSteps, executed only when calling bake with "-c" or "--rebuild".
+    * Added: Wildcard "*" is allowed for project/config names in Adapt.
+    * Bugfix: In certain circumstances an Adapt was not applied to subconfigs of the Project.meta where Adapt was defined.
 
 January 4, 2017 - bake-toolkit 2.28.1
     * Bugfix: Build does not break anymore if "LintPolicy" is still defined in Project.meta. Now only a warning is printed out.
