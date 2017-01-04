@@ -5,4 +5,11 @@ Project {
     DefaultToolchain GCC
   }
 
+  CustomConfig test_cleanstep {
+    CleanSteps {
+      Makefile "makefile/makefile"
+    }
+    DefaultToolchain GCC
+  }
+
 }

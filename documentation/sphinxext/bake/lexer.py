@@ -26,6 +26,7 @@ class BakeLexer(RegexLexer):
                  (r'\bPostSteps\b', Name.Namespace),
                  (r'\bStartupSteps\b', Name.Namespace),
                  (r'\bExitSteps\b', Name.Namespace),
+                 (r'\bCleanSteps\b', Name.Namespace),
                  (r'\bMakefile\b', Name.Namespace),
                  (r'\bDefaultToolchain\b', Name.Namespace),
                  (r'\bCompiler\b', Name.Namespace),

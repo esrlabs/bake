@@ -38,6 +38,10 @@ module Bake
         @exitSteps ||= []
       end
 
+      def cleanSteps
+        @cleanSteps ||= []
+      end
+
       def dependencies
         @dependencies ||= []
       end
@@ -262,7 +266,7 @@ module Bake
         depResult = callDeps(:clean)
         return false if not depResult and Bake.options.stopOnFirstError
 
-        if Bake.options.verbose >= 2
+        if Bake.options.verbose >= 2 or cleanSteps.length > 0
           typeStr = @prebuild ? "Checking" : "Cleaning"
           Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
@@ -277,6 +281,11 @@ module Bake
             end
           end
         end
+
+        cleanSteps.each do |step|
+          @result = executeStep(step, :cleanStep) if @result
+          return false if not @result and Bake.options.stopOnFirstError
+        end unless @prebuild
 
         return (depResult && @result)
       end

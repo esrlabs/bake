@@ -300,8 +300,9 @@ module Bake
           addSteps(block, block.exitSteps,  config.exitSteps)
 
           if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.file_list and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
-            addSteps(block, block.preSteps,  config.preSteps)
-            addSteps(block, block.postSteps, config.postSteps)
+            addSteps(block, block.preSteps,   config.preSteps)
+            addSteps(block, block.postSteps,  config.postSteps)
+            addSteps(block, block.cleanSteps, config.cleanSteps)
           end
 
           if Bake.options.docu

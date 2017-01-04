@@ -351,9 +351,10 @@ module Bake
       @referencedConfigs.each do |projName, configs|
         configs.each do |config|
           config.startupSteps.step  = config.startupSteps.step.delete_if  { |step| filterStep(step, "STARTUP") }  if config.startupSteps
-          config.preSteps.step      = config.preSteps.step.delete_if      { |step| filterStep(step, "PRE") }  if config.preSteps
-          config.postSteps.step     = config.postSteps.step.delete_if     { |step| filterStep(step, "POST") } if config.postSteps
-          config.exitSteps.step     = config.exitSteps.step.delete_if     { |step| filterStep(step, "EXIT") }  if config.exitSteps
+          config.preSteps.step      = config.preSteps.step.delete_if      { |step| filterStep(step, "PRE") }      if config.preSteps
+          config.postSteps.step     = config.postSteps.step.delete_if     { |step| filterStep(step, "POST") }     if config.postSteps
+          config.exitSteps.step     = config.exitSteps.step.delete_if     { |step| filterStep(step, "EXIT") }     if config.exitSteps
+          config.cleanSteps.step    = config.cleanSteps.step.delete_if    { |step| filterStep(step, "CLEAN") }    if config.cleanSteps
           if Metamodel::CustomConfig === config and config.step
             config.step = nil if filterStep(config.step, nil)
           end

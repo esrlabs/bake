@@ -205,6 +205,10 @@ module Bake
         contains_many 'step', Step, 'parent'
       end
 
+      class CleanSteps < ModelElement
+        contains_many 'step', Step, 'parent'
+      end
+
       class StartupSteps < ModelElement
         contains_many 'step', Step, 'parent'
       end
@@ -239,6 +243,7 @@ module Bake
         contains_one 'preSteps', PreSteps, 'parent'
         contains_one 'postSteps', PostSteps, 'parent'
         contains_one 'exitSteps', ExitSteps, 'parent'
+        contains_one 'cleanSteps', CleanSteps, 'parent'
         contains_many 'baseElement', BaseElement, 'parent'
         contains_one 'defaultToolchain', DefaultToolchain, 'parent'
         contains_one 'toolchain', Toolchain, 'parent'

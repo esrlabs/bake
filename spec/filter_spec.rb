@@ -185,6 +185,48 @@ describe "Filter" do
     expect($mystring.include?("test post4")).to be == false
   end
 
+  it 'MultipleSteps_doSTARTUP' do
+    Bake.startBake("filter", ["MultipleSteps", "--do", "STARTUP"])
+    expect($mystring.include?("test startup1")).to be == true
+    expect($mystring.include?("test startup2")).to be == true
+  end
+
+  it 'MultipleSteps_omitSTARTUP' do
+    Bake.startBake("filter", ["MultipleSteps", "--omit", "STARTUP"])
+    expect($mystring.include?("test startup1")).to be == false
+    expect($mystring.include?("test startup2")).to be == false
+  end
+
+  it 'MultipleSteps_doEXIT' do
+    Bake.startBake("filter", ["MultipleSteps", "--do", "EXIT"])
+    expect($mystring.include?("test exit1")).to be == true
+    expect($mystring.include?("test exit2")).to be == true
+  end
+
+  it 'MultipleSteps_omitEXIT' do
+    Bake.startBake("filter", ["MultipleSteps", "--omit", "EXIT"])
+    expect($mystring.include?("test exit1")).to be == false
+    expect($mystring.include?("test exit2")).to be == false
+  end
+
+  it 'MultipleSteps_doCLEAN' do
+    Bake.startBake("filter", ["MultipleSteps", "--do", "CLEAN", "-c"])
+    expect($mystring.include?("test clean1")).to be == true
+    expect($mystring.include?("test clean2")).to be == true
+  end
+
+  it 'MultipleSteps_omitCLEAN' do
+    Bake.startBake("filter", ["MultipleSteps", "--omit", "CLEAN", "-c"])
+    expect($mystring.include?("test clean1")).to be == false
+    expect($mystring.include?("test clean2")).to be == false
+  end
+
+  it 'MultipleSteps_doCLEAN without cleaning' do
+    Bake.startBake("filter", ["MultipleSteps", "--do", "CLEAN"])
+    expect($mystring.include?("test clean1")).to be == false
+    expect($mystring.include?("test clean2")).to be == false
+  end
+
   it 'MultipleSteps_includeFILTERandPRE_excludePOST' do
     Bake.startBake("filter", ["MultipleSteps", "--include_filter", "PRE", "--exclude_filter", "POST", "--include_filter", "FILTER"])
     expect($mystring.include?("test pre1")).to be == true

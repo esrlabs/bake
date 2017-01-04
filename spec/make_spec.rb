@@ -27,6 +27,16 @@ describe "Makefile" do
     expect($mystring.include?("Cleaning done.")).to be == true
   end
 
+  it 'cleanStep build' do
+    Bake.startBake("make/main",  ["test_cleanstep"])
+    expect($mystring.include?("make clean")).to be == false
+  end
+
+  it 'cleanStep clean' do
+    Bake.startBake("make/main",  ["test_cleanstep", "-c"])
+    expect($mystring.include?("make clean")).to be == true
+  end
+
 end
 
 end

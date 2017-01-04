@@ -74,24 +74,34 @@ module Bake
 
       end
 
-      def execute
+      def run
         return true if Bake.options.linkOnly
         return executeCommand(@commandLine, nil, @config.validExitCodes, @config.echo)
+      end
+
+      def execute
+        return run()
        end
 
       def startupStep
-        return true if Bake.options.linkOnly
-        return executeCommand(@commandLine, nil, @config.validExitCodes, @config.echo)
+        return run()
       end
 
       def exitStep
+        return run()
+      end
+
+      def do_clean
         return true if Bake.options.linkOnly
-        return executeCommand(@commandLine, nil, @config.validExitCodes, @config.echo)
+        return executeCommand(@cleanLine, "No rule to make target 'clean'.", @config.validExitCodes, @config.echo) unless Bake.options.filename
       end
 
       def clean
-        return true if Bake.options.linkOnly
-        return executeCommand(@cleanLine, "No rule to make target 'clean'.", @config.validExitCodes, @config.echo) unless Bake.options.filename
+        return do_clean()
+      end
+
+      def cleanStep
+        return do_clean()
       end
 
     end

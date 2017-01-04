@@ -49,6 +49,18 @@ Project {
       CommandLine "echo test post3", default: on, filter: "FILTER2"
       CommandLine "echo test post4", default: on, filter: "FILTER"
     }
+    StartupSteps {
+      CommandLine "echo test startup1", default: on
+      CommandLine "echo test startup2", default: off
+    }
+    ExitSteps {
+      CommandLine "echo test exit1", default: on
+      CommandLine "echo test exit2", default: off
+    }
+    CleanSteps {
+      CommandLine "echo test clean1", default: on
+      CommandLine "echo test clean2", default: off
+    }
   }
 
   CustomConfig FilterMain {
