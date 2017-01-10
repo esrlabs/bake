@@ -121,6 +121,44 @@ describe "FileList" do
     expect(content.split("fileList").length).to be == 2
   end
 
+  it 'compile partly then fully' do
+    Bake.startBake("fileList/main",  ["test_main", "--file-list=txt", "-p",  "main,test_sub"])
+    expect(ExitHelper.exit_code).to be == 0
+
+    Bake.startBake("fileList/main",  ["test_main", "--file-list=txt"])
+    content = File.read("spec/testdata/fileList/main/build/test_main/global-file-list.txt")
+    expect(content.include?("fileList/main/src/sub/sub1.cpp")).to be == true
+    expect(content.include?("fileList/main/src/sub/sub2.cpp")).to be == true
+    expect(content.include?("fileList/main/include/sub/sub1.h")).to be == true
+    expect(content.include?("fileList/main/include/sub/sub2.h")).to be == true
+    expect(content.include?("fileList/main/src/main/main1.cpp")).to be == true
+    expect(content.include?("fileList/main/src/main/main2.cpp")).to be == true
+    expect(content.include?("fileList/main/include/main/main1.h")).to be == true
+    expect(content.include?("fileList/main/include/main/main2.h")).to be == true
+    expect(content.split("fileList").length).to be == 9
+
+    content = File.read("spec/testdata/fileList/main/build/test_main/file-list.txt")
+    expect(content.include?("fileList/main/src/sub/sub1.cpp")).to be == false
+    expect(content.include?("fileList/main/src/sub/sub2.cpp")).to be == false
+    expect(content.include?("fileList/main/include/sub/sub1.h")).to be == true
+    expect(content.include?("fileList/main/include/sub/sub2.h")).to be == false
+    expect(content.include?("fileList/main/src/main/main1.cpp")).to be == true
+    expect(content.include?("fileList/main/src/main/main2.cpp")).to be == true
+    expect(content.include?("fileList/main/include/main/main1.h")).to be == true
+    expect(content.include?("fileList/main/include/main/main2.h")).to be == true
+    expect(content.split("fileList").length).to be == 6
+
+    content = File.read("spec/testdata/fileList/main/build/test_sub_main_test_main/file-list.txt")
+    expect(content.include?("fileList/main/src/sub/sub1.cpp")).to be == true
+    expect(content.include?("fileList/main/src/sub/sub2.cpp")).to be == true
+    expect(content.include?("fileList/main/include/sub/sub1.h")).to be == true
+    expect(content.include?("fileList/main/include/sub/sub2.h")).to be == true
+    expect(content.include?("fileList/main/src/main/main1.cpp")).to be == false
+    expect(content.include?("fileList/main/src/main/main2.cpp")).to be == false
+    expect(content.include?("fileList/main/include/main/main1.h")).to be == false
+    expect(content.include?("fileList/main/include/main/main2.h")).to be == false
+    expect(content.split("fileList").length).to be == 5
+  end
 
   it 'json' do
     Bake.startBake("fileList/main",  ["test_main", "--file-list=json"])

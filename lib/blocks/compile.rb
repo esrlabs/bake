@@ -310,6 +310,7 @@ module Bake
           if Bake.options.filelist
             Bake.options.filelist.merge(fileListBlock.merge(fileListBlock))
 
+            FileUtils.mkdir_p(@block.output_dir)
             if Bake.options.json
               require "json"
               File.open(@block.output_dir + "/" + "file-list.json", 'wb') do |f|
