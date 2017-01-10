@@ -1,8 +1,9 @@
 Changelog
 =========
 
-January 10, 2017 - bake-toolkit 2.29.1
-    * Changed: --file-list changed to --file-list=json and --file-list=txt. Output now written into files instead of stdout.
+January 10, 2017 - bake-toolkit 2.29.2
+    * Changed: --file-list output now written into files instead of stdout, see "bake -h".
+    * Bugfix: adapt condition "toolchain" not evaluated correctly in all cases
 
 January 4, 2017 - bake-toolkit 2.29.0
     * Added: CleanSteps, executed only when calling bake with "-c" or "--rebuild".
