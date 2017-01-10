@@ -81,6 +81,12 @@ describe "Local Adapt" do
     expect($mystring.include?("Wildcard16")).to be == true
   end
 
+  it 'change dt and adapt sub' do
+    Bake.startBake("localAdapt/main2", ["test_extend_dt"])
+    expect($mystring.include?("EXTEND_DIAB")).to be == true
+    expect($mystring.include?("EXTEND_GCC")).to be == true
+  end
+
 end
 
 end

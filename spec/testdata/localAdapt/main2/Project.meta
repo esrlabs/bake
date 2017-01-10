@@ -1,0 +1,37 @@
+Project default: test {
+
+  CustomConfig test_dt_sub
+
+  CustomConfig test_extend_dt {
+    Dependency config: test_dt_sub
+  }
+
+}
+
+Adapt toolchain: Diab {
+  CustomConfig test_dt_sub, project: __THIS__, type: extend {
+    PreSteps {
+      CommandLine "echo EXTEND_DIAB"
+    }
+  }
+}
+
+Adapt {
+  CustomConfig __MAIN__, project: __THIS__, type: extend {
+    DefaultToolchain GCC
+  }
+}
+
+Adapt toolchain: GCC {
+  CustomConfig test_extend_dt, project: __THIS__, type: extend {
+    PreSteps {
+      CommandLine "echo EXTEND_GCC"
+    }
+  }
+}
+
+Adapt {
+  CustomConfig __MAIN__, project: __THIS__, type: extend {
+    DefaultToolchain Diab
+  }
+}

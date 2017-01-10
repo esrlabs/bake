@@ -88,17 +88,17 @@ module Bake
       # check if config has to be manipulated
       @adaptConfigs.each do |c|
 
+      if isMain
+        @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
+        @mainProjectName = config.parent.name
+        @mainConfigName = config.name
+      end
+
       projPattern = /\A#{c.project.gsub("*", "(\\w*)")}\z/
       confPattern = /\A#{c.name.gsub("*", "(\\w*)")}\z/
 
        if projPattern.match(config.parent.name) or (isMain and c.project == "__MAIN__") or c.project == "__ALL__"
           if confPattern.match(config.name) or (isMain and c.name == "__MAIN__") or c.name == "__ALL__"
-
-            if isMain
-              @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
-              @mainProjectName = config.parent.name
-              @mainConfigName = config.name
-            end
 
             conditionProjPattern = /\A#{c.parent.mainProject.gsub("*", "(\\w*)")}\z/
             conditionConfPattern = /\A#{c.parent.mainConfig.gsub("*", "(\\w*)")}\z/
@@ -109,6 +109,11 @@ module Bake
             next if c.parent.mainConfig !=  "" && !conditionConfPattern.match(@mainConfigName)
 
             MergeConfig.new(c, config).merge(c.type.to_sym)
+
+            if isMain # can be changed after adapt
+              @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
+            end
+
           end
         end
       end
