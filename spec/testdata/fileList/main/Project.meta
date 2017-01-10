@@ -5,7 +5,7 @@ Project {
     IncludeDir "include/sub", inherit: true
   }
 
-  LibraryConfig test_main {
+  ExecutableConfig test_main {
     Files "src/main/*.cpp"
     IncludeDir "include/main", inherit: true
     Dependency config: test_sub

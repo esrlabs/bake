@@ -106,7 +106,7 @@ module Bake
             else
               blockIncs += block.include_list
             end
-            [:CPP, :C, :ASM].each { |type| blockDefs[type] += block.tcs[:COMPILER][type][:DEFINES] }
+            [:CPP, :C, :ASM].each { |type| blockDefs[type] += block.block.tcs[:COMPILER][type][:DEFINES] }
           end
           if Bake.options.json
             projs[projName] =

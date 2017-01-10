@@ -6,8 +6,8 @@ module Bake
 
     class Executable < BlockBase
 
-      def initialize(block, config, referencedConfigs, tcs, compileBlock)
-        super(block, config, referencedConfigs, tcs)
+      def initialize(block, config, referencedConfigs, compileBlock)
+        super(block, config, referencedConfigs)
         @compileBlock = compileBlock
 
         calcArtifactName
@@ -24,9 +24,9 @@ module Bake
         if not @config.artifactName.nil? and @config.artifactName.name != ""
           baseFilename = @config.artifactName.name
         else
-          baseFilename = "#{@projectName}#{Bake::Toolchain.outputEnding(@tcs)}"
+          baseFilename = "#{@projectName}#{Bake::Toolchain.outputEnding(@block.tcs)}"
         end
-        @exe_name ||= File.join([@output_dir, baseFilename])
+        @exe_name ||= File.join([@block.output_dir, baseFilename])
       end
 
       def calcCmdlineFile()
@@ -94,7 +94,7 @@ module Bake
             Bake.formatter.printWarning("Source compiled more than once: #{d}")
           end
 
-          libs, linker_libs_array = LibElements.calc_linker_lib_string(@block, @tcs)
+          libs, linker_libs_array = LibElements.calc_linker_lib_string(@block, @block.tcs)
 
           cmdLineCheck = false
           cmdLineFile = calcCmdlineFile()
@@ -106,7 +106,7 @@ module Bake
             reason = config_changed?(cmdLineFile)
           end
 
-          linker = @tcs[:LINKER]
+          linker = @block.tcs[:LINKER]
 
           cmd = Utils.flagSplit(linker[:COMMAND], false) # g++
           cmd += linker[:MUST_FLAGS].split(" ")

@@ -15,7 +15,7 @@ module Bake
 
     class Block
 
-      attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :prebuild
+      attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :prebuild, :output_dir, :tcs
       attr_accessor :visited, :inDeps, :result
 
       def startupSteps
@@ -62,7 +62,7 @@ module Bake
         @library = library
       end
 
-      def initialize(config, referencedConfigs, prebuild)
+      def initialize(config, referencedConfigs, prebuild, tcs)
         @inDeps = false
         @prebuild = prebuild
         @visited = false
@@ -74,8 +74,11 @@ module Bake
         @projectDir = config.get_project_dir
         @@block_counter = 0
         @result = true
+        @tcs = tcs
 
         @lib_elements = Bake::LibElements.calcLibElements(self)
+
+        calcOutputDir
       end
 
       def getCompileBlocks()
@@ -337,6 +340,24 @@ module Bake
         @otherBlocks = []
         getSubBlocks(self, method)
         return @otherBlocks
+      end
+
+      def isMainProject?
+        @projectName == Bake.options.main_project_name and @config.name == Bake.options.build_config
+      end
+
+      def calcOutputDir
+        if @tcs[:OUTPUT_DIR] != nil
+          p = convPath(@tcs[:OUTPUT_DIR])
+          @output_dir = p
+        else
+          qacPart = Bake.options.qac ? (".qac" + Bake.options.buildDirDelimiter) : ""
+          if isMainProject?
+            @output_dir = "build" + Bake.options.buildDirDelimiter + qacPart + Bake.options.build_config
+          else
+            @output_dir = "build" + Bake.options.buildDirDelimiter + qacPart + @config.name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
+          end
+        end
       end
 
     end

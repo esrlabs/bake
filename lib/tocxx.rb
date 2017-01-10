@@ -152,7 +152,7 @@ module Bake
             prebuild = false if (@prebuild[projName].include?"" or @prebuild[projName].include?config.name)
           end
 
-          block = Blocks::Block.new(config, @referencedConfigs, prebuild)
+          block = Blocks::Block.new(config, @referencedConfigs, prebuild, @configTcMap[config])
           Blocks::ALL_BLOCKS[config.qname] = block
         end
       end
@@ -299,7 +299,7 @@ module Bake
           addSteps(block, block.startupSteps,  config.startupSteps)
           addSteps(block, block.exitSteps,  config.exitSteps)
 
-          if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.file_list and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
+          if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
             addSteps(block, block.preSteps,   config.preSteps)
             addSteps(block, block.postSteps,  config.postSteps)
             addSteps(block, block.cleanSteps, config.cleanSteps)
@@ -308,22 +308,20 @@ module Bake
           if Bake.options.docu
             block.mainSteps << Blocks::Docu.new(config, @configTcMap[config])
           elsif Metamodel::CustomConfig === config
-            if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.file_list and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
+            if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
               addSteps(block, block.mainSteps, config) if config.step
             end
-          elsif Bake.options.file_list
-            block.mainSteps << Blocks::FileList.new(block, config, @referencedConfigs, @configTcMap[config])
           elsif Bake.options.conversion_info
-            block.mainSteps << Blocks::Convert.new(block, config, @referencedConfigs, @configTcMap[config])
+            block.mainSteps << Blocks::Convert.new(block, config, @referencedConfigs)
           else
-            compile = Blocks::Compile.new(block, config, @referencedConfigs, @configTcMap[config])
+            compile = Blocks::Compile.new(block, config, @referencedConfigs)
             (Blocks::ALL_COMPILE_BLOCKS[projName] ||= []) << compile
             block.mainSteps << compile
             if not Bake.options.filename and not Bake.options.analyze
               if Metamodel::LibraryConfig === config
-                block.mainSteps << Blocks::Library.new(block, config, @referencedConfigs, @configTcMap[config], compile)
+                block.mainSteps << Blocks::Library.new(block, config, @referencedConfigs, compile)
               else
-                block.mainSteps << Blocks::Executable.new(block, config, @referencedConfigs, @configTcMap[config], compile)
+                block.mainSteps << Blocks::Executable.new(block, config, @referencedConfigs, compile)
               end
             end
           end
@@ -407,9 +405,7 @@ module Bake
       end
 
       taskType = "Building"
-      if Bake.options.file_list
-        taskType = "Showing file list"
-      elsif Bake.options.conversion_info
+      if Bake.options.conversion_info
         taskType = "Showing conversion infos"
       elsif Bake.options.docu
         taskType = "Generating documentation"
@@ -541,6 +537,28 @@ module Bake
         if Bake.options.cc2j_filename
           require "json"
           File.write(Bake.options.cc2j_filename, JSON.pretty_generate(Blocks::CC2J))
+        end
+
+        if Bake.options.filelist
+          mainBlock = Blocks::ALL_BLOCKS[Bake.options.main_project_name+","+Bake.options.build_config]
+          Dir.chdir(mainBlock.projectDir) do
+            FileUtils.mkdir_p(mainBlock.output_dir)
+
+
+            if Bake.options.json
+              require "json"
+              File.open(mainBlock.output_dir + "/" + "global-file-list.json", 'wb') do |f|
+                f.puts JSON.pretty_generate({:files=>Bake.options.filelist.sort})
+              end
+            else
+              File.open(mainBlock.output_dir + "/" + "global-file-list.txt", 'wb') do |f|
+                Bake.options.filelist.sort.each do |entry|
+                  f.puts(entry)
+                end
+              end
+            end
+
+          end
         end
 
         if result == false

@@ -8,8 +8,8 @@ module Bake
 
       attr_reader :compileBlock, :archive_name
 
-      def initialize(block, config, referencedConfigs, tcs, compileBlock)
-        super(block,config, referencedConfigs, tcs)
+      def initialize(block, config, referencedConfigs, compileBlock)
+        super(block,config, referencedConfigs)
         @compileBlock = compileBlock
 
         block.set_library(self)
@@ -23,7 +23,7 @@ module Bake
         else
           baseFilename = "lib#{@projectName}.a"
         end
-        @archive_name ||= File.join([@output_dir, baseFilename])
+        @archive_name ||= File.join([@block.output_dir, baseFilename])
       end
 
       def calcCmdlineFile()
@@ -60,7 +60,7 @@ module Bake
               return true
             end
           else
-            @objects = Dir.glob("#{@output_dir}/**/*.o")
+            @objects = Dir.glob("#{@block.output_dir}/**/*.o")
             if @objects.empty?
               if !File.exists?(@archive_name)
                 puts "No object files, library won't be created" if Bake.options.verbose >= 2
@@ -78,7 +78,7 @@ module Bake
             cmdLineCheck = true
             reason = config_changed?(cmdLineFile)
           end
-          archiver = @tcs[:ARCHIVER]
+          archiver = @block.tcs[:ARCHIVER]
 
           cmd = Utils.flagSplit(archiver[:COMMAND], false) # ar
           cmd += Bake::Utils::flagSplit(archiver[:FLAGS],true) # --all_load
@@ -111,7 +111,7 @@ module Bake
       def clean
         if @block.prebuild
           Dir.chdir(@projectDir) do
-            @objects = Dir.glob("#{@output_dir}/**/*.o")
+            @objects = Dir.glob("#{@block.output_dir}/**/*.o")
             if !@objects.empty? && File.exist?(@archive_name)
               puts "Deleting file #{@archive_name}" if Bake.options.verbose >= 2
               FileUtils.rm_rf(@archive_name)

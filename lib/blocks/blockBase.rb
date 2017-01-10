@@ -3,22 +3,18 @@ module Bake
 
     class BlockBase
 
-      attr_reader :tcs
-      attr_reader :projectDir
+      attr_reader :projectDir, :block
 
-      def initialize(block, config, referencedConfigs, tcs)
+      def initialize(block, config, referencedConfigs)
         @block = block
         @config = config
         @referencedConfigs = referencedConfigs
         @projectName = config.parent.name
         @projectDir = config.get_project_dir
-        @tcs = tcs
         @config_date = Time.now
 
         @printedCmdAlternate = false
         @lastCommand = nil
-
-        calcOutputDir
       end
 
       def check_config_file()
@@ -85,24 +81,6 @@ module Bake
           if Bake.options.debug
             puts e.message
             puts e.backtrace
-          end
-        end
-      end
-
-      def isMainProject?
-        @projectName == Bake.options.main_project_name and @config.name == Bake.options.build_config
-      end
-
-      def calcOutputDir
-        if @tcs[:OUTPUT_DIR] != nil
-          p = @block.convPath(@tcs[:OUTPUT_DIR])
-          @output_dir = p
-        else
-          qacPart = Bake.options.qac ? (".qac" + Bake.options.buildDirDelimiter) : ""
-          if isMainProject?
-            @output_dir = "build" + Bake.options.buildDirDelimiter + qacPart + Bake.options.build_config
-          else
-            @output_dir = "build" + Bake.options.buildDirDelimiter + qacPart + @config.name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
           end
         end
       end
@@ -199,12 +177,12 @@ module Bake
 
       def cleanProjectDir
         Dir.chdir(@projectDir) do
-          if File.exist?@output_dir
-            puts "Deleting folder #{@output_dir}" if Bake.options.verbose >= 2
-            FileUtils.rm_rf(@output_dir)
+          if File.exist?@block.output_dir
+            puts "Deleting folder #{@block.output_dir}" if Bake.options.verbose >= 2
+            FileUtils.rm_rf(@block.output_dir)
 
-            if (@tcs[:OUTPUT_DIR] == nil) && (Bake.options.buildDirDelimiter == "/") # in this case all builds are placed in a "build" folder
-              buildDir = File.dirname(@output_dir)
+            if (@block.tcs[:OUTPUT_DIR] == nil) && (Bake.options.buildDirDelimiter == "/") # in this case all builds are placed in a "build" folder
+              buildDir = File.dirname(@block.output_dir)
               if (File.basename(buildDir) == "build") && (Dir.entries(buildDir).size == 2)# double check if it's really "build" and check if it's empty (except "." and "..")
                 puts "Deleting folder #{buildDir}" if Bake.options.verbose >= 2
                 FileUtils.rm_rf(buildDir)

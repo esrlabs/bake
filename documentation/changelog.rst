@@ -1,6 +1,9 @@
 Changelog
 =========
 
+January 10, 2017 - bake-toolkit 2.29.1
+    * Changed: --file-list changed to --file-list=json and --file-list=txt. Output now written into files instead of stdout.
+
 January 4, 2017 - bake-toolkit 2.29.0
     * Added: CleanSteps, executed only when calling bake with "-c" or "--rebuild".
     * Added: Wildcard "*" is allowed for project/config names in Adapt.

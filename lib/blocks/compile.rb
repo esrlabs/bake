@@ -13,8 +13,8 @@ module Bake
 
       attr_reader :objects, :include_list
 
-      def initialize(block, config, referencedConfigs, tcs)
-        super(block, config, referencedConfigs, tcs)
+      def initialize(block, config, referencedConfigs)
+        super(block, config, referencedConfigs)
         @objects = []
         @object_files = {}
         @system_includes = Set.new
@@ -28,9 +28,9 @@ module Bake
       def get_object_file(source)
 
         # until now all OBJECT_FILE_ENDING are equal in all three types
-        adaptedSource = source.chomp(File.extname(source)).gsub(/\.\./, "##") + (Bake.options.prepro ? ".i" : @tcs[:COMPILER][:CPP][:OBJECT_FILE_ENDING])
+        adaptedSource = source.chomp(File.extname(source)).gsub(/\.\./, "##") + (Bake.options.prepro ? ".i" : @block.tcs[:COMPILER][:CPP][:OBJECT_FILE_ENDING])
         return adaptedSource if File.is_absolute?source
-        File.join([@output_dir, adaptedSource])
+        File.join([@block.output_dir, adaptedSource])
       end
 
       def ignore?(type)
@@ -51,6 +51,8 @@ module Bake
 
           begin
             File.readlines(dep_filename_conv).map{|line| line.strip}.each do |dep|
+              Thread.current[:filelist].add(File.expand_path(dep)) if Bake.options.filelist
+
               if not File.exist?(dep)
                 # we need a hack here. with some windows configurations the compiler prints unix paths
                 # into the dep file which cannot be found easily. this will be true for system includes,
@@ -97,7 +99,7 @@ module Bake
       def get_source_type(source)
         ex = File.extname(source)
         [:CPP, :C, :ASM].each do |t|
-          return t if @tcs[:COMPILER][t][:SOURCE_FILE_ENDINGS].include?(ex)
+          return t if @block.tcs[:COMPILER][t][:SOURCE_FILE_ENDINGS].include?(ex)
         end
         nil
       end
@@ -105,6 +107,8 @@ module Bake
       def compileFile(source)
         type = get_source_type(source)
         return if type.nil?
+
+        @headerFilesFromDep = []
 
         object = @object_files[source]
 
@@ -121,12 +125,14 @@ module Bake
           reason = config_changed?(cmdLineFile)
         end
 
+        Thread.current[:filelist].add(File.expand_path(source)) if Bake.options.filelist
+
         if @fileTcs.include?(source)
           compiler = @fileTcs[source][:COMPILER][type]
           defines = getDefines(compiler)
           flags = getFlags(compiler)
         else
-          compiler = @tcs[:COMPILER][type]
+          compiler = @block.tcs[:COMPILER][type]
           defines = @define_array[type]
           flags = @flag_array[type]
         end
@@ -141,9 +147,9 @@ module Bake
         cmd += compiler[:COMPILE_FLAGS].split(" ")
 
         if dep_filename
-          cmd += @tcs[:COMPILER][type][:DEP_FLAGS].split(" ")
-          if @tcs[:COMPILER][type][:DEP_FLAGS_FILENAME]
-            if @tcs[:COMPILER][type][:DEP_FLAGS_SPACE]
+          cmd += @block.tcs[:COMPILER][type][:DEP_FLAGS].split(" ")
+          if @block.tcs[:COMPILER][type][:DEP_FLAGS_FILENAME]
+            if @block.tcs[:COMPILER][type][:DEP_FLAGS_SPACE]
               cmd << dep_filename
             else
               if dep_filename.include?" "
@@ -190,11 +196,17 @@ module Bake
           incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
 
           if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
-            incList = Compile.read_depfile(dep_filename, @projectDir, @tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
+            incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
             Compile.write_depfile(incList, dep_filename_conv)
+
+            incList.each do |h|
+              Thread.current[:filelist].add(File.expand_path(h))
+            end if Bake.options.filelist
           end
           check_config_file
         end
+
+
 
       end
 
@@ -248,6 +260,7 @@ module Bake
 
           @error_strings = {}
 
+          fileListBlock = Set.new if Bake.options.filelist
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|
             while source = jobs.get_next_or_nil do
 
@@ -258,6 +271,8 @@ module Bake
               s = StringIO.new
               tmp = Thread.current[:stdout]
               Thread.current[:stdout] = s unless tmp
+
+              Thread.current[:filelist] = Set.new if Bake.options.filelist
 
               result = false
               begin
@@ -277,6 +292,8 @@ module Bake
               Thread.current[:stdout] = tmp
 
               mutex.synchronize do
+                fileListBlock.merge(Thread.current[:filelist]) if Bake.options.filelist
+
                 if s.string.length > 0
                   if Bake.options.stopOnFirstError and not result
                     @error_strings[source] = s.string
@@ -289,6 +306,24 @@ module Bake
             end
           end
           compileJobs.join
+
+          if Bake.options.filelist
+            Bake.options.filelist.merge(fileListBlock.merge(fileListBlock))
+
+            if Bake.options.json
+              require "json"
+              File.open(@block.output_dir + "/" + "file-list.json", 'wb') do |f|
+                f.puts JSON.pretty_generate({:files=>fileListBlock.sort})
+              end
+            else
+              File.open(@block.output_dir + "/" + "file-list.txt", 'wb') do |f|
+                fileListBlock.sort.each do |entry|
+                  f.puts(entry)
+                end
+              end
+            end
+          end
+
 
           # can only happen in case of bail_on_first_error.
           # if not sorted, it may be confusing when builing more than once and the order of the error appearances changes from build to build
@@ -477,9 +512,9 @@ module Bake
         [:CPP, :C, :ASM].each do |type|
           @include_array[type] = @include_list.map do |k|
             if @system_includes.include?(k)
-              "#{@tcs[:COMPILER][type][:SYSTEM_INCLUDE_PATH_FLAG]}#{k}"
+              "#{@block.tcs[:COMPILER][type][:SYSTEM_INCLUDE_PATH_FLAG]}#{k}"
             else
-              "#{@tcs[:COMPILER][type][:INCLUDE_PATH_FLAG]}#{k}"
+              "#{@block.tcs[:COMPILER][type][:INCLUDE_PATH_FLAG]}#{k}"
             end
           end
         end
@@ -496,13 +531,13 @@ module Bake
       def calcDefines
         @define_array = {}
         [:CPP, :C, :ASM].each do |type|
-          @define_array[type] = getDefines(@tcs[:COMPILER][type])
+          @define_array[type] = getDefines(@block.tcs[:COMPILER][type])
         end
       end
       def calcFlags
         @flag_array = {}
         [:CPP, :C, :ASM].each do |type|
-          @flag_array[type] = getFlags(@tcs[:COMPILER][type])
+          @flag_array[type] = getFlags(@block.tcs[:COMPILER][type])
         end
       end
 
@@ -519,14 +554,14 @@ module Bake
               err_res.message = "Toolchain settings not allowed for file patterns"
               Bake::IDEInterface.instance.set_errors([err_res])
             else
-              @fileTcs[f.name] = integrateCompilerFile(Utils.deep_copy(@tcs),f)
+              @fileTcs[f.name] = integrateCompilerFile(Utils.deep_copy(@block.tcs),f)
             end
           end
         end
       end
 
       def tcs4source(source)
-        @fileTcs[source] || @tcs
+        @fileTcs[source] || @block.tcs
       end
 
 

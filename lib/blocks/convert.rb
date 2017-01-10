@@ -6,8 +6,8 @@ module Bake
 
     class Convert < Compile
 
-      def initialize(block, config, referencedConfigs, tcs)
-        super(block, config, referencedConfigs, tcs)
+      def initialize(block, config, referencedConfigs)
+        super(block, config, referencedConfigs)
       end
 
       def execute
@@ -22,7 +22,7 @@ module Bake
           puts " BAKE_INCLUDES"
           @include_list.each { |s| puts "  #{s}" }
           puts " BAKE_DEFINES"
-          (@tcs[:COMPILER][:CPP][:DEFINES] + @tcs[:COMPILER][:C][:DEFINES] + @tcs[:COMPILER][:ASM][:DEFINES]).uniq.each { |s| puts "  #{s}" }
+          (@block.tcs[:COMPILER][:CPP][:DEFINES] + @block.tcs[:COMPILER][:C][:DEFINES] + @block.tcs[:COMPILER][:ASM][:DEFINES]).uniq.each { |s| puts "  #{s}" }
           puts " BAKE_DEPENDENCIES"
           @block.childs.each { |dep| puts "  #{dep.projectName}" }
           puts " BAKE_DEPENDENCIES_FILTERED"
