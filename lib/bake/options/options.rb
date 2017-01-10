@@ -93,8 +93,7 @@ module Bake
 
       add_option(["--create"                                     ], lambda { |x| Bake::Create.proj(x)                    })
       add_option(["--conversion-info",    "--conversion_info"    ], lambda {     @conversion_info = true                 })
-      add_option(["--file-list=json",     "--file_list=json"     ], lambda {     @filelist = Set.new; @json=true         })
-      add_option(["--file-list=txt",      "--file_list=txt"      ], lambda {     @filelist = Set.new                     })
+      add_option(["--file-list",          "--file_list"          ], lambda {     @filelist = Set.new                     })
       add_option(["--filter-paths"                               ], lambda {     @projectPaths = true                    })
       add_option(["--qac"                                        ], lambda {     @qac = true                             })
 

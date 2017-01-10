@@ -311,18 +311,12 @@ module Bake
             Bake.options.filelist.merge(fileListBlock.merge(fileListBlock))
 
             FileUtils.mkdir_p(@block.output_dir)
-            if Bake.options.json
-              require "json"
-              File.open(@block.output_dir + "/" + "file-list.json", 'wb') do |f|
-                f.puts JSON.pretty_generate({:files=>fileListBlock.sort})
-              end
-            else
-              File.open(@block.output_dir + "/" + "file-list.txt", 'wb') do |f|
-                fileListBlock.sort.each do |entry|
-                  f.puts(entry)
-                end
+            File.open(@block.output_dir + "/" + "file-list.txt", 'wb') do |f|
+              fileListBlock.sort.each do |entry|
+                f.puts(entry)
               end
             end
+
           end
 
 

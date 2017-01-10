@@ -542,21 +542,11 @@ module Bake
           mainBlock = Blocks::ALL_BLOCKS[Bake.options.main_project_name+","+Bake.options.build_config]
           Dir.chdir(mainBlock.projectDir) do
             FileUtils.mkdir_p(mainBlock.output_dir)
-
-
-            if Bake.options.json
-              require "json"
-              File.open(mainBlock.output_dir + "/" + "global-file-list.json", 'wb') do |f|
-                f.puts JSON.pretty_generate({:files=>Bake.options.filelist.sort})
-              end
-            else
-              File.open(mainBlock.output_dir + "/" + "global-file-list.txt", 'wb') do |f|
-                Bake.options.filelist.sort.each do |entry|
-                  f.puts(entry)
-                end
+            File.open(mainBlock.output_dir + "/" + "global-file-list.txt", 'wb') do |f|
+              Bake.options.filelist.sort.each do |entry|
+                f.puts(entry)
               end
             end
-
           end
         end
 
