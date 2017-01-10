@@ -11,7 +11,6 @@ require 'fileutils'
 module Bake
 
   def self.testGlobalFileList(x, main=true, sub=true)
-    x.expect(ExitHelper.exit_code).to x.be == 0 if sub&&!main
     content = File.read("spec/testdata/fileList/main/build/test_main/global-file-list.txt")
     x.expect(content.include?("fileList/main/src/sub/sub1.cpp")).to x.be == (sub == true)
     x.expect(content.include?("fileList/main/src/sub/sub2.cpp")).to x.be == (sub == true)
@@ -24,8 +23,7 @@ module Bake
     x.expect(content.split("fileList").length).to x.be == (main&&sub ? 9 : (main ? 6 : 5))
   end
 
-  def self.testMainFileList(x, success = true)
-    x.expect(ExitHelper.exit_code).to x.be == 0 if success
+  def self.testMainFileList(x)
     content = File.read("spec/testdata/fileList/main/build/test_main/file-list.txt")
     x.expect(content.include?("fileList/main/src/sub/sub1.cpp")).to x.be == false
     x.expect(content.include?("fileList/main/src/sub/sub2.cpp")).to x.be == false
@@ -39,7 +37,6 @@ module Bake
   end
 
   def self.testSubFileList(x)
-    x.expect(ExitHelper.exit_code).to x.be == 0
     content = File.read("spec/testdata/fileList/main/build/test_sub_main_test_main/file-list.txt")
     x.expect(content.include?("fileList/main/src/sub/sub1.cpp")).to x.be == true
     x.expect(content.include?("fileList/main/src/sub/sub2.cpp")).to x.be == true
@@ -57,6 +54,7 @@ describe "FileList" do
 
   it 'compile all' do
     Bake.startBake("fileList/main",  ["test_main", "--file-list"])
+    expect(ExitHelper.exit_code).to be == 0
     Bake.testGlobalFileList(self)
     Bake.testMainFileList(self)
     Bake.testSubFileList(self)
@@ -74,7 +72,7 @@ describe "FileList" do
     Bake.startBake("fileList/main",  ["test_main", "--file-list", "-p",  "main,test_main"])
     expect(ExitHelper.exit_code).to be > 0 # does not link
     Bake.testGlobalFileList(self, true, false)
-    Bake.testMainFileList(self, false)
+    Bake.testMainFileList(self)
     expect(File.exist?("spec/testdata/fileList/main/build/test_sub_main_test_main/file-list.txt")).to be == false
   end
 
@@ -96,6 +94,7 @@ describe "FileList" do
     expect(ExitHelper.exit_code).to be == 0
 
     Bake.startBake("fileList/main",  ["test_main", "--file-list"])
+    expect(ExitHelper.exit_code).to be == 0
     Bake.testGlobalFileList(self)
     Bake.testMainFileList(self)
     Bake.testSubFileList(self)
