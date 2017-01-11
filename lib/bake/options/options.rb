@@ -160,11 +160,7 @@ module Bake
         end
       end
 
-      if @conversion_info || @filelist
-        if @conversion_info && @filelist
-          Bake.formatter.printError("Error: --conversion-info and --file-list not allowed at the same time")
-          ExitHelper.exit(1)
-        end
+      if @conversion_info
         if @rebuild
           Bake.formatter.printError("Error: --conversion-info and --rebuild not allowed at the same time")
           ExitHelper.exit(1)

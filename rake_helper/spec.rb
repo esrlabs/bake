@@ -7,7 +7,7 @@ begin
 rescue LoadError
 end
 
-SPEC_PATTERN ='spec/**/fileList_spec.rb'
+SPEC_PATTERN ='spec/**/*_spec.rb'
 
 puts "Creating dummy libs"
 `gcc -r -c rake_helper/dummy.c -o rake_helper/dummy.a`

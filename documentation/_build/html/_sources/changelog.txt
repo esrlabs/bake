@@ -1,6 +1,9 @@
 Changelog
 =========
 
+January 11, 2017 - bake-toolkit 2.29.3
+    * Bugfix: Some commandline checks in combination with --file-list were outdated.
+
 January 10, 2017 - bake-toolkit 2.29.2
     * Changed: --file-list output now written into files instead of stdout, see "bake -h".
     * Bugfix: adapt condition "toolchain" not evaluated correctly in all cases
