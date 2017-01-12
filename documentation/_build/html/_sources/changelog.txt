@@ -1,6 +1,9 @@
 Changelog
 =========
 
+January 12, 2017 - bake-toolkit 2.29.3
+    * Bugfix: qac: QAC bails out if modules have too many errors, added workaround and additional hint in output.
+
 January 11, 2017 - bake-toolkit 2.29.3
     * Bugfix: Some commandline checks in combination with --file-list were outdated.
 

@@ -192,7 +192,7 @@ end
       if success
         puts filterOutput
         File.open("#{@options.qacdata}/filter.txt", "w+") do |f|
-          f.puts(filter)
+          f.puts(filter.uniq)
         end
       else
         puts consoleOutput # error
@@ -228,7 +228,8 @@ end
     success, consoleOutput, checkError = executeQacli(cmd)
 
     if useFilter
-      if success
+
+      if !checkError # success # HACK: seems that QAC returns with error if there too much issues
         # 1. filter
         filteredLines = []
         foundFile = false
@@ -245,7 +246,11 @@ end
               end
             end
           end
-          filteredLines << line if foundFile && !line.include?("QAC++ Deep Flow Static Analyser")
+          if foundFile && !line.include?("QAC++ Deep Flow Static Analyser")
+            filteredLines << line
+          elsif !success # HACK, see above
+            filteredLines << line if ["MSG: ", "trc: ", "// ======= Results for"].none? { |pattern| line.include?(pattern) }
+          end
         end
 
         # 2. sort
@@ -299,6 +304,10 @@ end
             end
           end
           Bake.formatter.printSuccess("\n**** Number of messages: #{numberOfMessages} ****")
+          if !success # HACK, see above
+            Bake.formatter.printInfo("\nNote: qacli exited with error, maybe the number of messages was too high and output was truncated.")
+            success = true
+          end
         end
       else
         puts consoleOutput # error
