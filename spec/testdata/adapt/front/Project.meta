@@ -1,0 +1,23 @@
+Project {
+
+  LibraryConfig test {
+    IncludeDir "a"
+    Files "src/x.cpp"
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Define "defA"
+      }
+    }
+  }
+}
+
+Adapt {
+  LibraryConfig test, project: __THIS__, type: push_front {
+    IncludeDir "b"
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Define "defB"
+      }
+    }
+  }
+}

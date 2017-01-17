@@ -175,11 +175,36 @@ The type can be
 - **replace**
 - **remove**
 - **extend**
+- **push_front**
 
 Type: extend
 ~~~~~~~~~~~~
 
 This works exactly like for :doc:`derive_configs`.
+
+Type: push_front
+~~~~~~~~~~~~~~~~
+
+This works like extend, but elements which can be contained multiple times are pushed to front.
+
+Example project config:
+
+.. code-block:: text
+
+    Project {
+      LibraryConfig test {
+        IncludeDir "abc"
+        ...
+      }
+    }
+
+    Adapt ... {
+      LibraryConfig test, project: __THIS__, type: push_front {
+        IncludeDir "mock"
+      }
+    }
+
+The resulting include path order will be "-Imock -Iabc".
 
 Type: remove
 ~~~~~~~~~~~~

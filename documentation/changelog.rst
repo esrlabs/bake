@@ -1,6 +1,13 @@
 Changelog
 =========
 
+January ??, 2017 - bake-toolkit 2.30.0
+    * Added: mew adapt option "push_front".
+    * Added: --debug prints now also the checks which are made when reading the cache.
+
+January 12, 2017 - bake-toolkit 2.29.4
+    * Added: qac: Workaround if QAC cannot handle the amount of errors and returns with != 0. The build must not be aborted, instead the printed errors should be parsed.
+
 January 12, 2017 - bake-toolkit 2.29.3
     * Bugfix: qac: QAC bails out if modules have too many errors, added workaround and additional hint in output.
 

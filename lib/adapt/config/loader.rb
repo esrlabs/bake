@@ -45,8 +45,8 @@ module Bake
           Bake.formatter.printError("The corresponding project must be specified.",c)
           ExitHelper.exit(1)
         end
-        if not ["replace", "remove", "extend"].include?c.type
-          Bake.formatter.printError("Allowed types are 'replace', 'remove' and 'extend'.",c)
+        if not ["replace", "remove", "extend", "push_front"].include?c.type
+          Bake.formatter.printError("Allowed types are 'replace', 'remove', 'extend' and 'push_front'.",c)
           ExitHelper.exit(1)
         end
       end

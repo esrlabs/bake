@@ -911,6 +911,11 @@ describe "Adapt" do
     expect(pos2<pos3).to be == true
   end
 
+  it 'push front' do
+    Bake.startBake("adapt/front", ["test", "-v2"])
+    expect($mystring.include?("-Ib -Ia -DdefB -DdefA")).to be == true
+  end
+
 end
 
 end

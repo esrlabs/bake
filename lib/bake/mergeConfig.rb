@@ -127,7 +127,7 @@ module Bake
        end
      end
 
-     def extend(child, parent)
+     def extend(child, parent, push_front)
        (parent.class.ecore.eAllReferences & child.class.ecore.eAllReferences).each do |f|
          next unless f.containment
          parentData = parent.getGeneric(f.name)
@@ -141,7 +141,7 @@ module Bake
                c = childData.find { |c| p.ctype == c.ctype }
                if c
                  extendAttributes(c, p)
-                 extend(c, p)
+                 extend(c, p, push_front)
                  extendedParentData << c
                else
                  extendedParentData << p
@@ -150,14 +150,18 @@ module Bake
              restOfChildData = childData.find_all { |c| parentData.find {|p| p.ctype != c.ctype } }
              child.setGeneric(f.name, extendedParentData + restOfChildData)
            else
-             child.setGeneric(f.name, parentData + childData)
+             if push_front
+               child.setGeneric(f.name, childData + parentData)
+             else
+               child.setGeneric(f.name, parentData + childData)
+             end
            end
          elsif Metamodel::ModelElement === parentData
            if childData.nil? || childData.class != parentData.class
              child.setGeneric(f.name, parentData)
            else
              extendAttributes(childData, parentData)
-             extend(childData, parentData)
+             extend(childData, parentData, push_front)
            end
          end
        end
@@ -189,7 +193,11 @@ module Bake
         replace
       elsif (type == :extend)
         c = MergeConfig.clone(@child)
-        extend(c, @parent)
+        extend(c, @parent, false)
+        copyChildToParent(c, @parent)
+      elsif (type == :push_front)
+        c = MergeConfig.clone(@child)
+        extend(c, @parent, true)
         copyChildToParent(c, @parent)
       elsif (type == :merge)
         extend(@child, MergeConfig.clone(@parent))

@@ -109,6 +109,7 @@
 <li><a class="reference internal" href="#apply-order">Apply order</a></li>
 <li><a class="reference internal" href="#types">Types</a><ul>
 <li><a class="reference internal" href="#type-extend">Type: extend</a></li>
+<li><a class="reference internal" href="#type-push-front">Type: push_front</a></li>
 <li><a class="reference internal" href="#type-remove">Type: remove</a></li>
 <li><a class="reference internal" href="#type-replace">Type: replace</a></li>
 </ul>
@@ -301,10 +302,31 @@ Adapt toolchain: GCC {
 <li><strong>replace</strong></li>
 <li><strong>remove</strong></li>
 <li><strong>extend</strong></li>
+<li><strong>push_front</strong></li>
 </ul>
 <div class="section" id="type-extend">
 <h3>Type: extend<a class="headerlink" href="#type-extend" title="Permalink to this headline">¶</a></h3>
 <p>This works exactly like for <a class="reference internal" href="derive_configs.html"><em>Derive configs</em></a>.</p>
+</div>
+<div class="section" id="type-push-front">
+<h3>Type: push_front<a class="headerlink" href="#type-push-front" title="Permalink to this headline">¶</a></h3>
+<p>This works like extend, but elements which can be contained multiple times are pushed to front.</p>
+<p>Example project config:</p>
+<div class="highlight-text"><div class="highlight"><pre>Project {
+  LibraryConfig test {
+    IncludeDir &quot;abc&quot;
+    ...
+  }
+}
+
+Adapt ... {
+  LibraryConfig test, project: __THIS__, type: push_front {
+    IncludeDir &quot;mock&quot;
+  }
+}
+</pre></div>
+</div>
+<p>The resulting include path order will be &#8220;-Imock -Iabc&#8221;.</p>
 </div>
 <div class="section" id="type-remove">
 <h3>Type: remove<a class="headerlink" href="#type-remove" title="Permalink to this headline">¶</a></h3>
