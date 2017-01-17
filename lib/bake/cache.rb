@@ -36,17 +36,21 @@ module Bake
       def load_cache
         cache = nil
         begin
-          allFiles = Dir.glob(File.dirname(@cacheFilename)+"/*.cache")
-          if allFiles.include?(@cacheFilename)
+
+          fileExists = File.exist?(@cacheFilename)
+          puts "Cache: Checking if cache file #{@cacheFilename} exists: #{fileExists}" if Bake.options.debug
+          if fileExists
             cacheTime = File.mtime(@cacheFilename)
             contents = File.open(@cacheFilename, "rb") {|io| io.read }
             cache = Marshal.load(contents)
 
+            puts "Cache: Checking cache version: #{cache.version} vs. #{Version.number}" if Bake.options.debug
             if cache.version != Version.number
               Bake.formatter.printInfo("Info: cache version ("+cache.version+") does not match to bake version ("+Version.number+"), reloading meta information")
               cache = nil
             end
 
+            puts "Cache: Checking if cache was moved: #{@cacheFilename} vs. #{cache.cache_file}" if Bake.options.debug
             if cache != nil
               if cache.cache_file != @cacheFilename
                 Bake.formatter.printInfo("Info: cache filename changed, reloading meta information")
@@ -55,14 +59,20 @@ module Bake
             end
 
             if cache != nil
+              puts "Cache: Checking if referenced configs are up to date..." if Bake.options.debug
               cache.referencedConfigs.each do |pname,configs|
                 configs.each do |config|
-                  if not File.exists?(config.file_name)
+                  fileExists = File.exists?(config.file_name)
+                  puts "Cache: Checking if #{config.file_name} exists: #{fileExists}" if Bake.options.debug
+                  if not fileExists
                     Bake.options.nocache = true
                     Bake.formatter.printInfo("Info: cached meta file #{config.file_name} renamed or deleted, reloading meta information")
                     cache = nil
                     break
-                  elsif File.mtime(config.file_name) > cacheTime + 1
+                  end
+                  configTime = File.mtime(config.file_name)
+                  puts "Cache: Checking if #{config.file_name} was modified: #{configTime} vs #{cacheTime}" if Bake.options.debug
+                  if configTime > cacheTime + 1
                     Bake.formatter.printInfo("Info: #{config.file_name} has been changed, reloading meta information")
                     cache = nil
                     break
@@ -72,6 +82,7 @@ module Bake
             end
 
             if (cache != nil)
+              puts "Cache: Checking adapt options: #{cache.adaptStrings.inspect} vs. #{Bake.options.adapt.inspect}" if Bake.options.debug
               if (cache.adaptStrings.length != Bake.options.adapt.length) ||
                 (cache.adaptStrings.any? { |a| !Bake.options.adapt.include?(a) }) ||
                   (Bake.options.adapt.any? { |a| !cache.adaptStrings.include?(a) })
@@ -82,36 +93,55 @@ module Bake
 
             if (cache != nil)
               cache.adapt_filenames.each do |f|
+                fileExists = File.exists?(f)
+                puts "Cache: Checking if #{f} exists: #{fileExists}" if Bake.options.debug
+                if !fileExists
+                  Bake.formatter.printInfo("Info: #{f} does not exist anymore, reloading meta information")
+                  cache = nil
+                  break
+                end
                 adaptTime = File.mtime(f)
+                puts "Cache: Checking if #{f} was modified: #{adaptTime} vs #{cacheTime}" if Bake.options.debug
                 if adaptTime > cacheTime + 1
                   Bake.formatter.printInfo("Info: #{f} has been changed, reloading meta information")
                   cache = nil
+                  break
                 end
               end
             end
 
             if cache != nil
-              if cache.workspace_roots.length == Bake.options.roots.length
-                cache.workspace_roots.each do |r|
-                  if not Bake.options.roots.include?r
-                    cache = nil
-                    break
-                  end
-                end
-              else
+              puts "Cache: Checking root options: #{cache.workspace_roots.inspect} vs. #{Bake.options.roots.inspect}" if Bake.options.debug
+              if (cache.workspace_roots.length != Bake.options.roots.length) ||
+                (cache.workspace_roots.any? { |a| !Bake.options.roots.include?(a) }) ||
+                (Bake.options.roots.any? { |a| !cache.workspace_roots.include?(a) })
+                Bake.formatter.printInfo("Info: specified roots differ from cached roots, reloading meta information") if cache.nil?
                 cache = nil
-              end
-              Bake.formatter.printInfo("Info: specified roots differ from cached roots, reloading meta information") if cache.nil?
-            end
-
-            if cache != nil
-              if (not Bake.options.include_filter.eql?(cache.include_filter)) or (not Bake.options.exclude_filter.eql?(cache.exclude_filter))
-                cache = nil
-                Bake.formatter.printInfo("Info: specified filters differ from cached filters, reloading meta information")
               end
             end
 
             if cache != nil
+              puts "Cache: Checking include_filter options: #{cache.include_filter.inspect} vs. #{Bake.options.include_filter.inspect}" if Bake.options.debug
+              if (cache.include_filter.length != Bake.options.include_filter.length) ||
+                (cache.include_filter.any? { |a| !Bake.options.include_filter.include?(a) }) ||
+                (Bake.options.include_filter.any? { |a| !cache.include_filter.include?(a) })
+                cache = nil
+                Bake.formatter.printInfo("Info: specified include filters differ from cached filters, reloading meta information")
+              end
+            end
+
+            if cache != nil
+              puts "Cache: Checking exclude_filter options: #{cache.exclude_filter.inspect} vs. #{Bake.options.exclude_filter.inspect}" if Bake.options.debug
+              if (cache.exclude_filter.length != Bake.options.exclude_filter.length) ||
+                (cache.exclude_filter.any? { |a| !Bake.options.exclude_filter.include?(a) }) ||
+                (Bake.options.exclude_filter.any? { |a| !cache.exclude_filter.include?(a) })
+                cache = nil
+                Bake.formatter.printInfo("Info: specified include filters differ from cached filters, reloading meta information")
+              end
+            end
+
+            if cache != nil
+              puts "Cache: Checking autodir option: #{cache.no_autodir} vs. #{Bake.options.no_autodir}" if Bake.options.debug
               if (not Bake.options.no_autodir.eql?(cache.no_autodir))
                 cache = nil
                 Bake.formatter.printInfo("Info: no_autodir option differs in cache, reloading meta information")

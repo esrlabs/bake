@@ -48,6 +48,14 @@ describe "Caching" do
     expect(File.exists?("spec/testdata/cache/main/.bake/Project.meta.test.cache")).to be == true
   end
 
+  it 'debug cache checks' do
+    Bake.startBake("cache/main", ["-b", "test", "-w", "spec/testdata/cache", "-w", "spec/testdata", "--adapt", "gcc", "--debug", "-v3"])
+    expect(ExitHelper.exit_code).to be == 0
+    Bake.startBake("cache/main", ["-b", "test", "-w", "spec/testdata/cache", "-w", "spec/testdata", "--adapt", "gcc", "--debug", "-v3"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect($mystring.split("Info: cache is up-to-date").length).to be == 2
+  end
+
 end
 
 end
