@@ -16,7 +16,7 @@ Debug*/
 dummy_main*/
 *.exe
 **/obj/*
-**/_build/doctrees/*
+**/_build/*
 coverage/*
 rake_helper/dummy.a
 spec/testdata/cache/main/makefile/dummy.a
