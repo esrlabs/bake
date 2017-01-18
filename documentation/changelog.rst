@@ -5,7 +5,7 @@ January 18, 2017 - bake-toolkit 2.30.0
     * Added: mew adapt option "push_front".
     * Added: --debug prints now also the checks which are made when reading the cache.
     * Added: Project.meta and Collection.meta will be searched upwards if not found in current directory (or the directory specified with -m).
-    * Changed: offline documentation removed from gem. --doc will open the documentation on github.
+    * Changed: offline documentation removed from gem. --doc will open the documentation on github. Reduces gem size from 5.6 MB to 70 kB.
 
 January 12, 2017 - bake-toolkit 2.29.4
     * Added: qac: Workaround if QAC cannot handle the amount of errors and returns with != 0. The build must not be aborted, instead the printed errors should be parsed.
