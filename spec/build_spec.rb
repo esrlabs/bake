@@ -12,6 +12,14 @@ module Bake
 
 describe "Building" do
 
+  it 'search Project.meta' do
+    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == false
+    Bake.startBake("simple/main/src", ["test_ok"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect($mystring.include?("Building done")).to be == true
+    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == true
+  end
+
   it 'sameObj' do
     expect(File.exists?("spec/testdata/sameObj/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
 

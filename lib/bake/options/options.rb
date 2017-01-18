@@ -5,6 +5,7 @@ require 'bake/options/showLicense'
 require 'bake/options/showDoc'
 require 'bake/options/usage'
 require 'bake/options/create'
+require 'common/options/finder'
 
 module Bake
 
@@ -148,7 +149,16 @@ module Bake
 
     def parse_options()
       parse_internal(false)
-      set_main_dir(Dir.pwd) if @main_dir.nil?
+
+      searchDir = @main_dir.nil? ? Dir.pwd : @main_dir
+      dir = Bake.findDirOfFileToRoot(searchDir,"Project.meta")
+      if dir
+        set_main_dir(dir)
+      else
+        Bake.formatter.printError("Error: Project.meta not found in #{searchDir} or upwards")
+        ExitHelper.exit(1)
+      end
+
       @roots += @def_roots
       @roots.uniq!
       @adapt.uniq!

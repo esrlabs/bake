@@ -1,5 +1,6 @@
 require 'bake/toolchain/colorizing_formatter'
 require 'common/options/parser'
+require 'common/options/finder'
 
 module Bake
 
@@ -44,7 +45,16 @@ module Bake
 
     def parse_options(bakeOptions)
       parse_internal(true, bakeOptions)
-      set_collection_dir(Dir.pwd) if @collection_dir.nil?
+
+      searchDir = @collection_dir.nil? ? Dir.pwd : @collection_dir
+      dir = Bake.findDirOfFileToRoot(searchDir,"Collection.meta")
+      if dir
+        set_collection_dir(dir)
+      else
+        Bake.formatter.printError("Error: Collection.meta not found in #{searchDir} or upwards")
+        ExitHelper.exit(1)
+      end
+
       @roots += @def_roots
       @roots.uniq!
     end

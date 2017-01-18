@@ -139,6 +139,12 @@ describe "bake" do
     expect(str.include?("2 of 2 builds ok")).to be == true
   end
 
+  it 'search Project.meta' do
+    str = `ruby bin/bakery -m spec/testdata/root1/main/src -b Combined -w spec/testdata/root1 -w spec/testdata/root2 -r --list --adapt nols`
+    puts str
+    expect(str.include?("3 of 3 builds ok")).to be == true
+  end
+
 end
 
 end

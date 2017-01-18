@@ -1,6 +1,7 @@
 require 'bake/toolchain/colorizing_formatter'
 require 'common/options/parser'
 require 'bake/toolchain/gcc'
+require 'common/options/finder'
 
 module Bake
 
@@ -110,7 +111,15 @@ module Bake
     def parse_options(bakeOptions)
       parse_internal(true, bakeOptions)
 
-      set_main_dir(Dir.pwd) if @main_dir.nil?
+      searchDir = @main_dir.nil? ? Dir.pwd : @main_dir
+      dir = Bake.findDirOfFileToRoot(searchDir,"Project.meta")
+      if dir
+        set_main_dir(dir)
+      else
+        Bake.formatter.printError("Error: Project.meta not found in #{searchDir} or upwards")
+        ExitHelper.exit(1)
+      end
+
       @qacdata = "#{@main_dir}/.qacdata" if @qacdata.nil?
 
       if !ENV["QAC_HOME"] || ENV["QAC_HOME"].empty?

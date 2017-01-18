@@ -305,18 +305,11 @@ module Bake
 
     def loadMainMeta()
       mainMeta = Bake.options.main_dir+"/Project.meta"
-      if not File.exist?(mainMeta)
-        Bake.formatter.printError("Error: #{mainMeta} not found")
-        ExitHelper.exit(1)
-      end
-
       configs = loadProjMeta(mainMeta)
       @loadedConfigs = {}
       @loadedConfigs[Bake.options.main_project_name] = configs
 
-
       if not showConfigNames?
-
         config, Bake.options.build_config = getFullProject(Bake.options.main_project_name, configs,Bake.options.build_config, true)
 
         @referencedConfigs = {}

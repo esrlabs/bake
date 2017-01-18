@@ -200,7 +200,7 @@ module Bake
         extend(c, @parent, true)
         copyChildToParent(c, @parent)
       elsif (type == :merge)
-        extend(@child, MergeConfig.clone(@parent))
+        extend(@child, MergeConfig.clone(@parent), false)
       end
 
       if Bake.options.debug
