@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Injection and inheritance of IncludeDir and Dependency &mdash; bake documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
+    <link rel="top" title="bake documentation" href="../index.html" />
+    <link rel="up" title="Concepts" href="concepts.html" />
+    <link rel="next" title="Syntax" href="../syntax/syntax.html" />
+    <link rel="prev" title="Prebuild configurations for distributions" href="prebuild.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img src="../_static/logo_tiny_48.png">
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Injection and inheritance of IncludeDir and Dependency</a><ul>
+<li><a class="reference internal" href="#inherit-includedir">Inherit IncludeDir</a></li>
+<li><a class="reference internal" href="#inject-includedir">Inject IncludeDir</a></li>
+<li><a class="reference internal" href="#inject-dependency">Inject Dependency</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="prebuild.html" title="Previous Chapter: Prebuild configurations for distributions"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Prebuild conf...</span>
+    </a>
+  </li>
+  <li>
+    <a href="../syntax/syntax.html" title="Next Chapter: Syntax"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Syntax &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="injection-and-inheritance-of-includedir-and-dependency">
+<h1>Injection and inheritance of IncludeDir and Dependency<a class="headerlink" href="#injection-and-inheritance-of-includedir-and-dependency" title="Permalink to this headline">¶</a></h1>
+<p>It is possible to inject and inherit &#8220;includes&#8221; and inject &#8220;dependencies&#8221;.</p>
+<div class="section" id="inherit-includedir">
+<h2>Inherit IncludeDir<a class="headerlink" href="#inherit-includedir" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">IncludeDir include, inherit: true</span>
+</pre></div>
+</div>
+<p>This is typically used to make include directories available to upper levels, e.g.:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> in MyLib/Project.meta
+<span class="go">LibraryConfig Lib {</span>
+<span class="go">  ...</span>
+<span class="go">  IncludeDir include, inherit: true</span>
+<span class="go">}</span>
+
+<span class="gp">#</span> in main/Project.meta
+<span class="go">ExecutableConfig Debug {</span>
+<span class="go">  ...</span>
+<span class="go">  Dependency MyLib, config: Lib</span>
+<span class="go">  # IncludeDir &quot;MyLib/include&quot; - not needed because this IncludeDir is inherited</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inject-includedir">
+<h2>Inject IncludeDir<a class="headerlink" href="#inject-includedir" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">IncludeDir &quot;mock/include&quot;, inject: front</span>
+</pre></div>
+</div>
+<p>&#8220;front&#8221; is used for mocking IncludeDirs, e.g. if a library shall include a mocked class instead of the original one in UnitTest context.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">IncludeDir include, inject: back</span>
+</pre></div>
+</div>
+<p>&#8220;back&#8221; is used if the lower levels do not know by themselves what to include. So this has to be configured from the outside, typically in the main project.</p>
+</div>
+<div class="section" id="inject-dependency">
+<h2>Inject Dependency<a class="headerlink" href="#inject-dependency" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Dependency MyLib, inject: front # or back</span>
+</pre></div>
+</div>
+<p>This is used if a component cannot have this dependency hard coded, because it shall not know the concrete implementation or the dependency is only used for unittesting.</p>
+<p>Example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">ExecutableConfig UnitTest {</span>
+<span class="go">  ...</span>
+<span class="go">  Dependency config: Lib</span>
+<span class="go">  Dependency googleTest, inject: front</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>In this example the config Lib depends on googleTest. If googleTest inherits an IncludeDir, this would be known by Lib.</p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, E.S.R.Labs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

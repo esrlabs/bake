@@ -2,7 +2,7 @@ module Bake
   class Doc
     def self.show
 
-      link = "http://esrlabs.github.io/bake"
+      link = File.expand_path(File.dirname(__FILE__)+"/../../../documentation/_build/html/index.html")
       if RUBY_PLATFORM =~ /mswin|mingw|cygwin/
         system "start #{link}"
       elsif RUBY_PLATFORM =~ /darwin/

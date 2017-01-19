@@ -11,6 +11,8 @@ PKG_VERSION = Bake::Version.number
 PKG_FILES = FileList[
   "lib/**/*.rb",
   "Rakefile.rb",
+  "documentation/_build/html/**/*",
+  "documentation/_build/html/*",
   "license.txt"
 ]
 

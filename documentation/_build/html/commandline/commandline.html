@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Commandline &mdash; bake documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
+    <link rel="top" title="bake documentation" href="../index.html" />
+    <link rel="next" title="IDE Support" href="../ide/ide_integrations.html" />
+    <link rel="prev" title="Auto-adjustment of paths to existing projects" href="../syntax/auto_adjustment.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img src="../_static/logo_tiny_48.png">
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Commandline</a><ul>
+<li><a class="reference internal" href="#how-to-get-help">How to get help</a></li>
+<li><a class="reference internal" href="#the-most-important-options">The most important options</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#building-an-application">Building an application</a></li>
+<li><a class="reference internal" href="#building-from-within-an-arbitrary-directory">Building from within an arbitrary directory</a></li>
+<li><a class="reference internal" href="#building-just-one-specific-project">Building just one specific project</a></li>
+<li><a class="reference internal" href="#building-specific-projects-with-differnt-roots">Building specific projects with differnt roots</a></li>
+<li><a class="reference internal" href="#building-a-project-which-has-more-than-one-root">Building a project which has more than one root</a></li>
+<li><a class="reference internal" href="#clean-a-project-s">Clean a project(s)</a></li>
+<li><a class="reference internal" href="#build-a-single-file-s">Build a single file(s)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#roots-bake">roots.bake</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="../syntax/auto_adjustment.html" title="Previous Chapter: Auto-adjustment of paths to existing projects"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Auto-adjustme...</span>
+    </a>
+  </li>
+  <li>
+    <a href="../ide/ide_integrations.html" title="Next Chapter: IDE Support"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">IDE Support &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="commandline">
+<h1>Commandline<a class="headerlink" href="#commandline" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="how-to-get-help">
+<h2>How to get help<a class="headerlink" href="#how-to-get-help" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake -h
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-most-important-options">
+<h2>The most important options<a class="headerlink" href="#the-most-important-options" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first"><em>-b</em> the build configuration name</p>
+</li>
+<li><p class="first"><em>-m</em> the main project directory (default is current directory)</p>
+</li>
+<li><p class="first"><em>-p</em> the project to build (if not specified, the main project will be built with all dependencies)</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All configs of the project will be built, which is usually just one config, but if you have more than one config of the project in the workspace, use a comma separator.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="building-an-application">
+<h3>Building an application<a class="headerlink" href="#building-an-application" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake -b Debug
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>It is possible to omit <em>-b</em>:</p>
+<div class="last highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="building-from-within-an-arbitrary-directory">
+<h3>Building from within an arbitrary directory<a class="headerlink" href="#building-from-within-an-arbitrary-directory" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root/mainProj
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="building-just-one-specific-project">
+<h3>Building just one specific project<a class="headerlink" href="#building-just-one-specific-project" title="Permalink to this headline">¶</a></h3>
+<p>Assuming the project name to build s myProj.</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -p myProj
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="building-specific-projects-with-differnt-roots">
+<h3>Building specific projects with differnt roots<a class="headerlink" href="#building-specific-projects-with-differnt-roots" title="Permalink to this headline">¶</a></h3>
+<p>Assuming mainProj has several configs really included in the build (which is uncommon), you can choose one of the configs.</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -p myProj,abc
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="building-a-project-which-has-more-than-one-root">
+<h3>Building a project which has more than one root<a class="headerlink" href="#building-a-project-which-has-more-than-one-root" title="Permalink to this headline">¶</a></h3>
+<p>Assuming code has been checked out into two roots, the console supports ansi colors, you want to stop on first error and build only the project bspAbc.</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="clean-a-project-s">
+<h3>Clean a project(s)<a class="headerlink" href="#clean-a-project-s" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc -c
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="build-a-single-file-s">
+<h3>Build a single file(s)<a class="headerlink" href="#build-a-single-file-s" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -p bspAbc -f main.cpp
+<span class="gp">User@Host:~$</span> bake Debug -f .asm
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All files matching the pattern will be compiled (no wildcards allowed)</p>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="roots-bake">
+<h2>roots.bake<a class="headerlink" href="#roots-bake" title="Permalink to this headline">¶</a></h2>
+<p>Workspace roots can be defined in a file called &#8220;roots.bake&#8221;, which will be searched from main project directory to root folder.
+Example:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="go">../..</span>
+<span class="go">C:/another/root # comments written like this</span>
+<span class="go">something/else</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>If -w and roots.bake are specified, they will be merged. First -w, then roots.bake.</p>
+<p>If -w and roots.bake are not specified, the default workspace root is the parent directory of the main project.</p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, E.S.R.Labs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
