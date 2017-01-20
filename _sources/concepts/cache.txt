@@ -1,7 +1,7 @@
 Caching
 *******
 
-The project information will be cached here: <project folder>/.bake/*.cache.
+The project information will be cached here: <project folder>/.bake/\*.cache.
 There is one cache file for each Project.meta.
 
 In the main project, there will be an additional global cache, which also caches e.g. the adapt or filter settings.
