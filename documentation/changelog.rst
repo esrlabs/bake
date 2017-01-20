@@ -1,10 +1,11 @@
 Changelog
 =========
 
-January 18, 2017 - bake-toolkit 2.30.0
-    * Added: mew adapt option "push_front".
-    * Added: --debug prints now also the checks which are made when reading the cache.
+January 20, 2017 - bake-toolkit 2.30.0
+    * Added: new adapt option "push_front".
     * Added: Project.meta and Collection.meta will be searched upwards if not found in current directory (or the directory specified with -m).
+    * Changed: --doc opens online docu per default. You can install the offline docu with --install-doc.
+    * Added: --debug prints more information when reading the cache, use this as feedback if you think caching does not work correctly."
 
 January 12, 2017 - bake-toolkit 2.29.4
     * Added: qac: Workaround if QAC cannot handle the amount of errors and returns with != 0. The build must not be aborted, instead the printed errors should be parsed.

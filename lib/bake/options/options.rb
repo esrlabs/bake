@@ -131,6 +131,7 @@ module Bake
       add_option(["--incs-and-defs=json"                         ], lambda { @show_includes_and_defines=true; @json=true })
       add_option(["--license",            "--show_license"       ], lambda {     License.show                            })
       add_option(["--doc",                "--show_doc"           ], lambda {     Doc.show                                })
+      add_option(["--install-doc",        "--install_doc"        ], lambda {     Doc.install                             })
 
       add_option(["--version"                                    ], lambda {     Bake::Usage.version                     })
       add_option(["--list",               "--show_configs"       ], lambda {     @showConfigs = true                     })

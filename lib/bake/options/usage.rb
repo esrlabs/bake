@@ -59,6 +59,7 @@ module Bake
       puts " --version                Print version."
       puts " --time                   Print elapsed time at the end."
       puts " --doc                    Open documentation in browser"
+      puts " --install-doc            If installed, --doc opens the offline docu, otherwise it's online. You may need super user rights to enhance the bake-toolkit installation."
       puts " -h, --help               Print this help."
       puts " --license                Print the license."
       puts " --debug                  Print out backtraces in some cases - used only for debugging bake."
