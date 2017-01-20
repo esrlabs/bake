@@ -26,3 +26,4 @@ testdot.dot
 .qacdata
 *.stamp
 doc/
+documentation/_build
