@@ -78,6 +78,7 @@ module Bake
                     break
                   end
                 end
+                break if cache == nil
               end
             end
 
