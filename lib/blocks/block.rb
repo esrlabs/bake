@@ -104,6 +104,8 @@ module Bake
 
          res = []
 
+         return d if (inc[0] == "." || inc[0] == "..") # prio 0: force local
+
          if (inc[0] == @projectName) # prio 1: the real path magic
            resPathMagic = inc[1..-1].join("/") # within self
            resPathMagic = "." if resPathMagic == ""

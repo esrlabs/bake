@@ -33,5 +33,11 @@ Project default: test {
     DefaultToolchain GCC
   }
 
+   LibraryConfig test_dot {
+    IncludeDir "./lib"
+    IncludeDir "."
+    Files "./m.c"
+    DefaultToolchain GCC
+  }
 
 }

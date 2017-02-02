@@ -395,6 +395,8 @@ module Bake
           source_files = Set.new
           @config.files.each do |sources|
             p = sources.name
+            p = p[2..-1] if p.start_with?"./"
+
             res = Dir.glob(p).sort
             if res.length == 0 and cleaning == false
               if not p.include?"*" and not p.include?"?"

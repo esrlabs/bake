@@ -27,6 +27,13 @@ describe "Incs" do
     expect($mystring.include?("m.d -Imain1 -Imain2 -Imain3 -Imain4 -I../lib/lib3 -I../lib/lib1 -o")).to be == true
   end
 
+  it 'dot' do
+    Bake.startBake("incTest/main", ["test_dot", "-v2", "--rebuild"])
+
+    expect($mystring.include?("build/test_dot/m.d -Ilib -I. -o build/test_dot/m.o m.c")).to be == true
+  end
+
+
 end
 
 end
