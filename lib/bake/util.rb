@@ -60,6 +60,7 @@ end
 def integrateLinker(tcs, linker)
   return tcs unless linker
   tcs[:LINKER][:COMMAND] = linker.command if linker.command != ""
+  tcs[:LINKER][:PREFIX] = linker.prefix if linker.prefix != ""
   tcs[:LINKER][:FLAGS] = adjustFlags(tcs[:LINKER][:FLAGS], linker.flags)
   tcs[:LINKER][:LIB_PREFIX_FLAGS] = adjustFlags(tcs[:LINKER][:LIB_PREFIX_FLAGS], linker.libprefixflags)
   tcs[:LINKER][:LIB_POSTFIX_FLAGS] = adjustFlags(tcs[:LINKER][:LIB_POSTFIX_FLAGS], linker.libpostfixflags)
@@ -68,6 +69,7 @@ end
 def integrateArchiver(tcs, archiver)
   return tcs unless archiver
   tcs[:ARCHIVER][:COMMAND] = archiver.command if archiver.command != ""
+  tcs[:ARCHIVER][:PREFIX] = archiver.prefix if archiver.prefix != ""
   tcs[:ARCHIVER][:FLAGS] = adjustFlags(tcs[:ARCHIVER][:FLAGS], archiver.flags)
 end
 
@@ -76,6 +78,10 @@ def integrateCompiler(tcs, compiler, type)
   if compiler.respond_to?"command"
     tcs[:COMPILER][type][:COMMAND] = compiler.command if compiler.command != ""
   end
+  if compiler.respond_to?"prefix"
+    tcs[:COMPILER][type][:PREFIX] = compiler.prefix if compiler.prefix != ""
+  end
+
   tcs[:COMPILER][type][:FLAGS] = adjustFlags(tcs[:COMPILER][type][:FLAGS], compiler.flags)
   compiler.define.each do |d|
     tcs[:COMPILER][type][:DEFINES] << d.str unless tcs[:COMPILER][type][:DEFINES].include? d.str

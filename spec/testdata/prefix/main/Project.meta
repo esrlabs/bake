@@ -1,0 +1,16 @@
+Project {
+
+  LibraryConfig test_lib {
+    Files "src/lib.cpp"
+    Toolchain {
+      Compiler CPP, prefix: "echo CPPPREFIX"
+    }
+  }
+
+  ExecutableConfig test_main {
+    Files "src/main.cpp"
+    Dependency config: test_lib
+    DefaultToolchain GCC
+  }
+
+}

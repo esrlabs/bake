@@ -1,0 +1,10 @@
+Adapt mainConfig: test_main {
+
+  ExecutableConfig __ALL__, project: __ALL__, type: extend {
+    DefaultToolchain {
+      Linker prefix: "echo LINKERPREFIX"
+    }
+    Set ArchiverPrefix, value: "echo ARCHIVERPREFIX"
+  }
+
+}

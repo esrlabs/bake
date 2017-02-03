@@ -57,11 +57,13 @@ module Bake
 
       class Archiver < ModelElement
         has_attr 'command', String, :defaultValueLiteral => ""
+        has_attr 'prefix', String, :defaultValueLiteral => "$(ArchiverPrefix)"
         contains_many 'flags', Flags, 'parent'
       end
 
       class Linker < ModelElement
         has_attr 'command', String, :defaultValueLiteral => ""
+        has_attr 'prefix', String, :defaultValueLiteral => "$(LinkerPrefix)"
         contains_many 'flags', Flags, 'parent'
         contains_many 'libprefixflags', LibPrefixFlags, 'parent'
         contains_many 'libpostfixflags', LibPostfixFlags, 'parent'
@@ -70,6 +72,7 @@ module Bake
       class Compiler < ModelElement
         has_attr 'ctype', CompilerType
         has_attr 'command', String, :defaultValueLiteral => ""
+        has_attr 'prefix', String, :defaultValueLiteral => "$(CompilerPrefix)"
         contains_many 'define', Define, 'parent'
         contains_many 'flags', Flags, 'parent'
         contains_one 'internalDefines', InternalDefines, 'parent'

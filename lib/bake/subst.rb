@@ -264,7 +264,7 @@ module Bake
         elsif ENV[var]
           substStr << ENV[var]
         else
-          if Bake.options.verbose >= 2
+          if Bake.options.verbose >= 2 && !(["CompilerPrefix", "ArchiverPrefix", "LinkerPrefix"].include?(var))
             msg = "Substitute variable '$(#{var})' with empty string"
             if elem
               Bake.formatter.printInfo(msg, elem)

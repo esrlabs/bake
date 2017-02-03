@@ -9,3 +9,4 @@ Syntax
     derive_configs
     adapt_configs
     auto_adjustment
+    prefix
