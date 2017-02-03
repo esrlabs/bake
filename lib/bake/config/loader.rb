@@ -103,10 +103,13 @@ module Bake
             conditionProjPattern = /\A#{c.parent.mainProject.gsub("*", "(\\w*)")}\z/
             conditionConfPattern = /\A#{c.parent.mainConfig.gsub("*", "(\\w*)")}\z/
 
-            next if c.parent.toolchain != ""   && c.parent.toolchain != @defaultToolchainName
-            next if c.parent.os != ""          && c.parent.os != Utils::OS.name
-            next if c.parent.mainProject != "" && !conditionProjPattern.match(@mainProjectName)
-            next if c.parent.mainConfig !=  "" && !conditionConfPattern.match(@mainConfigName)
+            adaptCondition = (c.parent.toolchain == ""   || c.parent.toolchain == @defaultToolchainName) &&
+              (c.parent.os == ""          || c.parent.os == Utils::OS.name) &&
+              (c.parent.mainProject == "" || !conditionProjPattern.match(@mainProjectName).nil?) &&
+              (c.parent.mainConfig ==  "" || !conditionConfPattern.match(@mainConfigName).nil?)
+
+            invertLogic = (Bake::Metamodel::Unless === c.parent)
+            next if (adaptCondition && invertLogic) || (!adaptCondition && !invertLogic)
 
             MergeConfig.new(c, config).merge(c.type.to_sym)
 
@@ -215,9 +218,9 @@ module Bake
         adaptRoots.each do |adapt|
           adapt.mainProject = @mainProjectName if adapt.mainProject == "__THIS__"
           adaptConfigs = adapt.getConfig
-          AdaptConfig.checkSyntax(adaptConfigs, filename)
+          AdaptConfig.checkSyntax(adaptConfigs, filename, true)
           adaptConfigs.each do |ac|
-            ac.project = proj.name if ac.project == "__THIS__"
+            ac.project = proj.name if ac.project == "__THIS__" || ac.project == ""
           end
           @adaptConfigs.concat(adaptConfigs)
         end

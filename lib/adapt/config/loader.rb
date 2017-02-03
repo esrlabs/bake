@@ -29,9 +29,8 @@ module Bake
       configs
     end
 
-    def self.checkSyntax(configs, filename)
+    def self.checkSyntax(configs, filename, isLocalAdapt = false)
       Bake::Configs::Checks::commonMetamodelCheck(configs, filename, true)
-
       configs.each do |c|
         if not c.extends.empty?
           Bake.formatter.printError("Attribute 'extends' must not be used in adapt config.",c)
@@ -44,7 +43,7 @@ module Bake
         if c.project.empty?
           Bake.formatter.printError("The corresponding project must be specified.",c)
           ExitHelper.exit(1)
-        end
+        end if !isLocalAdapt
         if not ["replace", "remove", "extend", "push_front"].include?c.type
           Bake.formatter.printError("Allowed types are 'replace', 'remove', 'extend' and 'push_front'.",c)
           ExitHelper.exit(1)

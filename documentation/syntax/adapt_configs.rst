@@ -74,7 +74,7 @@ An *Adapt* can have up to four attributes:
 - **mainConfig**: name of the main config
 - **mainProject**: name of the main project
 
-The "Adapt* configs will be only applied if all these attributes are either empty or true. Example:
+The "Adapt* configs will be only applied if all these attributes are either empty or true ("AND" operation). Example:
 
 .. code-block:: text
 
@@ -83,6 +83,29 @@ The "Adapt* configs will be only applied if all these attributes are either empt
     }
 
 Here the *Adapt* configs will be applied if toolchain is GCC on Windows.
+
+.. note::
+
+    You can write "If" instead of "Adapt":
+
+.. code-block:: text
+
+    If toolchain: GCC, os: Windows {
+      ...
+    }
+
+.. note::
+
+    It is possible to negate the conditions with "Unless":
+
+.. code-block:: text
+
+    Unless toolchain: GCC, os: Windows {
+      ...
+    }
+
+The adapt block in the example above will be applied if the toolchain is not GCC AND if the OS is not Windows, e.g. for GCC on Linux or Diab Compiler on Mac.
+
 
 Effectiveness
 ~~~~~~~~~~~~~
@@ -104,7 +127,7 @@ __MAIN__, __ALL__ and __THIS__ are keywords:
 
 - **__MAIN__** means the main project or main config
 - **__ALL__** means all projects or configs
-- **__THIS__** is only valid for project name, which can be used for *Adapts* within a Project.meta to restrict the adaption to the current project.
+- **__THIS__** is only valid for project name, which can be used for *Adapts* within a Project.meta to restrict the adaption to the current project. This is the default for *Adapts* in Project.meta.
 
 If you want to apply the changes only to the top level config, write:
 

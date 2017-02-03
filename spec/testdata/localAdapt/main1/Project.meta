@@ -67,3 +67,43 @@ Adapt {
     }
   }
 }
+
+If toolchain: Wrong {
+  CustomConfig __ALL__, project: __ALL__, type: extend {
+    PreSteps {
+      CommandLine "echo ADAPT_06"
+    }
+  }
+}
+
+Unless toolchain: Wrong {
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo ADAPT_06"
+    }
+  }
+}
+
+Unless toolchain: Wrong, mainConfig: test2 {
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo ADAPT_07"
+    }
+  }
+}
+
+Unless toolchain: GCC, mainConfig: test2 {
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo ADAPT_08"
+    }
+  }
+}
+
+Unless { # means never ever
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo ADAPT_09"
+    }
+  }
+}

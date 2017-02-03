@@ -87,6 +87,15 @@ describe "Local Adapt" do
     expect($mystring.include?("EXTEND_GCC")).to be == true
   end
 
+  it 'if as adapt and not' do
+    Bake.startBake("localAdapt/main1", ["test2"])
+    expect($mystring.include?("ADAPT_06")).to be == true
+    expect($mystring.include?("ADAPT_07")).to be == true
+    expect($mystring.include?("ADAPT_08")).to be == false
+    expect($mystring.include?("ADAPT_09")).to be == false
+  end
+
+
 end
 
 end

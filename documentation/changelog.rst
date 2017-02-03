@@ -3,6 +3,9 @@ Changelog
 
 February ?, 2017 - bake-toolkit 2.31.0
     * Added: dry run via command line parameter --dry.
+    * Added: Support for compiler, archiver and linker prefixes, can be used for e.g. sccache.
+    * Added: "If" is now an alias for "Adapt". To negate the conditions, use "Unless".
+    * Added: For Adapts in Project.meta the "project" attribute is now "__THIS__" per default, which should be correct in almost every case.
     * Cosmetic: getting rid of warning output if paths start with ".", e.g. IncludeDir "./local/abc".
     * Cosmetic: only print the first out-of-date meta file when checking cache.
 

@@ -303,6 +303,12 @@ module Bake
         contains_many 'config', BaseConfig_INTERNAL, 'parent'
       end
 
+      class If < Adapt
+      end
+
+      class Unless < Adapt
+      end
+
       class Project < ModelElement
         has_attr 'default', String, :defaultValueLiteral => ""
         contains_one 'description', Description, 'parent'
