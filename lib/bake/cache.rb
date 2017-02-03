@@ -30,7 +30,7 @@ module Bake
         else
           @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta." + sanitize_filename(Bake.options.build_config) + qacStr + ".cache"
         end
-        FileUtils.mkdir_p(File.dirname(@cacheFilename))
+        FileUtils.mkdir_p(File.dirname(@cacheFilename)) if !Bake.options.dry
       end
 
       def load_cache
@@ -171,6 +171,8 @@ module Bake
       end
 
       def write_cache(referencedConfigs, adaptConfigs)
+        return if Bake.options.dry
+
         cache = Cache.new
         cache.referencedConfigs = referencedConfigs
         cache.adaptStrings = Bake.options.adapt

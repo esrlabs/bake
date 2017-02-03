@@ -190,7 +190,9 @@ module Bake
         if not (cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile))
           BlockBase.prepareOutput(object)
           BlockBase.writeCmdLineFile(cmd, cmdLineFile)
-          success, consoleOutput = ProcessHelper.run(cmd, false, false)
+          success = true
+          consoleOutput = ""
+          success, consoleOutput = ProcessHelper.run(cmd, false, false) if !Bake.options.dry
 
           outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
           incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
@@ -225,8 +227,10 @@ module Bake
             deps = dep_splitted.map { |d| d.gsub(/[\\] /,' ').gsub(/[\\]/,'/').strip }.delete_if {|d| d == "" }
           end
         rescue Exception => ex1
-          Bake.formatter.printWarning("Could not read '#{dep_filename}'", projDir)
-          puts ex1.message if Bake.options.debug
+          if !Bake.options.dry
+            Bake.formatter.printWarning("Could not read '#{dep_filename}'", projDir)
+            puts ex1.message if Bake.options.debug
+          end
           return nil
         end
         deps
@@ -234,7 +238,7 @@ module Bake
 
       # todo: move to toolchain util file
       def self.write_depfile(deps, dep_filename_conv)
-        if deps
+        if deps && !Bake.options.dry
           begin
             File.open(dep_filename_conv, 'wb') do |f|
               deps.each do |dep|
@@ -307,7 +311,7 @@ module Bake
           end
           compileJobs.join
 
-          if Bake.options.filelist
+          if Bake.options.filelist && !Bake.options.dry
             Bake.options.filelist.merge(fileListBlock.merge(fileListBlock))
 
             FileUtils.mkdir_p(@block.output_dir)
@@ -333,7 +337,7 @@ module Bake
       end
 
       def clean
-        if Bake.options.filename or Bake.options.analyze
+        if (Bake.options.filename or Bake.options.analyze)
           Dir.chdir(@projectDir) do
             calcSources(true)
             @source_files.each do |source|
@@ -343,18 +347,24 @@ module Bake
               object = get_object_file(source)
               if File.exist?object
                 puts "Deleting file #{object}" if Bake.options.verbose >= 2
-                FileUtils.rm_rf(object)
+                if !Bake.options.dry
+                  FileUtils.rm_rf(object)
+                end
               end
               if not Bake.options.analyze
                 dep_filename = calcDepFile(object, type)
                 if dep_filename and File.exist?dep_filename
                   puts "Deleting file #{dep_filename}" if Bake.options.verbose >= 2
-                  FileUtils.rm_rf(dep_filename)
+                  if !Bake.options.dry
+                    FileUtils.rm_rf(dep_filename)
+                  end
                 end
                 cmdLineFile = calcCmdlineFile(object)
                 if File.exist?cmdLineFile
                   puts "Deleting file #{cmdLineFile}" if Bake.options.verbose >= 2
-                  FileUtils.rm_rf(cmdLineFile)
+                  if !Bake.options.dry
+                    FileUtils.rm_rf(cmdLineFile)
+                  end
                 end
               end
             end

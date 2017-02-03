@@ -37,7 +37,7 @@ module Bake
       r.each { |f| FileUtils.rm_rf(f) }
       r = Dir.glob("spec/testdata/**/.bake")
       r.each { |f| FileUtils.rm_rf(f) }
-      r = Dir.glob("spec/testdata/**/build/*")
+      r = Dir.glob("spec/testdata/**/build")
       r.each { |f| FileUtils.rm_rf(f) }
       r = Dir.glob("spec/testdata/**/build_*")
       r.each { |f| FileUtils.rm_rf(f) }
@@ -47,6 +47,10 @@ module Bake
       r.each { |f| FileUtils.rm_rf(f) }
       r = Dir.glob("**/testQacData")
       r.each { |f| FileUtils.rm_rf(f) }
+
+      FileUtils.rm_rf("spec/testdata/make/main/obj")
+      FileUtils.rm_rf("spec/testdata/make/main/project")
+      FileUtils.rm_rf("spec/testdata/make/main/project.exe")
     end
   end
 

@@ -20,7 +20,7 @@ module Bake
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
     attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
-    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac # Boolean
+    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse # Boolean
     attr_reader :threads, :socket # Fixnum
     attr_reader :vars # map
@@ -32,6 +32,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
+      @dry = false
       @filelist = nil
       @qac = false
       @projectPaths = false
@@ -132,6 +133,8 @@ module Bake
       add_option(["--license",            "--show_license"       ], lambda {     License.show                            })
       add_option(["--doc",                "--show_doc"           ], lambda {     Doc.show                                })
       add_option(["--install-doc",        "--install_doc"        ], lambda {     Doc.install                             })
+
+      add_option(["--dry"                                        ], lambda {     @dry = true                             })
 
       add_option(["--version"                                    ], lambda {     Bake::Usage.version                     })
       add_option(["--list",               "--show_configs"       ], lambda {     @showConfigs = true                     })

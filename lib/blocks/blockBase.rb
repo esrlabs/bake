@@ -20,7 +20,7 @@ module Bake
       def check_config_file()
         if File.exists?(@config.file_name) and File.mtime(@config.file_name) > @config_date
           begin
-            FileUtils.touch(@config.file_name)
+            FileUtils.touch(@config.file_name) if !Bake.options.dry
           rescue Exception=>e
             if Bake.options.verbose >= 2
               Bake.formatter.printWarning("Could not touch #{@config.file_name}: #{e.message}", @config.file_name)
@@ -30,6 +30,7 @@ module Bake
       end
 
       def self.prepareOutput(filename)
+        return if Bake.options.dry
         begin
           if File.exists?(filename)
             FileUtils.rm(filename)
@@ -61,7 +62,7 @@ module Bake
           if File.exist?cmdLineFile
             lastCmdLineArray = File.readlines(cmdLineFile)[0];
             if lastCmdLineArray == cmd.join(" ")
-              FileUtils.touch(cmdLineFile)
+              FileUtils.touch(cmdLineFile) if !Bake.options.dry
               return true
             end
           end
@@ -76,7 +77,9 @@ module Bake
 
       def self.writeCmdLineFile(cmd, cmdLineFile)
         begin
-          File.open(cmdLineFile, 'w') { |f| f.write(cmd.join(" ")) }
+          if !Bake.options.dry
+            File.open(cmdLineFile, 'w') { |f| f.write(cmd.join(" ")) }
+          end
         rescue Exception => e
           if Bake.options.debug
             puts e.message
@@ -176,21 +179,27 @@ module Bake
 
 
       def cleanProjectDir
-        Dir.chdir(@projectDir) do
-          if File.exist?@block.output_dir
-            puts "Deleting folder #{@block.output_dir}" if Bake.options.verbose >= 2
-            FileUtils.rm_rf(@block.output_dir)
-
-            if (@block.tcs[:OUTPUT_DIR] == nil) && (Bake.options.buildDirDelimiter == "/") # in this case all builds are placed in a "build" folder
-              buildDir = File.dirname(@block.output_dir)
-              if (File.basename(buildDir) == "build") && (Dir.entries(buildDir).size == 2)# double check if it's really "build" and check if it's empty (except "." and "..")
-                puts "Deleting folder #{buildDir}" if Bake.options.verbose >= 2
-                FileUtils.rm_rf(buildDir)
+        if !Bake.options.filename
+          Dir.chdir(@projectDir) do
+            if File.exist?@block.output_dir
+              puts "Deleting folder #{@block.output_dir}" if Bake.options.verbose >= 2
+              if !Bake.options.dry
+                FileUtils.rm_rf(@block.output_dir)
               end
-            end
 
+              if (@block.tcs[:OUTPUT_DIR] == nil) && (Bake.options.buildDirDelimiter == "/") # in this case all builds are placed in a "build" folder
+                buildDir = File.dirname(@block.output_dir)
+                if (File.basename(buildDir) == "build") && (Dir.entries(buildDir).size == 2)# double check if it's really "build" and check if it's empty (except "." and "..")
+                  puts "Deleting folder #{buildDir}" if Bake.options.verbose >= 2
+                  if !Bake.options.dry
+                    FileUtils.rm_rf(buildDir)
+                  end
+                end
+              end
+
+            end
           end
-        end unless Bake.options.filename
+        end
         return true
       end
 

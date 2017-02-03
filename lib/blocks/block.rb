@@ -282,7 +282,9 @@ module Bake
           Dir.chdir(@projectDir) do
             if File.exist?".bake"
               puts "Deleting folder .bake" if Bake.options.verbose >= 2
-              FileUtils.rm_rf(".bake")
+              if !Bake.options.dry
+                FileUtils.rm_rf(".bake")
+              end
             end
           end
         end

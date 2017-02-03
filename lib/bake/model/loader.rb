@@ -24,7 +24,13 @@ module Bake
 
       fcm = RGen::Util::FileCacheMap.new(".bake", ".cache")
       fcm.version_info = Version.number
-      @DumpFileCache = RGen::Fragment::DumpFileCache.new(fcm)
+
+      if !Bake.options.dry
+        @DumpFileCache = RGen::Fragment::DumpFileCache.new(fcm)
+      else
+        @DumpFileCache = nil
+      end
+
       @model = RGen::Fragment::FragmentedModel.new(:env => @env)
     end
 

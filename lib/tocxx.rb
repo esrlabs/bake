@@ -538,7 +538,7 @@ module Bake
           File.write(Bake.options.cc2j_filename, JSON.pretty_generate(Blocks::CC2J))
         end
 
-        if Bake.options.filelist
+        if Bake.options.filelist && !Bake.options.dry
           mainBlock = Blocks::ALL_BLOCKS[Bake.options.main_project_name+","+Bake.options.build_config]
           Dir.chdir(mainBlock.projectDir) do
             FileUtils.mkdir_p(mainBlock.output_dir)

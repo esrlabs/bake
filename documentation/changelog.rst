@@ -2,6 +2,7 @@ Changelog
 =========
 
 February ?, 2017 - bake-toolkit 2.31.0
+    * Added: dry run via command line parameter --dry.
     * Cosmetic: getting rid of warning output if paths start with ".", e.g. IncludeDir "./local/abc".
     * Cosmetic: only print the first out-of-date meta file when checking cache.
 

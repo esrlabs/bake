@@ -98,7 +98,9 @@ module Bake
             BlockBase.prepareOutput(@archive_name)
 
             BlockBase.writeCmdLineFile(cmd, cmdLineFile)
-            success, consoleOutput = ProcessHelper.run(cmd, false, false)
+            success = true
+            consoleOutput = ""
+            success, consoleOutput = ProcessHelper.run(cmd, false, false) if !Bake.options.dry
             process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{@archive_name}", reason, success)
 
             check_config_file()
@@ -114,7 +116,9 @@ module Bake
             @objects = Dir.glob("#{@block.output_dir}/**/*.o")
             if !@objects.empty? && File.exist?(@archive_name)
               puts "Deleting file #{@archive_name}" if Bake.options.verbose >= 2
-              FileUtils.rm_rf(@archive_name)
+              if !Bake.options.dry
+                FileUtils.rm_rf(@archive_name)
+              end
             end
           end
         else

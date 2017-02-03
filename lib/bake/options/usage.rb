@@ -59,6 +59,8 @@ module Bake
       puts " --version                Print version."
       puts " --time                   Print elapsed time at the end."
       puts " --doc                    Open documentation in browser"
+      puts " --dry                    No changes to the file system, no external processes like the compiler are called."
+      puts "                          Exceptions: some special command line options like --create or --dot and 'cmd's of 'Set's."
       puts " --install-doc            If installed, --doc opens the offline docu, otherwise it's online. You may need super user rights to enhance the bake-toolkit installation."
       puts " -h, --help               Print this help."
       puts " --license                Print the license."
