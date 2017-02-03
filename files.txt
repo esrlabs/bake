@@ -37,6 +37,7 @@
 ./syntax/adapt_configs.html
 ./syntax/auto_adjustment.html
 ./syntax/derive_configs.html
+./syntax/prefix.html
 ./syntax/project_meta_syntax.html
 ./syntax/syntax.html
 ./syntax/variable_substitutions.html
@@ -133,6 +134,7 @@
 ./_sources/syntax/adapt_configs.txt
 ./_sources/syntax/auto_adjustment.txt
 ./_sources/syntax/derive_configs.txt
+./_sources/syntax/prefix.txt
 ./_sources/syntax/project_meta_syntax.txt
 ./_sources/syntax/syntax.txt
 ./_sources/syntax/variable_substitutions.txt

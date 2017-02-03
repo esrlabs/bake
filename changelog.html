@@ -140,12 +140,22 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>February ?, 2017 - bake-toolkit 2.31.0</dt>
+<dd><ul class="first last simple">
+<li>Added: dry run via command line parameter &#8211;dry.</li>
+<li>Added: Support for compiler, archiver and linker prefixes, can be used for e.g. sccache.</li>
+<li>Added: &#8220;If&#8221; is now an alias for &#8220;Adapt&#8221;. To negate the conditions, use &#8220;Unless&#8221;.</li>
+<li>Added: For Adapts in Project.meta the &#8220;project&#8221; attribute is now &#8220;__THIS__&#8221; per default, which should be correct in almost every case.</li>
+<li>Cosmetic: getting rid of warning output if paths start with &#8221;.&#8221;, e.g. IncludeDir &#8221;./local/abc&#8221;.</li>
+<li>Cosmetic: only print the first out-of-date meta file when checking cache.</li>
+</ul>
+</dd>
 <dt>January 20, 2017 - bake-toolkit 2.30.0</dt>
 <dd><ul class="first last simple">
 <li>Added: new adapt option &#8220;push_front&#8221;.</li>
 <li>Added: Project.meta and Collection.meta will be searched upwards if not found in current directory (or the directory specified with -m).</li>
 <li>Changed: &#8211;doc opens online docu per default. You can install the offline docu with &#8211;install-doc.</li>
-<li>Added: &#8211;debug prints more information when reading the cache, use this as feedback if you think caching does not work correctly.&#8221;</li>
+<li>Added: &#8211;debug prints more information when reading the cache, use this as feedback if you think caching does not work correctly.</li>
 </ul>
 </dd>
 <dt>January 12, 2017 - bake-toolkit 2.29.4</dt>

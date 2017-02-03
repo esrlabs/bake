@@ -262,17 +262,20 @@ z-index: 100;
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showDefaultToolchain()" onMouseout="notip()">DefaultToolchain</span> &#60;basedOn&#62;, <span class="help" onMouseover="showOutputDir()" onMouseout="notip()">outputDir</span>: &#60;dir&#62;, <span class="help" onMouseover="showEclipseOrder()" onMouseout="notip()">eclipseOrder</span>: true|false {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C,
-                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
+                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
+                                          <span class="help" onMouseover="showPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showInternalDefines()" onMouseout="notip()">InternalDefines</span> &#60;file&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultArchiver()" onMouseout="notip()">Archiver</span>
-                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
+                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
+                                          <span class="help" onMouseover="showArchiverPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultLinker()" onMouseout="notip()">Linker</span>
-                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
+                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
+                                          <span class="help" onMouseover="showLinkerPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPrefixFlags()" onMouseout="notip()">LibPrefixFlags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPostfixFlags()" onMouseout="notip()">LibPostfixFlags</span> &#60;flags&#62;<br>
@@ -284,16 +287,19 @@ z-index: 100;
 
 &nbsp; &nbsp; <span class="help" onMouseover="showToolchainProject()" onMouseout="notip()">Toolchain</span> <span class="help" onMouseover="showOutputDir()" onMouseout="notip()">outputDir</span>: &#60;dir&#62; {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C,
-                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
+                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
+                                         <span class="help" onMouseover="showPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showArchiver()" onMouseout="notip()">Archiver</span>
-                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
+                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
+                                         <span class="help" onMouseover="showArchiverPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLinker()" onMouseout="notip()">Linker</span>
-                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62; {</i><br>
+                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
+                                         <span class="help" onMouseover="showLinkerPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPrefixFlags()" onMouseout="notip()">LibPrefixFlags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPostfixFlags()" onMouseout="notip()">LibPostfixFlags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
@@ -826,7 +832,17 @@ function showCommand() {
   ddrivetip("command", "No","-","Depending on toolchain, e.g. \"gcc\"","Change command, e.g. \"$(PATH_TO_EXE)/gcc_speciale.exe\"")
 }
 
+function showPrefix() {
+  ddrivetip("prefix", "No","-","$(CompilerPrefix)","Wrapper for compiler, e.g. a (s)ccache. If variable is not set, no prefix is used.<br>You can use the adapt feature to set the variable or overwrite the prefix.")
+}
 
+function showArchiverPrefix() {
+  ddrivetip("prefix", "No","-","$(ArchiverPrefix)","Wrapper for archiver. If variable is not set, no prefix is used.<br>You can use the adapt feature to set the variable or overwrite the prefix.")
+}
+
+function showLinkerPrefix() {
+  ddrivetip("prefix", "No","-","$(LinkerPrefix)","Wrapper for linker. If variable is not set, no prefix is used.<br>You can use the adapt feature to set the variable or overwrite the prefix.")
+}
 
 var offsetxpoint=20 //Customize x offset of tooltip
 var offsetypoint=20 //Customize y offset of tooltip

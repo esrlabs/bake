@@ -219,13 +219,32 @@ Adapt {
 <li><strong>mainConfig</strong>: name of the main config</li>
 <li><strong>mainProject</strong>: name of the main project</li>
 </ul>
-<p>The &#8220;Adapt* configs will be only applied if all these attributes are either empty or true. Example:</p>
+<p>The &#8220;Adapt* configs will be only applied if all these attributes are either empty or true (&#8220;AND&#8221; operation). Example:</p>
 <div class="highlight-text"><div class="highlight"><pre>Adapt toolchain: GCC, os: Windows {
   ...
 }
 </pre></div>
 </div>
 <p>Here the <em>Adapt</em> configs will be applied if toolchain is GCC on Windows.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can write &#8220;If&#8221; instead of &#8220;Adapt&#8221;:</p>
+</div>
+<div class="highlight-text"><div class="highlight"><pre>If toolchain: GCC, os: Windows {
+  ...
+}
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is possible to negate the conditions with &#8220;Unless&#8221;:</p>
+</div>
+<div class="highlight-text"><div class="highlight"><pre>Unless toolchain: GCC, os: Windows {
+  ...
+}
+</pre></div>
+</div>
+<p>The adapt block in the example above will be applied if the toolchain is not GCC AND if the OS is not Windows, e.g. for GCC on Linux or Diab Compiler on Mac.</p>
 </div>
 <div class="section" id="effectiveness">
 <h3>Effectiveness<a class="headerlink" href="#effectiveness" title="Permalink to this headline">¶</a></h3>
@@ -243,7 +262,7 @@ Remember the example from the beginning?</p>
 <ul class="simple">
 <li><strong>__MAIN__</strong> means the main project or main config</li>
 <li><strong>__ALL__</strong> means all projects or configs</li>
-<li><strong>__THIS__</strong> is only valid for project name, which can be used for <em>Adapts</em> within a Project.meta to restrict the adaption to the current project.</li>
+<li><strong>__THIS__</strong> is only valid for project name, which can be used for <em>Adapts</em> within a Project.meta to restrict the adaption to the current project. This is the default for <em>Adapts</em> in Project.meta.</li>
 </ul>
 <p>If you want to apply the changes only to the top level config, write:</p>
 <div class="highlight-text"><div class="highlight"><pre>ExecutableConfig __MAIN__, project: __MAIN__, ...
