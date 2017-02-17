@@ -219,7 +219,16 @@ module Bake
           if singleLine
             File.readlines(dep_filename).each do |line|
               splitted = line.split(": ")
-              deps << splitted[1].gsub(/[\\]/,'/') if splitted.length > 1
+              if splitted.length > 1
+                deps << splitted[1].gsub(/[\\]/,'/')
+              else
+                splitted = line.split(":\t") # right now only for tasking compiler
+                if splitted.length > 1
+                  dep = splitted[1].gsub(/[\\]/,'/').strip
+                  dep = dep[1..-2] if dep.start_with?("\"")
+                  deps << dep
+                end
+              end
             end
           else
             deps_string = File.read(dep_filename)

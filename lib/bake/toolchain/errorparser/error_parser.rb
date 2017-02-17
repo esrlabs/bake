@@ -31,6 +31,12 @@ module Bake
       end
     end
 
+    def get_tasking_severity(str)
+      return SEVERITY_INFO if str.start_with?"R"
+      return SEVERITY_WARNING if str.start_with?"W"
+      return SEVERITY_ERROR  # F,E and S
+    end
+
     def inv_severity(s)
       if s == SEVERITY_INFO
         "info"

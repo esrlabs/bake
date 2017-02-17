@@ -1,6 +1,9 @@
 Changelog
 =========
 
+February 17, 2017 - bake-toolkit 2.31.1
+    * Added: Tasking compiler support
+
 February 3, 2017 - bake-toolkit 2.31.0
     * Added: dry run via command line parameter --dry.
     * Added: Support for compiler, archiver and linker prefixes, can be used for e.g. sccache.

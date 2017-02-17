@@ -122,8 +122,14 @@ module Bake
           end
 
           cmd += @compileBlock.objects
-          cmd << linker[:SCRIPT] if @linker_script # -T
-          cmd << @linker_script if @linker_script # xy/xy.dld
+          if @linker_script
+            if linker[:SCRIPT_SPACE]
+              cmd << linker[:SCRIPT] # -T
+              cmd << @linker_script # xy/xy.dld
+            else
+              cmd << linker[:SCRIPT]+@linker_script
+            end
+          end
           cmd += linker[:MAP_FILE_FLAG].split(" ") if @mapfile # -Wl,-m6
           if not linker[:MAP_FILE_PIPE] and @mapfile
             cmd[cmd.length-1] << @mapfile

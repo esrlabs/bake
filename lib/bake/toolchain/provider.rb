@@ -91,6 +91,7 @@ module Bake
           :PREFIX => "$(LinkerPrefix)",
           :MUST_FLAGS => "",
           :SCRIPT => "",
+          :SCRIPT_SPACE => true,
           :USER_LIB_FLAG => "",
           :EXE_FLAG => "",
           :EXE_FLAG_SPACE => true,
@@ -158,3 +159,4 @@ require 'bake/toolchain/greenhills'
 require 'bake/toolchain/keil'
 require 'bake/toolchain/msvc'
 require 'bake/toolchain/gcc_env'
+require 'bake/toolchain/tasking'
