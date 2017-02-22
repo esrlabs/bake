@@ -1,4 +1,3 @@
-./.buildinfo
 ./changelog.html
 ./commandline/commandline.html
 ./concepts/build_hierarchy.html

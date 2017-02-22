@@ -14,6 +14,6 @@ cd _build/html
 rm -rf _static/bootstrap-2.3.2
 rm -rf _static/bootswatch-2.3.2
 rm -rf _sources
-find . -name "*" -type f > files.txt
+find . -name "*" -type f | grep -v ".buildinfo" > files.txt
 cp -Rf * ../../../docs/
 cd ../..

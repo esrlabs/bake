@@ -1,11 +1,13 @@
 require "open-uri"
 require "fileutils"
+require "common/version"
+require "openssl"
 
 module Bake
   class Doc
     def self.show
-      if File.exist?(File.dirname(__FILE__)+"/../../../doc/index.html")
-        link = File.expand_path(File.dirname(__FILE__)+"/../../../doc/index.html")
+      if File.exist?(File.dirname(__FILE__)+"/../../../docs/index.html")
+        link = File.expand_path(File.dirname(__FILE__)+"/../../../docs/index.html")
       else
         link = "http://esrlabs.github.io/bake"
       end
@@ -24,10 +26,11 @@ module Bake
     end
 
     def self.install
-      docuSource = "http://esrlabs.github.io/bake/"
+
+      docuSource = "https://raw.githubusercontent.com/esrlabs/bake/$(Bake::Version.number)/docs/"
       docuTarget = File.dirname(__FILE__)+"/../../../doc/"
       begin
-        f = open(docuSource+"files.txt")
+        f = open(docuSource+"files.txt", {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE})
       rescue OpenURI::HTTPError => e
         puts "Could not open #{docuSource}files.txt"
         ExitHelper.exit(0)
@@ -35,7 +38,7 @@ module Bake
       f.each_line do |fileName|
         fileName = fileName[2..-1].strip
         begin
-          sourceFile = open(docuSource+fileName)
+          sourceFile = open(docuSource+fileName, {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE})
         puts "[OK]     "+ docuSource+fileName
         rescue OpenURI::HTTPError => e
           puts "[FAILED] "+ docuSource+fileName
