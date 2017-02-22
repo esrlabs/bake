@@ -6,8 +6,8 @@ require "openssl"
 module Bake
   class Doc
     def self.show
-      if File.exist?(File.dirname(__FILE__)+"/../../../docs/index.html")
-        link = File.expand_path(File.dirname(__FILE__)+"/../../../docs/index.html")
+      if File.exist?(File.dirname(__FILE__)+"/../../../doc/index.html")
+        link = File.expand_path(File.dirname(__FILE__)+"/../../../doc/index.html")
       else
         link = "http://esrlabs.github.io/bake"
       end

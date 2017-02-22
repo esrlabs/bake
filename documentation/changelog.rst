@@ -1,7 +1,7 @@
 Changelog
 =========
 
-February 22, 2017 - bake-toolkit 2.31.3
+February 22, 2017 - bake-toolkit 2.31.4
     * Bugfix: --install-doc was broken
 
 February 22, 2017 - bake-toolkit 2.31.2
