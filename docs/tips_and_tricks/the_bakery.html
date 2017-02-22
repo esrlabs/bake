@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Bakery &mdash; bake documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
+    <link rel="top" title="bake documentation" href="../index.html" />
+    <link rel="up" title="Additional features" href="tips_and_tricks.html" />
+    <link rel="next" title="How to use bake with cygwin" href="how_to_use_bake_with_cygwin.html" />
+    <link rel="prev" title="Additional features" href="tips_and_tricks.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img src="../_static/logo_tiny_48.png">
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">The Bakery</a><ul>
+<li><a class="reference internal" href="#what-is-the-bakery">What is the Bakery</a></li>
+<li><a class="reference internal" href="#how-to-use-the-bakery-on-the-commandline">How to use the Bakery on the commandline</a></li>
+<li><a class="reference internal" href="#syntax-of-collection-meta">Syntax of Collection.meta</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="tips_and_tricks.html" title="Previous Chapter: Additional features"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Additional fe...</span>
+    </a>
+  </li>
+  <li>
+    <a href="how_to_use_bake_with_cygwin.html" title="Next Chapter: How to use bake with cygwin"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">How to use ba... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="the-bakery">
+<h1>The Bakery<a class="headerlink" href="#the-bakery" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-the-bakery">
+<h2>What is the Bakery<a class="headerlink" href="#what-is-the-bakery" title="Permalink to this headline">¶</a></h2>
+<p>bakery is part of the bake-toolkit distribution and it is used to build several independent projects at once.
+It&#8217;s very useful for e.g. compiling and running all unit tests.
+The collections are specified in Collection.meta files.</p>
+</div>
+<div class="section" id="how-to-use-the-bakery-on-the-commandline">
+<h2>How to use the Bakery on the commandline<a class="headerlink" href="#how-to-use-the-bakery-on-the-commandline" title="Permalink to this headline">¶</a></h2>
+<p>Call <em>bakery -h</em> to display the command line options.
+The most important options are the collection name (<em>-b</em>) and the collection directory (<em>-m</em>, default is current directory).</p>
+<p>Examples:</p>
+<blockquote>
+<div><p>Build all unittests:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakery -b AllUnitTests</span>
+</pre></div>
+</div>
+<p>It is possible to omit <em>-b</em>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakery AllUnitTests</span>
+</pre></div>
+</div>
+<p>Clean all unittests:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakery -b AllUnitTests -c</span>
+</pre></div>
+</div>
+<p>Build all unittests, workspace checked out into two roots, console supports colors, stop on first error, run the unittests after build:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakery -b AllUnitTests -m w:/root1/mainProj -w w:/root2 -r -a black --do run</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="syntax-of-collection-meta">
+<h2>Syntax of Collection.meta<a class="headerlink" href="#syntax-of-collection-meta" title="Permalink to this headline">¶</a></h2>
+<p>Move the mouse cursor over the blue elements to display more information.</p>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0100)file:///Users/NiCoretti/.rvm/gems/ruby-2.1.2/gems/bake-toolkit-2.10.3/doc/further/bakery/syntax.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><title></title></head>
+
+
+<body>
+
+<style type="text/css">
+#rundrum {
+  border-width:1px;
+  border-style:dashed;
+  border-color:blue;
+  padding:0.2cm;
+  text-align:justify; }
+}
+</style>
+
+<style type="text/css">
+
+#dhtmltooltip{
+position: absolute;
+width: 150px;
+border: 2px solid black;
+padding: 2px;
+background-color: lightyellow;
+visibility: hidden;
+z-index: 100;
+}
+
+</style>
+
+<style type="text/css">
+.hide {
+    display:none;
+ }
+.show {
+    display:block
+ }
+.showInline {
+    display:inline
+ }
+ .help {
+    color:blue
+ } 
+.showRadio {
+    font-weight:bold;color:blue;text-decoration:overline underline
+ } 
+.hideRadio {
+    color:#AAAAFF;
+ } 
+.mycomment {
+    color:green
+ }   
+</style>
+
+
+
+
+
+</p><table border="1" style="font-family:monospace" ;="" font-size:10=""><tbody><tr><td>
+
+<span class="help" onmouseover="showCollection()" onmouseout="notip()">Collection</span> &lt;name&gt; {<br>
+&nbsp; <span class="help" onmouseover="showProject()" onmouseout="notip()">Project</span> &lt;name&gt;, config: &lt;name&gt;<br>
+&nbsp; <span class="help" onmouseover="showExclude()" onmouseout="notip()">Exclude</span> &lt;name&gt;, config: &lt;name&gt;<br>
+&nbsp; <span class="help" onmouseover="showSubCollection()" onmouseout="notip()">SubCollection</span> &lt;name&gt;<br>
+}
+
+
+
+
+
+<div id="dhtmltooltip" style="left: -1000px; top: 151px; visibility: hidden;"><b><u>Collection</u><br><br>Mandatory:</b> Yes<br><b>Quantity</b>: 1..n<br><b>Default</b>: -<br><br><b>Description</b>:<br>This is a collection of builds. The name must be unique within this file.</div>
+
+<script type="text/javascript">
+
+
+function showCollection() {
+  str = 'This is a collection of builds. The name must be unique within this file.'
+  ddrivetip("Collection", "Yes", "1..n", "-",str)
+}
+
+function showProject() {
+  str = "Specify the projects with it's configs to build. It is possible to use \"*\" as wildcards."
+  ddrivetip("Project", "Yes,", "1..n", "-",str)
+}
+
+function showConfig() {
+  str = "Specify the configs. It is possible to use \"*\" as wildcard."
+  ddrivetip("config", "Yes", "-", "-",str)
+}
+
+function showExclude() {
+  str = "Specify the projects with it's configs to exclude from build. It is possible to use \"*\" as wildcards."
+  ddrivetip("Exclude", "No", "0..n", "-",str)
+}
+
+function showSubCollection() {
+	  str = 'This references another collection.'
+	  ddrivetip("SubCollection", "No", "0..n", "-",str)
+	}
+
+
+
+var offsetxpoint=20 //Customize x offset of tooltip
+var offsetypoint=20 //Customize y offset of tooltip
+var ie=document.all
+var ns6=document.getElementById && !document.all
+var enabletip=false
+if (ie||ns6)
+var tipobj=document.all? document.all["dhtmltooltip"] : document.getElementById? document.getElementById("dhtmltooltip") : ""
+
+function ietruebody(){
+return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
+}
+
+function ddrivetip(item, manda, quan, def, desc){
+if (ns6||ie){
+
+var abc=ie&&!window.opera? ietruebody().clientWidth : window.innerWidth
+
+tipobj.style.width=(abc/2-offsetxpoint*2).toString()+"px"
+tipobj.style.backgroundColor="#DDFFDD"
+tipobj.innerHTML="<b><u>"+item+"</u><br><br>Mandatory:</b> "+manda+"<br><b>Quantity</b>: "+quan+"<br><b>Default</b>: "+def+"<br><br><b>Description</b>:<br>"+desc
+enabletip=true
+return false
+}
+}
+
+function positiontip(e){
+if (enabletip){
+var curX=(ns6)?e.pageX : event.clientX+ietruebody().scrollLeft;
+var curY=(ns6)?e.pageY : event.clientY+ietruebody().scrollTop;
+//Find out how close the mouse is to the corner of the window
+var rightedge=ie&&!window.opera? ietruebody().clientWidth-event.clientX-offsetxpoint : window.innerWidth-e.clientX-offsetxpoint
+var bottomedge=ie&&!window.opera? ietruebody().clientHeight-event.clientY-offsetypoint*2 : window.innerHeight-e.clientY-offsetypoint
+var bottom=ie&&!window.opera? ietruebody().clientHeight : window.innerHeight
+
+var leftedge=(offsetxpoint<0)? offsetxpoint*(-1) : -1000
+
+//if the horizontal distance isn't enough to accomodate the width of the context menu
+if (rightedge<tipobj.offsetWidth+offsetxpoint/2)
+//move the horizontal position of the menu to the left by it's width
+tipobj.style.left=ie? ietruebody().scrollLeft+event.clientX-tipobj.offsetWidth-offsetxpoint+"px" : window.pageXOffset+e.clientX-tipobj.offsetWidth-offsetxpoint+"px"
+else if (curX<leftedge)
+tipobj.style.left="5px"
+else
+//position the horizontal position of the menu where the mouse is positioned
+tipobj.style.left=curX+offsetxpoint+"px"
+
+//same concept with the vertical position
+if (bottomedge<tipobj.offsetHeight)
+tipobj.style.top=ie? ietruebody().scrollTop+bottom-tipobj.offsetHeight-offsetypoint+"px" : window.pageYOffset+bottom-tipobj.offsetHeight-offsetypoint+"px"
+else
+tipobj.style.top=curY+offsetypoint+"px"
+tipobj.style.visibility="visible"
+}
+}
+
+function notip(){
+if (ns6||ie){
+enabletip=false
+tipobj.style.visibility="hidden"
+tipobj.style.left="-1000px"
+tipobj.style.backgroundColor=''
+tipobj.style.width=''
+}
+}
+
+document.onmousemove=positiontip
+
+</script>
+
+</td></tr></tbody></table>
+
+
+
+
+
+</body></html>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>Use double quotes (&#8221;) if the strings have wildcards</li>
+<li>Use hash marks (#) for comments.</li>
+</ul>
+</div>
+<p>Example:</p>
+<blockquote>
+<div><div class="highlight-text"><div class="highlight"><pre>Collection AllUnitTests {
+    Project &quot;*&quot;, config: UnitTest
+}
+Collection UnitTestLibsWithoutBsp {
+    Project &quot;*&quot;, config: &quot;UnitTestLib*&quot;
+    Exclude &quot;bsp*&quot;, config: &quot;*&quot;
+}
+Collection MySpecialCollection {
+    Project Main1, config: Debug
+    Project Main2, config: Release
+    Project Sub3, config: Debug
+    SubCollection UnitTestLibsWithoutBsp
+}
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, E.S.R.Labs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
