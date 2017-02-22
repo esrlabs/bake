@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bake 2.30.0 &mdash; bake documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="_static/logo_tiny_32.ico"/>
+    <link rel="top" title="bake documentation" href="#" />
+    <link rel="next" title="Why you should use bake" href="why_bake/why_bake.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="_static/logo_tiny_48.png">
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internal.html">Internal developing notes</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">bake 2.30.0</a><ul>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="why_bake/why_bake.html" title="Next Chapter: Why you should use bake"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Why you shoul... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="bake-2-30-0">
+<h1>bake 2.30.0<a class="headerlink" href="#bake-2-30-0" title="Permalink to this headline">¶</a></h1>
+<p>bake, building software <strong>fast</strong> and <strong>easy</strong>!</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><img alt="_images/bake_tagcloud.png" class="first last" src="_images/bake_tagcloud.png" />
+</td>
+<td><p class="first"><strong>Start to bake</strong></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="why_bake/why_bake.html">Why you should use bake</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="why_bake/why_bake.html#bake-desgin-goals">bake desgin goals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/install_bake.html">Install bake</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/install_bake.html#how-to-install-bake">How to install bake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/install_bake.html#known-issues">Known Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts/concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts/the_project_meta_file.html">The Project.meta file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts/the_main_project.html">The main project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts/build_hierarchy.html">The build hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts/link_order.html">The link order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts/prebuild.html">Prebuild configurations for distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts/inject.html">Injection and inheritance of IncludeDir and Dependency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts/cache.html">Caching</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="syntax/syntax.html">Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="syntax/project_meta_syntax.html">The Syntax of the Project.meta file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="syntax/variable_substitutions.html">Variables in Project.meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="syntax/derive_configs.html">Derive configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="syntax/adapt_configs.html">Adapt configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="syntax/auto_adjustment.html">Auto-adjustment of paths to existing projects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="commandline/commandline.html">Commandline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="commandline/commandline.html#how-to-get-help">How to get help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commandline/commandline.html#the-most-important-options">The most important options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commandline/commandline.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commandline/commandline.html#roots-bake">roots.bake</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ide/ide_integrations.html">IDE Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ide/eclipse/eclipse.html">Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ide/vs/vs.html">Visual Studio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ide/ide_integrations.html#basic-integrations">Basic integrations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks/tips_and_tricks.html">Additional features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/the_bakery.html">The Bakery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/how_to_use_bake_with_cygwin.html">How to use bake with cygwin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/the_clang.html">Clang Analyze</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/dot.html">Generating dot graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/qac.html">QACPP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/bakeclean.html">bakeclean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/tips_and_tricks.html#unnecessary-includes">Unnecessary includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/tips_and_tricks.html#symlinks-and-junctions">Symlinks and junctions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="performance/performance.html">Performance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="performance/performance.html#eclipse-vs-bake">Eclipse vs. bake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance/performance.html#cmake-with-unix-makefiles-vs-bake">CMake with Unix makefiles vs. bake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance/performance.html#performance-using-different-rubies">Performance using different rubies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper last compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internal.html">Internal developing notes</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, E.S.R.Labs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

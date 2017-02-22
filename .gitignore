@@ -25,5 +25,5 @@ testdot.dot
 *.json
 .qacdata
 *.stamp
-doc/
+docc/
 documentation/_build
