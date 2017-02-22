@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>QACPP &mdash; bake documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
+    <link rel="top" title="bake documentation" href="../index.html" />
+    <link rel="up" title="Additional features" href="tips_and_tricks.html" />
+    <link rel="next" title="bakeclean" href="bakeclean.html" />
+    <link rel="prev" title="Generating dot graphs" href="dot.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img src="../_static/logo_tiny_48.png">
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">QACPP</a><ul>
+<li><a class="reference internal" href="#without-bakeqac">Without bakeqac</a></li>
+<li><a class="reference internal" href="#with-bakeqac">With bakeqac</a></li>
+<li><a class="reference internal" href="#step-1-admin">Step 1: admin</a></li>
+<li><a class="reference internal" href="#step-2-analyze">Step 2: analyze</a></li>
+<li><a class="reference internal" href="#step-3-view">Step 3: view</a></li>
+<li><a class="reference internal" href="#step-4-report">Step 4: report</a></li>
+<li><a class="reference internal" href="#additional-options">Additional options</a></li>
+<li><a class="reference internal" href="#notes">Notes</a></li>
+<li><a class="reference internal" href="#example-output">Example output</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="dot.html" title="Previous Chapter: Generating dot graphs"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Generating do...</span>
+    </a>
+  </li>
+  <li>
+    <a href="bakeclean.html" title="Next Chapter: bakeclean"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">bakeclean &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="qacpp">
+<h1>QACPP<a class="headerlink" href="#qacpp" title="Permalink to this headline">¶</a></h1>
+<p>bakeqac is a convenience wrapper for QACPP with some nice features.</p>
+<div class="section" id="without-bakeqac">
+<h2>Without bakeqac<a class="headerlink" href="#without-bakeqac" title="Permalink to this headline">¶</a></h2>
+<p>QACPP can be called directly from command line:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">qacli admin --qaf-project-config --qaf-project qacdata --cct &lt;cct&gt; --rcf &lt;rcf&gt; --acf &lt;acf&gt;</span>
+<span class="go">qacli analyze -P qacdata -b &lt;bake call&gt;</span>
+<span class="go">qacli view -P qacdata -m STDOUT</span>
+<span class="go">qacli report -P qacdata -t SUR # or -t RCR. Please also note, that the &quot;view&quot; is not necessary to generate the reports.</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>The first command creates the qac project database.</li>
+<li>The second command builds and analyzes the files.</li>
+<li>The third command prints out the result unfiltered.</li>
+<li>The forth command generates reports. You may replace the python scripts in PRQA to adapt the output.</li>
+</ul>
+</div>
+<div class="section" id="with-bakeqac">
+<h2>With bakeqac<a class="headerlink" href="#with-bakeqac" title="Permalink to this headline">¶</a></h2>
+<p>Instead of writing</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bake &lt;options&gt;</span>
+</pre></div>
+</div>
+<p>for regular build, simply write:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt;</span>
+</pre></div>
+</div>
+<p>bakeqac will automatically do the first three steps mentioned above. If one of these steps fails, the consecutive steps will be dismissed.</p>
+<p>You can also choose certain steps (can be combined with &#8220;|&#8221;):</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacstep admin|analyze|view|report</span>
+<span class="go">bakeqac &lt;options&gt; --qacstep admin</span>
+<span class="go">etc.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-1-admin">
+<h2>Step 1: admin<a class="headerlink" href="#step-1-admin" title="Permalink to this headline">¶</a></h2>
+<p>You have to set the environment variable QAC_HOME, e.g. to <em>c:\tools\prqa\PRQA-Framework-2.1.0</em>. If not specified otherwise, cct, rcf and acf will be automatically chosen.</p>
+<ul>
+<li><p class="first">Configuration compiler template (cct): Only GCC is supported. bakeqac tries to get the platform and the GCC version and calculates the path to the right cct file. To overwrite this behaviour, specify one or more ccts:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --cct &lt;first&gt; --cct &lt;second&gt;</span>
+</pre></div>
+</div>
+<p>Alternatively, you can add</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --c++11</span>
+<span class="go">bakeqac &lt;options&gt; --c++14</span>
+</pre></div>
+</div>
+<p>to enforce bakeqac choosing the C++11 or C++14 toolchain.</p>
+<p>If &#8211;cct is not used, bakeqac uses a built-in cct file as mentioned above. Additionally, it searched for a file named qac.cct up to root and appends the content to the original cct file.
+This may be used to add additional configuration parameters which are compiler independent, e.q. &#8220;-n 1234&#8221; suppresses warning 1234.</p>
+</li>
+<li><p class="first">Rule configuration file (rcf): Can be specified with:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --rcf &lt;rcf&gt;</span>
+</pre></div>
+</div>
+<p>If not specified, bakeqac uses $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf.</p>
+</li>
+<li><p class="first">Analysis configuration file (acf): Can be specified with:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --acf &lt;acf&gt;</span>
+</pre></div>
+</div>
+<p>If not specified, $(QAC_HOME)/config/acf/default.acf will be used.</p>
+</li>
+<li><p class="first">You can also specify the qacdata folder, default is <em>.qacdata</em>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacdata anotherFolder</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="step-2-analyze">
+<h2>Step 2: analyze<a class="headerlink" href="#step-2-analyze" title="Permalink to this headline">¶</a></h2>
+<p>This is the main step. Use exactly the same options for bakeqac as for bake. A few things have to be mentioned:</p>
+<ul class="simple">
+<li><em>&#8211;compile-only</em> will be automatically added</li>
+<li><em>&#8211;rebuild</em> will be automatically added</li>
+</ul>
+<p>The output will be filtered per default (e.g. some warnings) . To get unfiltered output, write:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacnofilter</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-3-view">
+<h2>Step 3: view<a class="headerlink" href="#step-3-view" title="Permalink to this headline">¶</a></h2>
+<p>Results are also filtered in this step if not specified otherwise:</p>
+<ul class="simple">
+<li>Only results from compiled bake projects will be shown (which does not apply to e.g. compiler libraries). To narrow the results, use the <em>-p</em> option.</li>
+<li>Files from subfolders test and mock will be filtered out.</li>
+<li>Files from projects gtest and gmock will be filtered out.</li>
+</ul>
+<p>bakeqac slightly reformats the output (originally the violated MISRA rule numbers are printed out incomplete). To switch back to raw format, use:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacrawformat</span>
+</pre></div>
+</div>
+<p>To get additional links to the appropriate documentation pages use:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacdoc</span>
+</pre></div>
+</div>
+<p>Colored output is also supported similar to bake:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; -a &lt;color_scheme&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-4-report">
+<h2>Step 4: report<a class="headerlink" href="#step-4-report" title="Permalink to this headline">¶</a></h2>
+<p>Reports about the warnings and suppressed warnings are be generated.</p>
+</div>
+<div class="section" id="additional-options">
+<h2>Additional options<a class="headerlink" href="#additional-options" title="Permalink to this headline">¶</a></h2>
+<p>QACPP needs a license. If floating licenses are not available, bakeqac can retry to checkout them:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacretry &lt;seconds&gt;</span>
+</pre></div>
+</div>
+<p>Steps &#8220;analyze&#8221; and &#8220;view&#8221; are retried until timeout is reached.</p>
+</div>
+<div class="section" id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+<p>If &#8220;&lt;mainConfigName&gt;Qac&#8221; is found in main project, it will be used instead of &#8220;&lt;mainConfigName&gt;. This is useful if the unit test has to be built different to MISRA.</p>
+</div>
+<div class="section" id="example-output">
+<h2>Example output<a class="headerlink" href="#example-output" title="Permalink to this headline">¶</a></h2>
+<img alt="../_images/misra.png" src="../_images/misra.png" />
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, E.S.R.Labs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

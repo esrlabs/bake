@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How to use bake in Eclipse &mdash; bake documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
+    <link rel="top" title="bake documentation" href="../../index.html" />
+    <link rel="up" title="Eclipse" href="eclipse.html" />
+    <link rel="next" title="How to convert existing CDT workspaces" href="how_to_convert_existing_cdt_workspace.html" />
+    <link rel="prev" title="How to install bake Eclipse integration" href="how_to_install_eclipse_plugin.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/logo_tiny_48.png">
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../internal.html">Internal developing notes</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">How to use bake in Eclipse</a><ul>
+<li><a class="reference internal" href="#choose-the-c-c-perspective">Choose the C/C++ perspective</a></li>
+<li><a class="reference internal" href="#select-a-build-configuration-of-the-main-project">Select a build configuration of the main project</a></li>
+<li><a class="reference internal" href="#adjust-includes-and-defines-for-cdt">Adjust includes and defines for CDT</a></li>
+<li><a class="reference internal" href="#build-clean-projects-files">Build/Clean Projects/Files</a></li>
+<li><a class="reference internal" href="#result">Result</a></li>
+<li><a class="reference internal" href="#preferences">Preferences</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="how_to_install_eclipse_plugin.html" title="Previous Chapter: How to install bake Eclipse integration"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; How to instal...</span>
+    </a>
+  </li>
+  <li>
+    <a href="how_to_convert_existing_cdt_workspace.html" title="Next Chapter: How to convert existing CDT workspaces"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">How to conver... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="how-to-use-bake-in-eclipse">
+<h1>How to use bake in Eclipse<a class="headerlink" href="#how-to-use-bake-in-eclipse" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="choose-the-c-c-perspective">
+<h2>Choose the C/C++ perspective<a class="headerlink" href="#choose-the-c-c-perspective" title="Permalink to this headline">¶</a></h2>
+<p>The menu items described on this page only appear in the C/C++ perspective.</p>
+</div>
+<div class="section" id="select-a-build-configuration-of-the-main-project">
+<h2>Select a build configuration of the main project<a class="headerlink" href="#select-a-build-configuration-of-the-main-project" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Right click on the main project and select a bake build configuration.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../../_images/FirstSelect.png"><img alt="../../_images/FirstSelect.png" src="../../_images/FirstSelect.png" style="width: 50.0%;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>That only configurations with a DefaultToolchain will be displayed.</li>
+</ul>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">If no Project.meta or configuration with a DefaultToolchain exist, an error item will be displayed like this</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../../_images/WrongSelect.png"><img alt="../../_images/WrongSelect.png" src="../../_images/WrongSelect.png" style="width: 50.0%;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">The chosen config is marked with a filled circle before the config name.You can also see it directly in the project explorer</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../../_images/SecondSelect.png"><img alt="../../_images/SecondSelect.png" src="../../_images/SecondSelect.png" style="width: 50.0%;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>This label decoration can be switched off and on via Window-&gt;Preferences-&gt;General-&gt;Appearance-&gt;Label Decoration</li>
+</ul>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="adjust-includes-and-defines-for-cdt">
+<h2>Adjust includes and defines for CDT<a class="headerlink" href="#adjust-includes-and-defines-for-cdt" title="Permalink to this headline">¶</a></h2>
+<p>s you might have already seen, a new menu item for the main project is enabled now: Adjust includes and defines for CDT.
+All CDT features work out-of-the-box except those about the <cite>#include</cite> and <cite>#define</cite> statements e.g. auto-completion of includes.
+To import the includes and defines into the CDT .cproject files, simply click on this menu item.</p>
+<p>Compiler internal includes and defines must be specified in InternalInclude and InternalDefine files.
+See &#8220;Syntax&#8221; help page how to set the name of these files. Note, that the variables CPPPath, CPath, ASMPath,
+ArchiverPath and LinkerPath can be used in these files.</p>
+<p>Adjusting can take between a few seconds and a minute depending on the size of the workspace and the number of
+project settings which have to be written.</p>
+</div>
+<div class="section" id="build-clean-projects-files">
+<h2>Build/Clean Projects/Files<a class="headerlink" href="#build-clean-projects-files" title="Permalink to this headline">¶</a></h2>
+<p>Now you can build or clean a project by clicking on the appropriate menu items.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="51%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Project</th>
+<th class="head">File</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><img alt="../../_images/buildMain.png" class="first last" src="../../_images/buildMain.png" />
+</td>
+<td><img alt="../../_images/buildFile.png" class="first last" src="../../_images/buildFile.png" />
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>Build File always rebuilds the file</li>
+</ul>
+</div>
+</div>
+<div class="section" id="result">
+<h2>Result<a class="headerlink" href="#result" title="Permalink to this headline">¶</a></h2>
+<p>The result of the build will be shown in the Console and Problems View as usual</p>
+<a class="reference internal image-reference" href="../../_images/console.png"><img alt="../../_images/console.png" src="../../_images/console.png" style="width: 50.0%;" /></a>
+<a class="reference internal image-reference" href="../../_images/problem.png"><img alt="../../_images/problem.png" src="../../_images/problem.png" style="width: 50.0%;" /></a>
+</div>
+<div class="section" id="preferences">
+<h2>Preferences<a class="headerlink" href="#preferences" title="Permalink to this headline">¶</a></h2>
+<p>Via <cite>Window-&gt;Preferences-&gt;bake</cite> some settings can be changed and the bake command line can be extended</p>
+<a class="reference internal image-reference" href="../../_images/pref.png"><img alt="../../_images/pref.png" src="../../_images/pref.png" style="width: 50.0%;" /></a>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, E.S.R.Labs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
