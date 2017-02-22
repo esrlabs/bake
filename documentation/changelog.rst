@@ -1,6 +1,9 @@
 Changelog
 =========
 
+February 22, 2017 - bake-toolkit 2.31.2
+    * Changed: files which will be compiled are now printed out *before* the compiler is called, not afterwards anymore.
+
 February 17, 2017 - bake-toolkit 2.31.1
     * Added: Tasking compiler support
 

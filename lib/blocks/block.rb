@@ -215,6 +215,7 @@ module Bake
       def callSteps(method)
 
         @config.writeEnvVars()
+        Thread.current[:lastCommand] = nil
 
         preSteps.each do |step|
           @result = executeStep(step, method) if @result

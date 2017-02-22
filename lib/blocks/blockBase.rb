@@ -12,9 +12,6 @@ module Bake
         @projectName = config.parent.name
         @projectDir = config.get_project_dir
         @config_date = Time.now
-
-        @printedCmdAlternate = false
-        @lastCommand = nil
       end
 
       def check_config_file()
@@ -89,18 +86,18 @@ module Bake
       end
 
       def printCmd(cmd, alternate, reason, forceVerbose)
-        if (cmd == @lastCommand)
-          if (Bake.options.verbose >= 2 or (@printedCmdAlternate and not forceVerbose))
+        if (cmd == Thread.current[:lastCommand])
+          if (Bake.options.verbose >= 2 or (Thread.current[:printedCmdAlternate] and not forceVerbose))
             return
           end
         end
 
-        @lastCommand = cmd
+        Thread.current[:lastCommand] = cmd
 
         return if Bake.options.verbose == 0 and not forceVerbose
 
         if forceVerbose or Bake.options.verbose >= 2 or not alternate
-          @printedCmdAlternate = false
+          Thread.current[:printedCmdAlternate] = false
           puts "" if Bake.options.verbose >= 2 # for A.K. :-)
           if Bake.options.verbose >= 3
             exedIn = "\n(executed in '#{@projectDir}')"
@@ -116,7 +113,7 @@ module Bake
             puts cmd + exedIn + because
           end
         else
-          @printedCmdAlternate = true
+          Thread.current[:printedCmdAlternate] = true
           puts alternate
         end
 

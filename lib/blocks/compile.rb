@@ -190,13 +190,15 @@ module Bake
 
         if not (cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile))
           BlockBase.prepareOutput(object)
+          outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
+          printCmd(cmd, "#{outputType} #{source}", reason, false)
+          flushOutput()
           BlockBase.writeCmdLineFile(cmd, cmdLineFile)
+
           success = true
           consoleOutput = ""
           success, consoleOutput = ProcessHelper.run(cmd, false, false) if !Bake.options.dry
-
-          outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
-          incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], "#{outputType} #{source}", reason, success)
+          incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], nil, reason, success)
 
           if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
             incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
@@ -266,6 +268,19 @@ module Bake
         @mutex ||= Mutex.new
       end
 
+      def flushOutput
+        mutex.synchronize do
+          tmp = Thread.current[:stdout]
+          if tmp.string.length > 0
+            Thread.current[:stdout] = Thread.current[:tmpStdout]
+            puts tmp.string
+            tmp.reopen("")
+            Thread.current[:stdout] = tmp
+          end
+        end
+      end
+
+
       def execute
         Dir.chdir(@projectDir) do
 
@@ -283,10 +298,10 @@ module Bake
               end
 
               s = StringIO.new
-              tmp = Thread.current[:stdout]
-              Thread.current[:stdout] = s unless tmp
-
+              Thread.current[:tmpStdout] = Thread.current[:stdout]
+              Thread.current[:stdout] = s unless Thread.current[:tmpStdout]
               Thread.current[:filelist] = Set.new if Bake.options.filelist
+              Thread.current[:lastCommand] = nil
 
               result = false
               begin
@@ -303,7 +318,7 @@ module Bake
 
               jobs.set_failed if not result
 
-              Thread.current[:stdout] = tmp
+              Thread.current[:stdout] = Thread.current[:tmpStdout]
 
               mutex.synchronize do
                 fileListBlock.merge(Thread.current[:filelist]) if Bake.options.filelist
