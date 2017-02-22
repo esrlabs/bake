@@ -27,7 +27,7 @@ module Bake
 
     def self.install
 
-      docuSource = "https://raw.githubusercontent.com/esrlabs/bake/#{Bake::Version.number}/docs/"
+      docuSource = "https://raw.githubusercontent.com/esrlabs/bake/#{Bake::Version.number}/install-docs/"
       docuTarget = File.dirname(__FILE__)+"/../../../doc/"
       begin
         f = open(docuSource+"files.txt", {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE})
