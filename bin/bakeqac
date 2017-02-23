@@ -44,6 +44,7 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
     FileUtils.rm_rf @options.qacdata if adminStepAndImmediateOutput
     success, consoleOutput = ProcessHelper.run(cmd, adminStepAndImmediateOutput)
     licenseError = false
+    qacDaemonError = false
 
     consoleOutput.each_line do |line|
       if (line.include?("License Refused") && !line.include?("License Refused: C:"))
@@ -51,14 +52,19 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
         puts "License refused!"
         break
       end
+      if (line.include?("unable to connect to QAX Daemon") && !line.include?("License Refused: C:"))
+        qacDaemonError = true
+        puts "Unable to connect to QAX Daemon!"
+        break
+      end
     end
 
     cSizeCheck = checkCipSize()
 
-    break unless ((@options.qacretry >= (Time.now - timeStart)) && (!cSizeCheck || licenseError))
+    break unless ((@options.qacretry >= (Time.now - timeStart)) && (!cSizeCheck || licenseError || qacDaemonError))
     puts "Retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
   end
-  checkError = !cSizeCheck || licenseError
+  checkError = !cSizeCheck || licenseError || qacDaemonError
   puts "Retry timeout over -> failure." if @options.qacretry > 0 && checkError
 
   success = false if checkError

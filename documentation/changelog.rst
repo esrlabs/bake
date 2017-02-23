@@ -1,6 +1,9 @@
 Changelog
 =========
 
+February 23, 2017 - bake-toolkit 2.31.5
+    * Added: qac: retry if QAX daemon cannot be reached
+
 February 22, 2017 - bake-toolkit 2.31.4
     * Bugfix: --install-doc was broken
 
