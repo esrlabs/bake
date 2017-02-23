@@ -37,6 +37,7 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
   timeStart = Time.now
   cSizeCheck = true
   licenseError = false
+  qacDaemonError = false
   consoleOutput = ""
   success = false
 
