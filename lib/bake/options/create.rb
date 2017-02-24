@@ -88,7 +88,7 @@ module Bake
       end
 
       puts "Project created."
-      ExitHelper.exit(1)
+      ExitHelper.exit(0)
     end
 
   end
