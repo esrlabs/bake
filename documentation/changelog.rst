@@ -3,7 +3,7 @@ Changelog
 
 February 27, 2017 - bake-toolkit 2.32.0
     * Changed: Per default configs without *Files* and *Steps* are not counted and printed out anymore (because nothing has to be done), use *-v2* to show them again.
-    * Changed: Templates used for *--create* are now closer to ESRLabs standard
+    * Changed: Templates used for *--create* are now closer to ESRLabs standard. Exit code corrected (was 1 instead of 0), thanks to flxo for the pull request.
     * Changed: Promoted warning "files are compiled more than once" to error.
 
 February 23, 2017 - bake-toolkit 2.31.5
