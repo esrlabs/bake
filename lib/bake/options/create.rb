@@ -1,58 +1,70 @@
 require 'fileutils'
+require 'common/version'
 
 module Bake
 
   class Create
 
-    def self.exeTemplate
-      "Project default: main {\n"+
+    def self.header
+      "\n"+
+      "  RequiredBakeVersion minimum: \"#{Bake::Version.number}\"\n"+
       "\n"+
       "  Responsible {\n"+
       "    Person \"#{ENV["USER"]}\"\n"+
-      "  }\n"+
+      "  }\n"
+    end
+
+    def self.includeOnly
       "\n"+
-      "  ExecutableConfig main {\n"+
-      "    # Dependency ...\n"+
+      "  CustomConfig IncludeOnly {\n"+
+      "    IncludeDir include, inherit: true\n"+
+      "  }\n"
+    end
+
+    def self.unitTestBase
+      "\n"+
+      "  ExecutableConfig UnitTestBase {\n"+
+      "    Files \"test/src/**/*.cpp\"\n"+
+      "    Dependency config: Lib\n"+
+      "    DefaultToolchain GCC\n"+
+      "  }\n"
+    end
+
+    def self.exeTemplate
+      "Project default: Main {\n"+
+      self.header +
+      self.includeOnly+
+      "\n"+
+      "  ExecutableConfig Main {\n"+
       "    Files \"src/**/*.cpp\"\n"+
-      "    IncludeDir \"include\"\n"+
+      "    Dependency config: IncludeOnly\n"+
       "    DefaultToolchain GCC\n"+
       "  }\n"+
-      "}\n"
+      "\n}\n"
     end
 
     def self.libTemplate
-      "Project default: lib {\n"+
+      "Project default: Lib {\n"+
+      self.header +
+      self.includeOnly+
       "\n"+
-      "  Responsible {\n"+
-      "    Person \"#{ENV["USER"]}\"\n"+
-      "  }\n"+
-      "\n"+
-      "  LibraryConfig lib {\n"+
+      "  LibraryConfig Lib {\n"+
       "    Files \"src/**/*.cpp\"\n"+
-      "    IncludeDir \"include\"\n"+
+      "    Dependency config: IncludeOnly\n"+
       "  }\n"+
-      "\n"+
-      "  ExecutableConfig UnitTest {\n"+
-      "    Dependency config: lib\n"+
-      "    Files \"test/src/**/*.cpp\"\n"+
-      "    IncludeDir \"include\"\n"+
-      "    DefaultToolchain GCC\n"+
-      "  }\n"+
-      "}\n"
+      self.unitTestBase +
+      "\n}\n"
     end
 
     def self.customTemplate
-      "Project default: lib {\n"+
+      "Project default: Lib {\n"+
+      self.header+
       "\n"+
-      "  Responsible {\n"+
-      "    Person \"#{ENV["USER"]}\"\n"+
+      "  CustomConfig Lib {\n"+
+      "    Dependency config: IncludeOnly\n"+
       "  }\n"+
-      "\n"+
-      "  CustomConfig lib {\n"+
-      "    Files \"src/**/*.cpp\"\n"+
-      "    IncludeDir \"include\"\n"+
-      "  }\n"+
-      "}\n"
+      self.unitTestBase +
+      "\n}\n"
     end
 
     def self.mainTemplate
