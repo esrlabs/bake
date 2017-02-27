@@ -1,4 +1,5 @@
 require 'bake/libElement'
+require 'bake/model/metamodel'
 require 'common/abortException'
 
 module Bake
@@ -86,77 +87,112 @@ module Bake
       end
 
       def convPath(dir, elem=nil, warnIfLocal=false)
-         if dir.respond_to?("name")
-           d = dir.name
-           elem = dir
-         else
-           d = dir
-         end
+        if dir.respond_to?("name")
+          d = dir.name
+          elem = dir
+        else
+          d = dir
+        end
 
-         return d if Bake.options.no_autodir
+        return d if Bake.options.no_autodir
 
-         inc = d.split("/")
-         if (inc[0] == "..") # very simple check, but should be okay for 99.9 % of the cases
-           if elem and Bake.options.verbose >= 2
-             Bake.formatter.printInfo("path starts with \"..\"", elem)
-           end
-         end
+        inc = d.split("/")
+        if (inc[0] == "..") # very simple check, but should be okay for 99.9 % of the cases
+          if elem and Bake.options.verbose >= 2
+            Bake.formatter.printInfo("path starts with \"..\"", elem)
+          end
+        end
 
-         res = []
+        res = []
 
-         return d if (inc[0] == "." || inc[0] == "..") # prio 0: force local
+        return d if (inc[0] == "." || inc[0] == "..") # prio 0: force local
 
-         if (inc[0] == @projectName) # prio 1: the real path magic
-           resPathMagic = inc[1..-1].join("/") # within self
-           resPathMagic = "." if resPathMagic == ""
-           res << resPathMagic
-         elsif @referencedConfigs.include?(inc[0])
-           dirOther = @referencedConfigs[inc[0]].first.parent.get_project_dir
-           resPathMagic = File.rel_from_to_project(@projectDir, dirOther, false)
-           postfix = inc[1..-1].join("/")
-           resPathMagic = resPathMagic + "/" + postfix if postfix != ""
-           resPathMagic = "." if resPathMagic == ""
-           res << resPathMagic
-         end
+        if (inc[0] == @projectName) # prio 1: the real path magic
+          resPathMagic = inc[1..-1].join("/") # within self
+          resPathMagic = "." if resPathMagic == ""
+          res << resPathMagic
+        elsif @referencedConfigs.include?(inc[0])
+          dirOther = @referencedConfigs[inc[0]].first.parent.get_project_dir
+          resPathMagic = File.rel_from_to_project(@projectDir, dirOther, false)
+          postfix = inc[1..-1].join("/")
+          resPathMagic = resPathMagic + "/" + postfix if postfix != ""
+          resPathMagic = "." if resPathMagic == ""
+          res << resPathMagic
+        end
 
-         if File.exists?(@projectDir + "/" + d) # prio 2: local, e.g. "include"
-           res << d
-         end
+        if File.exists?(@projectDir + "/" + d) # prio 2: local, e.g. "include"
+          res << d
+        end
 
-         # prioo 3: check if dir exists without Project.meta entry
-         Bake.options.roots.each do |r|
-           absIncDir = r+"/"+d
-           if File.exists?(absIncDir)
-             res << File.rel_from_to_project(@projectDir,absIncDir,false)
-           end
-         end
+        # prioo 3: check if dir exists without Project.meta entry
+        Bake.options.roots.each do |r|
+          absIncDir = r+"/"+d
+          if File.exists?(absIncDir)
+            res << File.rel_from_to_project(@projectDir,absIncDir,false)
+          end
+        end
 
-         return d if res.empty? # prio 4: fallback, no path found
+        return d if res.empty? # prio 4: fallback, no path found
 
-         res = res.map{ |r| Pathname.new(r).cleanpath.to_s }.uniq
+        res = res.map{ |r| Pathname.new(r).cleanpath.to_s }.uniq
 
-         if warnIfLocal && res.length > 1
-           if elem and Bake.options.verbose >= 2
-             Bake.formatter.printInfo("#{d} matches several paths:", elem)
-             puts "  #{res[0]} (chosen)"
-             res[1..-1].each { |r| puts "  #{r}" }
-           end
-         end
+        if warnIfLocal && res.length > 1
+          if elem and Bake.options.verbose >= 2
+            Bake.formatter.printInfo("#{d} matches several paths:", elem)
+            puts "  #{res[0]} (chosen)"
+            res[1..-1].each { |r| puts "  #{r}" }
+          end
+        end
 
-         res[0]
-       end
+        res[0]
+      end
 
+      def self.inc_block_counter()
+        @@block_counter += 1
+      end
 
       def self.block_counter
-        @@block_counter += 1
+        @@block_counter
       end
 
       def self.reset_block_counter
         @@block_counter = 0
       end
 
-      def self.set_num_projects(num)
-        @@num_projects = num
+      def calcIsBuildBlock
+        @startupSteps ||= []
+
+        return true if Metamodel::ExecutableConfig === @config
+        if Metamodel::CustomConfig === @config
+          return true if @config.step
+        else
+          return true if @config.files.length > 0
+          if ((@config.startupSteps && @config.startupSteps.step.length > 0) ||
+          (@config.preSteps && @config.preSteps.step.length > 0) ||
+          (@config.postSteps && @config.postSteps.step.length > 0) ||
+          (@config.exitSteps && @config.exitSteps.step.length > 0) ||
+          (@config.cleanSteps && @config.cleanSteps.step.length > 0) ||
+          (@config.preSteps && @config.preSteps.step.length > 0))
+            return true
+          end
+        end
+        return false
+      end
+
+      def isBuildBlock?
+        @isBuildBlock ||= calcIsBuildBlock
+      end
+
+      def self.set_num_projects(blocks)
+        if Bake.options.verbose >= 2
+          @@num_projects = blocks.length
+        else
+          counter = 0
+          blocks.each do |b|
+            counter += 1 if b.isBuildBlock? || b.prebuild
+          end
+          @@num_projects = counter
+        end
       end
 
       def executeStep(step, method)
@@ -255,8 +291,14 @@ module Bake
 
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
 
-        if Bake.options.verbose >= 1
-          typeStr = @prebuild ? "Using" : "Building"
+        if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
+          typeStr = "Building"
+          if @prebuild
+            typeStr = "Using"
+          elsif not isBuildBlock?
+            typeStr = "Applying"
+          end
+          Block.inc_block_counter()
           Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
         puts "Project path: #{@projectDir}" if Bake.options.projectPaths
@@ -272,8 +314,14 @@ module Bake
         depResult = callDeps(:clean)
         return false if not depResult and Bake.options.stopOnFirstError
 
-        if Bake.options.verbose >= 2 or cleanSteps.length > 0
-          typeStr = @prebuild ? "Checking" : "Cleaning"
+        if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
+          typeStr = "Cleaning"
+          if @prebuild
+            typeStr = "Checking"
+          elsif not isBuildBlock?
+            typeStr = "Skipping"
+          end
+          Block.inc_block_counter()
           Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
 

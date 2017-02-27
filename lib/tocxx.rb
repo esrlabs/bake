@@ -374,7 +374,7 @@ module Bake
           ExitHelper.exit(1)
         end
         startBlocks = [Blocks::ALL_BLOCKS[startProjectName+","+startConfigName]]
-        Blocks::Block.set_num_projects(1)
+        Blocks::Block.set_num_projects(startBlocks)
       elsif startProjectName
         startBlocks = []
         Blocks::ALL_BLOCKS.each do |blockName, block|
@@ -387,10 +387,10 @@ module Bake
           ExitHelper.exit(1)
         end
         startBlocks.reverse! # most probably the order of dependencies if any
-        Blocks::Block.set_num_projects(startBlocks.length)
+        Blocks::Block.set_num_projects(startBlocks)
       else
         startBlocks = [Blocks::ALL_BLOCKS[Bake.options.main_project_name+","+Bake.options.build_config]]
-        Blocks::Block.set_num_projects(Blocks::ALL_BLOCKS.length)
+        Blocks::Block.set_num_projects(Blocks::ALL_BLOCKS.values)
       end
      return startBlocks
     end

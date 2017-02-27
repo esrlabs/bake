@@ -13,21 +13,21 @@ module Bake
 describe "Default" do
 
   it 'lib explicit config' do
-    Bake.startBake("default/libD", ["--rebuild", "testL1A"])
+    Bake.startBake("default/libD", ["--rebuild", "testL1A", "-v2"])
     expect($mystring.include?("libD (testL1A)")).to be == true
     expect($mystring.include?("testL1B")).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'lib default config' do
-    Bake.startBake("default/libD", ["--rebuild"])
+    Bake.startBake("default/libD", ["--rebuild", "-v2"])
     expect($mystring.include?("libD (testL1B)")).to be == true
     expect($mystring.include?("testL1A")).to be == false
     expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'lib no default config' do
-    Bake.startBake("default/libNoD", ["--rebuild"])
+    Bake.startBake("default/libNoD", ["--rebuild", "-v2"])
     expect($mystring.include?("* testL2A")).to be == true
     expect($mystring.include?("* testL2B")).to be == true
     expect($mystring.include?("* testL2C")).to be == true
@@ -35,14 +35,14 @@ describe "Default" do
   end
 
   it 'main sub default config' do
-    Bake.startBake("default/mainD", ["--rebuild"])
+    Bake.startBake("default/mainD", ["--rebuild", "-v2"])
     expect($mystring.include?("libD (testL1B)")).to be == true
     expect($mystring.include?("mainD (test2)")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'sub no default config' do
-    Bake.startBake("default/mainD", ["--rebuild", "test1"])
+    Bake.startBake("default/mainD", ["--rebuild", "test1", "-v2"])
     expect($mystring.include?("mainD/Project.meta")).to be == true
     expect($mystring.include?("libNoD/Project.meta")).to be == true
     expect($mystring.include?("No default config")).to be == true
@@ -50,7 +50,7 @@ describe "Default" do
   end
 
   it 'main ref itself per default' do
-    Bake.startBake("default/mainD", ["--rebuild", "test3"])
+    Bake.startBake("default/mainD", ["--rebuild", "test3", "-v2"])
     expect($mystring.include?("libD (testL1B)")).to be == true
     expect($mystring.include?("mainD (test2)")).to be == true
     expect($mystring.include?("mainD (test3)")).to be == true

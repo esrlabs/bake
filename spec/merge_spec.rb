@@ -66,7 +66,7 @@ describe "Merging Configs" do
 
 
   it 'deps (all)' do
-    Bake.startBake("merge/main", ["testL3", "--rebuild"])
+    Bake.startBake("merge/main", ["testL3", "--rebuild", "-v2"])
 
     posdep11 = $mystring.index("depL1_1 (lib)")
     posdep12 = $mystring.index("depL1_2 (lib)")
