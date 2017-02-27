@@ -140,9 +140,16 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>February 27, 2017 - bake-toolkit 2.32.0</dt>
+<dd><ul class="first last simple">
+<li>Changed: Per default configs without <em>Files</em> and <em>Steps</em> are not counted and printed out anymore (because nothing has to be done), use <em>-v2</em> to show them again.</li>
+<li>Changed: Templates used for <em>&#8211;create</em> are now closer to ESRLabs standard. Exit code corrected (was 1 instead of 0), thanks to flxo for the pull request.</li>
+<li>Changed: Promoted warning &#8220;files are compiled more than once&#8221; to error.</li>
+</ul>
+</dd>
 <dt>February 23, 2017 - bake-toolkit 2.31.5</dt>
 <dd><ul class="first last simple">
-<li>Added: qac: retry if QAX daemon cannot be reached</li>
+<li>Added: qac: Retry if QAX daemon cannot be reached</li>
 </ul>
 </dd>
 <dt>February 22, 2017 - bake-toolkit 2.31.4</dt>
@@ -152,7 +159,7 @@
 </dd>
 <dt>February 22, 2017 - bake-toolkit 2.31.2</dt>
 <dd><ul class="first last simple">
-<li>Changed: files which will be compiled are now printed out <em>before</em> the compiler is called, not afterwards anymore.</li>
+<li>Changed: Files which will be compiled are now printed out <em>before</em> the compiler is called, not afterwards anymore.</li>
 </ul>
 </dd>
 <dt>February 17, 2017 - bake-toolkit 2.31.1</dt>
@@ -162,17 +169,17 @@
 </dd>
 <dt>February 3, 2017 - bake-toolkit 2.31.0</dt>
 <dd><ul class="first last simple">
-<li>Added: dry run via command line parameter &#8211;dry.</li>
+<li>Added: Dry run via command line parameter &#8211;dry.</li>
 <li>Added: Support for compiler, archiver and linker prefixes, can be used for e.g. sccache.</li>
 <li>Added: &#8220;If&#8221; is now an alias for &#8220;Adapt&#8221;. To negate the conditions, use &#8220;Unless&#8221;.</li>
 <li>Added: For Adapts in Project.meta the &#8220;project&#8221; attribute is now &#8220;__THIS__&#8221; per default, which should be correct in almost every case.</li>
-<li>Cosmetic: getting rid of warning output if paths start with &#8221;.&#8221;, e.g. IncludeDir &#8221;./local/abc&#8221;.</li>
-<li>Cosmetic: only print the first out-of-date meta file when checking cache.</li>
+<li>Cosmetic: Getting rid of warning output if paths start with &#8221;.&#8221;, e.g. IncludeDir &#8221;./local/abc&#8221;.</li>
+<li>Cosmetic: Only print the first out-of-date meta file when checking cache.</li>
 </ul>
 </dd>
 <dt>January 20, 2017 - bake-toolkit 2.30.0</dt>
 <dd><ul class="first last simple">
-<li>Added: new adapt option &#8220;push_front&#8221;.</li>
+<li>Added: New adapt option &#8220;push_front&#8221;.</li>
 <li>Added: Project.meta and Collection.meta will be searched upwards if not found in current directory (or the directory specified with -m).</li>
 <li>Changed: &#8211;doc opens online docu per default. You can install the offline docu with &#8211;install-doc.</li>
 <li>Added: &#8211;debug prints more information when reading the cache, use this as feedback if you think caching does not work correctly.</li>
