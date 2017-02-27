@@ -1,28 +1,33 @@
 Changelog
 =========
 
+February 27, 2017 - bake-toolkit 2.32.0
+    * Changed: Per default configs without *Files* and *Steps* are not counted and printed out anymore (because nothing has to be done), use *-v2* to show them again.
+    * Changed: Templates used for *--create* are now closer to ESRLabs standard
+    * Changed: Promoted warning "files are compiled more than once" to error.
+
 February 23, 2017 - bake-toolkit 2.31.5
-    * Added: qac: retry if QAX daemon cannot be reached
+    * Added: qac: Retry if QAX daemon cannot be reached
 
 February 22, 2017 - bake-toolkit 2.31.4
     * Bugfix: --install-doc was broken
 
 February 22, 2017 - bake-toolkit 2.31.2
-    * Changed: files which will be compiled are now printed out *before* the compiler is called, not afterwards anymore.
+    * Changed: Files which will be compiled are now printed out *before* the compiler is called, not afterwards anymore.
 
 February 17, 2017 - bake-toolkit 2.31.1
     * Added: Tasking compiler support
 
 February 3, 2017 - bake-toolkit 2.31.0
-    * Added: dry run via command line parameter --dry.
+    * Added: Dry run via command line parameter --dry.
     * Added: Support for compiler, archiver and linker prefixes, can be used for e.g. sccache.
     * Added: "If" is now an alias for "Adapt". To negate the conditions, use "Unless".
     * Added: For Adapts in Project.meta the "project" attribute is now "__THIS__" per default, which should be correct in almost every case.
-    * Cosmetic: getting rid of warning output if paths start with ".", e.g. IncludeDir "./local/abc".
-    * Cosmetic: only print the first out-of-date meta file when checking cache.
+    * Cosmetic: Getting rid of warning output if paths start with ".", e.g. IncludeDir "./local/abc".
+    * Cosmetic: Only print the first out-of-date meta file when checking cache.
 
 January 20, 2017 - bake-toolkit 2.30.0
-    * Added: new adapt option "push_front".
+    * Added: New adapt option "push_front".
     * Added: Project.meta and Collection.meta will be searched upwards if not found in current directory (or the directory specified with -m).
     * Changed: --doc opens online docu per default. You can install the offline docu with --install-doc.
     * Added: --debug prints more information when reading the cache, use this as feedback if you think caching does not work correctly.
