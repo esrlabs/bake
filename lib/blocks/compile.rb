@@ -453,7 +453,7 @@ module Bake
             @source_files.keep_if do |source|
               source.include?Bake.options.filename
             end
-            if @source_files.length == 0 and cleaning == false
+            if @source_files.length == 0 and cleaning == false and @config.files.length > 0
               Bake.formatter.printInfo("#{Bake.options.filename} does not match to any source", @config)
             end
           end
