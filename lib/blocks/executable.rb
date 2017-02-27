@@ -91,8 +91,9 @@ module Bake
           end
           duplicateSources = allSources.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
           duplicateSources.each do |d|
-            Bake.formatter.printWarning("Source compiled more than once: #{d}")
+            Bake.formatter.printError("Source compiled more than once: #{d}")
           end
+          ExitHelper.exit(1) if duplicateSources.length > 0
 
           libs, linker_libs_array = LibElements.calc_linker_lib_string(@block, @block.tcs)
 
