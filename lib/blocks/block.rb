@@ -1,6 +1,7 @@
 require 'bake/libElement'
 require 'bake/model/metamodel'
 require 'common/abortException'
+require "multithread/job"
 require "thwait"
 
 module Bake
@@ -278,7 +279,7 @@ module Bake
              @@threads.delete(endedThread)
             end
           end
-          @@threads << Thread.new() {
+          thread = Thread.new() {
 
             exceptionOccured = false
             begin
@@ -299,6 +300,9 @@ module Bake
               @@delayed_result = false
             end
           }
+          @@mutex.synchronize do
+            @@threads << thread
+          end
         else
           yield
         end
@@ -320,13 +324,18 @@ module Bake
           return false if blockAbort?(@result)
         end unless @prebuild
 
-        threadableSteps    = mainSteps.select { |step|   Library === step || Compile === step  }
-        nonThreadableSteps = mainSteps.select { |step| !(Library === step || Compile === step) }
+        threadableSteps    = mainSteps.select { |step| method == :execute && (Library === step || Compile === step) }
+        nonThreadableSteps = mainSteps.select { |step| method != :execute || !(Library === step || Compile === step) }
 
         execute_in_thread(method) {
           threadableSteps.each do |step|
             if !@prebuild || (Library === step)
-              @result = executeStep(step, method) if @result
+              Multithread::Jobs.incThread() if Library === step
+              begin
+                @result = executeStep(step, method) if @result
+              ensure
+                Multithread::Jobs.decThread() if Library === step
+              end
               @@delayed_result &&= @result
             end
             return false if blockAbort?(@result)

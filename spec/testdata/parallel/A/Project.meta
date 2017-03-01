@@ -1,0 +1,10 @@
+Project default: test {
+
+  LibraryConfig test {
+    Files "src/*.cpp"
+    PostSteps {
+      CommandLine "echo POSTSTEP", filter: steps, default: off
+    }
+  }
+
+}

@@ -1,0 +1,7 @@
+Project default: test {
+
+  LibraryConfig test {
+    Files "src/*.cpp"
+  }
+
+}

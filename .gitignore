@@ -26,3 +26,5 @@ testdot.dot
 .qacdata
 *.stamp
 documentation/_build
+spec/testdata/parallel/step.txt
+spec/testdata/parallel/global.lock
