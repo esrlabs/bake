@@ -6,13 +6,42 @@ module Bake
   module Multithread
 
     class Jobs
+
+      @@mutex_sempaphore = Mutex.new
+      @@running_threads = 0
+      @@waiting_threads = 0
+      @@cv = ConditionVariable.new
+
+      def self.incThread
+        @@mutex_sempaphore.synchronize do
+          if @@running_threads >= Bake.options.threads
+            @@waiting_threads += 1
+            @@cv.wait(@@mutex_sempaphore)
+            @@waiting_threads -= 1
+            @@running_threads += 1
+          else
+            @@running_threads += 1
+          end
+        end
+      end
+      def self.decThread
+        @@mutex_sempaphore.synchronize do
+          @@running_threads -= 1
+          if @@waiting_threads > 0
+            @@cv.signal
+          end
+        end
+      end
+
       def initialize(jobs, &block)
         nr_of_threads = [Bake.options.threads, jobs.length].min
         @jobs = jobs
         @threads = []
         nr_of_threads.times do
           @threads << ::Thread.new do
+            Jobs.incThread()
             block.call(self)
+            Jobs.decThread()
           end
         end
       end

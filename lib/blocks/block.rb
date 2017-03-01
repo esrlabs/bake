@@ -1,6 +1,7 @@
 require 'bake/libElement'
 require 'bake/model/metamodel'
 require 'common/abortException'
+require "thwait"
 
 module Bake
 
@@ -15,6 +16,10 @@ module Bake
     ALL_COMPILE_BLOCKS = {}
 
     class Block
+
+      @@block_counter = 0
+      @@delayed_result = true
+      @@threads = []
 
       attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :prebuild, :output_dir, :tcs
       attr_accessor :visited, :inDeps, :result
@@ -73,7 +78,6 @@ module Bake
         @projectName = config.parent.name
         @configName = config.name
         @projectDir = config.get_project_dir
-        @@block_counter = 0
         @result = true
         @tcs = tcs
 
@@ -157,6 +161,18 @@ module Bake
 
       def self.reset_block_counter
         @@block_counter = 0
+      end
+
+      def self.reset_delayed_result
+        @@delayed_result = true
+      end
+
+      def self.delayed_result
+        @@delayed_result
+      end
+
+      def self.threads
+        @@threads
       end
 
       def calcIsBuildBlock
@@ -248,26 +264,78 @@ module Bake
         return depResult
       end
 
+      def execute_in_thread(method)
+        if method == :execute
+          @@mutex.synchronize do
+            if @@threads.length == Bake.options.threads
+             endedThread = ThreadsWait.new(@@threads).next_wait
+             @@threads.delete(endedThread)
+            end
+          end
+          @@threads << Thread.new() {
+
+            exceptionOccured = false
+            begin
+              yield
+              exceptionOccured = true
+            rescue Bake::SystemCommandFailed => scf # normal compilation error
+            rescue SystemExit => exSys
+            rescue Exception => ex1
+              if not Bake::IDEInterface.instance.get_abort
+                Bake.formatter.printError("Error: #{ex1.message}")
+                puts ex1.backtrace if Bake.options.debug
+              end
+            end
+            if !exceptionOccured
+              @result = false
+              @@delayed_result = false
+            end
+          }
+        else
+          yield
+        end
+        raise AbortException.new if Bake::IDEInterface.instance.get_abort
+      end
+
+      def blockAbort?(res)
+        ((not res) || !@@delayed_result) and Bake.options.stopOnFirstError or Bake::IDEInterface.instance.get_abort
+      end
+
       def callSteps(method)
 
         @config.writeEnvVars()
         Thread.current[:lastCommand] = nil
 
         preSteps.each do |step|
+          ThreadsWait.all_waits(Blocks::Block::threads)
           @result = executeStep(step, method) if @result
-          return false if not @result and Bake.options.stopOnFirstError
+          return false if blockAbort?(@result)
         end unless @prebuild
 
-        mainSteps.each do |step|
+        threadableSteps    = mainSteps.select { |step|   Library === step || Compile === step  }
+        nonThreadableSteps = mainSteps.select { |step| !(Library === step || Compile === step) }
+
+        execute_in_thread(method) {
+          threadableSteps.each do |step|
+            if !@prebuild || (Library === step)
+              @result = executeStep(step, method) if @result
+              @@delayed_result &&= @result
+            end
+            return false if blockAbort?(@result)
+          end
+        } if !threadableSteps.empty?
+        nonThreadableSteps.each do |step|
           if !@prebuild || (Library === step)
+            ThreadsWait.all_waits(Blocks::Block::threads)
             @result = executeStep(step, method) if @result
           end
-          return false if not @result and Bake.options.stopOnFirstError
+          return false if blockAbort?(@result)
         end
 
         postSteps.each do |step|
+          ThreadsWait.all_waits(Blocks::Block::threads)
           @result = executeStep(step, method) if @result
-          return false if not @result and Bake.options.stopOnFirstError
+          return false if blockAbort?(@result)
         end unless @prebuild
 
         return @result
@@ -287,7 +355,7 @@ module Bake
         @inDeps = true
         depResult = callDeps(:execute)
         @inDeps = false
-        return false if not depResult and Bake.options.stopOnFirstError
+        return false if blockAbort?(depResult)
 
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
 
@@ -344,6 +412,12 @@ module Bake
         end unless @prebuild
 
         return (depResult && @result)
+      end
+
+      def self.init_threads()
+        @@threads = []
+        @@result = true
+        @@mutex = Mutex.new
       end
 
       def startup

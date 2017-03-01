@@ -89,8 +89,8 @@ describe "Kill process" do
   it 'Compile' do
     Bake.startKillTest("testCompile", self)
 
-    expect($mystring.include?"Compiling src/a.cpp").to be == true
-    expect($mystring.include?"Compiling src/e.cpp").to be == false
+    expect($mystring.include?"Compiling lib1 (testCompile): src/a.cpp").to be == true
+    expect($mystring.include?"Compiling lib1 (testCompile): src/e.cpp").to be == false
   end
 
   it 'Archive' do

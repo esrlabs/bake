@@ -28,6 +28,7 @@ module Bake
 
       def self.prepareOutput(filename)
         return if Bake.options.dry
+        filename = File.expand_path(filename, @projectDir)
         begin
           if File.exists?(filename)
             FileUtils.rm(filename)

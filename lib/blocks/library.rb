@@ -27,7 +27,7 @@ module Bake
       end
 
       def calcCmdlineFile()
-        @archive_name + ".cmdline"
+        File.expand_path(@archive_name + ".cmdline", @projectDir)
       end
 
       def ignore?
@@ -35,23 +35,26 @@ module Bake
       end
 
       def needed?
-        # lib
-        return "because library does not exist" if not File.exists?(@archive_name)
+        Dir.mutex.synchronize do
+          Dir.chdir(@projectDir) do
+            # lib
+            return "because library does not exist" if not File.exists?(@archive_name)
 
-        aTime = File.mtime(@archive_name)
+            aTime = File.mtime(@archive_name)
 
-        # sources
-        @objects.each do |obj|
-          return "because object #{obj} does not exist" if not File.exists?(obj)
-          return "because object #{obj} is newer than executable" if aTime < File.mtime(obj)
+            # sources
+            @objects.each do |obj|
+              return "because object #{obj} does not exist" if not File.exists?(obj)
+              return "because object #{obj} is newer than executable" if aTime < File.mtime(obj)
+            end
+          end
         end
-
-        false
+        return false
       end
 
       def execute
 
-        Dir.chdir(@projectDir) do
+        #Dir.chdir(@projectDir) do
 
           @objects = @compileBlock.objects
           if !@block.prebuild
@@ -60,9 +63,9 @@ module Bake
               return true
             end
           else
-            @objects = Dir.glob("#{@block.output_dir}/**/*.o")
+            @objects = Dir.glob_dir("#{@block.output_dir}/**/*.o", @projectDir)
             if @objects.empty?
-              if !File.exists?(@archive_name)
+              if !File.exists?(File.expand_path(@archive_name, @projectDir))
                 puts "No object files, library won't be created" if Bake.options.verbose >= 2
               end
               return true
@@ -96,25 +99,25 @@ module Bake
           if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
             success = true
           else
-            BlockBase.prepareOutput(@archive_name)
+            BlockBase.prepareOutput(File.expand_path(@archive_name, @projectDir))
 
             BlockBase.writeCmdLineFile(cmd, cmdLineFile)
             success = true
             consoleOutput = ""
-            success, consoleOutput = ProcessHelper.run(cmd, false, false) if !Bake.options.dry
-            process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating #{@archive_name}", reason, success)
+            success, consoleOutput = ProcessHelper.run(cmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
+            process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating  #{@projectName} (#{@config.name}): #{@archive_name}", reason, success)
 
             check_config_file()
           end
 
           return success
-        end
+        #end
       end
 
       def clean
         if @block.prebuild
           Dir.chdir(@projectDir) do
-            @objects = Dir.glob("#{@block.output_dir}/**/*.o")
+            @objects = Dir.glob_dir("#{@block.output_dir}/**/*.o", @projectDir)
             if !@objects.empty? && File.exist?(@archive_name)
               puts "Deleting file #{@archive_name}" if Bake.options.verbose >= 2
               if !Bake.options.dry

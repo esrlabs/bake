@@ -1,3 +1,5 @@
+require "blocks/block"
+
 module Bake
 
     def self.cleanup()
@@ -5,6 +7,8 @@ module Bake
       Blocks::ALL_COMPILE_BLOCKS.clear
       Blocks::CC2J.clear
       Bake::IDEInterface.instance.set_abort(false)
+      Blocks::Block.reset_block_counter
+      Blocks::Block.delayed_result
     end
 
 end

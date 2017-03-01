@@ -15,7 +15,7 @@ module Bake
         lstripped = l.rstrip
         scan_res = lstripped.scan(@error_expression)
         if scan_res.length > 0
-          d.file_name = File.expand_path(scan_res[0][1])
+          d.file_name = File.expand_path(scan_res[0][1], proj_dir)
           d.line_number = scan_res[0][2].to_i
           d.message = scan_res[0][3]
           d.severity = get_tasking_severity(scan_res[0][0])

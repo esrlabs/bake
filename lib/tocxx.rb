@@ -33,6 +33,7 @@ require 'blocks/showIncludes'
 require 'common/abortException'
 
 require 'adapt/config/loader'
+require "thwait"
 
 module Bake
 
@@ -351,6 +352,8 @@ module Bake
       result = true
       startBlocks.each do |block|
         result = callBlock(block, method) && result
+        ThreadsWait.all_waits(Blocks::Block::threads)
+        result &&= Blocks::Block.delayed_result
         if not ignoreStopOnFirstError
           return false if not result and Bake.options.stopOnFirstError
         end
@@ -510,7 +513,10 @@ module Bake
         Bake::IDEInterface.instance.set_build_info(@mainConfig.parent.name, @mainConfig.name, Blocks::ALL_BLOCKS.length)
 
         ideAbort = false
+        Blocks::Block.reset_delayed_result
+
         begin
+          Blocks::Block.init_threads()
           result = callBlocks(startBlocks, :startup, true)
           if Bake.options.clean or Bake.options.rebuild
             if not Bake.options.stopOnFirstError or result
@@ -527,7 +533,7 @@ module Bake
         end
         result = callBlocks(startBlocks, :exits, true) && result
 
-        if ideAbort
+        if ideAbort || Bake::IDEInterface.instance.get_abort
           Bake.formatter.printError("\n#{taskType} aborted.")
           ExitHelper.set_exit_code(1)
           return

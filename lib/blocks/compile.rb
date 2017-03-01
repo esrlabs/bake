@@ -1,6 +1,8 @@
 require 'blocks/blockBase'
+
 require 'multithread/job'
 require 'common/process'
+require 'common/ext/dir'
 require 'common/utils'
 require 'bake/toolchain/colorizing_formatter'
 require 'bake/config/loader'
@@ -41,47 +43,50 @@ module Bake
         return "because analyzer toolchain is configured" if Bake.options.analyze
         return "because prepro was specified and source is no assembler file" if Bake.options.prepro
 
-        return "because object does not exist" if not File.exist?(object)
-        oTime = File.mtime(object)
+        Dir.mutex.synchronize do
+          Dir.chdir(@projectDir) do
+            return "because object does not exist" if not File.exist?(object)
+            oTime = File.mtime(object)
 
-        return "because source is newer than object" if oTime < File.mtime(source)
+            return "because source is newer than object" if oTime < File.mtime(source)
 
-        if type != :ASM
-          return "because dependency file does not exist" if not File.exist?(dep_filename_conv)
+            if type != :ASM
+              return "because dependency file does not exist" if not File.exist?(dep_filename_conv)
 
-          begin
-            File.readlines(dep_filename_conv).map{|line| line.strip}.each do |dep|
-              Thread.current[:filelist].add(File.expand_path(dep)) if Bake.options.filelist
+              begin
+                File.readlines(dep_filename_conv).map{|line| line.strip}.each do |dep|
+                  Thread.current[:filelist].add(File.expand_path(dep, @projectDir)) if Bake.options.filelist
 
-              if not File.exist?(dep)
-                # we need a hack here. with some windows configurations the compiler prints unix paths
-                # into the dep file which cannot be found easily. this will be true for system includes,
-                # e.g. /usr/lib/...xy.h
-                if (Bake::Utils::OS.windows? and dep.start_with?"/") or
-                  (not Bake::Utils::OS.windows? and dep.length > 1 and dep[1] == ":")
-                  puts "Dependency header file #{dep} ignored!" if Bake.options.debug
-                else
-                  return "because dependent header #{dep} does not exist"
+                  if not File.exist?(dep)
+                    # we need a hack here. with some windows configurations the compiler prints unix paths
+                    # into the dep file which cannot be found easily. this will be true for system includes,
+                    # e.g. /usr/lib/...xy.h
+                    if (Bake::Utils::OS.windows? and dep.start_with?"/") or
+                      (not Bake::Utils::OS.windows? and dep.length > 1 and dep[1] == ":")
+                      puts "Dependency header file #{dep} ignored!" if Bake.options.debug
+                    else
+                      return "because dependent header #{dep} does not exist"
+                    end
+                  else
+                    return "because dependent header #{dep} is newer than object" if oTime < File.mtime(dep)
+                  end
                 end
-              else
-                return "because dependent header #{dep} is newer than object" if oTime < File.mtime(dep)
+              rescue Exception => ex
+                if Bake.options.debug
+                  puts "While reading #{dep_filename_conv}:"
+                  puts ex.message
+                  puts ex.backtrace
+                end
+                return "because dependency file could not be loaded"
               end
             end
-          rescue Exception => ex
-            if Bake.options.debug
-              puts "While reading #{dep_filename_conv}:"
-              puts ex.message
-              puts ex.backtrace
-            end
-            return "because dependency file could not be loaded"
           end
         end
-
-        false
+        return false
       end
 
       def calcCmdlineFile(object)
-        object[0..-3] + ".cmdline"
+        File.expand_path(object[0..-3] + ".cmdline", @projectDir)
       end
 
       def calcDepFile(object, type)
@@ -125,7 +130,7 @@ module Bake
           reason = config_changed?(cmdLineFile)
         end
 
-        Thread.current[:filelist].add(File.expand_path(source)) if Bake.options.filelist
+        Thread.current[:filelist].add(File.expand_path(source, @projectDir)) if Bake.options.filelist
 
         if @fileTcs.include?(source)
           compiler = @fileTcs[source][:COMPILER][type]
@@ -189,23 +194,27 @@ module Bake
         end
 
         if not (cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile))
-          BlockBase.prepareOutput(object)
+          BlockBase.prepareOutput(File.expand_path(object,@projectDir))
           outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
-          printCmd(cmd, "#{outputType} #{source}", reason, false)
+          printCmd(cmd, "#{outputType} #{@projectName} (#{@config.name}): #{source}", reason, false)
           flushOutput()
           BlockBase.writeCmdLineFile(cmd, cmdLineFile)
 
           success = true
           consoleOutput = ""
-          success, consoleOutput = ProcessHelper.run(cmd, false, false) if !Bake.options.dry
+          success, consoleOutput = ProcessHelper.run(cmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
           incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], nil, reason, success)
 
           if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
-            incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
-            Compile.write_depfile(incList, dep_filename_conv)
+            Dir.mutex.synchronize do
+              Dir.chdir(@projectDir) do
+                incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
+                Compile.write_depfile(incList, dep_filename_conv)
+              end
+            end
 
             incList.each do |h|
-              Thread.current[:filelist].add(File.expand_path(h))
+              Thread.current[:filelist].add(File.expand_path(h, @projectDir))
             end if Bake.options.filelist
           end
           check_config_file
@@ -282,7 +291,7 @@ module Bake
 
 
       def execute
-        Dir.chdir(@projectDir) do
+        #Dir.chdir(@projectDir) do
 
           calcSources
           calcObjects
@@ -293,7 +302,7 @@ module Bake
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|
             while source = jobs.get_next_or_nil do
 
-              if (jobs.failed and Bake.options.stopOnFirstError) or Bake::IDEInterface.instance.get_abort
+              if ((jobs.failed || !Blocks::Block.delayed_result) and Bake.options.stopOnFirstError) or Bake::IDEInterface.instance.get_abort
                 break
               end
 
@@ -339,8 +348,9 @@ module Bake
           if Bake.options.filelist && !Bake.options.dry
             Bake.options.filelist.merge(fileListBlock.merge(fileListBlock))
 
-            FileUtils.mkdir_p(@block.output_dir)
-            File.open(@block.output_dir + "/" + "file-list.txt", 'wb') do |f|
+            odir = File.expand_path(@block.output_dir, @projectDir)
+            FileUtils.mkdir_p(odir)
+            File.open(odir + "/" + "file-list.txt", 'wb') do |f|
               fileListBlock.sort.each do |entry|
                 f.puts(entry)
               end
@@ -357,7 +367,7 @@ module Bake
           raise SystemCommandFailed.new if compileJobs.failed
 
 
-        end
+        #end
         return true
       end
 
@@ -419,65 +429,64 @@ module Bake
 
       def calcSources(cleaning = false, keep = false)
         return @source_files if @source_files and not @source_files.empty?
-        Dir.chdir(@projectDir) do
-          @source_files = []
+        @source_files = []
 
-          exclude_files = Set.new
-          @config.excludeFiles.each do |p|
-            Dir.glob(p.name).each {|f| exclude_files << f}
-          end
+        exclude_files = Set.new
+        @config.excludeFiles.each do |p|
+          Dir.glob_dir(p.name, @projectDir).each {|f| exclude_files << f}
+        end
 
-          source_files = Set.new
-          @config.files.each do |sources|
-            p = sources.name
-            p = p[2..-1] if p.start_with?"./"
+        source_files = Set.new
+        @config.files.each do |sources|
+          p = sources.name
+          p = p[2..-1] if p.start_with?"./"
 
-            res = Dir.glob(p).sort
-            if res.length == 0 and cleaning == false
-              if not p.include?"*" and not p.include?"?"
-                Bake.formatter.printError("Source file '#{p}' not found", sources)
-                raise SystemCommandFailed.new
-              elsif Bake.options.verbose >= 1
-                Bake.formatter.printInfo("Source file pattern '#{p}' does not match to any file", sources)
-              end
+          res = Dir.glob_dir(p, @projectDir).sort
+          if res.length == 0 and cleaning == false
+            if not p.include?"*" and not p.include?"?"
+              Bake.formatter.printError("Source file '#{p}' not found", sources)
+              raise SystemCommandFailed.new
+            elsif Bake.options.verbose >= 1
+              Bake.formatter.printInfo("Source file pattern '#{p}' does not match to any file", sources)
             end
-            res.each do |f|
-              next if exclude_files.include?(f)
-              next if source_files.include?(f)
-              source_files << f
+          end
+          res.each do |f|
+            next if exclude_files.include?(f)
+            next if source_files.include?(f)
+            source_files << f
+            @source_files << f
+          end
+        end
+
+        if Bake.options.filename
+          @source_files.keep_if do |source|
+            source.include?Bake.options.filename
+          end
+          if @source_files.length == 0 and cleaning == false and @config.files.length > 0
+            Bake.formatter.printInfo("#{Bake.options.filename} does not match to any source", @config)
+          end
+        end
+
+        if Bake.options.eclipseOrder # directories reverse order, files in directories in alphabetical order
+          dirs = []
+          filemap = {}
+          @source_files.sort.reverse.each do |o|
+            d = File.dirname(o)
+            if filemap.include?(d)
+              filemap[d] << o
+            else
+              filemap[d] = [o]
+              dirs << d
+            end
+          end
+          @source_files = []
+          dirs.each do |d|
+            filemap[d].reverse.each do |f|
               @source_files << f
             end
           end
-
-          if Bake.options.filename
-            @source_files.keep_if do |source|
-              source.include?Bake.options.filename
-            end
-            if @source_files.length == 0 and cleaning == false and @config.files.length > 0
-              Bake.formatter.printInfo("#{Bake.options.filename} does not match to any source", @config)
-            end
-          end
-
-          if Bake.options.eclipseOrder # directories reverse order, files in directories in alphabetical order
-            dirs = []
-            filemap = {}
-            @source_files.sort.reverse.each do |o|
-              d = File.dirname(o)
-              if filemap.include?(d)
-                filemap[d] << o
-              else
-                filemap[d] = [o]
-                dirs << d
-              end
-            end
-            @source_files = []
-            dirs.each do |d|
-              filemap[d].reverse.each do |f|
-                @source_files << f
-              end
-            end
-          end
         end
+
         @source_files
       end
 

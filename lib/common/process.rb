@@ -4,11 +4,11 @@ module Bake
     @@pid = nil
     @@rd = nil
 
-    def self.run(cmdLineArray, immediateOutput=false, force=true, outpipe=nil, exitCodeArray = [0])
+    def self.run(cmdLineArray, immediateOutput=false, force=true, outpipe=nil, exitCodeArray = [0], dir = Dir.pwd)
       rd, wr = IO.pipe
       @@rd = rd if force
       duppedCmdLineArray = cmdLineArray.dup
-      duppedCmdLineArray << { :err=>wr, :out=>(outpipe ? outpipe : wr) }
+      duppedCmdLineArray << { :chdir=>dir, :err=>wr, :out=>(outpipe ? outpipe : wr) }
       begin
         pid = spawn(*duppedCmdLineArray)
       rescue Exception => e

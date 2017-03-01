@@ -18,7 +18,7 @@ describe "Adapt" do
 
     absAdapt = File.expand_path("spec/testdata/adapt/adapt/dep/dep_extend")
 
-    Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", absAdapt])
+    Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", absAdapt, "-v2"])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
     expect($mystring.include?("Building 2 of 4: lib1 (test_ok)")).to be == true
     expect($mystring.include?("Building 3 of 4: lib3 (test_ok)")).to be == true
@@ -27,7 +27,7 @@ describe "Adapt" do
   end
 
   it 'Dep extend 2' do
-    Bake.startBake("adapt/main", ["test_dep2", "--rebuild", "--adapt", "dep_extend"])
+    Bake.startBake("adapt/main", ["test_dep2", "--rebuild", "--adapt", "dep_extend", "-v2"])
     expect($mystring.include?("Building 1 of 5: lib1 (test_ok)")).to be == true
     expect($mystring.include?("Building 2 of 5: lib2 (test_ok)")).to be == true
     expect($mystring.include?("Building 3 of 5: lib1 (test_other)")).to be == true
@@ -37,20 +37,20 @@ describe "Adapt" do
   end
 
   it 'Dep remove 0' do
-    Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_remove"])
+    Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_remove", "-v2"])
     expect($mystring.include?("Building 1 of 1: main (test_dep0)")).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
 
   it 'Dep remove 2' do
-    Bake.startBake("adapt/main", ["test_dep2", "--rebuild", "--adapt", "dep_remove"])
+    Bake.startBake("adapt/main", ["test_dep2", "--rebuild", "--adapt", "dep_remove", "-v2"])
     expect($mystring.include?("Building 1 of 2: lib2 (test_ok)")).to be == true
     expect($mystring.include?("Building 2 of 2: main (test_dep2)")).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true
   end
 
   it 'Dep replace 0' do
-    Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_replace"])
+    Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_replace", "-v2"])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
     expect($mystring.include?("Building 2 of 4: lib1 (test_ok)")).to be == true
     expect($mystring.include?("Building 3 of 4: lib3 (test_ok)")).to be == true
@@ -59,7 +59,7 @@ describe "Adapt" do
   end
 
   it 'Dep replace 2' do
-    Bake.startBake("adapt/main", ["test_dep2", "--rebuild", "--adapt", "dep_replace"])
+    Bake.startBake("adapt/main", ["test_dep2", "--rebuild", "--adapt", "dep_replace", "-v2"])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
     expect($mystring.include?("Building 2 of 4: lib1 (test_ok)")).to be == true
     expect($mystring.include?("Building 3 of 4: lib3 (test_ok)")).to be == true

@@ -153,7 +153,7 @@ module Bake
 
             BlockBase.prepareOutput(@exe_name)
 
-            printCmd(cmdLinePrint, "Linking #{@exe_name}", reason, false)
+            printCmd(cmdLinePrint, "Linking   #{@projectName} (#{@config.name}): #{@exe_name}", reason, false)
             BlockBase.writeCmdLineFile(cmd, cmdLineFile)
             success = true
             consoleOutput = ""

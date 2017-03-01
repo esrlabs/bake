@@ -103,10 +103,10 @@ describe "Dry" do
     expect(File.exists?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a.cmdline")).to be == false
     expect(File.exists?("spec/testdata/simple/lib/build")).to be == false
 
-    expect($mystring.include?("Compiling src/y.cpp")).to be == true
-    expect($mystring.include?("Creating build/test_ok_main_test_ok/liblib.a")).to be == true
-    expect($mystring.include?("Compiling src/x.cpp")).to be == true
-    expect($mystring.include?("Linking build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == true
+    expect($mystring.include?("Compiling lib (test_ok): src/y.cpp")).to be == true
+    expect($mystring.include?("Creating  lib (test_ok): build/test_ok_main_test_ok/liblib.a")).to be == true
+    expect($mystring.include?("Compiling main (test_ok): src/x.cpp")).to be == true
+    expect($mystring.include?("Linking   main (test_ok): build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == true
 
     expect($mystring.split("abc").length).to be == 2
 
