@@ -20,4 +20,4 @@ Key features
 * configuration files easy to understand and maintain
 
 More information can be found here:
-http://esrlabs.github.io/bake
+https://esrlabs.github.io/bake
