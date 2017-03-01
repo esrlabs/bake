@@ -103,7 +103,9 @@ module Bake
         inc = d.split("/")
         if (inc[0] == "..") # very simple check, but should be okay for 99.9 % of the cases
           if elem and Bake.options.verbose >= 2
-            Bake.formatter.printInfo("path starts with \"..\"", elem)
+            SyncOut.mutex.synchronize do
+              Bake.formatter.printInfo("path starts with \"..\"", elem)
+            end
           end
         end
 
@@ -142,9 +144,11 @@ module Bake
 
         if warnIfLocal && res.length > 1
           if elem and Bake.options.verbose >= 2
-            Bake.formatter.printInfo("#{d} matches several paths:", elem)
-            puts "  #{res[0]} (chosen)"
-            res[1..-1].each { |r| puts "  #{r}" }
+            SyncOut.mutex.synchronize do
+              Bake.formatter.printInfo("#{d} matches several paths:", elem)
+              puts "  #{res[0]} (chosen)"
+              res[1..-1].each { |r| puts "  #{r}" }
+            end
           end
         end
 
@@ -223,8 +227,10 @@ module Bake
         rescue Exception => ex1
           @result = false
           if not Bake::IDEInterface.instance.get_abort
-            Bake.formatter.printError("Error: #{ex1.message}")
-            puts ex1.backtrace if Bake.options.debug
+            SyncOut.mutex.synchronize do
+              Bake.formatter.printError("Error: #{ex1.message}")
+              puts ex1.backtrace if Bake.options.debug
+            end
           end
         end
 
@@ -282,8 +288,10 @@ module Bake
             rescue SystemExit => exSys
             rescue Exception => ex1
               if not Bake::IDEInterface.instance.get_abort
-                Bake.formatter.printError("Error: #{ex1.message}")
-                puts ex1.backtrace if Bake.options.debug
+                SyncOut.mutex.synchronize do
+                  Bake.formatter.printError("Error: #{ex1.message}")
+                  puts ex1.backtrace if Bake.options.debug
+                end
               end
             end
             if !exceptionOccured
@@ -344,7 +352,9 @@ module Bake
       def execute
         if (@inDeps)
           if Bake.options.verbose >= 3
-            Bake.formatter.printWarning("While calculating next config, a circular dependency was found including project #{@projectName} with config #{@configName}", @config)
+            SyncOut.mutex.synchronize do
+              Bake.formatter.printWarning("While calculating next config, a circular dependency was found including project #{@projectName} with config #{@configName}", @config)
+            end
           end
           return true
         end
@@ -359,17 +369,19 @@ module Bake
 
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
 
-        if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
-          typeStr = "Building"
-          if @prebuild
-            typeStr = "Using"
-          elsif not isBuildBlock?
-            typeStr = "Applying"
+        SyncOut.mutex.synchronize do
+          if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
+            typeStr = "Building"
+            if @prebuild
+              typeStr = "Using"
+            elsif not isBuildBlock?
+              typeStr = "Applying"
+            end
+            Block.inc_block_counter()
+            Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
           end
-          Block.inc_block_counter()
-          Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
+          puts "Project path: #{@projectDir}" if Bake.options.projectPaths
         end
-        puts "Project path: #{@projectDir}" if Bake.options.projectPaths
 
         @result = callSteps(:execute)
         return (depResult && @result)

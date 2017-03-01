@@ -15,6 +15,10 @@ module Bake
 
       attr_reader :objects, :include_list
 
+      def mutex
+        @mutex ||= Mutex.new
+      end
+
       def initialize(block, config, referencedConfigs)
         super(block, config, referencedConfigs)
         @objects = []
@@ -197,14 +201,13 @@ module Bake
           BlockBase.prepareOutput(File.expand_path(object,@projectDir))
           outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
           printCmd(cmd, "#{outputType} #{@projectName} (#{@config.name}): #{source}", reason, false)
-          flushOutput()
+          SyncOut.flushOutput()
           BlockBase.writeCmdLineFile(cmd, cmdLineFile)
 
           success = true
           consoleOutput = ""
           success, consoleOutput = ProcessHelper.run(cmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
           incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], nil, reason, success)
-
           if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
             Dir.mutex.synchronize do
               Dir.chdir(@projectDir) do
@@ -273,30 +276,11 @@ module Bake
         end
       end
 
-      def mutex
-        @mutex ||= Mutex.new
-      end
-
-      def flushOutput
-        mutex.synchronize do
-          tmp = Thread.current[:stdout]
-          if tmp.string.length > 0
-            Thread.current[:stdout] = Thread.current[:tmpStdout]
-            puts tmp.string
-            tmp.reopen("")
-            Thread.current[:stdout] = tmp
-          end
-        end
-      end
-
-
       def execute
         #Dir.chdir(@projectDir) do
 
           calcSources
           calcObjects
-
-          @error_strings = {}
 
           fileListBlock = Set.new if Bake.options.filelist
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|
@@ -306,39 +290,30 @@ module Bake
                 break
               end
 
-              s = StringIO.new
-              Thread.current[:tmpStdout] = Thread.current[:stdout]
-              Thread.current[:stdout] = s unless Thread.current[:tmpStdout]
-              Thread.current[:filelist] = Set.new if Bake.options.filelist
-              Thread.current[:lastCommand] = nil
-
-              result = false
+              SyncOut.startStream()
               begin
-                compileFile(source)
-                result = true
-              rescue Bake::SystemCommandFailed => scf # normal compilation error
-              rescue SystemExit => exSys
-              rescue Exception => ex1
-                if not Bake::IDEInterface.instance.get_abort
-                  Bake.formatter.printError("Error: #{ex1.message}")
-                  puts ex1.backtrace if Bake.options.debug
-                end
-              end
+                Thread.current[:filelist] = Set.new if Bake.options.filelist
+                Thread.current[:lastCommand] = nil
 
-              jobs.set_failed if not result
-
-              Thread.current[:stdout] = Thread.current[:tmpStdout]
-
-              mutex.synchronize do
-                fileListBlock.merge(Thread.current[:filelist]) if Bake.options.filelist
-
-                if s.string.length > 0
-                  if Bake.options.stopOnFirstError and not result
-                    @error_strings[source] = s.string
-                  else
-                    puts s.string
+                result = false
+                begin
+                  compileFile(source)
+                  result = true
+                rescue Bake::SystemCommandFailed => scf # normal compilation error
+                rescue SystemExit => exSys
+                rescue Exception => ex1
+                  if not Bake::IDEInterface.instance.get_abort
+                    Bake.formatter.printError("Error: #{ex1.message}")
+                    puts ex1.backtrace if Bake.options.debug
                   end
                 end
+
+                jobs.set_failed if not result
+              ensure
+                SyncOut.stopStream()
+              end
+              self.mutex.synchronize do
+                fileListBlock.merge(Thread.current[:filelist]) if Bake.options.filelist
               end
 
             end
@@ -358,14 +333,7 @@ module Bake
 
           end
 
-
-          # can only happen in case of bail_on_first_error.
-          # if not sorted, it may be confusing when builing more than once and the order of the error appearances changes from build to build
-          # (it is not deterministic which file compilation finishes first)
-          @error_strings.sort.each {|es| puts es[1]}
-
           raise SystemCommandFailed.new if compileJobs.failed
-
 
         #end
         return true

@@ -59,14 +59,18 @@ module Bake
           @objects = @compileBlock.objects
           if !@block.prebuild
             if @objects.empty?
-              puts "No source files, library won't be created" if Bake.options.verbose >= 2
+              SyncOut.mutex.synchronize do
+                puts "No source files, library won't be created" if Bake.options.verbose >= 2
+              end
               return true
             end
           else
             @objects = Dir.glob_dir("#{@block.output_dir}/**/*.o", @projectDir)
             if @objects.empty?
               if !File.exists?(File.expand_path(@archive_name, @projectDir))
-                puts "No object files, library won't be created" if Bake.options.verbose >= 2
+                SyncOut.mutex.synchronize do
+                  puts "No object files, library won't be created" if Bake.options.verbose >= 2
+                end
               end
               return true
             end
@@ -99,15 +103,25 @@ module Bake
           if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
             success = true
           else
-            BlockBase.prepareOutput(File.expand_path(@archive_name, @projectDir))
+            SyncOut.startStream()
 
-            BlockBase.writeCmdLineFile(cmd, cmdLineFile)
-            success = true
-            consoleOutput = ""
-            success, consoleOutput = ProcessHelper.run(cmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
-            process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], "Creating  #{@projectName} (#{@config.name}): #{@archive_name}", reason, success)
+            begin
+              BlockBase.prepareOutput(File.expand_path(@archive_name, @projectDir))
 
-            check_config_file()
+              BlockBase.writeCmdLineFile(cmd, cmdLineFile)
+              success = true
+              consoleOutput = ""
+
+              printCmd(cmd, "Creating  #{@projectName} (#{@config.name}): #{@archive_name}", reason, false)
+              SyncOut.flushOutput()
+
+              success, consoleOutput = ProcessHelper.run(cmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
+              process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], nil, reason, success)
+
+              check_config_file()
+            ensure
+              SyncOut.stopStream()
+            end
           end
 
           return success

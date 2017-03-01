@@ -43,3 +43,38 @@ STDOUT.sync = true
 STDERR.sync = true
 $stdout = ThreadOut.new(STDOUT)
 $stderr = ThreadOut.new(STDERR)
+
+
+class SyncOut
+  def self.mutex
+    @@mutex ||= Mutex.new
+  end
+
+  def self.flushOutput
+    mutex.synchronize do
+      tmp = Thread.current[:stdout]
+      if tmp.string.length > 0
+        Thread.current[:stdout] = Thread.current[:tmpStdout]
+        puts tmp.string
+        tmp.reopen("")
+        Thread.current[:stdout] = tmp
+      end
+    end
+  end
+
+  def self.startStream
+    s = StringIO.new
+    Thread.current[:tmpStdout] = Thread.current[:stdout]
+    Thread.current[:stdout] = s
+  end
+
+  def self.stopStream
+    s = Thread.current[:stdout]
+    Thread.current[:stdout] = Thread.current[:tmpStdout]
+    mutex.synchronize do
+      puts s.string if s.string.length > 0
+    end
+  end
+
+end
+
