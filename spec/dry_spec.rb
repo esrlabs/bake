@@ -35,7 +35,7 @@ describe "Dry" do
     expect(File.exists?("spec/testdata/make/main/obj/main.o")).to be == false
     expect(File.exists?("spec/testdata/make/main/obj/main2.o")).to be == false
     expect(File.exists?("spec/testdata/make/main/obj")).to be == false
-    expect(File.exists?("spec/testdata/make/main/project"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exists?("spec/testdata/make/main/project.exe")).to be == false
 
     expect($mystring.include?("make all")).to be == true
     expect($mystring.include?("gcc -c")).to be == false
@@ -51,7 +51,7 @@ describe "Dry" do
     expect(File.exists?("spec/testdata/make/main/obj/main.o")).to be == true
     expect(File.exists?("spec/testdata/make/main/obj/main2.o")).to be == true
     expect(File.exists?("spec/testdata/make/main/obj")).to be == true
-    expect(File.exists?("spec/testdata/make/main/project"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exists?("spec/testdata/make/main/project.exe")).to be == true
 
     expect($mystring.split("make all").length).to be == 2
     expect($mystring.split("main2.c").length).to be == 1
@@ -65,7 +65,7 @@ describe "Dry" do
     expect(File.exists?("spec/testdata/make/main/obj/main.o")).to be == false
     expect(File.exists?("spec/testdata/make/main/obj/main2.o")).to be == false
     expect(File.exists?("spec/testdata/make/main/obj")).to be == false
-    expect(File.exists?("spec/testdata/make/main/project"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exists?("spec/testdata/make/main/project.exe")).to be == false
 
     expect($mystring.split("make clean").length).to be == 2
     expect($mystring.split("Cleaning done.").length).to be == 2
@@ -80,7 +80,7 @@ describe "Dry" do
     expect(File.exists?("spec/testdata/make/main/obj/main.o")).to be == true
     expect(File.exists?("spec/testdata/make/main/obj/main2.o")).to be == true
     expect(File.exists?("spec/testdata/make/main/obj")).to be == true
-    expect(File.exists?("spec/testdata/make/main/project"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exists?("spec/testdata/make/main/project.exe")).to be == true
 
     expect($mystring.split("make clean").length).to be == 2
     expect($mystring.split("Cleaning done.").length).to be == 2

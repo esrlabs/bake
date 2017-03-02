@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How to release &mdash; bake documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
+    <link rel="top" title="bake documentation" href="../index.html" />
+    <link rel="up" title="Internal developing notes" href="internal.html" />
+    <link rel="prev" title="Socket" href="socket.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><img src="../_static/logo_tiny_48.png">
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Section <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="internal.html">Internal developing notes</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">SubSections <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">How to release</a><ul>
+<li><a class="reference internal" href="#git-code-and-test">git code and test</a></li>
+<li><a class="reference internal" href="#git-docu">git docu</a></li>
+<li><a class="reference internal" href="#git-admin">git admin</a></li>
+<li><a class="reference internal" href="#gem">gem</a></li>
+<li><a class="reference internal" href="#final">final</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="socket.html" title="Previous Chapter: Socket"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Socket</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="how-to-release">
+<h1>How to release<a class="headerlink" href="#how-to-release" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="git-code-and-test">
+<h2>git code and test<a class="headerlink" href="#git-code-and-test" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Develop features and fixes</li>
+<li>Increment version (in version.rb and index.rst)</li>
+<li>Create documentation in &#8220;documentation&#8221; folder with &#8220;make html &amp;&amp; ./fixBootstrap.sh&#8221;</li>
+<li>Adapt unittest, run with &#8220;rake test:spec&#8221;</li>
+<li>Commit</li>
+<li>Check on Travis CI and Appveyor if all builds are green</li>
+<li>Tag repository</li>
+<li>Push commits and tags</li>
+</ul>
+</div>
+<div class="section" id="git-docu">
+<h2>git docu<a class="headerlink" href="#git-docu" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Copy content from install_docs (after documentation has been generated) into gh_pages branch</li>
+<li>Commit</li>
+<li>Check if docu is really updated on &#8220;esrlabs.github.io/bake&#8221;</li>
+</ul>
+</div>
+<div class="section" id="git-admin">
+<h2>git admin<a class="headerlink" href="#git-admin" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Resolve issues on github</li>
+<li>Draft a release (click on main page on releases link)</li>
+</ul>
+</div>
+<div class="section" id="gem">
+<h2>gem<a class="headerlink" href="#gem" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Build gem with &#8220;gem build bake-toolkit.gemspec&#8221;</li>
+<li>Push gem to rubygems</li>
+</ul>
+</div>
+<div class="section" id="final">
+<h2>final<a class="headerlink" href="#final" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Announce the release in bake channel (ESRLabs internal)</li>
+</ul>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, E.S.R.Labs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

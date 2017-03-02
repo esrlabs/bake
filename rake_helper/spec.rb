@@ -57,7 +57,7 @@ end
 task :gem => [:spec]
 
 task :test do
-  puts 'Please speficy a task in the namespace "test"'
+  puts 'Please specify a task in the namespace "test"'
 end
 task :spec do
   puts 'Please run test:spec'

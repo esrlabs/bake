@@ -1,8 +1,5 @@
-Internal developing notes
-*************************
-
 Socket
-======
+*************************
 
 If command line option --socket is used, bake tries to connect to the given port on localhost.
 

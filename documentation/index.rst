@@ -26,7 +26,7 @@ bake, building software **fast** and **easy**!
                                                    .. toctree::
                                                         :maxdepth: 1
 
-                                                        internal
+                                                        internal/internal
 =======================================            =======================================
 
 

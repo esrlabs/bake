@@ -26,6 +26,9 @@
 ./ide/vs/vs_install.html
 ./index.html
 ./install/install_bake.html
+./internal/internal.html
+./internal/release.html
+./internal/socket.html
 ./internal.html
 ./known_issues.html
 ./license.html
