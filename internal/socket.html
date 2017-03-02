@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Concepts &mdash; bake documentation</title>
+    <title>Socket &mdash; bake documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -30,8 +30,9 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="top" title="bake documentation" href="../index.html" />
-    <link rel="next" title="The Project.meta file" href="the_project_meta_file.html" />
-    <link rel="prev" title="Quickstart" href="../quickstart/quickstart.html" />
+    <link rel="up" title="Concepts" href="internal.html" />
+    <link rel="next" title="How to release" href="release.html" />
+    <link rel="prev" title="Concepts" href="internal.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -66,11 +67,11 @@
      href="../index.html">Section <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul class="current">
+      aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
@@ -80,8 +81,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="internal.html">Concepts</a></li>
 </ul>
 </ul>
 </li>
@@ -95,7 +96,17 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Concepts</a></li>
+<li><a class="reference internal" href="#">Socket</a><ul>
+<li><a class="reference internal" href="#send">send</a><ul>
+<li><a class="reference internal" href="#header">Header</a></li>
+<li><a class="reference internal" href="#error-packet-type-0x01">Error packet (type 0x01)</a></li>
+<li><a class="reference internal" href="#starting-build-packet-type-0x0a">Starting build packet (type 0x0A)</a></li>
+<li><a class="reference internal" href="#building-project-packet">Building project packet</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#receive">receive</a></li>
+</ul>
+</li>
 </ul>
 </ul>
 </li>
@@ -105,11 +116,11 @@
               
                 
   <li>
-    <a href="../quickstart/quickstart.html" title="Previous Chapter: Quickstart"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Quickstart</span>
+    <a href="internal.html" title="Previous Chapter: Concepts"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Concepts</span>
     </a>
   </li>
   <li>
-    <a href="the_project_meta_file.html" title="Next Chapter: The Project.meta file"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">The Project.m... &raquo;</span>
+    <a href="release.html" title="Next Chapter: How to release"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">How to release &raquo;</span>
     </a>
   </li>
               
@@ -137,48 +148,52 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="concepts">
-<h1>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="the_project_meta_file.html">The Project.meta file</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="the_project_meta_file.html#what-is-the-project-meta-file">What is the Project.meta file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="the_project_meta_file.html#example">Example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="the_main_project.html">The main project</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="the_main_project.html#advantages">Advantages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="the_main_project.html#example">Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="the_main_project.html#output-directory">Output directory</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="build_hierarchy.html">The build hierarchy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="build_hierarchy.html#build-graph">Build graph</a></li>
-<li class="toctree-l2"><a class="reference internal" href="build_hierarchy.html#example">Example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="parallel.html">Parallel build</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="parallel.html#example">Example:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="parallel.html#id1">Example:</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="link_order.html">The link order</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="link_order.html#example">Example:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="link_order.html#same-example-but-with-external-libraries">Same example but with external libraries:</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="prebuild.html">Prebuild configurations for distributions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="prebuild.html#typical-workflow">Typical workflow</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="inject.html">Injection and inheritance of IncludeDir and Dependency</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="inject.html#inherit-includedir">Inherit IncludeDir</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inject.html#inject-includedir">Inject IncludeDir</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inject.html#inject-dependency">Inject Dependency</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cache.html">Caching</a></li>
-</ul>
+  <div class="section" id="socket">
+<h1>Socket<a class="headerlink" href="#socket" title="Permalink to this headline">¶</a></h1>
+<p>If command line option &#8211;socket is used, bake tries to connect to the given port on localhost.</p>
+<div class="section" id="send">
+<h2>send<a class="headerlink" href="#send" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="header">
+<h3>Header<a class="headerlink" href="#header" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="go">1 Byte: Type</span>
+<span class="go">4 Byte: Length (used to discard the paket if type is unknown to the listening application)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="error-packet-type-0x01">
+<h3>Error packet (type 0x01)<a class="headerlink" href="#error-packet-type-0x01" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="go">4 Byte: Length filename, project name</span>
+<span class="go">x Byte: filename, project name</span>
+<span class="go">4 Byte: line number (can be 0)</span>
+<span class="go">1 Byte: severity (0x00 = info, 0x01 = warning, 0x02 = error, 0xFF = ok)</span>
+<span class="go">x Byte: message (length = rest of packet)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="starting-build-packet-type-0x0a">
+<h3>Starting build packet (type 0x0A)<a class="headerlink" href="#starting-build-packet-type-0x0a" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="go">4 Byte: Length project name</span>
+<span class="go">x Byte: project name</span>
+<span class="go">4 Byte: Length config name</span>
+<span class="go">x Byte: config name</span>
+<span class="go">4 Byte: number of projects in this build (greater than 0)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="building-project-packet">
+<h3>Building project packet<a class="headerlink" href="#building-project-packet" title="Permalink to this headline">¶</a></h3>
+<p>Same as Starting build packet, except number of projects = 0</p>
+</div>
+</div>
+<div class="section" id="receive">
+<h2>receive<a class="headerlink" href="#receive" title="Permalink to this headline">¶</a></h2>
+<p>If a byte is received, the build will be aborted.</p>
 </div>
 </div>
 

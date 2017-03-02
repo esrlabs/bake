@@ -5,6 +5,7 @@
 ./concepts/concepts.html
 ./concepts/inject.html
 ./concepts/link_order.html
+./concepts/parallel.html
 ./concepts/prebuild.html
 ./concepts/the_main_project.html
 ./concepts/the_project_meta_file.html
@@ -25,6 +26,9 @@
 ./ide/vs/vs_install.html
 ./index.html
 ./install/install_bake.html
+./internal/internal.html
+./internal/release.html
+./internal/socket.html
 ./internal.html
 ./known_issues.html
 ./license.html

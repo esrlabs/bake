@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Concepts &mdash; bake documentation</title>
+    <title>Internal developing notes &mdash; bake documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -30,8 +30,8 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="top" title="bake documentation" href="../index.html" />
-    <link rel="next" title="The Project.meta file" href="the_project_meta_file.html" />
-    <link rel="prev" title="Quickstart" href="../quickstart/quickstart.html" />
+    <link rel="next" title="Socket" href="socket.html" />
+    <link rel="prev" title="License" href="../license.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -66,11 +66,11 @@
      href="../index.html">Section <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul class="current">
+      aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
@@ -80,8 +80,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -95,7 +95,7 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Concepts</a></li>
+<li><a class="reference internal" href="#">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -105,11 +105,11 @@
               
                 
   <li>
-    <a href="../quickstart/quickstart.html" title="Previous Chapter: Quickstart"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Quickstart</span>
+    <a href="../license.html" title="Previous Chapter: License"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; License</span>
     </a>
   </li>
   <li>
-    <a href="the_project_meta_file.html" title="Next Chapter: The Project.meta file"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">The Project.m... &raquo;</span>
+    <a href="socket.html" title="Next Chapter: Socket"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Socket &raquo;</span>
     </a>
   </li>
               
@@ -137,47 +137,12 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="concepts">
-<h1>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="internal-developing-notes">
+<h1>Internal developing notes<a class="headerlink" href="#internal-developing-notes" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="the_project_meta_file.html">The Project.meta file</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="the_project_meta_file.html#what-is-the-project-meta-file">What is the Project.meta file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="the_project_meta_file.html#example">Example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="the_main_project.html">The main project</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="the_main_project.html#advantages">Advantages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="the_main_project.html#example">Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="the_main_project.html#output-directory">Output directory</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="build_hierarchy.html">The build hierarchy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="build_hierarchy.html#build-graph">Build graph</a></li>
-<li class="toctree-l2"><a class="reference internal" href="build_hierarchy.html#example">Example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="parallel.html">Parallel build</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="parallel.html#example">Example:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="parallel.html#id1">Example:</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="link_order.html">The link order</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="link_order.html#example">Example:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="link_order.html#same-example-but-with-external-libraries">Same example but with external libraries:</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="prebuild.html">Prebuild configurations for distributions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="prebuild.html#typical-workflow">Typical workflow</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="inject.html">Injection and inheritance of IncludeDir and Dependency</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="inject.html#inherit-includedir">Inherit IncludeDir</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inject.html#inject-includedir">Inject IncludeDir</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inject.html#inject-dependency">Inject Dependency</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cache.html">Caching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="socket.html">Socket</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">How to release</a></li>
 </ul>
 </div>
 </div>
