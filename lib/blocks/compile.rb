@@ -310,7 +310,7 @@ module Bake
 
                 jobs.set_failed if not result
               ensure
-                SyncOut.stopStream()
+                SyncOut.stopStream(result)
               end
               self.mutex.synchronize do
                 fileListBlock.merge(Thread.current[:filelist]) if Bake.options.filelist

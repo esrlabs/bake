@@ -21,4 +21,12 @@ Project default: test {
     }
   }
 
+
+  ExecutableConfig test_custom {
+    Files "src/*.cpp"
+    Dependency A
+    Dependency B, config: test_custom
+    DefaultToolchain GCC
+  }
+
 }

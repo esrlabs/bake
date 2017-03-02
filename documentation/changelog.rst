@@ -1,6 +1,9 @@
 Changelog
 =========
 
+March 2, 2017 - bake-toolkit 2.33.0
+    * Changed: Projects are built in parallel now (not only the files within a single project). This implies a change in the output.
+
 February 27, 2017 - bake-toolkit 2.32.0
     * Changed: Per default configs without *Files* and *Steps* are not counted and printed out anymore (because nothing has to be done), use *-v2* to show them again.
     * Changed: Templates used for *--create* are now closer to ESRLabs standard. Exit code corrected (was 1 instead of 0), thanks to flxo for the pull request.

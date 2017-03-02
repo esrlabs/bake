@@ -351,8 +351,13 @@ module Bake
       Blocks::Block.reset_block_counter
       result = true
       startBlocks.each do |block|
-        result = callBlock(block, method) && result
-        ThreadsWait.all_waits(Blocks::Block::threads)
+        begin
+          SyncOut.reset_errors
+          result = callBlock(block, method) && result
+        ensure
+          ThreadsWait.all_waits(Blocks::Block::threads)
+          SyncOut.flush_errors
+        end
         result &&= Blocks::Block.delayed_result
         if not ignoreStopOnFirstError
           return false if not result and Bake.options.stopOnFirstError

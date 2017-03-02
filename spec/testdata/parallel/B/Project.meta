@@ -4,4 +4,8 @@ Project default: test {
     Files "src/*.cpp"
   }
 
+  CustomConfig test_custom {
+    CommandLine "echo CUSTOM"
+  }
+
 }

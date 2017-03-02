@@ -106,10 +106,9 @@ module Bake
             SyncOut.startStream()
 
             begin
-              BlockBase.prepareOutput(File.expand_path(@archive_name, @projectDir))
-
-              BlockBase.writeCmdLineFile(cmd, cmdLineFile)
               success = true
+              BlockBase.prepareOutput(File.expand_path(@archive_name, @projectDir))
+              BlockBase.writeCmdLineFile(cmd, cmdLineFile)
               consoleOutput = ""
 
               printCmd(cmd, "Creating  #{@projectName} (#{@config.name}): #{@archive_name}", reason, false)
@@ -120,7 +119,7 @@ module Bake
 
               check_config_file()
             ensure
-              SyncOut.stopStream()
+              SyncOut.stopStream(success)
             end
           end
 

@@ -338,7 +338,7 @@ module Bake
               end
               @@delayed_result &&= @result
             end
-            return false if blockAbort?(@result)
+            break if blockAbort?(@result)
           end
         } if !threadableSteps.empty?
         nonThreadableSteps.each do |step|

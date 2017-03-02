@@ -126,6 +126,18 @@ describe "Parallel" do
     end
   end
 
+  it 'Custom' do
+    Bake.startBake("parallel/C",["test_custom"])
+    expect(ExitHelper.exit_code).to be == 0
+
+    posLibA = $mystring.index("libA.a")
+    posCustom = $mystring.index("CUSTOM")
+    posSrcC= $mystring.index("src/c")
+
+    expect(posLibA<posCustom).to be == true
+    expect(posCustom<posSrcC).to be == true
+  end
+
 end
 
 end

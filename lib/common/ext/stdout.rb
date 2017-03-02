@@ -68,12 +68,27 @@ class SyncOut
     Thread.current[:stdout] = s
   end
 
-  def self.stopStream
+  def self.stopStream(result)
     s = Thread.current[:stdout]
     Thread.current[:stdout] = Thread.current[:tmpStdout]
-    mutex.synchronize do
-      puts s.string if s.string.length > 0
+    if s.string.length > 0
+      mutex.synchronize do
+        if !result && Bake.options.stopOnFirstError
+          @@errors << s.string
+        else
+          puts s.string
+        end
+      end
     end
+  end
+
+  def self.flush_errors
+    puts @@errors unless @@errors.empty?
+    reset_errors
+  end
+
+  def self.reset_errors
+    @@errors = ""
   end
 
 end
