@@ -102,8 +102,29 @@ describe "Parallel" do
     expect($mystring.include?("MAX: 3")).to be == false
   end
 
+  it 'Steps' do
+    10.times do |i|
+      $sstring.reopen($mystring,"w+")
 
-  # todo: pre and post step and check if "thread wait works
+      Bake.startBake("parallel/C",["test_steps", "--do", "steps", "--rebuild", "-j", "#{i+1}"])
+      expect(ExitHelper.exit_code).to be == 0
+
+      posLibA = $mystring.index("libA.a")
+      posPostStep = $mystring.index("POSTSTEP")
+      posB = $mystring.index("2 of 3: B")
+      posSrcB= $mystring.index("src/b")
+      posLibB= $mystring.index("libB.a")
+      posPreStep = $mystring.index("PRESTEP")
+      posSrcC = $mystring.index("src/c")
+
+      expect(posLibA<posPostStep).to be == true
+      expect(posPostStep<posB).to be == true
+      expect(posB<posSrcB).to be == true
+      expect(posSrcB<posLibB).to be == true
+      expect(posLibB<posPreStep).to be == true
+      expect(posPreStep<posSrcC).to be == true
+    end
+  end
 
 end
 

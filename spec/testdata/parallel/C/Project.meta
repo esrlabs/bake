@@ -9,6 +9,13 @@ Project default: test {
       Archiver command: "ruby $(MainProjectDir)/sync.rb"
       Linker command: "ruby $(MainProjectDir)/sync.rb"
     }
+  }
+
+  ExecutableConfig test_steps {
+    Files "src/*.cpp"
+    Dependency A
+    Dependency B
+    DefaultToolchain GCC
     PreSteps {
       CommandLine "echo PRESTEP", filter: steps, default: off
     }

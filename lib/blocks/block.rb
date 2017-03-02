@@ -404,6 +404,10 @@ module Bake
         return false if not depResult and Bake.options.stopOnFirstError
 
         if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
+          Block.inc_block_counter()
+        end
+
+        if Bake.options.verbose >= 2
           typeStr = "Cleaning"
           if @prebuild
             typeStr = "Checking"
