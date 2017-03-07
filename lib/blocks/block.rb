@@ -327,7 +327,8 @@ module Bake
         threadableSteps    = mainSteps.select { |step| method == :execute && (Library === step || Compile === step) }
         nonThreadableSteps = mainSteps.select { |step| method != :execute || !(Library === step || Compile === step) }
 
-        @output_after_finish = (threadableSteps.length > 0)
+        @output_after_finish = (threadableSteps.length > 0) && nonThreadableSteps.none?{ |step| !@prebuild || (Library === step) } && postSteps.empty?
+
         execute_in_thread(method) {
           begin
             threadableSteps.each do |step|
@@ -343,13 +344,12 @@ module Bake
               break if blockAbort?(@result)
             end
           ensure
-            SyncOut.stopStream(@result)
+            SyncOut.stopStream(@result) if @output_after_finish
           end
         } if !threadableSteps.empty?
         nonThreadableSteps.each do |step|
           if !@prebuild || (Library === step)
             ThreadsWait.all_waits(Blocks::Block::threads)
-            SyncOut.stopStream()
             @result = executeStep(step, method) if @result
           end
           return false if blockAbort?(@result)
@@ -357,7 +357,6 @@ module Bake
 
         postSteps.each do |step|
           ThreadsWait.all_waits(Blocks::Block::threads)
-          SyncOut.stopStream()
           @result = executeStep(step, method) if @result
           return false if blockAbort?(@result)
         end unless @prebuild

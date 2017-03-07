@@ -1,0 +1,38 @@
+Project {
+
+  LibraryConfig test_lib1 {
+    Files "src/lib1/*.cpp"
+  }
+
+  LibraryConfig test_lib2 {
+    Files "src/lib2/*.cpp"
+  }
+
+  LibraryConfig test_preStepFailure {
+    PreSteps {
+      CommandLine "really_broken"
+    }
+  }
+
+  ExecutableConfig test_exe1 {
+    Files "src/main/*.cpp"
+    Dependency config: test_lib1
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_exe2 {
+    Files "src/main/*.cpp"
+    Dependency config: test_lib2 # has errors
+    Dependency config: test_lib1
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_exe3 {
+    Files "src/main/*.cpp"
+    Dependency config: test_lib1
+    Dependency config: test_preStepFailure
+    DefaultToolchain GCC
+  }
+
+
+}
