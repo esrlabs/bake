@@ -123,6 +123,10 @@ module Bake
       tocxx = ToCxx.new
       tocxx.doit()
       runOk = (ExitHelper.exit_code == 0)
+      if Bake::IDEInterface.instance.get_abort
+        abort = true
+        break
+      end
     rescue SystemExit
       runOk = (ExitHelper.exit_code == 0)
     rescue Exception => e
@@ -151,25 +155,26 @@ module Bake
     else
       msg1 << "summary: #{maxRuns} of #{maxRuns} builds ok"
     end
+
+    timeEnd = Time.now
+    timeDiff = timeEnd - $timeStart
+    failedRuns.each_with_index do |f,i|
+      msg1 << "\n#{i+1}: #{f}"
+    end
+    msg1 << "\ntime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60]
+
+
+    if failedRuns.length == 0
+      Bake.formatter.printSuccess($stars)
+      Bake.formatter.printSuccess(msg1)
+      Bake.formatter.printSuccess($stars)
+    else
+      Bake.formatter.printError($stars)
+      Bake.formatter.printError(msg1)
+      Bake.formatter.printError($stars)
+    end
   else
-  end
-
-  timeEnd = Time.now
-  timeDiff = timeEnd - $timeStart
-  failedRuns.each_with_index do |f,i|
-    msg1 << "\n#{i+1}: #{f}"
-  end
-  msg1 << "\ntime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60]
-
-
-  if failedRuns.length == 0
-    Bake.formatter.printSuccess($stars)
-    Bake.formatter.printSuccess(msg1)
-    Bake.formatter.printSuccess($stars)
-  else
-    Bake.formatter.printError($stars)
-    Bake.formatter.printError(msg1)
-    Bake.formatter.printError($stars)
+    exit(1)
   end
 
   Bake::IDEInterface.instance.disconnect()
