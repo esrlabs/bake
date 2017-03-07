@@ -165,7 +165,7 @@ module Bake
       end
 
       def self.reset_block_counter
-        @@block_counter = 0
+        @@block_counter = 1
       end
 
       def self.reset_delayed_result
@@ -279,8 +279,9 @@ module Bake
              @@threads.delete(endedThread)
             end
           end
-          thread = Thread.new() {
-
+          thread = Thread.new(Thread.current[:stdout], Thread.current[:errorStream]) { |outStr, errStr|
+            Thread.current[:stdout] = outStr
+            Thread.current[:errorStream] = errStr
             exceptionOccured = false
             begin
               yield
@@ -314,7 +315,6 @@ module Bake
       end
 
       def callSteps(method)
-
         @config.writeEnvVars()
         Thread.current[:lastCommand] = nil
 
@@ -327,23 +327,29 @@ module Bake
         threadableSteps    = mainSteps.select { |step| method == :execute && (Library === step || Compile === step) }
         nonThreadableSteps = mainSteps.select { |step| method != :execute || !(Library === step || Compile === step) }
 
+        @output_after_finish = (threadableSteps.length > 0)
         execute_in_thread(method) {
-          threadableSteps.each do |step|
-            if !@prebuild || (Library === step)
-              Multithread::Jobs.incThread() if Library === step
-              begin
-                @result = executeStep(step, method) if @result
-              ensure
-                Multithread::Jobs.decThread() if Library === step
+          begin
+            threadableSteps.each do |step|
+              if !@prebuild || (Library === step)
+                Multithread::Jobs.incThread() if Library === step
+                begin
+                  @result = executeStep(step, method) if @result
+                ensure
+                  Multithread::Jobs.decThread() if Library === step
+                end
+                @@delayed_result &&= @result
               end
-              @@delayed_result &&= @result
+              break if blockAbort?(@result)
             end
-            break if blockAbort?(@result)
+          ensure
+            SyncOut.stopStream(@result)
           end
         } if !threadableSteps.empty?
         nonThreadableSteps.each do |step|
           if !@prebuild || (Library === step)
             ThreadsWait.all_waits(Blocks::Block::threads)
+            SyncOut.stopStream()
             @result = executeStep(step, method) if @result
           end
           return false if blockAbort?(@result)
@@ -351,6 +357,7 @@ module Bake
 
         postSteps.each do |step|
           ThreadsWait.all_waits(Blocks::Block::threads)
+          SyncOut.stopStream()
           @result = executeStep(step, method) if @result
           return false if blockAbort?(@result)
         end unless @prebuild
@@ -379,6 +386,7 @@ module Bake
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
 
         SyncOut.mutex.synchronize do
+          SyncOut.startStream() if Bake.options.syncedOutput
           if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
             typeStr = "Building"
             if @prebuild
@@ -386,13 +394,27 @@ module Bake
             elsif not isBuildBlock?
               typeStr = "Applying"
             end
-            Block.inc_block_counter()
-            Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
+
+            bcStr = ">>CONF_NUM<<"
+            if !Bake.options.syncedOutput
+              bcStr = Block.block_counter
+              Block.inc_block_counter()
+            end
+
+            Bake.formatter.printAdditionalInfo "**** #{typeStr} #{bcStr} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
           end
           puts "Project path: #{@projectDir}" if Bake.options.projectPaths
         end
 
+        @output_after_finish = false
         @result = callSteps(:execute)
+        if !@output_after_finish
+          SyncOut.stopStream(@result)
+        else
+          SyncOut.discardStreams()
+        end
+
+
         return (depResult && @result)
       end
 
@@ -403,10 +425,6 @@ module Bake
         depResult = callDeps(:clean)
         return false if not depResult and Bake.options.stopOnFirstError
 
-        if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
-          Block.inc_block_counter()
-        end
-
         if Bake.options.verbose >= 2
           typeStr = "Cleaning"
           if @prebuild
@@ -414,8 +432,11 @@ module Bake
           elsif not isBuildBlock?
             typeStr = "Skipping"
           end
-          Block.inc_block_counter()
           Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
+        end
+
+        if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
+          Block.inc_block_counter()
         end
 
         @result = callSteps(:clean)

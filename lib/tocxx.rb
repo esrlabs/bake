@@ -356,9 +356,9 @@ module Bake
           result = callBlock(block, method) && result
         ensure
           ThreadsWait.all_waits(Blocks::Block::threads)
-          SyncOut.flush_errors
+          result &&= Blocks::Block.delayed_result
+          SyncOut.stopStream(result)
         end
-        result &&= Blocks::Block.delayed_result
         if not ignoreStopOnFirstError
           return false if not result and Bake.options.stopOnFirstError
         end
@@ -536,6 +536,7 @@ module Bake
         rescue AbortException
           ideAbort = true
         end
+        SyncOut.flush_errors
         result = callBlocks(startBlocks, :exits, true) && result
 
         if ideAbort || Bake::IDEInterface.instance.get_abort

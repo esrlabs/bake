@@ -1,4 +1,5 @@
 require 'stringio'
+require 'blocks/block'
 
 class ThreadOut
 
@@ -54,7 +55,7 @@ class SyncOut
     mutex.synchronize do
       tmp = Thread.current[:stdout]
       if tmp.string.length > 0
-        Thread.current[:stdout] = Thread.current[:tmpStdout]
+        Thread.current[:stdout] = Thread.current[:tmpStdout][Thread.current[:tmpStdout].length-1]
         puts tmp.string
         tmp.reopen("")
         Thread.current[:stdout] = tmp
@@ -64,31 +65,55 @@ class SyncOut
 
   def self.startStream
     s = StringIO.new
-    Thread.current[:tmpStdout] = Thread.current[:stdout]
+    if Thread.current[:tmpStdout].nil?
+      Thread.current[:tmpStdout] = [Thread.current[:stdout]]
+    else
+      Thread.current[:tmpStdout] << Thread.current[:stdout]
+    end
+
     Thread.current[:stdout] = s
   end
 
-  def self.stopStream(result)
+  def self.stopStream(result=true)
     s = Thread.current[:stdout]
-    Thread.current[:stdout] = Thread.current[:tmpStdout]
+    return if s.nil?
+    Thread.current[:stdout] = Thread.current[:tmpStdout] ? Thread.current[:tmpStdout].pop : nil
     if s.string.length > 0
       mutex.synchronize do
         if !result && Bake.options.stopOnFirstError
-          @@errors << s.string
+          Thread.current[:errorStream] << s.string
         else
+          if Bake.options.syncedOutput
+            if s.string.gsub!(">>CONF_NUM<<", Bake::Blocks::Block.block_counter.to_s)
+              Bake::Blocks::Block.inc_block_counter
+            end
+          end
           puts s.string
         end
       end
+      s.reopen("")
     end
   end
 
+
+  def self.discardStreams()
+    Thread.current[:tmpStdout] = []
+  end
+
   def self.flush_errors
-    puts @@errors unless @@errors.empty?
-    reset_errors
+    if !Thread.current[:errorStream].empty?
+      if Bake.options.syncedOutput
+        if Thread.current[:errorStream].gsub!(">>CONF_NUM<<", Bake::Blocks::Block.block_counter.to_s)
+          Bake::Blocks::Block.inc_block_counter
+        end
+      end
+      puts Thread.current[:errorStream]
+      reset_errors
+    end
   end
 
   def self.reset_errors
-    @@errors = ""
+    Thread.current[:errorStream] = ""
   end
 
 end

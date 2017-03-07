@@ -20,7 +20,7 @@ module Bake
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
     attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
-    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry # Boolean
+    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse # Boolean
     attr_reader :threads, :socket # Fixnum
     attr_reader :vars # map
@@ -78,6 +78,7 @@ module Bake
       @def_roots = []
       @main_project_name = ""
       @adapt = []
+      @syncedOutput = false
 
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| set_main_dir(x)                         })
@@ -87,6 +88,7 @@ module Bake
       add_option(["-a"                                           ], lambda { |x| Bake.formatter.setColorScheme(x.to_sym) })
       add_option(["-w"                                           ], lambda { |x| set_root(x)                             })
       add_option(["-r"                                           ], lambda {     @stopOnFirstError = true                })
+      add_option(["-O"                                           ], lambda {     @syncedOutput = true                    })
       add_option(["--rebuild"                                    ], lambda {     @rebuild = true                         })
       add_option(["--prepro"                                     ], lambda {     @prepro = true                          })
       add_option(["--link-only",          "--link_only"          ], lambda {     @linkOnly = true;                       })

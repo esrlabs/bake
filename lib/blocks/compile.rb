@@ -291,6 +291,7 @@ module Bake
               end
 
               SyncOut.startStream()
+              SyncOut.reset_errors()
               begin
                 Thread.current[:filelist] = Set.new if Bake.options.filelist
                 Thread.current[:lastCommand] = nil
@@ -311,6 +312,7 @@ module Bake
                 jobs.set_failed if not result
               ensure
                 SyncOut.stopStream(result)
+                SyncOut.flush_errors()
               end
               self.mutex.synchronize do
                 fileListBlock.merge(Thread.current[:filelist]) if Bake.options.filelist
