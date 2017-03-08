@@ -12,9 +12,9 @@ require 'common/exit_helper'
 
 module Bake
 
-describe "autodir" do
+describe "abort" do
 
-  it 'without no_autodir' do
+  it 'no hallo' do
     Bake.startBake("abort/main", ["test", "--rebuild"])
     expect($mystring.include?("hallo")).to be == false
   end

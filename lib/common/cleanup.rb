@@ -8,7 +8,7 @@ module Bake
       Blocks::CC2J.clear
       Bake::IDEInterface.instance.set_abort(false)
       Blocks::Block.reset_block_counter
-      Blocks::Block.delayed_result
+      Blocks::Block.reset_delayed_result
     end
 
 end

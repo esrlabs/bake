@@ -5,6 +5,8 @@ Since the beginning of bake, files within a project will be built in parallel. T
 
 Since bake 2.33.0, **projects are built also in parallel**. Note: if there is a CommandLine/Makefile step or an ExecutableConfig, the build will not proceed until all stuff prior to this has been finished.
 
+To synchronize the output, use the parameter "-O".
+
 Example:
 --------
 

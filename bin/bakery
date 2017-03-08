@@ -125,6 +125,7 @@ module Bake
       runOk = (ExitHelper.exit_code == 0)
       if Bake::IDEInterface.instance.get_abort
         abort = true
+        exitValue = 1
         break
       end
     rescue SystemExit
@@ -162,19 +163,16 @@ module Bake
       msg1 << "\n#{i+1}: #{f}"
     end
     msg1 << "\ntime: %02d:%02d minutes" % [timeDiff/60, timeDiff%60]
+  end
 
-
-    if failedRuns.length == 0
-      Bake.formatter.printSuccess($stars)
-      Bake.formatter.printSuccess(msg1)
-      Bake.formatter.printSuccess($stars)
-    else
-      Bake.formatter.printError($stars)
-      Bake.formatter.printError(msg1)
-      Bake.formatter.printError($stars)
-    end
+  if failedRuns.length == 0
+    Bake.formatter.printSuccess($stars)
+    Bake.formatter.printSuccess(msg1)
+    Bake.formatter.printSuccess($stars)
   else
-    exit(1)
+    Bake.formatter.printError($stars)
+    Bake.formatter.printError(msg1)
+    Bake.formatter.printError($stars)
   end
 
   Bake::IDEInterface.instance.disconnect()

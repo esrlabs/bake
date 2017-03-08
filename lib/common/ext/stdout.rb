@@ -45,6 +45,10 @@ STDERR.sync = true
 $stdout = ThreadOut.new(STDOUT)
 $stderr = ThreadOut.new(STDERR)
 
+def puts(o)
+  tmp = Thread.current[:stdout]
+  tmp ? tmp.puts(o) : super(o)
+end
 
 class SyncOut
   def self.mutex
@@ -74,6 +78,14 @@ class SyncOut
     Thread.current[:stdout] = s
   end
 
+  def self.convertConfNum(str)
+    if Bake.options.syncedOutput
+      while str.sub!(">>CONF_NUM<<", Bake::Blocks::Block.block_counter.to_s) do
+        Bake::Blocks::Block.inc_block_counter
+      end
+    end
+  end
+
   def self.stopStream(result=true)
     s = Thread.current[:stdout]
     return if s.nil?
@@ -83,11 +95,7 @@ class SyncOut
         if !result && Bake.options.stopOnFirstError
           Thread.current[:errorStream] << s.string
         else
-          if Bake.options.syncedOutput
-            if s.string.gsub!(">>CONF_NUM<<", Bake::Blocks::Block.block_counter.to_s)
-              Bake::Blocks::Block.inc_block_counter
-            end
-          end
+          convertConfNum(s.string)
           puts s.string
         end
       end
@@ -102,13 +110,11 @@ class SyncOut
 
   def self.flush_errors
     if !Thread.current[:errorStream].empty?
-      if Bake.options.syncedOutput
-        if Thread.current[:errorStream].gsub!(">>CONF_NUM<<", Bake::Blocks::Block.block_counter.to_s)
-          Bake::Blocks::Block.inc_block_counter
-        end
+      mutex.synchronize do
+        convertConfNum(Thread.current[:errorStream])
+        puts Thread.current[:errorStream]
+        reset_errors
       end
-      puts Thread.current[:errorStream]
-      reset_errors
     end
   end
 

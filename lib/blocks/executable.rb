@@ -79,7 +79,14 @@ module Bake
       def execute
         Dir.chdir(@projectDir) do
           childs = @block.getBlocks(:childs)
-          return false if childs.any? { |b| b.result == false }
+          if childs.any? { |b| b.result == false }
+            if Bake.options.stopOnFirstError
+              Blocks::Block.set_delayed_result
+              return true
+            else
+              return false
+            end
+          end
 
           allSources = []
           (childs + [@block]).each do |b|

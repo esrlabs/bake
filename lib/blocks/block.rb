@@ -168,6 +168,10 @@ module Bake
         @@block_counter = 1
       end
 
+      def self.set_delayed_result
+        @@delayed_result = false
+      end
+
       def self.reset_delayed_result
         @@delayed_result = true
       end
@@ -271,38 +275,44 @@ module Bake
         return depResult
       end
 
+      def self.waitForFreeThread
+        if @@threads.length == Bake.options.threads
+         endedThread = ThreadsWait.new(@@threads).next_wait
+         @@threads.delete(endedThread)
+        end
+      end
+
       def execute_in_thread(method)
         if method == :execute
           @@mutex.synchronize do
-            if @@threads.length == Bake.options.threads
-             endedThread = ThreadsWait.new(@@threads).next_wait
-             @@threads.delete(endedThread)
-            end
-          end
-          thread = Thread.new(Thread.current[:stdout], Thread.current[:errorStream]) { |outStr, errStr|
-            Thread.current[:stdout] = outStr
-            Thread.current[:errorStream] = errStr
-            exceptionOccured = false
-            begin
-              yield
-              exceptionOccured = true
-            rescue Bake::SystemCommandFailed => scf # normal compilation error
-            rescue SystemExit => exSys
-            rescue Exception => ex1
-              if not Bake::IDEInterface.instance.get_abort
-                SyncOut.mutex.synchronize do
-                  Bake.formatter.printError("Error: #{ex1.message}")
-                  puts ex1.backtrace if Bake.options.debug
+            Block::waitForFreeThread()
+            return if blockAbort?(true)
+
+            @@threads << Thread.new(Thread.current[:stdout], Thread.current[:errorStream]) { |outStr, errStr|
+              Thread.current[:stdout] = outStr
+              Thread.current[:errorStream] = errStr
+              exceptionOccured = false
+              begin
+                yield
+                exceptionOccured = true
+              rescue Bake::SystemCommandFailed => scf # normal compilation error
+              rescue SystemExit => exSys
+              rescue Exception => ex1
+                if not Bake::IDEInterface.instance.get_abort
+                  SyncOut.mutex.synchronize do
+                    Bake.formatter.printError("Error: #{ex1.message}")
+                    puts ex1.backtrace if Bake.options.debug
+                  end
                 end
               end
-            end
-            if !exceptionOccured
-              @result = false
-              @@delayed_result = false
-            end
-          }
-          @@mutex.synchronize do
-            @@threads << thread
+              if !exceptionOccured
+                @result = false
+                @@delayed_result = false
+              end
+            }
+
+            Block::waitForFreeThread()
+            return if blockAbort?(true)
           end
         else
           yield
@@ -321,13 +331,15 @@ module Bake
         preSteps.each do |step|
           ThreadsWait.all_waits(Blocks::Block::threads)
           @result = executeStep(step, method) if @result
-          return false if blockAbort?(@result)
+          return @result if blockAbort?(@result)
         end unless @prebuild
 
         threadableSteps    = mainSteps.select { |step| method == :execute && (Library === step || Compile === step) }
         nonThreadableSteps = mainSteps.select { |step| method != :execute || !(Library === step || Compile === step) }
 
-        @output_after_finish = (threadableSteps.length > 0) && nonThreadableSteps.none?{ |step| !@prebuild || (Library === step) } && postSteps.empty?
+        @outputInMainThread = nonThreadableSteps.any?{ |step| !@prebuild || (Library === step) } ||
+                              postSteps.length > 0 ||
+                              (threadableSteps.length == 0 && preSteps.length > 0)
 
         execute_in_thread(method) {
           begin
@@ -344,7 +356,7 @@ module Bake
               break if blockAbort?(@result)
             end
           ensure
-            SyncOut.stopStream(@result) if @output_after_finish
+            SyncOut.stopStream(@result) if !@outputInMainThread
           end
         } if !threadableSteps.empty?
         nonThreadableSteps.each do |step|
@@ -352,13 +364,13 @@ module Bake
             ThreadsWait.all_waits(Blocks::Block::threads)
             @result = executeStep(step, method) if @result
           end
-          return false if blockAbort?(@result)
+          return @result if blockAbort?(@result)
         end
 
         postSteps.each do |step|
           ThreadsWait.all_waits(Blocks::Block::threads)
           @result = executeStep(step, method) if @result
-          return false if blockAbort?(@result)
+          return @result if blockAbort?(@result)
         end unless @prebuild
 
         return @result
@@ -380,41 +392,44 @@ module Bake
         @inDeps = true
         depResult = callDeps(:execute)
         @inDeps = false
-        return false if blockAbort?(depResult)
+        return @result if blockAbort?(depResult)
 
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
 
-        SyncOut.mutex.synchronize do
-          SyncOut.startStream() if Bake.options.syncedOutput
-          if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
-            typeStr = "Building"
-            if @prebuild
-              typeStr = "Using"
-            elsif not isBuildBlock?
-              typeStr = "Applying"
-            end
+        begin
+          SyncOut.mutex.synchronize do
+            @outputInMainThread = true
+            SyncOut.startStream() if Bake.options.syncedOutput
+            if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
+              typeStr = "Building"
+              if @prebuild
+                typeStr = "Using"
+              elsif not isBuildBlock?
+                typeStr = "Applying"
+              end
 
-            bcStr = ">>CONF_NUM<<"
-            if !Bake.options.syncedOutput
-              bcStr = Block.block_counter
-              Block.inc_block_counter()
-            end
+              bcStr = ">>CONF_NUM<<"
+              if !Bake.options.syncedOutput
+                bcStr = Block.block_counter
+                Block.inc_block_counter()
+              end
 
-            Bake.formatter.printAdditionalInfo "**** #{typeStr} #{bcStr} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
+              Bake.formatter.printAdditionalInfo "**** #{typeStr} #{bcStr} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
+            end
+            puts "Project path: #{@projectDir}" if Bake.options.projectPaths
           end
-          puts "Project path: #{@projectDir}" if Bake.options.projectPaths
+
+          @result = callSteps(:execute)
+        ensure
+          if @outputInMainThread
+            SyncOut.stopStream(@result)
+          else
+            SyncOut.discardStreams()
+          end
         end
 
-        @output_after_finish = false
-        @result = callSteps(:execute)
-        if !@output_after_finish
-          SyncOut.stopStream(@result)
-        else
-          SyncOut.discardStreams()
-        end
 
-
-        return (depResult && @result)
+        return (depResult && @result)# && @@delayed_result)
       end
 
       def clean

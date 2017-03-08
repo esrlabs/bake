@@ -1,6 +1,11 @@
 Changelog
 =========
 
+March 8, 2017 - bake-toolkit 2.34.0
+    * Added: With parameter -O the output can be synchronized now for parallel build.
+    * Added: Logging which roots are checked when loading Project.metas.
+    * Bugfix: Fixed ctrl-c for bakery in some shells.
+
 March 2, 2017 - bake-toolkit 2.33.0
     * Changed: Projects are built in parallel now (not only the files within a single project). This implies a change in the output.
 
