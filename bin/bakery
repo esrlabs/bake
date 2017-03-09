@@ -125,6 +125,7 @@ module Bake
       runOk = (ExitHelper.exit_code == 0)
       if Bake::IDEInterface.instance.get_abort
         abort = true
+        msg1 << "aborted"
         exitValue = 1
         break
       end
