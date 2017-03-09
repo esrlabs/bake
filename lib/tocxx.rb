@@ -355,7 +355,7 @@ module Bake
           SyncOut.reset_errors
           result = callBlock(block, method) && result
         ensure
-          ThreadsWait.all_waits(Blocks::Block::threads)
+          Blocks::Block::waitForAllThreads()
           result &&= Blocks::Block.delayed_result
           SyncOut.stopStream(result)
         end

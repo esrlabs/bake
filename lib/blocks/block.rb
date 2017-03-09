@@ -184,6 +184,15 @@ module Bake
         @@threads
       end
 
+      def self.waitForAllThreads
+        if @@threads.length > 0
+          STDOUT.puts "DEBUG_THREADS: Wait for all threads." if Bake.options.debug_threads
+          ThreadsWait.all_waits(@@threads)
+          @@threads = []
+          STDOUT.puts "DEBUG_THREADS: All threads finished." if Bake.options.debug_threads
+        end
+      end
+
       def calcIsBuildBlock
         @startupSteps ||= []
 
@@ -277,8 +286,13 @@ module Bake
 
       def self.waitForFreeThread
         if @@threads.length == Bake.options.threads
-         endedThread = ThreadsWait.new(@@threads).next_wait
-         @@threads.delete(endedThread)
+          begin
+            STDOUT.puts "DEBUG_THREADS: Wait for free thread." if Bake.options.debug_threads
+            endedThread = ThreadsWait.new(@@threads).next_wait
+            STDOUT.puts "DEBUG_THREADS: Thread free." if Bake.options.debug_threads
+            @@threads.delete(endedThread)
+          rescue ErrNoWaitingThread
+          end
         end
       end
 
@@ -289,6 +303,7 @@ module Bake
             return if blockAbort?(true)
 
             @@threads << Thread.new(Thread.current[:stdout], Thread.current[:errorStream]) { |outStr, errStr|
+              STDOUT.puts "DEBUG_THREADS: Started: #{Thread.current.object_id} (#{@projectName}, #{@config.name})" if Bake.options.debug_threads
               Thread.current[:stdout] = outStr
               Thread.current[:errorStream] = errStr
               exceptionOccured = false
@@ -309,6 +324,7 @@ module Bake
                 @result = false
                 @@delayed_result = false
               end
+              STDOUT.puts "DEBUG_THREADS: Stopped: #{Thread.current.object_id} (#{@projectName}, #{@config.name})" if Bake.options.debug_threads
             }
 
             Block::waitForFreeThread()
@@ -329,7 +345,7 @@ module Bake
         Thread.current[:lastCommand] = nil
 
         preSteps.each do |step|
-          ThreadsWait.all_waits(Blocks::Block::threads)
+          Blocks::Block::waitForAllThreads()
           @result = executeStep(step, method) if @result
           return @result if blockAbort?(@result)
         end unless @prebuild
@@ -361,14 +377,14 @@ module Bake
         } if !threadableSteps.empty?
         nonThreadableSteps.each do |step|
           if !@prebuild || (Library === step)
-            ThreadsWait.all_waits(Blocks::Block::threads)
+            Blocks::Block::waitForAllThreads()
             @result = executeStep(step, method) if @result
           end
           return @result if blockAbort?(@result)
         end
 
         postSteps.each do |step|
-          ThreadsWait.all_waits(Blocks::Block::threads)
+          Blocks::Block::waitForAllThreads()
           @result = executeStep(step, method) if @result
           return @result if blockAbort?(@result)
         end unless @prebuild
