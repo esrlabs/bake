@@ -66,6 +66,7 @@ module Bake
       puts " -h, --help               Print this help."
       puts " --license                Print the license."
       puts " --debug                  Print out backtraces in some cases - used only for debugging bake."
+      puts " --debug-threads          Print some debug information about started and stopped threads."
       ExitHelper.exit(0)
     end
 
