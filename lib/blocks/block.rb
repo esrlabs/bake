@@ -187,9 +187,7 @@ module Bake
       def self.waitForAllThreads
         if @@threads.length > 0
           STDOUT.puts "DEBUG_THREADS: Wait for all threads." if Bake.options.debug_threads
-          ThreadsWait.all_waits(@@threads) { |t|
-            STDOUT.puts "DEBUG_THREADS: Waited for #{t.object_id}"
-          }
+          @@threads.each{|t| while not t.join(2) do end}
           @@threads = []
           STDOUT.puts "DEBUG_THREADS: All threads finished." if Bake.options.debug_threads
         end
