@@ -1,7 +1,7 @@
 module Bake
   class Version
     def self.number
-      "2.34.1"
+      "2.34.2"
     end
 
     def self.printBakeVersion(ry = "")
@@ -23,6 +23,7 @@ module Bake
 
   expectedRGen = "0.8.2"
   expectedRText = "0.9.0"
+  expectedConcurrent = "1.0.5"
 
   begin
     gem "rgen", "=#{expectedRGen}"
@@ -34,6 +35,12 @@ module Bake
     gem "rtext", "=#{expectedRText}"
   rescue Exception => e
     puts "Warning: Failed to load rtext #{expectedRText}, using latest version"
+  end
+
+  begin
+    gem "concurrent-ruby", "=#{expectedConcurrent}"
+  rescue Exception => e
+    puts "Warning: Failed to load concurrent-ruby #{expectedConcurrent}, using latest version"
   end
 
 end

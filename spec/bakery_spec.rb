@@ -63,7 +63,7 @@ describe "bake" do
   it 'collection wrong' do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b wrong -w spec/testdata/root1 -w spec/testdata/root2 -r --adapt nols`
     puts str
-    expect(str.include?("bakery aborted")).to be == true
+    expect(str.include?("bakery stopped on first error")).to be == true
     expect(str.include?("must contain DefaultToolchain")).to be == true
     str = `ruby bin/bakery -m spec/testdata/root1/main -b wrong -w spec/testdata/root1 -w spec/testdata/root2 --adapt nols`
     puts str
@@ -73,7 +73,7 @@ describe "bake" do
   it 'collection error' do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b error -w spec/testdata/root1 -w spec/testdata/root2 -r --adapt nols`
     puts str
-    expect(str.include?("bakery aborted")).to be == true
+    expect(str.include?("bakery stopped on first error")).to be == true
     expect(str.include?("Error: system command failed")).to be == false
     str = `ruby bin/bakery -m spec/testdata/root1/main -b error -w spec/testdata/root1 -w spec/testdata/root2 --adapt nols`
     puts str

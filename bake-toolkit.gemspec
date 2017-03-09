@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency("rtext", "=0.9.0")
   s.add_dependency("rgen", "=0.8.2")
   s.add_dependency("highline", "=1.7.8")
+  s.add_dependency("concurrent-ruby", "=1.0.5")
   s.add_dependency("colored", "=1.2")
   s.add_development_dependency("rspec")
   s.add_development_dependency("simplecov")

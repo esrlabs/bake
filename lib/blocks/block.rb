@@ -187,7 +187,9 @@ module Bake
       def self.waitForAllThreads
         if @@threads.length > 0
           STDOUT.puts "DEBUG_THREADS: Wait for all threads." if Bake.options.debug_threads
-          ThreadsWait.all_waits(@@threads)
+          ThreadsWait.all_waits(@@threads) { |t|
+            STDOUT.puts "DEBUG_THREADS: Waited for #{t.object_id}"
+          }
           @@threads = []
           STDOUT.puts "DEBUG_THREADS: All threads finished." if Bake.options.debug_threads
         end
@@ -289,7 +291,7 @@ module Bake
           begin
             STDOUT.puts "DEBUG_THREADS: Wait for free thread." if Bake.options.debug_threads
             endedThread = ThreadsWait.new(@@threads).next_wait
-            STDOUT.puts "DEBUG_THREADS: Thread free." if Bake.options.debug_threads
+            STDOUT.puts "DEBUG_THREADS: Thread free: #{endedThread.object_id}" if Bake.options.debug_threads
             @@threads.delete(endedThread)
           rescue ErrNoWaitingThread
           end
@@ -494,6 +496,7 @@ module Bake
         @@threads = []
         @@result = true
         @@mutex = Mutex.new
+        Bake::Multithread::Jobs.init_semaphore()
       end
 
       def startup

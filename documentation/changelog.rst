@@ -1,6 +1,11 @@
 Changelog
 =========
 
+March 9, 2017 - bake-toolkit 2.34.2
+    * Changed: improved output for failed builds (exit status, bakery message).
+    * Changed: improved debug-thread output.
+    * Bugfix: killing processes on failure may not work correctly.
+
 March 9, 2017 - bake-toolkit 2.34.1
     * Added: --debug-threads to debug multithread problems.
     * Bugfix: Cleanuped thread data structure. I don't think this is a real problem, but this depends on OS implementation of Ruby's thread lib".

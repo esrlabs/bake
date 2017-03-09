@@ -138,11 +138,11 @@ module Bake
     Bake::cleanup
     ExitHelper.reset_exit_code
 
-    if runOk == false
+    if runOk == false && abort == false
       exitValue = 1
       failedRuns << "bake " + cmd.join(" ")
       if @options.error
-        msg1 << "aborted"
+        msg1 << "stopped on first error"
         abort = true
         break
       end

@@ -1,36 +1,21 @@
 require 'common/ext/stdout'
 require 'stringio'
 require 'thread'
+require 'concurrent/atomic/mutex_semaphore'
 
 module Bake
   module Multithread
 
     class Jobs
 
-      @@mutex_sempaphore = Mutex.new
-      @@running_threads = 0
-      @@waiting_threads = 0
-      @@cv = ConditionVariable.new
-
       def self.incThread
-        @@mutex_sempaphore.synchronize do
-          if @@running_threads >= Bake.options.threads
-            @@waiting_threads += 1
-            @@cv.wait(@@mutex_sempaphore)
-            @@waiting_threads -= 1
-            @@running_threads += 1
-          else
-            @@running_threads += 1
-          end
-        end
+        @@semaphore.acquire
       end
       def self.decThread
-        @@mutex_sempaphore.synchronize do
-          @@running_threads -= 1
-          if @@waiting_threads > 0
-            @@cv.signal
-          end
-        end
+        @@semaphore.release
+      end
+      def self.init_semaphore
+        @@semaphore = ::Concurrent::MutexSemaphore.new(Bake.options.threads)
       end
 
       def initialize(jobs, &block)
@@ -41,9 +26,12 @@ module Bake
           @threads << ::Thread.new(Thread.current[:stdout], Thread.current[:errorStream]) do |outStr, errStr|
             Thread.current[:stdout] = outStr
             Thread.current[:errorStream] = errStr
-            Jobs.incThread()
-            block.call(self)
-            Jobs.decThread()
+            begin
+              Jobs.incThread()
+              block.call(self)
+            ensure
+              Jobs.decThread()
+            end
           end
         end
       end
