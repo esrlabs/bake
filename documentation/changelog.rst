@@ -1,6 +1,9 @@
 Changelog
 =========
 
+March 9, 2017 - bake-toolkit 2.34.3
+    * Changed: slightly changed thread handling (internal change).
+
 March 9, 2017 - bake-toolkit 2.34.2
     * Changed: improved output for failed builds (exit status, bakery message).
     * Changed: improved debug-thread output.

@@ -288,7 +288,7 @@ module Bake
         if @@threads.length == Bake.options.threads
           begin
             STDOUT.puts "DEBUG_THREADS: Wait for free thread." if Bake.options.debug_threads
-            endedThread = ThreadsWait.new(@@threads).next_wait
+            endedThread = ThreadsWait.new(*@@threads).next_wait
             STDOUT.puts "DEBUG_THREADS: Thread free: #{endedThread.object_id}" if Bake.options.debug_threads
             @@threads.delete(endedThread)
           rescue ErrNoWaitingThread
