@@ -50,8 +50,8 @@ module Bake
               cache = nil
             end
 
-            puts "Cache: Checking if cache was moved: #{@cacheFilename} vs. #{cache.cache_file}" if Bake.options.debug
             if cache != nil
+              puts "Cache: Checking if cache was moved: #{@cacheFilename} vs. #{cache.cache_file}" if Bake.options.debug
               if cache.cache_file != @cacheFilename
                 Bake.formatter.printInfo("Info: cache filename changed, reloading meta information")
                 cache = nil
