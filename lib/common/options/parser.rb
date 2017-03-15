@@ -18,19 +18,27 @@ module Bake
       params.each { |p| @arguments[p] = block }
     end
 
-    def get_block(param)
-      opt = @arguments[param]
-      raise "Internal error in option handling" unless opt
-      opt.block
+    def valid?(argument)
+      @arguments.keys.any? { |a| a != "" && argument.start_with?(a) }
     end
 
-    def valid?(argument)
-      @arguments.include?argument
+    def get_block(argument)
+      arg = nil
+      block = nil
+      @arguments.each do |a, b|
+        if argument.start_with?(a) && a != ""
+          return [b, nil] if a == argument
+          block = b
+          arg = b.parameters.length==3 ? argument[a.length..-1] : nil
+        end
+      end
+      return [block, arg]
     end
 
     def has_parameter?(argument)
-      return false unless valid?(argument)
-      @arguments[argument].parameters.length == 1
+      b, inPlaceArg = get_block(argument)
+      return false unless b
+      b.parameters.length == 1
     end
 
     def parse_internal(ignore_invalid, subOptions = nil)
@@ -55,29 +63,32 @@ module Bake
             if index != nil and index == 0
               raise "Option #{arg} unknown" if not ignore_invalid
             else
-              @arguments[""].call(arg) # default paramter without "-"
+              @arguments[""].call(arg) # default parameter without "-"
             end
           else
-            option = @arguments[arg]
-            if option.parameters.length >= 1
-              hasArgument = (pos+1 < @argv.length and @argv[pos+1][0] != "-")
-              if option.parameters.length == 2 or hasArgument
-                if option.parameters.length == 2
-                  if hasArgument
-                    option.call(@argv[pos+1], nil) # do not use default value
-                    pos = pos + 1
-                  else
-                    option.call(nil, nil) # use default value
-                  end
-                else
-                  option.call(@argv[pos+1])
-                  pos = pos + 1
-                end
+            option, inPlaceArg = get_block(arg)
+            hasArgument = (pos+1 < @argv.length and @argv[pos+1][0] != "-")
+            if option.parameters.length == 3 && (hasArgument || inPlaceArg)
+              if inPlaceArg
+                option.call(inPlaceArg, nil, nil)
               else
-                raise "Argument for option #{arg} missing"
+                option.call(@argv[pos+1], nil, nil) # do not use inplace value
+                pos = pos + 1
               end
-            else
+            elsif option.parameters.length == 2
+              if hasArgument
+                option.call(@argv[pos+1], nil) # do not use default value
+                pos = pos + 1
+              else
+                option.call(nil, nil) # use default value
+              end
+            elsif option.parameters.length == 1 && hasArgument
+              option.call(@argv[pos+1])
+              pos = pos + 1
+            elsif option.parameters.length == 0
               option.call()
+            else
+              raise "Argument for option #{arg} missing"
             end
           end
           pos = pos + 1

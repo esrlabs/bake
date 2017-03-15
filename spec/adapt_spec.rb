@@ -50,7 +50,7 @@ describe "Adapt" do
   end
 
   it 'Dep replace 0' do
-    Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_replace", "-v2"])
+    Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", "dep_replace", "-v", "2"])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
     expect($mystring.include?("Building 2 of 4: lib1 (test_ok)")).to be == true
     expect($mystring.include?("Building 3 of 4: lib3 (test_ok)")).to be == true
@@ -59,7 +59,7 @@ describe "Adapt" do
   end
 
   it 'Dep replace 2' do
-    Bake.startBake("adapt/main", ["test_dep2", "--rebuild", "--adapt", "dep_replace", "-v2"])
+    Bake.startBake("adapt/main", ["test_dep2", "--rebuild", "--adapt", "dep_replace", "-v", "2"])
     expect($mystring.include?("Building 1 of 4: lib1 (test_other)")).to be == true
     expect($mystring.include?("Building 2 of 4: lib1 (test_ok)")).to be == true
     expect($mystring.include?("Building 3 of 4: lib3 (test_ok)")).to be == true
@@ -245,7 +245,7 @@ describe "Adapt" do
   end
 
   it 'Files extend 0' do
-    Bake.startBake("adapt/main", ["test_files0", "--rebuild", "--adapt", "files_extend", "-j", "1"])
+    Bake.startBake("adapt/main", ["test_files0", "--rebuild", "--adapt", "files_extend", "-j1"])
     expect($mystring.include?("add1.cpp")).to be == true
     expect($mystring.include?("nix.cpp")).to be == true
     expect($mystring.include?("main.cpp")).to be == false

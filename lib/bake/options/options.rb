@@ -106,10 +106,7 @@ module Bake
 
       add_option(["--adapt"                                      ], lambda { |x| set_adapt(x)                            })
 
-      add_option(["-v0"                                          ], lambda {     @verbose = 0                            })
-      add_option(["-v1"                                          ], lambda {     @verbose = 1                            })
-      add_option(["-v2"                                          ], lambda {     @verbose = 2                            })
-      add_option(["-v3"                                          ], lambda {     @verbose = 3                            })
+      add_option(["-v"                                           ], lambda { |x, dummy1, dummy2| set_verbose(x)          })
 
       add_option(["--debug"                                      ], lambda {     @debug = true                           })
       add_option(["--debug-threads"                              ], lambda {     @debug_threads = true                   })
@@ -117,7 +114,7 @@ module Bake
 
       add_option(["--clobber"                                    ], lambda {     @clobber = true; @clean = true          })
       add_option(["--ignore-cache",       "--ignore_cache"       ], lambda {     @nocache = true                         })
-      add_option(["-j",                   "--threads"            ], lambda { |x| set_threads(x)                          })
+      add_option(["-j",                   "--threads"            ], lambda { |x, dummy1, dummy2| set_threads(x)          })
       add_option(["--socket"                                     ], lambda { |x| @socket = String === x ? x.to_i : x     })
       add_option(["--toolchain-info",     "--toolchain_info"     ], lambda { |x| ToolchainInfo.showToolchain(x)          })
       add_option(["--toolchain-names",    "--toolchain_names"    ], lambda {     ToolchainInfo.showToolchainList         })
@@ -286,10 +283,27 @@ module Bake
       @adapt << name if not @adapt.include?name
     end
 
+    def checkNum(num)
+      if String === num && !/\A\d+\z/.match(num)
+        Bake.formatter.printError("Error: #{num} is not a positive number")
+        ExitHelper.exit(1)
+      end
+    end
+
     def set_threads(num)
+      checkNum(num)
       @threads = String === num ? num.to_i : num
       if @threads <= 0
         Bake.formatter.printError("Error: number of threads must be > 0")
+        ExitHelper.exit(1)
+      end
+    end
+
+    def set_verbose(num)
+      checkNum(num)
+      @verbose = String === num ? num.to_i : num
+      if @verbose < 0 || verbose > 3
+        Bake.formatter.printError("Error: verbose must be between 0 and 3")
         ExitHelper.exit(1)
       end
     end

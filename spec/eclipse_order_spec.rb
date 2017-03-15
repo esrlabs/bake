@@ -13,7 +13,7 @@ module Bake
 describe "Eclipse Order" do
 
   it 'normal' do
-    Bake.startBake("eclipseOrder/main", ["test_normal", "-v2"])
+    Bake.startBake("eclipseOrder/main", ["test_normal", "-v", "2"])
     buildStr =
       "build/test_normal/a/x.o " +
       "build/test_normal/a/y.o " +
@@ -32,7 +32,7 @@ describe "Eclipse Order" do
   end
 
   it 'eclipse' do
-    Bake.startBake("eclipseOrder/main", ["test_eclipse", "-v2"])
+    Bake.startBake("eclipseOrder/main", ["test_eclipse", "-v", "2"])
     buildStr =
       "build/test_eclipse/c/x.o " +
       "build/test_eclipse/c/y.o " +
