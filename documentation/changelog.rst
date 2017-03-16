@@ -2,7 +2,9 @@ Changelog
 =========
 
 March 16, 2017 - bake-toolkit 2.34.4
-
+    * Added: CommandLine and Makefile have a new argument. If *independent: true*, they are not executed exclusively but in parallel to other projects/configs.
+    * Added: -j can now be used without space and -v with space, e.g. -j8 or -j 8, -v2 or -v 2.
+    * Bugfix: under the hood optimizations for parallel build.
 
 March 9, 2017 - bake-toolkit 2.34.3
     * Changed: slightly changed thread handling (internal change).

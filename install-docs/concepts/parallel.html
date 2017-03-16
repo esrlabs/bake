@@ -99,6 +99,8 @@
 <li><a class="reference internal" href="#">Parallel build</a><ul>
 <li><a class="reference internal" href="#example">Example:</a></li>
 <li><a class="reference internal" href="#id1">Example:</a></li>
+<li><a class="reference internal" href="#id2">Example:</a></li>
+<li><a class="reference internal" href="#id3">Example:</a></li>
 </ul>
 </li>
 </ul>
@@ -144,13 +146,24 @@
       
   <div class="section" id="parallel-build">
 <h1>Parallel build<a class="headerlink" href="#parallel-build" title="Permalink to this headline">¶</a></h1>
-<p>Since the beginning of bake, files within a project will be built in parallel. The number of threads can be defined on command line via the &#8220;-j&#8221; parameter. &#8220;-j 8&#8221; is the default.</p>
-<p>Since bake 2.33.0, <strong>projects are built also in parallel</strong>. Note: if there is a CommandLine/Makefile step or an ExecutableConfig, the build will not proceed until all stuff prior to this has been finished.</p>
+<p>Since the beginning of bake, files within a project will be built in parallel. The number of threads can be defined on command line via the &#8220;-j&#8221; parameter. &#8220;-j8&#8221; is the default.</p>
+<p>Since bake 2.33.0, <strong>projects are built also in parallel</strong>.</p>
+<p>Note: if there is a CommandLine/Makefile step or an ExecutableConfig, the build will not proceed until all stuff prior to this has been finished. Exception: CommandLine/Makefile have an attribute &#8220;independent: true&#8221;.</p>
 <p>To synchronize the output, use the parameter &#8220;-O&#8221;.</p>
 <div class="section" id="example">
 <h2>Example:<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>ExecutableConfig A depends on libraries B and C (without any additional steps).</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> project C
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> project A
+<span class="go">LibraryConfig ... {</span>
+<span class="go">  ...</span>
+<span class="go">}</span>
+
+<span class="gp">#</span> project B
+<span class="go">LibraryConfig ... {</span>
+<span class="go">  ...</span>
+<span class="go">}</span>
+
+<span class="gp">#</span> project C
 <span class="go">ExecutableConfig ... {</span>
 <span class="go">  Dependency A</span>
 <span class="go">  Dependency B</span>
@@ -158,23 +171,87 @@
 <span class="go">}</span>
 </pre></div>
 </div>
-<p>This means all files of A, B and C can be built in parallel. When all files of A/B have been successfully compiled,
-the archive of A/B can be created in parallel with the other archive and the remaining files) . When <strong>everything has been finished</strong>, C can be linked.</p>
+<p>A, B and C can be built in parallel, at the end C is linked.</p>
 </div>
 <div class="section" id="id1">
 <h2>Example:<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>Same as above, but B has be PreStep (e.g. to generate something).</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> project B
+<p>Same as above, but B has a PreStep (e.g. to generate something).</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> project A
+<span class="go">LibraryConfig ... {</span>
+<span class="go">  ...</span>
+<span class="go">}</span>
+
+<span class="gp">#</span> project B
 <span class="go">LibraryConfig ... {</span>
 <span class="go">  ...</span>
 <span class="go">  PreSteps {</span>
 <span class="go">    CommandLine ...</span>
 <span class="go">  }</span>
 <span class="go">}</span>
+
+<span class="gp">#</span> project C
+<span class="go">ExecutableConfig ... {</span>
+<span class="go">  Dependency A</span>
+<span class="go">  Dependency B</span>
+<span class="go">  ...</span>
+<span class="go">}</span>
 </pre></div>
 </div>
 <p>First project A will be built completely. After the PreStep of B has been executed,
-the files of projects B/C can be built in parallel. Rest is the same as above.</p>
+the files of projects B/C can be built in parallel. At the end C is linked.</p>
+</div>
+<div class="section" id="id2">
+<h2>Example:<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>B has a PostStep instead of a PreStep.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> project A
+<span class="go">LibraryConfig ... {</span>
+<span class="go">  ...</span>
+<span class="go">}</span>
+
+<span class="gp">#</span> project B
+<span class="go">LibraryConfig ... {</span>
+<span class="go">  ...</span>
+<span class="go">  PostSteps {</span>
+<span class="go">    CommandLine ...</span>
+<span class="go">  }</span>
+<span class="go">}</span>
+
+<span class="gp">#</span> project C
+<span class="go">ExecutableConfig ... {</span>
+<span class="go">  Dependency A</span>
+<span class="go">  Dependency B</span>
+<span class="go">  ...</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>First project A will be built completely. In parallel the library of B will be built, but the PostStep is not executed before A is completed and the library of B is created.
+Then C is built and linked.</p>
+</div>
+<div class="section" id="id3">
+<h2>Example:<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>PostStep of B is independent:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">#</span> project A
+<span class="go">LibraryConfig ... {</span>
+<span class="go">  ...</span>
+<span class="go">}</span>
+
+<span class="gp">#</span> project B
+<span class="go">LibraryConfig ... {</span>
+<span class="go">  ...</span>
+<span class="go">  PostSteps {</span>
+<span class="go">    CommandLine ..., independent: true</span>
+<span class="go">  }</span>
+<span class="go">}</span>
+
+<span class="gp">#</span> project C
+<span class="go">ExecutableConfig ... {</span>
+<span class="go">  Dependency A</span>
+<span class="go">  Dependency B</span>
+<span class="go">  ...</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>A, B and C can be built in parallel, at the end C is linked.</p>
 </div>
 </div>
 
