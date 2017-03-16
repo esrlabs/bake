@@ -1,0 +1,2 @@
+STDOUT.puts ARGV[0]
+STDOUT.flush

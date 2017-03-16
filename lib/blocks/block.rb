@@ -296,42 +296,41 @@ module Bake
         end
       end
 
-      def execute_in_thread(method)
-        if method == :execute
-          @@mutex.synchronize do
-            Block::waitForFreeThread()
-            return if blockAbort?(true)
+      def execute_in_thread(steps)
+        @@mutex.synchronize do
+          Block::waitForFreeThread()
+          return if blockAbort?(true)
 
-            @@threads << Thread.new(Thread.current[:stdout], Thread.current[:errorStream]) { |outStr, errStr|
-              STDOUT.puts "DEBUG_THREADS: Started: #{Thread.current.object_id} (#{@projectName}, #{@config.name})" if Bake.options.debug_threads
-              Thread.current[:stdout] = outStr
-              Thread.current[:errorStream] = errStr
-              exceptionOccured = false
-              begin
-                yield
-                exceptionOccured = true
-              rescue Bake::SystemCommandFailed => scf # normal compilation error
-              rescue SystemExit => exSys
-              rescue Exception => ex1
-                if not Bake::IDEInterface.instance.get_abort
-                  SyncOut.mutex.synchronize do
-                    Bake.formatter.printError("Error: #{ex1.message}")
-                    puts ex1.backtrace if Bake.options.debug
-                  end
+          tmpstdout = Thread.current[:tmpStdout].nil? ? nil : Thread.current[:tmpStdout].dup
+          @@threads << Thread.new(Thread.current[:stdout], Thread.current[:errorStream], tmpstdout, steps) { |outStr, errStr, tmpStdout, steps|
+            STDOUT.puts "DEBUG_THREADS: Started: #{Thread.current.object_id} (#{@projectName}, #{@config.name})" if Bake.options.debug_threads
+            Thread.current[:stdout] = outStr
+            Thread.current[:errorStream] = errStr
+            Thread.current[:tmpStdout] = tmpStdout
+            Thread.current[:steps] = steps
+            exceptionOccured = false
+            begin
+              yield
+              exceptionOccured = true
+            rescue Bake::SystemCommandFailed => scf # normal compilation error
+            rescue SystemExit => exSys
+            rescue Exception => ex1
+              if not Bake::IDEInterface.instance.get_abort
+                SyncOut.mutex.synchronize do
+                  Bake.formatter.printError("Error: #{ex1.message}")
+                  puts ex1.backtrace if Bake.options.debug
                 end
               end
-              if !exceptionOccured
-                @result = false
-                @@delayed_result = false
-              end
-              STDOUT.puts "DEBUG_THREADS: Stopped: #{Thread.current.object_id} (#{@projectName}, #{@config.name})" if Bake.options.debug_threads
-            }
+            end
+            if !exceptionOccured
+              @result = false
+              @@delayed_result = false
+            end
+            STDOUT.puts "DEBUG_THREADS: Stopped: #{Thread.current.object_id} (#{@projectName}, #{@config.name})" if Bake.options.debug_threads
+          }
 
-            Block::waitForFreeThread()
-            return if blockAbort?(true)
-          end
-        else
-          yield
+          Block::waitForFreeThread()
+          return if blockAbort?(true)
         end
         raise AbortException.new if Bake::IDEInterface.instance.get_abort
       end
@@ -340,54 +339,53 @@ module Bake
         ((not res) || !@@delayed_result) and Bake.options.stopOnFirstError or Bake::IDEInterface.instance.get_abort
       end
 
+      def independent?(method, step)
+        method == :execute && (Library === step || Compile === step ||
+          (CommandLine === step && step.config.independent) ||
+          (Makefile === step && step.config.independent))
+      end
+
       def callSteps(method)
         @config.writeEnvVars()
         Thread.current[:lastCommand] = nil
 
-        preSteps.each do |step|
-          Blocks::Block::waitForAllThreads()
-          @result = executeStep(step, method) if @result
-          return @result if blockAbort?(@result)
-        end unless @prebuild
+        allSteps = (preSteps + mainSteps + postSteps)
 
-        threadableSteps    = mainSteps.select { |step| method == :execute && (Library === step || Compile === step) }
-        nonThreadableSteps = mainSteps.select { |step| method != :execute || !(Library === step || Compile === step) }
+        # check if we have to delay the output (if the last step of this block is not in a thread)
+        # todo: sync output if commandline and makefile!!!!!!!!!!!!!!!!!!!
+        @outputStep = nil
+        allSteps.each { |step| @outputStep = independent?(method, step) ? step : nil }
 
-        @outputInMainThread = nonThreadableSteps.any?{ |step| !@prebuild || (Library === step) } ||
-                              postSteps.length > 0 ||
-                              (threadableSteps.length == 0 && preSteps.length > 0)
-
-        execute_in_thread(method) {
-          begin
-            threadableSteps.each do |step|
-              if !@prebuild || (Library === step)
-                Multithread::Jobs.incThread() if Library === step
-                begin
-                  @result = executeStep(step, method) if @result
-                ensure
-                  Multithread::Jobs.decThread() if Library === step
-                end
-                @@delayed_result &&= @result
-              end
-              break if blockAbort?(@result)
-            end
-          ensure
-            SyncOut.stopStream(@result) if !@outputInMainThread
+        while !allSteps.empty?
+          parallel = []
+          while allSteps.first && independent?(method, allSteps.first)
+            parallel << allSteps.shift
           end
-        } if !threadableSteps.empty?
-        nonThreadableSteps.each do |step|
-          if !@prebuild || (Library === step)
+          if parallel.length > 0
+            execute_in_thread(parallel) {
+              lastStep = Thread.current[:steps].last
+               begin
+                 Thread.current[:steps].each do |step|
+                   Multithread::Jobs.incThread() if !Compile === step
+                   begin
+                     @result = executeStep(step, :execute) if @result
+                   ensure
+                     Multithread::Jobs.decThread() if !Compile === step
+                   end
+                   @@delayed_result &&= @result
+                   break if blockAbort?(@result)
+                 end
+               ensure
+                 SyncOut.stopStream(@result) if lastStep == @outputStep if Bake.options.syncedOutput
+               end
+             }
+          else
+            step = allSteps.shift
             Blocks::Block::waitForAllThreads()
             @result = executeStep(step, method) if @result
           end
           return @result if blockAbort?(@result)
         end
-
-        postSteps.each do |step|
-          Blocks::Block::waitForAllThreads()
-          @result = executeStep(step, method) if @result
-          return @result if blockAbort?(@result)
-        end unless @prebuild
 
         return @result
       end
@@ -414,7 +412,7 @@ module Bake
 
         begin
           SyncOut.mutex.synchronize do
-            @outputInMainThread = true
+            @outputStep = nil
             SyncOut.startStream() if Bake.options.syncedOutput
             if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
               typeStr = "Building"
@@ -437,10 +435,12 @@ module Bake
 
           @result = callSteps(:execute)
         ensure
-          if @outputInMainThread
-            SyncOut.stopStream(@result)
-          else
-            SyncOut.discardStreams()
+          if Bake.options.syncedOutput
+            if !@outputStep
+              SyncOut.stopStream(@result)
+            else
+              SyncOut.discardStreams()
+            end
           end
         end
 
@@ -485,7 +485,7 @@ module Bake
         cleanSteps.each do |step|
           @result = executeStep(step, :cleanStep) if @result
           return false if not @result and Bake.options.stopOnFirstError
-        end unless @prebuild
+        end
 
         return (depResult && @result)
       end

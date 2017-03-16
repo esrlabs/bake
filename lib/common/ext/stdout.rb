@@ -74,7 +74,6 @@ class SyncOut
     else
       Thread.current[:tmpStdout] << Thread.current[:stdout]
     end
-
     Thread.current[:stdout] = s
   end
 
@@ -90,6 +89,7 @@ class SyncOut
     s = Thread.current[:stdout]
     return if s.nil?
     Thread.current[:stdout] = Thread.current[:tmpStdout] ? Thread.current[:tmpStdout].pop : nil
+
     if s.string.length > 0
       mutex.synchronize do
         if !result && Bake.options.stopOnFirstError
@@ -105,7 +105,7 @@ class SyncOut
 
 
   def self.discardStreams()
-    Thread.current[:tmpStdout] = []
+    Thread.current[:stdout] = Thread.current[:tmpStdout] ? Thread.current[:tmpStdout].pop : nil
   end
 
   def self.flush_errors

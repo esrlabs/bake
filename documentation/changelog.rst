@@ -1,6 +1,9 @@
 Changelog
 =========
 
+March 16, 2017 - bake-toolkit 2.34.4
+
+
 March 9, 2017 - bake-toolkit 2.34.3
     * Changed: slightly changed thread handling (internal change).
 

@@ -3,6 +3,7 @@ module Bake
   module Blocks
 
     module HasExecuteCommand
+      attr_reader :config
 
       def executeCommand(commandLine, ignoreStr=nil, exitCodeArray = [0], echo = "on")
         if Bake.options.dry
@@ -15,9 +16,7 @@ module Bake
         cmd_result = false
         output = ""
         begin
-          Dir.chdir(@projectDir) do
-            cmd_result, output = ProcessHelper.run([commandLine], true, true, nil, exitCodeArray)
-          end
+          cmd_result, output = ProcessHelper.run([commandLine], true, true, nil, exitCodeArray, @projectDir)
         rescue Exception=>e
           puts e.message
           puts e.backtrace if Bake.options.debug

@@ -1,0 +1,114 @@
+Project {
+
+  LibraryConfig test_pre_a {
+    PreSteps {
+      CommandLine "ruby takesLong.rb CMD_A", echo: "off", independent: true
+    }
+  }
+  LibraryConfig test_pre_b {
+    PreSteps {
+      CommandLine "ruby takesLong.rb CMD_B", echo: "off", independent: true
+    }
+  }
+  LibraryConfig test_pre_c {
+    PreSteps {
+      CommandLine "ruby takesLong.rb CMD_C", echo: "off", independent: false
+    }
+  }
+  LibraryConfig test_pre_d {
+    PreSteps {
+      CommandLine "ruby takesLong.rb CMD_D", echo: "off", independent: true
+    }
+  }
+  LibraryConfig test_pre_abcd {
+    Dependency config: test_pre_a
+    Dependency config: test_pre_b
+    Dependency config: test_pre_c
+    Dependency config: test_pre_d
+    DefaultToolchain GCC
+  }
+
+
+  LibraryConfig test_post_a {
+    PostSteps {
+      CommandLine "ruby takesLong.rb CMD_A", echo: "off", independent: true
+    }
+  }
+  LibraryConfig test_post_b {
+    PostSteps {
+      CommandLine "ruby takesLong.rb CMD_B", echo: "off", independent: true
+    }
+  }
+  LibraryConfig test_post_c {
+    PostSteps {
+      CommandLine "ruby takesLong.rb CMD_C", echo: "off", independent: false
+    }
+  }
+  LibraryConfig test_post_d {
+    PostSteps {
+      CommandLine "ruby takesLong.rb CMD_D", echo: "off", independent: true
+    }
+  }
+  LibraryConfig test_post_abcd {
+    Dependency config: test_post_a
+    Dependency config: test_post_b
+    Dependency config: test_post_c
+    Dependency config: test_post_d
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test_a {
+    CommandLine "ruby takesLong.rb CMD_A", echo: "off", independent: true
+  }
+  CustomConfig test_b {
+    CommandLine "ruby takesLong.rb CMD_B", echo: "off", independent: true
+  }
+  CustomConfig test_c {
+    CommandLine "ruby takesLong.rb CMD_C", echo: "off", independent: false
+  }
+  CustomConfig test_d {
+    CommandLine "ruby takesLong.rb CMD_D", echo: "off", independent: true
+  }
+  CustomConfig test_abcd {
+    Dependency config: test_a
+    Dependency config: test_b
+    Dependency config: test_c
+    Dependency config: test_d
+    DefaultToolchain GCC
+  }
+
+
+  LibraryConfig test_lib_a {
+    Files "src/a.cpp"
+    PostSteps {
+      CommandLine "ruby takesLong.rb CMD_A", echo: "off", independent: true  # after b.cpp
+    }
+  }
+  LibraryConfig test_lib_b {
+    Files "src/b.cpp"
+  }
+  LibraryConfig test_lib_c {
+    PreSteps {
+      CommandLine "ruby takesShort.rb CMD_C", echo: "off", independent: false # after A before c.cpp
+    }
+    Files "src/c.cpp"
+  }
+  LibraryConfig test_lib_d {
+    PreSteps {
+      CommandLine "echo CMD_D", echo: "off", independent: true
+    }
+  }
+  ExecutableConfig test_lib_abcd {
+    Files "src/e.cpp" # before c.cpp
+    Dependency config: test_lib_a
+    Dependency config: test_lib_b
+    Dependency config: test_lib_c
+    Dependency config: test_lib_d
+    DefaultToolchain GCC {
+      Compiler CPP, command: "ruby compile.rb"
+      Archiver command: "ruby archive.rb"
+      Linker command: "ruby link.rb"
+    }
+  }
+
+}

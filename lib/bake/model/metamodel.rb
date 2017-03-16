@@ -183,6 +183,7 @@ module Bake
         has_attr 'default', String, :defaultValueLiteral => "on"
         has_attr 'filter', String, :defaultValueLiteral => ""
         has_attr 'echo', String, :defaultValueLiteral => "on"
+        has_attr 'independent', Boolean, :defaultValueLiteral => "false"
         has_many_attr 'validExitCodes', Integer
       end
 

@@ -299,29 +299,31 @@ module Bake
           addSteps(block, block.startupSteps,  config.startupSteps)
           addSteps(block, block.exitSteps,  config.exitSteps)
 
-          if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
+          if not block.prebuild and not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
             addSteps(block, block.preSteps,   config.preSteps)
             addSteps(block, block.postSteps,  config.postSteps)
             addSteps(block, block.cleanSteps, config.cleanSteps)
           end
 
           if Bake.options.docu
-            block.mainSteps << Blocks::Docu.new(config, @configTcMap[config])
+            block.mainSteps << Blocks::Docu.new(config, @configTcMap[config]) unless block.prebuild
           elsif Metamodel::CustomConfig === config
             if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
-              addSteps(block, block.mainSteps, config) if config.step
+              addSteps(block, block.mainSteps, config) if config.step unless block.prebuild
             end
           elsif Bake.options.conversion_info
-            block.mainSteps << Blocks::Convert.new(block, config, @referencedConfigs)
+            block.mainSteps << Blocks::Convert.new(block, config, @referencedConfigs) unless block.prebuild
           else
-            compile = Blocks::Compile.new(block, config, @referencedConfigs)
-            (Blocks::ALL_COMPILE_BLOCKS[projName] ||= []) << compile
-            block.mainSteps << compile
+            if not block.prebuild
+              compile = Blocks::Compile.new(block, config, @referencedConfigs)
+              (Blocks::ALL_COMPILE_BLOCKS[projName] ||= []) << compile
+              block.mainSteps << compile
+            end
             if not Bake.options.filename and not Bake.options.analyze
               if Metamodel::LibraryConfig === config
                 block.mainSteps << Blocks::Library.new(block, config, @referencedConfigs, compile)
               else
-                block.mainSteps << Blocks::Executable.new(block, config, @referencedConfigs, compile)
+                block.mainSteps << Blocks::Executable.new(block, config, @referencedConfigs, compile) unless block.prebuild
               end
             end
           end
@@ -357,7 +359,6 @@ module Bake
         ensure
           Blocks::Block::waitForAllThreads()
           result &&= Blocks::Block.delayed_result
-          SyncOut.stopStream(result)
         end
         if not ignoreStopOnFirstError
           return false if not result and Bake.options.stopOnFirstError

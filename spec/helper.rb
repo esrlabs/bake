@@ -69,12 +69,12 @@ module Bake
 
       $mystring=""
       $sstring=StringIO.open($mystring,"w+")
-      $stdoutbackup=$stdout
-      $stdout=$sstring
+      $stdoutbackup=Thread.current[:stdout]
+      Thread.current[:stdout]=$sstring
     end
 
     config.after(:each) do
-      $stdout=$stdoutbackup
+      Thread.current[:stdout]=$stdoutbackup
 
       @fstdout.rewind; @fstdout.read; @fstdout.close
       @fstderr.rewind; @fstderr.read; @fstderr.close
