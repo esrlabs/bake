@@ -66,8 +66,9 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
     puts "Retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
   end
   checkError = !cSizeCheck || licenseError || qacDaemonError
-  puts "Retry timeout over -> failure." if @options.qacretry > 0 && checkError
-
+  if @options.qacretry > 0 && checkError
+    puts "Retry timeout over: %d -> failure." % (@options.qacretry - (Time.now - timeStart))
+  end
   success = false if checkError
   return [success, consoleOutput, checkError]
 end
