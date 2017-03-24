@@ -262,16 +262,17 @@ module Bake
         # not true for Windows RubyInstaller packages.
         ctrl_c_found = false
         begin
-          while IO.select([$stdin],nil,nil,0) do
-            nextChar = $stdin.sysread(1)
-            if nextChar == "\x03"
-              ctrl_c_found = true
+          @@mutexStdinSelect.synchronize do
+            while IO.select([$stdin],nil,nil,0) do
+              nextChar = $stdin.sysread(1)
+              if nextChar == "\x03"
+                ctrl_c_found = true
+              end
             end
           end
         rescue Exception => e
         end
         raise AbortException.new if ctrl_c_found
-
         return @result
       end
 
@@ -320,6 +321,7 @@ module Bake
                   Bake.formatter.printError("Error: #{ex1.message}")
                   puts ex1.backtrace if Bake.options.debug
                 end
+
               end
             end
             if !exceptionOccured
@@ -494,6 +496,7 @@ module Bake
         @@threads = []
         @@result = true
         @@mutex = Mutex.new
+        @@mutexStdinSelect = Mutex.new
         Bake::Multithread::Jobs.init_semaphore()
       end
 
