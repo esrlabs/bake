@@ -6,6 +6,7 @@ require 'bake/options/showDoc'
 require 'bake/options/usage'
 require 'bake/options/create'
 require 'common/options/finder'
+require 'common/root'
 
 module Bake
 
@@ -19,7 +20,7 @@ module Bake
   class Options < Parser
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
     attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :cc2j_filename # String
-    attr_reader :roots, :include_filter, :exclude_filter, :adapt # String List
+    attr_reader :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse # Boolean
     attr_reader :threads, :socket # Fixnum
@@ -27,6 +28,7 @@ module Bake
     attr_reader :verbose
     attr_reader :filelist # set
     attr_reader :consoleOutput_fullnames, :consoleOutput_visualStudio
+    attr_reader :roots # Root array
 
 
     def initialize(argv)
@@ -76,13 +78,12 @@ module Bake
       @socket = 0
       @include_filter = []
       @exclude_filter = []
-      @def_roots = []
       @main_project_name = ""
       @adapt = []
       @syncedOutput = false
 
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
-      add_option(["-m"                                           ], lambda { |x| set_main_dir(x)                         })
+      add_option(["-m"                                           ], lambda { |x| @main_dir = x                           })
       add_option(["-p"                                           ], lambda { |x| @project = x                            })
       add_option(["-f"                                           ], lambda { |x| @filename = x.gsub(/[\\]/,'/')          })
       add_option(["-c"                                           ], lambda {     @clean = true                           })
@@ -164,8 +165,16 @@ module Bake
         ExitHelper.exit(1)
       end
 
-      @roots += @def_roots
-      @roots.uniq!
+      def_roots = Root.calc_roots_bake(@main_dir)
+      @roots += def_roots
+
+      if @roots.empty?
+        @roots = []
+        @roots = Root.calc_def_roots(@main_dir)
+      end
+
+      @roots = Root.uniq(@roots)
+
       @adapt.uniq!
 
       if @project
@@ -270,13 +279,13 @@ module Bake
       check_valid_dir(dir)
       @main_dir = File.expand_path(dir.gsub(/[\\]/,'/'))
       @main_project_name = File::basename(@main_dir)
-      @def_roots = calc_def_roots(@main_dir)
     end
 
     def set_root(dir)
-      check_valid_dir(dir)
-      r = File.expand_path(dir.gsub(/[\\]/,'/'))
-      @roots << r if not @roots.include?r
+      root = Root.extract_depth(dir)
+      check_valid_dir(root.dir)
+      root.dir  = File.expand_path(root.dir.gsub(/[\\]/,'/'))
+      @roots << root
     end
 
     def set_adapt(name)

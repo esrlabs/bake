@@ -1,0 +1,7 @@
+Project default: test {
+
+  CustomConfig test {
+    CommandLine "echo _LIB_LEVEL4_", echo: off
+  }
+
+}

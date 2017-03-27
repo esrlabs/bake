@@ -133,7 +133,7 @@ module Bake
 
         # prioo 3: check if dir exists without Project.meta entry
         Bake.options.roots.each do |r|
-          absIncDir = r+"/"+d
+          absIncDir = r.dir+"/"+d
           if File.exists?(absIncDir)
             res << File.rel_from_to_project(@projectDir,absIncDir,false)
           end

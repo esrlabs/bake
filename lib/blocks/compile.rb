@@ -463,7 +463,7 @@ module Bake
       def mapInclude(inc, orgBlock)
 
         if inc.name == "___ROOTS___"
-          return Bake.options.roots.map { |r| File.rel_from_to_project(@projectDir,r,false) }
+          return Bake.options.roots.map { |r| File.rel_from_to_project(@projectDir,r.dir,false) }
         end
 
         i = orgBlock.convPath(inc,nil,true)

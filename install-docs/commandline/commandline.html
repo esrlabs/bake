@@ -81,7 +81,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -104,6 +104,7 @@
 <li><a class="reference internal" href="#building-just-one-specific-project">Building just one specific project</a></li>
 <li><a class="reference internal" href="#building-specific-projects-with-differnt-roots">Building specific projects with differnt roots</a></li>
 <li><a class="reference internal" href="#building-a-project-which-has-more-than-one-root">Building a project which has more than one root</a></li>
+<li><a class="reference internal" href="#search-depth">Search depth</a></li>
 <li><a class="reference internal" href="#clean-a-project-s">Clean a project(s)</a></li>
 <li><a class="reference internal" href="#build-a-single-file-s">Build a single file(s)</a></li>
 </ul>
@@ -227,6 +228,26 @@
 </div>
 </div></blockquote>
 </div>
+<div class="section" id="search-depth">
+<h3>Search depth<a class="headerlink" href="#search-depth" title="Permalink to this headline">¶</a></h3>
+<p>Projects and Adaptions are searched recursively within the roots. Specify the maximum search depth like this:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1,3 -w w:/root2/libA,0 -r -a black -p bspAbc
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>In this example the following folders are checked:</dt>
+<dd><ul class="first last simple">
+<li>w:/root1/Project.meta</li>
+<li>w:/root1/*/Project.meta</li>
+<li>w:/root1/*/*/Project.meta</li>
+<li>w:/root1/*/*/*/Project.meta</li>
+<li>w:/root2/libA/Project.meta</li>
+</ul>
+</dd>
+</dl>
+</div>
 <div class="section" id="clean-a-project-s">
 <h3>Clean a project(s)<a class="headerlink" href="#clean-a-project-s" title="Permalink to this headline">¶</a></h3>
 <blockquote>
@@ -256,7 +277,7 @@ Example:</p>
 <blockquote>
 <div><div class="highlight-console"><div class="highlight"><pre><span class="go">../..</span>
 <span class="go">C:/another/root # comments written like this</span>
-<span class="go">something/else</span>
+<span class="go">something/else, 3 # maximum search depth = 3, same as for &quot;-w&quot; arguments on command line</span>
 </pre></div>
 </div>
 </div></blockquote>

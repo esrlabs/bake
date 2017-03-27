@@ -72,6 +72,21 @@ Assuming code has been checked out into two roots, the console supports ansi col
 
         User@Host:~$ bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc
 
+Search depth
+------------
+
+Projects and Adaptions are searched recursively within the roots. Specify the maximum search depth like this:
+
+    .. code-block:: console
+
+        User@Host:~$ bake Debug -m w:/root1/myProj -w w:/root1,3 -w w:/root2/libA,0 -r -a black -p bspAbc
+
+In this example the following folders are checked:
+    - w:/root1/Project.meta
+    - w:/root1/\*/Project.meta
+    - w:/root1/\*/\*/Project.meta
+    - w:/root1/\*/\*/\*/Project.meta
+    - w:/root2/libA/Project.meta
 
 Clean a project(s)
 ------------------
@@ -102,7 +117,7 @@ Example:
 
         ../..
         C:/another/root # comments written like this
-        something/else
+        something/else, 3 # maximum search depth = 3, same as for "-w" arguments on command line
 
 If -w and roots.bake are specified, they will be merged. First -w, then roots.bake.
 

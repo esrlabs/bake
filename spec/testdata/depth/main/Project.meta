@@ -1,0 +1,9 @@
+Project default: test {
+
+  CustomConfig test {
+    Dependency lib
+    CommandLine "echo _MAIN_", echo: off
+    DefaultToolchain GCC
+  }
+
+}

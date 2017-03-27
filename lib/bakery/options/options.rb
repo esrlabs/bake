@@ -1,12 +1,13 @@
 require 'bake/toolchain/colorizing_formatter'
 require 'common/options/parser'
 require 'common/options/finder'
+require 'common/root'
 
 module Bake
 
   class BakeryOptions < Parser
     attr_reader :collection_name, :collection_dir # String
-    attr_reader :roots # String List
+    attr_reader :roots # Root list
     attr_reader :color, :error # Boolean
     attr_reader :socket # Fixnum
 
@@ -19,10 +20,9 @@ module Bake
       @error = false
       @roots = []
       @socket = 0
-      @def_roots = []
 
       add_option(["-b", ""      ], lambda { |x| set_collection_name(x)                  })
-      add_option(["-m"          ], lambda { |x| set_collection_dir(x)                   })
+      add_option(["-m"          ], lambda { |x| @collection_dir = x                    })
       add_option(["-r"          ], lambda {     @error = true                           })
       add_option(["-a"          ], lambda { |x| Bake.formatter.setColorScheme(x.to_sym) })
       add_option(["-w"          ], lambda { |x| set_root(x)                             })
@@ -32,14 +32,14 @@ module Bake
 
     def usage
       puts "\nUsage: bake <name> [options]"
-      puts " [-b] <name>     Name of the collection to build."
-      puts " -m <dir>        Directory containing the collection file (default is current directory)."
-      puts " -r              Stop on first error."
-      puts " -a <scheme>     Use ansi color sequences (console must support it). Possible values are 'white' and 'black'."
-      puts " -h, --help      Print this help."
-      puts " -w <root>       Add a workspace root (can be used multiple times)."
-      puts "                 If no root is specified, the parent directory of Collection.meta is added automatically."
-      puts " --socket <num>  Set socket for sending errors, receiving commands, etc. - used by e.g. Eclipse."
+      puts " [-b] <name>           Name of the collection to build."
+      puts " -m <dir>              Directory containing the collection file (default is current directory)."
+      puts " -r                    Stop on first error."
+      puts " -a <scheme>           Use ansi color sequences (console must support it). Possible values are 'white' and 'black'."
+      puts " -h, --help            Print this help."
+      puts " -w <root>[,<depth>]   Add a workspace root (can be used multiple times). Additionally the search depth can be specified (>=0)."
+      puts "                       If no root is specified, the parent directory of Collection.meta is added automatically."
+      puts " --socket <num>        Set socket for sending errors, receiving commands, etc. - used by e.g. Eclipse."
       puts "Note: all parameters except -b, -m and -h will be passed to bake - see bake help for more options."
     end
 
@@ -55,8 +55,15 @@ module Bake
         ExitHelper.exit(1)
       end
 
-      @roots += @def_roots
-      @roots.uniq!
+      def_roots = Root.calc_roots_bake(@collection_dir)
+      @roots += def_roots
+
+      if @roots.empty?
+        @roots = []
+        @roots = Root.calc_def_roots(@collection_dir)
+      end
+
+      @roots = Root.uniq(@roots)
     end
 
     def check_valid_dir(dir)
@@ -81,15 +88,14 @@ module Bake
     def set_collection_dir(dir)
       check_valid_dir(dir)
       @collection_dir = File.expand_path(dir.gsub(/[\\]/,'/'))
-      @def_roots = calc_def_roots(@collection_dir)
     end
 
     def set_root(dir)
-      check_valid_dir(dir)
-      r = File.expand_path(dir.gsub(/[\\]/,'/'))
-      @roots << r if not @roots.include?r
+      root = Root.extract_depth(dir)
+      check_valid_dir(root.dir)
+      root.dir  = File.expand_path(root.dir.gsub(/[\\]/,'/'))
+      @roots << root
     end
-
 
   end
 

@@ -54,7 +54,7 @@ module Bake
               dirOfP = referencedConfigs[nameOfP].first.get_project_dir
             else
               Bake.options.roots.each do |r|
-                absIncDir = r+"/"+nameOfP
+                absIncDir = r.dir+"/"+nameOfP
                 if File.exists?(absIncDir)
                   dirOfP = absIncDir
                   break

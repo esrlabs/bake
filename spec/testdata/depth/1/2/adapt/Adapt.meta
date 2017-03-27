@@ -1,0 +1,9 @@
+Adapt {
+
+  CustomConfig "__ALL__", project: "__ALL__", type: extend {
+    PostSteps {
+      CommandLine "echo _ADAPT_", echo: off
+    }
+  }
+
+}

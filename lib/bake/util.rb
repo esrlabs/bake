@@ -112,36 +112,6 @@ def sanitize_filename(filename)
   end
 end
 
-def searchRootsFile(dir)
-  rootsFile = dir+"/roots.bake"
-  return rootsFile if File.exist?(rootsFile)
-
-  parent = File.dirname(dir)
-  return searchRootsFile(parent) if parent != dir
-
-  return nil
-end
-
-def calc_def_roots(dir)
-  def_roots = []
-  rootsFile = searchRootsFile(dir)
-  if (rootsFile)
-    File.open(rootsFile).each do |line|
-      line = line.split("#")[0].strip.gsub(/[\\]/,'/')
-      if line != ""
-        if File.is_absolute?(line)
-          def_roots << line
-        else
-          def_roots << File.expand_path(File.dirname(rootsFile) + "/" + line)
-        end
-      end
-    end
-  else
-    def_roots << File.dirname(dir)
-  end
-  def_roots
-end
-
 def add_line_if_no_comment(array, str)
   s = str.split("#")[0].strip
   array << s unless s.empty?

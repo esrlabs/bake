@@ -21,7 +21,7 @@ module Bake
       puts " -a <scheme>              Use ansi color sequences (console must-- support it). Possible values are 'white' and 'black'."
       puts " -v<level>                Verbose level from 0 to 3, whereas -v0 is less, -v1 is normal (default) and -v2 and -v3 are more verbose."
       puts " -r                       Stop on first error."
-      puts " -w <root>                Add a workspace root (can be used multiple times)."
+      puts " -w <root>[,<depth>]      Add a workspace root (can be used multiple times). Additionally the search depth can be specified (>=0)."
       puts "                          If no root is specified, the parent directory of the main project is added automatically."
       puts " --list                   Lists all configs with a DefaultToolchain."
       puts " --rebuild                Clean before build."

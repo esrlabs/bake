@@ -331,18 +331,17 @@ module Bake
 
     def checkRoots()
       @potentialProjs = []
-      Bake.options.roots.each do |r|
+      Bake.options.roots.each do |root|
+        r = root.dir
         if (r.length == 3 && r.include?(":/"))
           r = r + Bake.options.main_project_name # glob would not work otherwise on windows (ruby bug?)
         end
-        puts "Checking root #{r}" if Bake.options.verbose >= 1
-        r = r+"/**{,/*/**}/Project.meta"
-        @potentialProjs.concat(Dir.glob(r).sort)
+        depthStr = root.depth.nil? ? "max" : root.depth.to_s
+        puts "Checking root #{r} (depth: #{depthStr})" if Bake.options.verbose >= 1
+        @potentialProjs.concat(Root.search_to_depth(r, "Project.meta", root.depth))
       end
-
-      @potentialProjs = @potentialProjs.uniq
+      @potentialProjs.uniq!
     end
-
 
     def filterStep(step, globalFilterStr)
 

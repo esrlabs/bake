@@ -113,9 +113,7 @@ module Bake
 
             if cache != nil
               puts "Cache: Checking root options: #{cache.workspace_roots.inspect} vs. #{Bake.options.roots.inspect}" if Bake.options.debug
-              if (cache.workspace_roots.length != Bake.options.roots.length) ||
-                (cache.workspace_roots.any? { |a| !Bake.options.roots.include?(a) }) ||
-                (Bake.options.roots.any? { |a| !cache.workspace_roots.include?(a) })
+              if (!Root.equal(cache.workspace_roots, Bake.options.roots))
                 Bake.formatter.printInfo("Info: specified roots differ from cached roots, reloading meta information") if cache.nil?
                 cache = nil
               end

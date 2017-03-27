@@ -53,16 +53,16 @@ module Bake
 
     def getPotentialAdaptionProjects()
       potentialAdapts = []
-      Bake.options.roots.each do |r|
+      Bake.options.roots.each do |root|
+        r = root.dir
         if (r.length == 3 && r.include?(":/"))
           r = r + Bake.options.main_project_name # glob would not work otherwise on windows (ruby bug?)
         end
         Bake.options.adapt.each do |a|
           adaptBaseName = a + "/Adapt.meta"
           potentialAdapts << adaptBaseName  if File.exists?adaptBaseName
-          fn = r+"/**{,/*/**}/#{adaptBaseName}"
-          potentialAdapts.concat(Dir.glob(fn).sort)
         end
+        potentialAdapts.concat(Root.search_to_depth(r, "Adapt.meta", root.depth))
       end
 
       potentialAdapts.uniq
@@ -71,7 +71,7 @@ module Bake
     def chooseProjectFilenames(potentialAdapts)
       @@filenames = []
       Bake.options.adapt.each do |a|
-        adapts = potentialAdapts.find_all { |p| p.include?(a+"/Adapt.meta") }
+        adapts = potentialAdapts.find_all { |p| p.include?("/"+a+"/Adapt.meta") or p == a+"/Adapt.meta" }
         if adapts.empty?
           Bake.formatter.printError("Adaption project #{a} not found")
           ExitHelper.exit(1)

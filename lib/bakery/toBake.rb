@@ -28,9 +28,9 @@ module Bake
     end
 
     toBuildPattern = []
-    @options.roots.each do |r|
+    @options.roots.each do |root|
       col.project.each do |p|
-        projs = Dir.glob(r+"/**/"+p.name+"/Project.meta")
+        projs = Root.search_to_depth(root.dir,p.name + "/Project.meta", root.depth)
         if projs.length == 0
           toBuildPattern << BuildPattern.new(nil, nil, p) # remember it for sorted info printout
         end

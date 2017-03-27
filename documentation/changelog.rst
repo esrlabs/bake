@@ -1,6 +1,12 @@
 Changelog
 =========
 
+March 27, 2017 - bake-toolkit 2.35.0
+    * Bugfix: Rubys IO.select() is not thread-safe by itself. It could happen, that bake hangs and the user has to press a key (due to waiting for already closed stdin stream) - bug was added in 2.33.0.
+    * Bugfix: if no roots.bake was found, the default root ("<mainProject>/..") was added to the root list even when -w options were added on command line.
+    * Added: roots defined on command line (with -w) and entries in roots.bake can be equipped with an optional search depth setting, e.g. "-w some/folder,3".
+      This can reduce startup time of bake avoid multiple-projects-found-warnings.
+
 March 16, 2017 - bake-toolkit 2.34.4
     * Added: CommandLine and Makefile have a new argument. If *independent: true*, they are not executed exclusively but in parallel to other projects/configs.
     * Added: -j can now be used without space and -v with space, e.g. -j8 or -j 8, -v2 or -v 2.
