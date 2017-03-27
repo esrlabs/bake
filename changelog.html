@@ -140,11 +140,19 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>March 27, 2017 - bake-toolkit 2.35.0</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: Rubys IO.select() is not thread-safe by itself. It could happen, that bake hangs and the user has to press a key (due to waiting for already closed stdin stream) - bug was added in 2.33.0.</li>
+<li>Bugfix: if no roots.bake was found, the default root (&#8220;&lt;mainProject&gt;/..&#8221;) was added to the root list even when -w options were added on command line.</li>
+<li>Added: roots defined on command line (with -w) and entries in roots.bake can be equipped with an optional search depth setting, e.g. &#8220;-w some/folder,3&#8221;.
+This can reduce startup time of bake avoid multiple-projects-found-warnings.</li>
+</ul>
+</dd>
 <dt>March 16, 2017 - bake-toolkit 2.34.4</dt>
 <dd><ul class="first last simple">
 <li>Added: CommandLine and Makefile have a new argument. If <em>independent: true</em>, they are not executed exclusively but in parallel to other projects/configs.</li>
 <li>Added: -j can now be used without space and -v with space, e.g. -j8 or -j 8, -v2 or -v 2.</li>
-<li>Bugfix: under the hood optimizations for parallel build.</li>
+<li>Internal: under the hood optimizations for parallel build.</li>
 </ul>
 </dd>
 <dt>March 9, 2017 - bake-toolkit 2.34.3</dt>
@@ -162,7 +170,7 @@
 <dt>March 9, 2017 - bake-toolkit 2.34.1</dt>
 <dd><ul class="first last simple">
 <li>Added: &#8211;debug-threads to debug multithread problems.</li>
-<li>Bugfix: Cleanuped thread data structure. I don&#8217;t think this is a real problem, but this depends on OS implementation of Ruby&#8217;s thread lib&#8221;.</li>
+<li>Bugfix: Cleaned up thread data structure. I don&#8217;t think this is a real problem, but this depends on OS implementation of Ruby&#8217;s thread lib&#8221;.</li>
 <li>Bugfix: On Linux console bakery abort output corrected.</li>
 </ul>
 </dd>
