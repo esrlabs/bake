@@ -19,7 +19,9 @@ module Bake
     end
 
     def valid?(argument)
-      @arguments.keys.any? { |a| a != "" && argument.start_with?(a) }
+      @arguments.any? { |a, b|
+        argument == a || (a != "" && argument.start_with?(a) && (!b || (b.parameters.length==3 && argument[a.length..-1].scan(/\A\d*\z/).length > 0)))
+      }
     end
 
     def get_block(argument)
@@ -28,8 +30,10 @@ module Bake
       @arguments.each do |a, b|
         if argument.start_with?(a) && a != ""
           return [b, nil] if a == argument
-          block = b
-          arg = b.parameters.length==3 ? argument[a.length..-1] : nil
+          if b && b.parameters.length==3 && argument[a.length..-1].scan(/\A\d*\z/).length > 0
+            block = b
+            arg = argument[a.length..-1]
+          end
         end
       end
       return [block, arg]

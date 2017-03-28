@@ -1,9 +1,12 @@
 Changelog
 =========
 
+March 27, 2017 - bake-toolkit 2.35.1
+    * Bugfix: Invalid command line arguments could have been recognized as valid, e.g. "--rebuild123" was interpreted as "--rebuild", there was no complaint about the "123" - affected version: >= 2.34.4.
+
 March 27, 2017 - bake-toolkit 2.35.0
-    * Bugfix: Rubys IO.select() is not thread-safe by itself. It could happen, that bake hangs and the user has to press a key (due to waiting for already closed stdin stream) - bug was added in 2.33.0.
-    * Bugfix: if no roots.bake was found, the default root ("<mainProject>/..") was added to the root list even when -w options were added on command line.
+    * Bugfix: Rubys IO.select() is not thread-safe by itself. It could happen, that bake hangs and the user has to press a key (due to waiting for already closed stdin stream) - affected versions: >= 2.33.0.
+    * Bugfix: if no roots.bake was found, the default root ("<mainProject>/..") was added to the root list even when -w options were added on command line - affected versions: >= 2.26.0.
     * Added: roots defined on command line (with -w) and entries in roots.bake can be equipped with an optional search depth setting, e.g. "-w some/folder,3".
       This can reduce startup time of bake avoid multiple-projects-found-warnings.
 
