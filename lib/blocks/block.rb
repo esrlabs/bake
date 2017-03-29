@@ -223,7 +223,7 @@ module Bake
         else
           counter = 0
           blocks.each do |b|
-            counter += 1 if b.isBuildBlock? || b.prebuild
+            counter += 1 if b.isBuildBlock?
           end
           @@num_projects = counter
         end
@@ -416,7 +416,7 @@ module Bake
           SyncOut.mutex.synchronize do
             @outputStep = nil
             SyncOut.startStream() if Bake.options.syncedOutput
-            if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
+            if Bake.options.verbose >= 2 || isBuildBlock?
               typeStr = "Building"
               if @prebuild
                 typeStr = "Using"
@@ -467,7 +467,7 @@ module Bake
           Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
 
-        if Bake.options.verbose >= 2 || isBuildBlock? || @prebuild
+        if Bake.options.verbose >= 2 || isBuildBlock?
           Block.inc_block_counter()
         end
 

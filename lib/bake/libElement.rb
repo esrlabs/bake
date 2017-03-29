@@ -59,8 +59,8 @@ module Bake
       if block.library
         adaptedPath, prefix = adaptPath(block.library.archive_name, block, prefix)
         if (block.prebuild and File.exist?adaptedPath) or
-           (not block.library.compileBlock.objects.empty?) or
-           (not block.library.compileBlock.calcSources(true, true).empty?)
+           (!block.library.compileBlock.nil? and !block.library.compileBlock.objects.empty?) or
+           (!block.library.compileBlock.nil? and !block.library.compileBlock.calcSources(true, true).empty?)
           @@linker_libs_array << adaptedPath
           @@source_libraries << adaptedPath
         end

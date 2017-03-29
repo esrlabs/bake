@@ -80,7 +80,13 @@ module Bake
       end
     end
 
-
+    def addLib(block, configSteps)
+      Array(configSteps.step).each do |step|
+        if Bake::Metamodel::Makefile === step
+          block.lib_elements << LibElement.new(LibElement::LIB_WITH_PATH, step.lib) if step.lib != ""
+        end
+      end if configSteps
+    end
 
     def addSteps(block, blockSteps, configSteps)
       Array(configSteps.step).each do |step|
@@ -299,17 +305,29 @@ module Bake
           addSteps(block, block.startupSteps,  config.startupSteps)
           addSteps(block, block.exitSteps,  config.exitSteps)
 
-          if not block.prebuild and not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
-            addSteps(block, block.preSteps,   config.preSteps)
-            addSteps(block, block.postSteps,  config.postSteps)
-            addSteps(block, block.cleanSteps, config.cleanSteps)
+          if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
+            if block.prebuild
+              addLib(block, config.preSteps)
+              addLib(block, config.postSteps)
+              addLib(block, config.cleanSteps)
+            else
+              addSteps(block, block.preSteps,   config.preSteps)
+              addSteps(block, block.postSteps,  config.postSteps)
+              addSteps(block, block.cleanSteps, config.cleanSteps)
+            end
           end
 
           if Bake.options.docu
             block.mainSteps << Blocks::Docu.new(config, @configTcMap[config]) unless block.prebuild
           elsif Metamodel::CustomConfig === config
             if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
-              addSteps(block, block.mainSteps, config) if config.step unless block.prebuild
+              p block.prebuild
+              if block.prebuild
+                addLib(block, config)
+              else
+                puts config.parent.name
+                addSteps(block, block.mainSteps, config) if config.step
+              end
             end
           elsif Bake.options.conversion_info
             block.mainSteps << Blocks::Convert.new(block, config, @referencedConfigs) unless block.prebuild

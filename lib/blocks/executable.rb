@@ -66,7 +66,7 @@ module Bake
         @compileBlock.objects.each do |obj|
           return "because object #{obj} does not exist" if not File.exists?(obj)
           return "because object #{obj} is newer than executable" if eTime < File.mtime(obj)
-        end
+        end if @compileBlock
 
         # libs
         libs.each do |lib|

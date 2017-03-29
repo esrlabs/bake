@@ -56,8 +56,8 @@ module Bake
 
         #Dir.chdir(@projectDir) do
 
-          @objects = @compileBlock.objects
           if !@block.prebuild
+            @objects = @compileBlock.objects
             if @objects.empty?
               SyncOut.mutex.synchronize do
                 puts "No source files, library won't be created" if Bake.options.verbose >= 2

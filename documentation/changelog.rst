@@ -1,7 +1,8 @@
 Changelog
 =========
 
-March 27, 2017 - bake-toolkit 2.35.1
+March 29, 2017 - bake-toolkit 2.35.1
+    * Bugfix: --prebuild was broken - affected version: >= 2.33.0.
     * Bugfix: Invalid command line arguments could have been recognized as valid, e.g. "--rebuild123" was interpreted as "--rebuild", there was no complaint about the "123" - affected version: >= 2.34.4.
 
 March 27, 2017 - bake-toolkit 2.35.0
