@@ -321,11 +321,9 @@ module Bake
             block.mainSteps << Blocks::Docu.new(config, @configTcMap[config]) unless block.prebuild
           elsif Metamodel::CustomConfig === config
             if not Bake.options.prepro and not Bake.options.conversion_info and not Bake.options.docu and not Bake.options.filename and not Bake.options.analyze
-              p block.prebuild
               if block.prebuild
                 addLib(block, config)
               else
-                puts config.parent.name
                 addSteps(block, block.mainSteps, config) if config.step
               end
             end
