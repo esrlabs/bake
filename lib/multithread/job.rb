@@ -1,6 +1,7 @@
 require 'common/ext/stdout'
 require 'stringio'
 require 'thread'
+require 'monitor' # this should fix a missing require in concurrent gem
 require 'concurrent/atomic/mutex_semaphore'
 
 module Bake
