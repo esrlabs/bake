@@ -1,8 +1,8 @@
 Changelog
 =========
 
-April ??, 2017 - bake-toolkit 2.35.3
-    * Bugfix: added workaround for broken concurrent gem on some platforms
+April 5, 2017 - bake-toolkit 2.35.3
+    * Bugfix: added workaround for broken concurrent gem on some platforms with ruby 1.9.3.
 
 March 30, 2017 - bake-toolkit 2.35.2
     * Bugfix: forgot to remove debug output in 2.35.1.
