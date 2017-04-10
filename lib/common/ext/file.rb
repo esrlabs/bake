@@ -8,6 +8,14 @@ class File
     filename[0] == SLASH or filename[1] == ':'
   end
 
+  def self.normalize(filename)
+    if filename.length > 1
+      toIsWindowsAbs = filename[1] == ':'
+      return filename[0].downcase + filename[1..-1] if toIsWindowsAbs
+    end
+    return filename
+  end
+
   # seems both are rel or both are abs in all cases
   def self.rel_from_to_project(from,to,endWithSlash = true)
 

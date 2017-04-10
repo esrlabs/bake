@@ -5,10 +5,12 @@ require 'fileutils'
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 
 require "bakeqac/options/options"
+require "bakeqac/filter"
 require 'bake/toolchain/colorizing_formatter'
 require 'bake/options/options'
 require 'common/process'
 require 'common/utils'
+require 'common/ext/file'
 
 STDOUT.sync = true
 STDERR.sync = true
@@ -78,6 +80,7 @@ end
   @options = BakeqacOptions.new(ARGV)
   bakeOptions = Options.new([])
   @options.parse_options(bakeOptions)
+  pfilter = ProjectFilter.new(@options)
   success = false
 
 ###### PREREQUISITE 2: BAKE OPTIONS ######
@@ -199,9 +202,7 @@ end
     if @options.qacfilter
       if success
         puts filterOutput
-        File.open("#{@options.qacdata}/filter.txt", "w+") do |f|
-          f.puts(filter.uniq)
-        end
+        ProjectFilter.writeFilter(filter)
       else
         puts consoleOutput # error
       end
@@ -218,16 +219,6 @@ end
 
     puts "bakeqac: printing results..."
 
-    filter = []
-    useFilter = File.exist?("#{@options.qacdata}/filter.txt") && @options.qacfilter
-
-    if useFilter
-      File.open("#{@options.qacdata}/filter.txt", "r") do |f|
-        f.each_line { |line| filter << line.strip }
-      end
-      filter.delete_if { |f| (f.end_with? "/gtest") or (f.end_with? "/gmock") }
-    end
-
     cmd = qaExe + ["view", "-P", @options.qacdata, "-m", "STDOUT"]
     if not @options.qacnoformat
       cmd += ["-f", "%?u==0%(MSG: %:trc: %)%F(%l,%c): (%r:%N)%t%?v%(\n%v%)"]
@@ -235,7 +226,7 @@ end
 
     success, consoleOutput, checkError = executeQacli(cmd)
 
-    if useFilter
+    if ProjectFilter.is_valid?
 
       if !checkError # success # HACK: seems that QAC returns with error if there too much issues
         # 1. filter
@@ -247,12 +238,7 @@ end
           scan_res = line.scan(/\/\/ ======= Results for ([a-zA-Z]{0,1})(:{0,1})(.*)/)
           if scan_res.length > 0
             converted_line = (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/"))
-            filter.each do |fil|
-              if converted_line.include?(fil+"/") and not converted_line.include?(fil+"/test/") and not converted_line.include?(fil+"/mock/") and not converted_line.include?(fil+"/.qacdata/")
-                foundFile = true
-                break
-              end
-            end
+            foundFile = ProjectFilter.localFile(converted_line)
           end
           if foundFile && !line.include?("QAC++ Deep Flow Static Analyser")
             filteredLines << line
@@ -383,6 +369,46 @@ end
 
   end
 
+###### STEP 5: REPORT MDR (OPTIONAL) ######
+
+  if success and !@options.qacstep.nil? and @options.qacstep.include?("mdr")
+    FileUtils::mkdir_p @options.qacdata
+
+    puts "bakeqac: generating MDR report..."
+
+    cmd = qaExe + ["report", "-P", @options.qacdata, "-t", "MDR"]
+    success, consoleOutput = ProcessHelper.run(cmd, false)
+    puts consoleOutput
+
+    if success
+      require "json"
+      jsons = Dir.glob(@options.qacdata + "/prqa/reports/data/*.json")
+
+      maxComplexity = 0
+      jsons.each do |file|
+        raw = File.read(file)
+        data = JSON.parse(raw)
+        filename = File.normalize(data["file"])
+
+        if ProjectFilter.localFile(filename)
+          Bake.formatter.printAdditionalInfo(filename)
+          entities = data["entities"]
+          if Array === entities
+            entities.each do |e|
+              if e["type"] == "function"
+                complexity = e["metrics"]["STCYC"].to_i
+                puts "  #{e["name"]}:#{e["line"]}: cyclomatic complexity = #{complexity}"
+                maxComplexity = complexity if complexity > maxComplexity
+              end
+            end
+          end
+        end
+      end
+      Bake.formatter.printSuccess("\n**** Maximum cyclomatic complexity: #{maxComplexity} ****")
+    else
+      Bake.formatter.printError("Failed to generate MDR report.")
+    end
+  end
 
 #### TODO: unittest for report
 

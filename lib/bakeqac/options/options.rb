@@ -63,7 +63,7 @@ module Bake
       puts " --acf <file>     Set a specific analysis config file, otherwise $(QAC_HOME)/config/acf/default.acf will be used."
       puts " --qaccctpatch    If specified, some adaptions to cct are made. Might improve the result - no guarantee."
       puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/.qacdata."
-      puts " --qacstep admin|analyze|view|report   Steps can be ORed. Per default admin|analyze|view will be executed."
+      puts " --qacstep admin|analyze|view|report|mdr   Steps can be ORed. Per default admin|analyze|view will be executed."
       puts " --qacnofilter    Output will be printed immediately and unfiltered. Per default filters are used to reduce noise."
       puts " --qacrawformat   Raw QAC output (with incomplete MISRA rules!)."
       puts " --qacretry <seconds>   If build or result step fail due to refused license, the step will be retried until timeout."
@@ -129,7 +129,7 @@ module Bake
 
       if !@qacstep.nil?
         @qacstep.split("|").each do |s|
-          if not ["admin", "analyze", "view", "report"].include?s
+          if not ["admin", "analyze", "view", "report", "mdr"].include?s
             Bake.formatter.printError("Error: incorrect qacstep name.")
             ExitHelper.exit(1)
           end
