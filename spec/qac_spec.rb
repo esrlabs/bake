@@ -658,6 +658,34 @@ describe "Qac" do
     expect($mystring.split("CHANGED").length).to be == 5
   end
 
+  it 'mdr_test_okay' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "mdr_test_okay"
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "\"admin|analyze|mdr\""])
+
+    expect($mystring.include?("lib2")).to be == false
+    expect($mystring.include?("lib1/src/File1.cpp")).to be == true
+    expect($mystring.include?("Func1:11: cyclomatic complexity = 13")).to be == true
+    expect($mystring.include?("Func2:22: cyclomatic complexity = 2")).to be == true
+    expect($mystring.include?("Maximum cyclomatic complexity: 13")).to be == true
+    expect($mystring.include?("umber of functions with cyclomatic complexity > 10: 1")).to be == true
+    expect(exit_code).to be == 0
+  end
+
+  it 'mdr_test_okay no filter' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "mdr_test_okay"
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "\"admin|analyze|mdr\"", "--qacnofilter"])
+
+    expect($mystring.include?("lib2")).to be == true
+    expect($mystring.include?("lib1/src/File1.cpp")).to be == true
+    expect($mystring.include?("Func1:11: cyclomatic complexity = 13")).to be == true
+    expect($mystring.include?("Func2:22: cyclomatic complexity = 2")).to be == true
+    expect($mystring.include?("Maximum cyclomatic complexity: 14")).to be == true
+    expect($mystring.include?("umber of functions with cyclomatic complexity > 10: 2")).to be == true
+    expect(exit_code).to be == 0
+  end
+
 end
 
 end

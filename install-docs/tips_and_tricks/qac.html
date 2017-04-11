@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>QACPP &mdash; bake documentation</title>
+    <title>QACPP for MISRA and cyclomatic complexity &mdash; bake documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -82,7 +82,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -96,13 +96,14 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">QACPP</a><ul>
+<li><a class="reference internal" href="#">QACPP for MISRA and cyclomatic complexity</a><ul>
 <li><a class="reference internal" href="#without-bakeqac">Without bakeqac</a></li>
 <li><a class="reference internal" href="#with-bakeqac">With bakeqac</a></li>
 <li><a class="reference internal" href="#step-1-admin">Step 1: admin</a></li>
 <li><a class="reference internal" href="#step-2-analyze">Step 2: analyze</a></li>
 <li><a class="reference internal" href="#step-3-view">Step 3: view</a></li>
 <li><a class="reference internal" href="#step-4-report">Step 4: report</a></li>
+<li><a class="reference internal" href="#step-5-mdr">Step 5: mdr</a></li>
 <li><a class="reference internal" href="#additional-options">Additional options</a></li>
 <li><a class="reference internal" href="#notes">Notes</a></li>
 <li><a class="reference internal" href="#example-output">Example output</a></li>
@@ -149,8 +150,8 @@
   <div class="row">
     <div class="col-md-12">
       
-  <div class="section" id="qacpp">
-<h1>QACPP<a class="headerlink" href="#qacpp" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="qacpp-for-misra-and-cyclomatic-complexity">
+<h1>QACPP for MISRA and cyclomatic complexity<a class="headerlink" href="#qacpp-for-misra-and-cyclomatic-complexity" title="Permalink to this headline">¶</a></h1>
 <p>bakeqac is a convenience wrapper for QACPP with some nice features.</p>
 <div class="section" id="without-bakeqac">
 <h2>Without bakeqac<a class="headerlink" href="#without-bakeqac" title="Permalink to this headline">¶</a></h2>
@@ -158,15 +159,17 @@
 <div class="highlight-console"><div class="highlight"><pre><span class="go">qacli admin --qaf-project-config --qaf-project qacdata --cct &lt;cct&gt; --rcf &lt;rcf&gt; --acf &lt;acf&gt;</span>
 <span class="go">qacli analyze -P qacdata -b &lt;bake call&gt;</span>
 <span class="go">qacli view -P qacdata -m STDOUT</span>
-<span class="go">qacli report -P qacdata -t SUR # or -t RCR. Please also note, that the &quot;view&quot; is not necessary to generate the reports.</span>
+<span class="go">qacli report -P qacdata -t SUR # or -t RCR, which generates reports of MISRA warnings</span>
+<span class="go">qacli report -P qacdata -t MDR # generates report of cyclomatic complexity</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>The first command creates the qac project database.</li>
 <li>The second command builds and analyzes the files.</li>
 <li>The third command prints out the result unfiltered.</li>
-<li>The forth command generates reports. You may replace the python scripts in PRQA to adapt the output.</li>
+<li>The forth and fifth commands generate reports. You may replace the python scripts in PRQA to adapt the output.</li>
 </ul>
+<p>Please note, that &#8220;view&#8221; is not necessary to generate the reports.</p>
 </div>
 <div class="section" id="with-bakeqac">
 <h2>With bakeqac<a class="headerlink" href="#with-bakeqac" title="Permalink to this headline">¶</a></h2>
@@ -180,7 +183,7 @@
 </div>
 <p>bakeqac will automatically do the first three steps mentioned above. If one of these steps fails, the consecutive steps will be dismissed.</p>
 <p>You can also choose certain steps (can be combined with &#8220;|&#8221;):</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacstep admin|analyze|view|report</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacstep admin|analyze|view|report|mdr</span>
 <span class="go">bakeqac &lt;options&gt; --qacstep admin</span>
 <span class="go">etc.</span>
 </pre></div>
@@ -258,6 +261,10 @@ This may be used to add additional configuration parameters which are compiler i
 <div class="section" id="step-4-report">
 <h2>Step 4: report<a class="headerlink" href="#step-4-report" title="Permalink to this headline">¶</a></h2>
 <p>Reports about the warnings and suppressed warnings are be generated.</p>
+</div>
+<div class="section" id="step-5-mdr">
+<h2>Step 5: mdr<a class="headerlink" href="#step-5-mdr" title="Permalink to this headline">¶</a></h2>
+<p>Reports about cyclomatic complexity of functions. Every function with cyclomatic complexity &gt; 10 produces a warning.</p>
 </div>
 <div class="section" id="additional-options">
 <h2>Additional options<a class="headerlink" href="#additional-options" title="Permalink to this headline">¶</a></h2>

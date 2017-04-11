@@ -1,6 +1,9 @@
 Changelog
 =========
 
+April 11 2017 - bake-toolkit 2.36.0
+    * Added: bake can now use QAC to printout cyclomatic complexity. Use *--qacstep mdr* after regular MISRA build or from scratch *--qacstep "admin|analyze|mdr"*.
+
 April 5, 2017 - bake-toolkit 2.35.3
     * Bugfix: added workaround for broken concurrent gem on some platforms with ruby 1.9.3.
 

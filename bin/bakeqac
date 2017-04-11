@@ -377,6 +377,7 @@ end
     puts "bakeqac: generating MDR report..."
 
     cmd = qaExe + ["report", "-P", @options.qacdata, "-t", "MDR"]
+
     success, consoleOutput = ProcessHelper.run(cmd, false)
     puts consoleOutput
 
@@ -385,9 +386,11 @@ end
       jsons = Dir.glob(@options.qacdata + "/prqa/reports/data/*.json")
 
       maxComplexity = 0
+      numGreater10 = 0
       jsons.each do |file|
         raw = File.read(file)
         data = JSON.parse(raw)
+
         filename = File.normalize(data["file"])
 
         if ProjectFilter.localFile(filename)
@@ -395,16 +398,22 @@ end
           entities = data["entities"]
           if Array === entities
             entities.each do |e|
-              if e["type"] == "function"
-                complexity = e["metrics"]["STCYC"].to_i
-                puts "  #{e["name"]}:#{e["line"]}: cyclomatic complexity = #{complexity}"
-                maxComplexity = complexity if complexity > maxComplexity
+              if e.has_key?("type") && e["type"] == "function"
+                if e.has_key?("metrics") && e["metrics"].has_key?("STCYC")
+                  complexity = e["metrics"]["STCYC"].to_i
+                  str = "  #{e["name"]}:#{e["line"]}: cyclomatic complexity = #{complexity}"
+                  complexity > 10 ? Bake.formatter.printWarning(str) : puts(str)
+                  maxComplexity = complexity if complexity > maxComplexity
+                  numGreater10 +=1 if complexity > 10
+                end
               end
             end
           end
         end
       end
-      Bake.formatter.printSuccess("\n**** Maximum cyclomatic complexity: #{maxComplexity} ****")
+      Bake.formatter.printInfo("\n**** Maximum cyclomatic complexity: #{maxComplexity} ****")
+      resultStr = "**** Number of functions with cyclomatic complexity > 10: #{numGreater10} ****"
+      numGreater10 > 0 ? Bake.formatter.printWarning(resultStr) : Bake.formatter.printSuccess(resultStr)
     else
       Bake.formatter.printError("Failed to generate MDR report.")
     end

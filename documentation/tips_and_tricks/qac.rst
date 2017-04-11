@@ -1,5 +1,5 @@
-QACPP
-*****
+QACPP for MISRA and cyclomatic complexity
+*****************************************
 
 bakeqac is a convenience wrapper for QACPP with some nice features.
 
@@ -13,12 +13,15 @@ QACPP can be called directly from command line:
     qacli admin --qaf-project-config --qaf-project qacdata --cct <cct> --rcf <rcf> --acf <acf>
     qacli analyze -P qacdata -b <bake call>
     qacli view -P qacdata -m STDOUT
-    qacli report -P qacdata -t SUR # or -t RCR. Please also note, that the "view" is not necessary to generate the reports.
+    qacli report -P qacdata -t SUR # or -t RCR, which generates reports of MISRA warnings
+    qacli report -P qacdata -t MDR # generates report of cyclomatic complexity
 
 - The first command creates the qac project database.
 - The second command builds and analyzes the files.
 - The third command prints out the result unfiltered.
-- The forth command generates reports. You may replace the python scripts in PRQA to adapt the output.
+- The forth and fifth commands generate reports. You may replace the python scripts in PRQA to adapt the output.
+
+Please note, that "view" is not necessary to generate the reports.
 
 With bakeqac
 ------------
@@ -41,7 +44,7 @@ You can also choose certain steps (can be combined with "|"):
 
 .. code-block:: console
 
-    bakeqac <options> --qacstep admin|analyze|view|report
+    bakeqac <options> --qacstep admin|analyze|view|report|mdr
     bakeqac <options> --qacstep admin
     etc.
 
@@ -137,6 +140,10 @@ Step 4: report
 
 Reports about the warnings and suppressed warnings are be generated.
 
+Step 5: mdr
+-----------
+
+Reports about cyclomatic complexity of functions. Every function with cyclomatic complexity > 10 produces a warning.
 
 Additional options
 ------------------
