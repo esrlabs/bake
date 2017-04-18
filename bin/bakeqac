@@ -278,6 +278,7 @@ end
         numberOfMessages = 0
         Dir.chdir(@options.qac_home) do
           sortedLines.each do |line|
+            success = true if line.include?"The specified project does not have any source files" # to proceed we assume that this is a valid scenario
             if (!@options.qacnoformat && line.start_with?("MSG: ")) || (@options.qacnoformat && line.include?(": Msg("))
               Bake.formatter.printWarning(line)
               if @options.qacdoc
@@ -380,6 +381,8 @@ end
 
     success, consoleOutput = ProcessHelper.run(cmd, false)
     puts consoleOutput
+
+    success = true if consoleOutput.include?"The specified project does not have any source files"
 
     if success
       require "json"

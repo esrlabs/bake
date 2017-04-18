@@ -1,6 +1,9 @@
 Changelog
 =========
 
+April 18 2017 - bake-toolkit 2.36.1
+    * Changed: bakeqac: it's not an error anymore, if a project doesn't consist of any files
+
 April 11 2017 - bake-toolkit 2.36.0
     * Added: bake can now use QAC to printout cyclomatic complexity. Use *--qacstep mdr* after regular MISRA build or from scratch *--qacstep "admin|analyze|mdr"*.
 
