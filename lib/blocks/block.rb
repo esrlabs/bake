@@ -416,7 +416,7 @@ module Bake
           SyncOut.mutex.synchronize do
             @outputStep = nil
             SyncOut.startStream() if Bake.options.syncedOutput
-            if Bake.options.verbose >= 2 || isBuildBlock?
+            if Bake.options.verbose >= 2 || (isBuildBlock? && Bake.options.verbose >= 1)
               typeStr = "Building"
               if @prebuild
                 typeStr = "Using"
@@ -467,7 +467,7 @@ module Bake
           Bake.formatter.printAdditionalInfo "**** #{typeStr} #{Block.block_counter} of #{@@num_projects}: #{@projectName} (#{@configName}) ****"
         end
 
-        if Bake.options.verbose >= 2 || isBuildBlock?
+        if Bake.options.verbose >= 2 || (isBuildBlock? && Bake.options.verbose >= 1)
           Block.inc_block_counter()
         end
 
