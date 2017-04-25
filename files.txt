@@ -60,6 +60,7 @@
 ./_images/buildMain.png
 ./_images/console.png
 ./_images/cvsp.png
+./_images/cyclo.png
 ./_images/cygwin_mount.png
 ./_images/cygwin_ruby.png
 ./_images/cygwin_tty.png
@@ -155,6 +156,7 @@
 ./_static/comment.png
 ./_static/console.png
 ./_static/cvsp.png
+./_static/cyclo.png
 ./_static/cygwin_mount.png
 ./_static/cygwin_ruby.png
 ./_static/cygwin_tty.png

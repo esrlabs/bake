@@ -106,7 +106,6 @@
 <li><a class="reference internal" href="#step-5-mdr">Step 5: mdr</a></li>
 <li><a class="reference internal" href="#additional-options">Additional options</a></li>
 <li><a class="reference internal" href="#notes">Notes</a></li>
-<li><a class="reference internal" href="#example-output">Example output</a></li>
 </ul>
 </li>
 </ul>
@@ -188,6 +187,8 @@
 <span class="go">etc.</span>
 </pre></div>
 </div>
+<p>Example output:</p>
+<a class="reference internal image-reference" href="../_images/misra.png"><img alt="../_images/misra.png" src="../_images/misra.png" /></a>
 </div>
 <div class="section" id="step-1-admin">
 <h2>Step 1: admin<a class="headerlink" href="#step-1-admin" title="Permalink to this headline">¶</a></h2>
@@ -264,7 +265,20 @@ This may be used to add additional configuration parameters which are compiler i
 </div>
 <div class="section" id="step-5-mdr">
 <h2>Step 5: mdr<a class="headerlink" href="#step-5-mdr" title="Permalink to this headline">¶</a></h2>
-<p>Reports about cyclomatic complexity of functions. Every function with cyclomatic complexity &gt; 10 produces a warning.</p>
+<p>Reports about cyclomatic complexity of functions.</p>
+<p>Per default, every function with cyclomatic complexity &gt; 10 produces a warning. To suppress this warning, the code can be annotated:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">// METRIC STCYC 20</span>
+<span class="go">int func()</span>
+<span class="go">{</span>
+<span class="go">    // complex function</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>In the example above the complexity can be up to 20 without a warning.
+The suppression syntax is &#8220;METRIC STCYC &lt;accepted complexity&gt;&#8221; and must be placed above the function.</p>
+<p>STCYC is the name of this metric in QAC.</p>
+<p>In case of a warning or if the accepted complexity is changed, an additional info is printed out, see example output below:</p>
+<img alt="../_images/cyclo.png" src="../_images/cyclo.png" />
 </div>
 <div class="section" id="additional-options">
 <h2>Additional options<a class="headerlink" href="#additional-options" title="Permalink to this headline">¶</a></h2>
@@ -277,10 +291,6 @@ This may be used to add additional configuration parameters which are compiler i
 <div class="section" id="notes">
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <p>If &#8220;&lt;mainConfigName&gt;Qac&#8221; is found in main project, it will be used instead of &#8220;&lt;mainConfigName&gt;. This is useful if the unit test has to be built different to MISRA.</p>
-</div>
-<div class="section" id="example-output">
-<h2>Example output<a class="headerlink" href="#example-output" title="Permalink to this headline">¶</a></h2>
-<img alt="../_images/misra.png" src="../_images/misra.png" />
 </div>
 </div>
 
