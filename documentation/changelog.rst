@@ -1,6 +1,10 @@
 Changelog
 =========
 
+April 25 2017 - bake-toolkit 2.37.0
+    * Added: bakeqac: possibility to increase accepted cyclomatic complexity of functions, see documentation.
+    * Bugfix: Info output "\*\*\*\* Building x of y: projectName (configName) \*\*\*\*" is suppressed again with "-v0" - affected versions: >= 2.32.0.
+
 April 18 2017 - bake-toolkit 2.36.1
     * Changed: bakeqac: it's not an error anymore, if a project doesn't consist of any files
 
@@ -14,8 +18,8 @@ March 30, 2017 - bake-toolkit 2.35.2
     * Bugfix: forgot to remove debug output in 2.35.1.
 
 March 29, 2017 - bake-toolkit 2.35.1
-    * Bugfix: --prebuild was broken - affected version: >= 2.33.0.
-    * Bugfix: Invalid command line arguments could have been recognized as valid, e.g. "--rebuild123" was interpreted as "--rebuild", there was no complaint about the "123" - affected version: >= 2.34.4.
+    * Bugfix: --prebuild was broken - affected versions: >= 2.33.0.
+    * Bugfix: Invalid command line arguments could have been recognized as valid, e.g. "--rebuild123" was interpreted as "--rebuild", there was no complaint about the "123" - affected versions: >= 2.34.4.
 
 March 27, 2017 - bake-toolkit 2.35.0
     * Bugfix: Rubys IO.select() is not thread-safe by itself. It could happen, that bake hangs and the user has to press a key (due to waiting for already closed stdin stream) - affected versions: >= 2.33.0.

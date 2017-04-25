@@ -75,6 +75,17 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
   return [success, consoleOutput, checkError]
 end
 
+def self.getLineNumbersOfFunctions(entities)
+  fileFunctions = []
+  entities.each do |e2|
+    if e2.has_key?("type") && e2["type"] == "function"
+      fileFunctions << e2["line"].to_i
+    end
+  end
+  fileFunctions.sort
+  return fileFunctions
+end
+
 ###### PREREQUISITE 1: BAKEQAC OPTIONS ######
 
   @options = BakeqacOptions.new(ARGV)
@@ -389,12 +400,15 @@ end
       jsons = Dir.glob(@options.qacdata + "/prqa/reports/data/*.json")
 
       maxComplexity = 0
-      numGreater10 = 0
+      numGreaterAllowed = 0
       jsons.each do |file|
         raw = File.read(file)
         data = JSON.parse(raw)
 
         filename = File.normalize(data["file"])
+        filename = @options.qacdata + "/../" + filename unless File.is_absolute?(filename) # only needed for UT
+        fileContent = nil
+        fileFunctions = []
 
         if ProjectFilter.localFile(filename)
           Bake.formatter.printAdditionalInfo(filename)
@@ -404,10 +418,40 @@ end
               if e.has_key?("type") && e["type"] == "function"
                 if e.has_key?("metrics") && e["metrics"].has_key?("STCYC")
                   complexity = e["metrics"]["STCYC"].to_i
-                  str = "  #{e["name"]}:#{e["line"]}: cyclomatic complexity = #{complexity}"
-                  complexity > 10 ? Bake.formatter.printWarning(str) : puts(str)
+                  line = e["line"].to_i
+                  allowed = 10
+
+                  if complexity > 10 && File.exist?(filename)
+                    if fileContent.nil?
+                      fileContent = File.readlines(filename)
+                      fileFunctions = getLineNumbersOfFunctions(entities)
+                    end
+                    lineOfLastFunction = 0
+                    pos = fileFunctions.find_index(line)
+                    if !pos.nil? and fileContent.length >= line
+                      lineOfLastFunction = fileFunctions[pos-1] if pos > 0
+                      # "line" received from json count from 1...
+                      # ... so adjustment of lineOfLastFunction for array access not needed
+                      # line-2 = index of array for line above the current function
+                      (line-2).downto(lineOfLastFunction) do |i|
+                        res = fileContent[i].scan(/METRIC\s+STCYC\s+(\d+)/)
+                        if (res.length > 0)
+                          allowed = res[0][0].to_i if res[0][0].to_i > 10
+                        end
+                      end
+                    end
+                  end
+
+                  str = "  #{e["name"]}:#{line}: cyclomatic complexity = #{complexity}"
+                  if complexity > allowed
+                    str = str + " (warning: accepted = #{allowed})"
+                  elsif allowed > 10
+                    str = str + " (info: accepted = #{allowed})"
+                  end
+
+                  complexity > allowed ? Bake.formatter.printWarning(str) : puts(str)
                   maxComplexity = complexity if complexity > maxComplexity
-                  numGreater10 +=1 if complexity > 10
+                  numGreaterAllowed +=1 if complexity > allowed
                 end
               end
             end
@@ -415,8 +459,8 @@ end
         end
       end
       Bake.formatter.printInfo("\n**** Maximum cyclomatic complexity: #{maxComplexity} ****")
-      resultStr = "**** Number of functions with cyclomatic complexity > 10: #{numGreater10} ****"
-      numGreater10 > 0 ? Bake.formatter.printWarning(resultStr) : Bake.formatter.printSuccess(resultStr)
+      resultStr = "**** Number of functions with cyclomatic complexity more than accepted: #{numGreaterAllowed} ****"
+      numGreaterAllowed > 0 ? Bake.formatter.printWarning(resultStr) : Bake.formatter.printSuccess(resultStr)
     else
       Bake.formatter.printError("Failed to generate MDR report.")
     end

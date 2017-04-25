@@ -668,7 +668,7 @@ describe "Qac" do
     expect($mystring.include?("Func1:11: cyclomatic complexity = 13")).to be == true
     expect($mystring.include?("Func2:22: cyclomatic complexity = 2")).to be == true
     expect($mystring.include?("Maximum cyclomatic complexity: 13")).to be == true
-    expect($mystring.include?("umber of functions with cyclomatic complexity > 10: 1")).to be == true
+    expect($mystring.include?("umber of functions with cyclomatic complexity more than accepted: 1")).to be == true
     expect(exit_code).to be == 0
   end
 
@@ -682,7 +682,27 @@ describe "Qac" do
     expect($mystring.include?("Func1:11: cyclomatic complexity = 13")).to be == true
     expect($mystring.include?("Func2:22: cyclomatic complexity = 2")).to be == true
     expect($mystring.include?("Maximum cyclomatic complexity: 14")).to be == true
-    expect($mystring.include?("umber of functions with cyclomatic complexity > 10: 2")).to be == true
+    expect($mystring.include?("umber of functions with cyclomatic complexity more than accepted: 2")).to be == true
+    expect(exit_code).to be == 0
+  end
+
+  it 'mdr_test_suppress' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "mdr_test_suppress"
+    exit_code = Bake.startBakeqac("stcyc/main", ["--qacunittest", "--qacstep", "mdr"])
+    expect($mystring.include?("FuncA:1: cyclomatic complexity = 12 (warning: accepted = 10)")).to be == true
+    expect($mystring.include?("FuncB:2: cyclomatic complexity = 12 (info: accepted = 12)")).to be == true
+    expect($mystring.include?("FuncC1:2: cyclomatic complexity = 12 (warning: accepted = 10)")).to be == true
+    expect($mystring.include?("FuncC2:22: cyclomatic complexity = 12 (info: accepted = 12)")).to be == true
+    expect($mystring.include?("FuncD1:4: cyclomatic complexity = 12 (info: accepted = 12)")).to be == true
+    expect($mystring.include?("FuncD2:23: cyclomatic complexity = 12 (warning: accepted = 10)")).to be == true
+    expect($mystring.include?("FuncE1:3: cyclomatic complexity = 12 (info: accepted = 17)")).to be == true
+    expect($mystring.include?("FuncE2:22: cyclomatic complexity = 1")).to be == true
+    expect($mystring.include?("FuncE2:27: cyclomatic complexity = 16 (warning: accepted = 12)")).to be == true
+    expect($mystring.include?("FuncF1:3: cyclomatic complexity = 12 (warning: accepted = 10)")).to be == true
+    expect($mystring.include?("FuncF2:23: cyclomatic complexity = 12 (warning: accepted = 10)")).to be == true
+    expect($mystring.include?("**** Maximum cyclomatic complexity: 16 ****")).to be == true
+    expect($mystring.include?("**** Number of functions with cyclomatic complexity more than accepted: 6 ****")).to be == true
     expect(exit_code).to be == 0
   end
 

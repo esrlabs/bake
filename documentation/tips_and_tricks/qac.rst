@@ -48,6 +48,11 @@ You can also choose certain steps (can be combined with "|"):
     bakeqac <options> --qacstep admin
     etc.
 
+Example output:
+
+.. image:: ../_static/misra.png
+    :scale: 100 %
+
 Step 1: admin
 -------------
 
@@ -143,7 +148,26 @@ Reports about the warnings and suppressed warnings are be generated.
 Step 5: mdr
 -----------
 
-Reports about cyclomatic complexity of functions. Every function with cyclomatic complexity > 10 produces a warning.
+Reports about cyclomatic complexity of functions.
+
+Per default, every function with cyclomatic complexity > 10 produces a warning. To suppress this warning, the code can be annotated:
+
+.. code-block:: console
+
+    // METRIC STCYC 20
+    int func()
+    {
+        // complex function
+    }
+
+In the example above the complexity can be up to 20 without a warning.
+The suppression syntax is "METRIC STCYC <accepted complexity>" and must be placed above the function.
+
+STCYC is the name of this metric in QAC.
+
+In case of a warning or if the accepted complexity is changed, an additional info is printed out, see example output below:
+
+.. image:: ../_static/cyclo.png
 
 Additional options
 ------------------
@@ -160,8 +184,3 @@ Notes
 -----
 
 If "<mainConfigName>Qac" is found in main project, it will be used instead of "<mainConfigName>. This is useful if the unit test has to be built different to MISRA.
-
-Example output
---------------
-
-.. image:: ../_static/misra.png
