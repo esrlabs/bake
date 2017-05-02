@@ -1,6 +1,9 @@
 Changelog
 =========
 
+May 2 2017 - bake-toolkit 2.37.1
+    * Added: bakeqac: another workaround for hanging "qacli admin" call. Process will be killed after 60s and the call retried as long as the retry timer is not expired.
+
 April 25 2017 - bake-toolkit 2.37.0
     * Added: bakeqac: possibility to increase accepted cyclomatic complexity of functions, see documentation.
     * Bugfix: Info output "\*\*\*\* Building x of y: projectName (configName) \*\*\*\*" is suppressed again with "-v0" - affected versions: >= 2.32.0.

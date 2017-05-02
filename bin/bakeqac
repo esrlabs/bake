@@ -42,12 +42,15 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
   qacDaemonError = false
   consoleOutput = ""
   success = false
+  processTimeout = false
 
   loop do
     FileUtils.rm_rf @options.qacdata if adminStepAndImmediateOutput
-    success, consoleOutput = ProcessHelper.run(cmd, adminStepAndImmediateOutput)
+    # admin step should not take longer than 30 seconds
+    success, consoleOutput = ProcessHelper.run(cmd, adminStepAndImmediateOutput, true, nil, [0], Dir.pwd, adminStepAndImmediateOutput ? 60 : 0)
     licenseError = false
     qacDaemonError = false
+    processTimeout = false
 
     consoleOutput.each_line do |line|
       if (line.include?("License Refused") && !line.include?("License Refused: C:"))
@@ -60,14 +63,19 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
         puts "Unable to connect to QAX Daemon!"
         break
       end
+      if (line.include?("Process timeout"))
+        puts "Process takes too long!"
+        processTimeout = true
+        break
+      end
     end
 
     cSizeCheck = checkCipSize()
 
-    break unless ((@options.qacretry >= (Time.now - timeStart)) && (!cSizeCheck || licenseError || qacDaemonError))
+    break unless ((@options.qacretry >= (Time.now - timeStart)) && (!cSizeCheck || licenseError || qacDaemonError || processTimeout))
     puts "Retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
   end
-  checkError = !cSizeCheck || licenseError || qacDaemonError
+  checkError = !cSizeCheck || licenseError || qacDaemonError || processTimeout
   if @options.qacretry > 0 && checkError
     puts "Retry timeout over: %d -> failure." % (@options.qacretry - (Time.now - timeStart))
   end

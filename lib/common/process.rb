@@ -1,10 +1,12 @@
+require 'timeout'
+
 module Bake
 
   class ProcessHelper
     @@pid = nil
     @@rd = nil
 
-    def self.run(cmdLineArray, immediateOutput=false, force=true, outpipe=nil, exitCodeArray = [0], dir = Dir.pwd)
+    def self.run(cmdLineArray, immediateOutput=false, force=true, outpipe=nil, exitCodeArray = [0], dir = Dir.pwd, timeout = 0)
       rd, wr = IO.pipe
       @@rd = force ? rd : nil
       duppedCmdLineArray = cmdLineArray.dup
@@ -18,16 +20,27 @@ module Bake
       wr.close
       output = ""
       begin
-        while not rd.eof?
-          tmp = rd.read(1)
-          if (tmp != nil)
-            tmp.encode!('UTF-8',  :invalid => :replace, :undef => :replace, :replace => '')
-            tmp.encode!('binary', :invalid => :replace, :undef => :replace, :replace => '')
-            output << tmp
+        begin
+          Timeout::timeout(timeout) {
+          while not rd.eof?
+            tmp = rd.read(1)
+            if (tmp != nil)
+              tmp.encode!('UTF-8',  :invalid => :replace, :undef => :replace, :replace => '')
+              tmp.encode!('binary', :invalid => :replace, :undef => :replace, :replace => '')
+              output << tmp
 
-            print tmp if immediateOutput
+              print tmp if immediateOutput
+            end
           end
+          }
+        rescue Timeout::Error
+          @@rd = rd
+          @@pid = pid
+          ProcessHelper::killProcess(true)
+          output << "Process timeout (#{timeout} seconds).\n"
+          return [false, output]
         end
+
       rescue
         # Seems to be a bug in ruby: sometimes there is a bad file descriptor on Windows instead of eof, which causes
         # an exception on read(). However, this happens not before everything is read, so there is no practical difference
@@ -40,6 +53,7 @@ module Bake
       rescue
       end
       pid, status = Process.wait2(pid)
+
       @@pid = nil
       @@rd = nil
 
