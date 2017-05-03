@@ -25,17 +25,17 @@ def self.checkCipSize()
     s = File.size?(cips[0])
     s = 0 if s.nil?
     if s < @@cipFileSize
-      puts "cip file too small: #{cips[0]} has #{s} bytes"
+      puts "bakeqac: cip file too small: #{cips[0]} has #{s} bytes"
       return false
     end
     @@cipFileSize = s
     return true
   end
-  puts "cip file does not exist!"
+  puts "bakeqac: cip file does not exist!"
   return false
 end
 
-def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
+def self.executeQacli(cmd, adminStepAndImmediateOutput = false, cmdRemoveLocks = nil)
   timeStart = Time.now
   cSizeCheck = true
   licenseError = false
@@ -55,17 +55,20 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
     consoleOutput.each_line do |line|
       if (line.include?("License Refused") && !line.include?("License Refused: C:"))
         licenseError = true
-        puts "License refused!"
+        puts "bakeqac: License refused!"
         break
       end
       if (line.include?("unable to connect to QAX Daemon") && !line.include?("License Refused: C:"))
         qacDaemonError = true
-        puts "Unable to connect to QAX Daemon!"
+        puts "bakeqac: Unable to connect to QAX Daemon!"
         break
       end
       if (line.include?("Process timeout"))
-        puts "Process takes too long!"
+        puts "bakeqac: Process takes too long!"
         processTimeout = true
+        puts "bakeqac: Removing locks from #{@options.qacdata}..."
+        successRemove, consoleOutput = ProcessHelper.run(cmdRemoveLocks, false)
+        puts consoleOutput unless consoleOutput.empty?
         break
       end
     end
@@ -145,7 +148,8 @@ end
 
     puts "bakeqac: creating database..."
 
-    success, consoleOutput, checkError = executeQacli(cmd, true)
+    cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove-locks"]
+    success, consoleOutput, checkError = executeQacli(cmd, true, cmdRemoveLocks)
 
     if success
       cctFilename = @options.qacdata+"/prqa/config/"+File.basename(@options.cct[0])
@@ -169,7 +173,7 @@ end
         end
       end
     else
-      puts consoleOutput
+      puts consoleOutput unless consoleOutput.empty?
     end
   end
 
