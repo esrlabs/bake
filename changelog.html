@@ -140,23 +140,29 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
-<dt>May 2 2017 - bake-toolkit 2.37.1</dt>
+<dt>May 3, 2017 - bake-toolkit 2.37.2</dt>
+<dd><ul class="first last simple">
+<li>Added: new argument to <em>Linker</em> tag in Project.meta: <em>onlyDirectDeps: false|true</em>. If set to true, the linker links only first level libraries.</li>
+<li>Added: bakeqac: made workaround introduced in 2.37.1 more robust (removing locks from qac files after killing qac process).</li>
+</ul>
+</dd>
+<dt>May 2, 2017 - bake-toolkit 2.37.1</dt>
 <dd><ul class="first last simple">
 <li>Added: bakeqac: another workaround for hanging &#8220;qacli admin&#8221; call. Process will be killed after 60s and the call retried as long as the retry timer is not expired.</li>
 </ul>
 </dd>
-<dt>April 25 2017 - bake-toolkit 2.37.0</dt>
+<dt>April 25, 2017 - bake-toolkit 2.37.0</dt>
 <dd><ul class="first last simple">
 <li>Added: bakeqac: possibility to increase accepted cyclomatic complexity of functions, see documentation.</li>
 <li>Bugfix: Info output &#8220;**** Building x of y: projectName (configName) ****&#8221; is suppressed again with &#8220;-v0&#8221; - affected versions: &gt;= 2.32.0.</li>
 </ul>
 </dd>
-<dt>April 18 2017 - bake-toolkit 2.36.1</dt>
+<dt>April 18, 2017 - bake-toolkit 2.36.1</dt>
 <dd><ul class="first last simple">
 <li>Changed: bakeqac: it&#8217;s not an error anymore, if a project doesn&#8217;t consist of any files</li>
 </ul>
 </dd>
-<dt>April 11 2017 - bake-toolkit 2.36.0</dt>
+<dt>April 11, 2017 - bake-toolkit 2.36.0</dt>
 <dd><ul class="first last simple">
 <li>Added: bake can now use QAC to printout cyclomatic complexity. Use <em>&#8211;qacstep mdr</em> after regular MISRA build or from scratch <em>&#8211;qacstep &#8220;admin|analyze|mdr&#8221;</em>.</li>
 </ul>
