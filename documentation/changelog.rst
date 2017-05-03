@@ -1,17 +1,21 @@
 Changelog
 =========
 
-May 2 2017 - bake-toolkit 2.37.1
+May 3, 2017 - bake-toolkit 2.37.2
+    * Added: new argument to *Linker* tag in Project.meta: *onlyDirectDeps: false|true*. If set to true, the linker links only first level libraries.
+    * Added: bakeqac: made workaround introduced in 2.37.1 more robust (removing locks from qac files after killing qac process).
+
+May 2, 2017 - bake-toolkit 2.37.1
     * Added: bakeqac: another workaround for hanging "qacli admin" call. Process will be killed after 60s and the call retried as long as the retry timer is not expired.
 
-April 25 2017 - bake-toolkit 2.37.0
+April 25, 2017 - bake-toolkit 2.37.0
     * Added: bakeqac: possibility to increase accepted cyclomatic complexity of functions, see documentation.
     * Bugfix: Info output "\*\*\*\* Building x of y: projectName (configName) \*\*\*\*" is suppressed again with "-v0" - affected versions: >= 2.32.0.
 
-April 18 2017 - bake-toolkit 2.36.1
+April 18, 2017 - bake-toolkit 2.36.1
     * Changed: bakeqac: it's not an error anymore, if a project doesn't consist of any files
 
-April 11 2017 - bake-toolkit 2.36.0
+April 11, 2017 - bake-toolkit 2.36.0
     * Added: bake can now use QAC to printout cyclomatic complexity. Use *--qacstep mdr* after regular MISRA build or from scratch *--qacstep "admin|analyze|mdr"*.
 
 April 5, 2017 - bake-toolkit 2.35.3

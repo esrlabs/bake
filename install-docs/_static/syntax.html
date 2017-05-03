@@ -69,7 +69,7 @@ z-index: 100;
               <span class="help" onMouseover="showExtends()" onMouseout="notip()">extends</span>: &#60;parent(s)&#62;,
               <span class="help" onMouseover="showPrivate()" onMouseout="notip()">private</span>: true|false {<br><br>
 
-			  <span><span style="background-color:#EEEEEE;" class="show">
+              <span><span style="background-color:#EEEEEE;" class="show">
 &nbsp; &nbsp; <span class="mycomment"># Valid for all config types</span><br><br>
 &nbsp; &nbsp; <span class="help" onMouseover="showDescription()" onMouseout="notip()">Description</span>  &#60;text&#62;<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;, <span class="help" onMouseover="showInherit()" onMouseout="notip()">inherit</span>: true|false, <span class="help" onMouseover="showInfix()" onMouseout="notip()">inject</span>: front|back, <span class="help" onMouseover="showSystemInclude()" onMouseout="notip()">system</span>: true|false<br>
@@ -83,21 +83,21 @@ z-index: 100;
 &nbsp; &nbsp; <span class="help" onMouseover="showPreSteps()" onMouseout="notip()">PreSteps</span> {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefile()" onMouseout="notip()">Makefile</span> &#60;file&#62;,
                                           <span class="help" onMouseover="showMakefileLib()" onMouseout="notip()">lib</span>: &#60;lib&#62;,
-										  <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
-										  <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
-										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
-										  <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
-										  <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
-										  <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
-										  <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
+                                          <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
+                                          <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
+                                          <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
+                                          <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
+                                          <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
+                                          <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
+                                          <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCommandLine()" onMouseout="notip()">CommandLine</span> &#60;line&#62;,
-										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
-										  <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
-										  <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
-										  <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
-										  <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62;<br>
+                                          <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
+                                          <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
+                                          <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
+                                          <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
+                                          <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62;<br>
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showPostSteps()" onMouseout="notip()">PostSteps</span> {<br>
 &nbsp; &nbsp; &nbsp; <span class="mycomment"># Same as for PreSteps</span><br>
@@ -126,7 +126,8 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultLinker()" onMouseout="notip()">Linker</span>
                                           <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
-                                          <span class="help" onMouseover="showLinkerPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
+                                          <span class="help" onMouseover="showLinkerPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62;,
+                                          <span class="help" onMouseover="showOnlyDirectDeps()" onMouseout="notip()">onlyDirectDeps</span>: true|false {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPrefixFlags()" onMouseout="notip()">LibPrefixFlags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPostfixFlags()" onMouseout="notip()">LibPostfixFlags</span> &#60;flags&#62;<br>
@@ -150,7 +151,8 @@ z-index: 100;
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLinker()" onMouseout="notip()">Linker</span>
                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
-                                         <span class="help" onMouseover="showLinkerPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
+                                         <span class="help" onMouseover="showLinkerPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62;,
+                                         <span class="help" onMouseover="showOnlyDirectDeps()" onMouseout="notip()">onlyDirectDeps</span>: true|false {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPrefixFlags()" onMouseout="notip()">LibPrefixFlags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPostfixFlags()" onMouseout="notip()">LibPostfixFlags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
@@ -186,16 +188,16 @@ z-index: 100;
                             <span class="hideRadio"     id="commandline" onMouseover="showCommandlineCustom()" onMouseout="notip()">CommandLine</span>
                             <span style="background-color:#DDDDDD;" id="makefile_part" class="showInline"> &#60;name&#62;,
                                           <span class="help" onMouseover="showMakefileLib()" onMouseout="notip()">lib</span>: &#60;lib&#62;,
-										  <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
-										  <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
-										  <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
+                                          <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
+                                          <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
+                                          <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
                                           <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
                                           <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
                                           <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
                                           <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; }<br>
-							</span>
+                            </span>
                             <span style="background-color:#DDDDDD;" id="commandline_part"  class="hide">&#60;line&#62;,
                             <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
                             <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
@@ -300,27 +302,27 @@ function showExternalLibrary() {
   str = 'Every config can specify libs which have to be linked to the executable.<br>'+
     'It\'s possible to add a path, e.g.:<br>'+
     '<i> &nbsp; &nbsp; ExternalLibrary "xy/z/ab"</i><br>'+
-	'In this case the lib "ab" is added to the linker command line as well as the lib search path "xy/z".<br>'+
-	'Note, that the linker will look for "libab.a".'
+    'In this case the lib "ab" is added to the linker command line as well as the lib search path "xy/z".<br>'+
+    'Note, that the linker will look for "libab.a".'
   ddrivetip("ExternalLibrary", "No","0..n","-",str)
 }
 
 function showExternalLibrarySearch() {
   str = 'If the attribute "search: false" is specified, the lib will not be searched but linked with the full name, e.g.<br>'+
     '<i> &nbsp; &nbsp; ExternalLibrary "xy/z/libpq.a", search: false</i><br>'+
-	'will link "xy/z/libpq.a" to the executable.<br>'+
-	'It is also possible to specify an object file when using "search: false".'
+    'will link "xy/z/libpq.a" to the executable.<br>'+
+    'It is also possible to specify an object file when using "search: false".'
   ddrivetip("search", "No","-","true",str)
 }
 
 function showUserLibrary() {
   str = 'A user library will be linked <i>before</i> any other libraries or objects to the executable.<br>'+
     'It is also possible to specify an object file.<br>'+
-	'The library will be searched like an ExternalLibrary, but with the full name, e.g.<br>'+
-	'<i> &nbsp; &nbsp; UserLibrary "xy/z/libUser.a"</i><br>'+
-	'<i> &nbsp; &nbsp; UserLibrary "xy/z/something.o"</i><br>'+
-	'will link "libUser.a" and "something.o" before regular objects and libraries.<br>'+
-	'"xy/z" will be added as an ExternalLibrarySearchPath.'
+    'The library will be searched like an ExternalLibrary, but with the full name, e.g.<br>'+
+    '<i> &nbsp; &nbsp; UserLibrary "xy/z/libUser.a"</i><br>'+
+    '<i> &nbsp; &nbsp; UserLibrary "xy/z/something.o"</i><br>'+
+    'will link "libUser.a" and "something.o" before regular objects and libraries.<br>'+
+    '"xy/z" will be added as an ExternalLibrarySearchPath.'
   ddrivetip("UserLibrary", "No","0..n","-",str)
 }
 
@@ -333,14 +335,14 @@ function showExternalLibrarySearchPath() {
 function showPreSteps() {
   str = 'PreSteps are executed before compiling files of the project.<br>'+
     'The number of steps are not limited.<br>'+
-	'If a step fails, all further steps of the project will be skipped.'
+    'If a step fails, all further steps of the project will be skipped.'
   ddrivetip("PreSteps", "No","0..1","-",str)
 }
 
 function showPostSteps() {
   str = 'PostSteps are executed after the main task of the project, e.g. linking an executable.<br>'+
     'The number of steps are not limited.<br>'+
-	'If a step fails, all further steps of the project will be skipped.'
+    'If a step fails, all further steps of the project will be skipped.'
   ddrivetip("PostSteps", "No","0..1","-",str)
 }
 
@@ -375,14 +377,14 @@ function showEcho() {
 }
 
 function showInde() {
-	  str = '"true" means the step can be built in parallel to other projects. "false" means everything before must be completed, the step runs exclusively.'
-	  ddrivetip("independent", "No","-","false",str)
-	}
+      str = '"true" means the step can be built in parallel to other projects. "false" means everything before must be completed, the step runs exclusively.'
+      ddrivetip("independent", "No","-","false",str)
+    }
 
 function showStepFilter() {
   str = 'A step can be switched on or off explicitly regardless of the "default" attribute with the command line options<br>'+
-	'<i> &nbsp; &nbsp; --do &#60;filter name&#62;</i><br>'+
-	'<i> &nbsp; &nbsp; --omit &#60;filter name&#62;</i><br>'
+    '<i> &nbsp; &nbsp; --do &#60;filter name&#62;</i><br>'+
+    '<i> &nbsp; &nbsp; --omit &#60;filter name&#62;</i><br>'
   ddrivetip("filter", "No","-","-",str)
 }
 
@@ -395,7 +397,7 @@ function showValidExitCodes() {
 
 function getMakefileDesc() {
   return 'Makefile to be started, e.g.:<br>'+
-	'<i> &nbsp; &nbsp; Makefile "subDir/makefile"</i><br>'
+    '<i> &nbsp; &nbsp; Makefile "subDir/makefile"</i><br>'
 }
 
 function showMakefile() {
@@ -415,24 +417,24 @@ function showMakefileTarget() {
 function showMakefilePathTo() {
   str = 'Comma separated list, e.g. "common, abc, xy".<br>'+
     'The makefile can use variables like $(PATH_TO_common). This is very useful if paths to other projects are needed in the makefile.<br>'+
-	'Remember that more than one workspace root can exist and a hardcoded "../common" is not reliable in that case.<br>'+
-	'$(PATH_TO_common) will result in the path from the parent directory of the current project to the common project without the common directory itself. '+
-	'So if the current project and the common project have the same parent folder, the string will be empty.<br>'+
-	'Example:<br>'+
-	'makefile: c:\\workspaceroot\\yourProject\\makefile<br>'+
+    'Remember that more than one workspace root can exist and a hardcoded "../common" is not reliable in that case.<br>'+
+    '$(PATH_TO_common) will result in the path from the parent directory of the current project to the common project without the common directory itself. '+
+    'So if the current project and the common project have the same parent folder, the string will be empty.<br>'+
+    'Example:<br>'+
+    'makefile: c:\\workspaceroot\\yourProject\\makefile<br>'+
     'usage in makefile: gcc -I$../../$(PATH_TO_common)common/include ...<br>'+
-	'It\'s done like this due to compatibility reasons.'
+    'It\'s done like this due to compatibility reasons.'
   ddrivetip("pathTo", "No","-","-",str)
 }
 
 function showMakefileFlags() {
-	  ddrivetip("Flags", "No","0..n","-j","Additional makefile flags.")
+      ddrivetip("Flags", "No","0..n","-j","Additional makefile flags.")
 }
 
 function getCommandLineDesc() {
   return 'A command to execute, e.g.:<br>'+
-	'<i> &nbsp; &nbsp; CommandLine "ddump -Ruv -y 0xFFFFF -oRelease/application.bin Release/application.elf"</i><br>'+
-	'<i> &nbsp; &nbsp; CommandLine "echo Hello world!"</i><br>'
+    '<i> &nbsp; &nbsp; CommandLine "ddump -Ruv -y 0xFFFFF -oRelease/application.bin Release/application.elf"</i><br>'+
+    '<i> &nbsp; &nbsp; CommandLine "echo Hello world!"</i><br>'
 }
 
 function showCommandLine() {
@@ -460,7 +462,7 @@ function showOutputDir() {
 }
 
 function showExtends() {
-	ddrivetip("extends", "No","0..1","-","Inherit settings from parent config(s).<br>For more information see docu page 'Derive configs'.")
+    ddrivetip("extends", "No","0..1","-","Inherit settings from parent config(s).<br>For more information see docu page 'Derive configs'.")
 }
 
 function showPrivate() {
@@ -470,12 +472,12 @@ function showPrivate() {
 function showFiles() {
   str = 'Specifies the files to build.<br>'+
     'It\'s valid to specify a single file, e.g.<br>'+
-	'<i> &nbsp; &nbsp; Files "src/abc/def.asm"</i><br>'+
+    '<i> &nbsp; &nbsp; Files "src/abc/def.asm"</i><br>'+
     'or a pattern, e.g.<br>'+
-	'<i> &nbsp; &nbsp; Files "*/**/.cpp"</i><br>'+
-	'which builds all files with the ending ".cpp" in all subdirectories.<br>'+
-	'Note: ".." is not allowed in the file path. All files must be located within the project.<br>'+
-	'Note: if patterns are used, Flags and Define are ignored.'
+    '<i> &nbsp; &nbsp; Files "*/**/.cpp"</i><br>'+
+    'which builds all files with the ending ".cpp" in all subdirectories.<br>'+
+    'Note: ".." is not allowed in the file path. All files must be located within the project.<br>'+
+    'Note: if patterns are used, Flags and Define are ignored.'
   ddrivetip("Files", "No","0..n","-",str)
 }
 
@@ -490,12 +492,12 @@ function showIncludeDir() {
     'Use always relative paths, not absolute paths due to portability.<p>'+
     'Use always "/" and not "\\".<p>'+
     'It is possible to work with different workspace roots. Do not include something like this: <br>'+
-	'<i> &nbsp; &nbsp; IncludeDir "../abc/include"</i><br>'+
+    '<i> &nbsp; &nbsp; IncludeDir "../abc/include"</i><br>'+
     'but<br>'+
-	'<i> &nbsp; &nbsp; IncludeDir "abc/include"</i><br>'+
+    '<i> &nbsp; &nbsp; IncludeDir "abc/include"</i><br>'+
     'because it may happen, that abc does not exist in the same root as the current project. The path to abc will be calculated automatically.<p>'+
     'To include directories of the current project, the project name can be omitted like this:<br>'+
-	'<i> &nbsp; &nbsp; IncludeDir "include"</i><br>'+
+    '<i> &nbsp; &nbsp; IncludeDir "include"</i><br>'+
     '<i> &nbsp; &nbsp; IncludeDir "generated/include"</i><br>'
   ddrivetip("IncludeDir", "No","0..n","-",str)
 }
@@ -520,7 +522,7 @@ function showSystemInclude() {
 function showSet() {
   str = 'Sets a variable for this and all dependent projects.<br>'+
   'The variable can be a simple value or the result of a cmd, e.g. \"cat myVar.txt\".'
-	ddrivetip("Set", "No","0..n","-",str)
+    ddrivetip("Set", "No","0..n","-",str)
 }
 
 function showEnv() {
@@ -536,12 +538,12 @@ function showDependency() {
     '<b>Examples:</b><br>'+
     '&nbsp;&nbsp; <i>Dependency gtest, config: lib<br>'+
     '&nbsp;&nbsp; Dependency "my/folder/proj"</i>'
-	ddrivetip("Dependency", "No","0..n","-",str)
+    ddrivetip("Dependency", "No","0..n","-",str)
 }
 
 function showDependencyConfig() {
   str = 'Config name of the project to build.'
-	ddrivetip("config", "Yes","-","-",str)
+    ddrivetip("config", "Yes","-","-",str)
 }
 
 function showLinkerScript() {
@@ -577,18 +579,18 @@ function showCommandlineCustom() {
 }
 
 function flagExample() {
-	return  "<br>For removing flags use regular expressions which can be interpreted by ruby.<br>"+
-	"Regex options for start and stop string are automatically added in order to avoid substring matches.<br><br>"+
-	"Flag strings are always splitted at spaces and computed individually.<br><br>"+
-	"<b>Examples:</b><br>"+
-	"&nbsp;&nbsp; <i>Flags \"-x -y\"</i> overwrites the inherited flags<br><br>"+
-	"&nbsp;&nbsp; <i>Flags add: \"-x -y\"</i> adds -x and -y if not exist<br><br>"+
-	"&nbsp;&nbsp; <i>Flags remove: \"-x -y\"</i> removes -x and -y if exist<br><br>"+
-	"&nbsp;&nbsp; It is possible to combine the attributes like this:<br>"+
-	"&nbsp;&nbsp; <i>Flags remove: \"-x\", add: \"-y\"</i><br><br>"+
-	"&nbsp;&nbsp; To remove -g followed by any string, e.g. -g3, the command is:<br>"+
-	"&nbsp;&nbsp; <i>Flags remove: \"-g.*\"</i><br>"+
-	"&nbsp;&nbsp; An inherited flag string \"-abc -g3 -xy\" will end up in \"-abc -xy\"."
+    return  "<br>For removing flags use regular expressions which can be interpreted by ruby.<br>"+
+    "Regex options for start and stop string are automatically added in order to avoid substring matches.<br><br>"+
+    "Flag strings are always splitted at spaces and computed individually.<br><br>"+
+    "<b>Examples:</b><br>"+
+    "&nbsp;&nbsp; <i>Flags \"-x -y\"</i> overwrites the inherited flags<br><br>"+
+    "&nbsp;&nbsp; <i>Flags add: \"-x -y\"</i> adds -x and -y if not exist<br><br>"+
+    "&nbsp;&nbsp; <i>Flags remove: \"-x -y\"</i> removes -x and -y if exist<br><br>"+
+    "&nbsp;&nbsp; It is possible to combine the attributes like this:<br>"+
+    "&nbsp;&nbsp; <i>Flags remove: \"-x\", add: \"-y\"</i><br><br>"+
+    "&nbsp;&nbsp; To remove -g followed by any string, e.g. -g3, the command is:<br>"+
+    "&nbsp;&nbsp; <i>Flags remove: \"-g.*\"</i><br>"+
+    "&nbsp;&nbsp; An inherited flag string \"-abc -g3 -xy\" will end up in \"-abc -xy\"."
 }
 
 function showPrebuild() {
@@ -701,6 +703,11 @@ function showArchiverPrefix() {
 function showLinkerPrefix() {
   ddrivetip("prefix", "No","-","$(LinkerPrefix)","Wrapper for linker. If variable is not set, no prefix is used.<br>You can use the adapt feature to set the variable or overwrite the prefix.")
 }
+
+function showOnlyDirectDeps() {
+  ddrivetip("onlyDirectDeps", "No","-","false","If set to true, only first level libraries will be linked (not sub-dependencies from dependencies).")
+}
+
 
 var offsetxpoint=20 //Customize x offset of tooltip
 var offsetypoint=20 //Customize y offset of tooltip
