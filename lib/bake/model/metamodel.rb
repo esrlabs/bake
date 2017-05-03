@@ -64,6 +64,7 @@ module Bake
       class Linker < ModelElement
         has_attr 'command', String, :defaultValueLiteral => ""
         has_attr 'prefix', String, :defaultValueLiteral => "$(LinkerPrefix)"
+        has_attr 'onlyDirectDeps', Boolean, :defaultValueLiteral => "false"
         contains_many 'flags', Flags, 'parent'
         contains_many 'libprefixflags', LibPrefixFlags, 'parent'
         contains_many 'libpostfixflags', LibPostfixFlags, 'parent'

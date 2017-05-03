@@ -1,0 +1,17 @@
+Project default: test {
+
+  ExecutableConfig test {
+    Files "src/x.cpp"
+    Dependency a
+    ExternalLibrarySearchPath "SP_MAIN_SP"
+    Dependency c
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_direct, extends: test {
+    Toolchain {
+      Linker onlyDirectDeps: true
+    }
+  }
+
+}

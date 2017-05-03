@@ -60,6 +60,7 @@ end
 def integrateLinker(tcs, linker)
   return tcs unless linker
   tcs[:LINKER][:COMMAND] = linker.command if linker.command != ""
+  tcs[:LINKER][:LINK_ONLY_DIRECT_DEPS] = linker.onlyDirectDeps
   tcs[:LINKER][:PREFIX] = linker.prefix if linker.prefix != ""
   tcs[:LINKER][:FLAGS] = adjustFlags(tcs[:LINKER][:FLAGS], linker.flags)
   tcs[:LINKER][:LIB_PREFIX_FLAGS] = adjustFlags(tcs[:LINKER][:LIB_PREFIX_FLAGS], linker.libprefixflags)

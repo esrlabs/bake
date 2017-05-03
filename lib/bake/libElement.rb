@@ -26,7 +26,8 @@ module Bake
       @@source_libraries = []
       @@linker_libs_array = []
 
-      collect_recursive(block)
+      levels = @@linker[:LINK_ONLY_DIRECT_DEPS] ? 1 : -1
+      collect_recursive(block, levels)
 
       if Bake.options.oldLinkOrder
         if @@linker[:LIST_MODE] and not @@lib_path_set.empty?
@@ -67,7 +68,7 @@ module Bake
       end
     end
 
-    def self.collect_recursive(block)
+    def self.collect_recursive(block, levels = -1)
       return if @@dep_set.include?block
       @@dep_set << block
 
@@ -117,18 +118,15 @@ module Bake
         when LibElement::DEPENDENCY
           if Blocks::ALL_BLOCKS.include?elem.value
             bb = Blocks::ALL_BLOCKS[elem.value]
-            collect_recursive(bb)
+            collect_recursive(bb, levels-1)
           else
             # TODO: warning or error?
           end
         end
-      end
+      end if levels != 0
 
       addOwnLib(block) if not Bake.options.oldLinkOrder
-
     end
-
-
 
 
     def self.calcLibElements(block)

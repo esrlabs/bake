@@ -1,0 +1,8 @@
+Project default: test {
+
+  LibraryConfig test {
+    Files "src/c.cpp"
+    ExternalLibrarySearchPath "SP_C_SP"
+  }
+
+}
