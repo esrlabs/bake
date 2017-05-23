@@ -1,8 +1,11 @@
 Changelog
 =========
 
+May 23, 2017 - bake-toolkit 2.37.3
+    * Added: bakeqac: making metrics report now retried on error
+
 May 3, 2017 - bake-toolkit 2.37.2
-    * Added: new argument to *Linker* tag in Project.meta: *onlyDirectDeps: false|true*. If set to true, the linker links only first level libraries.
+    * Added: new argument to *Linker* tag in Project.meta: *onlyDirectDeps: false|true*. If set to true, the linker links only first level dependencies (no subdependencies).
     * Added: bakeqac: made workaround introduced in 2.37.1 more robust (removing locks from qac files after killing qac process).
 
 May 2, 2017 - bake-toolkit 2.37.1

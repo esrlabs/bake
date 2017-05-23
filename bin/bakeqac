@@ -402,7 +402,7 @@ end
 
     cmd = qaExe + ["report", "-P", @options.qacdata, "-t", "MDR"]
 
-    success, consoleOutput = ProcessHelper.run(cmd, false)
+    success, consoleOutput, checkError = executeQacli(cmd)
     puts consoleOutput
 
     success = true if consoleOutput.include?"The specified project does not have any source files"
