@@ -3,6 +3,7 @@ Changelog
 
 May 23, 2017 - bake-toolkit 2.37.3
     * Added: bakeqac: making metrics report now retried on error
+    * Added: new complex variable $(ProjectDir,<project name>)
 
 May 3, 2017 - bake-toolkit 2.37.2
     * Added: new argument to *Linker* tag in Project.meta: *onlyDirectDeps: false|true*. If set to true, the linker links only first level dependencies (no subdependencies).

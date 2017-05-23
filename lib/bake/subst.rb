@@ -181,23 +181,21 @@ module Bake
          substStr << @@toolchainName
         elsif var == "ProjectName"
           substStr << @@projName
-#        elsif var == "ProjectDir"
-#          substStr << @@projDir
         elsif var == "ProjectDir" or (splittedVar.length == 2 and splittedVar[0] == "ProjectDir")
           if (var == "ProjectDir")
-            out_proj_name = @@projName
+            substStr << @@projDir
           else
             out_proj_name = splittedVar[1].strip
-          end
-          if @@referencedConfigs.has_key?out_proj_name
-            configs = @@referencedConfigs[out_proj_name]
-            config = configs.first
+            if @@referencedConfigs.has_key?out_proj_name
+              configs = @@referencedConfigs[out_proj_name]
+              config = configs.first
 
-            substStr << File.rel_from_to_project(@@projDir,config.get_project_dir,false)
-          else
-            if Bake.options.verbose > 0
-              msg = "Substitute variable '$(#{var})' with empty string, because project #{out_proj_name} not found"
-              Bake.formatter.printInfo(msg, elem ? elem : @@config)
+              substStr << File.rel_from_to_project(@@projDir,config.get_project_dir,false)
+            else
+              if Bake.options.verbose > 0
+                msg = "Substitute variable '$(#{var})' with empty string, because project #{out_proj_name} not found"
+                Bake.formatter.printInfo(msg, elem ? elem : @@config)
+              end
             end
           end
         elsif var == "OutputDir" or (splittedVar.length == 3 and splittedVar[0] == "ProjectDir")

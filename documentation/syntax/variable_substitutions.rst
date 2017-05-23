@@ -122,13 +122,19 @@ Example:
 Complex variables
 *****************
 
-bake supports one complex variable:
+bake supports two complex variables:
 
 .. code-block:: console
 
     $(OutputDir,$(TheProject),$(TheConfig))
 
 This will evaluate to the output directory of a specific configuration.
+
+.. code-block:: console
+
+    $(ProjectDir,$(TheProject))
+
+This will evaluate to the directory of a specific project.
 
 Notes and warnings
 ******************
