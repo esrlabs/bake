@@ -82,7 +82,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -310,11 +310,15 @@ of the current platform</td>
 </div>
 <div class="section" id="complex-variables">
 <h2>Complex variables<a class="headerlink" href="#complex-variables" title="Permalink to this headline">¶</a></h2>
-<p>bake supports one complex variable:</p>
+<p>bake supports two complex variables:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>OutputDir,<span class="k">$(</span>TheProject<span class="k">)</span>,<span class="k">$(</span>TheConfig<span class="k">)</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>This will evaluate to the output directory of a specific configuration.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>ProjectDir,<span class="k">$(</span>TheProject<span class="k">)</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>This will evaluate to the directory of a specific project.</p>
 </div>
 <div class="section" id="notes-and-warnings">
 <h2>Notes and warnings<a class="headerlink" href="#notes-and-warnings" title="Permalink to this headline">¶</a></h2>
