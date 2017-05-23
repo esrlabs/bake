@@ -140,9 +140,14 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>May 23, 2017 - bake-toolkit 2.37.3</dt>
+<dd><ul class="first last simple">
+<li>Added: bakeqac: making metrics report now retried on error</li>
+</ul>
+</dd>
 <dt>May 3, 2017 - bake-toolkit 2.37.2</dt>
 <dd><ul class="first last simple">
-<li>Added: new argument to <em>Linker</em> tag in Project.meta: <em>onlyDirectDeps: false|true</em>. If set to true, the linker links only first level libraries.</li>
+<li>Added: new argument to <em>Linker</em> tag in Project.meta: <em>onlyDirectDeps: false|true</em>. If set to true, the linker links only first level dependencies (no subdependencies).</li>
 <li>Added: bakeqac: made workaround introduced in 2.37.1 more robust (removing locks from qac files after killing qac process).</li>
 </ul>
 </dd>
