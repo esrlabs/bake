@@ -1,6 +1,9 @@
 Changelog
 =========
 
+May 29, 2017 - bake-toolkit 2.37.4
+    * Changed: bakeqac: timeout for *qacli* calls now 80% of qacretry time (except *qacli admin*, which is 60 seconds)
+
 May 23, 2017 - bake-toolkit 2.37.3
     * Added: bakeqac: making metrics report now retried on error
     * Added: new complex variable $(ProjectDir,<project name>)
