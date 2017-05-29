@@ -46,8 +46,8 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false, cmdRemoveLocks =
 
   loop do
     FileUtils.rm_rf @options.qacdata if adminStepAndImmediateOutput
-    # admin step should not take longer than 30 seconds
-    success, consoleOutput = ProcessHelper.run(cmd, adminStepAndImmediateOutput, true, nil, [0], Dir.pwd, adminStepAndImmediateOutput ? 60 : 0)
+    # admin step should not take longer than 60 seconds, rest not longer than 80% of qacretry time if specified
+    success, consoleOutput = ProcessHelper.run(cmd, adminStepAndImmediateOutput, true, nil, [0], Dir.pwd, adminStepAndImmediateOutput ? 60 : (@options.qacretry * 0.8).to_i)
     licenseError = false
     qacDaemonError = false
     processTimeout = false
