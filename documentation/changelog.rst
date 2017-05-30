@@ -1,12 +1,15 @@
 Changelog
 =========
 
+May 30, 2017 - bake-toolkit 2.37.5
+    * Bugfix: bakeqac: now timeout workaround get's active as expected, but error handling was broken (ruby exception).
+
 May 29, 2017 - bake-toolkit 2.37.4
-    * Changed: bakeqac: timeout for *qacli* calls now 80% of qacretry time (except *qacli admin*, which is 60 seconds)
+    * Changed: bakeqac: timeout for *qacli* calls now 80% of qacretry time (except *qacli admin*, which is 60 seconds).
 
 May 23, 2017 - bake-toolkit 2.37.3
-    * Added: bakeqac: making metrics report now retried on error
-    * Added: new complex variable $(ProjectDir,<project name>)
+    * Added: bakeqac: making metrics report now retried on error.
+    * Added: new complex variable $(ProjectDir,<project name>).
 
 May 3, 2017 - bake-toolkit 2.37.2
     * Added: new argument to *Linker* tag in Project.meta: *onlyDirectDeps: false|true*. If set to true, the linker links only first level dependencies (no subdependencies).

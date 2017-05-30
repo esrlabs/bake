@@ -35,7 +35,7 @@ def self.checkCipSize()
   return false
 end
 
-def self.executeQacli(cmd, adminStepAndImmediateOutput = false, cmdRemoveLocks = nil)
+def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
   timeStart = Time.now
   cSizeCheck = true
   licenseError = false
@@ -67,7 +67,8 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false, cmdRemoveLocks =
         puts "bakeqac: Process takes too long!"
         processTimeout = true
         puts "bakeqac: Removing locks from #{@options.qacdata}..."
-        successRemove, consoleOutput = ProcessHelper.run(cmdRemoveLocks, false)
+        sleep(1)
+        successRemove, consoleOutput = ProcessHelper.run($cmdRemoveLocks, false)
         puts consoleOutput unless consoleOutput.empty?
         break
       end
@@ -136,6 +137,7 @@ qaExe = [@options.qac_home+"/common/bin/qacli"]
 if @options.qacunittest
   qaExe = ["ruby", File.dirname(__FILE__)+"/../spec/bin/qactester.rb"]
 end
+$cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove-locks"]
 
 ###### STEP 1: CREATE ######
 
@@ -148,8 +150,7 @@ end
 
     puts "bakeqac: creating database..."
 
-    cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove-locks"]
-    success, consoleOutput, checkError = executeQacli(cmd, true, cmdRemoveLocks)
+    success, consoleOutput, checkError = executeQacli(cmd, true)
 
     if success
       cctFilename = @options.qacdata+"/prqa/config/"+File.basename(@options.cct[0])
