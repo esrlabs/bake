@@ -2,7 +2,7 @@ Changelog
 =========
 
 May 30, 2017 - bake-toolkit 2.37.5
-    * Bugfix: bakeqac: now timeout workaround get's active as expected, but error handling was broken (ruby exception).
+    * Bugfix: bakeqac: now timeout workaround gets active as expected, but error handling was broken (ruby exception).
 
 May 29, 2017 - bake-toolkit 2.37.4
     * Changed: bakeqac: timeout for *qacli* calls now 80% of qacretry time (except *qacli admin*, which is 60 seconds).
