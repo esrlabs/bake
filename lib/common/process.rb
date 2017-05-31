@@ -83,6 +83,14 @@ module Bake
       end
       if @@pid
         begin
+          5.times do |i|
+            Process.kill("TERM",@@pid)
+            sleep(1)
+            break unless Process.waitpid(@@pid, Process::WNOHANG).nil? # nil = process still running
+          end
+        rescue Exception => e
+        end
+        begin
           Process.kill("KILL",@@pid)
         rescue Exception => e
         end
