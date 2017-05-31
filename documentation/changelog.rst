@@ -1,6 +1,15 @@
 Changelog
 =========
 
+May 31, 2017 - bake-toolkit 2.37.8
+    * Added: bake handles *.cu files as c-files, so Cuda files can be compiled without renaming.
+
+May 31, 2017 - bake-toolkit 2.37.7
+    * Changed: bakeqac: terminate process and wait a little bit before killing it (for systems which support SIGTERM).
+
+May 31, 2017 - bake-toolkit 2.37.6
+    * Cosmetic: bakeqac: added more debug info in "process takes too long" workaround.
+
 May 30, 2017 - bake-toolkit 2.37.5
     * Bugfix: bakeqac: now timeout workaround gets active as expected, but error handling was broken (ruby exception).
 

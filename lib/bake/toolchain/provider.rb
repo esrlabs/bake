@@ -45,7 +45,7 @@ module Bake
             :COMPILE_FLAGS => "",
             :DEFINES => [],
             :FLAGS => "",
-            :SOURCE_FILE_ENDINGS => [".c"],
+            :SOURCE_FILE_ENDINGS => [".c", ".cu"],
             :DEP_FLAGS => "",
             :DEP_FLAGS_SPACE => false,
             :DEP_FLAGS_FILENAME => true,
