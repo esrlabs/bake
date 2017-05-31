@@ -46,6 +46,7 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
 
   loop do
     FileUtils.rm_rf @options.qacdata if adminStepAndImmediateOutput
+
     # admin step should not take longer than 60 seconds, rest not longer than 80% of qacretry time if specified
     success, consoleOutput = ProcessHelper.run(cmd, adminStepAndImmediateOutput, true, nil, [0], Dir.pwd, adminStepAndImmediateOutput ? 60 : (@options.qacretry * 0.8).to_i)
     licenseError = false
@@ -63,17 +64,18 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
         puts "bakeqac: Unable to connect to QAX Daemon!"
         break
       end
-      if (line.include?("Process timeout"))
-        puts "bakeqac: Process takes too long!"
+      if (line.include?("Process timeout") || line.include?("A mutually exclusive operation is in progress"))
+        puts line
+        puts "Seconds left after killing process: %d" % (@options.qacretry - (Time.now - timeStart))
         processTimeout = true
         puts "bakeqac: Removing locks from #{@options.qacdata}..."
         sleep(1)
         successRemove, consoleOutput = ProcessHelper.run($cmdRemoveLocks, false)
+        puts "Seconds left after removing locks: %d" % (@options.qacretry - (Time.now - timeStart))
         puts consoleOutput unless consoleOutput.empty?
         break
       end
     end
-
     cSizeCheck = checkCipSize()
 
     break unless ((@options.qacretry >= (Time.now - timeStart)) && (!cSizeCheck || licenseError || qacDaemonError || processTimeout))
