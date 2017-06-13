@@ -1,7 +1,7 @@
 module Bake
   class Version
     def self.number
-      "2.37.8"
+      "2.37.9"
     end
 
     def self.printBakeVersion(ry = "")

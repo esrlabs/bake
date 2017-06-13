@@ -212,7 +212,7 @@ module Bake
             Dir.mutex.synchronize do
               Dir.chdir(@projectDir) do
                 incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
-                Compile.write_depfile(incList, dep_filename_conv)
+                Compile.write_depfile(incList, dep_filename_conv, @projectDir)
               end
             end
 
@@ -261,7 +261,7 @@ module Bake
       end
 
       # todo: move to toolchain util file
-      def self.write_depfile(deps, dep_filename_conv)
+      def self.write_depfile(deps, dep_filename_conv, projDir)
         if deps && !Bake.options.dry
           begin
             File.open(dep_filename_conv, 'wb') do |f|

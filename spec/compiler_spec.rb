@@ -103,42 +103,42 @@ describe "compiler" do
   it 'dcc deps - regular' do
     path = "spec/testdata/compiler/dcc"
     incList = Blocks::Compile.read_depfile("#{path}/dep.d", "DIR", false)
-    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake", "DIR")
     FileUtils.identical?("#{path}/test.d.bake","#{path}/dep.ref")
   end
 
   it 'dcc deps - oneline' do
     path = "spec/testdata/compiler/dcc"
     incList = Blocks::Compile.read_depfile("#{path}/dep_oneline.d", "DIR", false)
-    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake", "DIR")
     FileUtils.identical?("#{path}/test.d.bake","#{path}/dep_oneline.ref")
   end
 
   it 'dcc deps - noline' do
     path = "spec/testdata/compiler/dcc"
     incList = Blocks::Compile.read_depfile("#{path}/dep_noline.d", "DIR", false)
-    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake", "DIR")
     FileUtils.identical?("#{path}/test.d.bake","#{path}/dep_noline.ref")
   end
 
   it 'keil deps - regular' do
     path = "spec/testdata/compiler/keil"
     incList = Blocks::Compile.read_depfile("#{path}/dep.d", "DIR", true)
-    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake", "DIR")
     FileUtils.identical?("#{path}/test.d.bake","#{path}/dep.ref")
   end
 
   it 'keil deps - oneline' do
     path = "spec/testdata/compiler/keil"
     incList = Blocks::Compile.read_depfile("#{path}/dep_oneline.d", "DIR", true)
-    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake", "DIR")
     FileUtils.identical?("#{path}/test.d.bake","#{path}/dep_oneline.ref")
   end
 
   it 'keil deps - noline' do
     path = "spec/testdata/compiler/keil"
     incList = Blocks::Compile.read_depfile("#{path}/dep_noline.d", "DIR", true)
-    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake")
+    Blocks::Compile.write_depfile(incList, "#{path}/test.d.bake", "DIR")
     FileUtils.identical?("#{path}/test.d.bake","#{path}/dep_noline.ref")
   end
 
