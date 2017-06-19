@@ -1,6 +1,12 @@
 Changelog
 =========
 
+June 19, 2017 - bake-toolkit 2.37.10
+    * Cosmetic: Docu update for inofficial 2.37.9 release.
+
+June 13, 2017 - bake-toolkit 2.37.9 (not released officially)
+    * Bugfix: Exception in exception handler of writing dep files.
+
 May 31, 2017 - bake-toolkit 2.37.8
     * Added: bake handles *.cu files as c-files, so Cuda files can be compiled without renaming.
 
