@@ -6,7 +6,6 @@ module Bake
       @@filterList = nil
       @@valid = nil
       @@options = options
-      @@filter_filename = "#{@@options.qacdata}/filter.txt"
     end
 
     def self.projects
@@ -25,7 +24,8 @@ module Bake
     end
 
     def self.writeFilter(filter)
-      File.open(@@filter_filename, "w+") do |f|
+      filter_filename = "#{@@options.qacdata}/filter.txt"
+      File.open(filter_filename, "w+") do |f|
         filter.uniq!
         filter.delete_if { |f| (f.end_with? "/gtest") or (f.end_with? "/gmock") }
         f.puts(filter)
@@ -34,9 +34,10 @@ module Bake
 
     def self.calcFilter_internal
       @@filterList = []
-      @@valid = File.exist?(@@filter_filename) && @@options.qacfilter
+      filter_filename = "#{@@options.qacdata}/filter.txt"
+      @@valid = File.exist?(filter_filename) && @@options.qacfilter
       if @@valid
-        File.open(@@filter_filename, "r") do |f|
+        File.open(filter_filename, "r") do |f|
           f.each_line { |line| @@filterList << line.strip }
         end
       end

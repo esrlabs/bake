@@ -1,6 +1,9 @@
 Changelog
 =========
 
+June 22, 2017 - bake-toolkit 2.37.11
+    * Changed: bakeqac: next try to workaround QAX daemon error
+
 June 19, 2017 - bake-toolkit 2.37.10
     * Cosmetic: Docu update for inofficial 2.37.9 release.
 

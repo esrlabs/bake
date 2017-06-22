@@ -46,9 +46,13 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
 
   loop do
     FileUtils.rm_rf @options.qacdata if adminStepAndImmediateOutput
+    FileUtils::mkdir_p @options.qacdata
+
+    cmdDupped = cmd.dup
+    cmdDupped << @options.qacdata
 
     # admin step should not take longer than 60 seconds, rest not longer than 80% of qacretry time if specified
-    success, consoleOutput = ProcessHelper.run(cmd, adminStepAndImmediateOutput, true, nil, [0], Dir.pwd, adminStepAndImmediateOutput ? 60 : (@options.qacretry * 0.8).to_i)
+    success, consoleOutput = ProcessHelper.run(cmdDupped, adminStepAndImmediateOutput, true, nil, [0], Dir.pwd, adminStepAndImmediateOutput ? 60 : (@options.qacretry * 0.8).to_i)
     licenseError = false
     qacDaemonError = false
     processTimeout = false
@@ -66,24 +70,29 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
       end
       if (line.include?("Process timeout") || line.include?("A mutually exclusive operation is in progress"))
         puts line
-        puts "Seconds left after killing process: %d" % (@options.qacretry - (Time.now - timeStart))
         processTimeout = true
-        puts "bakeqac: Removing locks from #{@options.qacdata}..."
-        sleep(1)
-        successRemove, consoleOutput = ProcessHelper.run($cmdRemoveLocks, false)
-        puts "Seconds left after removing locks: %d" % (@options.qacretry - (Time.now - timeStart))
-        puts consoleOutput unless consoleOutput.empty?
+        if !adminStepAndImmediateOutput
+          puts "bakeqac: Removing locks from #{@options.qacdata}..."
+          sleep(1)
+          successRemove, consoleOutput = ProcessHelper.run($cmdRemoveLocks, false)
+          puts consoleOutput unless consoleOutput.empty?
+        end
         break
       end
     end
     cSizeCheck = checkCipSize()
 
     break unless ((@options.qacretry >= (Time.now - timeStart)) && (!cSizeCheck || licenseError || qacDaemonError || processTimeout))
-    puts "Retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
+    puts "bakeqac: Retry seconds left: %d" % (@options.qacretry - (Time.now - timeStart))
+
+    if processTimeout && adminStepAndImmediateOutput
+      @options.incrementQacdata
+    end
+
   end
   checkError = !cSizeCheck || licenseError || qacDaemonError || processTimeout
   if @options.qacretry > 0 && checkError
-    puts "Retry timeout over: %d -> failure." % (@options.qacretry - (Time.now - timeStart))
+    puts "bakeqac: Retry timeout over: %d -> failure." % (@options.qacretry - (Time.now - timeStart))
   end
   success = false if checkError
   return [success, consoleOutput, checkError]
@@ -145,10 +154,11 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
 
   if (@options.qacstep.nil? or @options.qacstep.include?"admin")
 
-    cmd = qaExe + ["admin", "--qaf-project-config", "--qaf-project", @options.qacdata]
+    cmd = qaExe + ["admin", "--qaf-project-config"]
     @options.cct.each {|c| cmd << "--cct" << c }
     cmd << "--rcf" << @options.rcf
     cmd << "--acf" << @options.acf
+    cmd << "--qaf-project" # <<  @options.qacdata
 
     puts "bakeqac: creating database..."
 
@@ -185,7 +195,7 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
   if success and (@options.qacstep.nil? or @options.qacstep.include?"analyze")
     FileUtils::mkdir_p @options.qacdata
 
-    cmd = qaExe + ["analyze", "-P", @options.qacdata, "-b"]
+    cmd = qaExe + ["analyze", "-b"]
 
     begin
       devMode = File.exist?"c:/Projekte/git/bake/bin/bake"
@@ -201,7 +211,7 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
 
     bcmd += passedParams.join(" ")
     cmd << bcmd
-
+    cmd << "-P" # << @options.qacdata
     puts "bakeqac: building and analyzing files..."
 
     success, consoleOutput, checkError = executeQacli(cmd)
@@ -245,11 +255,12 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
 
     puts "bakeqac: printing results..."
 
-    cmd = qaExe + ["view", "-P", @options.qacdata, "-m", "STDOUT"]
+    cmd = qaExe + ["view", "-m", "STDOUT"]
     if not @options.qacnoformat
       cmd += ["-f", "%?u==0%(MSG: %:trc: %)%F(%l,%c): (%r:%N)%t%?v%(\n%v%)"]
     end
 
+    cmd << "-P" # << @options.qacdata,
     success, consoleOutput, checkError = executeQacli(cmd)
 
     if ProjectFilter.is_valid?
@@ -403,8 +414,9 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
 
     puts "bakeqac: generating MDR report..."
 
-    cmd = qaExe + ["report", "-P", @options.qacdata, "-t", "MDR"]
+    cmd = qaExe + ["report", "-t", "MDR"]
 
+    cmd << "-P" # << @options.qacdata
     success, consoleOutput, checkError = executeQacli(cmd)
     puts consoleOutput
 
@@ -421,7 +433,7 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
         data = JSON.parse(raw)
 
         filename = File.normalize(data["file"])
-        filename = @options.qacdata + "/../" + filename unless File.is_absolute?(filename) # only needed for UT
+        filename = @options.qacdata + "/../../" + filename unless File.is_absolute?(filename) # only needed for UT
         fileContent = nil
         fileFunctions = []
 

@@ -6,10 +6,11 @@ require 'common/options/finder'
 module Bake
 
   class BakeqacOptions < Parser
-    attr_reader :rcf, :acf, :qacdata, :qacstep, :qac_home, :cct_append  # String
+    attr_reader :rcf, :acf, :qacstep, :qac_home, :cct_append  # String
     attr_reader :c11, :c14, :qacfilter, :qacnoformat, :qacunittest, :qacdoc, :cct_patch # Boolean
     attr_reader :cct # Array
     attr_reader :qacretry # int
+    attr_accessor :qacdata # String
 
     def initialize(argv)
       super(argv)
@@ -30,6 +31,8 @@ module Bake
       @qacunittest = false
       @qacretry = 0
       @qacdoc = false
+      @qacdataOrg = nil
+      @qacdataCounter = 0
 
       add_option(["-b", ""                         ], lambda { |x| setDefault(x)                })
       add_option(["-a"                             ], lambda { |x| Bake.formatter.setColorScheme(x.to_sym) })
@@ -108,6 +111,14 @@ module Bake
       return nil
     end
 
+    def incrementQacdata()
+      if @qacdataCounter > 0
+        FileUtils::rm_rf(@qacdata)
+      end
+      @qacdataCounter = @qacdataCounter + 1
+      @qacdata = @qacdataOrg + "/run" + @qacdataCounter.to_s
+    end
+
     def parse_options(bakeOptions)
       parse_internal(true, bakeOptions)
 
@@ -121,6 +132,9 @@ module Bake
       end
 
       @qacdata = "#{@main_dir}/.qacdata" if @qacdata.nil?
+      @qacdataOrg = @qacdata
+      @qacdataCounter = 0
+      incrementQacdata()
 
       if !ENV["QAC_HOME"] || ENV["QAC_HOME"].empty?
         Bake.formatter.printError("Error: specify the environment variable QAC_HOME.")

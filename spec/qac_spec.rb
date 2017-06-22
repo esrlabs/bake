@@ -270,9 +270,9 @@ describe "Qac" do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "steps_qacdata"
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacnofilter"])
-    admin = $mystring.match(/admin:.*spec\/testdata\/qac\/main\/\.qacdata\*/)
-    analyze = $mystring.match(/analyze:.*spec\/testdata\/qac\/main\/\.qacdata\*/)
-    view = $mystring.match(/view:.*spec\/testdata\/qac\/main\/\.qacdata\*/)
+    admin = $mystring.match(/admin:.*spec\/testdata\/qac\/main\/\.qacdata\/run1\*/)
+    analyze = $mystring.match(/analyze:.*spec\/testdata\/qac\/main\/\.qacdata\/run1\*/)
+    view = $mystring.match(/view:.*spec\/testdata\/qac\/main\/\.qacdata\/run1\*/)
     expect(admin && admin.length > 0).to be == true
     expect(analyze && analyze.length > 0).to be == true
     expect(view && view.length > 0).to be == true
@@ -283,9 +283,9 @@ describe "Qac" do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "steps_qacdata"
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacdata", "\"testQacData\\bla\"", "--qacnofilter"])
-    expect($mystring.include?("admin: *testQacData/bla*")).to be == true
-    expect($mystring.include?("analyze: *testQacData/bla*")).to be == true
-    expect($mystring.include?("view: *testQacData/bla*")).to be == true
+    expect($mystring.include?("admin: *testQacData/bla/run1*")).to be == true
+    expect($mystring.include?("analyze: *testQacData/bla/run1*")).to be == true
+    expect($mystring.include?("view: *testQacData/bla/run1*")).to be == true
     expect(exit_code).to be == 0
   end
 
