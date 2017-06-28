@@ -42,7 +42,8 @@ module Bake
     def has_parameter?(argument)
       b, inPlaceArg = get_block(argument)
       return false unless b
-      b.parameters.length == 1
+      return false if inPlaceArg
+      b.parameters.length >= 1
     end
 
     def parse_internal(ignore_invalid, subOptions = nil)

@@ -1,0 +1,1 @@
+g++ -o testABC/main.exe testABC/src/main.o

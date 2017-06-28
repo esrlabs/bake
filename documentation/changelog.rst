@@ -1,6 +1,9 @@
 Changelog
 =========
 
+June 28, 2017 - bake-toolkit 2.37.12
+    * Bugfix: bakery did not work with -j <num> and -v <num>
+
 June 22, 2017 - bake-toolkit 2.37.11
     * Changed: bakeqac: next try to workaround QAX daemon error
 
@@ -11,7 +14,7 @@ June 13, 2017 - bake-toolkit 2.37.9 (not released officially)
     * Bugfix: Exception in exception handler of writing dep files.
 
 May 31, 2017 - bake-toolkit 2.37.8
-    * Added: bake handles *.cu files as c-files, so Cuda files can be compiled without renaming.
+    * Added: bake handles \*.cu files as c-files, so Cuda files can be compiled without renaming.
 
 May 31, 2017 - bake-toolkit 2.37.7
     * Changed: bakeqac: terminate process and wait a little bit before killing it (for systems which support SIGTERM).

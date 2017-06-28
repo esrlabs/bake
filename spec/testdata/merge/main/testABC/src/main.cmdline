@@ -1,0 +1,1 @@
+g++ -c -MD -MF testABC/src/main.d -o testABC/src/main.o src/main.cpp
