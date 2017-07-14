@@ -1,0 +1,8 @@
+Project default: test {
+
+  LibraryConfig test {
+    Files "$(ProjectDir)/src/x.cpp"
+    DefaultToolchain GCC
+  }
+
+}

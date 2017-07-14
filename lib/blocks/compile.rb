@@ -32,10 +32,17 @@ module Bake
       end
 
       def get_object_file(source)
-
         # until now all OBJECT_FILE_ENDING are equal in all three types
-        adaptedSource = source.chomp(File.extname(source)).gsub(/\.\./, "##") + (Bake.options.prepro ? ".i" : @block.tcs[:COMPILER][:CPP][:OBJECT_FILE_ENDING])
-        return adaptedSource if File.is_absolute?source
+
+        srcWithoutDotDot = source.chomp(File.extname(source)).gsub(/\.\./, "##")
+        if srcWithoutDotDot[0] == '/'
+          srcWithoutDotDot = "#" + srcWithoutDotDot
+        elsif srcWithoutDotDot[1] == ':'
+          srcWithoutDotDot = "#" + srcWithoutDotDot[0] + "#" + srcWithoutDotDot[2..-1]
+        end
+
+        adaptedSource = srcWithoutDotDot + (Bake.options.prepro ? ".i" : @block.tcs[:COMPILER][:CPP][:OBJECT_FILE_ENDING])
+
         File.join([@block.output_dir, adaptedSource])
       end
 
