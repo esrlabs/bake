@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bake-toolkit (2.37.5)
+    bake-toolkit (2.37.13)
       colored (= 1.2)
       concurrent-ruby (= 1.0.5)
       highline (= 1.7.8)
@@ -23,6 +23,7 @@ GEM
     docile (1.1.5)
     highline (1.7.8)
     json (2.1.0)
+    rake (12.0.0)
     rgen (0.8.2)
     rspec (3.6.0)
       rspec-core (~> 3.6.0)
@@ -56,8 +57,9 @@ PLATFORMS
 DEPENDENCIES
   bake-toolkit!
   coveralls
+  rake
   rspec
   simplecov
 
 BUNDLED WITH
-   1.15.0
+   1.15.1
