@@ -1,11 +1,14 @@
 Changelog
 =========
 
+July 17, 2017 - bake-toolkit 2.37.13
+    * Bugfix: Corrected output folder for *Files* in Project.meta with absolute paths.
+
 June 28, 2017 - bake-toolkit 2.37.12
-    * Bugfix: bakery did not work with -j <num> and -v <num>
+    * Bugfix: bakery did not work with -j <num> and -v <num>.
 
 June 22, 2017 - bake-toolkit 2.37.11
-    * Changed: bakeqac: next try to workaround QAX daemon error
+    * Changed: bakeqac: next try to workaround QAX daemon error.
 
 June 19, 2017 - bake-toolkit 2.37.10
     * Cosmetic: Docu update for inofficial 2.37.9 release.
@@ -341,7 +344,7 @@ February 11, 2016 - bake-toolkit 2.15.0
     * Added: multiple inheritance for configs
     * Added: ArtifactName can be specified for libraries
     * Added: Merged configs are printed out when running bake with --debug
-    * Added: info output if "path magic" hides local pathes for IncludeDir
+    * Added: info output if "path magic" hides local paths for IncludeDir
     * Bugfix: fixed passing arguments from bakery to bake
 
 January 14, 2016 - bake-toolkit 2.14.0
@@ -393,7 +396,7 @@ October 26, 2015 - Eclipse plugin 1.6.0
     * Bugfix: fixed exception when trying to build after starting eclipse with a closed project
 October 14, 2015 - bake-toolkit 2.12.0
     * Changed: now ALL startup and exit steps are executed regardless if the previous steps were successful even if stopOnFirstError was configured
-    * Bugfix: relative pathes between roots based on roots.bake were calculated incorrectly
+    * Bugfix: relative paths between roots based on roots.bake were calculated incorrectly
 October 2, 2015 - bake-toolkit 2.11.4
     * Bugfix: bake aborted in larger workspaces with 2.11.3 right before linking
 September 8, 2015 - bake-toolkit 2.11.3

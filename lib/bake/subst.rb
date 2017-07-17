@@ -5,7 +5,7 @@ module Bake
   class Subst
 
     # this is done lazy because usually there is no need to calculate that
-    def self.lazyPathes
+    def self.lazyPaths
       return unless @@lazy
 
       cppCmd = @@toolchain[:COMPILER][:CPP][:COMMAND]
@@ -256,19 +256,19 @@ module Bake
         elsif var == "ArtifactNameBase"
           substStr << @@artifactName.chomp(File.extname(@@artifactName))
         elsif var == "CPPPath"
-          self.lazyPathes
+          self.lazyPaths
           substStr << @@cppExe
         elsif var == "CPath"
-          self.lazyPathes
+          self.lazyPaths
           substStr << @@cExe
         elsif var == "ASMPath"
-          self.lazyPathes
+          self.lazyPaths
           substStr << @@asmExe
         elsif var == "ArchiverPath"
-          self.lazyPathes
+          self.lazyPaths
           substStr << @@archiverExe
         elsif var == "LinkerPath"
-          self.lazyPathes
+          self.lazyPaths
           substStr << @@linkerExe
         elsif var == "Roots"
           substStr << "___ROOTS___"

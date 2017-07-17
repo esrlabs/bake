@@ -74,8 +74,8 @@ describe "VarSubst" do
   end
 
 
-  it 'pathes' do
-    Bake.startBake("cache/main", ["testPathes", "-v", "2"])
+  it 'paths' do
+    Bake.startBake("cache/main", ["testPaths", "-v", "2"])
 
     if not Utils::OS.windows?
       expect($mystring.scan("/usr/bin").count + $mystring.scan("/ruby").count).to be >= 5
