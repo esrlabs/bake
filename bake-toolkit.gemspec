@@ -1,6 +1,5 @@
 $:.unshift(File.dirname(__FILE__)+"/")
 
-require "rake"
 require "lib/common/version"
 
 include FileUtils
@@ -8,7 +7,7 @@ include FileUtils
 #YAML::ENGINE.yamler = 'syck'
 
 PKG_VERSION = Bake::Version.number
-PKG_FILES = FileList[
+PKG_FILES = Dir[
   "lib/**/*.rb",
   "Rakefile.rb",
   "license.txt"
@@ -19,7 +18,7 @@ Gem::Specification.new do |s|
   s.version = PKG_VERSION
   s.summary = "Build tool to compile C/C++ projects fast and easy."
   s.description = "See documentation for more details"
-  s.files = PKG_FILES.to_a
+  s.files = PKG_FILES
   s.require_path = "lib"
   s.author = "Alexander Schaal"
   s.email = "alexander.schaal@esrlabs.com"
@@ -29,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency("highline", "=1.7.8")
   s.add_dependency("concurrent-ruby", "=1.0.5")
   s.add_dependency("colored", "=1.2")
+  s.add_development_dependency("rake")
   s.add_development_dependency("rspec")
   s.add_development_dependency("simplecov")
   s.add_development_dependency("coveralls")
