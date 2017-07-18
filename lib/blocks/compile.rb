@@ -34,11 +34,11 @@ module Bake
       def get_object_file(source)
         # until now all OBJECT_FILE_ENDING are equal in all three types
 
-        srcWithoutDotDot = source.chomp(File.extname(source)).gsub(/\.\./, "##")
+        srcWithoutDotDot = source.chomp(File.extname(source)).gsub(/\.\./, "__")
         if srcWithoutDotDot[0] == '/'
-          srcWithoutDotDot = "#" + srcWithoutDotDot
+          srcWithoutDotDot = "_" + srcWithoutDotDot
         elsif srcWithoutDotDot[1] == ':'
-          srcWithoutDotDot = "#" + srcWithoutDotDot[0] + "#" + srcWithoutDotDot[2..-1]
+          srcWithoutDotDot = "_" + srcWithoutDotDot[0] + "_" + srcWithoutDotDot[2..-1]
         end
 
         adaptedSource = srcWithoutDotDot + (Bake.options.prepro ? ".i" : @block.tcs[:COMPILER][:CPP][:OBJECT_FILE_ENDING])

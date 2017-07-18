@@ -11,7 +11,7 @@ require 'fileutils'
 module Bake
 
 describe "Independent" do
-=begin
+
   it 'Presteps' do
     Bake.startBake("independent/main", ["test_pre_abcd"])
     expect(ExitHelper.exit_code).to be == 0
@@ -158,7 +158,6 @@ describe "Independent" do
     expect((posB < posC)).to be == true
     expect((posC < posD)).to be == true
   end
-=end
 
   it 'Lib' do
     Bake.startBake("independent/main", ["test_lib_abcd"])
