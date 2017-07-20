@@ -2,7 +2,7 @@ Changelog
 =========
 
 July 18, 2017 - bake-toolkit 2.37.14
-    * Bugfix: ".." in *Files* are replaced with "__" now instead of "##" (TI compiler cannot handle this).
+    * Bugfix: ".." in *Files* are replaced now with "__" instead with "##" (TI compiler cannot handle this).
 
 July 17, 2017 - bake-toolkit 2.37.13
     * Bugfix: Corrected output folder for *Files* in Project.meta with absolute paths.

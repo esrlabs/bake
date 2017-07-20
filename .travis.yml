@@ -23,5 +23,6 @@ install:
  - gem install concurrent-ruby -v 1.0.5 --no-ri --no-rdoc
  - gem install colored --no-ri --no-rdoc
  - gem install rspec --no-ri --no-rdoc
+ - gem install rake --no-ri --no-rdoc
 
 script: rake travis

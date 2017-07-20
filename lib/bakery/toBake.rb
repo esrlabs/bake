@@ -55,12 +55,6 @@ module Bake
       end
     end
 
-    toBuildPattern.each do |bp|
-      if not bp.coll_p.isFound
-        Bake.formatter.printInfo("No match for project #{bp.coll_p.name} with config #{bp.coll_p.config}", @options.collection_dir+"/Collection.meta", bp.coll_p.line_number)
-      end
-    end
-
     col.exclude.each do |p|
       p.name = "/"+p.name.gsub("*","(\\w*)")+"/Project.meta"
       p.config = "^"+p.config.gsub("*","(\\w*)")+"$"
