@@ -79,6 +79,10 @@ module Bake
     end
 
     def self.search_to_depth(root, baseName, depth)
+      if not File.exist?(root)
+        Bake.formatter.printError("Root #{root} does not exist.")
+        ExitHelper.exit(1)
+      end
       if depth != nil
         array = Array.new(depth+1) {|i| root + '/*'*i + '/' + baseName}
         return Dir.glob(array).sort
