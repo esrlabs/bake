@@ -15,12 +15,12 @@ module Bake
       s = ""
 
       str.split("").each do |i|
-        hasDoubleQuote = !hasDoubleQuote if !hasQuote and i == '"'
-        hasQuote = !hasQuote if !hasDoubleQuote and i == '\''
-        hadQuote = true if hasDoubleQuote
+        hasDoubleQuote = !hasDoubleQuote if !hasQuote && i == '"'
+        hasQuote = !hasQuote if !hasDoubleQuote && i == '\''
+        hadQuote = true if hasDoubleQuote || hasQuote
         if i == ' '
-          if not hasDoubleQuote and not hasQuote
-            if hadQuote and removeQuotes
+          if !hasDoubleQuote && !hasQuote
+            if hadQuote && removeQuotes
               ar << s[1..-2] if s.length > 2
               hadQuote = false
             else
@@ -32,7 +32,11 @@ module Bake
         end
         s << i
       end
-      ar << s if s.length > 0
+      if !hasDoubleQuote && !hasQuote && hadQuote && removeQuotes
+        ar << s[1..-2] if s.length > 2
+      elsif s.length > 0
+        ar << s
+      end
       ar
     end
 

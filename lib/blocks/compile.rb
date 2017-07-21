@@ -159,8 +159,8 @@ module Bake
           raise SystemCommandFailed.new
         end
 
-        cmd = Utils.flagSplit(compiler[:PREFIX], false)
-        cmd += Utils.flagSplit(compiler[:COMMAND], false)
+        cmd = Utils.flagSplit(compiler[:PREFIX], true)
+        cmd += Utils.flagSplit(compiler[:COMMAND], true)
         cmd += compiler[:COMPILE_FLAGS].split(" ")
 
         if dep_filename

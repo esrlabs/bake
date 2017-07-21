@@ -87,8 +87,8 @@ module Bake
           end
           archiver = @block.tcs[:ARCHIVER]
 
-          cmd = Utils.flagSplit(archiver[:PREFIX], false)
-          cmd += Utils.flagSplit(archiver[:COMMAND], false) # ar
+          cmd = Utils.flagSplit(archiver[:PREFIX], true)
+          cmd += Utils.flagSplit(archiver[:COMMAND], true) # ar
           cmd += Bake::Utils::flagSplit(archiver[:FLAGS],true) # --all_load
           cmd += archiver[:ARCHIVE_FLAGS].split(" ")
 

@@ -1,6 +1,7 @@
-extern void super2();
+#include <iostream>
+
 int main()
 {
-	super2();
-	return 0;
+    std::cout << "TEST COMMAND" << std::endl;
+    return 0;
 }

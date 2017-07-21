@@ -7,4 +7,34 @@ Project {
 	}
   }
 
+  ExecutableConfig testSpace1 {
+    Files "**/*.cpp"
+    ArtifactName "x y.exe"
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig testSpace2a {
+    Files "**/*.cpp"
+    DefaultToolchain GCC {
+      Compiler CPP, command: "build/testSpace1/x y.exe"
+      Linker command: "build/testSpace1/x y.exe"
+    }
+  }
+
+  ExecutableConfig testSpace2b {
+    Files "**/*.cpp"
+    DefaultToolchain GCC {
+      Compiler CPP, command: "'build/testSpace1/x y.exe'"
+      Linker command: "'build/testSpace1/x y.exe'"
+    }
+  }
+
+  ExecutableConfig testSpace2c {
+    Files "**/*.cpp"
+    DefaultToolchain GCC {
+      Compiler CPP, command: "\"build/testSpace1/x y.exe\""
+      Linker command: "\"build/testSpace1/x y.exe\""
+    }
+  }
+
 }

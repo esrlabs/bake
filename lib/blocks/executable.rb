@@ -116,8 +116,8 @@ module Bake
 
           linker = @block.tcs[:LINKER]
 
-          cmd = Utils.flagSplit(linker[:PREFIX], false)
-          cmd += Utils.flagSplit(linker[:COMMAND], false) # g++
+          cmd = Utils.flagSplit(linker[:PREFIX], true)
+          cmd += Utils.flagSplit(linker[:COMMAND], true) # g++
           cmd += linker[:MUST_FLAGS].split(" ")
           cmd += Bake::Utils::flagSplit(linker[:FLAGS],true)
 
