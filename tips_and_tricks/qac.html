@@ -233,8 +233,8 @@ This may be used to add additional configuration parameters which are compiler i
 <li><em>&#8211;compile-only</em> will be automatically added</li>
 <li><em>&#8211;rebuild</em> will be automatically added</li>
 </ul>
-<p>The output will be filtered per default (e.g. some warnings) . To get unfiltered output, write:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacnofilter</span>
+<p>The output will be filtered per default (warnings) . To get unfiltered output, write:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacnomsgfilter</span>
 </pre></div>
 </div>
 </div>
@@ -246,6 +246,10 @@ This may be used to add additional configuration parameters which are compiler i
 <li>Files from subfolders test and mock will be filtered out.</li>
 <li>Files from projects gtest and gmock will be filtered out.</li>
 </ul>
+<p>To shall ALL files:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacnofilefilter</span>
+</pre></div>
+</div>
 <p>bakeqac slightly reformats the output (originally the violated MISRA rule numbers are printed out incomplete). To switch back to raw format, use:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacrawformat</span>
 </pre></div>
