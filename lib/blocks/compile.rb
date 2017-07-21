@@ -228,6 +228,11 @@ module Bake
             end if Bake.options.filelist
           end
           check_config_file
+        else
+          if Bake.options.filename and Bake.options.verbose >= 1
+            puts "Up-to-date #{source}"
+            SyncOut.flushOutput()
+          end
         end
 
 
@@ -286,8 +291,10 @@ module Bake
       def execute
         #Dir.chdir(@projectDir) do
 
-          calcSources
-          calcObjects
+          SyncOut.mutex.synchronize do
+            calcSources
+            calcObjects
+          end
 
           fileListBlock = Set.new if Bake.options.filelist
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|
@@ -439,7 +446,7 @@ module Bake
           @source_files.keep_if do |source|
             source.include?Bake.options.filename
           end
-          if @source_files.length == 0 and cleaning == false and @config.files.length > 0
+          if @source_files.length == 0 and cleaning == false and @config.files.length > 0 and Bake.options.verbose >= 2
             Bake.formatter.printInfo("#{Bake.options.filename} does not match to any source", @config)
           end
         end
