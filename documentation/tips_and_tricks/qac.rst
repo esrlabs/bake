@@ -107,11 +107,11 @@ This is the main step. Use exactly the same options for bakeqac as for bake. A f
 - *--compile-only* will be automatically added
 - *--rebuild* will be automatically added
 
-The output will be filtered per default (e.g. some warnings) . To get unfiltered output, write:
+The output will be filtered per default (warnings) . To get unfiltered output, write:
 
 .. code-block:: console
 
-    bakeqac <options> --qacnofilter
+    bakeqac <options> --qacnomsgfilter
 
 Step 3: view
 ------------
@@ -121,6 +121,13 @@ Results are also filtered in this step if not specified otherwise:
 - Only results from compiled bake projects will be shown (which does not apply to e.g. compiler libraries). To narrow the results, use the *-p* option.
 - Files from subfolders test and mock will be filtered out.
 - Files from projects gtest and gmock will be filtered out.
+
+To shall ALL files:
+
+.. code-block:: console
+
+    bakeqac <options> --qacnofilefilter
+
 
 bakeqac slightly reformats the output (originally the violated MISRA rule numbers are printed out incomplete). To switch back to raw format, use:
 

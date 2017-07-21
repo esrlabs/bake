@@ -1,6 +1,13 @@
 Changelog
 =========
 
+July 21, 2017 - bake-toolkit 2.38.0
+    * Bugfix: It was not possible to specify a path to the compiler including spaces.
+    * Changed: --qacnofilter splitted into --qacnomsgfilter and --qacnofilefilter.
+    * Changed: bake(ry) will exit if a specified workspace does not exist.
+    * Cosmetic: Removed "No match for project" warning from bakery.
+    * Cosmetic: Changed info output when compiling single files with "-f".
+
 July 18, 2017 - bake-toolkit 2.37.14
     * Bugfix: ".." in *Files* are replaced now with "__" instead with "##" (TI compiler cannot handle this).
 

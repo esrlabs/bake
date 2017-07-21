@@ -7,7 +7,7 @@ module Bake
 
   class BakeqacOptions < Parser
     attr_reader :rcf, :acf, :qacstep, :qac_home, :cct_append  # String
-    attr_reader :c11, :c14, :qacfilter, :qacnoformat, :qacunittest, :qacdoc, :cct_patch # Boolean
+    attr_reader :c11, :c14, :qacmsgfilter, :qacfilefilter, :qacnoformat, :qacunittest, :qacdoc, :cct_patch # Boolean
     attr_reader :cct # Array
     attr_reader :qacretry # int
     attr_accessor :qacdata # String
@@ -26,7 +26,8 @@ module Bake
       @default = nil
       @qacdata = nil
       @qacstep = nil
-      @qacfilter = true
+      @qacmsgfilter = true
+      @qacfilefilter = true
       @qacnoformat = false
       @qacunittest = false
       @qacretry = 0
@@ -45,7 +46,9 @@ module Bake
       add_option(["--qaccctpatch"                  ], lambda { @cct_patch = true                })
       add_option(["--qacdata"                      ], lambda { |x| @qacdata = x.gsub(/\\/,"/")  })
       add_option(["--qacstep"                      ], lambda { |x| @qacstep = x                 })
-      add_option(["--qacnofilter"                  ], lambda { @qacfilter = false               })
+      add_option(["--qacnofilter"                  ], lambda { @qacfilefilter = false; @qacmsgfilter = false }) # backward compatibility
+      add_option(["--qacnofilefilter"              ], lambda { @qacfilefilter = false           })
+      add_option(["--qacnomsgfilter"               ], lambda { @qacmsgfilter = false            })
       add_option(["--qacretry"                     ], lambda { |x| @qacretry = x.to_i           })
       add_option(["--qacnoformat", "--qacrawformat"], lambda { @qacnoformat = true              })
       add_option(["--qacunittest"                  ], lambda { @qacunittest = true              })
@@ -67,7 +70,8 @@ module Bake
       puts " --qaccctpatch    If specified, some adaptions to cct are made. Might improve the result - no guarantee."
       puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/.qacdata."
       puts " --qacstep admin|analyze|view|report|mdr   Steps can be ORed. Per default admin|analyze|view will be executed."
-      puts " --qacnofilter    Output will be printed immediately and unfiltered. Per default filters are used to reduce noise."
+      puts " --qacnofilefilter Some files will be filtered per default, like /test/."
+      puts " --qacnomsgfilter  Some messages will be filter per default filters to reduce noise."
       puts " --qacrawformat   Raw QAC output (with incomplete MISRA rules!)."
       puts " --qacretry <seconds>   If build or result step fail due to refused license, the step will be retried until timeout."
       puts " --qacdoc         Print link to HTML help page for every warning if found."

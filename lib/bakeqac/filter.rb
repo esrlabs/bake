@@ -19,7 +19,7 @@ module Bake
     end
 
     def self.localFile(str)
-      return true if not is_valid?
+      return true if (not is_valid?) || (not @@options.qacfilefilter)
       projects.any? { |fil| str.include?(fil+"/") and not str.include?(fil+"/test/") and not str.include?(fil+"/mock/") and not str.include?(fil+"/.qacdata/") }
     end
 
@@ -35,7 +35,7 @@ module Bake
     def self.calcFilter_internal
       @@filterList = []
       filter_filename = "#{@@options.qacdata}/filter.txt"
-      @@valid = File.exist?(filter_filename) && @@options.qacfilter
+      @@valid = File.exist?(filter_filename)
       if @@valid
         File.open(filter_filename, "r") do |f|
           f.each_line { |line| @@filterList << line.strip }

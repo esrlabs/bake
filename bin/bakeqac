@@ -123,7 +123,7 @@ end
   excludeParam = false
   wasMinus = false
   ARGV.each do |x|
-    if ["--c++11", "--c++14", "--qacnofilter", "--qacnoformat", "--qacrawformat", "--qacunittest", "--qacdoc", "--qaccctpatch"].include?x
+    if ["--c++11", "--c++14", "--qacnofilefilter", "--qacnomsgfilter", "--qacnofilter", "--qacnoformat", "--qacrawformat", "--qacunittest", "--qacdoc", "--qaccctpatch"].include?x
       excludeParam = false
       next
     elsif ["--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacretry"].include?x
@@ -235,10 +235,13 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
       end
     end
 
-    if @options.qacfilter
+    if success
+      ProjectFilter.writeFilter(filter)
+    end
+
+    if @options.qacmsgfilter
       if success
         puts filterOutput
-        ProjectFilter.writeFilter(filter)
       else
         puts consoleOutput # error
       end
@@ -277,11 +280,15 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
             converted_line = (scan_res[0][0].downcase + scan_res[0][1] + scan_res[0][2].gsub(/\\/,"/"))
             foundFile = ProjectFilter.localFile(converted_line)
           end
-          if foundFile && !line.include?("QAC++ Deep Flow Static Analyser")
+          if foundFile && (!line.include?("QAC++ Deep Flow Static Analyser") || !@options.qacmsgfilter)
             filteredLines << line
-          elsif !success # HACK, see above
-            filteredLines << line if ["MSG: ", "trc: ", "// ======= Results for"].none? { |pattern| line.include?(pattern) }
+          else
+            misraLine = ["MSG: ", "trc: ", "// ======= Results for"].none? { |pattern| line.include?(pattern) }
+            if !success || (misraLine && !@options.qacmsgfilter) # HACK, see above
+              filteredLines << line
+            end
           end
+
         end
 
         # 2. sort

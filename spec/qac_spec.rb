@@ -442,21 +442,40 @@ describe "Qac" do
     expect(exit_code).to be == 0
   end
 
-  it 'no filter' do
+  it 'no msg filter' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "new_format"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacnofilter"])
-    expect($mystring.include?("rspec/lib1")).to be == true
-    expect($mystring.include?("rspec/lib2")).to be == true
-    expect($mystring.include?("rspec/lib3")).to be == true
-    expect($mystring.include?("rspec/lib1/test")).to be == true
-    expect($mystring.include?("rspec/lib1/mock")).to be == true
-    expect($mystring.include?("rspec/gmock")).to be == true
-    expect($mystring.include?("rspec/gtest")).to be == true
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacnomsgfilter"])
+    expect($mystring.include?("rspec/lib1/")).to be == true
+    expect($mystring.include?("rspec/lib2/")).to be == true
+    expect($mystring.include?("rspec/lib3/")).to be == false
+    expect($mystring.include?("rspec/lib1/test/")).to be == false
+    expect($mystring.include?("rspec/lib1/mock/")).to be == false
+    expect($mystring.include?("rspec/gmock/")).to be == false
+    expect($mystring.include?("rspec/gtest/")).to be == false
     expect($mystring.include?("QAC++ Deep Flow Static Analyser")).to be == true
     expect($mystring.include?("Filtered out 1")).to be == true
     expect($mystring.include?("Filtered out 2")).to be == true
     expect($mystring.include?("Project path")).to be == true
+    expect($mystring.include?("Rebuilding done.")).to be == true
+    expect(exit_code).to be == 0
+  end
+
+  it 'no file filter' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "new_format"
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacnofilefilter"])
+    expect($mystring.include?("rspec/lib1/")).to be == true
+    expect($mystring.include?("rspec/lib2/")).to be == true
+    expect($mystring.include?("rspec/lib3/")).to be == true
+    expect($mystring.include?("rspec/lib1/test/")).to be == true
+    expect($mystring.include?("rspec/lib1/mock/")).to be == true
+    expect($mystring.include?("rspec/gmock/")).to be == true
+    expect($mystring.include?("rspec/gtest/")).to be == true
+    expect($mystring.include?("QAC++ Deep Flow Static Analyser")).to be == false
+    expect($mystring.include?("Filtered out 1")).to be == false
+    expect($mystring.include?("Filtered out 2")).to be == false
+    expect($mystring.include?("Project path")).to be == false
     expect($mystring.include?("Rebuilding done.")).to be == true
     expect(exit_code).to be == 0
   end
