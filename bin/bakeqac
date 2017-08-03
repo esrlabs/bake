@@ -454,7 +454,6 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
                   complexity = e["metrics"]["STCYC"].to_i
                   line = e["line"].to_i
                   allowed = 10
-
                   if complexity > 10 && File.exist?(filename)
                     if fileContent.nil?
                       fileContent = File.readlines(filename)
@@ -463,7 +462,7 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
                     lineOfLastFunction = 0
                     pos = fileFunctions.find_index(line)
                     if !pos.nil? and fileContent.length >= line
-                      lineOfLastFunction = fileFunctions[pos-1] if pos > 0
+                      fileFunctions.each { |x| lineOfLastFunction = x if x > lineOfLastFunction && x < fileFunctions[pos] }
                       # "line" received from json count from 1...
                       # ... so adjustment of lineOfLastFunction for array access not needed
                       # line-2 = index of array for line above the current function

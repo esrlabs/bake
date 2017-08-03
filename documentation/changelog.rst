@@ -1,10 +1,13 @@
 Changelog
 =========
 
+August 3, 2017 - bake-toolkit 2.38.1
+    * Bugfix: bakeqac: suppressions for cyclomatic complexity check may not work in certain cases
+
 July 21, 2017 - bake-toolkit 2.38.0
     * Bugfix: It was not possible to specify a path to the compiler including spaces.
     * Changed: --qacnofilter splitted into --qacnomsgfilter and --qacnofilefilter.
-    * Changed: bake(ry) will exit if a specified workspace does not exist.
+    * Changed: bake(ry) will exit if a specified workspace root does not exist.
     * Cosmetic: Removed "No match for project" warning from bakery.
     * Cosmetic: Changed info output when compiling single files with "-f".
 
