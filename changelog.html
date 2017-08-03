@@ -140,11 +140,16 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>August 3, 2017 - bake-toolkit 2.38.1</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: bakeqac: suppressions for cyclomatic complexity check may not work in certain cases</li>
+</ul>
+</dd>
 <dt>July 21, 2017 - bake-toolkit 2.38.0</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: It was not possible to specify a path to the compiler including spaces.</li>
 <li>Changed: &#8211;qacnofilter splitted into &#8211;qacnomsgfilter and &#8211;qacnofilefilter.</li>
-<li>Changed: bake(ry) will exit if a specified workspace does not exist.</li>
+<li>Changed: bake(ry) will exit if a specified workspace root does not exist.</li>
 <li>Cosmetic: Removed &#8220;No match for project&#8221; warning from bakery.</li>
 <li>Cosmetic: Changed info output when compiling single files with &#8220;-f&#8221;.</li>
 </ul>
