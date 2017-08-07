@@ -1,4 +1,4 @@
-bake 2.38.1
+bake 2.38.2
 ==========================================
 bake, building software **fast** and **easy**!
 

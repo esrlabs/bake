@@ -101,6 +101,9 @@ Variable                                    Description                         
 
 *$(:)*                                      Evaluates to the path variable seperator            Windows: ;, Other: :
                                             of the current platform
+
+*$(QacActive)*                              Evaluates to "yes" if QAC is running (via           yes, no
+                                            bakeqac), otherwise "no".
 ========================================    ===============================================     ========================================
 
 Environment variables

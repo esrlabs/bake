@@ -251,6 +251,8 @@ module Bake
           substStr << Time.now.to_s
         elsif var == "Hostname"
           substStr << Socket.gethostname
+        elsif var == "QacActive"
+          substStr << (Bake.options.qac ? "yes" : "no")
         elsif var == "ArtifactName"
           substStr << @@artifactName
         elsif var == "ArtifactNameBase"

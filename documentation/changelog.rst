@@ -1,6 +1,9 @@
 Changelog
 =========
 
+August 7, 2017 - bake-toolkit 2.38.2
+    * Added: variable $(QacActive) evaluates to "yes" if bakeqac is running, otherwise "no".
+
 August 3, 2017 - bake-toolkit 2.38.1
     * Bugfix: bakeqac: suppressions for cyclomatic complexity check may not work in certain cases
 
