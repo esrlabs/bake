@@ -1,6 +1,9 @@
 Changelog
 =========
 
+August 8, 2017 - bake-toolkit 2.38.3
+    * Changed: bakeqac: if qacli returns with an error, file and message filters are now also applied (but qacli errors are printed out)
+
 August 7, 2017 - bake-toolkit 2.38.2
     * Added: variable $(QacActive) evaluates to "yes" if bakeqac is running, otherwise "no".
 
