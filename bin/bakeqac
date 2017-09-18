@@ -165,7 +165,8 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
     success, consoleOutput, checkError = executeQacli(cmd, true)
 
     if success
-      cctFilename = @options.qacdata+"/prqa/config/"+File.basename(@options.cct[0])
+      cct220 = (File.exist?(@options.qacdata+"/prqa/configs/Initial_Config/config") ? "configs/Initial_Config/" : "")
+      cctFilename = @options.qacdata+"/prqa/" + cct220 + "config/" + File.basename(@options.cct[0])
       if File.exist?cctFilename
         File.open(cctFilename, 'a') do |f|
 

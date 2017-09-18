@@ -1,6 +1,9 @@
 Changelog
 =========
 
+September 18, 2017 - bake-toolkit 2.39.0
+    * Changed: bakeqac: now compatible with PRQA Framework 2.2.0.
+
 August 8, 2017 - bake-toolkit 2.38.3
     * Changed: bakeqac: if qacli returns with an error, file and message filters are now also applied (but qacli errors are printed out)
 
