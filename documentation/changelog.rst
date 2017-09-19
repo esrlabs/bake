@@ -1,6 +1,9 @@
 Changelog
 =========
 
+September 19, 2017 - bake-toolkit 2.39.1
+    * Bugfix: bakeqac: cyclomatic complexity check now also works with PRQA Framework 2.2.0.
+
 September 18, 2017 - bake-toolkit 2.39.0
     * Changed: bakeqac: now compatible with PRQA Framework 2.2.0.
 

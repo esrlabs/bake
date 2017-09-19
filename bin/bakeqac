@@ -432,7 +432,9 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
 
     if success
       require "json"
-      jsons = Dir.glob(@options.qacdata + "/prqa/reports/data/*.json")
+
+      cct220 = (File.exist?(@options.qacdata+"/prqa/configs/Initial_Config/reports") ? "configs/Initial_Config/" : "")
+      jsons = Dir.glob(@options.qacdata + "/prqa/" + cct220 + "reports/data/*.json")
 
       maxComplexity = 0
       numGreaterAllowed = 0
