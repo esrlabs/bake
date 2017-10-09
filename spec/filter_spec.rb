@@ -260,6 +260,26 @@ describe "Filter" do
     expect($mystring.include?("POSTFILTER")).to be == true
   end
 
+  it 'Filter args nothing' do
+    Bake.startBake("filter", ["FilterArgs", "--include_filter", "run"])
+    expect($mystring.include?("run:  :run")).to be == true
+  end
+
+  it 'Filter args empty string' do
+    Bake.startBake("filter", ["FilterArgs", "--include_filter", "run="])
+    expect($mystring.include?("run:  :run")).to be == true
+  end
+
+  it 'Filter args simple filter' do
+    Bake.startBake("filter", ["FilterArgs", "--include_filter", "run=abc"])
+    expect($mystring.include?("run: abc :run")).to be == true
+  end
+
+  it 'Filter args complex filter' do
+    Bake.startBake("filter", ["FilterArgs", "--include_filter", "run=--bla=2,3 --fasel"])
+    expect($mystring.include?("run: --bla=2,3 --fasel :run")).to be == true
+  end
+
 end
 
 end

@@ -24,7 +24,7 @@ module Bake
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse # Boolean
     attr_reader :threads, :socket # Fixnum
-    attr_reader :vars # map
+    attr_reader :vars, :include_filter_args # map
     attr_reader :verbose
     attr_reader :filelist # set
     attr_reader :consoleOutput_fullnames, :consoleOutput_visualStudio
@@ -77,6 +77,7 @@ module Bake
       @roots = []
       @socket = 0
       @include_filter = []
+      @include_filter_args = {}
       @exclude_filter = []
       @main_project_name = ""
       @adapt = []
@@ -120,7 +121,7 @@ module Bake
       add_option(["--toolchain-info",     "--toolchain_info"     ], lambda { |x| ToolchainInfo.showToolchain(x)          })
       add_option(["--toolchain-names",    "--toolchain_names"    ], lambda {     ToolchainInfo.showToolchainList         })
       add_option(["--dot",                                       ], lambda { |x| @dot = x                                })
-      add_option(["--do",                 "--include_filter"     ], lambda { |x| @include_filter << x                    })
+      add_option(["--do",                 "--include_filter"     ], lambda { |x| set_filter(x)                           })
       add_option(["--omit",               "--exclude_filter"     ], lambda { |x| @exclude_filter << x                    })
       add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })
       add_option(["--prebuild"                                   ], lambda {     @prebuild = true                        })
@@ -324,6 +325,12 @@ module Bake
         ExitHelper.exit(1)
       end
       @vars[ar[0]] = ar[1..-1].join("=")
+    end
+
+    def set_filter(f)
+      splitted = f.split("=", 2)
+      @include_filter << splitted[0]
+      @include_filter_args[splitted[0]] = splitted[1] if splitted.length == 2
     end
 
   end

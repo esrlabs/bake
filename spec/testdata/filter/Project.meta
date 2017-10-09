@@ -74,4 +74,9 @@ Project {
     }
   }
 
+  CustomConfig FilterArgs {
+    DefaultToolchain GCC
+    CommandLine "echo run: $(FilterArguments, run) :run", default: off, filter: "run"
+  }
+
 }

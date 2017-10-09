@@ -1,6 +1,10 @@
 Changelog
 =========
 
+October 9, 2017 - bake-toolkit 2.40.0
+    * Workaround: glob pattern with ** don't work with NTFS junctions. First level now manually checked (like done in bake <= 2.34.4).
+    * Added: filters can have arguments, e.g. --do run=--gtest_repeat=2, which can be accessed via $(FilterArguments, run).
+
 September 19, 2017 - bake-toolkit 2.39.1
     * Bugfix: bakeqac: cyclomatic complexity check now also works with PRQA Framework 2.2.0.
 
@@ -8,7 +12,7 @@ September 18, 2017 - bake-toolkit 2.39.0
     * Changed: bakeqac: now compatible with PRQA Framework 2.2.0.
 
 August 8, 2017 - bake-toolkit 2.38.3
-    * Changed: bakeqac: if qacli returns with an error, file and message filters are now also applied (but qacli errors are printed out)
+    * Changed: bakeqac: if qacli returns with an error, file and message filters are now also applied (but qacli errors are printed out).
 
 August 7, 2017 - bake-toolkit 2.38.2
     * Added: variable $(QacActive) evaluates to "yes" if bakeqac is running, otherwise "no".

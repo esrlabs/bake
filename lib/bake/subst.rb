@@ -163,7 +163,7 @@ module Bake
         @@resolvedVars += 1
         var = str[posStart+2..posEnd-1]
 
-        splittedVar = var.split(",")
+        splittedVar = var.split(",").map { |v| v.strip() }
 
         if Bake.options.vars.has_key?(var)
           substStr << Bake.options.vars[var]
@@ -181,15 +181,21 @@ module Bake
          substStr << @@toolchainName
         elsif var == "ProjectName"
           substStr << @@projName
+        elsif var == "FilterArguments" or (splittedVar.length == 2 and splittedVar[0] == "FilterArguments")
+          if (var == "FilterArguments")
+            # default = nothing
+          else
+            args = Bake.options.include_filter_args[splittedVar[1]]
+            substStr << args if args
+          end
         elsif var == "ProjectDir" or (splittedVar.length == 2 and splittedVar[0] == "ProjectDir")
           if (var == "ProjectDir")
             substStr << @@projDir
           else
-            out_proj_name = splittedVar[1].strip
+            out_proj_name = splittedVar[1]
             if @@referencedConfigs.has_key?out_proj_name
               configs = @@referencedConfigs[out_proj_name]
               config = configs.first
-
               substStr << File.rel_from_to_project(@@projDir,config.get_project_dir,false)
             else
               if Bake.options.verbose > 0
@@ -203,8 +209,8 @@ module Bake
             out_proj_name = @@projName
             out_conf_name = @@configName
           else
-            out_proj_name = splittedVar[1].strip
-            out_conf_name = splittedVar[2].strip
+            out_proj_name = splittedVar[1]
+            out_conf_name = splittedVar[2]
           end
           if @@referencedConfigs.has_key?out_proj_name
             configs = @@referencedConfigs[out_proj_name]

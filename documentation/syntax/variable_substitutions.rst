@@ -125,19 +125,25 @@ Example:
 Complex variables
 *****************
 
-bake supports two complex variables:
+bake supports three complex variables:
 
 .. code-block:: console
 
-    $(OutputDir,$(TheProject),$(TheConfig))
+    $(OutputDir, $(TheProject), $(TheConfig))
 
 This will evaluate to the output directory of a specific configuration.
 
 .. code-block:: console
 
-    $(ProjectDir,$(TheProject))
+    $(ProjectDir, $(TheProject))
 
 This will evaluate to the directory of a specific project.
+
+.. code-block:: console
+
+    $(FilterArguments, filterName)
+
+If a filter is specified via e.g. --do run=--gtest_repeat=2, this variable evaluates to --gtest_repeat=2.
 
 Notes and warnings
 ******************
