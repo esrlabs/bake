@@ -87,8 +87,10 @@ module Bake
         array = Array.new(depth+1) {|i| root + '/*'*i + '/' + baseName}
         return Dir.glob(array).sort
       else
-        str = "#{root}/**/#{baseName}"
-        return Dir.glob(str).sort
+        # when using junctions, /**/ does not work, so the glob is splitted into two globs to find at least first level projects
+        str1 = "#{root}/#{baseName}"
+        str2 = "#{root}/*/**/#{baseName}"
+        return (Dir.glob(str1) + Dir.glob(str2)).sort
       end
     end
 
