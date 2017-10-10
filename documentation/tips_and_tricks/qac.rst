@@ -40,11 +40,11 @@ for regular build, simply write:
 
 bakeqac will automatically do the first three steps mentioned above. If one of these steps fails, the consecutive steps will be dismissed.
 
-You can also choose certain steps (can be combined with "|"):
+You can also choose certain steps (can be combined with ","):
 
 .. code-block:: console
 
-    bakeqac <options> --qacstep admin|analyze|view|report|mdr
+    bakeqac <options> --qacstep admin,analyze,view,report,mdr
     bakeqac <options> --qacstep admin
     etc.
 

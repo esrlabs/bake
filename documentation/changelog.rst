@@ -1,6 +1,9 @@
 Changelog
 =========
 
+October 10, 2017 - bake-toolkit 2.40.1
+    * Changed: qacsteps can now be separated by "," (e.g. "--qacstep admin,analyze,mdr")
+
 October 9, 2017 - bake-toolkit 2.40.0
     * Workaround: glob pattern with ** don't work with NTFS junctions. First level now manually checked (like done in bake <= 2.34.4).
     * Added: filters can have arguments, e.g. --do run=--gtest_repeat=2, which can be accessed via $(FilterArguments, run).

@@ -700,7 +700,7 @@ describe "Qac" do
   it 'mdr_test_okay' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "mdr_test_okay"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "\"admin|analyze|mdr\""])
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin,analyze,mdr"])
 
     expect($mystring.include?("lib2")).to be == false
     expect($mystring.include?("lib1/src/File1.cpp")).to be == true
