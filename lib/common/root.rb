@@ -28,7 +28,7 @@ module Bake
     end
 
     def self.extract_depth(str)
-      regex = /(.*)\s*,\s*(\d+)\s*\z/
+      regex = /\s*(\S*)\s*,\s*(\d+)\s*\z/
       scan_res = str.scan(regex)
       if scan_res.length > 0
         return Root.new(scan_res[0][0],scan_res[0][1].to_i)
