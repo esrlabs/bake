@@ -6,11 +6,13 @@ require 'common/options/finder'
 module Bake
 
   class BakeqacOptions < Parser
-    attr_reader :rcf, :acf, :qacstep, :qac_home, :cct_append  # String
+    attr_reader :rcf, :acf, :qacstep, :qac_home, :mcpp_home, :cct_append  # String
     attr_reader :c11, :c14, :qacmsgfilter, :qacfilefilter, :qacnoformat, :qacunittest, :qacdoc, :cct_patch # Boolean
     attr_reader :cct # Array
     attr_reader :qacretry # int
     attr_accessor :qacdata # String
+
+    RCF_DEFAULT = "config/rcf/mcpp-1_5_1-en_US.rcf".freeze()
 
     def initialize(argv)
       super(argv)
@@ -65,7 +67,7 @@ module Bake
       puts " --cct <file>     Set a specific compiler compatibility template, can be defined multiple times."
       puts "                  If not specified, $(QAC_HOME)/config/cct/<platform>.ctt will be used and additionally"
       puts "                  a file named qac.cct will be searched up to root and also used if found."
-      puts " --rcf <file>     Set a specific rule config file. If not specified, $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf will be used."
+      puts " --rcf <file>     Set a specific rule config file. If not specified, $(MCPP_HOME)/#{RCF_DEFAULT} will be used."
       puts " --acf <file>     Set a specific analysis config file, otherwise $(QAC_HOME)/config/acf/default.acf will be used."
       puts " --qaccctpatch    If specified, some adaptions to cct are made. Might improve the result - no guarantee."
       puts " --qacdata <dir>  QAC writes data into this folder. Default is <working directory>/.qacdata."
@@ -144,6 +146,32 @@ module Bake
         Bake.formatter.printError("Error: specify the environment variable QAC_HOME.")
         ExitHelper.exit(1)
       end
+      @qac_home = ENV["QAC_HOME"].gsub(/\\/,"/")
+      @qac_home = @qac_home[0, @qac_home.length-1] if @qac_home.end_with?"/"
+      if !File.directory?(@qac_home)
+        Bake.formatter.printError("Error: QAC_HOME points to invalid directory.")
+        ExitHelper.exit(1)
+      end
+
+      # find mcpp install folder
+      # prio 1: explicit env var
+      if ENV["MCPP_HOME"] && !ENV["MCPP_HOME"].empty?
+        @mcpp_home = ENV["MCPP_HOME"].gsub(/\\/,"/")
+        @mcpp_home = @mcpp_home[0, @mcpp_home.length-1] if @mcpp_home.end_with?"/"
+        if !File.directory?(@mcpp_home)
+          Bake.formatter.printError("Error: MCPP_HOME points to invalid directory: #{@mcpp_home}")
+          ExitHelper.exit(1)
+        end
+      # prio 2: with qac_home
+      elsif File.exists?(@qac_home+"/#{RCF_DEFAULT}")
+        @mcpp_home = @qac_home
+      # prio 3: next to qac_home
+      elsif File.exists?(File.dirname(@qac_home)+"/mcpp-1.5.1/#{RCF_DEFAULT}")
+        @mcpp_home = File.dirname(@qac_home)+"/mcpp-1.5.1"
+      else
+        Bake.formatter.printError("Error: cannot find MCPP home folder. Specify MCPP_HOME.")
+        ExitHelper.exit(1)
+      end
 
       if !@qacstep.nil?
         @qacstep.split("|").each do |s|
@@ -153,9 +181,6 @@ module Bake
           end
         end
       end
-
-      @qac_home = ENV["QAC_HOME"].gsub(/\\/,"/")
-      @qac_home = qac_home[0, qac_home.length-1] if qac_home.end_with?"/"
 
       if @cct.empty?
         gccVersion = Bake::Toolchain::getGccVersion
@@ -185,9 +210,9 @@ module Bake
         end
 
         while (@cct.empty? or gccVersion[0]>=4)
-          @cct = [qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-i686-#{plStr}-C++#{@cVersion}.cct"]
+          @cct = [@qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-i686-#{plStr}-C++#{@cVersion}.cct"]
           break if File.exist?@cct[0]
-          @cct = [qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-x86_64-#{plStr}-C++#{@cVersion}.cct"]
+          @cct = [@qac_home + "/config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-x86_64-#{plStr}-C++#{@cVersion}.cct"]
           break if File.exist?@cct[0]
           if gccVersion[1]>0
             gccVersion[1] -= 1
@@ -202,11 +227,26 @@ module Bake
       @cct_append = cctInDir.gsub(/[\\]/,'/') if cctInDir
 
       if @acf.nil?
-        @acf = qac_home + "/config/acf/default.acf"
+        @acf = @qac_home + "/config/acf/default.acf"
       end
 
       if @rcf.nil?
-        @rcf  = qac_home + "/config/rcf/mcpp-1_5_1-en_US.rcf"
+        @rcf  = @mcpp_home + "/#{RCF_DEFAULT}"
+      end
+
+      @cct.each do |cct|
+        if !File.exists?(cct)
+          Bake.formatter.printError("Error: cct file not found: #{cct}")
+          ExitHelper.exit(1)
+        end
+      end
+      if !File.exists?(@acf)
+        Bake.formatter.printError("Error: acf file not found: #{@acf}")
+        ExitHelper.exit(1)
+      end
+      if !File.exists?(@rcf)
+        Bake.formatter.printError("Error: rcf file not found: #{@rcf}")
+        ExitHelper.exit(1)
       end
 
     end

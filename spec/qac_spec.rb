@@ -10,6 +10,20 @@ require 'fileutils'
 
 module Bake
 
+  VISIBLE_RCF = File.dirname(__FILE__)+"/bin/config/rcf/mcpp-1_5_1-en_US.rcf"
+  HIDDEN_RCF  = File.dirname(__FILE__)+"/bin/config/rcf/mcpp-1_5_1-en_US.rcf_"
+
+  VISIBLE_RCF2 = File.dirname(__FILE__)+"/mcpp-1.5.1"
+  HIDDEN_RCF2  = File.dirname(__FILE__)+"/mcpp-1.5.1_"
+
+
+  def self.hideRcf()
+    FileUtils.mv(Bake::VISIBLE_RCF, Bake::HIDDEN_RCF) if File.exists?(Bake::VISIBLE_RCF)
+  end
+  def self.showRcf2()
+    FileUtils.mv(Bake::HIDDEN_RCF2, Bake::VISIBLE_RCF2) if File.exists?(Bake::HIDDEN_RCF2)
+  end
+
   def self.startBakeqac(proj, opt)
     cmd = ["ruby", "bin/bakeqac","-m", "spec/testdata/#{proj}"].concat(opt).join(" ")
     puts `#{cmd}`
@@ -59,6 +73,12 @@ module Bake
   end
 
 describe "Qac" do
+
+  after(:each) do
+    FileUtils.mv(Bake::HIDDEN_RCF, Bake::VISIBLE_RCF) if File.exists?(Bake::HIDDEN_RCF)
+    FileUtils.mv(Bake::VISIBLE_RCF2, Bake::HIDDEN_RCF2) if File.exists?(Bake::VISIBLE_RCF2)
+    ENV.delete("MCPP_HOME")
+  end
 
   it 'gcc version test' do
     $oldGccVersion = Bake::Toolchain.method(:getGccRawVersionInfo)
@@ -292,8 +312,8 @@ describe "Qac" do
   it 'acf_user' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "config_files"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--acf", "\"bla\\fasel\""])
-    expect($mystring.include?("bla/fasel - ACF")).to be == true
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--acf", "\"#{ENV["QAC_HOME"]}config/acf\\fasel.acf\""])
+    expect($mystring.include?("config/acf/fasel.acf - ACF")).to be == true
     expect(exit_code).to be == 0
   end
 
@@ -308,8 +328,8 @@ describe "Qac" do
   it 'rcf_user' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "config_files"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--rcf", "\"bla\\fasel\""])
-    expect($mystring.include?("bla/fasel - RCF")).to be == true
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--rcf", "\"#{ENV["QAC_HOME"]}config/rcf\\fasel.rcf\""])
+    expect($mystring.include?("config/rcf/fasel.rcf - RCF")).to be == true
     expect(exit_code).to be == 0
   end
 
@@ -350,17 +370,17 @@ describe "Qac" do
   it 'cct user_1' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "config_files"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--cct", "\"bla\\fasel\""])
-    expect($mystring.include?("bla/fasel - CCT")).to be == true
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--cct", "\"#{ENV["QAC_HOME"]}config/cct\\fasel.cct\""])
+    expect($mystring.include?("config/cct/fasel.cct - CCT")).to be == true
     expect(exit_code).to be == 0
   end
 
   it 'cct user_2' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "config_files"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--cct", "\"bla\\fasel\"", "--cct", "more"])
-    expect($mystring.include?("bla/fasel - CCT")).to be == true
-    expect($mystring.include?("more - CCT")).to be == true
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--cct", "\"#{ENV["QAC_HOME"]}config/cct\\fasel.cct\"", "--cct", "#{ENV["QAC_HOME"]}config/cct\\more.cct"])
+    expect($mystring.include?("config/cct/fasel.cct - CCT")).to be == true
+    expect($mystring.include?("config/cct/more.cct - CCT")).to be == true
     expect(exit_code).to be == 0
   end
 
@@ -455,7 +475,7 @@ describe "Qac" do
     expect($mystring.include?("rspec/gtest/")).to be == false
     expect($mystring.include?("QAC++ Deep Flow Static Analyser")).to be == true
     expect($mystring.include?("Filtered out 1")).to be == true
-    expect($mystring.include?("Filtered out 2")).to be == true
+    expect($mystring.include?("Filtered out 2")).to be == false
     expect($mystring.include?("Project path")).to be == true
     expect($mystring.include?("Rebuilding done.")).to be == true
     expect(exit_code).to be == 0
@@ -723,6 +743,111 @@ describe "Qac" do
     expect($mystring.include?("**** Maximum cyclomatic complexity: 16 ****")).to be == true
     expect($mystring.include?("**** Number of functions with cyclomatic complexity more than accepted: 6 ****")).to be == true
     expect(exit_code).to be == 0
+  end
+
+  it 'mcpp home not found' do
+    Bake.hideRcf()
+
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "steps_ok"
+
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest"])
+    expect($mystring.include?("Error: cannot find MCPP home folder. Specify MCPP_HOME.")).to be == true
+    expect($mystring.include?("bakeqac: creating database...")).to be == false
+    expect(exit_code).to be > 0
+  end
+
+  it 'mcpp home invalid' do
+    Bake.hideRcf()
+
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "steps_ok"
+    ENV["MCPP_HOME"] = "wrooong"
+
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest"])
+    expect($mystring.include?("Error: MCPP_HOME points to invalid directory:")).to be == true
+    expect($mystring.include?("bakeqac: creating database...")).to be == false
+    expect(exit_code).to be > 0
+  end
+
+  it 'mcpp home valid' do
+    Bake.hideRcf()
+
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "steps_ok"
+    ENV["MCPP_HOME"] = Bake::HIDDEN_RCF2
+
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest"])
+    expect($mystring.include?("bakeqac: creating database...")).to be == true
+    expect(exit_code).to be == 0
+  end
+
+
+  it 'mcpp included' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "steps_ok"
+
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest"])
+    expect($mystring.include?("bakeqac: creating database...")).to be == true
+    expect(exit_code).to be == 0
+  end
+
+  it 'mcpp beside' do
+    Bake.hideRcf()
+    Bake.showRcf2()
+
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "steps_ok"
+
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest"])
+    expect($mystring.include?("bakeqac: creating database...")).to be == true
+    expect(exit_code).to be == 0
+  end
+
+  it 'mcpp prio included > beside' do
+    Bake.showRcf2()
+
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "config_files"
+
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin"])
+    expect($mystring.include?("spec/bin/config/rcf/mcpp-1_5_1-en_US.rcf")).to be == true
+    expect(exit_code).to be == 0
+  end
+
+  it 'mcpp prio env > included' do
+    ENV["MCPP_HOME"] = Bake::HIDDEN_RCF2
+
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "config_files"
+
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin"])
+    expect($mystring.include?("/spec/mcpp-1.5.1_/config/rcf/mcpp-1_5_1-en_US.rcf")).to be == true
+    expect(exit_code).to be == 0
+  end
+
+  it 'cct not found' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "config_files"
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--cct", "wroong"])
+    expect($mystring.include?("Error: cct file not found: wroong")).to be == true
+    expect(exit_code).to be > 0
+  end
+
+  it 'acf not found' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "config_files"
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--acf", "wroong"])
+    expect($mystring.include?("Error: acf file not found: wroong")).to be == true
+    expect(exit_code).to be > 0
+  end
+
+  it 'rcf not found' do
+    ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
+    ENV["QAC_UT"] = "config_files"
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--rcf", "wroong"])
+    expect($mystring.include?("Error: rcf file not found: wroong")).to be == true
+    expect(exit_code).to be > 0
   end
 
 end

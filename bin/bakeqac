@@ -321,33 +321,37 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
 
         # 3. print
         numberOfMessages = 0
-        Dir.chdir(@options.qac_home) do
-          sortedLines.each do |line|
-            success = true if line.include?"The specified project does not have any source files" # to proceed we assume that this is a valid scenario
-            if (!@options.qacnoformat && line.start_with?("MSG: ")) || (@options.qacnoformat && line.include?(": Msg("))
-              Bake.formatter.printWarning(line)
-              if @options.qacdoc
-                errorNumScan = line.scan(/[^\(]*\([^\(]*\([^:]*:(\d*)/)
-                if errorNumScan.length > 0
-                  errorNum = errorNumScan[0][0].to_i
-                  htmlFiles = Dir.glob("components/qacpp*/doc-en_US/messages/%04d.html" % errorNum) + Dir.glob("components/mcpp*/doc-en_US/messages/%04d.html" % errorNum)
-                  htmlFiles.each do |htmlFile|
+        sortedLines.each do |line|
+          success = true if line.include?"The specified project does not have any source files" # to proceed we assume that this is a valid scenario
+          if (!@options.qacnoformat && line.start_with?("MSG: ")) || (@options.qacnoformat && line.include?(": Msg("))
+            Bake.formatter.printWarning(line)
+            if @options.qacdoc
+              errorNumScan = line.scan(/[^\(]*\([^\(]*\([^:]*:(\d*)/)
+              if errorNumScan.length > 0
+                errorNum = errorNumScan[0][0].to_i
+                Dir.chdir(@options.qac_home) do
+                  htmlFiles = Dir.glob("components/qacpp*/doc-en_US/messages/%04d.html" % errorNum).each do |htmlFile|
+                    puts "doc: #{File.expand_path(htmlFile)}"
+                  end
+                end
+                Dir.chdir(@options.mcpp_home) do
+                  htmlFiles = Dir.glob("components/mcpp*/doc-en_US/messages/%04d.html" % errorNum).each do |htmlFile|
                     puts "doc: #{File.expand_path(htmlFile)}"
                   end
                 end
               end
-              numberOfMessages += 1
-            elsif line.include? " ======= Results for "
-              Bake.formatter.printAdditionalInfo(line)
-            else
-              Bake.formatter.printInfo(line)
             end
+            numberOfMessages += 1
+          elsif line.include? " ======= Results for "
+            Bake.formatter.printAdditionalInfo(line)
+          else
+            Bake.formatter.printInfo(line)
           end
-          Bake.formatter.printSuccess("\n**** Number of messages: #{numberOfMessages} ****")
-          if !success # HACK, see above
-            Bake.formatter.printInfo("\nNote: qacli exited with error, maybe the number of messages was too high and output was truncated.")
-            success = true
-          end
+        end
+        Bake.formatter.printSuccess("\n**** Number of messages: #{numberOfMessages} ****")
+        if !success # HACK, see above
+          Bake.formatter.printInfo("\nNote: qacli exited with error, maybe the number of messages was too high and output was truncated.")
+          success = true
         end
       else
         puts consoleOutput # error

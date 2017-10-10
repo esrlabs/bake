@@ -67,6 +67,7 @@ when "steps_qacdata"
 
   puts "#{step}: *#{qacDir}*"
   puts "Rebuilding done." if step == "analyze"
+  exit(1) if step == "view"
 
 when "config_files"
   ccts = getParams("--cct")
