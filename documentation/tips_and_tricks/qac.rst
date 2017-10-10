@@ -56,7 +56,11 @@ Example output:
 Step 1: admin
 -------------
 
-You have to set the environment variable QAC_HOME, e.g. to *c:\\tools\\prqa\\PRQA-Framework-2.1.0*. If not specified otherwise, cct, rcf and acf will be automatically chosen.
+You have to set the environment variable QAC_HOME, e.g. to *c:\\tools\\prqa\\PRQA-Framework-2.1.0*.
+MCPP has to installed next to *PRQA-Framework-2.x.x* (in this case MCPP_HOME is set automatically to this directory).
+Alternatively set the MCPP_HOME variable explicitly when MCPP is installed somewhere else.
+
+If not specified otherwise, cct, rcf and acf will be automatically chosen.
 
 - Configuration compiler template (cct): Only GCC is supported. bakeqac tries to get the platform and the GCC version and calculates the path to the right cct file. To overwrite this behaviour, specify one or more ccts:
 
@@ -82,7 +86,7 @@ You have to set the environment variable QAC_HOME, e.g. to *c:\\tools\\prqa\\PRQ
 
       bakeqac <options> --rcf <rcf>
 
-  If not specified, bakeqac uses $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf.
+  If not specified, bakeqac uses $(MCPP_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf.
 
 - Analysis configuration file (acf): Can be specified with:
 

@@ -2,7 +2,9 @@ Changelog
 =========
 
 October 10, 2017 - bake-toolkit 2.40.1
-    * Changed: qacsteps can now be separated by "," (e.g. "--qacstep admin,analyze,mdr")
+    * Added: bakeqac supports now different installation folders for QACPP and MCPP.
+    * Added: qacsteps can now be separated by "," (e.g. "--qacstep admin,analyze,mdr")
+    * Bugfix: spaces in roots.bake were not correctly interpreted on Linux / Mac under some circumstances.
 
 October 9, 2017 - bake-toolkit 2.40.0
     * Workaround: glob pattern with ** don't work with NTFS junctions. First level now manually checked (like done in bake <= 2.34.4).
