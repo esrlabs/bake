@@ -181,8 +181,8 @@
 </pre></div>
 </div>
 <p>bakeqac will automatically do the first three steps mentioned above. If one of these steps fails, the consecutive steps will be dismissed.</p>
-<p>You can also choose certain steps (can be combined with &#8220;|&#8221;):</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacstep admin|analyze|view|report|mdr</span>
+<p>You can also choose certain steps (can be combined with &#8221;,&#8221;):</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --qacstep admin,analyze,view,report,mdr</span>
 <span class="go">bakeqac &lt;options&gt; --qacstep admin</span>
 <span class="go">etc.</span>
 </pre></div>
@@ -192,7 +192,10 @@
 </div>
 <div class="section" id="step-1-admin">
 <h2>Step 1: admin<a class="headerlink" href="#step-1-admin" title="Permalink to this headline">¶</a></h2>
-<p>You have to set the environment variable QAC_HOME, e.g. to <em>c:\tools\prqa\PRQA-Framework-2.1.0</em>. If not specified otherwise, cct, rcf and acf will be automatically chosen.</p>
+<p>You have to set the environment variable QAC_HOME, e.g. to <em>c:\tools\prqa\PRQA-Framework-2.1.0</em>.
+MCPP has to installed next to <em>PRQA-Framework-2.x.x</em> (in this case MCPP_HOME is set automatically to this directory).
+Alternatively set the MCPP_HOME variable explicitly when MCPP is installed somewhere else.</p>
+<p>If not specified otherwise, cct, rcf and acf will be automatically chosen.</p>
 <ul>
 <li><p class="first">Configuration compiler template (cct): Only GCC is supported. bakeqac tries to get the platform and the GCC version and calculates the path to the right cct file. To overwrite this behaviour, specify one or more ccts:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --cct &lt;first&gt; --cct &lt;second&gt;</span>
@@ -211,7 +214,7 @@ This may be used to add additional configuration parameters which are compiler i
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --rcf &lt;rcf&gt;</span>
 </pre></div>
 </div>
-<p>If not specified, bakeqac uses $(QAC_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf.</p>
+<p>If not specified, bakeqac uses $(MCPP_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf.</p>
 </li>
 <li><p class="first">Analysis configuration file (acf): Can be specified with:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakeqac &lt;options&gt; --acf &lt;acf&gt;</span>
