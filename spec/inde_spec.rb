@@ -197,7 +197,7 @@ describe "Independent" do
 
     pos41 = $mystring.index("**** Building 5 of 5: main (test_lib_abcd) ****")
     pos42 = $mystring.index("Compiling main (test_lib_abcd): src/e.cpp")
-    pos43 = $mystring.index("Linking   main (test_lib_abcd): build/test_lib_abcd/main.exe")
+    pos43 = $mystring.index("Linking   main (test_lib_abcd): build/test_lib_abcd/main")
 
     expect((pos11 < pos21)).to be == true
     expect((pos11 < pos31)).to be == true

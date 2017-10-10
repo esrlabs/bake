@@ -1,13 +1,26 @@
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 require 'common/version'
 
+if defined?(RUBY_ENGINE) && RUBY_ENGINE == "ruby" && RUBY_VERSION >= "1.9"
+  module Kernel
+    alias :__at_exit :at_exit
+    def at_exit(&block)
+      __at_exit do
+        exit_status = $!.status if $!.is_a?(SystemExit)
+        block.call
+        exit exit_status if exit_status
+      end
+    end
+  end
+end
+
 begin
   require 'coveralls/rake/task'
   Coveralls::RakeTask.new
 rescue LoadError
 end
 
-SPEC_PATTERN ='spec/**/*_spec.rb'
+SPEC_PATTERN ='spec/**/depth_spec.rb'
 
 puts "Creating dummy libs"
 `gcc -r -c rake_helper/dummy.c -o rake_helper/dummy.a`

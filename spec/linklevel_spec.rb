@@ -22,7 +22,7 @@ describe "linklevel" do
     expect($mystring.include?("ar -rc build/test_main_test/liba.a")).to be == true
     expect($mystring.include?("ar -rc build/test_main_test/libb.a")).to be == true
     expect($mystring.include?("ar -rc build/test_main_test/libc.a")).to be == true
-    expect($mystring.include?("g++ -o build/test/main.exe build/test/src/x.o ../a/build/test_main_test/liba.a ../b/build/test_main_test/libb.a -L../b/SP_B_SP -L../a/SP_A_SP -LSP_MAIN_SP ../c/build/test_main_test/libc.a -L../c/SP_C_SP")).to be == true
+    expect($mystring.include?("g++ -o build/test/main"+Bake::Toolchain.outputEnding+" build/test/src/x.o ../a/build/test_main_test/liba.a ../b/build/test_main_test/libb.a -L../b/SP_B_SP -L../a/SP_A_SP -LSP_MAIN_SP ../c/build/test_main_test/libc.a -L../c/SP_C_SP")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -35,7 +35,7 @@ describe "linklevel" do
     expect($mystring.include?("ar -rc build/test_main_test_direct/liba.a")).to be == true
     expect($mystring.include?("ar -rc build/test_main_test_direct/libb.a")).to be == true
     expect($mystring.include?("ar -rc build/test_main_test_direct/libc.a")).to be == true
-    expect($mystring.include?("g++ -o build/test_direct/main.exe build/test_direct/src/x.o ../a/build/test_main_test_direct/liba.a -LSP_MAIN_SP ../c/build/test_main_test_direct/libc.a")).to be == true
+    expect($mystring.include?("g++ -o build/test_direct/main"+Bake::Toolchain.outputEnding+" build/test_direct/src/x.o ../a/build/test_main_test_direct/liba.a -LSP_MAIN_SP ../c/build/test_main_test_direct/libc.a")).to be == true
     expect(ExitHelper.exit_code).to be > 0
   end
 end
