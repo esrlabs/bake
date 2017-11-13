@@ -1,0 +1,22 @@
+Project {
+
+  CustomConfig OneStep, default: off, filter: test1 {
+    CommandLine "echo TEST1", echo: off
+    DefaultToolchain GCC
+  }
+
+  CustomConfig OneStep, default: off, filter: test2 {
+    CommandLine "echo TEST2", echo: off
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig testDef {
+    Files "src/main.cpp"
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Define "BLA", default: on, filter: def
+      }
+    }
+  }
+
+}

@@ -12,6 +12,37 @@ module Bake
 
 describe "Filter" do
 
+  it 'no default in Project' do
+    Bake.startBake("filter2",  [])
+    expect($mystring.include?("* testDef")).to be == true
+    expect($mystring.include?("* OneStep")).to be == false
+    expect($mystring.include?("Building")).to be == false
+  end
+
+  it 'define included' do
+    Bake.startBake("filter2",  ["testDef", "-v2"])
+    expect($mystring.include?("-DBLA")).to be == true
+    expect($mystring.include?("Building done")).to be == true
+  end
+
+  it 'define excluded' do
+    Bake.startBake("filter2",  ["testDef", "-v2", "--omit", "def"])
+    expect($mystring.include?("-DBLA")).to be == false
+    expect($mystring.include?("Building done")).to be == true
+  end
+
+  it 'choose first config' do
+    Bake.startBake("filter2",  ["OneStep", "--do", "test1"])
+    expect($mystring.include?("TEST1")).to be == true
+    expect($mystring.include?("TEST2")).to be == false
+  end
+
+  it 'choose second config' do
+    Bake.startBake("filter2",  ["OneStep", "--do", "test2"])
+    expect($mystring.include?("TEST1")).to be == false
+    expect($mystring.include?("TEST2")).to be == true
+  end
+
   it 'OneStep' do
     Bake.startBake("filter",  ["OneStep"])
     expect($mystring.include?("test done")).to be == true

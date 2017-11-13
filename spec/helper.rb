@@ -30,6 +30,16 @@ module Bake
     Bake::cleanup
   end
 
+  def self.startBakeWithChangeDir(proj, opt)
+    Dir.chdir("spec/testdata/#{proj}") do
+      Bake.options = Options.new([].concat(opt))
+      Bake.options.parse_options()
+      tocxx = Bake::ToCxx.new
+      tocxx.doit()
+      Bake::cleanup
+    end
+  end
+
 
   def self.clean_testdata()
     if not $noCleanTestData

@@ -8,6 +8,8 @@ module Bake
 
     class ModelElement < RGen::MetamodelBuilder::MMBase
       abstract
+      has_attr 'default', String, :defaultValueLiteral => "on"
+      has_attr 'filter', String, :defaultValueLiteral => ""
       has_attr 'line_number', Integer do
         annotation :details => {'internal' => 'true'}
       end
@@ -181,8 +183,6 @@ module Bake
 
       class Step < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
-        has_attr 'default', String, :defaultValueLiteral => "on"
-        has_attr 'filter', String, :defaultValueLiteral => ""
         has_attr 'echo', String, :defaultValueLiteral => "on"
         has_attr 'independent', Boolean, :defaultValueLiteral => "false"
         has_many_attr 'validExitCodes', Integer

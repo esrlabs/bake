@@ -32,6 +32,14 @@ module Bake
       end
 
       @model = RGen::Fragment::FragmentedModel.new(:env => @env)
+
+      @globalFilterStrMap = {
+        Bake::Metamodel::StartupSteps => "STARTUP",
+        Bake::Metamodel::PreSteps => "PRE",
+        Bake::Metamodel::PostSteps => "POST",
+        Bake::Metamodel::ExitSteps => "EXIT",
+        Bake::Metamodel::CleanSteps => "CLEAN"
+      }
     end
 
     def load_internal(filename, silent = false)
@@ -68,6 +76,62 @@ module Bake
       frag
     end
 
+    def filterElement?(elem)
+      return false if Bake::Metamodel::Project === elem
+
+      # 1st prio: explicit single filter
+      if elem.filter != ""
+        return true if  Bake.options.exclude_filter.include?elem.filter
+        return false if Bake.options.include_filter.include?elem.filter
+      end
+
+      # 2nd prio: explicit global filter
+      if defined?(elem.parent)
+        globalFilterStr = @globalFilterStrMap[elem.parent.class]
+        if (globalFilterStr)
+            return true if  Bake.options.exclude_filter.include?globalFilterStr
+            return false if Bake.options.include_filter.include?globalFilterStr
+        end
+      end
+
+      # 3nd prio: default
+      return true if elem.default == "off"
+      false
+    end
+
+    def applyFilterOnArray(a)
+      toRemove = []
+      a.each do |elem|
+        if filterElement?(elem)
+          toRemove << elem
+        else
+          applyFilterOnElement(elem)
+        end
+      end
+      toRemove.each { |r| r.parent = nil }
+    end
+
+    def applyFilterOnElement(elem)
+      return if elem.nil?
+      elem.class.ecore.eAllReferences.each do |f|
+       next unless f.containment
+       begin
+         childData = elem.getGeneric(f.name)
+       rescue Exception => ex
+         next
+       end
+       next if childData.nil?
+       if (Array === childData)
+         applyFilterOnArray(childData)
+       elsif Metamodel::ModelElement === childData
+         if filterElement?(childData)
+           childData.parent = nil
+         else
+           applyFilterOnElement(childData)
+         end
+       end
+      end
+    end
 
     def load(filename)
       sumErrors = 0
@@ -97,6 +161,8 @@ module Bake
       if frag.data[:problems].length > 0
         ExitHelper.exit(1)
       end
+
+      applyFilterOnArray(frag.root_elements)
 
       return frag
 
