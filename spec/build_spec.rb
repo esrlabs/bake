@@ -61,7 +61,7 @@ describe "Building" do
     expect(File.exists?("spec/testdata/cache/main/build/test/src/main.o")).to be == false
     expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
 
-    Bake.startBake("cache/main", ["-p", "main", "-b", "test"])
+    Bake.startBakeWithChangeDir("cache/main", ["-p", ".", "-b", "test"])
 
     expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test/src/lib1.o")).to be == false
     expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == false
@@ -169,7 +169,7 @@ describe "Building" do
     expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == true
     expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == true
 
-    Bake.startBake("cache/main", ["-b", "test","-p", "main", "-c"])
+    Bake.startBakeWithChangeDir("cache/main", ["-b", "test","-p", ".", "-c"])
 
     expect(File.exists?("spec/testdata/cache/main/build/test")).to be == false
     expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test")).to be == true

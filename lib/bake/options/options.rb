@@ -179,10 +179,13 @@ module Bake
       @adapt.uniq!
 
       if @project
-        if @project.split(',').length > 2
+        ar = @project.split(",")
+        if ar.length > 2
           Bake.formatter.printError("Error: only one comma allowed for -p")
           ExitHelper.exit(1)
         end
+        ar[0] = File::basename(Dir.pwd) if ar[0] == "."
+        @project = ar.join(",")
       end
 
       if @conversion_info
