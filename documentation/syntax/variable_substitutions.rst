@@ -129,13 +129,13 @@ bake supports three complex variables:
 
 .. code-block:: console
 
-    $(OutputDir, $(TheProject), $(TheConfig))
+    $(OutputDir, "project name", "config name")
 
 This will evaluate to the output directory of a specific configuration.
 
 .. code-block:: console
 
-    $(ProjectDir, $(TheProject))
+    $(ProjectDir, "project name")
 
 This will evaluate to the directory of a specific project.
 
@@ -143,7 +143,13 @@ This will evaluate to the directory of a specific project.
 
     $(FilterArguments, filterName)
 
-If a filter is specified via e.g. --do run=--gtest_repeat=2, this variable evaluates to --gtest_repeat=2.
+If a filter is specified, the argument of the filter is returned.
+
+Example:
+
+- cmd: "bake ... --do run=--gtest_repeat=2"
+- Project.meta: $(FilterArguments, --gtest_repeat)
+- result: 2
 
 Notes and warnings
 ******************

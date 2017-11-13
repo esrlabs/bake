@@ -85,16 +85,12 @@ z-index: 100;
                                           <span class="help" onMouseover="showMakefileLib()" onMouseout="notip()">lib</span>: &#60;lib&#62;,
                                           <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
                                           <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
-                                          <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
-                                          <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
                                           <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
                                           <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
                                           <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCommandLine()" onMouseout="notip()">CommandLine</span> &#60;line&#62;,
-                                          <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
-                                          <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
                                           <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
                                           <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
                                           <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62;<br>
@@ -190,8 +186,6 @@ z-index: 100;
                                           <span class="help" onMouseover="showMakefileLib()" onMouseout="notip()">lib</span>: &#60;lib&#62;,
                                           <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
                                           <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
-                                          <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
-                                          <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
                                           <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
                                           <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
                                           <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
@@ -199,8 +193,6 @@ z-index: 100;
 &nbsp; &nbsp; }<br>
                             </span>
                             <span style="background-color:#DDDDDD;" id="commandline_part"  class="hide">&#60;line&#62;,
-                            <span class="help" onMouseover="showStepDefault()" onMouseout="notip()">default</span>: on|off,
-                            <span class="help" onMouseover="showStepFilter()" onMouseout="notip()">filter</span>: &#60;name&#62;,
                             <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
                             <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
                             <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62;
@@ -365,27 +357,14 @@ function showCleanSteps() {
   ddrivetip("CleanSteps", "No","0..1","-",str)
 }
 
-function showStepDefault() {
-  str = 'Specifies if a step will be executed by default.<br>'+
-    'Disabling a step by default is useful if the step shall not be executed every build, e.g. special steps for releasing a software or some kind of developer test steps.'
-  ddrivetip("default", "No","-","on",str)
-}
-
 function showEcho() {
   str = '"on" means the command line is shown in output, "off" means the command line is not shown.'
   ddrivetip("echo", "No","-","on",str)
 }
 
 function showInde() {
-      str = '"true" means the step can be built in parallel to other projects. "false" means everything before must be completed, the step runs exclusively.'
-      ddrivetip("independent", "No","-","false",str)
-    }
-
-function showStepFilter() {
-  str = 'A step can be switched on or off explicitly regardless of the "default" attribute with the command line options<br>'+
-    '<i> &nbsp; &nbsp; --do &#60;filter name&#62;</i><br>'+
-    '<i> &nbsp; &nbsp; --omit &#60;filter name&#62;</i><br>'
-  ddrivetip("filter", "No","-","-",str)
+  str = '"true" means the step can be built in parallel to other projects. "false" means everything before must be completed, the step runs exclusively.'
+  ddrivetip("independent", "No","-","false",str)
 }
 
 function showValidExitCodes() {
@@ -393,7 +372,6 @@ function showValidExitCodes() {
     '..., validExitCodes: [200,201,202]'
   ddrivetip("validExitCodes", "No","-","[0]",str)
 }
-
 
 function getMakefileDesc() {
   return 'Makefile to be started, e.g.:<br>'+

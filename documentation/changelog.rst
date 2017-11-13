@@ -1,6 +1,11 @@
 Changelog
 =========
 
+November 13, 2017 - bake-toolkit 2.41.0
+    * Added: default and filter attributes now supported by all elements in Project.meta (except the Project element itself).
+    * Added: "-p ." now specifies the project of the current folder. Example usage: "bakeqac UnitTestBase --adapt gcc -p ."
+    * Bugfix: bakeqac does not suppress warnings anymore about mismatch between glibc and QAC.
+
 October 10, 2017 - bake-toolkit 2.40.1
     * Added: bakeqac supports now different installation folders for QACPP and MCPP.
     * Added: qacsteps can now be separated by "," (e.g. "--qacstep admin,analyze,mdr")
@@ -23,7 +28,7 @@ August 7, 2017 - bake-toolkit 2.38.2
     * Added: variable $(QacActive) evaluates to "yes" if bakeqac is running, otherwise "no".
 
 August 3, 2017 - bake-toolkit 2.38.1
-    * Bugfix: bakeqac: suppressions for cyclomatic complexity check may not work in certain cases
+    * Bugfix: bakeqac: suppressions for cyclomatic complexity check may not work in certain cases.
 
 July 21, 2017 - bake-toolkit 2.38.0
     * Bugfix: It was not possible to specify a path to the compiler including spaces.
