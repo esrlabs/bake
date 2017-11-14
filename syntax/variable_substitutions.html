@@ -316,18 +316,24 @@ bakeqac), otherwise &#8220;no&#8221;.</td>
 <div class="section" id="complex-variables">
 <h2>Complex variables<a class="headerlink" href="#complex-variables" title="Permalink to this headline">¶</a></h2>
 <p>bake supports three complex variables:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>OutputDir, <span class="k">$(</span>TheProject<span class="k">)</span>, <span class="k">$(</span>TheConfig<span class="k">)</span><span class="o">)</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>OutputDir, <span class="s2">&quot;project name&quot;</span>, <span class="s2">&quot;config name&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>This will evaluate to the output directory of a specific configuration.</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>ProjectDir, <span class="k">$(</span>TheProject<span class="k">)</span><span class="o">)</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>ProjectDir, <span class="s2">&quot;project name&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>This will evaluate to the directory of a specific project.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">(</span>FilterArguments, filterName<span class="o">)</span>
 </pre></div>
 </div>
-<p>If a filter is specified via e.g. &#8211;do run=&#8211;gtest_repeat=2, this variable evaluates to &#8211;gtest_repeat=2.</p>
+<p>If a filter is specified, the argument of the filter is returned.</p>
+<p>Example:</p>
+<ul class="simple">
+<li>cmd: &#8220;bake ... &#8211;do run=&#8211;gtest_repeat=2&#8221;</li>
+<li>Project.meta: $(FilterArguments, &#8211;gtest_repeat)</li>
+<li>result: 2</li>
+</ul>
 </div>
 <div class="section" id="notes-and-warnings">
 <h2>Notes and warnings<a class="headerlink" href="#notes-and-warnings" title="Permalink to this headline">¶</a></h2>
