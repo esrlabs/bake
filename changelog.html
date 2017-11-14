@@ -140,10 +140,15 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>November 14, 2017 - bake-toolkit 2.41.1</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: complex variable $(OutputDir,&#8221;project name&#8221;, &#8220;config name&#8221;) did not work</li>
+</ul>
+</dd>
 <dt>November 13, 2017 - bake-toolkit 2.41.0</dt>
 <dd><ul class="first last simple">
 <li>Added: default and filter attributes now supported by all elements in Project.meta (except the Project element itself).</li>
-<li>Added: &#8220;-p .&#8221; now specifies the current project in the current folder. Example usage: &#8220;bakeqac UnitTestBase &#8211;adapt gcc -p .&#8221;</li>
+<li>Added: &#8220;-p .&#8221; now specifies the project of the current folder. Example usage: &#8220;bakeqac UnitTestBase &#8211;adapt gcc -p .&#8221;</li>
 <li>Bugfix: bakeqac does not suppress warnings anymore about mismatch between glibc and QAC.</li>
 </ul>
 </dd>
