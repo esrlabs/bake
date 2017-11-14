@@ -35,6 +35,8 @@ describe "OutputDir" do
     doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)
     Bake.startBake("outDir/main", ["testTcRel"])
     doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", true)
+    expect($mystring.include?("echo from main 1: testOut1")).to be == true
+    expect($mystring.include?("echo from main 2: ../testOut2")).to be == true
 
     Bake.startBake("outDir/main", ["testTcRel", "-c"])
     doesExist("spec/testdata/outDir", "main/testOut1", "testOut2", "lib1/testOut3", false)

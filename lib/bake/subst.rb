@@ -204,7 +204,7 @@ module Bake
               end
             end
           end
-        elsif var == "OutputDir" or (splittedVar.length == 3 and splittedVar[0] == "ProjectDir")
+        elsif var == "OutputDir" or (splittedVar.length == 3 and splittedVar[0] == "OutputDir")
           if (var == "OutputDir")
             out_proj_name = @@projName
             out_conf_name = @@configName

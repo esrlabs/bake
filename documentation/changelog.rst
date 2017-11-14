@@ -1,6 +1,9 @@
 Changelog
 =========
 
+November 14, 2017 - bake-toolkit 2.41.1
+    * Bugfix: complex variable $(OutputDir,"project name", "config name") did not work
+
 November 13, 2017 - bake-toolkit 2.41.0
     * Added: default and filter attributes now supported by all elements in Project.meta (except the Project element itself).
     * Added: "-p ." now specifies the project of the current folder. Example usage: "bakeqac UnitTestBase --adapt gcc -p ."
