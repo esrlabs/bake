@@ -78,6 +78,7 @@ module Bake
           end
         end
       end
+      Subst.resolveOutputDir
     end
 
     def addLib(block, configSteps)

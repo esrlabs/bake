@@ -1,8 +1,12 @@
 Changelog
 =========
 
+November 14, 2017 - bake-toolkit 2.41.2
+    * Bugfix: complex variable $(OutputDir,"project name", "config name") did not work if output folder is not default and based on other variables
+    * Changed: variable substitution speed up
+
 November 14, 2017 - bake-toolkit 2.41.1
-    * Bugfix: complex variable $(OutputDir,"project name", "config name") did not work
+    * Bugfix: complex variable $(OutputDir,"project name", "config name") did not work at all
 
 November 13, 2017 - bake-toolkit 2.41.0
     * Added: default and filter attributes now supported by all elements in Project.meta (except the Project element itself).

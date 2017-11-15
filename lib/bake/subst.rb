@@ -39,13 +39,22 @@ module Bake
       @@lazy = false
     end
 
+    def self.resolveOutputDir()
+      @@outputDirUnresolved.each do |elem|
+        subst(elem)
+     end
+    end
+
     def self.itute(config, projName, isMainProj, toolchain, referencedConfigs, configTcMap)
       @@lazy = true
       @@config = config
       @@toolchain = toolchain
       @@referencedConfigs = referencedConfigs
       @@configTcMap = configTcMap
-      @@toolchainName = config.defaultToolchain.basedOn if isMainProj
+      if isMainProj
+        @@toolchainName = config.defaultToolchain.basedOn
+        @@outputDirUnresolved = []
+      end
 
       @@configName = config.name
       @@projDir = config.parent.get_project_dir
@@ -120,22 +129,22 @@ module Bake
 
       @@userVarMapMain = @@userVarMap.clone if isMainProj
 
-      3.times {
-        subst(config);
-        substToolchain(toolchain)
-      }
-
       @@resolvedVars = 0
-      lastFoundInVar = -1
-      100.times do
+      lastFoundInVar = 0
+      10.times do
         subst(config)
-        break if @@resolvedVars == 0 or (@@resolvedVars >= lastFoundInVar and lastFoundInVar >= 0)
+        substToolchain(toolchain)
+        if @@resolvedVars == lastFoundInVar
+          lastFoundInVar = 0
+          break
+        end
         lastFoundInVar = @@resolvedVars
       end
-      if (@@resolvedVars > 0)
+      if (lastFoundInVar > 0)
         Bake.formatter.printError("Cyclic variable substitution detected", config.file_name)
         ExitHelper.exit(1)
       end
+
 
     end
 
@@ -230,11 +239,18 @@ module Bake
                   out_dir = "build" + Bake.options.buildDirDelimiter + qacPart + out_conf_name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
                 end
               end
-              out_dir = substString(out_dir, elem)
-              if File.is_absolute?(out_dir)
-                substStr << out_dir
+
+              if (out_dir.include?"$(")
+                substStr << str[posStart..posEnd]
+                @@resolvedVars -= 1
+                @@outputDirUnresolved << elem
               else
-                substStr << Pathname.new(File.rel_from_to_project(@@projDir,config.get_project_dir,true)  + out_dir).cleanpath.to_s
+                out_dir = substString(out_dir, elem)
+                if File.is_absolute?(out_dir)
+                  substStr << out_dir
+                else
+                  substStr << Pathname.new(File.rel_from_to_project(@@projDir,config.get_project_dir,true)  + out_dir).cleanpath.to_s
+                end
               end
             else
               if Bake.options.verbose > 0

@@ -1,0 +1,11 @@
+Project {
+
+  CustomConfig Lib
+
+  CustomConfig UnitTestBase {
+    Dependency config: Lib
+    CommandLine "echo $(OutputDir,$(ProjectName),Lib)", echo: off
+    DefaultToolchain GCC, outputDir: "-->$(ProjectName)_$(ConfigName)<--"
+}
+
+}

@@ -127,6 +127,12 @@ describe "VarSubst" do
       expect(($mystring.include?"from main 2: /tmp/testOutDirD")).to be == true
     end
   end
+
+  it 'complex outputdir with variables' do
+    Bake.startBake("var/main", ["UnitTestBase"])
+    expect(($mystring.include?"-->main_Lib<--")).to be == true
+  end
+
 end
 
 end
