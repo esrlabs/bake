@@ -1,6 +1,9 @@
 Changelog
 =========
 
+November 17, 2017 - bake-toolkit 2.41.3
+    * Changed: development dependency changed from latest rake to 12.2.1 to avoid problems with Ruby 1.9.
+
 November 14, 2017 - bake-toolkit 2.41.2
     * Bugfix: complex variable $(OutputDir,"project name", "config name") did not work if output folder is not default and based on other variables
     * Changed: variable substitution speed up
