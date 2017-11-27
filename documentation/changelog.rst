@@ -1,6 +1,9 @@
 Changelog
 =========
 
+November 27, 2017 - bake-toolkit 2.41.4
+    * Changed: bakeqac cyclomatic complexity check is now more robust against non-ASCII characters in source files
+
 November 17, 2017 - bake-toolkit 2.41.3
     * Changed: development dependency changed from latest rake to 12.2.1 to avoid problems with Ruby 1.9.
 

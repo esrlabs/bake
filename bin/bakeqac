@@ -476,6 +476,8 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
                       # ... so adjustment of lineOfLastFunction for array access not needed
                       # line-2 = index of array for line above the current function
                       (line-2).downto(lineOfLastFunction) do |i|
+                        # skip invalid character, otherwise exception might occur
+                        fileContent[i].encode!('UTF-8',  :invalid => :replace, :undef => :replace, :replace => '')
                         res = fileContent[i].scan(/METRIC\s+STCYC\s+(\d+)/)
                         if (res.length > 0)
                           allowed = res[0][0].to_i if res[0][0].to_i > 10
