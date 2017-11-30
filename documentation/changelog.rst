@@ -1,6 +1,10 @@
 Changelog
 =========
 
+November 30, 2017 - bake-toolkit 2.42.0
+    * Added: bakeqac now supports PRQA 2.2.2 and MCPP 1.5.2
+    * Added: --qacverbose to print the commandline which is used for for qacli
+
 November 27, 2017 - bake-toolkit 2.41.4
     * Changed: bakeqac cyclomatic complexity check is now more robust against non-ASCII characters in source files
 

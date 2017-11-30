@@ -51,6 +51,8 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
     cmdDupped = cmd.dup
     cmdDupped << @options.qacdata
 
+    puts cmdDupped.join(" ") if @options.qacverbose
+
     # admin step should not take longer than 60 seconds, rest not longer than 80% of qacretry time if specified
     success, consoleOutput = ProcessHelper.run(cmdDupped, adminStepAndImmediateOutput, true, nil, [0], Dir.pwd, adminStepAndImmediateOutput ? 60 : (@options.qacretry * 0.8).to_i)
     licenseError = false
@@ -123,7 +125,7 @@ end
   excludeParam = false
   wasMinus = false
   ARGV.each do |x|
-    if ["--c++11", "--c++14", "--qacnofilefilter", "--qacnomsgfilter", "--qacnofilter", "--qacnoformat", "--qacrawformat", "--qacunittest", "--qacdoc", "--qaccctpatch"].include?x
+    if ["--c++11", "--c++14", "--qacnofilefilter", "--qacnomsgfilter", "--qacnofilter", "--qacnoformat", "--qacrawformat", "--qacunittest", "--qacdoc", "--qaccctpatch", "--qacverbose"].include?x
       excludeParam = false
       next
     elsif ["--cct", "--rcf", "--acf", "--qacdata", "--qacstep", "--qacretry"].include?x

@@ -7,12 +7,12 @@ module Bake
 
   class BakeqacOptions < Parser
     attr_reader :rcf, :acf, :qacstep, :qac_home, :mcpp_home, :cct_append  # String
-    attr_reader :c11, :c14, :qacmsgfilter, :qacfilefilter, :qacnoformat, :qacunittest, :qacdoc, :cct_patch # Boolean
+    attr_reader :c11, :c14, :qacmsgfilter, :qacfilefilter, :qacnoformat, :qacunittest, :qacdoc, :cct_patch, :qacverbose # Boolean
     attr_reader :cct # Array
     attr_reader :qacretry # int
     attr_accessor :qacdata # String
 
-    RCF_DEFAULT = "config/rcf/mcpp-1_5_1-en_US.rcf".freeze()
+    RCF_DEFAULT = "config/rcf/mcpp-*-en_US.rcf".freeze()
 
     def initialize(argv)
       super(argv)
@@ -27,6 +27,7 @@ module Bake
       @cct = []
       @default = nil
       @qacdata = nil
+      @qacverbose = false
       @qacstep = nil
       @qacmsgfilter = true
       @qacfilefilter = true
@@ -55,6 +56,7 @@ module Bake
       add_option(["--qacnoformat", "--qacrawformat"], lambda { @qacnoformat = true              })
       add_option(["--qacunittest"                  ], lambda { @qacunittest = true              })
       add_option(["--qacdoc"                       ], lambda { @qacdoc = true                   })
+      add_option(["--qacverbose"                   ], lambda { @qacverbose = true               })
       add_option(["-h", "--help"                   ], lambda { usage; ExitHelper.exit(0)        })
       add_option(["--version"                      ], lambda { Bake::Version.printBakeqacVersion; ExitHelper.exit(0)    })
 
@@ -78,10 +80,18 @@ module Bake
       puts " --qacrawformat   Raw QAC output (with incomplete MISRA rules!)."
       puts " --qacretry <seconds>   If build or result step fail due to refused license, the step will be retried until timeout."
       puts " --qacdoc         Print link to HTML help page for every warning if found."
+      puts " --qacverbose     Verbose output of bakeqac."
       puts " --version        Print version."
       puts " -h, --help       Print this help."
       puts "Note: all parameters from bake apply also here. Note, that --rebuild and --compile-only will be added to the internal bake call automatically."
       puts "Note: works only for GCC 4.1 and above"
+    end
+
+    def checkNum(num)
+      if String === num && !/\A\d+\z/.match(num)
+        Bake.formatter.printError("Error: #{num} is not a positive number")
+        ExitHelper.exit(1)
+      end
     end
 
     def setDefault(x)
@@ -164,11 +174,11 @@ module Bake
           ExitHelper.exit(1)
         end
       # prio 2: with qac_home
-      elsif File.exists?(@qac_home+"/#{RCF_DEFAULT}")
+      elsif !(mcps = Dir.glob(@qac_home+"/#{RCF_DEFAULT}")).empty?
         @mcpp_home = @qac_home
       # prio 3: next to qac_home
-      elsif File.exists?(File.dirname(@qac_home)+"/mcpp-1.5.1/#{RCF_DEFAULT}")
-        @mcpp_home = File.dirname(@qac_home)+"/mcpp-1.5.1"
+      elsif !(mcps = Dir.glob(File.dirname(@qac_home)+"/mcpp-*/")).empty?
+        @mcpp_home = mcps.sort.last[0..-2]
       else
         Bake.formatter.printError("Error: cannot find MCPP home folder. Specify MCPP_HOME.")
         ExitHelper.exit(1)
@@ -232,7 +242,12 @@ module Bake
       end
 
       if @rcf.nil?
-        @rcf  = @mcpp_home + "/#{RCF_DEFAULT}"
+        rcfs = Dir.glob(@mcpp_home+"/#{RCF_DEFAULT}")
+        if rcfs.empty?
+          Bake.formatter.printError("Error: rcf file not found: #{@mcpp_home+"/#{RCF_DEFAULT}"}")
+          ExitHelper.exit(1)
+        end
+        @rcf  = rcfs.sort.last
       end
 
       @cct.each do |cct|
