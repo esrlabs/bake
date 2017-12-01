@@ -3,7 +3,7 @@ The Project.meta file
 
 What is the Project.meta file
 *****************************
-The `Project.meta` file is bakes configuration file.
+The `Project.meta` file is bake's configuration file.
 
 * Every project has a Project.meta file in the project root directory.
 * A Project.meta file contains one or more build configurations.

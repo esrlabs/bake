@@ -22,7 +22,7 @@ Quickstart
 
         Time: 00:00 minutes
 
-    This will provide you with the follwing basic project structure which is ready to use
+    This will provide you with the following basic project structure which is ready to use:
 
     .. code-block:: console
 

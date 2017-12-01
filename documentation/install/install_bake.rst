@@ -14,7 +14,7 @@ Installing bake is very easy!
 
 #. Make sure you have installed `Ruby <https://www.ruby-lang.org/en/>`_ **>= 1.9**.
 
-#. Istall the bake gem.
+#. Install the bake gem.
 
     .. code-block:: console
 
@@ -25,7 +25,7 @@ Example
 
 .. code-block:: console
 
-    User@Host:~$ ruby -v                    # (Check if an apropriate ruby version is installed)
+    User@Host:~$ ruby -v                    # (Check if an appropriate ruby version is installed)
     ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0]
 
     User@Host:~$ gem install bake-toolkit   # (Install the bake gem)
@@ -63,7 +63,7 @@ The installation does not start
 -------------------------------
 **Issue:**
 The installation of the bake gem does not start.
-(This is often caused by a password protected internat proxy.)
+(This is often caused by a password-protected internal proxy.)
 
 
 **Solution:**
@@ -97,7 +97,7 @@ Error Message During the installation
 Ruby throws an error during the installation.
 
 **Solution:**
-Usualy you will see an error like this:
+Usually you will see an error like this:
 
     .. code-block:: console
 

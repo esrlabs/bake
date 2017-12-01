@@ -16,10 +16,10 @@ To build a project, you have to specify
 Advantages
 **********
 
-Reducing the number of build configurations (toolchain settings like debug or release flags can be set outside of the project)
-Most projects do not have any compiler definitions anymore
-Only flags which must be used or flags which must not be used have to be specified in the projects
-Changing compiler definitions for all projects can be done easily in the main project build configuration
+ * Reducing the number of build configurations (toolchain settings like debug or release flags can be set outside of the project)
+ * Most projects do not have any compiler definitions anymore
+ * Only flags which must be used or flags which must not be used have to be specified in the projects
+ * Changing compiler definitions for all projects can be done easily in the main project build configuration
 
 Example
 *******
@@ -37,9 +37,9 @@ Project.meta of Main (Debug and Release)         Project.meta of Sub (only one b
 Output directory
 ****************
 
-A project in a specific build configuration can be build in different contexts.
-That's why the output directory of a project cannot be simply the build configuration name of the project to avoid inconsistencies.
-Therefore the output directory names are.
+A project in a specific build configuration can be built in different contexts.
+That's why the output directory of a project cannot be simply the build configuration name of the project, to avoid inconsistencies.
+Therefore the output directory names are:
 
     * Main project: $(MainConfigName) like in regular Eclipse CDT builds
     * Subprojects: $(MainConfigName)_$(MainProjectName) instead of the config name of the subproject
