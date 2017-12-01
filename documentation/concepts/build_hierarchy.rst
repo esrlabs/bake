@@ -24,10 +24,10 @@ The main project has dependencies to the projects A, B and C:
 
 Steps are executed bottom-up. If one step fails, all steps above won't be executed.
 
-If e.g.
+If for example:
     * PreStepMain 2 fails
     * at least one file of library B does not compile
-then
+then:
     * library B will not be created
     * files of the main project will not be compiled
     * main project will not be linked

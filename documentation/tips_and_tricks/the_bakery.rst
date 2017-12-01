@@ -14,7 +14,7 @@ The most important options are the collection name (*-b*) and the collection dir
 
 Examples:
 
-    Build all unittests:
+    Build all unit tests:
 
     .. code-block:: console
 
@@ -26,13 +26,13 @@ Examples:
 
         bakery AllUnitTests
 
-    Clean all unittests:
+    Clean all unit tests:
 
     .. code-block:: console
 
         bakery -b AllUnitTests -c
 
-    Build all unittests, workspace checked out into two roots, console supports colors, stop on first error, run the unittests after build:
+    Build all unit tests, workspace checked out into two roots, console supports colors, stop on first error, run the unittests after build:
 
     .. code-block:: console
 

@@ -20,7 +20,7 @@ Add in the Project.meta the following code:
       Except setup, config: Release
     }
 
-It is possible to specify the Prebuild tags in all configurations, not only in the main configuration. Logically they will be merged.
+It is possible to specify the Prebuild tags in all configurations, not only in the main configuration. Logically, they will be merged.
 
 In the example above, no configurations will be built - except those three. The prebuild output is used directly.
 
@@ -50,7 +50,7 @@ Typical workflow
 
 1. Compiling the workspace completely without prebuild feature.
 2. Executing a distribution script which copies all relevant files to a distribution directory.
-   Make sure to add all header files of prebuild libraries if they are needed for other non-prebuild libraries.
+   Make sure to add all header files of prebuilt libraries if they are needed for other non-prebuilt libraries.
    You may use the dependency files in the output directory for that script.
 3. In the distribution folder use "--prebuild" when compiling the workspace.
 
