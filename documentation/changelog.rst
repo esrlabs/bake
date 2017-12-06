@@ -1,6 +1,9 @@
 Changelog
 =========
 
+December 6, 2017 - bake-toolkit 2.42.1
+    * Added: --incs-and-defs now also prints directory of the project
+
 November 30, 2017 - bake-toolkit 2.42.0
     * Added: bakeqac now supports PRQA 2.2.2 and MCPP 1.5.2
     * Added: --qacverbose to print the commandline which is used for for qacli

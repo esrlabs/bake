@@ -87,7 +87,6 @@ module Bake
       end
 
       def self.includesAndDefines(mainConfig, mainTcs)
-        json = true
         secureShow {
         mainBlock = Blocks::ALL_BLOCKS[Bake.options.main_project_name+","+Bake.options.build_config]
 
@@ -113,10 +112,12 @@ module Bake
               {  :includes => (blockIncs + intIncs).uniq,
                  :cpp_defines => (blockDefs[:CPP] + intDefs[:CPP]).uniq,
                  :c_defines => (blockDefs[:C] + intDefs[:C]).uniq,
-                 :asm_defines => (blockDefs[:ASM] + intDefs[:ASM]).uniq
+                 :asm_defines => (blockDefs[:ASM] + intDefs[:ASM]).uniq,
+                 :dir => blocks.first.projectDir
               }
           else
             puts projName
+            puts " dir #{blocks.first.projectDir}"
             puts " includes"
             (blockIncs + intIncs).uniq.each { |i| puts "  #{i}" }
             [:CPP, :C, :ASM].each do |type|
