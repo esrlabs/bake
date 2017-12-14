@@ -82,7 +82,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -160,10 +160,14 @@ The main project can have a DefaultToolchain definition, which is valid for all 
 </div></blockquote>
 <div class="section" id="advantages">
 <h2>Advantages<a class="headerlink" href="#advantages" title="Permalink to this headline">¶</a></h2>
-<p>Reducing the number of build configurations (toolchain settings like debug or release flags can be set outside of the project)
-Most projects do not have any compiler definitions anymore
-Only flags which must be used or flags which must not be used have to be specified in the projects
-Changing compiler definitions for all projects can be done easily in the main project build configuration</p>
+<blockquote>
+<div><ul class="simple">
+<li>Reducing the number of build configurations (toolchain settings like debug or release flags can be set outside of the project)</li>
+<li>Most projects do not have any compiler definitions anymore</li>
+<li>Only flags which must be used or flags which must not be used have to be specified in the projects</li>
+<li>Changing compiler definitions for all projects can be done easily in the main project build configuration</li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
@@ -228,9 +232,9 @@ Changing compiler definitions for all projects can be done easily in the main pr
 </div>
 <div class="section" id="output-directory">
 <h2>Output directory<a class="headerlink" href="#output-directory" title="Permalink to this headline">¶</a></h2>
-<p>A project in a specific build configuration can be build in different contexts.
-That&#8217;s why the output directory of a project cannot be simply the build configuration name of the project to avoid inconsistencies.
-Therefore the output directory names are.</p>
+<p>A project in a specific build configuration can be built in different contexts.
+That&#8217;s why the output directory of a project cannot be simply the build configuration name of the project, to avoid inconsistencies.
+Therefore the output directory names are:</p>
 <blockquote>
 <div><ul class="simple">
 <li>Main project: $(MainConfigName) like in regular Eclipse CDT builds</li>
