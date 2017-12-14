@@ -1,7 +1,7 @@
 Parallel build
 ******************************************************
 
-Since the start of a bake execution, files within a project will be built in parallel. The number of threads can be defined on command line via the "-j" parameter. "-j8" is the default.
+Files within a project will be built in parallel. The number of threads can be defined on command line via the "-j" parameter. "-j8" is the default.
 
 Since bake 2.33.0, **projects are built also in parallel**.
 
