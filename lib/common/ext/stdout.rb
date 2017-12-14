@@ -11,7 +11,10 @@ class ThreadOut
     if Thread.current[:stdout] then
       Thread.current[:stdout].write stuff
     else
-      @out.write stuff
+      begin
+        @out.write stuff
+      rescue Exception
+      end
     end
   end
 
@@ -19,7 +22,10 @@ class ThreadOut
     if Thread.current[:stdout] then
       Thread.current[:stdout].puts stuff
     else
-      @out.puts stuff
+      begin
+         @out.puts stuff
+      rescue Exception
+      end
     end
   end
 
@@ -27,7 +33,10 @@ class ThreadOut
     if Thread.current[:stdout] then
       Thread.current[:stdout].puts stuff
     else
-      @out.print stuff
+      begin
+        @out.print stuff
+      rescue Exception
+      end
     end
   end
 
@@ -35,7 +44,10 @@ class ThreadOut
     if Thread.current[:stdout] then
       Thread.current[:stdout].flush
     else
-      @out.flush
+      begin
+        @out.flush
+      rescue Exception
+      end
     end
   end
 end
