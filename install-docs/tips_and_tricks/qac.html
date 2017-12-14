@@ -298,6 +298,24 @@ The suppression syntax is &#8220;METRIC STCYC &lt;accepted complexity&gt;&#8221;
 <div class="section" id="notes">
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <p>If &#8220;&lt;mainConfigName&gt;Qac&#8221; is found in main project, it will be used instead of &#8220;&lt;mainConfigName&gt;. This is useful if the unit test has to be built different to MISRA.</p>
+<p>bakeqac can suppress unsuppressible errors with &#8220;PRQA S &lt;num&gt;&#8221; syntax in the same line. Currently the affected error numbers are:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">[&quot;0019&quot;, &quot;0020&quot;, &quot;0031&quot;, &quot;0034&quot;, &quot;0035&quot;, &quot;0036&quot;, &quot;0061&quot;, &quot;0098&quot;, &quot;0099&quot;, &quot;0224&quot;,</span>
+<span class="go"> &quot;0622&quot;, &quot;0800&quot;, &quot;0801&quot;, &quot;0802&quot;, &quot;0996&quot;, &quot;1950&quot;, &quot;1951&quot;, &quot;1962&quot;, &quot;1963&quot;, &quot;1964&quot;,</span>
+<span class="go"> &quot;1965&quot;, &quot;1966&quot;, &quot;1967&quot;, &quot;1968&quot;, &quot;1969&quot;, &quot;1970&quot;, &quot;1971&quot;, &quot;1972&quot;, &quot;1973&quot;, &quot;1974&quot;,</span>
+<span class="go"> &quot;1975&quot;, &quot;1976&quot;, &quot;1977&quot;, &quot;1978&quot;, &quot;1979&quot;, &quot;1980&quot;, &quot;1982&quot;, &quot;1984&quot;, &quot;1985&quot;, &quot;1986&quot;,</span>
+<span class="go"> &quot;1987&quot;, &quot;1989&quot;, &quot;1990&quot;, &quot;1991&quot;, &quot;3104&quot;, &quot;0014&quot;, &quot;0015&quot;, &quot;0016&quot;, &quot;0021&quot;, &quot;0022&quot;,</span>
+<span class="go"> &quot;0028&quot;, &quot;0032&quot;, &quot;0039&quot;, &quot;0043&quot;, &quot;0045&quot;, &quot;0046&quot;, &quot;0050&quot;, &quot;0052&quot;, &quot;0053&quot;, &quot;0054&quot;,</span>
+<span class="go"> &quot;0058&quot;, &quot;0059&quot;, &quot;0079&quot;, &quot;0083&quot;, &quot;0101&quot;, &quot;0133&quot;, &quot;0150&quot;, &quot;0165&quot;, &quot;0170&quot;, &quot;0174&quot;,</span>
+<span class="go"> &quot;0175&quot;, &quot;0177&quot;, &quot;0200&quot;, &quot;0201&quot;, &quot;0208&quot;, &quot;0217&quot;, &quot;0231&quot;, &quot;0246&quot;, &quot;0248&quot;, &quot;0251&quot;,</span>
+<span class="go"> &quot;0253&quot;, &quot;0255&quot;, &quot;0257&quot;, &quot;0271&quot;, &quot;0276&quot;, &quot;0278&quot;, &quot;0279&quot;, &quot;0282&quot;, &quot;0284&quot;, &quot;0285&quot;,</span>
+<span class="go"> &quot;0286&quot;, &quot;0287&quot;, &quot;0307&quot;, &quot;0313&quot;, &quot;0320&quot;, &quot;0321&quot;, &quot;0322&quot;, &quot;0323&quot;, &quot;0333&quot;, &quot;0334&quot;,</span>
+<span class="go"> &quot;0335&quot;, &quot;0336&quot;, &quot;0339&quot;, &quot;0400&quot;, &quot;0401&quot;, &quot;0403&quot;, &quot;0404&quot;, &quot;0405&quot;, &quot;0415&quot;, &quot;0424&quot;,</span>
+<span class="go"> &quot;0429&quot;, &quot;0439&quot;, &quot;0440&quot;, &quot;0441&quot;, &quot;0445&quot;, &quot;0448&quot;, &quot;0450&quot;, &quot;0453&quot;, &quot;0454&quot;, &quot;0455&quot;,</span>
+<span class="go"> &quot;0456&quot;, &quot;0457&quot;, &quot;0458&quot;, &quot;0459&quot;, &quot;0469&quot;, &quot;0481&quot;, &quot;0482&quot;, &quot;0483&quot;, &quot;0484&quot;, &quot;0491&quot;,</span>
+<span class="go"> &quot;0492&quot;, &quot;0493&quot;, &quot;0494&quot;, &quot;0496&quot;, &quot;0497&quot;, &quot;0498&quot;, &quot;0600&quot;, &quot;0601&quot;, &quot;0602&quot;, &quot;0607&quot;,</span>
+<span class="go"> &quot;0608&quot;, &quot;0611&quot;, &quot;0616&quot;, &quot;0617&quot;, &quot;0619&quot;, &quot;0620&quot;, &quot;0621&quot;, &quot;0627&quot;, &quot;0631&quot;, &quot;0632&quot;]</span>
+</pre></div>
+</div>
 </div>
 </div>
 
