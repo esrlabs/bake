@@ -82,7 +82,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -157,7 +157,7 @@ The collections are specified in Collection.meta files.</p>
 The most important options are the collection name (<em>-b</em>) and the collection directory (<em>-m</em>, default is current directory).</p>
 <p>Examples:</p>
 <blockquote>
-<div><p>Build all unittests:</p>
+<div><p>Build all unit tests:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakery -b AllUnitTests</span>
 </pre></div>
 </div>
@@ -165,11 +165,11 @@ The most important options are the collection name (<em>-b</em>) and the collect
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakery AllUnitTests</span>
 </pre></div>
 </div>
-<p>Clean all unittests:</p>
+<p>Clean all unit tests:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakery -b AllUnitTests -c</span>
 </pre></div>
 </div>
-<p>Build all unittests, workspace checked out into two roots, console supports colors, stop on first error, run the unittests after build:</p>
+<p>Build all unit tests, workspace checked out into two roots, console supports colors, stop on first error, run the unittests after build:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">bakery -b AllUnitTests -m w:/root1/mainProj -w w:/root2 -r -a black --do run</span>
 </pre></div>
 </div>

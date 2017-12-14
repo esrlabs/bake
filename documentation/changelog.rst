@@ -2,7 +2,7 @@ Changelog
 =========
 
 December 14, 2017 - bake-toolkit 2.42.2
-    * Added: --incs-and-defs now also prints the directory of the project
+    * Added: bakeqac can suppress unsuppressible QAC errors now (with "PRQA S <num>" in the same source code line)
     * Bugfix: possible crash when using bake with the commandline tool "less"
 
 December 6, 2017 - bake-toolkit 2.42.1

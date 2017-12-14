@@ -31,7 +31,7 @@
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="top" title="bake documentation" href="../index.html" />
     <link rel="up" title="Concepts" href="concepts.html" />
-    <link rel="next" title="The link order" href="link_order.html" />
+    <link rel="next" title="Parallel build" href="parallel.html" />
     <link rel="prev" title="The main project" href="the_main_project.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -82,7 +82,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../internal.html">Internal developing notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
 </ul>
 </ul>
 </li>
@@ -114,7 +114,7 @@
     </a>
   </li>
   <li>
-    <a href="link_order.html" title="Next Chapter: The link order"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">The link order &raquo;</span>
+    <a href="parallel.html" title="Next Chapter: Parallel build"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Parallel build &raquo;</span>
     </a>
   </li>
               
@@ -166,13 +166,13 @@
 </div></blockquote>
 <p>Steps are executed bottom-up. If one step fails, all steps above won&#8217;t be executed.</p>
 <dl class="docutils">
-<dt>If e.g.</dt>
+<dt>If for example:</dt>
 <dd><ul class="first last simple">
 <li>PreStepMain 2 fails</li>
 <li>at least one file of library B does not compile</li>
 </ul>
 </dd>
-<dt>then</dt>
+<dt>then:</dt>
 <dd><ul class="first last simple">
 <li>library B will not be created</li>
 <li>files of the main project will not be compiled</li>
