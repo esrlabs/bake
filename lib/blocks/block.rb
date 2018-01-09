@@ -418,7 +418,7 @@ module Bake
           SyncOut.mutex.synchronize do
             @outputStep = nil
             SyncOut.startStream() if Bake.options.syncedOutput
-            if Bake.options.verbose >= 2 || (isBuildBlock? && Bake.options.verbose >= 1)
+            if !Bake.options.skipBuildingLine && (Bake.options.verbose >= 2 || (isBuildBlock? && Bake.options.verbose >= 1))
               typeStr = "Building"
               if @prebuild
                 typeStr = "Using"

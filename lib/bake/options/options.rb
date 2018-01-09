@@ -21,7 +21,7 @@ module Bake
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
     attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :include_filter, :exclude_filter, :adapt # String List
-    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads # Boolean
+    attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads, :skipBuildingLine # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse # Boolean
     attr_reader :threads, :socket # Fixnum
     attr_reader :vars, :include_filter_args # map
@@ -34,6 +34,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
+      @skipBuildingLine = false
       @debug_threads = false
       @dry = false
       @filelist = nil
@@ -113,6 +114,7 @@ module Bake
       add_option(["--debug"                                      ], lambda {     @debug = true                           })
       add_option(["--debug-threads"                              ], lambda {     @debug_threads = true                   })
       add_option(["--set"                                        ], lambda { |x| set_set(x)                              })
+      add_option(["-nb"                                          ], lambda {     @skipBuildingLine = true                })
 
       add_option(["--clobber"                                    ], lambda {     @clobber = true; @clean = true          })
       add_option(["--ignore-cache",       "--ignore_cache"       ], lambda {     @nocache = true                         })

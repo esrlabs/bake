@@ -56,6 +56,7 @@ module Bake
       puts " --prebuild               Does not build configs which are marked as 'prebuild', this feature is used for distributions."
       puts " --compilation-db [<fn>]  Writes compilation information into filename fn in json format, default for fn is compilation-db.json"
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
+      puts " --nb                     Suppresses the lines \"**** Building x of y: name (config) ****"
       puts " --link-2-17              DEPRECATED: Using link order of libraries which was used until bake 2.17"
       puts " --build_                 DEPRECATED: build directories will be build_<name> instead of build/<name>"
       puts " --version                Print version."

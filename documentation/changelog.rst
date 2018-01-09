@@ -1,6 +1,9 @@
 Changelog
 =========
 
+January 10, 2018 - bake-toolkit 2.42.3
+    * Added: command line parameter "-nb" to suppress the lines "\*\*\*\* Building x of y: name (config) \*\*\*\*"
+
 December 14, 2017 - bake-toolkit 2.42.2
     * Added: bakeqac can suppress unsuppressible QAC errors now (with "PRQA S <num>" in the same source code line)
     * Bugfix: possible crash when using bake with the commandline tool "less"
