@@ -25,6 +25,7 @@ module Bake
       @@projectDir = block.projectDir
       @@source_libraries = []
       @@linker_libs_array = []
+      @@withpath = []
 
       levels = @@linker[:LINK_ONLY_DIRECT_DEPS] ? 1 : -1
       collect_recursive(block, levels)
@@ -42,7 +43,7 @@ module Bake
         @@linker_libs_array.reverse!
       end
 
-      return [@@source_libraries, @@linker_libs_array]
+      return [@@source_libraries + @@withpath, @@linker_libs_array]
     end
 
     def self.adaptPath(path, block, prefix)
@@ -90,6 +91,7 @@ module Bake
         when LibElement::LIB_WITH_PATH
           adaptedPath, prefix = adaptPath(elem.value, block, prefix)
           @@linker_libs_array <<  adaptedPath
+          @@withpath << adaptedPath
         when LibElement::SEARCH_PATH
           adaptedPath, prefix = adaptPath(elem.value, block, prefix)
           lpf = "#{@@linker[:LIB_PATH_FLAG]}#{adaptedPath}"

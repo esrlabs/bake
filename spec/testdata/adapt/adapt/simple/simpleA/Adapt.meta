@@ -1,0 +1,9 @@
+Adapt {
+
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      PreSteps {
+        CommandLine "echo SIMPLEA", echo: off
+      }
+  }
+
+}

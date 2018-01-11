@@ -14,6 +14,20 @@ module Bake
 
 describe "Adapt" do
 
+  it 'MultipleAdapt without comma' do
+    Bake.startBake("adapt/main", ["test_multi", "--adapt",  "simpleA", "--adapt", "simpleB"])
+    expect($mystring.include?("SIMPLEA")).to be == true
+    expect($mystring.include?("SIMPLEB")).to be == true
+  end
+
+  it 'MultipleAdapt with comma' do
+    Bake.startBake("adapt/main", ["test_multi", "--adapt",  "simpleA,simpleB"])
+    expect($mystring.include?("SIMPLEA")).to be == true
+    expect($mystring.include?("SIMPLEB")).to be == true
+  end
+
+
+=begin
   it 'Dep extend 0' do
 
     absAdapt = File.expand_path("spec/testdata/adapt/adapt/dep/dep_extend")
@@ -915,7 +929,7 @@ describe "Adapt" do
     Bake.startBake("adapt/front", ["test", "-v2"])
     expect($mystring.include?("-Ib -Ia -DdefB -DdefA")).to be == true
   end
-
+=end
 end
 
 end

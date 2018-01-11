@@ -5,4 +5,8 @@ Project {
     Files "src/z.cpp"
   }
 
+  CustomConfig test_old {
+    ExternalLibrary "build/test_ok_main_test_ok/liblib.a", search: false
+  }
+
 }

@@ -295,7 +295,9 @@ module Bake
     end
 
     def set_adapt(name)
-      @adapt << name if not @adapt.include?name
+      name.split(",").each do |n|
+        @adapt << n if not @adapt.include?n
+      end
     end
 
     def checkNum(num)

@@ -47,7 +47,7 @@ module Bake
       puts " --Wparse                 The error parser result is also taken into account, not only the return value of compiler, archiver and linker."
       puts " --no-autodir             Disable auto completion of paths like in IncludeDir"
       puts " --set <key>=<value>      Sets a variable. Overwrites variables defined in Project.metas (can be used multiple times)."
-      puts " --adapt <name>           Specifies an adapt project to manipulate the configs (can be used multiple times)"
+      puts " --adapt <name>           Specifies an adapt project to manipulate the configs (can be used multiple times, or --adapt <name1,name2,...>)"
       puts " --incs-and-defs=json     Prints includes and defines of all projects in json format"
       puts " --incs-and-defs=bake     Used by IDEs plugins"
       puts " --conversion-info        Prints infos for an external tool which converts bake configs for other build systems"
