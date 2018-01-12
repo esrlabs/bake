@@ -42,6 +42,18 @@ Here is an example to change the DefaultToolchain (details explained below):
       }
     }
 
+--adapt can be used multiple times:
+
+.. code-block:: console
+
+    User@Host:~$ bake test --adapt abc --adapt xy
+
+The values for adapt can be also comma separated:
+
+.. code-block:: console
+
+    User@Host:~$ bake test --adapt abc,xy
+
 From Project.meta
 -----------------
 

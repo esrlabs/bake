@@ -89,3 +89,11 @@ The link order will be
 - d2
 - c2
 - a3
+
+Notes
+*****
+
+The executable will be automatically relinked, if a regular library (LibraryConfig) has been updated (file timestamp).
+
+This does NOT apply to ExternalLibraries, because these are arguments given to the linker which searches itself for the libraries.
+Exception: if an ExternalLibrary is specified with "search: false", the exact library is known to bake and is also taken into account.

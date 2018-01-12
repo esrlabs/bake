@@ -1,10 +1,10 @@
 Changelog
 =========
 
-January 11, 2018 - bake-toolkit 2.42.3
+January 12, 2018 - bake-toolkit 2.42.3
     * Added: command line parameter "-nb" to suppress the lines "\*\*\*\* Building x of y: name (config) \*\*\*\*"
     * Added: ExternalLibraries with "search: false" are now also taken into account when checking if executable is outdated
-    * Added: "--adapt" accepts now comma separated values like this: "--adapt gcc,debug,bla", which is "--adapt gcc --adapt debug --adapt bla"
+    * Added: "--adapt" accepts now comma separated values like this: "--adapt gcc,debug,bla", which is the same as "--adapt gcc --adapt debug --adapt bla"
 
 December 14, 2017 - bake-toolkit 2.42.2
     * Added: bakeqac can suppress unsuppressible QAC errors now (with "PRQA S <num>" in the same source code line)
