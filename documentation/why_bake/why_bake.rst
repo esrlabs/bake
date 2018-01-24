@@ -10,7 +10,7 @@ bake design goals
 =================================================================           ===============================================================================================
 Goal                                                                        Reasoning
 =================================================================           ===============================================================================================
-* It must be only a built tool                                              We want to focus your energy in providing a good and fast build tool.
+* It must be only a build tool                                              We want to focus your energy in providing a good and fast build tool.
 
 * It must be a command line tool                                            Sticking to the unix and single purpose philosophy, we think proving a command line tool
                                                                             is the easiest way to be easily used and integrated with other tools. **IDE independence!**
