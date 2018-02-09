@@ -129,19 +129,21 @@ bake supports three complex variables:
 
 .. code-block:: console
 
-    $(OutputDir, "project name", "config name")
+    $(OutputDir, <project name>, <config name>)
+    e.g.:
+    $(OutputDir, MyGreatLib, Debug)
 
 This will evaluate to the output directory of a specific configuration.
 
 .. code-block:: console
 
-    $(ProjectDir, "project name")
+    $(ProjectDir, <project name>)
 
 This will evaluate to the directory of a specific project.
 
 .. code-block:: console
 
-    $(FilterArguments, filterName)
+    $(FilterArguments, <filterName>)
 
 If a filter is specified, the argument of the filter is returned.
 
