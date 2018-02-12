@@ -6,6 +6,7 @@ IDE Support
 
     eclipse/eclipse
     vs/vs
+    vsc/vsc
 
 The integrations for eclipse and visual studio are the ones that are
 most used and best documented.
