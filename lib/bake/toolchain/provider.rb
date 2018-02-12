@@ -117,7 +117,8 @@ module Bake
         },
 
         :DEP_FILE_SINGLE_LINE => false,
-        :DOCU => ""
+        :DOCU => "",
+        :KEEP_FILE_ENDINGS => false
       }
 
       def self.add(name, basedOn = nil)

@@ -65,7 +65,13 @@ module Bake
               return true
             end
           else
-            @objects = Dir.glob_dir("#{@block.output_dir}/**/*.o", @projectDir)
+
+            @objects = []
+            [:CPP, :C, :ASM].map do |t|
+              @block.tcs[:COMPILER][t][:OBJECT_FILE_ENDING]
+            end.uniq.each do |e|
+              @objects << Dir.glob_dir("#{@block.output_dir}/**/*#{e}", @projectDir)
+            end
             if @objects.empty?
               if !File.exists?(File.expand_path(@archive_name, @projectDir))
                 SyncOut.mutex.synchronize do
@@ -130,7 +136,14 @@ module Bake
       def clean
         if @block.prebuild
           Dir.chdir(@projectDir) do
-            @objects = Dir.glob_dir("#{@block.output_dir}/**/*.o", @projectDir)
+
+            @objects = []
+            [:CPP, :C, :ASM].map do |t|
+              @block.tcs[:COMPILER][t][:OBJECT_FILE_ENDING]
+            end.uniq.each do |e|
+              @objects << Dir.glob_dir("#{@block.output_dir}/**/*#{e}", @projectDir)
+            end
+
             if !@objects.empty? && File.exist?(@archive_name)
               puts "Deleting file #{@archive_name}" if Bake.options.verbose >= 2
               if !Bake.options.dry

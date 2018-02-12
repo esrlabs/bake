@@ -44,6 +44,7 @@ end
 def integrateToolchain(tcs, toolchain)
   return tcs unless toolchain
 
+  tcs[:KEEP_FILE_ENDINGS] = @mainConfig.defaultToolchain.keepFileEndings
   tcs[:OUTPUT_DIR] = toolchain.outputDir if toolchain.outputDir != ""
   integrateLinker(tcs, toolchain.linker) if toolchain.respond_to?"linker"
   integrateArchiver(tcs, toolchain.archiver)

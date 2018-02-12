@@ -1,0 +1,13 @@
+Project default: test {
+
+  LibraryConfig test_dep {
+    Files "src/file1.cpp"
+  }
+
+  ExecutableConfig test {
+    Dependency config: test_dep
+    Files "src/file2.c"
+    DefaultToolchain GCC, keepFileEndings: true
+  }
+
+}

@@ -34,6 +34,20 @@ describe "Ending" do
     expect($mystring.include?("Building failed.")).to be == true
   end
 
+  it 'keep endings' do
+    Bake.startBake("ending/keep", ["-v2"])
+    expect(File.exists?("spec/testdata/ending/keep/build/test_dep_keep_test/src/file1.cpp.d")).to be == true
+    expect(File.exists?("spec/testdata/ending/keep/build/test_dep_keep_test/src/file1.cpp.o")).to be == true
+    expect(File.exists?("spec/testdata/ending/keep/build/test/src/file2.c.d")).to be == true
+    expect(File.exists?("spec/testdata/ending/keep/build/test/src/file2.c.o")).to be == true
+    expect($mystring.include?("Building done.")).to be == true
+
+    Bake.startBake("ending/keep", [])
+    expect($mystring.include?("Compiling")).to be == false
+    expect($mystring.split("Building done.").length).to be == 3
+  end
+
+
 end
 
 end

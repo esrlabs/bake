@@ -34,7 +34,8 @@ module Bake
       def get_object_file(source)
         # until now all OBJECT_FILE_ENDING are equal in all three types
 
-        srcWithoutDotDot = source.chomp(File.extname(source)).gsub(/\.\./, "__")
+        sourceEndingAdapted = @block.tcs[:KEEP_FILE_ENDINGS] ? source : source.chomp(File.extname(source))
+        srcWithoutDotDot = sourceEndingAdapted.gsub(/\.\./, "__")
         if srcWithoutDotDot[0] == '/'
           srcWithoutDotDot = "_" + srcWithoutDotDot
         elsif srcWithoutDotDot[1] == ':'
