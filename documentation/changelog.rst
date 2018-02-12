@@ -1,6 +1,9 @@
 Changelog
 =========
 
+February 12, 2018 - bake-toolkit 2.43.1
+    * Bugfix: exception when using file specific flags and defines fixed (bug introduced with 2.43.0)
+
 February 12, 2018 - bake-toolkit 2.43.0
     * Bugfix: when building with "stop on first error" (-r) and an error occurs in PreSteps or PostSteps of a dependency, the error status was not correctly handled.
     * Added: option to keep file endings for object files, which means file.cpp becomes file.cpp.o instead of file.o:

@@ -12,6 +12,9 @@ Project default: test {
   }
 
   LibraryConfig test, extends: base {
+    Files "src/file1.cpp" {
+      Define "A"
+    }
     Files "src/*"
     DefaultToolchain GCC
   }

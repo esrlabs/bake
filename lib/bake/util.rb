@@ -77,13 +77,13 @@ end
 
 def integrateCompiler(tcs, compiler, type)
   return tcs unless compiler
-  if compiler.respond_to?"command"
-    tcs[:COMPILER][type][:COMMAND] = compiler.command if compiler.command != ""
+  if compiler.respond_to?("command") && compiler.command != ""
+    tcs[:COMPILER][type][:COMMAND] = compiler.command
   end
-  if compiler.respond_to?"prefix"
-    tcs[:COMPILER][type][:PREFIX] = compiler.prefix if compiler.prefix != ""
+  if compiler.respond_to?("prefix") && compiler.prefix != ""
+    tcs[:COMPILER][type][:PREFIX] = compiler.prefix
   end
-  if compiler.fileEndings
+  if compiler.respond_to?("fileEndings") && compiler.fileEndings && compiler.fileEndings.endings != ""
     tcs[:COMPILER][type][:SOURCE_FILE_ENDINGS] = compiler.fileEndings.endings.split(",").map{|e| e.strip}
   end
 
