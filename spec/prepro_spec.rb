@@ -21,6 +21,54 @@ describe "Prepro" do
     expect(ExitHelper.exit_code).to be == 0
   end
 
+  it 'abort on error first level' do
+    Bake.startBake("prepro/main", ["test_error1", "-r"])
+    expect($mystring.include?("STEP1")).to be == true
+    expect($mystring.include?("STEP2")).to be == false
+    expect($mystring.include?("STEP3")).to be == false
+    expect($mystring.include?("STEP4")).to be == false
+    expect($mystring.include?("STEPMAIN1")).to be == false
+    expect($mystring.include?("STEPMAIN2")).to be == false
+    expect($mystring.include?("Building failed")).to be == true
+    expect(ExitHelper.exit_code).to be != 0
+  end
+
+  it 'abort on error second level' do
+    Bake.startBake("prepro/main", ["test_error2", "-r"])
+    expect($mystring.include?("STEP1")).to be == true
+    expect($mystring.include?("STEP2")).to be == false
+    expect($mystring.include?("STEP3")).to be == false
+    expect($mystring.include?("STEP4")).to be == false
+    expect($mystring.include?("STEPMAIN1")).to be == false
+    expect($mystring.include?("STEPMAIN2")).to be == false
+    expect($mystring.include?("Building failed")).to be == true
+    expect(ExitHelper.exit_code).to be != 0
+  end
+
+  it 'not abort on error first level' do
+    Bake.startBake("prepro/main", ["test_error1"])
+    expect($mystring.include?("STEP1")).to be == true
+    expect($mystring.include?("STEP2")).to be == false
+    expect($mystring.include?("STEP3")).to be == false
+    expect($mystring.include?("STEP4")).to be == false
+    expect($mystring.include?("STEPMAIN1")).to be == false
+    expect($mystring.include?("STEPMAIN2")).to be == true
+    expect($mystring.include?("Building failed")).to be == true
+    expect(ExitHelper.exit_code).to be != 0
+  end
+
+  it 'not abort on error second level' do
+    Bake.startBake("prepro/main", ["test_error2"])
+    expect($mystring.include?("STEP1")).to be == true
+    expect($mystring.include?("STEP2")).to be == false
+    expect($mystring.include?("STEP3")).to be == false
+    expect($mystring.include?("STEP4")).to be == false
+    expect($mystring.include?("STEPMAIN1")).to be == true
+    expect($mystring.include?("STEPMAIN2")).to be == false
+    expect($mystring.include?("Building failed")).to be == true
+    expect(ExitHelper.exit_code).to be != 0
+  end
+
 end
 
 end

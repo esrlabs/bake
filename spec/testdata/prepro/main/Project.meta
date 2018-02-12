@@ -6,4 +6,25 @@ Project {
     DefaultToolchain GCC
   }
 
+  CustomConfig test_error1 {
+    PreSteps {
+      CommandLine "echo STEP1", echo: off
+      CommandLine "ruby exit3", echo: off
+      CommandLine "echo STEP2", echo: off
+    }
+    CommandLine "echo STEPMAIN1", echo: off
+    PostSteps {
+      CommandLine "echo STEP3", echo: off
+      CommandLine "ruby exit3", echo: off
+      CommandLine "echo STEP4", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test_error2 {
+    Dependency config: test_error1
+    CommandLine "echo STEPMAIN2", echo: off
+    DefaultToolchain GCC
+  }
+
 }

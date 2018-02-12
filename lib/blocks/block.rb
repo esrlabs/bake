@@ -359,7 +359,6 @@ module Bake
         # todo: sync output if commandline and makefile!!!!!!!!!!!!!!!!!!!
         @outputStep = nil
         allSteps.each { |step| @outputStep = independent?(method, step) ? step : nil }
-
         while !allSteps.empty?
           parallel = []
           while allSteps.first && independent?(method, allSteps.first)
@@ -410,7 +409,7 @@ module Bake
         @inDeps = true
         depResult = callDeps(:execute)
         @inDeps = false
-        return @result if blockAbort?(depResult)
+        return @result && depResult if blockAbort?(depResult)
 
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
 
@@ -447,7 +446,6 @@ module Bake
             end
           end
         end
-
 
         return (depResult && @result)# && @@delayed_result)
       end
