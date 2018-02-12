@@ -1,6 +1,22 @@
 Changelog
 =========
 
+February 12, 2018 - bake-toolkit 2.43.0
+    * Bugfix: when building with "stop on first error" (-r) and an error occurs in PreSteps or PostSteps of a dependency, the error status was not correctly handled.
+    * Added: option to keep file endings for object files, which means file.cpp becomes file.cpp.o instead of file.o:
+
+      .. code-block:: console
+
+          DefaultToolchain keepObjFileEndings: true
+
+    * Added: the hard coded list for source file endings for a specific compiler (CPP, C, ASM) can now be overwritten, e.g.:
+
+      .. code-block:: console
+
+          Compiler CPP {
+              SrcFileEndings ".cpp, .c, .cxx"
+          }
+
 January 12, 2018 - bake-toolkit 2.42.3
     * Added: command line parameter "-nb" to suppress the lines "\*\*\*\* Building x of y: name (config) \*\*\*\*"
     * Added: ExternalLibraries with "search: false" are now also taken into account when checking if executable is outdated

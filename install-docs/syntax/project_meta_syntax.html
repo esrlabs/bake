@@ -298,10 +298,12 @@ z-index: 100;
 &nbsp; &nbsp; <span class="help" onMouseover="showDefaultToolchain()" onMouseout="notip()">DefaultToolchain</span> &#60;basedOn&#62;, <span class="help" onMouseover="showOutputDir()" onMouseout="notip()">outputDir</span>: &#60;dir&#62;, <span class="help" onMouseover="showEclipseOrder()" onMouseout="notip()">eclipseOrder</span>: true|false {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C,
                                           <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
-                                          <span class="help" onMouseover="showPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
+                                          <span class="help" onMouseover="showPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62;,
+                                          <span class="help" onMouseover="keepObjFileEndings()" onMouseout="notip()">keepObjFileEndings</span>: true|false {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showInternalDefines()" onMouseout="notip()">InternalDefines</span> &#60;file&#62;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showSrcFileEndings()" onMouseout="notip()">SrcFileEndings</span> &#60;file&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultArchiver()" onMouseout="notip()">Archiver</span>
                                           <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
@@ -327,6 +329,7 @@ z-index: 100;
                                          <span class="help" onMouseover="showPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showSrcFileEndings()" onMouseout="notip()">SrcFileEndings</span> &#60;file&#62;<br>
 &nbsp; &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showArchiver()" onMouseout="notip()">Archiver</span>
                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
@@ -860,6 +863,14 @@ function showCommand() {
 
 function showPrefix() {
   ddrivetip("prefix", "No","-","$(CompilerPrefix)","Wrapper for compiler, e.g. a (s)ccache. If variable is not set, no prefix is used.<br>You can use the adapt feature to set the variable or overwrite the prefix.")
+}
+
+function keepObjFileEndings() {
+  ddrivetip("keepObjFileEndings", "No","-","false","If false (default), the original source file endings will be cutted off (e.g. file1.cpp to file1.o), otherwise kept (file1.cpp.o).")
+}
+
+function showSrcFileEndings() {
+  ddrivetip("SrcFileEndings", "No","-","-","List of all source file endings with dot and comma separated which are handled by this CPP, C or ASM compiler, e.g. \".cpp, .c, .cxx\".<br>The list must not be empty.")
 }
 
 function showArchiverPrefix() {

@@ -3,7 +3,7 @@ Project default: test {
   LibraryConfig test {
     Toolchain {
       Compiler C {
-        FileEndings
+        SrcFileEndings
       }
     }
     DefaultToolchain GCC

@@ -49,7 +49,7 @@ module Bake
       has_attr 'str', String, :defaultValueLiteral => ""
     end
 
-    class FileEndings < ModelElement
+    class SrcFileEndings < ModelElement
       has_attr 'endings', String, :defaultValueLiteral => ""
     end
 
@@ -83,7 +83,7 @@ module Bake
         contains_many 'define', Define, 'parent'
         contains_many 'flags', Flags, 'parent'
         contains_one 'internalDefines', InternalDefines, 'parent'
-        contains_one 'fileEndings', FileEndings, 'parent'
+        contains_one 'fileEndings', SrcFileEndings, 'parent'
       end
 
       class LintPolicy < ModelElement
@@ -98,7 +98,7 @@ module Bake
         has_attr 'basedOn', String, :defaultValueLiteral => ""
         has_attr 'outputDir', String, :defaultValueLiteral => ""
         has_attr 'eclipseOrder', Boolean, :defaultValueLiteral => "false"
-        has_attr 'keepFileEndings', Boolean, :defaultValueLiteral => "false"
+        has_attr 'keepObjFileEndings', Boolean, :defaultValueLiteral => "false"
         contains_many 'compiler', Compiler, 'parent'
         contains_one 'archiver', Archiver, 'parent'
         contains_one 'linker', Linker, 'parent'

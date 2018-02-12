@@ -33,7 +33,7 @@ module Bake
         ["basedOn"]
       elsif c.name == "Description"
         ["text"]
-      elsif c.name == "FileEndings"
+      elsif c.name == "SrcFileEndings"
         ["endings"]
       else
         ["name"]

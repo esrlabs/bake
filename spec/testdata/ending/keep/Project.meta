@@ -7,7 +7,7 @@ Project default: test {
   ExecutableConfig test {
     Dependency config: test_dep
     Files "src/file2.c"
-    DefaultToolchain GCC, keepFileEndings: true
+    DefaultToolchain GCC, keepObjFileEndings: true
   }
 
 }
