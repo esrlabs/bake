@@ -1,0 +1,19 @@
+Project default: test {
+
+  LibraryConfig base {
+    Toolchain {
+      Compiler C {
+        FileEndings ".cpp, .hxx"
+      }
+      Compiler CPP {
+        FileEndings ".c"
+      }
+    }
+  }
+
+  LibraryConfig test, extends: base {
+    Files "src/*"
+    DefaultToolchain GCC
+  }
+
+}

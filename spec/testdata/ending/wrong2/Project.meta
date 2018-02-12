@@ -1,0 +1,12 @@
+Project default: test {
+
+  LibraryConfig test {
+    Toolchain {
+      Compiler C {
+        FileEndings
+      }
+    }
+    DefaultToolchain GCC
+  }
+
+}

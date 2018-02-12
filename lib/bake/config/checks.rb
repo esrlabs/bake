@@ -34,6 +34,10 @@ module Bake
                 Bake.formatter.printError("InternalDefines only allowed in DefaultToolchain", c.internalDefines)
                 ExitHelper.exit(1)
               end
+              if c.fileEndings && c.fileEndings.endings.empty?
+                Bake.formatter.printError("FileEnding must not be empty.", c.fileEndings)
+                ExitHelper.exit(1)
+              end
             end
             config.toolchain.lintPolicy.each do |l|
               Bake.formatter.printWarning("Lint support was removed. Please delete LintPolicy from Project.meta.", l)
@@ -42,6 +46,12 @@ module Bake
           if config.respond_to?("defaultToolchain") and config.defaultToolchain
             config.defaultToolchain.lintPolicy.each do |l|
               Bake.formatter.printWarning("Lint support was removed. Please delete LintPolicy from Project.meta.", l)
+            end
+            config.defaultToolchain.compiler.each do |c|
+              if c.fileEndings && c.fileEndings.endings.empty?
+                Bake.formatter.printError("FileEnding must not be empty.", c.fileEndings)
+                ExitHelper.exit(1)
+              end
             end
           end
 

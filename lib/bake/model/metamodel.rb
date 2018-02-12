@@ -49,6 +49,10 @@ module Bake
       has_attr 'str', String, :defaultValueLiteral => ""
     end
 
+    class FileEndings < ModelElement
+      has_attr 'endings', String, :defaultValueLiteral => ""
+    end
+
       class InternalIncludes < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
       end
@@ -79,6 +83,7 @@ module Bake
         contains_many 'define', Define, 'parent'
         contains_many 'flags', Flags, 'parent'
         contains_one 'internalDefines', InternalDefines, 'parent'
+        contains_one 'fileEndings', FileEndings, 'parent'
       end
 
       class LintPolicy < ModelElement

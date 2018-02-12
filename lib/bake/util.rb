@@ -82,6 +82,9 @@ def integrateCompiler(tcs, compiler, type)
   if compiler.respond_to?"prefix"
     tcs[:COMPILER][type][:PREFIX] = compiler.prefix if compiler.prefix != ""
   end
+  if compiler.fileEndings
+    tcs[:COMPILER][type][:SOURCE_FILE_ENDINGS] = compiler.fileEndings.endings.split(",").map{|e| e.strip}
+  end
 
   tcs[:COMPILER][type][:FLAGS] = adjustFlags(tcs[:COMPILER][type][:FLAGS], compiler.flags)
   compiler.define.each do |d|
