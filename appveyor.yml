@@ -8,6 +8,7 @@ environment:
   matrix:
     - ruby_version: "193"
     - ruby_version: "22"
+    - ruby_version: "25"
 
 install:
   - SET PATH=C:\Ruby%ruby_version%\bin;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;%PATH%
