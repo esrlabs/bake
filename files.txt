@@ -24,6 +24,7 @@
 ./ide/vs/how_to_used_bake_in_vs.html
 ./ide/vs/vs.html
 ./ide/vs/vs_install.html
+./ide/vsc/vsc.html
 ./index.html
 ./install/install_bake.html
 ./internal/internal.html

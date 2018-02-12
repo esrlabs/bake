@@ -140,6 +140,24 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>February 12, 2018 - bake-toolkit 2.43.0</dt>
+<dd><ul class="first last">
+<li><p class="first">Bugfix: when building with &#8220;stop on first error&#8221; (-r) and an error occurs in PreSteps or PostSteps of a dependency, the error status was not correctly handled.</p>
+</li>
+<li><p class="first">Added: option to keep file endings for object files, which means file.cpp becomes file.cpp.o instead of file.o:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">DefaultToolchain keepObjFileEndings: true</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Added: the hard coded list for source file endings for a specific compiler (CPP, C, ASM) can now be overwritten, e.g.:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">Compiler CPP {</span>
+<span class="go">    SrcFileEndings &quot;.cpp, .c, .cxx&quot;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
 <dt>January 12, 2018 - bake-toolkit 2.42.3</dt>
 <dd><ul class="first last simple">
 <li>Added: command line parameter &#8220;-nb&#8221; to suppress the lines &#8220;**** Building x of y: name (config) ****&#8221;</li>
