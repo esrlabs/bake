@@ -17,13 +17,15 @@ most used and best documented.
 .. image:: ../_static/visualstudio-pro.png
    :target: vs/vs.html
 
-
 Basic integrations
 ******************
 
 The following integrations lack in features, documentation and
 maturity compared to the above integrations. Still they provide you
 with a starting point.
+
+.. image:: ../_static/visualstudio-code.png
+   :target: vsc/vsc.html
 
 .. image:: ../_static/emacs.png
    :target: http://github.com/gizmomogwai/bake-mode
