@@ -70,7 +70,7 @@ module Bake
             [:CPP, :C, :ASM].map do |t|
               @block.tcs[:COMPILER][t][:OBJECT_FILE_ENDING]
             end.uniq.each do |e|
-              @objects << Dir.glob_dir("#{@block.output_dir}/**/*#{e}", @projectDir)
+              @objects.concat(Dir.glob_dir("#{@block.output_dir}/**/*#{e}", @projectDir))
             end
             if @objects.empty?
               if !File.exists?(File.expand_path(@archive_name, @projectDir))
@@ -141,7 +141,7 @@ module Bake
             [:CPP, :C, :ASM].map do |t|
               @block.tcs[:COMPILER][t][:OBJECT_FILE_ENDING]
             end.uniq.each do |e|
-              @objects << Dir.glob_dir("#{@block.output_dir}/**/*#{e}", @projectDir)
+              @objects.concat(Dir.glob_dir("#{@block.output_dir}/**/*#{e}", @projectDir))
             end
 
             if !@objects.empty? && File.exist?(@archive_name)
