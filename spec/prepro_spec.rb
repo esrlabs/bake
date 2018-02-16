@@ -30,7 +30,7 @@ describe "Prepro" do
     expect($mystring.include?("STEPMAIN1")).to be == false
     expect($mystring.include?("STEPMAIN2")).to be == false
     expect($mystring.include?("Building failed")).to be == true
-    expect(ExitHelper.exit_code).to be != 0
+    expect(ExitHelper.exit_code).to be > 0
   end
 
   it 'abort on error second level' do
@@ -42,7 +42,7 @@ describe "Prepro" do
     expect($mystring.include?("STEPMAIN1")).to be == false
     expect($mystring.include?("STEPMAIN2")).to be == false
     expect($mystring.include?("Building failed")).to be == true
-    expect(ExitHelper.exit_code).to be != 0
+    expect(ExitHelper.exit_code).to be > 0
   end
 
   it 'not abort on error first level' do
@@ -52,9 +52,9 @@ describe "Prepro" do
     expect($mystring.include?("STEP3")).to be == false
     expect($mystring.include?("STEP4")).to be == false
     expect($mystring.include?("STEPMAIN1")).to be == false
-    expect($mystring.include?("STEPMAIN2")).to be == true
+    expect($mystring.include?("STEPMAIN2")).to be == false
     expect($mystring.include?("Building failed")).to be == true
-    expect(ExitHelper.exit_code).to be != 0
+    expect(ExitHelper.exit_code).to be > 0
   end
 
   it 'not abort on error second level' do
@@ -63,10 +63,10 @@ describe "Prepro" do
     expect($mystring.include?("STEP2")).to be == false
     expect($mystring.include?("STEP3")).to be == false
     expect($mystring.include?("STEP4")).to be == false
-    expect($mystring.include?("STEPMAIN1")).to be == true
-    expect($mystring.include?("STEPMAIN2")).to be == false
+    expect($mystring.include?("STEPMAIN1")).to be == false
+    expect($mystring.include?("STEPMAIN2")).to be == true
     expect($mystring.include?("Building failed")).to be == true
-    expect(ExitHelper.exit_code).to be != 0
+    expect(ExitHelper.exit_code).to be > 0
   end
 
 end

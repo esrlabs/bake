@@ -201,14 +201,14 @@ module Bake
           return true if @config.step
         else
           return true if @config.files.length > 0
-          if ((@config.startupSteps && @config.startupSteps.step.length > 0) ||
+        end
+        if ((@config.startupSteps && @config.startupSteps.step.length > 0) ||
           (@config.preSteps && @config.preSteps.step.length > 0) ||
           (@config.postSteps && @config.postSteps.step.length > 0) ||
           (@config.exitSteps && @config.exitSteps.step.length > 0) ||
           (@config.cleanSteps && @config.cleanSteps.step.length > 0) ||
           (@config.preSteps && @config.preSteps.step.length > 0))
             return true
-          end
         end
         return false
       end
@@ -280,7 +280,7 @@ module Bake
         depResult = true
         dependencies.each do |dep|
           depResult = (ALL_BLOCKS[dep].send(method) and depResult)
-          break if not depResult and Bake.options.stopOnFirstError
+          break if (!depResult) && Bake.options.stopOnFirstError
         end
         return depResult
       end
@@ -352,7 +352,6 @@ module Bake
       def callSteps(method)
         @config.writeEnvVars()
         Thread.current[:lastCommand] = nil
-
         allSteps = (preSteps + mainSteps + postSteps)
 
         # check if we have to delay the output (if the last step of this block is not in a thread)
@@ -386,6 +385,7 @@ module Bake
             step = allSteps.shift
             Blocks::Block::waitForAllThreads()
             @result = executeStep(step, method) if @result
+            @outputStep = nil if !@result && blockAbort?(@result)
           end
           return @result if blockAbort?(@result)
         end
@@ -412,7 +412,6 @@ module Bake
         return @result && depResult if blockAbort?(depResult)
 
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
-
         begin
           SyncOut.mutex.synchronize do
             @outputStep = nil

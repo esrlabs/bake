@@ -11,8 +11,7 @@ require 'fileutils'
 module Bake
 
 
-  incsTestStr = "main\n"+
-      " includes\n"+
+  incsTestStr1 = " includes\n"+
       "  A/include\n"+
       "  ../sub/include\n"+
       "  subst\n"+
@@ -26,9 +25,8 @@ module Bake
       "  blah\n"+
       "  toll\n"+
       " ASM defines\n"+
-      " done\n"+
-      "sub\n"+
-      " includes\n"+
+      " done\n"
+  incsTestStr2 = " includes\n"+
       "  include\n"+
       "  incluuude\n"+
       "  C:\\gaga\n"+
@@ -67,12 +65,14 @@ describe "ShowInc" do
 
   it 'Default' do
     Bake.startBake("showinc/main", ["test", "--show_incs_and_defs"])
-    expect(($mystring.include?incsTestStr)).to be == true
+    expect($mystring.include?(incsTestStr1)).to be == true
+    expect($mystring.include?(incsTestStr2)).to be == true
   end
 
   it 'Bake' do
     Bake.startBake("showinc/main", ["test", "--incs-and-defs=bake"])
-    expect(($mystring.include?incsTestStr)).to be == true
+    expect($mystring.include?(incsTestStr1)).to be == true
+    expect($mystring.include?(incsTestStr2)).to be == true
   end
 
   it 'Json' do

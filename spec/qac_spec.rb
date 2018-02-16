@@ -11,10 +11,10 @@ require 'fileutils'
 module Bake
 
   VISIBLE_RCF = File.dirname(__FILE__)+"/bin/config/rcf/mcpp-1_5_1-en_US.rcf"
-  HIDDEN_RCF  = File.dirname(__FILE__)+"/bin/config/rcf/mcpp-1_5_1-en_US.rcf_"
+  HIDDEN_RCF  = File.dirname(__FILE__)+"/bin/config/rcf/_mcpp-1_5_1-en_US.rcf"
 
   VISIBLE_RCF2 = File.dirname(__FILE__)+"/mcpp-1.5.1"
-  HIDDEN_RCF2  = File.dirname(__FILE__)+"/mcpp-1.5.1_"
+  HIDDEN_RCF2  = File.dirname(__FILE__)+"/_mcpp-1.5.1"
 
 
   def self.hideRcf()
@@ -822,7 +822,7 @@ describe "Qac" do
     ENV["QAC_UT"] = "config_files"
 
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin"])
-    expect($mystring.include?("/spec/mcpp-1.5.1_/config/rcf/mcpp-1_5_1-en_US.rcf")).to be == true
+    expect($mystring.include?("/spec/_mcpp-1.5.1/config/rcf/mcpp-1_5_1-en_US.rcf")).to be == true
     expect(exit_code).to be == 0
   end
 

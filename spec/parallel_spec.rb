@@ -20,45 +20,45 @@ module Bake
 describe "Parallel" do
 
   it '-j8' do
+
+    File.open("spec/testdata/parallel/global.lock", 'wb') do |f|
+      f.puts("0")
+    end
+
     Bake.setStep(1)
     t = Thread.new() {
-      Bake.startBake("parallel/C",[])
+      inc = proc {|e| $mystring.include?(e) }
+
+      sleep 5
+      checks = []
+      checks << ["a1.cpp", "a2.cpp", "a3.cpp", "b1.cpp", "b2.cpp", "b3.cpp", "c1.cpp", "c2.cpp", "c3.cpp"].all?(&inc)
+      checks << ["libA", "libB", "Linking"].none?(&inc)
+
+
+      Bake.setStep(2)
+      sleep 5
+      checks << ["libA"].all?(&inc)
+      checks << ["libB", "Linking"].none?(&inc)
+
+      Bake.setStep(3)
+      sleep 5
+      checks << ["libB", "Linking"].none?(&inc)
+
+      Bake.setStep(4)
+      sleep 5
+      checks << ["libB", "Linking"].all?(&inc)
+
+      checks
     }
-    sleep 5
-    expect($mystring.include?("a1.cpp")).to be == true
-    expect($mystring.include?("a2.cpp")).to be == true
-    expect($mystring.include?("a3.cpp")).to be == true
-    expect($mystring.include?("b1.cpp")).to be == true
-    expect($mystring.include?("b2.cpp")).to be == true
-    expect($mystring.include?("b3.cpp")).to be == true
-    expect($mystring.include?("c1.cpp")).to be == true
-    expect($mystring.include?("c2.cpp")).to be == true
-    expect($mystring.include?("c3.cpp")).to be == true
-    expect($mystring.include?("libA")).to be == false
-    expect($mystring.include?("libB")).to be == false
-    expect($mystring.include?("Linking")).to be == false
-
-    Bake.setStep(2)
-    sleep 5
-    expect($mystring.include?("libA")).to be == true
-    expect($mystring.include?("libB")).to be == false
-    expect($mystring.include?("Linking")).to be == false
-
-    Bake.setStep(3)
-    sleep 5
-    expect($mystring.include?("libB")).to be == false
-    expect($mystring.include?("Linking")).to be == false
-
-    Bake.setStep(4)
+    Bake.startBake("parallel/C",[])
     t.join()
-    expect($mystring.include?("libB")).to be == true
-    expect($mystring.include?("Linking")).to be == true
-    expect(ExitHelper.exit_code).to be == 0
-
+    checks = t.value
+    p checks
+    expect(checks.all?{|c| c}).to be == true
     expect($mystring.include?("MAX: 2")).to be == true
     expect($mystring.include?("MAX: 9")).to be == false
-  end
 
+  end
 
   it '-j2' do
 
@@ -68,38 +68,38 @@ describe "Parallel" do
 
     Bake.setStep(1)
     t = Thread.new() {
-      Bake.startBake("parallel/C",["-j", "2"])
+      inc = proc {|e| $mystring.include?(e) }
+
+      sleep 5
+      checks = []
+      checks << ["c1.cpp", "c2.cpp", "c3.cpp", "libA", "libB", "Linking"].none?(&inc)
+
+
+      Bake.setStep(2)
+      sleep 5
+      checks << ["libA"].all?(&inc)
+      checks << ["libB", "Linking"].none?(&inc)
+
+      Bake.setStep(3)
+      sleep 5
+      checks << ["c1.cpp", "c2.cpp", "c3.cpp"].all?(&inc)
+      checks << ["libB", "Linking"].none?(&inc)
+
+      Bake.setStep(4)
+      sleep 5
+      checks << ["libB", "Linking"].all?(&inc)
+
+      checks
     }
-    sleep 5
-    expect($mystring.include?("c1.cpp")).to be == false
-    expect($mystring.include?("c2.cpp")).to be == false
-    expect($mystring.include?("c3.cpp")).to be == false
-    expect($mystring.include?("libA")).to be == false
-    expect($mystring.include?("libB")).to be == false
-    expect($mystring.include?("Linking")).to be == false
 
-    Bake.setStep(2)
-    sleep 5
-    expect($mystring.include?("libA")).to be == true
-    expect($mystring.include?("libB")).to be == false
-    expect($mystring.include?("Linking")).to be == false
-
-    Bake.setStep(3)
-    sleep 5
-    expect($mystring.include?("c1.cpp")).to be == true
-    expect($mystring.include?("c2.cpp")).to be == true
-    expect($mystring.include?("c3.cpp")).to be == true
-    expect($mystring.include?("libB")).to be == false
-    expect($mystring.include?("Linking")).to be == false
-
-    Bake.setStep(4)
+    Bake.startBake("parallel/C",["-j", "2"])
     t.join()
-    expect($mystring.include?("libB")).to be == true
-    expect($mystring.include?("Linking")).to be == true
-    expect(ExitHelper.exit_code).to be == 0
-
+    checks = t.value
+    p checks
+    expect(checks.all?{|c| c}).to be == true
     expect($mystring.include?("MAX: 2")).to be == true
-    expect($mystring.include?("MAX: 3")).to be == false
+    expect($mystring.include?("MAX: 5")).to be == false
+
   end
 
   it 'Steps' do

@@ -22,6 +22,8 @@ require 'tocxx'
 
 module Bake
 
+  $endReached = false
+
   def self.startBake(proj, opt)
     Bake.options = Options.new(["-m", "spec/testdata/#{proj}"].concat(opt))
     Bake.options.parse_options()
@@ -93,8 +95,11 @@ module Bake
 
       ExitHelper.reset_exit_code
       Bake::clean_testdata
-
-      #puts $mystring
+      if ($endReached)
+        print $mystring
+      else
+        #puts $mystring
+      end
     end
 
   end

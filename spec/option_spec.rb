@@ -47,7 +47,7 @@ describe "Option Parser" do
 
   it 'should provide a flag to specify number of compile threads' do
     Bake.options = Options.new([])
-    Bake.options.parse_options()
+    expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect(Bake.options.threads).to be == 8 # default
 
     Bake.options = Options.new(["-j"])
@@ -58,7 +58,7 @@ describe "Option Parser" do
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
 
     Bake.options = Options.new(["-j", "2"])
-    Bake.options.parse_options()
+    expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect(Bake.options.threads).to be == 2
   end
 
