@@ -17,7 +17,6 @@ describe "Ending" do
     Bake.startBake("ending/main", ["test", "-v2"])
     expect($mystring.include?("gcc -c -MD -MF build/test/src/file1.d -DA -o build/test/src/file1.o src/file1.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test/src/file2.d -o build/test/src/file2.o src/file2.c")).to be == true
-    expect($mystring.include?("gcc -c -MD -MF build/test/src/file3.d -o build/test/src/file3.o src/file3.hxx")).to be == true
 
     expect($mystring.include?("Building done.")).to be == true
   end

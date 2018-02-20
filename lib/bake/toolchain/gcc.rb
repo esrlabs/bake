@@ -13,6 +13,7 @@ module Bake
 
     def self.getGccVersion
       gccVersionStr = getGccRawVersionInfo()
+      puts gccVersionStr # todo: example win, linux, mac
       splitted = gccVersionStr.split("\n")[0].split(" ")
       vSubstr = splitted[splitted.length-1]
       vSubstr = splitted[splitted.length-2] if ((!vSubstr.include?".") && (splitted.length >= 2))

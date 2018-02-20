@@ -2,22 +2,22 @@ Project {
 
   LibraryConfig test_pre_a {
     PreSteps {
-      CommandLine "ruby takesLong.rb CMD_A", echo: "off", independent: true
+      CommandLine "ruby takesLong.rb CMD_A 1", echo: "off", independent: true
     }
   }
   LibraryConfig test_pre_b {
     PreSteps {
-      CommandLine "ruby takesLong.rb CMD_B", echo: "off", independent: true
+      CommandLine "ruby takesLong.rb CMD_B 2", echo: "off", independent: true
     }
   }
   LibraryConfig test_pre_c {
     PreSteps {
-      CommandLine "ruby takesLong.rb CMD_C", echo: "off", independent: false
+      CommandLine "ruby takesLong.rb CMD_C 3", echo: "off", independent: false
     }
   }
   LibraryConfig test_pre_d {
     PreSteps {
-      CommandLine "ruby takesLong.rb CMD_D", echo: "off", independent: true
+      CommandLine "ruby takesLong.rb CMD_D 4", echo: "off", independent: true
     }
   }
   LibraryConfig test_pre_abcd {
@@ -31,22 +31,22 @@ Project {
 
   LibraryConfig test_post_a {
     PostSteps {
-      CommandLine "ruby takesLong.rb CMD_A", echo: "off", independent: true
+      CommandLine "ruby takesLong.rb CMD_A 1", echo: "off", independent: true
     }
   }
   LibraryConfig test_post_b {
     PostSteps {
-      CommandLine "ruby takesLong.rb CMD_B", echo: "off", independent: true
+      CommandLine "ruby takesLong.rb CMD_B 2", echo: "off", independent: true
     }
   }
   LibraryConfig test_post_c {
     PostSteps {
-      CommandLine "ruby takesLong.rb CMD_C", echo: "off", independent: false
+      CommandLine "ruby takesLong.rb CMD_C 3", echo: "off", independent: false
     }
   }
   LibraryConfig test_post_d {
     PostSteps {
-      CommandLine "ruby takesLong.rb CMD_D", echo: "off", independent: true
+      CommandLine "ruby takesLong.rb CMD_D 4", echo: "off", independent: true
     }
   }
   LibraryConfig test_post_abcd {
@@ -58,16 +58,16 @@ Project {
   }
 
   CustomConfig test_a {
-    CommandLine "ruby takesLong.rb CMD_A", echo: "off", independent: true
+    CommandLine "ruby takesLong.rb CMD_A 1", echo: "off", independent: true
   }
   CustomConfig test_b {
-    CommandLine "ruby takesLong.rb CMD_B", echo: "off", independent: true
+    CommandLine "ruby takesLong.rb CMD_B 2", echo: "off", independent: true
   }
   CustomConfig test_c {
-    CommandLine "ruby takesLong.rb CMD_C", echo: "off", independent: false
+    CommandLine "ruby takesLong.rb CMD_C 3", echo: "off", independent: false
   }
   CustomConfig test_d {
-    CommandLine "ruby takesLong.rb CMD_D", echo: "off", independent: true
+    CommandLine "ruby takesLong.rb CMD_D 4", echo: "off", independent: true
   }
   CustomConfig test_abcd {
     Dependency config: test_a
@@ -81,7 +81,7 @@ Project {
   LibraryConfig test_lib_a {
     Files "src/a.cpp"
     PostSteps {
-      CommandLine "ruby takesLong.rb CMD_A", echo: "off", independent: true  # after b.cpp
+      CommandLine "ruby takesLong.rb CMD_A 1", echo: "off", independent: true  # after b.cpp
     }
   }
   LibraryConfig test_lib_b {
@@ -89,13 +89,13 @@ Project {
   }
   LibraryConfig test_lib_c {
     PreSteps {
-      CommandLine "ruby takesShort.rb CMD_C", echo: "off", independent: false # after A before c.cpp
+      CommandLine "ruby takesShort.rb CMD_C 3", echo: "off", independent: false # after A before c.cpp
     }
     Files "src/c.cpp"
   }
   LibraryConfig test_lib_d {
     PreSteps {
-      CommandLine "echo CMD_D", echo: "off", independent: true
+      CommandLine "echo CMD_D 4", echo: "off", independent: true
     }
   }
   ExecutableConfig test_lib_abcd {

@@ -3,7 +3,7 @@ Project default: test {
   LibraryConfig base {
     Toolchain {
       Compiler C {
-        SrcFileEndings ".cpp, .hxx"
+        SrcFileEndings ".cpp, .something"
       }
       Compiler CPP {
         SrcFileEndings ".c"
