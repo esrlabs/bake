@@ -53,7 +53,6 @@ describe "Parallel" do
     Bake.startBake("parallel/C",[])
     t.join()
     checks = t.value
-    p checks
     expect(checks.all?{|c| c}).to be == true
     expect($mystring.include?("MAX: 2")).to be == true
     expect($mystring.include?("MAX: 9")).to be == false
@@ -95,7 +94,6 @@ describe "Parallel" do
     Bake.startBake("parallel/C",["-j", "2"])
     t.join()
     checks = t.value
-    p checks
     expect(checks.all?{|c| c}).to be == true
     expect($mystring.include?("MAX: 2")).to be == true
     expect($mystring.include?("MAX: 5")).to be == false

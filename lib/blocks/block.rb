@@ -355,7 +355,6 @@ module Bake
         allSteps = (preSteps + mainSteps + postSteps)
 
         # check if we have to delay the output (if the last step of this block is not in a thread)
-        # todo: sync output if commandline and makefile!!!!!!!!!!!!!!!!!!!
         @outputStep = nil
         allSteps.each { |step| @outputStep = independent?(method, step) ? step : nil }
         while !allSteps.empty?

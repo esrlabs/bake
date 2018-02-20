@@ -71,8 +71,8 @@ when "steps_qacdata"
 
 when "config_files"
   ccts = getParams("--cct")
-  ccts.each do |p|
-    puts "#{p} - CCT"
+  ccts.each do |cct|
+    puts "#{cct} - CCT"
   end
   puts "#{getParam("--rcf")} - RCF"
   puts "#{getParam("--acf")} - ACF"

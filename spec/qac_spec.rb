@@ -160,6 +160,7 @@ describe "Qac" do
   end
 
   it 'simple test' do
+    puts "SSSSSSSSSSSSSSSSSSSSSSSS"
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "steps_ok"
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest"])

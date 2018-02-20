@@ -98,7 +98,7 @@ module Bake
       if ($endReached)
         print $mystring
       else
-        #puts $mystring
+        puts $mystring
       end
     end
 
