@@ -160,7 +160,6 @@ describe "Qac" do
   end
 
   it 'simple test' do
-    puts "SSSSSSSSSSSSSSSSSSSSSSSS"
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "steps_ok"
     exit_code = Bake.startBakeqac("qac/main", ["--qacunittest"])
@@ -379,7 +378,7 @@ describe "Qac" do
   it 'cct user_2' do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "config_files"
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--cct", "\"#{ENV["QAC_HOME"]}config/cct\\fasel.cct\"", "--cct", "#{ENV["QAC_HOME"]}config/cct\\more.cct"])
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacstep", "admin", "--cct", "\"#{ENV["QAC_HOME"]}config/cct\\fasel.cct\"", "--cct", "\"#{ENV["QAC_HOME"]}config/cct\\more.cct\""])
     expect($mystring.include?("config/cct/fasel.cct - CCT")).to be == true
     expect($mystring.include?("config/cct/more.cct - CCT")).to be == true
     expect(exit_code).to be == 0
