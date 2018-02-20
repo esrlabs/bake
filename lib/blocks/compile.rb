@@ -7,6 +7,41 @@ require 'common/utils'
 require 'bake/toolchain/colorizing_formatter'
 require 'bake/config/loader'
 
+
+begin
+require 'Win32API'
+
+def longname short_name
+  max_path = 1024
+  long_name = " " * max_path
+  lfn_size = Win32API.new("kernel32", "GetLongPathName", ['P','P','L'],'L').call(short_name, long_name, max_path)
+  return long_name[0..lfn_size-1]
+end
+
+def shortname long_name
+  max_path = 1024
+  short_name = " " * max_path
+  lfn_size = Win32API.new("kernel32", "GetShortPathName", ['P','P','L'],'L').call(long_name, short_name, max_path)
+  return short_name[0..lfn_size-1]
+end
+
+def realname file
+    longname(shortname(file))
+end
+
+rescue LoadError
+
+def realname file
+    file
+end
+
+end
+
+
+
+
+
+
 module Bake
 
   module Blocks
@@ -220,7 +255,7 @@ module Bake
             Dir.mutex.synchronize do
               Dir.chdir(@projectDir) do
                 incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
-                Compile.write_depfile(incList, dep_filename_conv, @projectDir)
+                Compile.write_depfile(source, incList, dep_filename_conv, @projectDir)
               end
             end
 
@@ -274,17 +309,31 @@ module Bake
       end
 
       # todo: move to toolchain util file
-      def self.write_depfile(deps, dep_filename_conv, projDir)
+      def self.write_depfile(source, deps, dep_filename_conv, projDir)
         if deps && !Bake.options.dry
+          wrongCase = false
           begin
             File.open(dep_filename_conv, 'wb') do |f|
               deps.each do |dep|
                 f.puts(dep)
+
+                if (Bake.options.caseSensitivityCheck)
+                  real = realname(dep)
+                  if dep != real && dep.upcase == real.upcase
+                    Bake.formatter.printError("Case sensitivity error in #{source}:\n  included: #{dep}\n  realname: #{real}")
+                    wrongCase = true
+                  end
+                end
+
               end
             end
           rescue Exception
             Bake.formatter.printWarning("Could not write '#{dep_filename_conv}'", projDir)
             return nil
+          end
+          if wrongCase
+            FileUtils.rm_f(dep_filename_conv)
+            raise SystemCommandFailed.new
           end
         end
       end
