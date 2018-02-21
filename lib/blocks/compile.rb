@@ -244,18 +244,14 @@ module Bake
           BlockBase.prepareOutput(File.expand_path(object,@projectDir))
           outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
           printCmd(cmd, "#{outputType} #{@projectName} (#{@config.name}): #{source}", reason, false)
-          puts "AAA1 #{source}"
           SyncOut.flushOutput()
           puts "AAA2 #{source}"
           BlockBase.writeCmdLineFile(cmd, cmdLineFile)
 
           success = true
           consoleOutput = ""
-          puts "AAA3 #{source}"
           success, consoleOutput = ProcessHelper.run(cmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
-          puts "AAA4 #{source}"
           incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], nil, reason, success)
-          puts "AAA5 #{source}"
           if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
             Dir.mutex.synchronize do
               Dir.chdir(@projectDir) do
