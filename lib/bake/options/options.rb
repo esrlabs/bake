@@ -34,7 +34,7 @@ module Bake
     def initialize(argv)
       super(argv)
 
-      @caseSensitivityCheck = true
+      @caseSensitivityCheck = Bake::Utils::OS.windows?
       @skipBuildingLine = false
       @debug_threads = false
       @dry = false

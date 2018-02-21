@@ -318,10 +318,12 @@ module Bake
                 f.puts(dep)
 
                 if (Bake.options.caseSensitivityCheck)
-                  real = realname(dep)
-                  if dep != real && dep.upcase == real.upcase
-                    Bake.formatter.printError("Case sensitivity error in #{source}:\n  included: #{dep}\n  realname: #{real}")
-                    wrongCase = true
+                  if dep.length<2 || dep[1] != ":"
+                    real = realname(dep)
+                    if dep != real && dep.upcase == real.upcase
+                      Bake.formatter.printError("Case sensitivity error in #{source}:\n  included: #{dep}\n  realname: #{real}")
+                      wrongCase = true
+                    end
                   end
                 end
 

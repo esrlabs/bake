@@ -30,7 +30,7 @@ module Bake
       puts " --link-only              Only link executables - doesn't update objects and archives or start PreSteps and PostSteps."
       puts "                          Forces executables to be relinked."
       puts " --compile-only           Only the compile steps are executed, equivalent to -f '.'"
-      puts " --no-case-check          Disables case-sensitivity-check of included header files (only for Windows)."
+      puts " --no-case-check          Disables case-sensitivity-check of included header files (only relative paths on Windows are checked)."
       puts " --generate-doc           Builds docu instead of compiling sources."
       puts " --ignore-cache           Rereads the original meta files - usefull if workspace structure has been changed."
       puts " -j <num>                 Set NUMBER of parallel compiled files (default is 8)."
