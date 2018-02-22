@@ -371,7 +371,6 @@ module Bake
       result = true
       startBlocks.each do |block|
         begin
-          SyncOut.reset_errors
           result = callBlock(block, method) && result
         ensure
           Blocks::Block::waitForAllThreads()
@@ -554,7 +553,6 @@ module Bake
         rescue AbortException
           ideAbort = true
         end
-        SyncOut.flush_errors
         result = callBlocks(startBlocks, :exits, true) && result
 
         if ideAbort || Bake::IDEInterface.instance.get_abort

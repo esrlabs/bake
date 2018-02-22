@@ -12,6 +12,7 @@ begin
       add_filter 'spec'
     end
     Coveralls.wear_merged!
+    SimpleCov.merge_timeout 3600
   end
 rescue LoadError
 end
@@ -98,7 +99,7 @@ module Bake
       if ($endReached)
         print $mystring
       else
-        puts $mystring
+        #puts $mystring
       end
     end
 

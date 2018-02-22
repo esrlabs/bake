@@ -1,6 +1,13 @@
 Changelog
 =========
 
+February 21, 2018 - bake-toolkit 2.44.0
+    * Added: Case sensitivity check of include files (on by default!), use --no-case-check to disable it
+    * Removed: error output is NOT shifted to the end anymore (was done when compiling with "-r")
+
+February 15, 2018 - bake-toolkit 2.43.2
+    * Bugfix: fixed prebuild feature after changes in 2.43.0
+
 February 12, 2018 - bake-toolkit 2.43.1
     * Bugfix: exception when using file specific flags and defines fixed (bug introduced with 2.43.0)
 

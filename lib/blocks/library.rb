@@ -125,7 +125,7 @@ module Bake
 
               check_config_file()
             ensure
-              SyncOut.stopStream(success)
+              SyncOut.stopStream()
             end
           end
 

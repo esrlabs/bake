@@ -303,10 +303,9 @@ module Bake
           return if blockAbort?(true)
 
           tmpstdout = Thread.current[:tmpStdout].nil? ? nil : Thread.current[:tmpStdout].dup
-          @@threads << Thread.new(Thread.current[:stdout], Thread.current[:errorStream], tmpstdout, steps) { |outStr, errStr, tmpStdout, steps|
+          @@threads << Thread.new(Thread.current[:stdout], tmpstdout, steps) { |outStr, tmpStdout, steps|
             STDOUT.puts "DEBUG_THREADS: Started: #{Thread.current.object_id} (#{@projectName}, #{@config.name})" if Bake.options.debug_threads
             Thread.current[:stdout] = outStr
-            Thread.current[:errorStream] = errStr
             Thread.current[:tmpStdout] = tmpStdout
             Thread.current[:steps] = steps
             exceptionOccured = false
@@ -377,7 +376,7 @@ module Bake
                    break if blockAbort?(@result)
                  end
                ensure
-                 SyncOut.stopStream(@result) if lastStep == @outputStep if Bake.options.syncedOutput
+                 SyncOut.stopStream() if lastStep == @outputStep if Bake.options.syncedOutput
                end
              }
           else
@@ -438,14 +437,14 @@ module Bake
         ensure
           if Bake.options.syncedOutput
             if !@outputStep
-              SyncOut.stopStream(@result)
+              SyncOut.stopStream()
             else
               SyncOut.discardStreams()
             end
           end
         end
 
-        return (depResult && @result)# && @@delayed_result)
+        return (depResult && @result)
       end
 
       def clean

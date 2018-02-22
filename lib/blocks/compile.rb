@@ -245,7 +245,6 @@ module Bake
           outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
           printCmd(cmd, "#{outputType} #{@projectName} (#{@config.name}): #{source}", reason, false)
           SyncOut.flushOutput()
-          puts "AAA2 #{source}"
           BlockBase.writeCmdLineFile(cmd, cmdLineFile)
 
           success = true
@@ -353,12 +352,11 @@ module Bake
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|
             while source = jobs.get_next_or_nil do
 
-              if ((jobs.failed || !Blocks::Block.delayed_result) and Bake.options.stopOnFirstError) or Bake::IDEInterface.instance.get_abort
+              if (jobs.failed && Bake.options.stopOnFirstError) or Bake::IDEInterface.instance.get_abort
                 break
               end
 
               SyncOut.startStream()
-              SyncOut.reset_errors()
               begin
                 Thread.current[:filelist] = Set.new if Bake.options.filelist
                 Thread.current[:lastCommand] = nil
@@ -378,8 +376,7 @@ module Bake
 
                 jobs.set_failed if not result
               ensure
-                SyncOut.stopStream(result)
-                SyncOut.flush_errors()
+                SyncOut.stopStream()
               end
               self.mutex.synchronize do
                 fileListBlock.merge(Thread.current[:filelist]) if Bake.options.filelist
@@ -469,22 +466,22 @@ module Bake
         @source_files = []
 
         exclude_files = Set.new
-        @config.excludeFiles.each do |p|
-          Dir.glob_dir(p.name, @projectDir).each {|f| exclude_files << f}
+        @config.excludeFiles.each do |pr|
+          Dir.glob_dir(pr.name, @projectDir).each {|f| exclude_files << f}
         end
 
         source_files = Set.new
         @config.files.each do |sources|
-          p = sources.name
-          p = p[2..-1] if p.start_with?"./"
+          pr = sources.name
+          pr = pr[2..-1] if pr.start_with?"./"
 
-          res = Dir.glob_dir(p, @projectDir).sort
+          res = Dir.glob_dir(pr, @projectDir).sort
           if res.length == 0 and cleaning == false
-            if not p.include?"*" and not p.include?"?"
-              Bake.formatter.printError("Source file '#{p}' not found", sources)
+            if not pr.include?"*" and not pr.include?"?"
+              Bake.formatter.printError("Source file '#{pr}' not found", sources)
               raise SystemCommandFailed.new
             elsif Bake.options.verbose >= 1
-              Bake.formatter.printInfo("Source file pattern '#{p}' does not match to any file", sources)
+              Bake.formatter.printInfo("Source file pattern '#{pr}' does not match to any file", sources)
             end
           end
           res.each do |f|

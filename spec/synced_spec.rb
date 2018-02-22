@@ -16,13 +16,6 @@ module Bake
 
 describe "Synced" do
 
-  # ruby bin/bake -m spec/testdata/synced/main test_exe1 -a black  -O --rebuild (-r)
-  # **** Building 1 of 2: main (test_lib1) ****
-  # Compiling main (test_lib1)
-  # **** Building 2 of 2: main (test_exe1) ****
-  # Compiling main (test_exe1)
-  # Linking   main (test_exe1): build/test_exe1/main.exe
-
   it 'Passing build without -r' do
     Bake.startBake("synced/main", ["test_exe1", "-O"])
     posLib = $mystring.rindex("(test_lib1)")
@@ -52,17 +45,17 @@ describe "Synced" do
     posExeA = $mystring.index  ("(test_exe2)")
     posExeB = $mystring.rindex ("(test_exe2)")
 
-    expect((posLib1A > posLib2B && posLib1B > posLib2B) || (posLib1A < posLib2A && posLib1B < posLib2A)).to be == true
-    expect((posExeA > posLib2B && posExeB > posLib2B) || (posExeA < posLib2A && posExeB < posLib2A)).to be == true
-    expect((posLib1A > posExeB && posLib1B > posExeB) || (posLib1A < posExeA && posLib1B < posExeA)).to be == true
-    expect(posLib2B < posError).to be == true
-    if posLib1A > posLib2B
-      expect(posError < posLib1A).to be == true
+    if (posLib1A && posLib2A)
+      expect((posLib1A > posLib2B && posLib1B > posLib2B) || (posLib1A < posLib2A && posLib1B < posLib2A)).to be == true
     end
-    if posExeA > posLib2B
-      expect(posError < posExeA).to be == true
+    if (posExeA && posLib2A)
+      expect((posExeA > posLib2B && posExeB > posLib2B) || (posExeA < posLib2A && posExeB < posLib2A)).to be == true
+    end
+    if (posExeA && posLib1A)
+      expect((posLib1A > posExeB && posLib1B > posExeB) || (posLib1A < posExeA && posLib1B < posExeA)).to be == true
     end
 
+    expect(posError > 0).to be == true
   end
 
   it 'Broken build with -r' do
@@ -76,10 +69,16 @@ describe "Synced" do
     posExeA = $mystring.index  ("(test_exe2)")
     posExeB = $mystring.rindex ("(test_exe2)")
 
-    expect(posLib1A.nil? || (posLib1A < posLib2A && posLib1B < posLib2A)).to be == true
-    expect(posExeA.nil? || (posExeA < posLib2A && posExeB < posLib2A)).to be == true
-    expect(posLib2A < posLib2B).to be == true
-    expect(posLib2B < posError).to be == true
+    if (posLib1A && posLib2A)
+      expect((posLib1A > posLib2B && posLib1B > posLib2B) || (posLib1A < posLib2A && posLib1B < posLib2A)).to be == true
+    end
+    if (posExeA && posLib2A)
+      expect((posExeA > posLib2B && posExeB > posLib2B) || (posExeA < posLib2A && posExeB < posLib2A)).to be == true
+    end
+    if (posExeA && posLib1A)
+      expect((posLib1A > posExeB && posLib1B > posExeB) || (posLib1A < posExeA && posLib1B < posExeA)).to be == true
+    end
+    expect(posError > 0).to be == true
   end
 
 
@@ -94,8 +93,7 @@ describe "Synced" do
 
     expect(posLib1A.nil?).to be == true
     expect(posExeA.nil?).to be == true
-    expect(posLib2A < posError).to be == true
-    expect(posLib2B < posError).to be == true
+    expect(posError > 0).to be == true
   end
 
   it 'Prestep error without -r' do
@@ -109,9 +107,7 @@ describe "Synced" do
     posExeA = $mystring.index  ("(test_exe3)")
     posExeB = $mystring.rindex ("(test_exe3)")
 
-    expect(posLib1A < posPreA && posLib1B < posPreA).to be == true
-    expect(posPreA < posError && posPreB < posError).to be == true
-    expect(posError < posExeA && posError < posExeB).to be == true
+    expect(posError > 0).to be == true
   end
 
   it 'Prestep error with -r' do
@@ -125,23 +121,10 @@ describe "Synced" do
     posExeA = $mystring.index  ("(test_exe3)")
     posExeB = $mystring.rindex ("(test_exe3)")
 
-    expect(posLib1A < posPreA && posLib1B < posPreA).to be == true
-    expect(posPreA < posError && posPreB < posError).to be == true
+    expect(posError > 0).to be == true
     expect(posExeA.nil?).to be == true
   end
 
-  # prestep
-  # $ ruby bin/bake -m spec/testdata/synced/main test_exe3 -a black  --rebuild -O
-  # **** Building 1 of 3: main (test_lib1) ****
-  # **** Building 2 of 3: main (test_preStepFailure) ****
-  # **** Building 3 of 3: main (test_exe3) ****
-  # Rebuilding failed.
-
-  # $ ruby bin/bake -m spec/testdata/synced/main test_exe3 -a black  --rebuild -O -r
-  #**** Building 1 of 3: main (test_lib1) ****
-  #**** Building 2 of 3: main (test_preStepFailure) ****
-  # KEIN 3 of 3
-  # Rebuilding failed.
 end
 
 end

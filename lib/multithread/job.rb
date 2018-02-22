@@ -24,9 +24,8 @@ module Bake
         @jobs = jobs
         @threads = []
         nr_of_threads.times do
-          @threads << ::Thread.new(Thread.current[:stdout], Thread.current[:errorStream]) do |outStr, errStr|
+          @threads << ::Thread.new(Thread.current[:stdout]) do |outStr|
             Thread.current[:stdout] = outStr
-            Thread.current[:errorStream] = errStr
             begin
               Jobs.incThread()
               block.call(self)

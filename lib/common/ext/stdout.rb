@@ -97,7 +97,7 @@ class SyncOut
     end
   end
 
-  def self.stopStream(result=true)
+  def self.stopStream()
     mutex.synchronize do
 
       s = Thread.current[:stdout]
@@ -105,12 +105,8 @@ class SyncOut
       Thread.current[:stdout] = Thread.current[:tmpStdout] ? Thread.current[:tmpStdout].pop : nil
 
       if s.string.length > 0
-        if !result && Bake.options.stopOnFirstError
-          Thread.current[:errorStream] << s.string
-        else
-          convertConfNum(s.string)
-          puts s.string
-        end
+        convertConfNum(s.string)
+        puts s.string
         s.reopen("")
       end
 
@@ -123,20 +119,6 @@ class SyncOut
     mutex.synchronize do
       Thread.current[:stdout] = Thread.current[:tmpStdout] ? Thread.current[:tmpStdout].pop : nil
     end
-  end
-
-  def self.flush_errors
-    mutex.synchronize do
-      if !Thread.current[:errorStream].empty?
-        convertConfNum(Thread.current[:errorStream])
-        puts Thread.current[:errorStream]
-        reset_errors
-      end
-    end
-  end
-
-  def self.reset_errors
-    Thread.current[:errorStream] = ""
   end
 
 end
