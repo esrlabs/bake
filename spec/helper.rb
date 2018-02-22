@@ -96,7 +96,7 @@ module Bake
       Thread.current[:stdout]=$sstring
     end
 
-    config.after(:each) do
+    config.after(:each) do |the_test|
       Thread.current[:stdout]=$stdoutbackup
 
       @fstdout.rewind; @fstdout.read; @fstdout.close
@@ -109,7 +109,9 @@ module Bake
       if ($endReached)
         print $mystring
       else
-        #puts $mystring
+        if !the_test.instance_variable_get(:@exception).nil?
+          puts $mystring
+        end
       end
     end
 
