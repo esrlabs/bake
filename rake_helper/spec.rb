@@ -1,5 +1,4 @@
 $:.unshift(File.dirname(__FILE__)+"/../lib")
-require 'common/version'
 
 if defined?(RUBY_ENGINE) && RUBY_ENGINE == "ruby" && RUBY_VERSION >= "1.9"
   module Kernel
@@ -20,7 +19,7 @@ begin
 rescue LoadError
 end
 
-SPEC_PATTERN ='spec/**/*_spec.rb'
+SPEC_PATTERN ='spec/**/synced_spec.rb'
 
 puts "Creating dummy libs"
 `gcc -r -c rake_helper/dummy.c -o rake_helper/dummy.a`
@@ -78,6 +77,12 @@ end
 
 task :travis do
   ENV["CI_RUNNING"] = "YES"
+  if RUBY_VERSION.start_with?("2.4")
+    ENV["COVERAGE_RUNNING"] = "YES"
+  else
+    ENV["COVERAGE_RUNNING"] = "NO"
+  end
+
   Rake::Task["test:spec"].invoke
   begin
     Rake::Task["coveralls:push"].invoke
@@ -87,5 +92,6 @@ end
 
 task :appveyor do
   ENV["CI_RUNNING"] = "YES"
+  ENV["COVERAGE_RUNNING"] = "NO"
   Rake::Task["test:spec"].invoke
 end

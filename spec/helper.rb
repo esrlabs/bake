@@ -4,17 +4,27 @@ module Bake
   end
 end
 
+module Bake
+  def self.coverageRunning?
+    ENV["COVERAGE_RUNNING"] == "YES"
+  end
+end
+
 begin
-  if Bake.ciRunning?
+  if Bake.coverageRunning?
     require 'simplecov'
     require 'coveralls'
+
     SimpleCov.start do
       add_filter 'spec'
     end
     Coveralls.wear_merged!
-    SimpleCov.merge_timeout 3600
   end
-rescue LoadError
+
+
+rescue LoadError => ex
+  puts ex.message
+  puts ex.backtrace
 end
 
 require 'tempfile'
