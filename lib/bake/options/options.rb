@@ -7,6 +7,7 @@ require 'bake/options/usage'
 require 'bake/options/create'
 require 'common/options/finder'
 require 'common/root'
+require 'common/crc32'
 
 module Bake
 
@@ -142,6 +143,8 @@ module Bake
       add_option(["--install-doc",        "--install_doc"        ], lambda {     Doc.install                             })
 
       add_option(["--dry"                                        ], lambda {     @dry = true                             })
+
+      add_option(["--crc32"                                      ], lambda { |x| CRC32.printAndExit(x)                   })
 
       add_option(["--version"                                    ], lambda {     Bake::Usage.version                     })
       add_option(["--list",               "--show_configs"       ], lambda {     @showConfigs = true                     })

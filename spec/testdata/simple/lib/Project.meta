@@ -3,6 +3,12 @@ Project {
   LibraryConfig test_ok {
     Files "src/y.cpp"
     Files "src/z.cpp"
+    PostSteps {
+      CommandLine "echo PathToMainProject_lib: $(PathToMainProject)", echo: off
+      CommandLine "echo PathToMainProjectSanitized_lib: $(PathToMainProjectSanitized)", echo: off
+      CommandLine "echo UidNoMainConfigName_lib: $(UidNoMainConfigName)", echo: off
+      CommandLine "echo Uid_lib: $(Uid)", echo: off
+    }
   }
 
   CustomConfig test_old {
