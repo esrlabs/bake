@@ -155,7 +155,7 @@
 <li>predefined</li>
 <li>environment</li>
 </ul>
-<p>variables in your Project.meta file (in this priority). If a variable is not found, it will be evaluated to an empty string.</p>
+<p>variables in your Project.meta file. Every environment and predefined variable can be overwritten by the user. If a variable is not found at all, it will be set to an empty string.</p>
 <div class="section" id="using-variables">
 <h2>Using variables<a class="headerlink" href="#using-variables" title="Permalink to this headline">¶</a></h2>
 <p>Variables can be used using the following syntax:</p>
@@ -178,7 +178,7 @@ something like this:</p>
 </pre></div>
 </div>
 <ol class="arabic simple">
-<li>THe variable is defined directly in the Project.meta file.</li>
+<li>The variable is defined directly in the Project.meta file.</li>
 </ol>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">Set MyVar, value: &quot;Hello world!&quot;</span>
 <span class="go">Set MyVar, cmd: &quot;ruby calcVar.rb&quot;</span>
