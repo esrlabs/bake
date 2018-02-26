@@ -1,8 +1,9 @@
 Changelog
 =========
 
-February 21, 2018 - bake-toolkit 2.44.0
-    * Added: Case sensitivity check of include files (on by default!), use --no-case-check to disable it
+February 26, 2018 - bake-toolkit 2.44.0
+    * Added: Case sensitivity check of C/C++ include files (on by default!), use --no-case-check to disable it
+    * Added: Variable $(Uid), a CRC32 over relative path to main project dir plus main config name.
     * Changed: error output is NOT shifted to the end anymore (was done when compiling with "-r")
 
 February 15, 2018 - bake-toolkit 2.43.2

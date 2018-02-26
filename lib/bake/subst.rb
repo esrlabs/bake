@@ -188,14 +188,14 @@ module Bake
          substStr << @@configName
         elsif var == "ToolchainName" and defined?@@toolchainName
          substStr << @@toolchainName
-        elsif var == "PathToMainProject"
-          substStr << File.rel_from_to_project(@@config.parent.get_project_dir, Bake.options.main_dir, false)
-        elsif var == "PathToMainProjectSanitized"
-          path = File.rel_from_to_project(@@config.parent.get_project_dir, Bake.options.main_dir, false).gsub(/\.\./,"__").gsub(/:/,"")
-          path = path[1..-1] if path.start_with?("/")
-          substStr << path
-        elsif var == "UidNoMainConfigName"
-          substStr << CRC32.calc(File.rel_from_to_project(@@config.parent.get_project_dir, Bake.options.main_dir, false))
+#        elsif var == "PathToMainProject"
+#          substStr << File.rel_from_to_project(@@config.parent.get_project_dir, Bake.options.main_dir, false)
+#        elsif var == "PathToMainProjectSanitized"
+#          path = File.rel_from_to_project(@@config.parent.get_project_dir, Bake.options.main_dir, false).gsub(/\.\./,"__").gsub(/:/,"")
+#          path = path[1..-1] if path.start_with?("/")
+#          substStr << path
+#        elsif var == "UidNoMainConfigName"
+#          substStr << CRC32.calc(File.rel_from_to_project(@@config.parent.get_project_dir, Bake.options.main_dir, false))
         elsif var == "Uid"
           substStr << CRC32.calc(File.rel_from_to_project(@@config.parent.get_project_dir, Bake.options.main_dir, false) + "," + Bake.options.build_config)
         elsif var == "ProjectName"

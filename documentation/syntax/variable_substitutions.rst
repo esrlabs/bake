@@ -6,7 +6,7 @@ bake allows you to use
 - predefined
 - environment
 
-variables in your Project.meta file (in this priority). If a variable is not found, it will be evaluated to an empty string.
+variables in your Project.meta file. Every environment and predefined variable can be overwritten by the user. If a variable is not found at all, it will be set to an empty string.
 
 Using variables
 ***************
@@ -35,7 +35,7 @@ There are two ways to create user defined variables.
 
     User@Host:~$ bake ... --set MyVar="Hello world!"
 
-#. THe variable is defined directly in the Project.meta file.
+#. The variable is defined directly in the Project.meta file.
 
 .. code-block:: console
 
@@ -78,6 +78,10 @@ Variable                                    Description                         
 *$(Time)*                                   Evaluates to the current time                       2012-12-24 20:00:00 +0200
 
 *$(Hostname)*                               Evaluates to the hostname                           MY_COMPUTER
+
+*$(Uid)*                                    CRC32 over relative path to MainProjectDir          03FAB429
+                                            plus MainConfigName, e.g.
+                                            "../libs/utils,Debug"
 
 *$(CPPPath)*                                Evaluates to the base path of the                   /usr/bin
                                             c++ compiler

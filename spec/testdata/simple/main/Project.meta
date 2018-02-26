@@ -6,9 +6,25 @@ Project {
     Set VAR, value: "abc"
     PostSteps {
       CommandLine "echo $(VAR) $(VAR2)"
-      CommandLine "echo PathToMainProject_main: $(PathToMainProject)", echo: off
-      CommandLine "echo PathToMainProjectSanitized_main: $(PathToMainProjectSanitized)", echo: off
-      CommandLine "echo UidNoMainConfigName_main: $(UidNoMainConfigName)", echo: off
+      CommandLine "echo Uid_main: $(Uid)", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_ok_uid {
+    Files "src/x.cpp"
+    Dependency lib, config: test_ok
+    PostSteps {
+      CommandLine "echo Uid_main: $(Uid)", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_ok_own_uid {
+    Files "src/x.cpp"
+    Dependency lib, config: test_ok
+    Set Uid, value: "OWN_ID"
+    PostSteps {
       CommandLine "echo Uid_main: $(Uid)", echo: off
     }
     DefaultToolchain GCC
