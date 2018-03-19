@@ -55,7 +55,7 @@ module Bake
       puts " --file-list              Writes all sources and headers used by a SINGLE config into '<config output folder>/file-list.txt'."
       puts "                          Writes all sources and headers used by ALL configs into '<main config output folder/global-file-list.txt'."
       puts " --prebuild               Does not build configs which are marked as 'prebuild', this feature is used for distributions."
-      puts " --compilation-db [<fn>]  Writes compilation information into filename fn in json format, default for fn is compilation-db.json"
+      puts " --compilation-db [<fn>]  Writes compilation information into filename fn in json format, default for fn is compile_commands.json"
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
       puts " --nb                     Suppresses the lines \"**** Building x of y: name (config) ****"
       puts " --crc32 <string>         Calulates the CRC32 of string (0x4C11DB7, init 0, final xor 0, input and result not reflected), used for Uid variable calculation"
