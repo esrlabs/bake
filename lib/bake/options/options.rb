@@ -148,7 +148,7 @@ module Bake
 
       add_option(["--version"                                    ], lambda {     Bake::Usage.version                     })
       add_option(["--list",               "--show_configs"       ], lambda {     @showConfigs = true                     })
-      add_option(["--compilation-db"                             ], lambda { |x,dummy| @cc2j_filename = (x ? x : "compilation-db.json" )})
+      add_option(["--compilation-db"                             ], lambda { |x,dummy| @cc2j_filename = (x ? x : "compile_commands.json" )})
       add_option(["--link-2-17",          "--link_2_17"          ], lambda {     @oldLinkOrder = true                    })
       add_option(["--build_",                                    ], lambda {     @buildDirDelimiter = "_"                })
 

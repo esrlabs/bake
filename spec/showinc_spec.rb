@@ -42,25 +42,6 @@ module Bake
       " ASM defines\n"+
       " done"
 
-def checkDb
-  f = File.read('compilation-db.json')
-     ar = JSON.parse(f)
-     expect(ar.length).to be == 3
-     ar.each do |a|
-       if a["file"] == "src/z.cpp"
-         expect(a["directory"].include?"spec/testdata/simple/lib").to be == true
-         expect(a["command"].include?"-c -MD -MF build/test_ok_main_test_ok/src/z.d -o build/test_ok_main_test_ok/src/z.o src/z.cpp").to be == true
-       elsif a["file"] == "src/y.cpp"
-         expect(a["directory"].include?"spec/testdata/simple/lib").to be == true
-         expect(a["command"].include?"-c -MD -MF build/test_ok_main_test_ok/src/y.d -o build/test_ok_main_test_ok/src/y.o src/y.cpp").to be == true
-       else
-         expect(a["file"]).to be == "src/x.cpp"
-         expect(a["directory"].include?"spec/testdata/simple/main").to be == true
-         expect(a["command"].include?"-c -MD -MF build/test_ok/src/x.d -o build/test_ok/src/x.o src/x.cpp").to be == true
-       end
-     end
-end
-
 describe "ShowInc" do
 
   it 'Default' do
@@ -96,19 +77,25 @@ describe "ShowInc" do
   end
 
   it 'compilation-db without parameter' do
+    def checkAbsoluteFilePath(cmd, fileName)
+      expect(cmd['file']).to be == "#{cmd['directory']}/src/#{fileName}"
+    end
+
     Bake.startBake("simple/main", ["test_ok", "--compilation-db"])
-    f = File.read('compilation-db.json')
+    f = File.read('compile_commands.json')
     ar = JSON.parse(f)
     expect(ar.length).to be == 3
     ar.each do |a|
-      if a["file"] == "src/z.cpp"
+      if File.basename(a["file"]) == "z.cpp"
+        checkAbsoluteFilePath(a, "z.cpp")
         expect(a["directory"].include?"spec/testdata/simple/lib").to be == true
         expect(a["command"].include?"-c -MD -MF build/test_ok_main_test_ok/src/z.d -o build/test_ok_main_test_ok/src/z.o src/z.cpp").to be == true
-      elsif a["file"] == "src/y.cpp"
+      elsif File.basename(a["file"]) == "y.cpp"
+        checkAbsoluteFilePath(a, "y.cpp")
         expect(a["directory"].include?"spec/testdata/simple/lib").to be == true
         expect(a["command"].include?"-c -MD -MF build/test_ok_main_test_ok/src/y.d -o build/test_ok_main_test_ok/src/y.o src/y.cpp").to be == true
       else
-        expect(a["file"]).to be == "src/x.cpp"
+        checkAbsoluteFilePath(a, "x.cpp")
         expect(a["directory"].include?"spec/testdata/simple/main").to be == true
         expect(a["command"].include?"-c -MD -MF build/test_ok/src/x.d -o build/test_ok/src/x.o src/x.cpp").to be == true
       end
