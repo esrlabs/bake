@@ -97,7 +97,7 @@ module Bake
       projPattern = /\A#{c.project.gsub("*", "(\\w*)")}\z/
       confPattern = /\A#{c.name.gsub("*", "(\\w*)")}\z/
 
-       if projPattern.match(config.parent.name) or (isMain and c.project == "__MAIN__") or c.project == "__ALL__"
+       if projPattern.match(config.parent.name) or (projName == Bake.options.main_project_name and c.project == "__MAIN__") or c.project == "__ALL__"
           if confPattern.match(config.name) or (isMain and c.name == "__MAIN__") or c.name == "__ALL__"
 
             conditionProjPattern = /\A#{c.parent.mainProject.gsub("*", "(\\w*)")}\z/

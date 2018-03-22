@@ -26,10 +26,7 @@ describe "Adapt" do
     expect($mystring.include?("SIMPLEB")).to be == true
   end
 
-
-=begin
   it 'Dep extend 0' do
-
     absAdapt = File.expand_path("spec/testdata/adapt/adapt/dep/dep_extend")
 
     Bake.startBake("adapt/main", ["test_dep0", "--rebuild", "--adapt", absAdapt, "-v2"])
@@ -929,7 +926,12 @@ describe "Adapt" do
     Bake.startBake("adapt/front", ["test", "-v2"])
     expect($mystring.include?("-Ib -Ia -DdefB -DdefA")).to be == true
   end
-=end
+
+  it 'bug in 2.44, __MAIN__ in project did only work for main config' do
+    Bake.startBake("adaptTest/main", ["testExe", "--adapt", "ada"])
+    expect(ExitHelper.exit_code).to be == 0
+  end
+
 end
 
 end

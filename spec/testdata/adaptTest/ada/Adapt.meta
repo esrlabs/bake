@@ -1,0 +1,7 @@
+Adapt {
+
+  LibraryConfig testLib, project: __MAIN__, type: extend {
+    Files "src/lib.cpp"
+  }
+
+}

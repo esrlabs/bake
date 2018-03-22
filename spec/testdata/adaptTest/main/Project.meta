@@ -1,0 +1,11 @@
+Project default: testLib {
+
+    LibraryConfig testLib
+
+    ExecutableConfig testExe {
+       Files "src/main.cpp"
+       Dependency config: testLib
+       DefaultToolchain GCC
+    }
+
+}
