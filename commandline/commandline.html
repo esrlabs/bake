@@ -1,35 +1,23 @@
 <!DOCTYPE html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Commandline &mdash; bake documentation</title>
-    
-    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <title>Commandline &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake documentation" href="../index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="IDE Support" href="../ide/ide_integrations.html" />
     <link rel="prev" title="Prefix compiler, archiver and linker" href="../syntax/prefix.html" />
 <meta charset='utf-8'>
@@ -37,8 +25,7 @@
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-  </head>
-  <body role="document">
+  </head><body>
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -49,7 +36,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/logo_tiny_48.png">
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/logo_tiny_48.png"></span>
            </a>
         <span class="navbar-text navbar-version pull-left"><b></b></span>
       </div>
@@ -72,7 +59,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Commandline</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Commandline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
@@ -118,18 +105,6 @@
               
             
             
-              
-                
-  <li>
-    <a href="../syntax/prefix.html" title="Previous Chapter: Prefix compiler, archiver and linker"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Prefix compil...</span>
-    </a>
-  </li>
-  <li>
-    <a href="../ide/ide_integrations.html" title="Next Chapter: IDE Support"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">IDE Support &raquo;</span>
-    </a>
-  </li>
-              
-            
             
             
             
@@ -151,13 +126,13 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="commandline">
 <h1>Commandline<a class="headerlink" href="#commandline" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="how-to-get-help">
 <h2>How to get help<a class="headerlink" href="#how-to-get-help" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake -h
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake -h
 </pre></div>
 </div>
 </div>
@@ -181,13 +156,13 @@
 <div class="section" id="building-an-application">
 <h3>Building an application<a class="headerlink" href="#building-an-application" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake -b Debug
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake -b Debug
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>It is possible to omit <em>-b</em>:</p>
-<div class="last highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug
+<div class="last highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug
 </pre></div>
 </div>
 </div>
@@ -196,7 +171,7 @@
 <div class="section" id="building-from-within-an-arbitrary-directory">
 <h3>Building from within an arbitrary directory<a class="headerlink" href="#building-from-within-an-arbitrary-directory" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root/mainProj
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root/mainProj
 </pre></div>
 </div>
 </div></blockquote>
@@ -205,7 +180,7 @@
 <h3>Building just one specific project<a class="headerlink" href="#building-just-one-specific-project" title="Permalink to this headline">¶</a></h3>
 <p>Assuming the project name to build s myProj.</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -p myProj
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -p myProj
 </pre></div>
 </div>
 </div></blockquote>
@@ -214,7 +189,7 @@
 <h3>Building specific projects with different roots<a class="headerlink" href="#building-specific-projects-with-different-roots" title="Permalink to this headline">¶</a></h3>
 <p>Assuming mainProj has several configs really included in the build (which is uncommon), you can choose one of the configs.</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -p myProj,abc
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -p myProj,abc
 </pre></div>
 </div>
 </div></blockquote>
@@ -223,7 +198,7 @@
 <h3>Building a project which has more than one root<a class="headerlink" href="#building-a-project-which-has-more-than-one-root" title="Permalink to this headline">¶</a></h3>
 <p>Assuming code has been checked out into two roots, the console supports ansi colors, you want to stop on first error and build only the project bspAbc.</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc
 </pre></div>
 </div>
 </div></blockquote>
@@ -232,7 +207,7 @@
 <h3>Search depth<a class="headerlink" href="#search-depth" title="Permalink to this headline">¶</a></h3>
 <p>Projects and Adaptions are searched recursively within the roots. Specify the maximum search depth like this:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1,3 -w w:/root2/libA,0 -r -a black -p bspAbc
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1,3 -w w:/root2/libA,0 -r -a black -p bspAbc
 </pre></div>
 </div>
 </div></blockquote>
@@ -251,7 +226,7 @@
 <div class="section" id="clean-a-project-s">
 <h3>Clean a project(s)<a class="headerlink" href="#clean-a-project-s" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc -c
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc -c
 </pre></div>
 </div>
 </div></blockquote>
@@ -259,7 +234,7 @@
 <div class="section" id="build-a-single-file-s">
 <h3>Build a single file(s)<a class="headerlink" href="#build-a-single-file-s" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake Debug -p bspAbc -f main.cpp
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -p bspAbc -f main.cpp
 <span class="gp">User@Host:~$</span> bake Debug -f .asm
 </pre></div>
 </div>
@@ -272,10 +247,10 @@
 </div>
 <div class="section" id="roots-bake">
 <h2>roots.bake<a class="headerlink" href="#roots-bake" title="Permalink to this headline">¶</a></h2>
-<p>Workspace roots can be defined in a file called &#8220;roots.bake&#8221;, which will be searched from main project directory to root folder.
+<p>Workspace roots can be defined in a file called “roots.bake”, which will be searched from main project directory to root folder.
 Example:</p>
 <blockquote>
-<div><div class="highlight-console"><div class="highlight"><pre><span class="go">../..</span>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">../..</span>
 <span class="go">C:/another/root # comments written like this</span>
 <span class="go">something/else, 3 # maximum search depth = 3, same as for &quot;-w&quot; arguments on command line</span>
 </pre></div>
@@ -298,8 +273,8 @@ Example:</p>
       
     </p>
     <p>
-        &copy; Copyright 2016, E.S.R.Labs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+        &copy; Copyright 2012-2018, ESRLabs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.<br/>
     </p>
   </div>
 </footer>

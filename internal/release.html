@@ -1,44 +1,30 @@
 <!DOCTYPE html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>How to release &mdash; bake documentation</title>
-    
-    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <title>How to release &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake documentation" href="../index.html" />
-    <link rel="up" title="Internal developing notes" href="internal.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="Socket" href="socket.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-  </head>
-  <body role="document">
+  </head><body>
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -49,7 +35,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/logo_tiny_48.png">
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/logo_tiny_48.png"></span>
            </a>
         <span class="navbar-text navbar-version pull-left"><b></b></span>
       </div>
@@ -109,14 +95,6 @@
               
             
             
-              
-                
-  <li>
-    <a href="socket.html" title="Previous Chapter: Socket"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Socket</span>
-    </a>
-  </li>
-              
-            
             
             
             
@@ -138,7 +116,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="how-to-release">
 <h1>How to release<a class="headerlink" href="#how-to-release" title="Permalink to this headline">¶</a></h1>
@@ -147,8 +125,8 @@
 <ul class="simple">
 <li>Develop features and fixes</li>
 <li>Increment version (in version.rb and index.rst)</li>
-<li>Create documentation in &#8220;documentation&#8221; folder with &#8220;make html &amp;&amp; ./fixBootstrap.sh&#8221;</li>
-<li>Adapt unittest, run with &#8220;rake test:spec&#8221;</li>
+<li>Create documentation in “documentation” folder with “make html &amp;&amp; ./fixBootstrap.sh”</li>
+<li>Adapt unittest, run with “rake test:spec”</li>
 <li>Commit</li>
 <li>Check on Travis CI and Appveyor if all builds are green</li>
 <li>Tag repository</li>
@@ -160,7 +138,7 @@
 <ul class="simple">
 <li>Copy content from install_docs (after documentation has been generated) into gh_pages branch</li>
 <li>Commit</li>
-<li>Check if docu is really updated on &#8220;esrlabs.github.io/bake&#8221;</li>
+<li>Check if docu is really updated on “esrlabs.github.io/bake”</li>
 </ul>
 </div>
 <div class="section" id="git-admin">
@@ -173,7 +151,7 @@
 <div class="section" id="gem">
 <h2>gem<a class="headerlink" href="#gem" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Build gem with &#8220;gem build bake-toolkit.gemspec&#8221;</li>
+<li>Build gem with “gem build bake-toolkit.gemspec”</li>
 <li>Push gem to rubygems</li>
 </ul>
 </div>
@@ -197,8 +175,8 @@
       
     </p>
     <p>
-        &copy; Copyright 2016, E.S.R.Labs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+        &copy; Copyright 2012-2018, ESRLabs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.<br/>
     </p>
   </div>
 </footer>
