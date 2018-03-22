@@ -1,6 +1,10 @@
 Changelog
 =========
 
+March 22, 2018 - bake-toolkit 2.44.1
+    * Bugfix: in Adapt.meta "__MAIN__" in project now applies to *all* configs in the main project
+    * Changed: "--compilation-db" now generates absolute paths if "--abs-paths" is set
+
 February 26, 2018 - bake-toolkit 2.44.0
     * Added: Case sensitivity check of C/C++ include files (on by default!), use --no-case-check to disable it
     * Added: Variable $(Uid), a CRC32 over relative path to main project dir plus main config name.

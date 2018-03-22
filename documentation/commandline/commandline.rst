@@ -55,7 +55,7 @@ Assuming the project name to build s myProj.
         User@Host:~$ bake Debug -m w:/root1/myProj -p myProj
 
 Building specific projects with different roots
-----------------------------------------------
+-----------------------------------------------
 Assuming mainProj has several configs really included in the build (which is uncommon), you can choose one of the configs.
 
 

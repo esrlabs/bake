@@ -1,36 +1,23 @@
 <!DOCTYPE html>
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Adapt configs &mdash; bake documentation</title>
-    
-    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/sandstone/bootstrap.min.css" type="text/css" />
+    <title>Adapt configs &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
-    <link rel="top" title="bake documentation" href="../index.html" />
-    <link rel="up" title="Syntax" href="syntax.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Auto-adjustment of paths to existing projects" href="auto_adjustment.html" />
     <link rel="prev" title="Derive configs" href="derive_configs.html" />
 <meta charset='utf-8'>
@@ -38,8 +25,7 @@
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-  </head>
-  <body role="document">
+  </head><body>
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -50,7 +36,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="../index.html"><img src="../_static/logo_tiny_48.png">
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/logo_tiny_48.png"></span>
            </a>
         <span class="navbar-text navbar-version pull-left"><b></b></span>
       </div>
@@ -123,18 +109,6 @@
               
             
             
-              
-                
-  <li>
-    <a href="derive_configs.html" title="Previous Chapter: Derive configs"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Derive configs</span>
-    </a>
-  </li>
-  <li>
-    <a href="auto_adjustment.html" title="Next Chapter: Auto-adjustment of paths to existing projects"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Auto-adjustme... &raquo;</span>
-    </a>
-  </li>
-              
-            
             
             
             
@@ -156,7 +130,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="adapt-configs">
 <span id="adapt-reference"></span><h1>Adapt configs<a class="headerlink" href="#adapt-configs" title="Permalink to this headline">¶</a></h1>
@@ -171,12 +145,12 @@
 </div>
 <div class="section" id="from-command-line">
 <h2>From command line<a class="headerlink" href="#from-command-line" title="Permalink to this headline">¶</a></h2>
-<p>If you want to manipulate existing configs without changing them, you can &#8220;adapt&#8221; them via command line.</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc
+<p>If you want to manipulate existing configs without changing them, you can “adapt” them via command line.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc
 </pre></div>
 </div>
 <p>bake searches for abc/Adapt.meta within the workspace roots. If found, the configs from the Adapt.meta are parsed:</p>
-<div class="highlight-text"><div class="highlight"><pre>Adapt {
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt {
   ExecutableConfig ... # 0..n
   LibraryConfig ... # 0..n
   CustomConfig ... # 0..n
@@ -184,26 +158,26 @@
 </pre></div>
 </div>
 <p>Here is an example to change the DefaultToolchain (details explained below):</p>
-<div class="highlight-text"><div class="highlight"><pre>Adapt {
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt {
   ExecutableConfig test, project: __MAIN__, type: replace {
     DefaultToolchain GCC
   }
 }
 </pre></div>
 </div>
-<p>&#8211;adapt can be used multiple times:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc --adapt xy
+<p>–adapt can be used multiple times:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc --adapt xy
 </pre></div>
 </div>
 <p>The values for adapt can be also comma separated:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc,xy
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc,xy
 </pre></div>
 </div>
 </div>
 <div class="section" id="from-project-meta">
 <h2>From Project.meta<a class="headerlink" href="#from-project-meta" title="Permalink to this headline">¶</a></h2>
 <p>You can do the same within the Project.meta:</p>
-<div class="highlight-text"><div class="highlight"><pre>Project {
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Project {
   ...
 }
 Adapt {
@@ -227,8 +201,8 @@ Adapt {
 <li><strong>mainConfig</strong>: name of the main config</li>
 <li><strong>mainProject</strong>: name of the main project</li>
 </ul>
-<p>The &#8220;Adapt* configs will be only applied if all these attributes are either empty or true (&#8220;AND&#8221; operation). Example:</p>
-<div class="highlight-text"><div class="highlight"><pre>Adapt toolchain: GCC, os: Windows {
+<p>The “Adapt* configs will be only applied if all these attributes are either empty or true (“AND” operation). Example:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt toolchain: GCC, os: Windows {
   ...
 }
 </pre></div>
@@ -236,18 +210,18 @@ Adapt {
 <p>Here the <em>Adapt</em> configs will be applied if toolchain is GCC on Windows.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">You can write &#8220;If&#8221; instead of &#8220;Adapt&#8221;:</p>
+<p class="last">You can write “If” instead of “Adapt”:</p>
 </div>
-<div class="highlight-text"><div class="highlight"><pre>If toolchain: GCC, os: Windows {
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>If toolchain: GCC, os: Windows {
   ...
 }
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">It is possible to negate the conditions with &#8220;Unless&#8221;:</p>
+<p class="last">It is possible to negate the conditions with “Unless”:</p>
 </div>
-<div class="highlight-text"><div class="highlight"><pre>Unless toolchain: GCC, os: Windows {
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Unless toolchain: GCC, os: Windows {
   ...
 }
 </pre></div>
@@ -258,14 +232,14 @@ Adapt {
 <h3>Effectiveness<a class="headerlink" href="#effectiveness" title="Permalink to this headline">¶</a></h3>
 <p>The <em>Adapt</em> configs can be applied to all configs from regular build. This can be controlled by the config names and the project attributes.
 Remember the example from the beginning?</p>
-<div class="highlight-text"><div class="highlight"><pre>Adapt {
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt {
   ExecutableConfig test, project: __MAIN__, type: replace {
     DefaultToolchain GCC
   }
 }
 </pre></div>
 </div>
-<p>This config is applied only to the config &#8220;test&#8221; of the main project.</p>
+<p>This config is applied only to the config “test” of the main project.</p>
 <p>__MAIN__, __ALL__ and __THIS__ are keywords:</p>
 <ul class="simple">
 <li><strong>__MAIN__</strong> means the main project or main config</li>
@@ -273,11 +247,11 @@ Remember the example from the beginning?</p>
 <li><strong>__THIS__</strong> is only valid for project name, which can be used for <em>Adapts</em> within a Project.meta to restrict the adaption to the current project. This is the default for <em>Adapts</em> in Project.meta.</li>
 </ul>
 <p>If you want to apply the changes only to the top level config, write:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig __MAIN__, project: __MAIN__, ...
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ExecutableConfig __MAIN__, project: __MAIN__, ...
 </pre></div>
 </div>
 <p>If you want to apply the changes to all configs, write:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig __ALL__, project: __ALL__, ...
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ExecutableConfig __ALL__, project: __ALL__, ...
 </pre></div>
 </div>
 <p>It is possible to mix the keywords with reals project or config names.</p>
@@ -286,7 +260,7 @@ Remember the example from the beginning?</p>
 <div class="section" id="occurrences">
 <h2>Occurrences<a class="headerlink" href="#occurrences" title="Permalink to this headline">¶</a></h2>
 <p>You can specify more configs in one <em>Adapt</em> and you can specify more than one Adapt.meta file:</p>
-<div class="highlight-text"><div class="highlight"><pre>Adapt {
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt {
   ExecutableConfig ..., project: ..., type: ... {
     ...
   }
@@ -300,7 +274,7 @@ Remember the example from the beginning?</p>
 }
 </pre></div>
 </div>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc --adapt xy
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc --adapt xy
 </pre></div>
 </div>
 </div>
@@ -308,8 +282,8 @@ Remember the example from the beginning?</p>
 <h2>Apply order<a class="headerlink" href="#apply-order" title="Permalink to this headline">¶</a></h2>
 <p>The <em>Adapt</em> configs will be applied in the order in which they were parsed. First the Adapt.metas referenced from the command line are read. Then the Project.metas are read
 one by one as usual. If an <em>Adapt</em> is found, it will be appended to the list of <em>Adapts</em>. Note, <em>Adapts</em> will be applied immediately when a Project.meta is read.</p>
-<p>If you inject a Toolchain from outside, e.g. &#8220;&#8211;adapt gcc&#8221;, you can use the toolchain info for local <em>Adapts</em>:</p>
-<div class="highlight-text"><div class="highlight"><pre>Project {
+<p>If you inject a Toolchain from outside, e.g. “–adapt gcc”, you can use the toolchain info for local <em>Adapts</em>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Project {
   ...
 }
 Adapt toolchain: GCC {
@@ -321,7 +295,7 @@ Adapt toolchain: GCC {
 <div class="section" id="types">
 <h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
 <p>It is possible to specify the type of adaption:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig ..., type: replace
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ExecutableConfig ..., type: replace
 </pre></div>
 </div>
 <p>The type can be</p>
@@ -333,13 +307,13 @@ Adapt toolchain: GCC {
 </ul>
 <div class="section" id="type-extend">
 <h3>Type: extend<a class="headerlink" href="#type-extend" title="Permalink to this headline">¶</a></h3>
-<p>This works exactly like for <a class="reference internal" href="derive_configs.html"><em>Derive configs</em></a>.</p>
+<p>This works exactly like for <a class="reference internal" href="derive_configs.html"><span class="doc">Derive configs</span></a>.</p>
 </div>
 <div class="section" id="type-push-front">
 <h3>Type: push_front<a class="headerlink" href="#type-push-front" title="Permalink to this headline">¶</a></h3>
 <p>This works like extend, but elements which can be contained multiple times are pushed to front.</p>
 <p>Example project config:</p>
-<div class="highlight-text"><div class="highlight"><pre>Project {
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Project {
   LibraryConfig test {
     IncludeDir &quot;abc&quot;
     ...
@@ -353,19 +327,19 @@ Adapt ... {
 }
 </pre></div>
 </div>
-<p>The resulting include path order will be &#8220;-Imock -Iabc&#8221;.</p>
+<p>The resulting include path order will be “-Imock -Iabc”.</p>
 </div>
 <div class="section" id="type-remove">
 <h3>Type: remove<a class="headerlink" href="#type-remove" title="Permalink to this headline">¶</a></h3>
 <p>If parent elements can be found which matches to the child elements, they will be removed.</p>
 <p>Example project config:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig test {
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ExecutableConfig test {
   DefaultToolchain GCC
 }
 </pre></div>
 </div>
 <p>Example <em>Adapt</em> configs:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig __ALL__, project: __ALL__, type: remove {
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ExecutableConfig __ALL__, project: __ALL__, type: remove {
   DefaultToolchain # remove ok
 }
 
@@ -385,9 +359,9 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
 </div>
 <div class="section" id="type-replace">
 <h3>Type: replace<a class="headerlink" href="#type-replace" title="Permalink to this headline">¶</a></h3>
-<p>This is for convenience. &#8220;replace&#8221; will remove all elements with the same type and extends the configs.</p>
+<p>This is for convenience. “replace” will remove all elements with the same type and extends the configs.</p>
 <p>Example:</p>
-<div class="highlight-text"><div class="highlight"><pre>ExecutableConfig __ALL__, project: __ALL__, type: replace {
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ExecutableConfig __ALL__, project: __ALL__, type: replace {
   Files &quot;*.cpp&quot;
   DefaultToolchain GCC {
     Linker command: &quot;link.exe&quot;
@@ -395,21 +369,21 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
 }
 </pre></div>
 </div>
-<p>This removes all &#8220;Files&#8221; and the &#8220;DefaultToolchain&#8221; from the original config regardless their attributes and replaces them by the elements of the <em>Adapt</em> config.</p>
+<p>This removes all “Files” and the “DefaultToolchain” from the original config regardless their attributes and replaces them by the elements of the <em>Adapt</em> config.</p>
 </div>
 </div>
 <div class="section" id="wildcards">
 <h2>Wildcards<a class="headerlink" href="#wildcards" title="Permalink to this headline">¶</a></h2>
-<p>The &#8220;*&#8221; wildcard is allowed:</p>
-<div class="highlight-text"><div class="highlight"><pre>Adapt mainProject: HERE, mainConfig: HERE ... {
+<p>The “*” wildcard is allowed:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt mainProject: HERE, mainConfig: HERE ... {
   SomeConfig HERE, project: HERE ... {
     ....
   }
 }
 </pre></div>
 </div>
-<p>Example (the configs of the Adapt are applied if the main config name starts with &#8220;UnitTest&#8221;):</p>
-<div class="highlight-text"><div class="highlight"><pre>Adapt mainConfig: &quot;UnitTest*&quot; {
+<p>Example (the configs of the Adapt are applied if the main config name starts with “UnitTest”):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt mainConfig: &quot;UnitTest*&quot; {
   ...
 }
 </pre></div>
@@ -429,8 +403,8 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
       
     </p>
     <p>
-        &copy; Copyright 2016, E.S.R.Labs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.<br/>
+        &copy; Copyright 2012-2018, ESRLabs AG.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.<br/>
     </p>
   </div>
 </footer>

@@ -57,7 +57,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'bake'
-copyright = '2016, E.S.R.Labs AG'
+copyright = '2012-2018, ESRLabs AG'
 author = ''
 
 # The version info for the project you're documenting, acts as replacement for
@@ -132,6 +132,9 @@ html_theme_options = {
     'navbar_pagenav': True,
     'navbar_pagenav_name': "SubSections",
     'source_link_position': "None",
+    'navbar_sidebarrel': False,
+    'globaltoc_includehidden': False,
+    'source_link_position': "",
     #'navbar_links': [
     #                    ("E.S.R.Labs", "https://www.esrlabs.com/", 1)
     #                ],
@@ -178,7 +181,9 @@ html_static_path = ['_static']
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-#html_sidebars = {}
+html_sidebars = {
+'**': []
+}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
