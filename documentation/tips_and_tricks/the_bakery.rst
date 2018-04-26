@@ -68,5 +68,8 @@ Example:
             Project Sub3, config: Debug
             SubCollection UnitTestLibsWithoutBsp
         }
+        Collection MainWithBakeArgs {
+            Project Main, config: Debug, args: "--adapt Debug --rebuild"
+        }
 
 

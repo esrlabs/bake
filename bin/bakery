@@ -109,7 +109,7 @@ module Bake
     p = File.dirname(bp.proj)
     pRel = File.rel_from_to_project(Dir.pwd, p, false)
     pRel = "." if pRel.empty?
-    cmd = (["-m", pRel, "-b", bp.conf] + passedParams)
+    cmd = (["-m", pRel, "-b", bp.conf] + bp.args.split + passedParams)
     cmdWithNum = "bakery #{currentRun} of #{maxRuns}: bake " + cmd.join(" ")
     puts "\n#{$stars}"
     Bake.formatter.printInfo(cmdWithNum)

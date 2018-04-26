@@ -122,6 +122,18 @@ describe "bake" do
     expect(str.include?("Argument for option --dot missing")).to be == true
   end
 
+  it 'collection project arg ok' do
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b ProjectArgs -w spec/testdata/root1 -w spec/testdata/root2 --adapt nols`
+    puts str
+    expect(str.include?("Rebuilding done.")).to be == true
+  end
+
+  it 'collection project arg not ok' do
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b ProjectInvalidArgs -w spec/testdata/root1 --adapt nols`
+    puts str
+    expect(str.include?("Argument for option --dot missing")).to be == true
+  end
+
   it 'recursive test 1' do
     str = `ruby bin/bakery -m spec/testdata/recursiveBakery/gaga gaga`
     puts str

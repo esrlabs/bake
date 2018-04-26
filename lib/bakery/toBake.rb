@@ -32,10 +32,10 @@ module Bake
       col.project.each do |p|
         projs = Root.search_to_depth(root.dir,p.name + "/Project.meta", root.depth)
         if projs.length == 0
-          toBuildPattern << BuildPattern.new(nil, nil, p) # remember it for sorted info printout
+          toBuildPattern << BuildPattern.new(nil, nil, p.args, p) # remember it for sorted info printout
         end
         projs.each do |f|
-          toBuildPattern << BuildPattern.new(f, "^"+p.config.gsub("*","(\\w*)")+"$", p)
+          toBuildPattern << BuildPattern.new(f, "^"+p.config.gsub("*","(\\w*)")+"$", p.args, p)
         end
       end
     end
@@ -48,7 +48,7 @@ module Bake
         res = c.match("\\s*(Library|Executable|Custom){1}Config\\s*(\\w*)")
         if res
           if res[2].match(bp.conf) != nil
-            toBuild << BuildPattern.new(bp.proj, res[2], nil)
+            toBuild << BuildPattern.new(bp.proj, res[2], bp.args, nil)
             bp.coll_p.found
           end
         end

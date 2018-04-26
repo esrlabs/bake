@@ -53,3 +53,11 @@ Collection InvalidRef {
 Collection Nothing {
   SubCollection Nothing
 }
+
+Collection ProjectArgs {
+  Project main, config: test, args: "--rebuild"
+}
+
+Collection ProjectInvalidArgs {
+  Project main, config: test, args: "--dot"
+}
