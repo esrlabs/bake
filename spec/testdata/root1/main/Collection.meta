@@ -53,3 +53,7 @@ Collection InvalidRef {
 Collection Nothing {
   SubCollection Nothing
 }
+
+Collection Quoted {
+  Project main, config: quoted
+}

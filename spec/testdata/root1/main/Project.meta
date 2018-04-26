@@ -40,4 +40,7 @@ Project {
     DefaultToolchain GCC
   }
 
+  CustomConfig "quoted" {
+    DefaultToolchain GCC
+  }
 }

@@ -45,7 +45,7 @@ module Bake
       next unless bp.proj
       contents = File.open(bp.proj, "r") {|io| io.read }
       contents.split("\n").each do |c|
-        res = c.match("\\s*(Library|Executable|Custom){1}Config\\s*(\\w*)")
+        res = c.match("\\s*(Library|Executable|Custom){1}Config\\s*\"?(\\w*)\"?")
         if res
           if res[2].match(bp.conf) != nil
             toBuild << BuildPattern.new(bp.proj, res[2], nil)
