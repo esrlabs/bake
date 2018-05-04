@@ -63,5 +63,5 @@ Collection ProjectInvalidArgs {
 }
 
 Collection Quoted {
-  Project main, config: quoted
+  Project main, config: "quo-te:d"
 }

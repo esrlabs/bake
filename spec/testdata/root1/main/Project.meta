@@ -40,7 +40,7 @@ Project {
     DefaultToolchain GCC
   }
 
-  CustomConfig "quoted" {
+  CustomConfig "quo-te:d" {
     DefaultToolchain GCC
   }
 }
