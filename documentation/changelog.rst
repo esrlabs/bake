@@ -2,11 +2,10 @@ Changelog
 =========
 
 May 4, 2018 - bake-toolkit 2.45.0
-
-    * Changed: it is possible now to specify files directly with with --adapt
-    * Changed: variables can be set by calling a script (Set var, cmd: script). If the script fails, bake aborts now with an error instead continuing with a warning.
+    * Changed: it is possible now to specify adapt files directly with *--adapt <filename>*
+    * Changed: variables can be set by calling a script (see *Set <var>, cmd: <script>*). If the script fails, bake aborts now with an error instead continuing with a warning.
     * Added: allow additional bake arguments specified per project in a bakery collection
-    * Bugfix: bakery collection can now reference a quoted project name and names with "-" or ":"
+    * Bugfix: bakery collections can now reference a quoted project name and names with "-" or ":"
     * Bugfix: under rare circumstances bake did not abort with an error if the main directory specified with -m does not exist
 
 March 22, 2018 - bake-toolkit 2.44.1
