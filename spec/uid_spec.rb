@@ -30,8 +30,11 @@ describe "Uid" do
   end
 
   it 'CRC32' do
+    begin
     Bake.startBake("simple/main", ["--crc32", "../main,test_ok_uid"])
-
+    rescue SystemExit => e
+      raise unless e.success?
+    end
     expect($mystring.include?"ACCA365A").to be == true
   end
 
