@@ -104,6 +104,12 @@ describe "bake" do
     expect(str.include?("0 of 0 builds ok")).to be == true
   end
 
+  it 'collection ref to quoted project name' do
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Quoted -w spec/testdata/root1 -r --adapt nols`
+    puts str
+    expect(str.include?("1 of 1 builds ok")).to be == true
+  end
+
   it 'collection invalid ref' do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b InvalidRef -w spec/testdata/root1 -w spec/testdata/root2 -r --adapt nols`
     puts str
