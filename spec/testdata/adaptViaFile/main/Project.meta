@@ -1,0 +1,7 @@
+Project {
+
+  CustomConfig test_adapt {
+    DefaultToolchain GCC
+  }
+
+}

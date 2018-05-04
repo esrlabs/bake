@@ -1,0 +1,9 @@
+Adapt {
+
+    CustomConfig __MAIN__, project: __MAIN__, type: extend {
+      PreSteps {
+        CommandLine "echo ROOT_DIR1", echo: off
+      }
+  }
+
+}

@@ -1,0 +1,9 @@
+Adapt {
+
+    CustomConfig __MAIN__, project: __MAIN__, type: extend {
+      PreSteps {
+        CommandLine "echo MAIN_DIR", echo: off
+      }
+  }
+
+}

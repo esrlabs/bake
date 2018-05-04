@@ -71,6 +71,39 @@ module Bake
     def chooseProjectFilenames(potentialAdapts)
       @@filenames = []
       Bake.options.adapt.each do |a|
+        a.gsub!(/\\/,"/")
+        found = false
+
+        # from working dir
+        if File.exist?(a) && File.file?(a)
+          @@filenames << File.expand_path(a)
+          found = true
+        end
+        next if found
+
+        # from main dir
+        Dir.chdir Bake.options.main_dir do
+          if File.exist?(a) && File.file?(a)
+            @@filenames << (Bake.options.main_dir + "/" + a)
+            found = true
+          end
+        end
+        next if found
+
+        # from roots
+        Bake.options.roots.each do |root|
+          r = root.dir
+          Dir.chdir r do
+            if File.exist?(a) && File.file?(a)
+              @@filenames << (r + "/" + a)
+              found = true
+            end
+          end
+          break if found
+        end
+        next if found
+
+        # old style
         adapts = potentialAdapts.find_all { |p| p.include?("/"+a+"/Adapt.meta") or p == a+"/Adapt.meta" }
         if adapts.empty?
           Bake.formatter.printError("Adaption project #{a} not found")

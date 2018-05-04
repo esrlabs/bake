@@ -932,6 +932,22 @@ describe "Adapt" do
     expect(ExitHelper.exit_code).to be == 0
   end
 
+  it 'adapt search' do
+    Bake.startBake("adaptViaFile/main", ["test_adapt",
+      "--adapt", "oldStyle",
+      "--adapt", "there/Adapt.meta",
+      "--adapt", "here/Adapt.meta",
+      "--adapt", "spec/testdata/adaptViaFile/working/Adapt.meta",
+      "--adapt", "here/SomeOtherFile"
+      ])
+    expect($mystring.include?("OLDSTYLE_DIR")).to be == true
+    expect($mystring.include?("MAIN_DIR")).to be == true
+    expect($mystring.include?("ROOT_DIR1")).to be == true
+    expect($mystring.include?("WORKING_DIR")).to be == true
+    expect($mystring.include?("ROOT_DIR2")).to be == true
+    expect(ExitHelper.exit_code).to be == 0
+  end
+
 end
 
 end
