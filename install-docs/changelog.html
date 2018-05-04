@@ -114,7 +114,16 @@
       
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<p>May 4, 2018 - bake-toolkit 2.45.0</p>
 <dl class="docutils">
+<dt>TODO: DOCU    * Changed: it is possible now to specify files directly with with –adapt</dt>
+<dd><ul class="first last simple">
+<li>Changed: variables can be set by calling a script (Set var, cmd: script). If the script fails, bake aborts now with an error instead continuing with a warning.</li>
+<li>Added: allow additional bake arguments specified per project in a bakery collection</li>
+<li>Bugfix: Fix bakery collections that reference a quoted project name</li>
+<li>Bugfix: under rare circumstances bake did not abort with an error if the main directory specified with -m does not exist</li>
+</ul>
+</dd>
 <dt>March 22, 2018 - bake-toolkit 2.44.1</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: in Adapt.meta “__MAIN__” in project now applies to <em>all</em> configs in the main project</li>

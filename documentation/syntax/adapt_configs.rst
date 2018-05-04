@@ -20,9 +20,16 @@ If you want to manipulate existing configs without changing them, you can "adapt
 
 .. code-block:: console
 
-    User@Host:~$ bake test --adapt abc
+    User@Host:~$ bake test --adapt abc/def
 
-bake searches for abc/Adapt.meta within the workspace roots. If found, the configs from the Adapt.meta are parsed:
+bake searches for *abc/def* in this priority:
+
+- *<current directory>/abc/def*
+- *<main project directory>/abc/def*
+- *<workspace root>/abc/def* (done for all roots)
+- *abc/def/Adapt.meta* recursively in all workspace roots (note, that */Adapt.meta* is automatically appended here)
+
+If found, the configs from the adapt file are parsed:
 
 .. code-block:: text
 

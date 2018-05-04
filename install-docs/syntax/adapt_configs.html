@@ -146,10 +146,17 @@
 <div class="section" id="from-command-line">
 <h2>From command line<a class="headerlink" href="#from-command-line" title="Permalink to this headline">¶</a></h2>
 <p>If you want to manipulate existing configs without changing them, you can “adapt” them via command line.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake <span class="nb">test</span> --adapt abc/def
 </pre></div>
 </div>
-<p>bake searches for abc/Adapt.meta within the workspace roots. If found, the configs from the Adapt.meta are parsed:</p>
+<p>bake searches for <em>abc/def</em> in this priority:</p>
+<ul class="simple">
+<li><em>&lt;current directory&gt;/abc/def</em></li>
+<li><em>&lt;main project directory&gt;/abc/def</em></li>
+<li><em>&lt;workspace root&gt;/abc/def**</em> (done for all roots)</li>
+<li><em>abc/def/Adapt.meta</em> recursively in all workspace roots (note, that <em>/Adapt.meta</em> is automatically appended here)</li>
+</ul>
+<p>If found, the configs from the adapt file are parsed:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt {
   ExecutableConfig ... # 0..n
   LibraryConfig ... # 0..n
