@@ -409,6 +409,21 @@ describe "Building" do
     expect($mystring.include?("-Wall -Iinclude/a -isysteminclude/b -isysteminclude/c -isysteminclude/d -o")).to be == true
   end
 
+  it 'call a sub main exists' do
+    Bake.startBakeWithPath("spec/testdata/brokenMainDir/main", "some/sub", ["test_1"])
+    expect($mystring.include?("THIS IS SUB")).to be == true
+  end
+
+  it 'call a sub main does not exist' do
+    begin
+      Bake.startBakeWithPath("spec/testdata/brokenMainDir/main", "some/subDoesNotExist", ["test_1"])
+    rescue Exception
+    end
+    expect($mystring.include?("THIS IS")).to be == false
+    expect($mystring.include?("Error: some/subDoesNotExist does not exist")).to be == true
+
+  end
+
 end
 
 end

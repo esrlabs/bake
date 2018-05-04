@@ -4,6 +4,8 @@ Changelog
 May 4, 2018 - bake-toolkit 2.45.0
     * Changed: variables can be set by calling a script (Set var, cmd: script). If the script fails, bake aborts now with an error instead continuing with a warning.
     * Added: allow additional bake arguments specified per project in a bakery collection
+    * Bugfix: Fix bakery collections that reference a quoted project name
+    * Bugfix: under rare circumstances bake did not abort with an error if the main directory specified with -m does not exist
 
 March 22, 2018 - bake-toolkit 2.44.1
     * Bugfix: in Adapt.meta "__MAIN__" in project now applies to *all* configs in the main project

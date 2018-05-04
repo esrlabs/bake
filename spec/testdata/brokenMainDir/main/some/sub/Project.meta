@@ -1,0 +1,8 @@
+Project {
+
+  CustomConfig test_1 {
+    CommandLine "THIS IS SUB"
+    DefaultToolchain GCC
+  }
+
+}

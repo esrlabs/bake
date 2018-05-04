@@ -44,6 +44,16 @@ module Bake
     Bake::cleanup
   end
 
+  def self.startBakeWithPath(path, proj, opt)
+    Dir.chdir(path) do
+      Bake.options = Options.new(["-m", "#{proj}"].concat(opt))
+      Bake.options.parse_options()
+      tocxx = Bake::ToCxx.new
+      tocxx.doit()
+      Bake::cleanup
+    end
+  end
+
   def self.startBakeWithChangeDir(proj, opt)
     Dir.chdir("spec/testdata/#{proj}") do
       Bake.options = Options.new([].concat(opt))
