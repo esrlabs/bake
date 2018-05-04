@@ -1,6 +1,8 @@
 Changelog
 =========
 
+    * Added: allow additional bake arguments specified per project in a bakery collection
+
 March 22, 2018 - bake-toolkit 2.44.1
     * Bugfix: in Adapt.meta "__MAIN__" in project now applies to *all* configs in the main project
     * Changed: "--compilation-db" now generates absolute paths if "--abs-paths" is set

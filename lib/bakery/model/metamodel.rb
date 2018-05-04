@@ -19,6 +19,7 @@ module Bake
     class Project < ModelElement
       has_attr 'name', String, :defaultValueLiteral => ""
       has_attr 'config', String, :defaultValueLiteral => ""
+      has_attr 'args', String, :defaultValueLiteral => ""
     end
     class Exclude < ModelElement
       has_attr 'name', String, :defaultValueLiteral => ""
