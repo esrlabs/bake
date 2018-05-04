@@ -86,12 +86,6 @@ describe "Set" do
     expect(($mystring.split("GAGA").length)).to be == 2
   end
 
-  it 'cmd does not work' do
-    Bake.startBake("set", ["cmdBroken"])
-    expect(($mystring.include?"echo **")).to be == true
-    expect(($mystring.include?"will be set to \"\"")).to be == true
-  end
-
   it 'setenv' do
     Bake.startBake("set", ["setEnv"])
     expect(($mystring.include?"IT_WORKS")).to be == true

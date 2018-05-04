@@ -102,9 +102,9 @@ module Bake
         else
           cmd_result = false
           consoleOutput = ""
+          cmd = [substString(s.cmd, s)]
           begin
             Dir.chdir(@@projDir) do
-              cmd = [substString(s.cmd, s)]
               cmd_result, consoleOutput = ProcessHelper.run(cmd)
               @@userVarMap[s.name] = consoleOutput.chomp
               if s.env
@@ -116,12 +116,8 @@ module Bake
             consoleOutput = e.message
           end
           if (cmd_result == false)
-            Bake.formatter.printWarning("Command not successful, variable #{s.name} will be set to \"\" (#{consoleOutput.chomp}).", s)
-            @@userVarMap[s.name] = ""
-            if s.env
-              ENV[s.name] = ""
-              config.setEnvVar(s.name, "")
-            end
+            Bake.formatter.printError("Command not successful: #{cmd.join(" ")}", s)
+            ExitHelper.exit(1)
           end
         end
 

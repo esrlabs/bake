@@ -1,0 +1,15 @@
+Project {
+
+  CustomConfig test_1 {
+    Set VAR, cmd: "gcc soWrong"
+    CommandLine "echo $(VAR)"
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test_2{
+    Set VAR, cmd: "doesNotExist"
+    CommandLine "echo $(VAR)"
+    DefaultToolchain GCC
+  }
+
+}

@@ -28,6 +28,7 @@ rescue LoadError => ex
 end
 
 require 'tempfile'
+require 'common/version'
 require 'common/cleanup'
 require 'tocxx'
 

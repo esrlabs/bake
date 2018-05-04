@@ -133,6 +133,20 @@ describe "VarSubst" do
     expect(($mystring.include?"-->main_Lib<--")).to be == true
   end
 
+  it 'cmd failed in subst' do
+    Bake.startBake("brokenSubstCmd/main", ["test_1"])
+
+    expect(($mystring.include?"brokenSubstCmd/main/Project.meta:4: Error: Command not successful: gcc soWrong")).to be == true
+    expect(($mystring.include?"Building failed.")).to be == true
+  end
+
+  it 'cmd does not exist in subst' do
+    Bake.startBake("brokenSubstCmd/main", ["test_2"])
+
+    expect(($mystring.include?"brokenSubstCmd/main/Project.meta:10: Error: Command not successful: doesNotExist")).to be == true
+    expect(($mystring.include?"Building failed.")).to be == true
+  end
+
 end
 
 end

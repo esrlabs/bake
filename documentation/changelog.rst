@@ -1,6 +1,8 @@
 Changelog
 =========
 
+May 4, 2018 - bake-toolkit 2.45.0
+    * Changed: variables can be set by calling a script (Set var, cmd: script). If the script fails, bake aborts now with an error instead continuing with a warning.
     * Added: allow additional bake arguments specified per project in a bakery collection
 
 March 22, 2018 - bake-toolkit 2.44.1
