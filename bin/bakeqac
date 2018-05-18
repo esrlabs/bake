@@ -222,13 +222,13 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
     cmd = qaExe + ["analyze", "-b"]
 
     begin
-      devMode = File.exist?"c:/Projekte/git/bake/bin/bake"
+      devMode = File.exist?"e:/bake/bake/bin/bake"
     rescue Exception
       devMode = false
     end
 
     if devMode
-      bcmd = "ruby c:/Projekte/git/bake/bin/bake "
+      bcmd = "ruby e:/bake/bake/bin/bake "
     else
       bcmd = (Utils::OS.windows? ? "cmd /c bake.bat " : "bake ")
     end

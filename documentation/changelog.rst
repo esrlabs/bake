@@ -1,6 +1,11 @@
 Changelog
 =========
 
+May 18, 2018 - bake-toolkit 2.46.0
+    * Added: Makefile command has new attribute **noClean**. If set to true, the target *clean* will not be executed when project is cleaned. Default: false.
+    * Added: Makefile command has new attribute **changeWorkingDir**. If set to false, bake stays in project's directory instead of changing into makefile's directory. Default: true.
+    * Added: Before executing the makefile, bake sets the environment variables $(BAKE_XX_COMMAND) and $(BAKE_XX_FLAGS), whereas XX is one of CPP, C, ASM, AR or LD.
+
 May 4, 2018 - bake-toolkit 2.45.0
     * Changed: it is possible now to specify adapt files directly with *--adapt <filename>*
     * Changed: variables can be set by calling a script (see *Set <var>, cmd: <script>*). If the script fails, bake aborts now with an error instead continuing with a warning.

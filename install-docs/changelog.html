@@ -115,6 +115,13 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>May 18, 2018 - bake-toolkit 2.46.0</dt>
+<dd><ul class="first last simple">
+<li>Added: Makefile command has new attribute <strong>noClean</strong>. If set to true, the target <em>clean</em> will not be executed when project is cleaned. Default: false.</li>
+<li>Added: Makefile command has new attribute <strong>changeWorkingDir</strong>. If set to false, bake stays in project’s directory instead of changing into makefile’s directory. Default: true.</li>
+<li>Added: Before executing the makefile, bake sets the environment variables $(BAKE_XX_COMMAND) and $(BAKE_XX_FLAGS), whereas XX is one of CPP, C, ASM, AR or LD.</li>
+</ul>
+</dd>
 <dt>May 4, 2018 - bake-toolkit 2.45.0</dt>
 <dd><ul class="first last simple">
 <li>Changed: it is possible now to specify adapt files directly with <em>–adapt &lt;filename&gt;</em></li>

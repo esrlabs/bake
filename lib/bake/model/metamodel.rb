@@ -198,6 +198,8 @@ module Bake
         has_attr 'lib', String, :defaultValueLiteral => ""
         has_attr 'target', String, :defaultValueLiteral => ""
         has_attr 'pathTo', String, :defaultValueLiteral => ""
+        has_attr 'changeWorkingDir', Boolean, :defaultValueLiteral => "true"
+        has_attr 'noClean', Boolean, :defaultValueLiteral => "false"
         contains_many 'flags', Flags, 'parent'
       end
 

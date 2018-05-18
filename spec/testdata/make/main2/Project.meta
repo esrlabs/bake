@@ -1,0 +1,37 @@
+Project {
+
+  CustomConfig test {
+    PreSteps {
+      Makefile "makefile/m.mak", target: all {
+        Flags "-s"
+      }
+      Makefile "makefile/m.mak", target: all, changeWorkingDir: false, noClean: false {
+        Flags "-s"
+      }
+      Makefile "makefile/m.mak", target: all, changeWorkingDir: true, noClean: true {
+        Flags "-s"
+      }
+    }
+    DefaultToolchain GCC {
+      Compiler CPP, command: "CPPC1" {
+        Define "CPPD1"
+        Flags "CPPF1"
+      }
+      Compiler C, command: "CC1" {
+        Define "CD1"
+        Flags "CF1"
+      }
+      Compiler ASM, command: "ASMC1" {
+        Define "ASMD1"
+        Flags "ASMF1"
+      }
+      Archiver command: "ARC1" {
+        Flags "ARF1"
+      }
+      Linker command: "LC1" {
+        Flags "LF1"
+      }
+    }
+  }
+
+}

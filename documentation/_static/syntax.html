@@ -85,6 +85,8 @@ z-index: 100;
                                           <span class="help" onMouseover="showMakefileLib()" onMouseout="notip()">lib</span>: &#60;lib&#62;,
                                           <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
                                           <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
+                                          <span class="help" onMouseover="showNoClean()" onMouseout="notip()">noClean</span>: true|false,
+                                          <span class="help" onMouseover="showChangeWorkingDir()" onMouseout="notip()">changeWorkingDir</span>: true|false,
                                           <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
                                           <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
                                           <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
@@ -378,7 +380,11 @@ function showValidExitCodes() {
 
 function getMakefileDesc() {
   return 'Makefile to be started, e.g.:<br>'+
-    '<i> &nbsp; &nbsp; Makefile "subDir/makefile"</i><br>'
+    '<i> &nbsp; &nbsp; Makefile "subDir/makefile"</i><br>'+
+    'Before executing the makefile, bake sets the environment variables<br>'+
+    ' &nbsp; &nbsp; $(BAKE_XX_COMMAND) and $(BAKE_XX_FLAGS),<br>'+
+    'whereas XX is one of <br>'+
+    ' &nbsp; &nbsp; CPP, C, ASM, AR or LD.'
 }
 
 function showMakefile() {
@@ -407,6 +413,16 @@ function showMakefilePathTo() {
     'It\'s done like this due to compatibility reasons.'
   ddrivetip("pathTo", "No","-","-",str)
 }
+
+function showNoClean() {
+  str = 'If project is cleaned (e.g. with command line argument -c), the target "clean" will be executed unless noClean is set to true.'
+  ddrivetip("noClean", "No","0..1","false",str)
+}
+
+function showChangeWorkingDir() {
+	  str = 'If set to false, the working directory will be the project directory instead of the makefile directory.'
+	  ddrivetip("changeWorkingDir", "No","0..1","true",str)
+	}
 
 function showMakefileFlags() {
       ddrivetip("Flags", "No","0..n","-j","Additional makefile flags.")
