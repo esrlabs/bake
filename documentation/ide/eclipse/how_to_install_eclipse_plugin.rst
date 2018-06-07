@@ -11,7 +11,7 @@ The bake Eclipse integration plugin is available on a E.S.R.Labs update site. Pl
 
 #. Setup the update site
 
-    `<http://www.esrlabs.com/eclipse-plugins/com.esrlabs.eclipse.bake.updatesite/>`_
+    `<https://assets.esrlabs.com/eclipse-plugins/com.esrlabs.eclipse.bake.updatesite/>`_
 
     .. image:: ../../_static/AddRepository.png
         :width: 100 %

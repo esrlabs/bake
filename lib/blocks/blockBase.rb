@@ -132,17 +132,6 @@ module Bake
               console_output = x[0]
               console_output = console_output_full if Bake.options.consoleOutput_fullnames
 
-              if Bake.options.consoleOutput_visualStudio
-                console_output_VS = ""
-                descCounter = 0
-                console_output.each_line do |l|
-                  d = error_descs[descCounter]
-                  console_output_VS << error_parser.makeVsError(l.rstrip, d) << "\n"
-                  descCounter = descCounter + 1
-                end
-                console_output = console_output_VS
-              end
-
               ret = error_descs.any? { |e| e.severity == ErrorParser::SEVERITY_ERROR }
 
               console_output.gsub!(/[\r]/, "")

@@ -1,6 +1,9 @@
 Changelog
 =========
 
+X X, 2018 - bake-toolkit 2.47.0
+    * Removed: support of Visual Studio
+
 May 18, 2018 - bake-toolkit 2.46.0
     * Added: Makefile command has new attribute **noClean**. If set to true, the target *clean* will not be executed when project is cleaned. Default: false.
     * Added: Makefile command has new attribute **changeWorkingDir**. If set to false, bake stays in project's directory instead of changing into makefile's directory. Default: true.

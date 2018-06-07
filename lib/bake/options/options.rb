@@ -28,7 +28,7 @@ module Bake
     attr_reader :vars, :include_filter_args # map
     attr_reader :verbose
     attr_reader :filelist # set
-    attr_reader :consoleOutput_fullnames, :consoleOutput_visualStudio
+    attr_reader :consoleOutput_fullnames
     attr_reader :roots # Root array
 
 
@@ -54,7 +54,6 @@ module Bake
       @eclipseOrder = false
       @showConfigs = false
       @consoleOutput_fullnames = false
-      @consoleOutput_visualStudio = false
       @prepro = false
       @stopOnFirstError = false
       @verbose = 1
@@ -151,10 +150,6 @@ module Bake
       add_option(["--compilation-db"                             ], lambda { |x,dummy| @cc2j_filename = (x ? x : "compile_commands.json" )})
       add_option(["--link-2-17",          "--link_2_17"          ], lambda {     @oldLinkOrder = true                    })
       add_option(["--build_",                                    ], lambda {     @buildDirDelimiter = "_"                })
-
-
-      # hidden
-      add_option(["--visualStudio"                               ], lambda {     @consoleOutput_visualStudio = true      })
 
       # deprecated and not replaced by new command
       add_option(["--show_include_paths"                         ], lambda {     @show_includes = true                   })

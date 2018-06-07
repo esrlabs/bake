@@ -16,7 +16,7 @@ Key features
 
 * faster than many other well known build systems
 * can be run on command line with colored output
-* Eclipse and Visual Studio integration plugins provided
+* IDE integration plugins provided
 * configuration files easy to understand and maintain
 
 More information can be found here:

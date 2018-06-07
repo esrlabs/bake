@@ -5,17 +5,12 @@ IDE Support
     :maxdepth: 1
 
     eclipse/eclipse
-    vs/vs
     vsc/vsc
 
-The integrations for eclipse and visual studio are the ones that are
-most used and best documented.
+The integration for eclipse is the one that is most used and best documented.
 
 .. image:: ../_static/eclipse.png
    :target: eclipse/eclipse.html
-
-.. image:: ../_static/visualstudio-pro.png
-   :target: vs/vs.html
 
 Basic integrations
 ******************
