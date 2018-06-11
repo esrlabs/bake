@@ -1,0 +1,10 @@
+Project default: test {
+
+  ExecutableConfig test {
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+    ArtifactName "out.exe"
+    MapFile
+  }
+
+}
