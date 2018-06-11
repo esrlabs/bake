@@ -254,14 +254,70 @@ module Bake
 
           success = true
           consoleOutput = ""
-          success, consoleOutput = ProcessHelper.run(cmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
-          incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], nil, reason, success)
+          incList = nil
+          if !Bake.options.diabCaseCheck
+            success, consoleOutput = ProcessHelper.run(cmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
+            incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], nil, reason, success)
+          end
+
           if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
             Dir.mutex.synchronize do
-              Dir.chdir(@projectDir) do
-                incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
-                Compile.write_depfile(source, incList, dep_filename_conv, @projectDir)
+              if !Bake.options.diabCaseCheck
+                Dir.chdir(@projectDir) do
+                  incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
+                  Compile.write_depfile(source, incList, dep_filename_conv, @projectDir)
+                end
               end
+              if !Bake.options.dry && Bake.options.caseSensitivityCheck
+                wrongCase = []
+
+                if compiler[:COMMAND] == "dcc"
+                  if Bake.options.diabCaseCheck
+                    pos = cmd.find_index(compiler[:OBJECT_FILE_FLAG])
+                    preProCmd = (cmd[0..pos-1] + cmd[pos+2..-1] + ["-E"])
+                    success, consoleOutput = ProcessHelper.run(preProCmd, false, false, nil, [0], @projectDir)
+                    if !success
+                      Bake.formatter.printError("Error: could not compile #{source}")
+                      raise SystemCommandFailed.new
+                    end
+                    Dir.chdir(@projectDir) do
+                      incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE])
+                      Compile.write_depfile(source, incList, dep_filename_conv, @projectDir)
+                    end
+                    ergs = consoleOutput.scan(/# \d+ "([^"]+)" \d+/)
+                    ergs.each do |f|
+                      next if source.include?f[0]
+                      next if f[0].length>=2 && f[0][1] == ":"
+                      filenameToCheck = f[0].gsub(/\\/,"/").gsub(/\/\//,"/").gsub(/\A\.\//,"")
+                      if incList.none?{|i| i.include?(filenameToCheck) }
+                        Dir.chdir(@projectDir) do
+                          wrongCase << [filenameToCheck, realname(filenameToCheck)]
+                        end
+                      end
+                    end
+                  end
+                else # not diab
+                  Dir.chdir(@projectDir) do
+                    incList.each do |dep|
+                      if dep.length<2 || dep[1] != ":"
+                        real = realname(dep)
+                        if dep != real && dep.upcase == real.upcase
+                          wrongCase << [dep, real]
+                        end
+                      end
+                    end unless incList.nil?
+                  end
+                end
+
+                if wrongCase.length > 0
+                  wrongCase.each do |c|
+                    Bake.formatter.printError("Case sensitivity error in #{source}:\n  included: #{c[0]}\n  realname: #{c[1]}")
+                  end
+                  FileUtils.rm_f(dep_filename_conv)
+                  raise SystemCommandFailed.new
+                end
+              end
+
             end
 
             incList.each do |h|
@@ -316,31 +372,15 @@ module Bake
       # todo: move to toolchain util file
       def self.write_depfile(source, deps, dep_filename_conv, projDir)
         if deps && !Bake.options.dry
-          wrongCase = false
           begin
             File.open(dep_filename_conv, 'wb') do |f|
               deps.each do |dep|
                 f.puts(dep)
-
-                if (Bake.options.caseSensitivityCheck)
-                  if dep.length<2 || dep[1] != ":"
-                    real = realname(dep)
-                    if dep != real && dep.upcase == real.upcase
-                      Bake.formatter.printError("Case sensitivity error in #{source}:\n  included: #{dep}\n  realname: #{real}")
-                      wrongCase = true
-                    end
-                  end
-                end
-
               end
             end
           rescue Exception
             Bake.formatter.printWarning("Could not write '#{dep_filename_conv}'", projDir)
             return nil
-          end
-          if wrongCase
-            FileUtils.rm_f(dep_filename_conv)
-            raise SystemCommandFailed.new
           end
         end
       end

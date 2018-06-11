@@ -30,6 +30,7 @@ module Bake
     attr_reader :filelist # set
     attr_reader :consoleOutput_fullnames
     attr_reader :roots # Root array
+    attr_reader :diabCaseCheck
 
 
     def initialize(argv)
@@ -84,6 +85,7 @@ module Bake
       @main_project_name = ""
       @adapt = []
       @syncedOutput = false
+      @diabCaseCheck = false
 
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| @main_dir = x                           })
@@ -144,6 +146,8 @@ module Bake
       add_option(["--dry"                                        ], lambda {     @dry = true                             })
 
       add_option(["--crc32"                                      ], lambda { |x| CRC32.printAndExit(x)                   })
+
+      add_option(["--diab-case-check"                            ], lambda {  @diabCaseCheck = true; @compileOnly = true })
 
       add_option(["--version"                                    ], lambda {     Bake::Usage.version                     })
       add_option(["--list",               "--show_configs"       ], lambda {     @showConfigs = true                     })
@@ -256,6 +260,11 @@ module Bake
           Bake.formatter.printError("Error: --prepro and -c not allowed at the same time")
           ExitHelper.exit(1)
         end
+      end
+
+      if @caseSensitivityCheck == false && @diabCaseCheck == true
+        Bake.formatter.printError("Error: --no-case-check and --diab-case-check not allowed at the same time")
+        ExitHelper.exit(1)
       end
 
       @filename = "." if @compileOnly

@@ -59,6 +59,7 @@ module Bake
       puts " --create exe|lib|custom  Creates a project with exe, lib or custom template"
       puts " --nb                     Suppresses the lines \"**** Building x of y: name (config) ****"
       puts " --crc32 <string>         Calulates the CRC32 of string (0x4C11DB7, init 0, final xor 0, input and result not reflected), used for Uid variable calculation"
+      puts " --diab-case-check        When compiling with DCC, this switches to the case check on Windows machines. No actual compilation is done."
       puts " --link-2-17              DEPRECATED: Using link order of libraries which was used until bake 2.17"
       puts " --build_                 DEPRECATED: build directories will be build_<name> instead of build/<name>"
       puts " --version                Print version."

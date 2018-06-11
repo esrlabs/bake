@@ -7,4 +7,15 @@ Project default: test {
     DefaultToolchain GCC
   }
 
+  LibraryConfig test_diab {
+    Files "src/*.cpp"
+    IncludeDir "."
+    IncludeDir "include"
+    DefaultToolchain Diab {
+      Compiler CPP {
+        Flags add: "-tPPCE200Z4VEF:simple"
+      }
+    }
+  }
+
 }
