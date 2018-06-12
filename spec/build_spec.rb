@@ -247,14 +247,14 @@ describe "Building" do
 
   it 'MapFileEmpty' do
     Bake.startBake("cache/main", ["testMapEmpty", "-v2"])
-    expect($mystring.include?("> build/testMapEmpty/main.map")).to be == true
+    expect($mystring.include?("-Wl,-Map=build/testMapEmpty/main.map")).to be == true
     expect(File.exist?("spec/testdata/cache/main/build/testMapEmpty/main.map")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'MapFileDada' do
     Bake.startBake("cache/main", ["testMapDada", "-v2"])
-    expect($mystring.include?("> build/testMapDada/dada.map")).to be == true
+    expect($mystring.include?("-Wl,-Map=build/testMapDada/dada.map")).to be == true
     expect(File.exist?("spec/testdata/cache/main/build/testMapDada/dada.map")).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
@@ -421,7 +421,6 @@ describe "Building" do
     end
     expect($mystring.include?("THIS IS")).to be == false
     expect($mystring.include?("Error: some/subDoesNotExist does not exist")).to be == true
-
   end
 
 end
