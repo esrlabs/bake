@@ -3,6 +3,7 @@ Changelog
 
 X X, 2018 - bake-toolkit 2.47.0
     * Removed: support of Visual Studio
+    * Bugfix: --incs-and-defs did not show any results in case the workspace was broken like a missing library.
 
 May 18, 2018 - bake-toolkit 2.46.0
     * Added: Makefile command has new attribute **noClean**. If set to true, the target *clean* will not be executed when project is cleaned. Default: false.

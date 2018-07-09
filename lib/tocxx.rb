@@ -422,111 +422,119 @@ module Bake
 
     def doit()
 
-      if Bake.options.show_includes or Bake.options.show_includes_and_defines
-        s = StringIO.new
-        tmp = Thread.current[:stdout]
-        Thread.current[:stdout] = s unless tmp
-      end
-
-      taskType = "Building"
-      if Bake.options.conversion_info
-        taskType = "Showing conversion infos"
-      elsif Bake.options.docu
-        taskType = "Generating documentation"
-      elsif Bake.options.prepro
-        taskType = "Preprocessing"
-      elsif Bake.options.linkOnly
-          taskType = "Linking"
-      elsif Bake.options.rebuild
-        taskType = "Rebuilding"
-      elsif Bake.options.clean
-        taskType = "Cleaning"
+      stdoutSuppression = nil
+      orgStdout = nil
+      if Bake.options.show_includes || Bake.options.show_includes_and_defines
+        stdoutSuppression = StringIO.new
+        orgStdout = Thread.current[:stdout]
+        Thread.current[:stdout] = stdoutSuppression unless orgStdout
       end
 
       begin
 
-        if Bake.options.showConfigs
-          al = AdaptConfig.new
-          adaptConfigs = al.load()
-          Config.new.printConfigs(adaptConfigs)
-        else
-          cache = CacheAccess.new()
-          @referencedConfigs = cache.load_cache unless Bake.options.nocache
+        taskType = "Building"
+        if Bake.options.conversion_info
+          taskType = "Showing conversion infos"
+        elsif Bake.options.docu
+          taskType = "Generating documentation"
+        elsif Bake.options.prepro
+          taskType = "Preprocessing"
+        elsif Bake.options.linkOnly
+            taskType = "Linking"
+        elsif Bake.options.rebuild
+          taskType = "Rebuilding"
+        elsif Bake.options.clean
+          taskType = "Cleaning"
+        end
 
-          if @referencedConfigs.nil?
+        begin
+
+          if Bake.options.showConfigs
             al = AdaptConfig.new
             adaptConfigs = al.load()
+            Config.new.printConfigs(adaptConfigs)
+          else
+            cache = CacheAccess.new()
+            @referencedConfigs = cache.load_cache unless Bake.options.nocache
 
-            @loadedConfig = Config.new
-            @referencedConfigs = @loadedConfig.load(adaptConfigs)
+            if @referencedConfigs.nil?
+              al = AdaptConfig.new
+              adaptConfigs = al.load()
 
-            cache.write_cache(@referencedConfigs, adaptConfigs)
-          end
-        end
+              @loadedConfig = Config.new
+              @referencedConfigs = @loadedConfig.load(adaptConfigs)
 
-        taskType = "Analyzing" if Bake.options.analyze
-
-        @mainConfig = @referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
-
-        basedOn =  @mainConfig.defaultToolchain.basedOn
-        basedOnToolchain = Bake::Toolchain::Provider[basedOn]
-        if basedOnToolchain.nil?
-          Bake.formatter.printError("DefaultToolchain based on unknown compiler '#{basedOn}'", @mainConfig.defaultToolchain)
-          ExitHelper.exit(1)
-        end
-
-        # The flag "-FS" must only be set for VS2013 and above
-        ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = ""
-        if basedOn == "MSVC"
-          begin
-            res = `cl.exe 2>&1`
-            raise Exception.new unless $?.success?
-            scan_res = res.scan(/ersion (\d+).(\d+).(\d+)/)
-            if scan_res.length > 0
-              ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = "-FS" if scan_res[0][0].to_i >= 18 # 18 is the compiler major version in VS2013
-            else
-              Bake.formatter.printError("Could not read MSVC version")
-              ExitHelper.exit(1)
+              cache.write_cache(@referencedConfigs, adaptConfigs)
             end
-          rescue SystemExit
-            raise
-          rescue Exception => e
-            Bake.formatter.printError("Could not detect MSVC compiler")
+          end
+
+          taskType = "Analyzing" if Bake.options.analyze
+
+          @mainConfig = @referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
+
+          basedOn =  @mainConfig.defaultToolchain.basedOn
+          basedOnToolchain = Bake::Toolchain::Provider[basedOn]
+          if basedOnToolchain.nil?
+            Bake.formatter.printError("DefaultToolchain based on unknown compiler '#{basedOn}'", @mainConfig.defaultToolchain)
             ExitHelper.exit(1)
           end
+
+          # The flag "-FS" must only be set for VS2013 and above
+          ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = ""
+          if basedOn == "MSVC"
+            begin
+              res = `cl.exe 2>&1`
+              raise Exception.new unless $?.success?
+              scan_res = res.scan(/ersion (\d+).(\d+).(\d+)/)
+              if scan_res.length > 0
+                ENV["MSVC_FORCE_SYNC_PDB_WRITES"] = "-FS" if scan_res[0][0].to_i >= 18 # 18 is the compiler major version in VS2013
+              else
+                Bake.formatter.printError("Could not read MSVC version")
+                ExitHelper.exit(1)
+              end
+            rescue SystemExit
+              raise
+            rescue Exception => e
+              Bake.formatter.printError("Could not detect MSVC compiler")
+              ExitHelper.exit(1)
+            end
+          end
+
+          @defaultToolchain = Utils.deep_copy(basedOnToolchain)
+          Bake.options.envToolchain = true if (basedOn.include?"_ENV")
+
+          integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
+
+          # todo: cleanup this hack
+          Bake.options.analyze = @defaultToolchain[:COMPILER][:CPP][:COMPILE_FLAGS].include?"analyze"
+          Bake.options.eclipseOrder = @mainConfig.defaultToolchain.eclipseOrder
+
+          createBaseTcsForConfig
+          substVars
+          createTcsForConfig
+
+          @@linkBlock = 0
+
+          @prebuild = nil
+          calcPrebuildBlocks if Bake.options.prebuild
+
+          makeBlocks
+          makeGraph
+          makeDot if Bake.options.dot
+
+          convert2bb
+        ensure
+          if Bake.options.show_includes || Bake.options.show_includes_and_defines
+            Thread.current[:stdout] = orgStdout
+            puts stdoutSuppression.string # this ensures to print a error message is needed even in case of an exception
+          end
         end
 
-        @defaultToolchain = Utils.deep_copy(basedOnToolchain)
-        Bake.options.envToolchain = true if (basedOn.include?"_ENV")
-
-        integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
-
-        # todo: cleanup this hack
-        Bake.options.analyze = @defaultToolchain[:COMPILER][:CPP][:COMPILE_FLAGS].include?"analyze"
-        Bake.options.eclipseOrder = @mainConfig.defaultToolchain.eclipseOrder
-
-        createBaseTcsForConfig
-        substVars
-        createTcsForConfig
-
-        @@linkBlock = 0
-
-        @prebuild = nil
-        calcPrebuildBlocks if Bake.options.prebuild
-
-        makeBlocks
-        makeGraph
-        makeDot if Bake.options.dot
-
-        convert2bb
-
         if Bake.options.show_includes
-          Thread.current[:stdout] = tmp
           Blocks::Show.includes
         end
 
         if Bake.options.show_includes_and_defines
-          Thread.current[:stdout] = tmp
           Blocks::Show.includesAndDefines(@mainConfig, @configTcMap[@mainConfig])
         end
 
