@@ -8,7 +8,11 @@ Project {
       CommandLine "echo $(VAR) $(VAR2)"
       CommandLine "echo Uid_main: $(Uid)", echo: off
     }
-    DefaultToolchain GCC
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Define "DEF1"
+      }
+    }
   }
 
   ExecutableConfig test_ok_uid {

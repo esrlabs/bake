@@ -2,7 +2,10 @@ Changelog
 =========
 
 X X, 2018 - bake-toolkit 2.47.0
+    * Added: option -D to add defines via command line.
+    * Added: DCC case check with --diab-case-check for Windows. Makes sense to start the compilation again after full build was successful with this parameter.
     * Removed: support of Visual Studio
+    * Bugfix: MapFile command now working for GCC
     * Bugfix: --incs-and-defs did not show any results in case the workspace was broken like a missing library.
 
 May 18, 2018 - bake-toolkit 2.46.0

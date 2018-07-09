@@ -641,7 +641,7 @@ module Bake
       end
 
       def getDefines(compiler)
-        compiler[:DEFINES].map {|k| "#{compiler[:DEFINE_FLAG]}#{k}"}
+        (compiler[:DEFINES] + Bake.options.defines).map {|k| "#{compiler[:DEFINE_FLAG]}#{k}"}
       end
 
       def getFlags(compiler)

@@ -110,9 +110,9 @@ module Bake
           if Bake.options.json
             projs[projName] =
               {  :includes => (blockIncs + intIncs).uniq,
-                 :cpp_defines => (blockDefs[:CPP] + intDefs[:CPP]).uniq,
-                 :c_defines => (blockDefs[:C] + intDefs[:C]).uniq,
-                 :asm_defines => (blockDefs[:ASM] + intDefs[:ASM]).uniq,
+                 :cpp_defines => (blockDefs[:CPP] + intDefs[:CPP]).uniq + Bake.options.defines,
+                 :c_defines => (blockDefs[:C] + intDefs[:C]).uniq + Bake.options.defines,
+                 :asm_defines => (blockDefs[:ASM] + intDefs[:ASM]).uniq + Bake.options.defines,
                  :dir => blocks.first.projectDir
               }
           else
@@ -122,7 +122,7 @@ module Bake
             (blockIncs + intIncs).uniq.each { |i| puts "  #{i}" }
             [:CPP, :C, :ASM].each do |type|
               puts " #{type} defines"
-              (blockDefs[type] + intDefs[type]).uniq.each { |d| puts "  #{d}" }
+              (blockDefs[type] + intDefs[type] + Bake.options.defines).uniq.each { |d| puts "  #{d}" }
             end
             puts " done"
           end

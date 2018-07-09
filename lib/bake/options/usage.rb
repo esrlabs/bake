@@ -35,6 +35,7 @@ module Bake
       puts " --ignore-cache           Rereads the original meta files - usefull if workspace structure has been changed."
       puts " -j <num>                 Set NUMBER of parallel compiled files (default is 8)."
       puts " -O                       The output will be synchronized per configuration. Note, this delays output."
+      puts " -D <define>              Adds this define to the compiler commands"
       puts " --socket <num>           Set SOCKET for sending errors, receiving commands, etc. - used by e.g. Eclipse."
       puts " --toolchain-info <name>  Prints default values of a toolchain."
       puts " --toolchain-names        Prints available toolchains."

@@ -31,6 +31,7 @@ module Bake
     attr_reader :consoleOutput_fullnames
     attr_reader :roots # Root array
     attr_reader :diabCaseCheck
+    attr_reader :defines
 
 
     def initialize(argv)
@@ -86,6 +87,7 @@ module Bake
       @adapt = []
       @syncedOutput = false
       @diabCaseCheck = false
+      @defines = []
 
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| @main_dir = x                           })
@@ -142,6 +144,8 @@ module Bake
       add_option(["--license",            "--show_license"       ], lambda {     License.show                            })
       add_option(["--doc",                "--show_doc"           ], lambda {     Doc.show                                })
       add_option(["--install-doc",        "--install_doc"        ], lambda {     Doc.install                             })
+
+      add_option(["-D"                                           ], lambda { |x| @defines << x                           })
 
       add_option(["--dry"                                        ], lambda {     @dry = true                             })
 

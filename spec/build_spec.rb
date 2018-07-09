@@ -423,6 +423,16 @@ describe "Building" do
     expect($mystring.include?("Error: some/subDoesNotExist does not exist")).to be == true
   end
 
+  it 'no def from commandline' do
+    Bake.startBake("simple/main", ["test_ok", "-v2"])
+    expect($mystring.include?("DEF2")).to be == false
+  end
+
+  it 'no def from commandline' do
+    Bake.startBake("simple/main", ["test_ok", "-v2", "-D", "DEF2=3"])
+    expect($mystring.include?("-DDEF1 -DDEF2=3")).to be == true
+  end
+
 end
 
 end
