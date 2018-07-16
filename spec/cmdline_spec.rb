@@ -26,13 +26,13 @@ describe "Cmdline" do
     expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding+".cmdline")).to be == true
 
     contents = File.read("spec/testdata/simple/lib/build/test_ok_main_test_ok/src/y.cmdline")
-    expect(contents.strip).to be == "g++ -c -MD -MF build/test_ok_main_test_ok/src/y.d -o build/test_ok_main_test_ok/src/y.o src/y.cpp"
+    expect(contents.strip).to be == "g++ -c -MD -MF build/test_ok_main_test_ok/src/y.d -DDEF1 -o build/test_ok_main_test_ok/src/y.o src/y.cpp"
 
     contents = File.read("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a.cmdline")
     expect(contents.strip).to be == "ar -rc build/test_ok_main_test_ok/liblib.a build/test_ok_main_test_ok/src/y.o build/test_ok_main_test_ok/src/z.o"
 
     contents = File.read("spec/testdata/simple/main/build/test_ok/src/x.cmdline")
-    expect(contents.strip).to be == "g++ -c -MD -MF build/test_ok/src/x.d -o build/test_ok/src/x.o src/x.cpp"
+    expect(contents.strip).to be == "g++ -c -MD -MF build/test_ok/src/x.d -DDEF1 -o build/test_ok/src/x.o src/x.cpp"
 
     contents = File.read("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding+".cmdline")
     expect(contents.strip).to be == "g++ -o build/test_ok/main"+Bake::Toolchain.outputEnding+" build/test_ok/src/x.o ../lib/build/test_ok_main_test_ok/liblib.a"

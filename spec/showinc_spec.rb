@@ -85,14 +85,14 @@ describe "ShowInc" do
       case a['file']
       when 'src/z.cpp'
         expect(a["directory"].include?"spec/testdata/simple/lib").to be == true
-        expect(a["command"].include?"-c -MD -MF build/test_ok_main_test_ok/src/z.d -o build/test_ok_main_test_ok/src/z.o src/z.cpp").to be == true
+        expect(a["command"].include?"-c -MD -MF build/test_ok_main_test_ok/src/z.d -DDEF1 -o build/test_ok_main_test_ok/src/z.o src/z.cpp").to be == true
       when 'src/y.cpp'
         expect(a["directory"].include?"spec/testdata/simple/lib").to be == true
-        expect(a["command"].include?"-c -MD -MF build/test_ok_main_test_ok/src/y.d -o build/test_ok_main_test_ok/src/y.o src/y.cpp").to be == true
+        expect(a["command"].include?"-c -MD -MF build/test_ok_main_test_ok/src/y.d -DDEF1 -o build/test_ok_main_test_ok/src/y.o src/y.cpp").to be == true
       else
         expect(a['file']).to be == 'src/x.cpp'
         expect(a["directory"].include?"spec/testdata/simple/main").to be == true
-        expect(a["command"].include?"-c -MD -MF build/test_ok/src/x.d -o build/test_ok/src/x.o src/x.cpp").to be == true
+        expect(a["command"].include?"-c -MD -MF build/test_ok/src/x.d -DDEF1 -o build/test_ok/src/x.o src/x.cpp").to be == true
       end
     end
   end
