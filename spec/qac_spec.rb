@@ -559,9 +559,9 @@ describe "Qac" do
     ENV["QAC_HOME"] = File.dirname(__FILE__)+"/bin\\"
     ENV["QAC_UT"] = "no_license_analyze"
     ENV["QAC_RETRY"] = Time.now.to_i.to_s
-    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacretry", "10"]) # after 5s the license is available
+    exit_code = Bake.startBakeqac("qac/main", ["--qacunittest", "--qacretry", "15"]) # after 5s the license is available
     expect($mystring.split("License refused").length).to be > 3
-    expect($mystring.split("License refused").length).to be < 10
+    expect($mystring.split("License refused").length).to be < 20
     expect($mystring.include?("Filtered out 1")).to be == false
     expect($mystring.include?("Filtered out 2")).to be == false
     expect($mystring.include?("rspec/lib1/bla")).to be == true
