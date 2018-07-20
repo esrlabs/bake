@@ -2,6 +2,7 @@ Changelog
 =========
 
 X X, 2018 - bake-toolkit 2.47.0
+    * Added: *Sleep*, *MakeDir*, *Remove*, *Copy* and *Move* commands in Project.meta.
     * Added: option -D to add defines via command line.
     * Added: DCC case check with --diab-case-check for Windows. Makes sense to start the compilation again after full build was successful with this parameter.
     * Removed: support of Visual Studio
