@@ -53,7 +53,7 @@ module Bake
     GCCChain[:LINKER][:EXE_FLAG] = "-o"
     GCCChain[:LINKER][:LIB_FLAG] = "-l"
     GCCChain[:LINKER][:LIB_PATH_FLAG] = "-L"
-    GCCChain[:LINKER][:MAP_FILE_FLAG] = "-Wl,-Map="
+    GCCChain[:LINKER][:MAP_FILE_FLAG] = (Bake::Utils::OS.name == "Mac" ? "-Wl,-map," : "-Wl,-Map=")
     GCCChain[:LINKER][:MAP_FILE_PIPE] = false
 
     gccCompilerErrorParser =                   GCCCompilerErrorParser.new
