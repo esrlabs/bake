@@ -1,20 +1,17 @@
-require 'blocks/has_execute_command'
-
 module Bake
   module Blocks
 
-    class CommandLine
-      include HasExecuteCommand
+    class Sleep
 
       def initialize(config)
-        @config = config # Bake::Metamodel::CommandLine
-        @commandLine = config.name
-        @projectDir = config.get_project_dir
+        @echo = (config.echo != "off")
+        @time = config.name.to_f
       end
 
       def run
-        return true if Bake.options.linkOnly
-        return executeCommand(@commandLine, nil, @config.validExitCodes, @config.echo)
+        puts "Sleeping #{@time}s" if @echo
+        sleep @time
+        return true
       end
 
       def execute

@@ -1,0 +1,29 @@
+Project {
+
+  CustomConfig test1 {
+    PreSteps {
+        Remove  "test", echo: off
+        MakeDir "test", echo: "$(FILEUTIL_TEST_OFF)"
+        MakeDir "test/a/b/c/d/e", echo: "$(FILEUTIL_TEST_OFF)"
+        Touch   "test/a/b/b.txt", echo: "$(FILEUTIL_TEST_OFF)"
+        Touch   "test/a/b/c/c.txt", echo: "$(FILEUTIL_TEST_OFF)"
+        Touch   "test/a/b/c/d/d.txt", echo: "$(FILEUTIL_TEST_OFF)"
+        Remove  "test/a/b/c/d/d.txt", echo: "$(FILEUTIL_TEST_OFF)"
+        Remove  "test/a/b/c", echo: "$(FILEUTIL_TEST_OFF)"
+        Copy    "test/a/b", to: "test/x", echo: "$(FILEUTIL_TEST_OFF)"
+        Copy    "test/a/b/b.txt", to: "test/z.txt", echo: "$(FILEUTIL_TEST_OFF)"
+        Move    "test/a/b", to: "test/g", echo: "$(FILEUTIL_TEST_OFF)"
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test2 {
+    PreSteps {
+        CommandLine "echo TEST1", echo: off
+        Sleep "5.0", echo: "$(FILEUTIL_TEST_OFF)"
+        CommandLine "echo TEST2", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+}

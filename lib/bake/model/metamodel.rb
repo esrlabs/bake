@@ -203,6 +203,27 @@ module Bake
         contains_many 'flags', Flags, 'parent'
       end
 
+      class MakeDir < Step
+      end
+
+      class Remove < Step
+      end
+
+      class Copy < Step
+        has_attr 'to', String, :defaultValueLiteral => ""
+      end
+
+      class Move < Step
+        has_attr 'to', String, :defaultValueLiteral => ""
+      end
+
+      class Touch < Step
+      end
+
+      class Sleep < Step
+        has_attr 'name', String, :defaultValueLiteral => "0.0"
+      end
+
       class CommandLine < Step
       end
 

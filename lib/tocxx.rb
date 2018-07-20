@@ -19,6 +19,8 @@ require 'bake/config/loader'
 
 require 'blocks/block'
 require 'blocks/commandLine'
+require 'blocks/sleep'
+require 'blocks/fileutil'
 require 'blocks/makefile'
 require 'blocks/compile'
 require 'blocks/convert'
@@ -94,7 +96,19 @@ module Bake
         if Bake::Metamodel::Makefile === step
           blockSteps << Blocks::Makefile.new(step, @referencedConfigs, block)
         elsif Bake::Metamodel::CommandLine === step
-          blockSteps << Blocks::CommandLine.new(step, @referencedConfigs)
+          blockSteps << Blocks::CommandLine.new(step)
+        elsif Bake::Metamodel::Sleep === step
+          blockSteps << Blocks::Sleep.new(step)
+        elsif Bake::Metamodel::Move === step
+          blockSteps << Blocks::FileUtil.new(step, :move, block.projectDir)
+        elsif Bake::Metamodel::Copy === step
+          blockSteps << Blocks::FileUtil.new(step, :copy, block.projectDir)
+        elsif Bake::Metamodel::Remove === step
+          blockSteps << Blocks::FileUtil.new(step, :remove, block.projectDir)
+        elsif Bake::Metamodel::MakeDir === step
+          blockSteps << Blocks::FileUtil.new(step, :makedir, block.projectDir)
+        elsif Bake::Metamodel::Touch === step
+          blockSteps << Blocks::FileUtil.new(step, :touch, block.projectDir)
         end
       end if configSteps
     end
