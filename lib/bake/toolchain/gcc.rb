@@ -49,6 +49,8 @@ module Bake
 
     GCCChain[:LINKER][:COMMAND] = "g++"
     GCCChain[:LINKER][:SCRIPT] = "-T"
+    GCCChain[:LINKER][:SCRIPT_SPACE] = (Bake::Utils::OS.name == "Mac" ? false : true)
+
     GCCChain[:LINKER][:USER_LIB_FLAG] = "-l:"
     GCCChain[:LINKER][:EXE_FLAG] = "-o"
     GCCChain[:LINKER][:LIB_FLAG] = "-l"
