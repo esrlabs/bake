@@ -1,4 +1,4 @@
-require 'bake/toolchain/errorparser/error_parser'
+require_relative 'error_parser'
 
 module Bake
   class GreenHillsCompilerErrorParser < ErrorParser

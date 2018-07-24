@@ -1,14 +1,14 @@
-require 'bakery/model/metamodel'
-require 'bakery/model/language'
-require 'common/version'
+require_relative 'metamodel'
+require_relative 'language'
+require_relative '../../common/version'
 
 require 'rgen/environment'
 require 'rgen/fragment/fragmented_model'
 
 require 'rtext/default_loader'
 
-require 'common/exit_helper'
-require 'bake/toolchain/colorizing_formatter'
+require_relative '../../common/exit_helper'
+require_relative '../../bake/toolchain/colorizing_formatter'
 
 module Bake
 

@@ -1,5 +1,5 @@
-require 'bake/model/metamodel'
-require 'common/ext/file'
+require_relative 'metamodel'
+require_relative '../../common/ext/file'
 
 module Bake
   module Metamodel

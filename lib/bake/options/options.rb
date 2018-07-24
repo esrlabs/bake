@@ -1,13 +1,13 @@
-require 'bake/toolchain/colorizing_formatter'
-require 'common/options/parser'
-require 'bake/options/showToolchains'
-require 'bake/options/showLicense'
-require 'bake/options/showDoc'
-require 'bake/options/usage'
-require 'bake/options/create'
-require 'common/options/finder'
-require 'common/root'
-require 'common/crc32'
+require_relative '../toolchain/colorizing_formatter'
+require_relative '../../common/options/parser'
+require_relative '../options/showToolchains'
+require_relative '../options/showLicense'
+require_relative '../options/showDoc'
+require_relative '../options/usage'
+require_relative '../options/create'
+require_relative '../../common/options/finder'
+require_relative '../../common/root'
+require_relative '../../common/crc32'
 
 module Bake
 

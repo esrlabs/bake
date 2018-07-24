@@ -1,4 +1,4 @@
-require 'blocks/blockBase'
+require_relative 'blockBase'
 
 module Bake
 

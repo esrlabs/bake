@@ -1,6 +1,6 @@
-require 'bake/model/metamodel'
-require 'bake/model/language'
-require 'common/version'
+require_relative 'metamodel'
+require_relative 'language'
+require_relative '../../common/version'
 
 require 'rgen/environment'
 require 'rgen/fragment/dump_file_cache'
@@ -9,9 +9,9 @@ require 'rgen/util/file_cache_map'
 
 require 'rtext/default_loader'
 
-require 'common/exit_helper'
-require 'bake/toolchain/colorizing_formatter'
-require 'bake/options/options'
+require_relative '../../common/exit_helper'
+require_relative '../toolchain/colorizing_formatter'
+require_relative '../options/options'
 
 module Bake
 

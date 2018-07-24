@@ -1,7 +1,7 @@
 Install bake
 ============
 
-bake is a `ruby gem <https://rubygems.org/>`_. It runs with `Ruby <https://www.ruby-lang.org/en/>`_ **>= 1.9**.
+bake is a `ruby gem <https://rubygems.org/>`_. It runs with `Ruby <https://www.ruby-lang.org/en/>`_ **>= 2.0**.
 bake and its depedencies can be found on `rubygems <https://rubygems.org/gems/bake-toolkit/>`_, which is configured as ruby source per default.
 
 .. attention::
@@ -12,7 +12,7 @@ How to install bake
 *******************
 Installing bake is very easy!
 
-#. Make sure you have installed `Ruby <https://www.ruby-lang.org/en/>`_ **>= 1.9**.
+#. Make sure you have installed `Ruby <https://www.ruby-lang.org/en/>`_ **>= 2.0**.
 
 #. Install the bake gem.
 

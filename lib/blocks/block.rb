@@ -1,7 +1,7 @@
-require 'bake/libElement'
-require 'bake/model/metamodel'
-require 'common/abortException'
-require "multithread/job"
+require_relative '../bake/libElement'
+require_relative '../bake/model/metamodel'
+require_relative '../common/abortException'
+require_relative "../multithread/job"
 require "thwait"
 
 module Bake

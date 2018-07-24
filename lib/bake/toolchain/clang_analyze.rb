@@ -1,5 +1,5 @@
-require 'common/utils'
-require 'bake/toolchain/provider'
+require_relative '../../common/utils'
+require_relative '../toolchain/provider'
 
 module Bake
   module Toolchain

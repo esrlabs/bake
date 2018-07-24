@@ -1,6 +1,6 @@
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 
-if defined?(RUBY_ENGINE) && RUBY_ENGINE == "ruby" && RUBY_VERSION >= "1.9"
+if defined?(RUBY_ENGINE) && RUBY_ENGINE == "ruby" && RUBY_VERSION >= "2.0"
   module Kernel
     alias :__at_exit :at_exit
     def at_exit(&block)

@@ -1,4 +1,4 @@
-require 'common/utils'
+require_relative '../utils'
 
 class File
 

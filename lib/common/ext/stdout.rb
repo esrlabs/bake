@@ -1,5 +1,5 @@
 require 'stringio'
-require 'blocks/block'
+require_relative '../../blocks/block'
 
 class ThreadOut
 

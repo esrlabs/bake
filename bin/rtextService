@@ -4,8 +4,8 @@ $:.unshift(File.dirname(__FILE__)+"/../lib")
 
 require 'rgen/lib/rtext/default_service_provider'
 require 'rgen/lib/rtext/service'
-require 'bake/model/metamodel'
-require 'bake/model/language'
+require_relative '../lib/bake/model/metamodel'
+require_relative '../lib/bake/model/language'
 
 require 'rgen/environment'
 require 'rgen/fragment/dump_file_cache'

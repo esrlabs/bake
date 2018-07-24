@@ -3,7 +3,7 @@
 $timeStart = Time.now
 
 $:.unshift(File.dirname(__FILE__)+"/../lib")
-require 'common/version'
+require_relative '../lib/common/version'
 
 STDOUT.sync = true
 STDERR.sync = true
@@ -15,8 +15,8 @@ module Bake
 
   earlyExit = nil
   begin
-    if RUBY_VERSION[0..2] == "1.8"
-      Bake.formatter.printError("Error: Ruby 1.8 not supported anymore. Use Ruby 1.9 or greater.")
+    if RUBY_VERSION[0..1] == "1."
+      Bake.formatter.printError("Error: Ruby 1.x not supported anymore. Use Ruby 2.0 or greater.")
       ExitHelper.exit(1)
     end
 

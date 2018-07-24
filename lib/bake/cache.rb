@@ -1,8 +1,8 @@
-require 'common/exit_helper'
-require 'bake/toolchain/colorizing_formatter'
-require 'common/options/parser'
-require 'common/version'
-require 'adapt/config/loader'
+require_relative '../common/exit_helper'
+require_relative 'toolchain/colorizing_formatter'
+require_relative '../common/options/parser'
+require_relative '../common/version'
+require_relative '../adapt/config/loader'
 
 module Bake
 

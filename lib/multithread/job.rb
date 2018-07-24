@@ -1,4 +1,4 @@
-require 'common/ext/stdout'
+require_relative '../common/ext/stdout'
 require 'stringio'
 require 'thread'
 require 'monitor' # this should fix a missing require in concurrent gem

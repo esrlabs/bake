@@ -58,9 +58,9 @@ module Bake
     cct = ""
     while (cct == "" or gccVersion[0]>=4)
       cct = "config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-i686-#{plStr}-C++#{cVersion}.cct"
-      break if File.exist?cct[0]
+      break if File.exist?cct
       cct = "config/cct/GNU_GCC-g++_#{gccVersion[0]}.#{gccVersion[1]}-x86_64-#{plStr}-C++#{cVersion}.cct"
-      break if File.exist?cct[0]
+      break if File.exist?cct
       if gccVersion[1]>0
         gccVersion[1] -= 1
       else

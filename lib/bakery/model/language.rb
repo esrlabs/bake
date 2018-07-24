@@ -1,4 +1,4 @@
-require 'bake/model/metamodel'
+require_relative '../../bake/model/metamodel'
 require 'rtext/language'
 
 module Bake

@@ -1,4 +1,4 @@
-require "blocks/block"
+require_relative "../blocks/block"
 
 module Bake
 

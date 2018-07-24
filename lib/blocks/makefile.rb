@@ -1,4 +1,4 @@
-require 'blocks/has_execute_command'
+require_relative 'has_execute_command'
 
 module Bake
   module Blocks

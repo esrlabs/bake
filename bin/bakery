@@ -3,9 +3,9 @@
 $timeStart = Time.now
 
 $:.unshift(File.dirname(__FILE__)+"/../lib")
-require 'common/version'
+require_relative '../lib/common/version'
 
-require 'common/utils'
+require_relative '../lib/common/utils'
 
 Bake::Version.printBakeryVersion
 
@@ -14,15 +14,15 @@ STDERR.sync = true
 
 $stars = "************************************************"
 
-require 'bake/toolchain/colorizing_formatter'
-require 'bake/options/options'
-require 'tocxx'
-require "bakery/model/loader"
-require "bakery/options/options"
-require "bakery/toBake"
-require "bakery/buildPattern"
-require 'common/ext/stdout'
-require 'common/cleanup'
+require_relative '../lib/bake/toolchain/colorizing_formatter'
+require_relative '../lib/bake/options/options'
+require_relative '../lib/tocxx'
+require_relative "../lib/bakery/model/loader"
+require_relative "../lib/bakery/options/options"
+require_relative "../lib/bakery/toBake"
+require_relative "../lib/bakery/buildPattern"
+require_relative '../lib/common/ext/stdout'
+require_relative '../lib/common/cleanup'
 
 module Bake
 

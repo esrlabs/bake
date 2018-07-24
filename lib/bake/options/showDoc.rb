@@ -1,6 +1,6 @@
 require "open-uri"
 require "fileutils"
-require "common/version"
+require_relative "../../common/version"
 require "openssl"
 
 module Bake

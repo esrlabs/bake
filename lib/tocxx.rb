@@ -1,40 +1,40 @@
 #!/usr/bin/env ruby
 
 
-require 'bake/model/metamodel_ext'
+require_relative 'bake/model/metamodel_ext'
 
-require 'bake/util'
-require 'bake/cache'
-require 'bake/subst'
-require 'bake/mergeConfig'
+require_relative 'bake/util'
+require_relative 'bake/cache'
+require_relative 'bake/subst'
+require_relative 'bake/mergeConfig'
 
-require 'common/exit_helper'
-require 'common/ide_interface'
-require 'common/ext/file'
-require 'bake/toolchain/provider'
-require 'common/ext/stdout'
-require 'common/utils'
-require 'bake/toolchain/colorizing_formatter'
-require 'bake/config/loader'
+require_relative 'common/exit_helper'
+require_relative 'common/ide_interface'
+require_relative 'common/ext/file'
+require_relative 'bake/toolchain/provider'
+require_relative 'common/ext/stdout'
+require_relative 'common/utils'
+require_relative 'bake/toolchain/colorizing_formatter'
+require_relative 'bake/config/loader'
 
-require 'blocks/block'
-require 'blocks/commandLine'
-require 'blocks/sleep'
-require 'blocks/fileutil'
-require 'blocks/makefile'
-require 'blocks/compile'
-require 'blocks/convert'
-require 'blocks/library'
-require 'blocks/executable'
-require 'blocks/docu'
+require_relative 'blocks/block'
+require_relative 'blocks/commandLine'
+require_relative 'blocks/sleep'
+require_relative 'blocks/fileutil'
+require_relative 'blocks/makefile'
+require_relative 'blocks/compile'
+require_relative 'blocks/convert'
+require_relative 'blocks/library'
+require_relative 'blocks/executable'
+require_relative 'blocks/docu'
 
 require 'set'
 require 'socket'
 
-require 'blocks/showIncludes'
-require 'common/abortException'
+require_relative 'blocks/showIncludes'
+require_relative 'common/abortException'
 
-require 'adapt/config/loader'
+require_relative 'adapt/config/loader'
 require "thwait"
 
 module Bake

@@ -1,8 +1,8 @@
-require 'common/utils'
-require 'bake/toolchain/provider'
-require 'bake/toolchain/errorparser/error_parser'
-require 'bake/toolchain/errorparser/keil_compiler_error_parser'
-require 'bake/toolchain/errorparser/keil_linker_error_parser'
+require_relative '../../common/utils'
+require_relative '../toolchain/provider'
+require_relative '../toolchain/errorparser/error_parser'
+require_relative '../toolchain/errorparser/keil_compiler_error_parser'
+require_relative '../toolchain/errorparser/keil_linker_error_parser'
 
 module Bake
   module Toolchain

@@ -12,4 +12,19 @@ Project {
     DefaultToolchain GCC
   }
 
+  ExecutableConfig test_3{
+    ArtifactName "$(ArtifactNameBase)"
+    Set VarA, value: "test"
+    Set VarB, value: "VarA"
+    Files "$(ArtifactNameBase)"
+    Toolchain outputDir: "$($(VarB))"
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_4{
+    Toolchain outputDir: "$($(VarB)"
+    DefaultToolchain GCC
+  }
+
+
 }

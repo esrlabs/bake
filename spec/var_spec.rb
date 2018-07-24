@@ -147,6 +147,18 @@ describe "VarSubst" do
     expect(($mystring.include?"Building failed.")).to be == true
   end
 
+  it 'could not resolve' do
+    Bake.startBake("brokenSubstCmd/main", ["test_3"])
+    expect($mystring.split("Could not resolve").length).to be == 3
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'incomplete' do
+    Bake.startBake("brokenSubstCmd/main", ["test_4"])
+    expect(($mystring.include?"'$(' found but no ')'")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
 end
 
 end

@@ -1,5 +1,5 @@
-require 'bake/toolchain/colorizing_formatter'
-require 'common/exit_helper'
+require_relative '../../bake/toolchain/colorizing_formatter'
+require_relative '../exit_helper'
 
 module Bake
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 $:.unshift(File.dirname(__FILE__)+"/../lib")
-require "bakeclean/options/options"
+require_relative "../lib/bakeclean/options/options"
 require "fileutils"
 
 $options = Bake::BakecleanOptions.new(ARGV)

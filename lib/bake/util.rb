@@ -1,10 +1,9 @@
-require 'bake/model/metamodel_ext'
-require 'bake/model/metamodel'
+require_relative 'model/metamodel_ext'
+require_relative 'model/metamodel'
 require 'set'
-require 'bake/toolchain/colorizing_formatter'
-require 'common/exit_helper'
-require 'common/utils'
-
+require_relative 'toolchain/colorizing_formatter'
+require_relative '../common/exit_helper'
+require_relative '../common/utils'
 
 def remove_empty_strings_and_join(a, j=' ')
   return a.reject{|e|e.to_s.empty?}.join(j)

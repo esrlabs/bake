@@ -1,4 +1,4 @@
-require 'common/exit_helper'
+require_relative 'exit_helper'
 
 module Bake
 

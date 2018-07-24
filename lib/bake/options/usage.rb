@@ -1,4 +1,4 @@
-require 'common/version'
+require_relative '../../common/version'
 
 module Bake
 

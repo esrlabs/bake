@@ -1,4 +1,4 @@
-require "bakery/buildPattern"
+require_relative "buildPattern"
 
 module Bake
 

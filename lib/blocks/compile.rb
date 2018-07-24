@@ -1,11 +1,11 @@
-require 'blocks/blockBase'
+require_relative 'blockBase'
 
-require 'multithread/job'
-require 'common/process'
-require 'common/ext/dir'
-require 'common/utils'
-require 'bake/toolchain/colorizing_formatter'
-require 'bake/config/loader'
+require_relative '../multithread/job'
+require_relative '../common/process'
+require_relative '../common/ext/dir'
+require_relative '../common/utils'
+require_relative '../bake/toolchain/colorizing_formatter'
+require_relative '../bake/config/loader'
 
 
 begin

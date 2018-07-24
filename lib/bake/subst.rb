@@ -59,7 +59,7 @@ module Bake
       @@configName = config.name
       @@projDir = config.parent.get_project_dir
       @@projName = projName
-      @@resolvedVars = 0
+      @@unresolvedVars = []
       @@configFilename = config.file_name
 
       @@artifactName = ""
@@ -125,19 +125,18 @@ module Bake
 
       @@userVarMapMain = @@userVarMap.clone if isMainProj
 
-      @@resolvedVars = 0
-      lastFoundInVar = 0
+      unresolvedVarsWithoutOutputDir = []
       10.times do
+        @@unresolvedVars = []
         subst(config)
         substToolchain(toolchain)
-        if @@resolvedVars == lastFoundInVar
-          lastFoundInVar = 0
-          break
-        end
-        lastFoundInVar = @@resolvedVars
+        unresolvedVarsWithoutOutputDir = (@@unresolvedVars - @@outputDirUnresolved)
+        break if unresolvedVarsWithoutOutputDir.empty?
       end
-      if (lastFoundInVar > 0)
-        Bake.formatter.printError("Cyclic variable substitution detected", config.file_name)
+      if (unresolvedVarsWithoutOutputDir.length > 0)
+        unresolvedVarsWithoutOutputDir.each do |elem|
+          Bake.formatter.printError("Could not resolve variable", elem)
+        end
         ExitHelper.exit(1)
       end
 
@@ -151,7 +150,10 @@ module Bake
         posStart = str.index("$(", posSubst)
         break if posStart.nil?
         posEnd = str.index(")", posStart)
-        break if posEnd.nil?
+        if posEnd.nil?
+          Bake.formatter.printError("'$(' found but no ')'", elem)
+          ExitHelper.exit(1)
+        end
         posStartSub = str.index("$(", posStart+1)
         if (not posStartSub.nil? and posStartSub < posEnd) # = nested vars
           newStr = str[0,posStartSub] + substString(str[posStartSub..posEnd],elem)
@@ -165,7 +167,6 @@ module Bake
 
         substStr << str[posSubst..posStart-1] if posStart>0
 
-        @@resolvedVars += 1
         var = str[posStart+2..posEnd-1]
 
         splittedVar = var.split(",").map { |v| v.strip() }
@@ -248,7 +249,6 @@ module Bake
 
               if (out_dir.include?"$(")
                 substStr << str[posStart..posEnd]
-                @@resolvedVars -= 1
                 @@outputDirUnresolved << elem
               else
                 out_dir = substString(out_dir, elem)
@@ -322,6 +322,7 @@ module Bake
         posSubst = posEnd + 1
       end
       substStr << str[posSubst..-1]
+      @@unresolvedVars << elem if substStr.include?("$(")
       substStr
     end
 

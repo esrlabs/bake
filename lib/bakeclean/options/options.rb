@@ -1,5 +1,5 @@
-require 'common/options/parser'
-require 'common/version'
+require_relative '../../common/options/parser'
+require_relative '../../common/version'
 
 module Bake
 

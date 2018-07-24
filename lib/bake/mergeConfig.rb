@@ -1,4 +1,4 @@
-require 'common/ext/rtext'
+require_relative '../common/ext/rtext'
 
 module Bake
 

@@ -1,6 +1,6 @@
-require 'bake/model/loader'
-require 'bake/config/checks'
-require 'adapt/config/loader'
+require_relative '../model/loader'
+require_relative 'checks'
+require_relative '../../adapt/config/loader'
 
 module Bake
 

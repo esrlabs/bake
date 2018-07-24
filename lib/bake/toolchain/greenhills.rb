@@ -1,7 +1,7 @@
-require 'bake/toolchain/provider'
-require 'common/utils'
-require 'bake/toolchain/errorparser/greenhills_compiler_error_parser'
-require 'bake/toolchain/errorparser/greenhills_linker_error_parser'
+require_relative '../toolchain/provider'
+require_relative '../../common/utils'
+require_relative '../toolchain/errorparser/greenhills_compiler_error_parser'
+require_relative '../toolchain/errorparser/greenhills_linker_error_parser'
 
 module Bake
   module Toolchain

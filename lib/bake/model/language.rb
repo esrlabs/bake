@@ -1,8 +1,5 @@
-require 'bake/model/metamodel'
-
+require_relative 'metamodel'
 require 'rtext/language'
-
-
 
 module Bake
 

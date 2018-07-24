@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 $:.unshift(File.dirname(__FILE__)+"/../lib")
-require 'common/version'
+require_relative '../lib/common/version'
 
 Bake::Version.printBakeVersion
 

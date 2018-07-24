@@ -151,13 +151,13 @@ module Bake
   end
 end
 
-require 'bake/toolchain/diab'
-require 'bake/toolchain/gcc'
-require 'bake/toolchain/clang'
-require 'bake/toolchain/clang_analyze'
-require 'bake/toolchain/ti'
-require 'bake/toolchain/greenhills'
-require 'bake/toolchain/keil'
-require 'bake/toolchain/msvc'
-require 'bake/toolchain/gcc_env'
-require 'bake/toolchain/tasking'
+require_relative '../toolchain/diab'
+require_relative '../toolchain/gcc'
+require_relative '../toolchain/clang'
+require_relative '../toolchain/clang_analyze'
+require_relative '../toolchain/ti'
+require_relative '../toolchain/greenhills'
+require_relative '../toolchain/keil'
+require_relative '../toolchain/msvc'
+require_relative '../toolchain/gcc_env'
+require_relative '../toolchain/tasking'

@@ -1,4 +1,4 @@
-require 'blocks/compile'
+require_relative 'compile'
 
 module Bake
 

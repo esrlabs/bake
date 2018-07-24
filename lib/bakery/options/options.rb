@@ -1,7 +1,7 @@
-require 'bake/toolchain/colorizing_formatter'
-require 'common/options/parser'
-require 'common/options/finder'
-require 'common/root'
+require_relative '../../bake/toolchain/colorizing_formatter'
+require_relative '../../common/options/parser'
+require_relative '../../common/options/finder'
+require_relative '../../common/root'
 
 module Bake
 
