@@ -258,6 +258,23 @@ z-index: 100;
                                           <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
                                           <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
                                           <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62;<br>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showSleep()" onMouseout="notip()">Sleep</span> &#60;seconds&#62;,
+                                          <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
+                                          <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false<br>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakeDir()" onMouseout="notip()">MakeDir</span> &#60;directory&#62;,
+                                          <span class="help" onMouseover="showEchoFileutils()" onMouseout="notip()">echo</span>: on|off<br>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showRemove()" onMouseout="notip()">Remove</span> &#60;file or directory&#62;,
+                                          <span class="help" onMouseover="showEchoFileutils()" onMouseout="notip()">echo</span>: on|off<br>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showTouch()" onMouseout="notip()">Touch</span> &#60;file or directory&#62;,
+                                          <span class="help" onMouseover="showEchoFileutils()" onMouseout="notip()">echo</span>: on|off<br>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCopy()" onMouseout="notip()">Copy</span> &#60;file or directory&#62;,
+                                          to: &#60;file or directory&#62;,
+                                          <span class="help" onMouseover="showEchoFileutils()" onMouseout="notip()">echo</span>: on|off<br>
+&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMove()" onMouseout="notip()">Move</span> &#60;file or directory&#62;,
+                                          to: &#60;file or directory&#62;,
+                                          <span class="help" onMouseover="showEchoFileutils()" onMouseout="notip()">echo</span>: on|off<br>
+
+
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showPostSteps()" onMouseout="notip()">PostSteps</span> {<br>
 &nbsp; &nbsp; &nbsp; <span class="mycomment"># Same as for PreSteps</span><br>
@@ -346,24 +363,9 @@ z-index: 100;
 </span><br></span>
 
               <span id="custom_part" class="hide"><span style="background-color:#EEEEEE;" class="show">
-&nbsp; &nbsp; <span class="mycomment"># Valid for CustomConfig</span><br><br>
-&nbsp; &nbsp; <span class="showRadio" id="makefile"    onMouseover="showMakefileCustom()"    onMouseout="notip()">Makefile</span> |
-                            <span class="hideRadio"     id="commandline" onMouseover="showCommandlineCustom()" onMouseout="notip()">CommandLine</span>
-                            <span style="background-color:#DDDDDD;" id="makefile_part" class="showInline"> &#60;name&#62;,
-                                          <span class="help" onMouseover="showMakefileLib()" onMouseout="notip()">lib</span>: &#60;lib&#62;,
-                                          <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
-                                          <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
-                                          <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
-                                          <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
-                                          <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
-&nbsp; &nbsp; }<br>
-                            </span>
-                            <span style="background-color:#DDDDDD;" id="commandline_part"  class="hide">&#60;line&#62;,
-                            <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
-                            <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
-                            <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62;
-                            </span>
+&nbsp; &nbsp; <span class="mycomment"># Valid for CustomConfig</span><br>
+&nbsp; &nbsp; <span class="mycomment"># Same as for PreSteps</span><br>
+
 &nbsp; &nbsp; <br></span><br></span>
 &nbsp; }<br>
 }<br><br>
@@ -529,6 +531,11 @@ function showEcho() {
   ddrivetip("echo", "No","-","on",str)
 }
 
+function showEchoFileutils() {
+  str = '"on" means a debug output is shown'
+  ddrivetip("echo", "No","-","on",str)
+}
+
 function showInde() {
   str = '"true" means the step can be built in parallel to other projects. "false" means everything before must be completed, the step runs exclusively.'
   ddrivetip("independent", "No","-","false",str)
@@ -600,6 +607,29 @@ function showCommandLine() {
   ddrivetip("CommandLine", "No","0..n","-",getCommandLineDesc())
 }
 
+function showSleep() {
+  ddrivetip("Sleep", "No","0..n","0.0","Sleep in seconds, floats are allowed.")
+}
+
+function showMakeDir() {
+  ddrivetip("MakeDir", "No","0..n","-","A file or folder will be created.")
+}
+
+function showRemove() {
+  ddrivetip("Remove", "No","0..n","-","A file or folder will be removed.")
+}
+
+function showTouch() {
+  ddrivetip("Touch", "No","0..n","-","A file or folder will be touched.")
+}
+
+function showCopy() {
+  ddrivetip("Copy", "No","0..n","-","A file or folder will be copied.")
+}
+
+function showMove() {
+  ddrivetip("Move", "No","0..n","-","A file or folder will be moved.")
+}
 
 function showEclipseOrder() {
   str = 'If not specified or false, all files are compiled in order of appearance in Project.meta. '+

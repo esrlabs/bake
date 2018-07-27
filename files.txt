@@ -19,11 +19,6 @@
 ./ide/eclipse/how_to_install_eclipse_plugin.html
 ./ide/eclipse/how_to_use_bake_in_eclipse.html
 ./ide/ide_integrations.html
-./ide/vs/how_to_create_vs_projects.html
-./ide/vs/how_to_debug_in_vs.html
-./ide/vs/how_to_used_bake_in_vs.html
-./ide/vs/vs.html
-./ide/vs/vs_install.html
 ./ide/vsc/vsc.html
 ./index.html
 ./install/install_bake.html
@@ -59,7 +54,6 @@
 ./_images/buildFile.png
 ./_images/buildMain.png
 ./_images/console.png
-./_images/cvsp.png
 ./_images/cyclo.png
 ./_images/cygwin_mount.png
 ./_images/cygwin_ruby.png
@@ -94,17 +88,6 @@
 ./_images/TrustMe.png
 ./_images/vim.png
 ./_images/visualstudio-code.png
-./_images/visualstudio-pro.png
-./_images/vs_2010_install.png
-./_images/vs_debug.png
-./_images/vs_error.png
-./_images/vs_install1.png
-./_images/vs_installed.png
-./_images/vs_options.png
-./_images/vs_select_config.png
-./_images/vs_show_config.png
-./_images/vs_update.png
-./_images/vs_update_site.png
 ./_images/WrongSelect.png
 ./_static/AddRepository.png
 ./_static/ajax-loader.gif
