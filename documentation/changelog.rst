@@ -1,12 +1,14 @@
 Changelog
 =========
 
-X X, 2018 - bake-toolkit 2.47.0
+July 27, 2018 - bake-toolkit 2.47.0
     * Added: *Sleep*, *MakeDir*, *Remove*, *Copy* and *Move* commands in Project.meta.
     * Added: option -D to add defines via command line.
     * Added: DCC case check with --diab-case-check for Windows. Makes sense to start the compilation again after full build was successful with this parameter.
+      With this parameter the code is not compiled, only checked. It takes around the time of a compilation. Note, with GCC the check is done during compilation in
+      "no time" - enhancement request ticked filed at Windriver to make that possible with Diab.
     * Improved: Cyclic variable substitution
-    * Removed: support of Visual Studio
+    * Removed: support of Visual Studio (not Visual Studio Code)
     * Removed: official support of Ruby 1.9
     * Bugfix: MapFile command now working for GCC
     * Bugfix: --incs-and-defs did not show any results in case the workspace was broken like a missing library.

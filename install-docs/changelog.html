@@ -115,12 +115,16 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
-<dt>X X, 2018 - bake-toolkit 2.47.0</dt>
+<dt>July 27, 2018 - bake-toolkit 2.47.0</dt>
 <dd><ul class="first last simple">
 <li>Added: <em>Sleep</em>, <em>MakeDir</em>, <em>Remove</em>, <em>Copy</em> and <em>Move</em> commands in Project.meta.</li>
 <li>Added: option -D to add defines via command line.</li>
-<li>Added: DCC case check with –diab-case-check for Windows. Makes sense to start the compilation again after full build was successful with this parameter.</li>
-<li>Removed: support of Visual Studio</li>
+<li>Added: DCC case check with –diab-case-check for Windows. Makes sense to start the compilation again after full build was successful with this parameter.
+With this parameter the code is not compiled, only checked. It takes around the time of a compilation. Note, with GCC the check is done during compilation in
+“no time” - enhancement request ticked filed at Windriver to make that possible with Diab.</li>
+<li>Improved: Cyclic variable substitution</li>
+<li>Removed: support of Visual Studio (not Visual Studio Code)</li>
+<li>Removed: official support of Ruby 1.9</li>
 <li>Bugfix: MapFile command now working for GCC</li>
 <li>Bugfix: –incs-and-defs did not show any results in case the workspace was broken like a missing library.</li>
 </ul>
