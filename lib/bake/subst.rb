@@ -222,8 +222,14 @@ module Bake
           end
         elsif var == "OutputDir" or (splittedVar.length == 3 and splittedVar[0] == "OutputDir")
           if (var == "OutputDir")
-            out_proj_name = @@projName
-            out_conf_name = @@configName
+            if (!elem.nil?)
+              config = elem.getConfig
+              out_proj_name = config.parent.name
+              out_conf_name = config.name
+            else
+              out_proj_name = @@projName
+              out_conf_name = @@configName
+            end
           else
             out_proj_name = splittedVar[1]
             out_conf_name = splittedVar[2]
@@ -255,7 +261,12 @@ module Bake
                 if File.is_absolute?(out_dir)
                   substStr << out_dir
                 else
-                  substStr << Pathname.new(File.rel_from_to_project(@@projDir,config.get_project_dir,true)  + out_dir).cleanpath.to_s
+                  if (elem.nil?)
+                    projDir = @@projDir
+                  else
+                    projDir = elem.get_project_dir
+                  end
+                  substStr << Pathname.new(File.rel_from_to_project(projDir,config.get_project_dir,true)  + out_dir).cleanpath.to_s
                 end
               end
             else

@@ -12,6 +12,15 @@ module Bake
           end
           ::File.dirname(comp.file_name)
         end
+
+        def getConfig
+          comp = self
+          while !(BaseConfig_INTERNAL === comp) && comp.respond_to?("parent")
+            comp = comp.parent
+          end
+          return comp
+        end
+
       end
 
       module BaseConfig_INTERNAL::ClassModule

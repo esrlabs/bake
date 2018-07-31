@@ -1,6 +1,9 @@
 Changelog
 =========
 
+July 31, 2018 - bake-toolkit 2.47.1
+    * Bugfix: in same cases the OutputDir variables were not substituted correctly in 2.47.0.
+
 July 27, 2018 - bake-toolkit 2.47.0
     * Added: *Sleep*, *MakeDir*, *Remove*, *Copy* and *Move* commands in Project.meta.
     * Added: option -D to add defines via command line.

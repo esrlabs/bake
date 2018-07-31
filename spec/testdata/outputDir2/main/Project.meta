@@ -1,0 +1,11 @@
+Project default: testMain {
+
+  CustomConfig testMain {
+    Dependency lib
+    PostSteps {
+      CommandLine "echo main: $(OutputDir)", echo: off
+    }
+    DefaultToolchain GCC, outputDir: "$(MainProjectName)/$(MainConfigName)/$(ProjectName)/$(ConfigName)"
+  }
+
+}

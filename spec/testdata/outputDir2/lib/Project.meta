@@ -1,0 +1,9 @@
+Project default: testLib {
+
+  CustomConfig testLib {
+    PostSteps {
+      CommandLine "echo lib: $(OutputDir)", echo: off
+    }
+  }
+
+}

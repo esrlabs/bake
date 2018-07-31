@@ -122,6 +122,11 @@ describe "OutputDir" do
     end
   end
 
+  it 'Variables in outputDir toolchain def' do
+    Bake.startBake("outputDir2/main", [])
+    expect($mystring.include?("lib: main/testMain/lib/testLib")).to be == true
+    expect($mystring.include?("main: main/testMain/main/testMain")).to be == true
+  end
 
 end
 
