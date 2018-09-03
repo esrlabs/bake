@@ -1,6 +1,9 @@
 Changelog
 =========
 
+??, 2018 - bake-toolkit 2.48
+    * Bugfix: variables can be set to an empty string now
+
 July 31, 2018 - bake-toolkit 2.47.1
     * Bugfix: in same cases the OutputDir variables were not substituted correctly in 2.47.0.
 

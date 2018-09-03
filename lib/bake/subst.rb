@@ -88,7 +88,7 @@ module Bake
           ExitHelper.exit(1)
         end
 
-        if (s.value != "")
+        if (s.value != "") or (s.cmd == "")
           setName = substString(s.name, s)
           if (setName.empty?)
             Bake.formatter.printWarning("Name of variable must not be empty - variable will be ignored", s)

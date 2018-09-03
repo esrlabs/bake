@@ -159,6 +159,12 @@ describe "VarSubst" do
     expect(ExitHelper.exit_code).to be > 0
   end
 
+  it 'empty var' do
+    Bake.startBake("var/main", ["EmptyVar"])
+    expect(($mystring.include?"EMPTYEMPTY")).to be == true
+    expect(ExitHelper.exit_code).to be == 0
+  end
+
 end
 
 end

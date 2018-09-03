@@ -6,6 +6,12 @@ Project {
     Dependency config: Lib
     CommandLine "echo $(OutputDir,$(ProjectName),Lib)", echo: off
     DefaultToolchain GCC, outputDir: "-->$(ProjectName)_$(ConfigName)<--"
-}
+  }
+
+  CustomConfig EmptyVar {
+    Set Nothing, value: ""
+    CommandLine "echo EMPTY$(Nothing)EMPTY", echo: off
+    DefaultToolchain GCC
+  }
 
 }
