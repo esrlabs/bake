@@ -57,7 +57,7 @@ Project {
     Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
     DefaultToolchain GCC {
       Linker {
-        Flags "$(NOSTDLIB)"
+        Flags "$(NOSTDLIB) -Wl,--image-base -Wl,0x10000000"
       }
     }
   }
@@ -68,7 +68,7 @@ Project {
     Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
     DefaultToolchain GCC {
       Linker {
-        Flags "$(NOSTDLIB)"
+        Flags "$(NOSTDLIB) -Wl,--image-base -Wl,0x10000000"
       }
     }
   }

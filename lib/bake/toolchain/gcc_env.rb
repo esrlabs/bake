@@ -25,11 +25,13 @@ module Bake
     GCCENVChain[:COMPILER][:C][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:C][:SOURCE_FILE_ENDINGS]
     GCCENVChain[:COMPILER][:C][:COMMAND] = "$(CC)"
     GCCENVChain[:COMPILER][:C][:FLAGS] = "$(CFLAGS)"
+    GCCENVChain[:COMPILER][:C][:PREFIX] = Provider.default[:COMPILER][:C][:PREFIX]
 
     GCCENVChain[:COMPILER][:ASM] = Utils.deep_copy(GCCENVChain[:COMPILER][:C])
     GCCENVChain[:COMPILER][:ASM][:COMMAND] = "$(AS)"
     GCCENVChain[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]
     GCCENVChain[:COMPILER][:ASM][:FLAGS] = "$(ASFLAGS)"
+    GCCENVChain[:COMPILER][:ASM][:PREFIX] = Provider.default[:COMPILER][:ASM][:PREFIX]
 
     GCCENVChain[:ARCHIVER][:COMMAND] = "$(AR)"
     GCCENVChain[:ARCHIVER][:ARCHIVE_FLAGS] = "-rc"

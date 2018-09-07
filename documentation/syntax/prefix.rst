@@ -28,10 +28,16 @@ This can be also done via an adapt config:
       }
     }
 
-The defaults are $(CompilerPrefix), $(ArchiverPrefix) and $(LinkerPrefix), so you can also do something like this:
+Alternatively you can use $(CPPCompilerPrefix), $(CCompilerPrefix), $(ASMCompilerPrefix), $(CompilerPrefix), $(ArchiverPrefix) or $(LinkerPrefix). Example:
 
 .. code-block:: text
 
     Set CompilerPrefix, value: "some other prefix"
 
 Or simply define an environment variable in your system.
+
+Priority (top to bottom):
+
+- prefix flags
+- $(CPPCompilerPrefix), $(CCompilerPrefix), $(ASMCompilerPrefix), $(ArchiverPrefix), $(LinkerPrefix)
+- $(CompilerPrefix)

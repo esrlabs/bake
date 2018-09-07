@@ -22,12 +22,14 @@ module Bake
 
     TaskingChain[:COMPILER][:CPP] = Utils.deep_copy(TaskingChain[:COMPILER][:C])
     TaskingChain[:COMPILER][:CPP][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:CPP][:SOURCE_FILE_ENDINGS]
+    TaskingChain[:COMPILER][:CPP][:PREFIX] = Provider.default[:COMPILER][:CPP][:PREFIX]
 
     TaskingChain[:COMPILER][:ASM] = Utils.deep_copy(TaskingChain[:COMPILER][:C])
     TaskingChain[:COMPILER][:ASM][:COMMAND] = "astc"
     TaskingChain[:COMPILER][:ASM][:COMPILE_FLAGS] = ""
     TaskingChain[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]
     TaskingChain[:COMPILER][:ASM][:PREPRO_FLAGS] = ""
+    TaskingChain[:COMPILER][:ASM][:PREFIX] = Provider.default[:COMPILER][:ASM][:PREFIX]
 
     TaskingChain[:ARCHIVER][:COMMAND] = "artc"
     TaskingChain[:ARCHIVER][:ARCHIVE_FLAGS] = "-rcu"

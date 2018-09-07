@@ -7,7 +7,7 @@
     <title>Prefix compiler, archiver and linker &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -139,11 +139,17 @@
 }
 </pre></div>
 </div>
-<p>The defaults are $(CompilerPrefix), $(ArchiverPrefix) and $(LinkerPrefix), so you can also do something like this:</p>
+<p>Alternatively you can use $(CPPCompilerPrefix), $(CCompilerPrefix), $(ASMCompilerPrefix), $(CompilerPrefix), $(ArchiverPrefix) or $(LinkerPrefix). Example:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Set CompilerPrefix, value: &quot;some other prefix&quot;
 </pre></div>
 </div>
 <p>Or simply define an environment variable in your system.</p>
+<p>Priority (top to bottom):</p>
+<ul class="simple">
+<li>prefix flags</li>
+<li>$(CPPCompilerPrefix), $(CCompilerPrefix), $(ASMCompilerPrefix), $(ArchiverPrefix), $(LinkerPrefix)</li>
+<li>$(CompilerPrefix)</li>
+</ul>
 </div>
 </div>
 
@@ -160,7 +166,7 @@
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
     </p>
   </div>
 </footer>

@@ -175,6 +175,21 @@ module Bake
           substStr << Bake.options.vars[var]
         elsif @@userVarMap.has_key?(var)
           substStr << @@userVarMap[var]
+        elsif var == "<none>"
+          # <none> shall be silently replaced with nothing
+        elsif (prefixScan = var.scan(/INTERNAL_(CPPCompiler|CCompiler|ASMCompiler|Archiver|Linker)_PREFIX/)).length > 0
+          v = prefixScan[0][0] + "Prefix"
+          if @@userVarMap.has_key?(v)
+            substStr << @@userVarMap[v]
+          elsif !ENV[v].nil?
+            substStr << ENV[v]
+          elsif v.include?"CompilerPrefix"
+            if @@userVarMap.has_key?("CompilerPrefix")
+              substStr << @@userVarMap["CompilerPrefix"]
+            elsif !ENV["CompilerPrefix"].nil?
+              substStr << ENV["CompilerPrefix"]
+            end
+          end
         elsif var == "MainConfigName"
           substStr << Bake.options.build_config
         elsif var == "MainProjectName"
@@ -320,7 +335,7 @@ module Bake
         elsif ENV[var]
           substStr << ENV[var]
         else
-          if Bake.options.verbose >= 2 && !(["CompilerPrefix", "ArchiverPrefix", "LinkerPrefix"].include?(var))
+          if Bake.options.verbose >= 2 && !(["CPPCompilerPrefix", "CCompilerPrefix", "ASMCompilerPrefix", "CompilerPrefix", "ArchiverPrefix", "LinkerPrefix"].include?(var))
             msg = "Substitute variable '$(#{var})' with empty string"
             if elem
               Bake.formatter.printInfo(msg, elem)
