@@ -57,7 +57,7 @@ Project {
     Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
     DefaultToolchain GCC {
       Linker {
-        Flags "$(NOSTDLIB) -Wl,--image-base -Wl,0x10000000"
+        Flags "$(NOSTDLIB) $(LINKER_WIN_FIX)"
       }
     }
   }
@@ -68,7 +68,7 @@ Project {
     Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
     DefaultToolchain GCC {
       Linker {
-        Flags "$(NOSTDLIB) -Wl,--image-base -Wl,0x10000000"
+        Flags "$(NOSTDLIB) $(LINKER_WIN_FIX)"
       }
     }
   }
@@ -274,4 +274,10 @@ Project {
     DefaultToolchain GCC
   }
 
+}
+
+If os: Windows {
+  ExecutableConfig __ALL__, type: extend {
+    Set LINKER_WIN_FIX, value: "-Wl,--image-base -Wl,0x10000000"
+  }
 }

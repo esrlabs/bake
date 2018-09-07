@@ -18,7 +18,7 @@ Project {
 	    Define "def1"
 	  }
 	  Linker {
-	    Flags "-O3 $(NOSTDLIB)"
+	    Flags "-O3 $(NOSTDLIB) $(LINKER_WIN_FIX)"
 	  }
 	}
 	LinkerScript "ls/linkerscript1.dld"
@@ -58,7 +58,11 @@ Project {
 	IncludeDir "Inc3_1"
 	IncludeDir "Inc3_2"
 
-    Toolchain
+    Toolchain {
+      Linker {
+        Flags add: "$(LINKER_WIN_FIX)"
+      }
+    }
     DefaultToolchain GCC
 	LinkerScript "ls/linkerscript3.dld"
 	ArtifactName "testE3.exe"
@@ -75,13 +79,13 @@ Project {
 	IncludeDir "Inc5_2"
     Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
 
-	DefaultToolchain GCC
+    DefaultToolchain GCC
     Toolchain {
 	  Compiler CPP {
 	    Define "def5"
 	  }
           Linker {
-            Flags "$(NOSTDLIB)"
+            Flags "$(NOSTDLIB) $(LINKER_WIN_FIX)"
           }
 	}
 	LinkerScript "ls/linkerscript5.dld"
@@ -90,6 +94,7 @@ Project {
   }
 
   ExecutableConfig testE6, extends: testE1 {
+    DefaultToolchain GCC
   }
 
 
@@ -435,8 +440,8 @@ Project {
 
 }
 
-
-
-
-
-
+If os: Windows {
+  ExecutableConfig __ALL__, type: extend {
+    Set LINKER_WIN_FIX, value: "-Wl,--image-base -Wl,0x10000000"
+  }
+}
