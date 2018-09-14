@@ -25,7 +25,6 @@ module Bake
     GCCENVChain[:COMPILER][:C][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:C][:SOURCE_FILE_ENDINGS]
     GCCENVChain[:COMPILER][:C][:COMMAND] = "$(CC)"
     GCCENVChain[:COMPILER][:C][:FLAGS] = "$(CFLAGS)"
-    GCCENVChain[:COMPILER][:C][:PREFIX] = Provider.default[:COMPILER][:C][:PREFIX]
 
     GCCENVChain[:COMPILER][:ASM] = Utils.deep_copy(GCCENVChain[:COMPILER][:C])
     GCCENVChain[:COMPILER][:ASM][:COMMAND] = "$(AS)"

@@ -22,7 +22,6 @@ module Bake
 
     DiabChain[:COMPILER][:CPP] = Utils.deep_copy(DiabChain[:COMPILER][:C])
     DiabChain[:COMPILER][:CPP][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:CPP][:SOURCE_FILE_ENDINGS]
-    DiabChain[:COMPILER][:C][:PREFIX] = Provider.default[:COMPILER][:C][:PREFIX]
 
     DiabChain[:COMPILER][:ASM] = Utils.deep_copy(DiabChain[:COMPILER][:C])
     DiabChain[:COMPILER][:ASM][:COMMAND] = "das"

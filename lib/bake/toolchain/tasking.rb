@@ -22,7 +22,6 @@ module Bake
 
     TaskingChain[:COMPILER][:CPP] = Utils.deep_copy(TaskingChain[:COMPILER][:C])
     TaskingChain[:COMPILER][:CPP][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:CPP][:SOURCE_FILE_ENDINGS]
-    TaskingChain[:COMPILER][:CPP][:PREFIX] = Provider.default[:COMPILER][:CPP][:PREFIX]
 
     TaskingChain[:COMPILER][:ASM] = Utils.deep_copy(TaskingChain[:COMPILER][:C])
     TaskingChain[:COMPILER][:ASM][:COMMAND] = "astc"

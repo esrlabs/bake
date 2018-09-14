@@ -22,7 +22,6 @@ module Bake
 
     GreenHillsChain[:COMPILER][:CPP] = Utils.deep_copy(GreenHillsChain[:COMPILER][:C])
     GreenHillsChain[:COMPILER][:CPP][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:C][:SOURCE_FILE_ENDINGS]
-    GreenHillsChain[:COMPILER][:C][:PREFIX] = Provider.default[:COMPILER][:C][:PREFIX]
 
     GreenHillsChain[:COMPILER][:ASM] = Utils.deep_copy(GreenHillsChain[:COMPILER][:C])
     GreenHillsChain[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]

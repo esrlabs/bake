@@ -24,7 +24,6 @@ module Bake
 
     MSVCChain[:COMPILER][:C] = Utils.deep_copy(MSVCChain[:COMPILER][:CPP])
     MSVCChain[:COMPILER][:C][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:C][:SOURCE_FILE_ENDINGS]
-    MSVCChain[:COMPILER][:C][:PREFIX] = Provider.default[:COMPILER][:C][:PREFIX]
 
     MSVCChain[:COMPILER][:ASM] = Utils.deep_copy(MSVCChain[:COMPILER][:C])
     MSVCChain[:COMPILER][:ASM][:COMMAND] = "ml"

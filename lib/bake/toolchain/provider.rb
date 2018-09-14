@@ -15,7 +15,7 @@ module Bake
         {
           :CPP => {
             :COMMAND => "",
-            :PREFIX => "$(INTERNAL_CPPCompiler_PREFIX)",
+            :PREFIX => "$(CompilerPrefix)",
             :DEFINE_FLAG => "",
             :OBJECT_FILE_FLAG => "",
             :OBJECT_FILE_ENDING => ".o",
@@ -35,7 +35,7 @@ module Bake
           },
           :C => {
             :COMMAND => "",
-            :PREFIX => "$(INTERNAL_CCompiler_PREFIX)",
+            :PREFIX => "$(CompilerPrefix)",
             :DEFINE_FLAG => "",
             :OBJECT_FILE_FLAG => "",
             :OBJECT_FILE_ENDING => ".o",
@@ -55,7 +55,7 @@ module Bake
           },
           :ASM => {
             :COMMAND => "",
-            :PREFIX => "$(INTERNAL_ASMCompiler_PREFIX)",
+            :PREFIX => "$(ASMCompilerPrefix)",
             :DEFINE_FLAG => "",
             :OBJECT_FILE_FLAG => "",
             :OBJECT_FILE_ENDING => ".o",
@@ -78,7 +78,7 @@ module Bake
         :ARCHIVER =>
         {
           :COMMAND => "",
-          :PREFIX => "$(INTERNAL_Archiver_PREFIX)",
+          :PREFIX => "$(ArchiverPrefix)",
           :ARCHIVE_FLAGS => "",
           :ARCHIVE_FLAGS_SPACE => true,
           :FLAGS => "",
@@ -88,7 +88,7 @@ module Bake
         :LINKER =>
         {
           :COMMAND => "",
-          :PREFIX => "$(INTERNAL_Linker_PREFIX)",
+          :PREFIX => "$(LinkerPrefix)",
           :MUST_FLAGS => "",
           :SCRIPT => "",
           :SCRIPT_SPACE => true,

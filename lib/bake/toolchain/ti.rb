@@ -23,7 +23,6 @@ module Bake
 
     TiChain[:COMPILER][:C] = Utils.deep_copy(TiChain[:COMPILER][:CPP])
     TiChain[:COMPILER][:C][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:C][:SOURCE_FILE_ENDINGS]
-    TiChain[:COMPILER][:C][:PREFIX] = Provider.default[:COMPILER][:C][:PREFIX]
 
     TiChain[:COMPILER][:ASM] = Utils.deep_copy(TiChain[:COMPILER][:C])
     TiChain[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]

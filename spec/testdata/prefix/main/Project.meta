@@ -22,20 +22,17 @@ Project {
     Files "src/c.c"
     Files "src/asm.s"
     Dependency config: test_lib_prio
-    
-    Set CPPCompilerPrefix, value: "CPPCOMPILERPREFIX2"
-    Set CCompilerPrefix, value: "CCOMPILERPREFIX2"
+
+    Set CompilerPrefix, value: "COMPILERPREFIX2"
     Set ASMCompilerPrefix, value: "ASMCOMPILERPREFIX2"
     Set ArchiverPrefix, value: "ARCHIVERPREFIX2"
     Set LinkerPrefix, value: "LINKERPREFIX2"
-   
-    Set CompilerPrefix, value: "COMPILERPREFIX3"
 
     DefaultToolchain GCC {
         Linker prefix: "echo LINKERPREFIX1"
         Archiver prefix: "echo ARCHIVERPREFIX1"
-        Compiler CPP, prefix: "echo CPPCOMPILERPREFIX1"
-        Compiler C,   prefix: "echo CCOMPILERPREFIX1"
+        Compiler CPP, prefix: "echo COMPILERPREFIX1"
+        Compiler C,   prefix: "echo COMPILERPREFIX1"
         Compiler ASM, prefix: "echo ASMCOMPILERPREFIX1"
     }
   }
@@ -49,8 +46,8 @@ Project {
     DefaultToolchain GCC {
         Linker prefix: "echo LINKERPREFIX1"
         Archiver prefix: "echo ARCHIVERPREFIX1"
-        Compiler CPP, prefix: "echo CPPCOMPILERPREFIX1"
-        Compiler C,   prefix: "echo CCOMPILERPREFIX1"
+        Compiler CPP, prefix: "echo COMPILERPREFIX1"
+        Compiler C,   prefix: "echo COMPILERPREFIX1"
         Compiler ASM, prefix: "echo ASMCOMPILERPREFIX1"
     }
   }
@@ -60,14 +57,17 @@ Project {
     Files "src/c.c"
     Files "src/asm.s"
     Dependency config: test_lib_prio
-    
-    Set CPPCompilerPrefix, value: "CPPCOMPILERPREFIX2"
-    Set CCompilerPrefix, value: "CCOMPILERPREFIX2"
+
+    Set CompilerPrefix, value: "COMPILERPREFIX2"
     Set ASMCompilerPrefix, value: "ASMCOMPILERPREFIX2"
     Set ArchiverPrefix, value: "ARCHIVERPREFIX2"
     Set LinkerPrefix, value: "LINKERPREFIX2"
-   
-    Set CompilerPrefix, value: "COMPILERPREFIX3"
+
+    Toolchain {
+      Compiler ASM {
+          Flags add: "-Dblah"
+      }
+    }
 
     DefaultToolchain GCC {
       Compiler ASM {
@@ -80,32 +80,11 @@ Project {
     Files "src/c.c"
     Files "src/asm.s"
     Dependency config: test_lib_prio
-    
+
     DefaultToolchain GCC {
       Compiler ASM {
       }
     }
   }
-
-  ExecutableConfig test_main_prio3 {
-    Files "src/main.cpp"
-    Files "src/c.c"
-    Files "src/asm.s"
-    Dependency config: test_lib_prio
-   
-    Set CompilerPrefix, value: "COMPILERPREFIX3"
-
-    DefaultToolchain GCC
-  }
-
-  ExecutableConfig test_main_prio3_env {
-    Files "src/main.cpp"
-    Files "src/c.c"
-    Files "src/asm.s"
-    Dependency config: test_lib_prio
-   
-    DefaultToolchain GCC
-  }
-
 
 }

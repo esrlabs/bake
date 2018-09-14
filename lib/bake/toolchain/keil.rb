@@ -22,7 +22,6 @@ module Bake
 
     KeilChain[:COMPILER][:C] = Utils.deep_copy(KeilChain[:COMPILER][:CPP])
     KeilChain[:COMPILER][:C][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:C][:SOURCE_FILE_ENDINGS]
-    KeilChain[:COMPILER][:C][:PREFIX] = Provider.default[:COMPILER][:C][:PREFIX]
 
     KeilChain[:COMPILER][:ASM] = Utils.deep_copy(KeilChain[:COMPILER][:C])
     KeilChain[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]
