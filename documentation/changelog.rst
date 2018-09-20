@@ -1,6 +1,9 @@
 Changelog
 =========
 
+September 20, 2018 - bake-toolkit 2.48.1
+    * Bugfix: Compiler prefix change reverted for C and CPP, only assembler still has the new ASMCompilerPrefix
+
 September 7, 2018 - bake-toolkit 2.48.0
     * Bugfix: Variables can be set to an empty string now
     * Added: Compiler prefix mechanism improved, see documentation
