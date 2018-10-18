@@ -30,6 +30,10 @@ module Bake
         configs.each do |config|
           if config.respond_to?("toolchain") and config.toolchain
             config.toolchain.compiler.each do |c|
+              if ["CPP","C","ASM"].none? {|t| t == c.ctype}
+                Bake.formatter.printError("Type of compiler must be CPP, C or ASM", c)
+                ExitHelper.exit(1)
+              end
               if not c.internalDefines.nil? and c.internalDefines != ""
                 Bake.formatter.printError("InternalDefines only allowed in DefaultToolchain", c.internalDefines)
                 ExitHelper.exit(1)
@@ -48,6 +52,10 @@ module Bake
               Bake.formatter.printWarning("Lint support was removed. Please delete LintPolicy from Project.meta.", l)
             end
             config.defaultToolchain.compiler.each do |c|
+              if ["CPP","C","ASM"].none? {|t| t == c.ctype}
+                Bake.formatter.printError("Type of compiler must be CPP, C or ASM", c)
+                ExitHelper.exit(1)
+              end
               if c.fileEndings && c.fileEndings.endings.empty?
                 Bake.formatter.printError("FileEnding must not be empty.", c.fileEndings)
                 ExitHelper.exit(1)
