@@ -30,7 +30,9 @@ module Bake
         configs.each do |config|
           if config.respond_to?("toolchain") and config.toolchain
             config.toolchain.compiler.each do |c|
-              if ["CPP","C","ASM"].none? {|t| t == c.ctype}
+              puts c.ctype.class
+              puts c.ctype
+              if [:CPP,:C,:ASM].none? {|t| t == c.ctype}
                 Bake.formatter.printError("Type of compiler must be CPP, C or ASM", c)
                 ExitHelper.exit(1)
               end
@@ -52,7 +54,7 @@ module Bake
               Bake.formatter.printWarning("Lint support was removed. Please delete LintPolicy from Project.meta.", l)
             end
             config.defaultToolchain.compiler.each do |c|
-              if ["CPP","C","ASM"].none? {|t| t == c.ctype}
+              if [:CPP,:C,:ASM].none? {|t| t == c.ctype}
                 Bake.formatter.printError("Type of compiler must be CPP, C or ASM", c)
                 ExitHelper.exit(1)
               end
