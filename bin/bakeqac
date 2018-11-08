@@ -188,7 +188,14 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
     success, consoleOutput, checkError = executeQacli(cmd, true)
 
     if success
-      cct220 = (File.exist?(@options.qacdata+"/prqa/configs/Initial_Config/config") ? "configs/Initial_Config/" : "")
+      if File.exist?(@options.qacdata+"/prqa/configs/Initial/config")
+        cct220 = "configs/Initial/"
+      elsif File.exist?(@options.qacdata+"/prqa/configs/Initial_Config/config")
+        cct220 = "configs/Initial_Config/"
+      else
+        cct220 = ""
+      end
+
       cctFilename = @options.qacdata+"/prqa/" + cct220 + "config/" + File.basename(@options.cct[0])
       if File.exist?cctFilename
         File.open(cctFilename, 'a') do |f|
@@ -208,6 +215,8 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
           end
 
         end
+      else
+        Bake.formatter.printWarning("Could not find cct file in .qacdata folder")
       end
     else
       puts consoleOutput unless consoleOutput.empty?
