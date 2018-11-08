@@ -7,7 +7,7 @@
     <title>Changelog &#8212; bake documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -115,6 +115,11 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>November 8, 2018 - bake-toolkit 2.48.2</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: Now compatible with new QAC folder structure (problem was that user-suppressed warnings in qac.cct were not suppressed)</li>
+</ul>
+</dd>
 <dt>September 20, 2018 - bake-toolkit 2.48.1</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: Compiler prefix change reverted for C and CPP, only assembler still has the new ASMCompilerPrefix</li>
@@ -1531,7 +1536,7 @@ write a PreStep which copies the file from the new location to the old one.</p>
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
     </p>
   </div>
 </footer>

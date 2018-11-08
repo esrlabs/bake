@@ -1,6 +1,9 @@
 Changelog
 =========
 
+November 8, 2018 - bake-toolkit 2.48.2
+    * Bugfix: Now compatible with new QAC folder structure (problem was that user-suppressed warnings in qac.cct were not suppressed)
+
 September 20, 2018 - bake-toolkit 2.48.1
     * Bugfix: Compiler prefix change reverted for C and CPP, only assembler still has the new ASMCompilerPrefix
 
