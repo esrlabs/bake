@@ -1,11 +1,14 @@
 Changelog
 =========
 
+November 28, 2018 - bake-toolkit 2.48.3
+    * Bugfix: Removed accidentially added debug ouput which was introduced in 2.48.2.
+
 November 8, 2018 - bake-toolkit 2.48.2
-    * Bugfix: Now compatible with new QAC folder structure (problem was that user-suppressed warnings in qac.cct were not suppressed)
+    * Bugfix: Now compatible with new QAC folder structure (problem was that user-suppressed warnings in qac.cct were not suppressed).
 
 September 20, 2018 - bake-toolkit 2.48.1
-    * Bugfix: Compiler prefix change reverted for C and CPP, only assembler still has the new ASMCompilerPrefix
+    * Bugfix: Compiler prefix change reverted for C and CPP, only assembler still has the new ASMCompilerPrefix.
 
 September 7, 2018 - bake-toolkit 2.48.0
     * Bugfix: Variables can be set to an empty string now

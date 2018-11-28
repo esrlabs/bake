@@ -30,8 +30,6 @@ module Bake
         configs.each do |config|
           if config.respond_to?("toolchain") and config.toolchain
             config.toolchain.compiler.each do |c|
-              puts c.ctype.class
-              puts c.ctype
               if [:CPP,:C,:ASM].none? {|t| t == c.ctype}
                 Bake.formatter.printError("Type of compiler must be CPP, C or ASM", c)
                 ExitHelper.exit(1)
