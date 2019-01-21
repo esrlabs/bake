@@ -2,7 +2,7 @@ Changelog
 =========
 
 November 28, 2018 - bake-toolkit 2.48.3
-    * Bugfix: Removed accidentially added debug ouput which was introduced in 2.48.2.
+    * Bugfix: Removed accidentally added debug output which was introduced in 2.48.2.
 
 November 8, 2018 - bake-toolkit 2.48.2
     * Bugfix: Now compatible with new QAC folder structure (problem was that user-suppressed warnings in qac.cct were not suppressed).
