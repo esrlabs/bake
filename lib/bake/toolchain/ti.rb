@@ -28,7 +28,7 @@ module Bake
     TiChain[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]
     TiChain[:COMPILER][:ASM][:PREFIX] = Provider.default[:COMPILER][:ASM][:PREFIX]
 
-    TiChain[:COMPILER][:DEP_FILE_SINGLE_LINE] = true
+    TiChain[:COMPILER][:DEP_FILE_SINGLE_LINE] = :single
 
     TiChain[:ARCHIVER][:COMMAND] = "ti_ar"
     TiChain[:ARCHIVER][:ARCHIVE_FLAGS] = "r"

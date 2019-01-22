@@ -51,6 +51,6 @@ module Bake
     TaskingChain[:ARCHIVER][:ERROR_PARSER] =       taskingCompilerErrorParser
     TaskingChain[:LINKER][:ERROR_PARSER] =         TaskingLinkerErrorParser.new
 
-    TaskingChain[:COMPILER][:DEP_FILE_SINGLE_LINE] = true
+    TaskingChain[:COMPILER][:DEP_FILE_SINGLE_LINE] = :single
   end
 end

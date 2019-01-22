@@ -29,7 +29,7 @@ module Bake
     KeilChain[:COMPILER][:ASM][:COMPILE_FLAGS] = ""
     KeilChain[:COMPILER][:ASM][:PREFIX] = Provider.default[:COMPILER][:ASM][:PREFIX]
 
-    KeilChain[:COMPILER][:DEP_FILE_SINGLE_LINE] = true
+    KeilChain[:COMPILER][:DEP_FILE_SINGLE_LINE] = :single
 
     KeilChain[:ARCHIVER][:COMMAND] = "armar"
     KeilChain[:ARCHIVER][:ARCHIVE_FLAGS] = "--create"

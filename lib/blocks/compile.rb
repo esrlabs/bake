@@ -336,10 +336,10 @@ module Bake
 
       end
 
-      def self.read_depfile(dep_filename, projDir, singleLine)
+      def self.read_depfile(dep_filename, projDir, lineType)
         deps = []
         begin
-          if singleLine
+          if lineType == :single
             File.readlines(dep_filename).each do |line|
               splitted = line.split(": ")
               if splitted.length > 1
@@ -353,11 +353,20 @@ module Bake
                 end
               end
             end
-          else
+          elsif lineType == :multi
             deps_string = File.read(dep_filename)
             deps_string = deps_string.gsub(/\\\n/,'')
             dep_splitted = deps_string.split(/([^\\]) /).each_slice(2).map(&:join)[2..-1]
             deps = dep_splitted.map { |d| d.gsub(/[\\] /,' ').gsub(/[\\]/,'/').strip }.delete_if {|d| d == "" }
+          elsif lineType == :plain
+            firstLine = true
+            File.readlines(dep_filename).each do |line|
+              if firstLine
+                firstLine = false
+              else
+                deps << line
+              end
+            end
           end
         rescue Exception => ex1
           if !Bake.options.dry

@@ -116,7 +116,7 @@ module Bake
           :CLEAN => "clean"
         },
 
-        :DEP_FILE_SINGLE_LINE => false,
+        :DEP_FILE_SINGLE_LINE => :multi,
         :DOCU => "",
         :KEEP_FILE_ENDINGS => false
       }
