@@ -287,7 +287,7 @@ describe "Building" do
     Bake.startBake("header/main", ["test"])
     expect($mystring.split("Compiling").length).to be == 2
 
-    sleep 1.1
+    sleep 2
     FileUtils.touch("spec/testdata/header/main/include/inc1.h")
 
     Bake.startBake("header/main", ["test"])

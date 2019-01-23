@@ -72,7 +72,8 @@ module Bake
             :ERROR_PARSER => nil,
             :PREPRO_FLAGS => "",
             :PREPRO_FILE_FLAG => nil
-          }
+          },
+          :DEP_FILE_SINGLE_LINE => :multi
         },
 
         :ARCHIVER =>
@@ -116,7 +117,6 @@ module Bake
           :CLEAN => "clean"
         },
 
-        :DEP_FILE_SINGLE_LINE => :multi,
         :DOCU => "",
         :KEEP_FILE_ENDINGS => false
       }

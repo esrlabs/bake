@@ -11,7 +11,7 @@ module Bake
           end
           puts k
           printHash(v,level+1)
-        elsif Array === v or String === v
+        elsif Array === v or String === v or true == v or false == v or Symbol === v
           level.times {print "  "}
           print "\n" if (level == 0)
           puts "#{k} = #{v}"
