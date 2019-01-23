@@ -1,7 +1,7 @@
 Changelog
 =========
 
-January XX, 2019 - bake-toolkit 2.49.0
+January 23, 2019 - bake-toolkit 2.49.0
     * Added: Support for IAR compiler.
 
 November 28, 2018 - bake-toolkit 2.48.3

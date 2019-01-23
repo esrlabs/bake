@@ -22,7 +22,7 @@ module Bake
     end
 
     def get_severity(str)
-      if str.downcase == "info" || str.downcase == "note"
+      if str.downcase == "info" || str.downcase == "note" || str.downcase == "remark"
         SEVERITY_INFO
       elsif str.downcase == "warning"
         SEVERITY_WARNING
