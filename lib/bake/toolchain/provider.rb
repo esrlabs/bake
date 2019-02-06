@@ -29,9 +29,11 @@ module Bake
             :DEP_FLAGS => "",
             :DEP_FLAGS_SPACE => false,
             :DEP_FLAGS_FILENAME => true,
+            :CUDA_PREFIX => "",
             :ERROR_PARSER => nil,
             :PREPRO_FLAGS => "",
-            :PREPRO_FILE_FLAG => nil
+            :PREPRO_FILE_FLAG => nil,
+            :FILE_COMMAND => ""
           },
           :C => {
             :COMMAND => "",
@@ -49,9 +51,11 @@ module Bake
             :DEP_FLAGS => "",
             :DEP_FLAGS_SPACE => false,
             :DEP_FLAGS_FILENAME => true,
+            :CUDA_PREFIX => "",
             :ERROR_PARSER => nil,
             :PREPRO_FLAGS => "",
-            :PREPRO_FILE_FLAG => nil
+            :PREPRO_FILE_FLAG => nil,
+            :FILE_COMMAND => ""
           },
           :ASM => {
             :COMMAND => "",
@@ -69,9 +73,11 @@ module Bake
             :DEP_FLAGS => "",
             :DEP_FLAGS_SPACE => false,
             :DEP_FLAGS_FILENAME => true,
+            :CUDA_PREFIX => "",
             :ERROR_PARSER => nil,
             :PREPRO_FLAGS => "",
-            :PREPRO_FILE_FLAG => nil
+            :PREPRO_FILE_FLAG => nil,
+            :FILE_COMMAND => ""
           },
           :DEP_FILE_SINGLE_LINE => :multi
         },
@@ -83,7 +89,8 @@ module Bake
           :ARCHIVE_FLAGS => "",
           :ARCHIVE_FLAGS_SPACE => true,
           :FLAGS => "",
-          :ERROR_PARSER => nil
+          :ERROR_PARSER => nil,
+          :FILE_COMMAND => ""
         },
 
         :LINKER =>
@@ -105,7 +112,8 @@ module Bake
           :MAP_FILE_PIPE => true,
           :OUTPUT_ENDING => "", # if empty, .exe is used on Windows, otherwise no ending
           :ERROR_PARSER => nil,
-          :LIST_MODE => false
+          :LIST_MODE => false,
+          :FILE_COMMAND => ""
         },
 
         :MAKE =>

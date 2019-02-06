@@ -10,4 +10,13 @@ Project {
     DefaultToolchain GCC
   }
 
+  LibraryConfig cuda {
+    Files "**/*.cpp"
+    IncludeDir "include"
+    Toolchain cuda: true {
+      Compiler CPP, command: "nvcc"
+      Compiler C, command: "nvcc"
+    }
+  }
+
 }

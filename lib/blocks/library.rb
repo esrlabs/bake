@@ -95,6 +95,7 @@ module Bake
 
           cmd = Utils.flagSplit(archiver[:PREFIX], true)
           cmd += Utils.flagSplit(archiver[:COMMAND], true) # ar
+          onlyCmd = cmd
           cmd += Bake::Utils::flagSplit(archiver[:FLAGS],true) # --all_load
           cmd += archiver[:ARCHIVE_FLAGS].split(" ")
 
@@ -117,11 +118,12 @@ module Bake
               BlockBase.writeCmdLineFile(cmd, cmdLineFile)
               consoleOutput = ""
 
-              printCmd(cmd, "Creating  #{@projectName} (#{@config.name}): #{@archive_name}", reason, false)
+              realCmd = Bake.options.fileCmd ? calcFileCmd(cmd, onlyCmd, @archive_name, archiver) : cmd
+              printCmd(realCmd, "Creating  #{@projectName} (#{@config.name}): #{@archive_name}", reason, false)
               SyncOut.flushOutput()
 
-              success, consoleOutput = ProcessHelper.run(cmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
-              process_result(cmd, consoleOutput, archiver[:ERROR_PARSER], nil, reason, success)
+              success, consoleOutput = ProcessHelper.run(realCmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
+              process_result(realCmd, consoleOutput, archiver[:ERROR_PARSER], nil, reason, success)
 
               check_config_file()
             ensure

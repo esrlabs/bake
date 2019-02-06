@@ -197,24 +197,35 @@ module Bake
 
         cmd = Utils.flagSplit(compiler[:PREFIX], true)
         cmd += Utils.flagSplit(compiler[:COMMAND], true)
+        onlyCmd = cmd
         cmd += compiler[:COMPILE_FLAGS].split(" ")
 
         if dep_filename
-          cmd += @block.tcs[:COMPILER][type][:DEP_FLAGS].split(" ")
-          if @block.tcs[:COMPILER][type][:DEP_FLAGS_FILENAME]
-            if @block.tcs[:COMPILER][type][:DEP_FLAGS_SPACE]
-              cmd << dep_filename
+          cmdDep = compiler[:DEP_FLAGS].split(" ")
+          if compiler[:DEP_FLAGS_FILENAME]
+            if compiler[:DEP_FLAGS_SPACE]
+              cmdDep << dep_filename
             else
               if dep_filename.include?" "
-                cmd[cmd.length-1] << "\"" + dep_filename + "\""
+                cmdDep[cmdDep.length-1] << "\"" + dep_filename + "\""
               else
-                cmd[cmd.length-1] << dep_filename
+                cmdDep[cmdDep.length-1] << dep_filename
               end
-
             end
           end
+          if @block.tcs[:CUDA]
+            if compiler[:CUDA_PREFIX] == ""
+              Bake.formatter.printWarning("Warning: Cuda not yet supported by this toolchain.")
+            else
+              cmdDep.each do |c|
+                cmd += [compiler[:CUDA_PREFIX], c]
+              end
+              cmdDep = nil
+            end
+          end
+          cmd += cmdDep if cmdDep
         end
-
+        
         cmd += compiler[:PREPRO_FLAGS].split(" ") if Bake.options.prepro
         cmd += flags
         cmd += includes
@@ -248,7 +259,8 @@ module Bake
         if not (cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile))
           BlockBase.prepareOutput(File.expand_path(object,@projectDir))
           outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
-          printCmd(cmd, "#{outputType} #{@projectName} (#{@config.name}): #{source}", reason, false)
+          realCmd = Bake.options.fileCmd ? calcFileCmd(cmd, onlyCmd, object, compiler) : cmd 
+          printCmd(realCmd, "#{outputType} #{@projectName} (#{@config.name}): #{source}", reason, false)
           SyncOut.flushOutput()
           BlockBase.writeCmdLineFile(cmd, cmdLineFile)
 
@@ -256,8 +268,8 @@ module Bake
           consoleOutput = ""
           incList = nil
           if !Bake.options.diabCaseCheck
-            success, consoleOutput = ProcessHelper.run(cmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
-            incList = process_result(cmd, consoleOutput, compiler[:ERROR_PARSER], nil, reason, success)
+            success, consoleOutput = ProcessHelper.run(realCmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
+            incList = process_result(realCmd, consoleOutput, compiler[:ERROR_PARSER], nil, reason, success)
           end
 
           if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
@@ -275,6 +287,7 @@ module Bake
                   if Bake.options.diabCaseCheck
                     pos = cmd.find_index(compiler[:OBJECT_FILE_FLAG])
                     preProCmd = (cmd[0..pos-1] + cmd[pos+2..-1] + ["-E"])
+                    preProCmd = calcFileCmd(preProCmd, onlyCmd, object, compiler, ".dccCaseCheck") if Bake.options.fileCmd
                     success, consoleOutput = ProcessHelper.run(preProCmd, false, false, nil, [0], @projectDir)
                     if !success
                       Bake.formatter.printError("Error: could not compile #{source}")
@@ -400,6 +413,7 @@ module Bake
           SyncOut.mutex.synchronize do
             calcSources
             calcObjects
+            prepareIncludes
           end
 
           fileListBlock = Set.new if Bake.options.filelist
@@ -636,6 +650,20 @@ module Bake
         end
 
         @include_list = @include_list.flatten.uniq
+
+      end
+
+      def prepareIncludes
+        if Bake.options.mergeInc
+          mdir = File.expand_path(@block.output_dir+"/mergedIncludes", @projectDir)
+          @include_list.each do |idir|
+            FileUtils.mkdir_p(mdir)
+            idir = idir.to_s
+            idir = File.expand_path(idir, @projectDir) if !File.is_absolute?(idir)
+            FileUtils.cp_r(Dir.glob(idir+"/*"), mdir)
+          end
+          @include_list = [mdir]
+        end 
 
         @include_array = {}
         [:CPP, :C, :ASM].each do |type|

@@ -189,6 +189,20 @@ module Bake
         end
         return true
       end
+      
+      def calcFileCmd(cmd, onlyCmd, orgOut, tcs, postfix = "")
+        if tcs[:FILE_COMMAND] == ""
+          Bake.formatter.printWarning("Warning: file command option not yet supported for this toolchain")
+          return cmd
+        end
+        args = cmd.drop(onlyCmd.length)
+        argsFlat = args.join(' ')
+        cmdFile = orgOut + ".file" + postfix
+        cmdFileLong = File.expand_path(cmdFile, @projectDir)
+        FileUtils.mkdir_p(File.dirname(cmdFileLong))
+        File.open(cmdFileLong, "w") { |f| f.puts argsFlat }
+        return onlyCmd + ["#{tcs[:FILE_COMMAND]}#{cmdFile}"]
+      end
 
     end
   end

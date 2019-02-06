@@ -100,6 +100,22 @@ describe "compiler" do
     end
   end
 
+  it 'file-cmd with dcc' do
+    if $dccInstalled
+      Bake.startBake("compiler/dcc", ["test", "-v2", "--file-cmd"])
+
+      expect($mystring.include?("dcc @build/test/src/main.o.file")).to be == true
+      expect($mystring.include?("dar @build/testLib_dcc_test/libdcc.a.file")).to be == true
+      expect($mystring.include?("dcc @build/test/dcc.elf.file")).to be == true
+
+      expect(File.exist?("spec/testdata/compiler/dcc/build/test/src/main.o.file")).to be == true
+      expect(File.exist?("spec/testdata/compiler/dcc/build/testLib_dcc_test/libdcc.a.file")).to be == true
+      expect(File.exist?("spec/testdata/compiler/dcc/build/test/dcc.elf.file")).to be == true
+
+      expect(ExitHelper.exit_code).to be == 0
+    end
+  end
+
   it 'dcc deps - regular' do
     path = "spec/testdata/compiler/dcc"
     incList = Blocks::Compile.read_depfile("#{path}/dep.d", "DIR", false)

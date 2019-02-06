@@ -43,4 +43,15 @@ Project {
   CustomConfig "quo-te:d" {
     DefaultToolchain GCC
   }
+  
+  ExecutableConfig cuda {
+    Files "**/*.cpp"
+    IncludeDir "include"
+    IncludeDir "lib1/include"
+    IncludeDir "lib2/include"
+    Dependency lib1, config: cuda
+    Dependency lib2, config: test
+    DefaultToolchain GCC
+  }
+  
 }

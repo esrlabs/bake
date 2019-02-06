@@ -34,7 +34,9 @@ module Bake
       :COMPILE_FLAGS => "-c ",
       :DEP_FLAGS => "-MD -MF",
       :DEP_FLAGS_SPACE => true,
-      :PREPRO_FLAGS => "-E -P"
+      :PREPRO_FLAGS => "-E -P",
+      :FILE_COMMAND => "@",
+      :CUDA_PREFIX => "-Xcompiler"
     })
 
     GCCChain[:COMPILER][:C] = Utils.deep_copy(GCCChain[:COMPILER][:CPP])
@@ -47,10 +49,12 @@ module Bake
 
     GCCChain[:ARCHIVER][:COMMAND] = "ar"
     GCCChain[:ARCHIVER][:ARCHIVE_FLAGS] = "-rc"
-
+    GCCChain[:ARCHIVER][:FILE_COMMAND] = "@"
+ 
     GCCChain[:LINKER][:COMMAND] = "g++"
     GCCChain[:LINKER][:SCRIPT] = "-T"
     GCCChain[:LINKER][:SCRIPT_SPACE] = (Bake::Utils::OS.name == "Mac" ? false : true)
+    GCCChain[:LINKER][:FILE_COMMAND] = "@"
 
     GCCChain[:LINKER][:USER_LIB_FLAG] = "-l:"
     GCCChain[:LINKER][:EXE_FLAG] = "-o"

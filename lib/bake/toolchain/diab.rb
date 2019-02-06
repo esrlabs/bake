@@ -17,7 +17,8 @@ module Bake
       :COMPILE_FLAGS => "-c",
       :DEP_FLAGS => "-Xmake-dependency=5 -Xmake-dependency-savefile=",
       :DEP_FLAGS_SPACE => false,
-      :PREPRO_FLAGS => "-P"
+      :PREPRO_FLAGS => "-P",
+      :FILE_COMMAND => "@"
     })
 
     DiabChain[:COMPILER][:CPP] = Utils.deep_copy(DiabChain[:COMPILER][:C])
@@ -32,7 +33,8 @@ module Bake
 
     DiabChain[:ARCHIVER][:COMMAND] = "dar"
     DiabChain[:ARCHIVER][:ARCHIVE_FLAGS] = "-rc"
-
+    DiabChain[:ARCHIVER][:FILE_COMMAND] = "@"
+      
     DiabChain[:LINKER][:COMMAND] = "dcc"
     DiabChain[:LINKER][:SCRIPT] = "-Wm"
     DiabChain[:LINKER][:USER_LIB_FLAG] = "-l:"
@@ -41,6 +43,7 @@ module Bake
     DiabChain[:LINKER][:LIB_PATH_FLAG] = "-L"
     DiabChain[:LINKER][:MAP_FILE_FLAG] = "-Wl,-m6" # no map file if this string is empty, otherwise -Wl,-m6>abc.map
     DiabChain[:LINKER][:OUTPUT_ENDING] = ".elf"
+    DiabChain[:LINKER][:FILE_COMMAND] = "@"
 
     diabCompilerErrorParser =                   DiabCompilerErrorParser.new
     DiabChain[:COMPILER][:C][:ERROR_PARSER] =   diabCompilerErrorParser

@@ -61,6 +61,8 @@ module Bake
       puts " --nb                     Suppresses the lines \"**** Building x of y: name (config) ****"
       puts " --crc32 <string>         Calulates the CRC32 of string (0x4C11DB7, init 0, final xor 0, input and result not reflected), used for Uid variable calculation"
       puts " --diab-case-check        When compiling with DCC, this switches to the case check on Windows machines. No actual compilation is done."
+      puts " --file-cmd               Writes arguments into a file and hands it over the compiler/archiver/linker. Works only for supported compilers."
+      puts " --merge-inc              Merges includes together, so the compiler gets only one include directory."
       puts " --link-2-17              DEPRECATED: Using link order of libraries which was used until bake 2.17"
       puts " --build_                 DEPRECATED: build directories will be build_<name> instead of build/<name>"
       puts " --version                Print version."

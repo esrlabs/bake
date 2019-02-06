@@ -23,7 +23,7 @@ module Bake
     attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads, :skipBuildingLine # Boolean
-    attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse, :caseSensitivityCheck # Boolean
+    attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse, :caseSensitivityCheck, :fileCmd, :mergeInc # Boolean
     attr_reader :threads, :socket # Fixnum
     attr_reader :vars, :include_filter_args # map
     attr_reader :verbose
@@ -88,6 +88,8 @@ module Bake
       @syncedOutput = false
       @diabCaseCheck = false
       @defines = []
+      @fileCmd = false
+      @mergeInc = false
 
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| @main_dir = x                           })
@@ -121,7 +123,8 @@ module Bake
       add_option(["--set"                                        ], lambda { |x| set_set(x)                              })
       add_option(["-nb"                                          ], lambda {     @skipBuildingLine = true                })
       add_option(["--no-case-check"                              ], lambda {     @caseSensitivityCheck = false           })
-
+      add_option(["--file-cmd"                                   ], lambda {     @fileCmd = true                         })
+      add_option(["--merge-inc"                                   ], lambda {    @mergeInc = true                        })
       add_option(["--clobber"                                    ], lambda {     @clobber = true; @clean = true          })
       add_option(["--ignore-cache",       "--ignore_cache"       ], lambda {     @nocache = true                         })
       add_option(["-j",                   "--threads"            ], lambda { |x, dummy1, dummy2| set_threads(x)          })

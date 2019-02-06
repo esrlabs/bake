@@ -118,10 +118,10 @@ module Bake
 
           cmd = Utils.flagSplit(linker[:PREFIX], true)
           cmd += Utils.flagSplit(linker[:COMMAND], true) # g++
+          onlyCmd = cmd
+
           cmd += linker[:MUST_FLAGS].split(" ")
           cmd += Bake::Utils::flagSplit(linker[:FLAGS],true)
-
-
           cmd << linker[:EXE_FLAG]
           if linker[:EXE_FLAG_SPACE]
             cmd << @exe_name
@@ -148,11 +148,17 @@ module Bake
 
           mapfileStr = (@mapfile and linker[:MAP_FILE_PIPE]) ? " >#{@mapfile}" : ""
 
+          realCmd = Bake.options.fileCmd ? calcFileCmd(cmd, onlyCmd, @exe_name, linker) : cmd
+            
           # pre print because linking can take much time
-          cmdLinePrint = cmd.dup
-          outPipe = (@mapfile and linker[:MAP_FILE_PIPE]) ? "#{@mapfile}" : nil
-          cmdLinePrint << "> #{outPipe}" if outPipe
-
+          if Bake.options.fileCmd
+            cmdLinePrint = realCmd
+          else
+            cmdLinePrint = cmd.dup
+            outPipe = (@mapfile and linker[:MAP_FILE_PIPE]) ? "#{@mapfile}" : nil
+            cmdLinePrint << "> #{outPipe}" if outPipe
+          end
+          
           if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
             success = true
           else
@@ -164,7 +170,7 @@ module Bake
             BlockBase.writeCmdLineFile(cmd, cmdLineFile)
             success = true
             consoleOutput = ""
-            success, consoleOutput = ProcessHelper.run(cmd, false, false, outPipe) if !Bake.options.dry
+            success, consoleOutput = ProcessHelper.run(realCmd, false, false, outPipe) if !Bake.options.dry
             process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, reason, success)
 
             check_config_file()
