@@ -157,6 +157,7 @@ z-index: 100;
 &nbsp; &nbsp; <span class="help" onMouseover="showToolchainProject()" onMouseout="notip()">Toolchain</span> <span class="help" onMouseover="showOutputDir()" onMouseout="notip()">outputDir</span>: &#60;dir&#62; {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C,
                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
+                                         <span class="help" onMouseover="showCuda()" onMouseout="notip()">cuda</span>: true|false,
                                          <span class="help" onMouseover="showPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
@@ -486,6 +487,12 @@ function showOutputDir() {
     'To avoid this magic, use something like this: <br>'+
     '<i> &nbsp; &nbsp; IncludeDir "./abc/include"</i><br>'
   ddrivetip("outputdir", "No","0..1","-",str)
+}
+
+function showCuda() {
+  str = 'Enables Cuda hack.<br>'+
+    'Adds some prefixes in front of dependency flags.'
+  ddrivetip("cuda", "No","0..1","false",str)
 }
 
 function showExtends() {

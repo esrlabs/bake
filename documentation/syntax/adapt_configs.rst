@@ -323,7 +323,7 @@ Example (the configs of the Adapt are applied if the main config name starts wit
 Lists
 ---------
 
-Additionally to the wildcards, several strings can be specified.
+Additionally to the wildcards, a list of projects/configs can be specified separared with ";".
 
 Example:
 
