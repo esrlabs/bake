@@ -49,7 +49,7 @@ module Bake
 
     GCCChain[:ARCHIVER][:COMMAND] = "ar"
     GCCChain[:ARCHIVER][:ARCHIVE_FLAGS] = "-rc"
-    GCCChain[:ARCHIVER][:FILE_COMMAND] = "@"
+    GCCChain[:ARCHIVER][:FILE_COMMAND] = (Bake::Utils::OS.name == "Mac" ? "" : "@")
  
     GCCChain[:LINKER][:COMMAND] = "g++"
     GCCChain[:LINKER][:SCRIPT] = "-T"

@@ -953,7 +953,8 @@ describe "Adapt" do
       "-w", "spec/testdata/root1",
       "-w", "spec/testdata/root2",
       "-w", "spec/testdata/adapt/adapt",
-      "--adapt", "list"
+      "--adapt", "list",
+      "--adapt", "spec/testdata/root1/main/NoLinkerScript.adapt"
       ])
 
     expect($mystring.include?("adapt_lib1_test_12345789ACDEFHHIJK_adapt")).to be == true
