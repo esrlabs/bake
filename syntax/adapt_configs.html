@@ -101,6 +101,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#wildcards">Wildcards</a></li>
+<li><a class="reference internal" href="#lists">Lists</a></li>
 </ul>
 </li>
 </ul>
@@ -392,6 +393,18 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
 <p>Example (the configs of the Adapt are applied if the main config name starts with “UnitTest”):</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt mainConfig: &quot;UnitTest*&quot; {
   ...
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="lists">
+<h2>Lists<a class="headerlink" href="#lists" title="Permalink to this headline">¶</a></h2>
+<p>Additionally to the wildcards, a list of projects/configs can be specified separared with “;”.</p>
+<p>Example:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt mainProject: &quot;projA;projB&quot;, mainConfig: &quot;UnitTest*;SomeOther&quot; ... {
+  SomeConfig &quot;libA;libX*&quot;, project: &quot;can*;*lin&quot; ... {
+    ....
+  }
 }
 </pre></div>
 </div>
