@@ -213,7 +213,7 @@ module Bake
               end
             end
           end
-          if @block.tcs[:CUDA]
+          if compiler[:CUDA]
             if compiler[:CUDA_PREFIX] == ""
               Bake.formatter.printWarning("Warning: Cuda not yet supported by this toolchain.")
             else
@@ -662,7 +662,7 @@ module Bake
             idir = File.expand_path(idir, @projectDir) if !File.is_absolute?(idir)
             FileUtils.cp_r(Dir.glob(idir+"/*"), mdir)
           end
-          @include_list = [mdir]
+          @include_list = [@block.output_dir+"/mergedIncludes"]
         end 
 
         @include_array = {}

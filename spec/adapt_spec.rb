@@ -948,6 +948,22 @@ describe "Adapt" do
     expect(ExitHelper.exit_code).to be == 0
   end
 
+  it 'adapt list' do
+    Bake.startBake("root1/main", ["test",
+      "-w", "spec/testdata/root1",
+      "-w", "spec/testdata/root2",
+      "-w", "spec/testdata/adapt/adapt",
+      "--adapt", "list"
+      ])
+
+    expect($mystring.include?("adapt_lib1_test_12345789ACDEFHHIJK_adapt")).to be == true
+    expect($mystring.include?("adapt_lib2_test_12345789ACDEFHHI_adapt")).to be == true
+    expect($mystring.include?("adapt_main_test_12345789ACDEFH_adapt")).to be == true
+
+    expect(ExitHelper.exit_code).to be == 0
+  end
+
+
 end
 
 end

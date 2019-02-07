@@ -2,6 +2,7 @@ Collection gaga {
   Project "lib*", config: "*"
   Project main, config: test
   Exclude lib1, config: "*"
+  Exclude "*", config: "cuda"
 }
 
 Collection gugu {
@@ -27,6 +28,7 @@ Collection error {
 Collection Part1 {
   Project main, config: test
   Exclude lib1, config: "*"
+  Exclude "*", config: "cuda"
 }
 
 Collection Part2 {
@@ -41,6 +43,7 @@ Collection Part3 {
 
 Collection Combined {
   Project "lib1", config: "*"
+  Exclude "*", config: "cuda"
   Exclude main, config: test
   SubCollection Part2
   SubCollection Part3

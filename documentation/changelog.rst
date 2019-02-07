@@ -1,9 +1,10 @@
 Changelog
 =========
 
-February 6, 2019 - bake-toolkit 2.50.0
+February 7, 2019 - bake-toolkit 2.50.0
     * Added: command line option "--merge-inc" which copies all include files into one temprary folder and invokes the compiler with just one include path.
     * Added: command line option "--file-cmd" which writes all command line arguments into a file and hands it over to the compiler (with "@" in gcc and dcc).
+    * Added: "adapt" supports now lists of projects/configs (additionally to wildcards), separated with ";".
     * Added: added Cuda support for GCC toolchain (experimental)
 
 January 23, 2019 - bake-toolkit 2.49.0

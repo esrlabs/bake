@@ -319,3 +319,18 @@ Example (the configs of the Adapt are applied if the main config name starts wit
     Adapt mainConfig: "UnitTest*" {
       ...
     }
+
+Lists
+---------
+
+Additionally to the wildcards, several strings can be specified.
+
+Example:
+
+.. code-block:: text
+
+    Adapt mainProject: "projA;projB", mainConfig: "UnitTest*;SomeOther" ... {
+      SomeConfig "libA;libX*", project: "can*;*lin" ... {
+        ....
+      }
+    }

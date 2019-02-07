@@ -88,25 +88,32 @@ module Bake
       # check if config has to be manipulated
       @adaptConfigs.each do |c|
 
-      if isMain
-        @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
-        @mainProjectName = config.parent.name
-        @mainConfigName = config.name
-      end
+        if isMain
+          @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
+          @mainProjectName = config.parent.name
+          @mainConfigName = config.name
+        end
 
-      projPattern = /\A#{c.project.gsub("*", "(\\w*)")}\z/
-      confPattern = /\A#{c.name.gsub("*", "(\\w*)")}\z/
+        projSplitted = c.project.split(";")
+        confSplitted = c.name.split(";")
+        projPatterns = projSplitted.map { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ }
+        confPatterns = confSplitted.map { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ } 
 
-       if projPattern.match(config.parent.name) or (projName == Bake.options.main_project_name and c.project == "__MAIN__") or c.project == "__ALL__"
-          if confPattern.match(config.name) or (isMain and c.name == "__MAIN__") or c.name == "__ALL__"
+        if projPatterns.any? {|p| p.match(config.parent.name) } \
+          || (projName == Bake.options.main_project_name and projSplitted.any? {|p| p == "__MAIN__"}) \
+          || projSplitted.any? {|p| p == "__ALL__"}
+            
+          if confPatterns.any? {|p| p.match(config.name)} \
+            || (isMain and confSplitted.any? {|p| p == "__MAIN__"}) \
+            || confSplitted.any? {|p| p == "__ALL__"}
 
-            conditionProjPattern = /\A#{c.parent.mainProject.gsub("*", "(\\w*)")}\z/
-            conditionConfPattern = /\A#{c.parent.mainConfig.gsub("*", "(\\w*)")}\z/
+            conditionProjPattern = c.parent.mainProject.split(";").map { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ }
+            conditionConfPattern = c.parent.mainConfig.split(";").map { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ }
 
             adaptCondition = (c.parent.toolchain == ""   || c.parent.toolchain == @defaultToolchainName) &&
               (c.parent.os == ""          || c.parent.os == Utils::OS.name) &&
-              (c.parent.mainProject == "" || !conditionProjPattern.match(@mainProjectName).nil?) &&
-              (c.parent.mainConfig ==  "" || !conditionConfPattern.match(@mainConfigName).nil?)
+              (c.parent.mainProject == "" || conditionProjPattern.any? {|p| p.match(@mainProjectName)}) &&
+              (c.parent.mainConfig ==  "" || conditionConfPattern.any? {|p| p.match(@mainConfigName)})
 
             invertLogic = (Bake::Metamodel::Unless === c.parent)
             next if (adaptCondition && invertLogic) || (!adaptCondition && !invertLogic)

@@ -13,9 +13,9 @@ Project {
   LibraryConfig cuda {
     Files "**/*.cpp"
     IncludeDir "include"
-    Toolchain cuda: true {
-      Compiler CPP, command: "nvcc"
-      Compiler C, command: "nvcc"
+    Toolchain {
+      Compiler CPP, command: "nvcc", cuda: true
+      Compiler C, command: "nvcc", cuda: true
     }
   }
 

@@ -1,0 +1,144 @@
+Adapt {
+    ExecutableConfig __ALL__, project: __ALL__, type: extend {
+      PostSteps {
+        CommandLine "echo adapt_$(ProjectName)_$(ConfigName)_$(LIST_ADAPT)_adapt"
+      }
+  }
+}
+
+###########################
+
+Adapt {
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)1"
+  }
+}
+
+###########################
+
+Adapt mainProject: "*" {
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)2"
+  }
+}
+
+Adapt mainProject: "ma*" {
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)3"
+  }
+}
+
+Adapt mainProject: "bla;main" {
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)4"
+  }
+}
+
+Adapt mainProject: "mai*;bla" {
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)5"
+  }
+}
+
+Adapt mainProject: "mai;bla" {
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)6"
+  }
+}
+
+###########################
+
+Adapt mainConfig: "*" {
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)7"
+  }
+}
+
+Adapt mainConfig: "te*" {
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)8"
+  }
+}
+
+Adapt mainConfig: "bla;test" {
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)9"
+  }
+}
+
+Adapt mainConfig: "tes*;bla" {
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)A"
+  }
+}
+
+Adapt mainConfig: "tes;bla" {
+    ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)B"
+  }
+}
+
+###########################
+
+Adapt {
+    ExecutableConfig "*", project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)C"
+  }
+}
+
+Adapt {
+    ExecutableConfig "te*", project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)D"
+  }
+}
+
+Adapt  {
+    ExecutableConfig "bla;test", project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)E"
+  }
+}
+
+Adapt {
+    ExecutableConfig "tes*;bla", project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)F"
+  }
+}
+
+Adapt  {
+    ExecutableConfig "tes;bla", project: __MAIN__, type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)G"
+  }
+}
+
+
+###########################
+
+Adapt {
+    ExecutableConfig __ALL__, project: "*", type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)H"
+  }
+}
+
+Adapt {
+    ExecutableConfig __ALL__, project: "li*", type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)I"
+  }
+}
+
+Adapt  {
+    ExecutableConfig __ALL__, project: "bla;lib1", type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)J"
+  }
+}
+
+Adapt {
+    ExecutableConfig __ALL__, project: "lib1*;bla", type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)K"
+  }
+}
+
+Adapt  {
+    ExecutableConfig __MAIN__, project: "lib;bla", type: extend {
+      Set LIST_ADAPT, value: "$(LIST_ADAPT)L"
+  }
+}

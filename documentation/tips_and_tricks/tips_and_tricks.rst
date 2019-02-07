@@ -10,6 +10,7 @@ Additional features
     dot
     qac
     bakeclean
+    cuda
 
 
 Unnecessary includes

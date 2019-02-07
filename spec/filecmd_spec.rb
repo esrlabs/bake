@@ -18,11 +18,11 @@ describe "FileCmd" do
 
     expect($mystring.include?("g++ -c -MD -MF build/test_main_test/src/lib2.d -Iinclude -o build/test_main_test/src/lib2.o src/lib2.cpp")).to be == true
     expect($mystring.include?("ar -rc build/test_main_test/liblib2.a build/test_main_test/src/lib2.o")).to be == true
-    expect($mystring.include?("g++ -nostdlib -o build/test/main.exe build/test/src/main.o -T ../../root2/lib2/ls/linkerscript.dld ../lib1/build/test_main_test/liblib1.a ../../root2/lib2/build/test_main_test/liblib2.a")).to be == true
+    expect($mystring.include?("g++ -nostdlib -o build/test/main#{Bake::Toolchain.outputEnding} build/test/src/main.o -T ../../root2/lib2/ls/linkerscript.dld ../lib1/build/test_main_test/liblib1.a ../../root2/lib2/build/test_main_test/liblib2.a")).to be == true
 
     expect(File.exist?("spec/testdata/root2/lib2/build/test_main_test/src/lib2.o.file")).to be == false
     expect(File.exist?("spec/testdata/root2/lib2/build/test_main_test/liblib2.a.file")).to be == false
-    expect(File.exist?("spec/testdata/root1/main/build/test/main.exe.file")).to be == false
+    expect(File.exist?("spec/testdata/root1/main/build/test/main#{Bake::Toolchain.outputEnding}.file")).to be == false
     
     expect(ExitHelper.exit_code).to be == 0
   end
@@ -33,11 +33,11 @@ describe "FileCmd" do
 
     expect($mystring.include?("g++ @build/test_main_test/src/lib2.o.file")).to be == true
     expect($mystring.include?("ar @build/test_main_test/liblib2.a.file")).to be == true
-    expect($mystring.include?("g++ @build/test/main.exe.file")).to be == true
+    expect($mystring.include?("g++ @build/test/main#{Bake::Toolchain.outputEnding}.file")).to be == true
 
     expect(File.exist?("spec/testdata/root2/lib2/build/test_main_test/src/lib2.o.file")).to be == true
     expect(File.exist?("spec/testdata/root2/lib2/build/test_main_test/liblib2.a.file")).to be == true
-    expect(File.exist?("spec/testdata/root1/main/build/test/main.exe.file")).to be == true
+    expect(File.exist?("spec/testdata/root1/main/build/test/main#{Bake::Toolchain.outputEnding}.file")).to be == true
 
     expect(ExitHelper.exit_code).to be == 0
   end
@@ -52,4 +52,3 @@ describe "FileCmd" do
 end
 
 end
-

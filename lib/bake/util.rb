@@ -45,7 +45,6 @@ def integrateToolchain(tcs, toolchain)
 
   tcs[:KEEP_FILE_ENDINGS] = @mainConfig.defaultToolchain.keepObjFileEndings
   tcs[:OUTPUT_DIR] = toolchain.outputDir if toolchain.outputDir != ""
-  tcs[:CUDA] = toolchain.cuda if toolchain.cuda == true
   integrateLinker(tcs, toolchain.linker) if toolchain.respond_to?"linker"
   integrateArchiver(tcs, toolchain.archiver)
   toolchain.compiler.each do |c|
@@ -79,6 +78,9 @@ def integrateCompiler(tcs, compiler, type)
   return tcs unless compiler
   if compiler.respond_to?("command") && compiler.command != ""
     tcs[:COMPILER][type][:COMMAND] = compiler.command
+  end
+  if compiler.respond_to?("cuda") && compiler.command != ""
+    tcs[:COMPILER][type][:CUDA] = compiler.cuda
   end
   if compiler.respond_to?("prefix") && compiler.prefix != ""
     tcs[:COMPILER][type][:PREFIX] = compiler.prefix
