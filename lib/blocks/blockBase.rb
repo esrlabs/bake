@@ -197,6 +197,14 @@ module Bake
         end
         args = cmd.drop(onlyCmd.length)
         argsFlat = args.join(' ')
+
+        splittedArgs = argsFlat.split("\"")
+        argsFlat = ""
+        splittedArgs.each_with_index do |s,i|
+          argsFlat << s
+          argsFlat << (i%2 == 0 ? "\"\\\"" : "\\\"\"") if i != splittedArgs.length - 1 
+        end
+
         cmdFile = orgOut + ".file" + postfix
         cmdFileLong = File.expand_path(cmdFile, @projectDir)
         FileUtils.mkdir_p(File.dirname(cmdFileLong))

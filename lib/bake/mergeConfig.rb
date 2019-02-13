@@ -39,6 +39,13 @@ module Bake
 
 
     def replace()
+      if Metamodel::BaseConfig_INTERNAL === @child &&
+        Metamodel::BaseConfig_INTERNAL ===  @parent
+        if @child.mergeInc != ""
+          @parent.mergeInc = @child.mergeInc
+        end
+      end
+
       @child.class.ecore.eAllReferences.each do |f|
         next unless @parent.class.ecore.eAllReferences.include?f
         next unless f.containment
@@ -78,6 +85,13 @@ module Bake
 
     def removeChilds(childElem, parentElem)
       return if childElem.nil? or parentElem.nil?
+      
+      if Metamodel::BaseConfig_INTERNAL === childElem &&
+        Metamodel::BaseConfig_INTERNAL ===  parentElem
+        if childElem.mergeInc == parentElem.mergeInc
+          parentElem.mergeInc = ""
+        end
+      end
 
       childElem.class.ecore.eAllReferences.each do |f|
         next unless f.containment
@@ -128,6 +142,13 @@ module Bake
      end
 
      def extend(child, parent, push_front)
+       if Metamodel::BaseConfig_INTERNAL === child &&
+         Metamodel::BaseConfig_INTERNAL ===  parent
+         if child.mergeInc != ""
+           parent.mergeInc = child.mergeInc
+         end
+       end
+
        (parent.class.ecore.eAllReferences & child.class.ecore.eAllReferences).each do |f|
          next unless f.containment
          parentData = parent.getGeneric(f.name)

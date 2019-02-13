@@ -612,9 +612,14 @@ module Bake
         @blocksRead << block
         block.config.baseElement.each do |be|
           if Metamodel::IncludeDir === be
+            
+            
             if be.inherit == true || block == @block
+              
+              
               mappedInc = mapInclude(be, block)
               @include_list << mappedInc
+              @include_merge[mappedInc] = block.config.mergeInc if !@include_merge.has_key?(mappedInc)
               @system_includes << mappedInc if be.system
             end
           elsif Metamodel::Dependency === be
@@ -628,6 +633,7 @@ module Bake
 
         @blocksRead = Set.new
         @include_list = []
+        @include_merge = {}
         @system_includes = Set.new
         calcIncludesInternal(@block) # includeDir and child dependencies with inherit: true
 
@@ -642,6 +648,7 @@ module Bake
               elsif inc.inject == "back" || inc.infix == "back"
                 mappedInc = mapInclude(inc, b)
                 @include_list << mappedInc
+                @include_merge[mappedInc] = b.config.mergeInc if !@include_merge.has_key?(mappedInc)
                 @system_includes << mappedInc if inc.system
               end
             end
@@ -654,16 +661,31 @@ module Bake
       end
 
       def prepareIncludes
-        if Bake.options.mergeInc
-          mdir = File.expand_path(@block.output_dir+"/mergedIncludes", @projectDir)
-          @include_list.each do |idir|
-            FileUtils.mkdir_p(mdir)
-            idir = idir.to_s
-            idir = File.expand_path(idir, @projectDir) if !File.is_absolute?(idir)
-            FileUtils.cp_r(Dir.glob(idir+"/*"), mdir)
+        mergeCounter = 0
+        inmerge = false
+        mdir = nil
+        include_list_new = []
+        @include_list.reverse.each do |idir|
+          idirs = idir.to_s
+          idirs = File.expand_path(idirs, @projectDir) if !File.is_absolute?(idirs)
+          tomerge = (@include_merge[idir] == "yes" || (@include_merge[idir] == "" && Bake.options.mergeInc))
+          if (tomerge)
+            if (!inmerge)
+              mergeCounter += 1
+              mdir = File.expand_path(@block.output_dir+"/mergedIncludes#{mergeCounter}", @projectDir)
+              FileUtils.mkdir_p(mdir)
+              inmerge = true
+            end
+            FileUtils.cp_r(Dir.glob(idirs+"/*"), mdir)
+            include_list_new << (@block.output_dir+"/mergedIncludes#{mergeCounter}")
+          else
+            if (inmerge)
+              inmerge = false
+            end
+            include_list_new << idir
           end
-          @include_list = [@block.output_dir+"/mergedIncludes"]
-        end 
+        end
+        @include_list = include_list_new.uniq.reverse
 
         @include_array = {}
         [:CPP, :C, :ASM].each do |type|

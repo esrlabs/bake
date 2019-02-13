@@ -1,6 +1,10 @@
 Changelog
 =========
 
+February 7, 2019 - bake-toolkit 2.50.x
+    * Bugfix: include folders merged by "--merge-inc" were merged in opposite order
+    * Added: a config can have a "mergeInc" option which can be set to "yes" or "no". If unset, the "--merge-inc" option will be taken into account.
+
 February 7, 2019 - bake-toolkit 2.50.0
     * Added: command line option "--merge-inc" which copies all include files into one temprary folder and invokes the compiler with just one include path.
     * Added: command line option "--file-cmd" which writes all command line arguments into a file and hands it over to the compiler (with "@" in gcc and dcc).

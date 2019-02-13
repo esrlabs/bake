@@ -46,6 +46,16 @@ describe "FileCmd" do
     expect(ExitHelper.exit_code).to be == 0
   end
 
+  it 'define comma with' do
+    Bake.startBake("filecmd/main", ["test", "--file-cmd"])
+    expect(ExitHelper.exit_code).to be == 0
+  end  
+
+  it 'define comma without' do
+    Bake.startBake("filecmd/main", ["test"])
+    expect(ExitHelper.exit_code).to be == 0
+  end  
+
   it 'keil not supported' do
     Bake.startBake("compiler/keil", ["test", "-v2", "--file-cmd"])
 

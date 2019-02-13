@@ -1,0 +1,23 @@
+Project {
+
+  LibraryConfig test1 {
+    Files "src/c1.cpp"
+    IncludeDir "include/c1", inherit: true
+  }
+
+  LibraryConfig test2, mergeInc: "no" {
+    Files "src/c2.cpp"
+    IncludeDir "include/c2", inherit: true
+  }
+
+  LibraryConfig test3, mergeInc: "yes" {
+    Files "src/c3.cpp"
+    IncludeDir "include/c3", inherit: true
+  }
+
+  LibraryConfig test4, mergeInc: "" {
+    Files "src/c4.cpp"
+    IncludeDir "include/c4", inherit: true
+  }
+  
+}

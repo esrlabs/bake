@@ -1,0 +1,5 @@
+Adapt {
+  CustomConfig "test2", project: lib, type: replace, mergeInc: "yes"
+  CustomConfig "test3", project: lib, type: replace, mergeInc: "yes"
+  CustomConfig "test4", project: lib, type: replace, mergeInc: "yes"
+}

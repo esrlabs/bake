@@ -1,0 +1,3 @@
+Adapt {
+  CustomConfig "*", project: main, type: replace, mergeInc: "yes"
+}

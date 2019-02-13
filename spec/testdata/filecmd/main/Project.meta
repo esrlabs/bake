@@ -1,0 +1,11 @@
+Project {
+  LibraryConfig test {
+    Files "src.cpp"
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Define "HEADER1=\"header1.h\""
+      }
+    }
+  }
+}
+

@@ -67,6 +67,7 @@ z-index: 100;
               <span class="hideRadio" onMouseover="showLibraryConfig()" onMouseout="notip()" id="libraryConfig">LibraryConfig</span> |
               <span class="hideRadio" onMouseover="showCustomConfig()" onMouseout="notip()" id="customConfig">CustomConfig</span> &#60;name&#62;,
               <span class="help" onMouseover="showExtends()" onMouseout="notip()">extends</span>: &#60;parent(s)&#62;,
+              <span class="help" onMouseover="showMergeInc()" onMouseout="notip()">mergeInc</span>: yes|no,
               <span class="help" onMouseover="showPrivate()" onMouseout="notip()">private</span>: true|false {<br><br>
 
               <span><span style="background-color:#EEEEEE;" class="show">
@@ -501,6 +502,13 @@ function showExtends() {
 
 function showPrivate() {
     ddrivetip("private", "No","0..1","false","If true, the config cannot be referenced directly outside of this project.")
+}
+
+function showMergeInc() {
+    ddrivetip("mergeInc", "No","0..1","-",
+        "If set to \"yes\", the IncludeDirs of this config will merged.<br>"+
+        "If set to \"no\", the IncludeDirs will not be merged.<br>"+
+        "If unset, merging can be controlled by bake command line argument --merge-inc.")
 }
 
 function showFiles() {
