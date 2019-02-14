@@ -673,10 +673,11 @@ module Bake
             if (!inmerge)
               mergeCounter += 1
               mdir = File.expand_path(@block.output_dir+"/mergedIncludes#{mergeCounter}", @projectDir)
+              FileUtils.rm_rf(mdir)
               FileUtils.mkdir_p(mdir)
               inmerge = true
             end
-            FileUtils.cp_r(Dir.glob(idirs+"/*"), mdir)
+            FileUtils.cp_r(Dir.glob(idirs+"/*"), mdir, :preserve => true)
             include_list_new << (@block.output_dir+"/mergedIncludes#{mergeCounter}")
           else
             if (inmerge)
