@@ -23,8 +23,6 @@ describe "FileCmd" do
     expect(File.exist?("spec/testdata/root2/lib2/build/test_main_test/src/lib2.o.file")).to be == false
     expect(File.exist?("spec/testdata/root2/lib2/build/test_main_test/liblib2.a.file")).to be == false
     expect(File.exist?("spec/testdata/root1/main/build/test/main#{Bake::Toolchain.outputEnding}.file")).to be == false
-    
-    expect(ExitHelper.exit_code).to be == 0
   end
 
 
@@ -42,8 +40,6 @@ describe "FileCmd" do
       expect(File.exist?("spec/testdata/root2/lib2/build/test_main_test/liblib2.a.file")).to be == true
     end
     expect(File.exist?("spec/testdata/root1/main/build/test/main#{Bake::Toolchain.outputEnding}.file")).to be == true
-
-    expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'define comma with' do

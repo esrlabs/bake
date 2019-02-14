@@ -960,8 +960,6 @@ describe "Adapt" do
     expect($mystring.include?("adapt_lib1_test_12345789ACDEFHHIJK_adapt")).to be == true
     expect($mystring.include?("adapt_lib2_test_12345789ACDEFHHI_adapt")).to be == true
     expect($mystring.include?("adapt_main_test_12345789ACDEFH_adapt")).to be == true
-
-    expect(ExitHelper.exit_code).to be == 0
   end
 
 

@@ -1,6 +1,6 @@
 Adapt {
     ExecutableConfig __ALL__, project: __ALL__, type: extend {
-      PostSteps {
+      PreSteps {
         CommandLine "echo adapt_$(ProjectName)_$(ConfigName)_$(LIST_ADAPT)_adapt"
       }
   }

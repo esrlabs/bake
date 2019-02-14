@@ -10,6 +10,11 @@ environment:
     - ruby_version: "25"
 
 install:
+  - echo %RUBY_VERSION%
+  - echo testtest
+  - echo %ruby_version%
+  - if %ruby_version% == 25 echo das ist 25_1
+  - if %RUBY_VERSION% == 25 echo das ist 25_2
   - SET PATH=C:\Ruby%ruby_version%\bin;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;%PATH%
   - gem install rtext -v 0.9.0 --no-rdoc --no-ri
   - gem install rgen -v 0.8.2 --no-rdoc --no-ri
