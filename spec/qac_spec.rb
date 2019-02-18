@@ -129,8 +129,10 @@ describe "Qac" do
       expect($mystring.include?("spec/testdata/qac/main/include/A.h")).to be == true
       expect($mystring.include?("spec/testdata/qac/main/src/main.cpp")).to be == true
 
-      expect($mystring.include?("spec/testdata/qac/main/mock/src/mock.cpp")).to be == false
-      expect($mystring.include?("spec/testdata/qac/gtest/src/gtest.cpp")).to be == false
+      results = $mystring.split("bakeqac: printing results")[1]
+      
+      expect(results.include?("spec/testdata/qac/main/mock/src/mock.cpp")).to be == false
+      expect(results.include?("spec/testdata/qac/gtest/src/gtest.cpp")).to be == false
 
       expect($mystring.include?("doc: ")).to be == true
 

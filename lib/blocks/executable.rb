@@ -146,19 +146,15 @@ module Bake
           cmd += linker_libs_array
           cmd += Bake::Utils::flagSplit(linker[:LIB_POSTFIX_FLAGS],true) # "-Wl,--no-whole-archive "
 
-          mapfileStr = (@mapfile and linker[:MAP_FILE_PIPE]) ? " >#{@mapfile}" : ""
-
           realCmd = Bake.options.fileCmd ? calcFileCmd(cmd, onlyCmd, @exe_name, linker) : cmd
             
           # pre print because linking can take much time
-          if Bake.options.fileCmd
-            cmdLinePrint = realCmd
-          else
-            cmdLinePrint = cmd.dup
-            outPipe = (@mapfile and linker[:MAP_FILE_PIPE]) ? "#{@mapfile}" : nil
-            cmdLinePrint << "> #{outPipe}" if outPipe
-          end
-          
+          cmdLinePrint = Bake.options.fileCmd ? realCmd.dup : cmd.dup
+
+          # some mapfiles are printed in stdout
+          outPipe = (@mapfile and linker[:MAP_FILE_PIPE]) ? "#{@mapfile}" : nil
+          cmdLinePrint << "> #{outPipe}" if outPipe
+
           if cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile)
             success = true
           else
