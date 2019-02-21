@@ -668,7 +668,7 @@ module Bake
         @include_list.reverse.each do |idir|
           idirs = idir.to_s
           idirs = File.expand_path(idirs, @projectDir) if !File.is_absolute?(idirs)
-          tomerge = (@include_merge[idir] == "yes" || (@include_merge[idir] == "" && Bake.options.mergeInc))
+          tomerge = (@include_merge[idir] == "yes" || (@include_merge[idir] == "" && (Bake.options.mergeInc || (Bake.options.mergeIncMain && Bake.options.main_project_name == @projectName))))
           if (tomerge)
             if (!inmerge)
               mergeCounter += 1
@@ -677,7 +677,8 @@ module Bake
               FileUtils.mkdir_p(mdir)
               inmerge = true
             end
-            FileUtils.cp_r(Dir.glob(idirs+"/*"), mdir, :preserve => true)
+            toCopy = Dir.glob(idirs+"/*").reject { |file| f = file.split("/").last; f.start_with?(".") || f == "build" }
+            FileUtils.cp_r(toCopy, mdir, :preserve => true)
             include_list_new << (@block.output_dir+"/mergedIncludes#{mergeCounter}")
           else
             if (inmerge)

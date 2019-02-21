@@ -6,4 +6,10 @@ Project {
         Files "src/x.cpp"
     }
 
+    LibraryConfig test2 {
+        Dependency sub, config: testApplication2
+        IncludeDir "include", inherit: true
+        Files "src/y.cpp"
+    }
+
 }
