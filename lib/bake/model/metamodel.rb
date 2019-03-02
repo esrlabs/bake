@@ -148,7 +148,10 @@ module Bake
       class BaseElement < ModelElement
       end
 
-      class IncludeDir < BaseElement
+      class LibStuff < BaseElement
+      end
+
+      class IncludeDir < LibStuff
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'infix', String, :defaultValueLiteral => ""
         has_attr 'inject', String, :defaultValueLiteral => ""
@@ -156,8 +159,7 @@ module Bake
         has_attr 'system', Boolean, :defaultValueLiteral => "false"
       end
 
-      class LibStuff < BaseElement
-      end
+
 
       class ExternalLibrary < LibStuff
         has_attr 'name', String, :defaultValueLiteral => ""

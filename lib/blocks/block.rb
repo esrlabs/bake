@@ -23,7 +23,7 @@ module Bake
       @@threads = []
 
       attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :prebuild, :output_dir, :tcs
-      attr_accessor :visited, :inDeps, :result
+      attr_accessor :visited, :inDeps, :result, :bes
 
       def startupSteps
         @startupSteps ||= []
@@ -52,17 +52,13 @@ module Bake
       def dependencies
         @dependencies ||= []
       end
-
+      
       def childs
         @childs ||= []
       end
 
       def parents
         @parents ||= []
-      end
-
-      def depToBlock
-        @depToBlock ||= {}
       end
 
       def set_library(library)
@@ -81,8 +77,9 @@ module Bake
         @projectDir = config.get_project_dir
         @result = true
         @tcs = tcs
-
-        @lib_elements = Bake::LibElements.calcLibElements(self)
+        @bes = []
+        @lib_elements = []
+        #@lib_elements = Bake::LibElements.calcLibElements(self)
 
         calcOutputDir
       end

@@ -24,9 +24,9 @@ module Bake
           puts " BAKE_DEFINES"
           (@block.tcs[:COMPILER][:CPP][:DEFINES] + @block.tcs[:COMPILER][:C][:DEFINES] + @block.tcs[:COMPILER][:ASM][:DEFINES]).uniq.each { |s| puts "  #{s}" }
           puts " BAKE_DEPENDENCIES"
-          @block.childs.each { |dep| puts "  #{dep.projectName}" }
+          @block.dependencies.each { |dep| puts "  #{dep.projectName}" }
           puts " BAKE_DEPENDENCIES_FILTERED"
-          @block.childs.each { |dep| puts "  #{dep.projectName}" unless @projectName == dep.projectName or dep.projectName == "gmock" or dep.projectName == "gtest" }
+          @block.dependencies.each { |dep| puts "  #{dep.projectName}" unless @projectName == dep.projectName or dep.projectName == "gmock" or dep.projectName == "gtest" }
           puts "END_INFO"
         end
         return true

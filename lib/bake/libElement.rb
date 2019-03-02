@@ -27,9 +27,8 @@ module Bake
       @@linker_libs_array = []
       @@withpath = []
 
-      levels = @@linker[:LINK_ONLY_DIRECT_DEPS] ? 1 : -1
+      levels = @@linker[:LINK_ONLY_DIRECT_DEPS] ? 1 : 2#-1
       collect_recursive(block, levels)
-
       if Bake.options.oldLinkOrder
         if @@linker[:LIST_MODE] and not @@lib_path_set.empty?
           @@linker_libs_array << (@@linker[:LIB_PATH_FLAG] + @@lib_path_set.join(","));
@@ -75,11 +74,19 @@ module Bake
 
       prefix = nil
 
+      lib_elements = calcLibElements(block)
+      lib_elements += block.lib_elements unless block.lib_elements.nil?
+      
+      #lib_elements.each do |e|
+      #  puts e.value
+      #end
+      #exit(1)
+      
       if Bake.options.oldLinkOrder
         addOwnLib(block)
-        elems = block.lib_elements
+        elems = lib_elements
       else
-        elems = block.lib_elements.reverse
+        elems = lib_elements.reverse
       end
 
       elems.each do |elem|
@@ -120,13 +127,13 @@ module Bake
         when LibElement::DEPENDENCY
           if Blocks::ALL_BLOCKS.include?elem.value
             bb = Blocks::ALL_BLOCKS[elem.value]
-            collect_recursive(bb, levels-1)
+            #addOwnLib(bb)
+            collect_recursive(bb, levels-1) if levels == 2
           else
             # TODO: warning or error?
           end
         end
       end if levels != 0
-
       addOwnLib(block) if not Bake.options.oldLinkOrder
     end
 
@@ -134,7 +141,7 @@ module Bake
     def self.calcLibElements(block)
       lib_elements = [] # value = array pairs [type, name/path string]
 
-      block.config.libStuff.each do |l|
+      block.bes.each do |l|
 
         if (Metamodel::UserLibrary === l)
           ln = l.name

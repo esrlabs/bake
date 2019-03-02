@@ -27,6 +27,9 @@ module Bake
         def qname
           @qname ||= parent.name + "," + name
         end
+        def depInc
+          baseElement.find_all { |l| Dependency === l || IncludeDir === l}
+        end
         def dependency
           baseElement.find_all { |l| Dependency === l }
         end

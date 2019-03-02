@@ -40,7 +40,7 @@ end
 
 
 
-
+$tsum = 0 
 
 module Bake
 
@@ -60,10 +60,7 @@ module Bake
         @object_files = {}
         @system_includes = Set.new
 
-        calcFileTcs
-        calcIncludes
-        calcDefines # not for files with changed tcs
-        calcFlags   # not for files with changed tcs
+
       end
 
       def get_object_file(source)
@@ -408,9 +405,19 @@ module Bake
       end
 
       def execute
+
+        
         #Dir.chdir(@projectDir) do
 
-          SyncOut.mutex.synchronize do
+          return true if @config.files.empty?
+          
+        SyncOut.mutex.synchronize do
+
+          calcFileTcs
+          calcIncludes
+          calcDefines # not for files with changed tcs
+          calcFlags   # not for files with changed tcs
+        
             calcSources
             calcObjects
             prepareIncludes
@@ -610,21 +617,25 @@ module Bake
 
       def calcIncludesInternal(block)
         @blocksRead << block
-        block.config.baseElement.each do |be|
+        #puts block.bes.length
+        block.bes.each do |be|
           if Metamodel::IncludeDir === be
             
             
             if be.inherit == true || block == @block
+              #puts "FOUNDDDDDDDDDDD"
               
-              
-              mappedInc = mapInclude(be, block)
+              mappedInc = File.rel_from_to_project(@projectDir,be.name,false)  #mapInclude(be, block)
+              #puts mappedInc
               @include_list << mappedInc
               @include_merge[mappedInc] = block.config.mergeInc if !@include_merge.has_key?(mappedInc)
               @system_includes << mappedInc if be.system
             end
           elsif Metamodel::Dependency === be
-            childBlock = block.depToBlock[be.name + "," + be.config]
-            calcIncludesInternal(childBlock) if !@blocksRead.include?(childBlock)
+            #if @block == block
+              childBlock = Blocks::ALL_BLOCKS[be.name + "," + be.config]
+              calcIncludesInternal(childBlock) if !@blocksRead.include?(childBlock)
+            #end
           end
         end
       end
@@ -636,26 +647,7 @@ module Bake
         @include_merge = {}
         @system_includes = Set.new
         calcIncludesInternal(@block) # includeDir and child dependencies with inherit: true
-
-        @block.getBlocks(:parents).each do |b|
-          if b.config.respond_to?("includeDir")
-            include_list_front = []
-            b.config.includeDir.each do |inc|
-              if inc.inject == "front" || inc.infix == "front"
-                mappedInc = mapInclude(inc, b)
-                include_list_front << mappedInc
-                @system_includes << mappedInc if inc.system
-              elsif inc.inject == "back" || inc.infix == "back"
-                mappedInc = mapInclude(inc, b)
-                @include_list << mappedInc
-                @include_merge[mappedInc] = b.config.mergeInc if !@include_merge.has_key?(mappedInc)
-                @system_includes << mappedInc if inc.system
-              end
-            end
-            @include_list = include_list_front + @include_list
-          end
-        end
-
+        #exit(1)
         @include_list = @include_list.flatten.uniq
 
       end
