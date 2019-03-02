@@ -64,7 +64,7 @@ module Bake
       puts " --file-cmd               Writes arguments into a file and hands it over the compiler/archiver/linker. Works only for supported compilers."
       puts " --merge-inc              Merges includes together, so the compiler gets only one include directory (applies to all configs which mergeInc attribute is not set)."
       puts " --merge-inc-main         Same as --merge-inc, but does the merge only for the main project."
-      puts " --link-2-17              DEPRECATED: Using link order of libraries which was used until bake 2.17"
+      puts " --link-beta              Improved linking, order of libs changed. Experimental."
       puts " --build_                 DEPRECATED: build directories will be build_<name> instead of build/<name>"
       puts " --version                Print version."
       puts " --time                   Print elapsed time at the end."
