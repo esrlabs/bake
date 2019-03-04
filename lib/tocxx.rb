@@ -115,7 +115,7 @@ module Bake
 
     def addDependencies2(block, config)
       subDeps = []
-      config.libStuff.each do |dep|
+      config.depInc.each do |dep|
         if (Metamodel::Dependency === dep)
           @referencedConfigs[dep.name].each do |configRef|
             if configRef.name == dep.config
@@ -153,7 +153,7 @@ module Bake
     
     def addDependencies(block, config)
       
-      block.bes = block.config.libStuff#.each do |be|
+      block.bes = block.config.depInc#.each do |be|
     #    block.bes << be if Metamodel::IncludeDir === be || Metamodel::Dependency === be
     #  end
       
@@ -651,35 +651,23 @@ module Bake
           Bake.options.envToolchain = true if (basedOn.include?"_ENV")
 
           integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
-          #puts "A"
 
           # todo: cleanup this hack
           Bake.options.analyze = @defaultToolchain[:COMPILER][:CPP][:COMPILE_FLAGS].include?"analyze"
           Bake.options.eclipseOrder = @mainConfig.defaultToolchain.eclipseOrder
 
           createBaseTcsForConfig
-          #puts "B"
           substVars
-          #puts "C"
-
           createTcsForConfig
-          #puts "D"
-
-
           @@linkBlock = 0
-
           @prebuild = nil
           calcPrebuildBlocks if Bake.options.prebuild
-
           makeBlocks
-          #puts "E"
           makeGraph
-          #puts "F"
           makeIncs
-          #puts "F2"
-         # exit(1)
           makeDot if Bake.options.dot
           convert2bb
+
         ensure
           if Bake.options.show_includes || Bake.options.show_includes_and_defines
             Thread.current[:stdout] = orgStdout

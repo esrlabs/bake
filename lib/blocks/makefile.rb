@@ -24,7 +24,7 @@ module Bake
         calcCleanLine
         calcEnv
 
-        block.lib_elements << LibElement.new(LibElement::LIB_WITH_PATH, config.lib, @projectDir) if config.lib != ""
+        block.lib_elements << LibElement.new(LibElement::LIB_WITH_PATH, config.lib) if config.lib != ""
       end
 
       def calcEnv

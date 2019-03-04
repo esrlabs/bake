@@ -151,7 +151,7 @@ module Bake
       class LibStuff < BaseElement
       end
 
-      class IncludeDir < LibStuff
+      class IncludeDir < BaseElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'infix', String, :defaultValueLiteral => ""
         has_attr 'inject', String, :defaultValueLiteral => ""

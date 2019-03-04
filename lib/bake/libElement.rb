@@ -8,12 +8,11 @@ module Bake
     SEARCH_PATH = 4
     DEPENDENCY = 5
 
-    attr_reader :type, :value, :pdir
+    attr_reader :type, :value
 
-    def initialize(type, value, pdir)
+    def initialize(type, value)
       @type = type
       @value = value
-      @pdir = pdir
     end
   end
 
@@ -28,14 +27,14 @@ module Bake
       @@linker_libs_array = []
       @@withpath = []
 
-      levels = @@linker[:LINK_ONLY_DIRECT_DEPS] ? 1 : (Bake.options.oldLinkOrder ? -1 : 1)
+      levels = @@linker[:LINK_ONLY_DIRECT_DEPS] ? 1 : -1
       collect_recursive(block, levels)
-      @@source_libraries.reverse! if Bake.options.oldLinkOrder
-      @@lib_path_set.reverse! if Bake.options.oldLinkOrder
+      @@source_libraries.reverse!
+      @@lib_path_set.reverse!
       if @@linker[:LIST_MODE] and not @@lib_path_set.empty?
         @@linker_libs_array.unshift (@@linker[:LIB_PATH_FLAG] + @@lib_path_set.join(","));
       end
-      @@linker_libs_array.reverse!# if Bake.options.oldLinkOrder
+      @@linker_libs_array.reverse!
 
       return [@@source_libraries + @@withpath, @@linker_libs_array]
     end
@@ -43,7 +42,7 @@ module Bake
     def self.adaptPath(path, block, prefix)
       adaptedPath = path
       if not File.is_absolute?(path)
-        prefix = File.rel_from_to_project(@@projectDir, String === block ? block : block.projectDir)
+        prefix = File.rel_from_to_project(@@projectDir, block.projectDir)
         adaptedPath = prefix + path if prefix
         adaptedPath = Pathname.new(adaptedPath).cleanpath.to_s
       end
@@ -70,33 +69,21 @@ module Bake
       prefix = nil
 
       if levels != 0
-        lib_elements = (levels == 2 ? [] : calcLibElements(block))
+        lib_elements = calcLibElements(block)
         lib_elements += block.lib_elements unless block.lib_elements.nil?
-        
-        #lib_elements.each do |e|
-        #  puts e.value
-        #end
-        #exit(1)
-        
-        elems = lib_elements.reverse
-  
-        elems.each do |elem|
+
+        lib_elements.reverse.each do |elem|
           case elem.type
           when LibElement::LIB
             @@linker_libs_array << "#{@@linker[:LIB_FLAG]}#{elem.value}"
           when LibElement::USERLIB
             @@linker_libs_array << "#{@@linker[:USER_LIB_FLAG]}#{elem.value}"
           when LibElement::LIB_WITH_PATH
-            adaptedPath, prefix = adaptPath(elem.value, elem.pdir, prefix)
+            adaptedPath, prefix = adaptPath(elem.value, block, prefix)
             @@linker_libs_array <<  adaptedPath
             @@withpath << adaptedPath
           when LibElement::SEARCH_PATH
-            puts elem.value
-            puts elem.pdir
-            puts prefix
-            adaptedPath, prefix = adaptPath(elem.value, elem.pdir, prefix)
-            puts adaptedPath
-            puts @@projectDir
+            adaptedPath, prefix = adaptPath(elem.value, block, prefix)
             lpf = "#{@@linker[:LIB_PATH_FLAG]}#{adaptedPath}"
   
             if not @@lib_path_set.include?adaptedPath
@@ -118,13 +105,7 @@ module Bake
             break if levels == 2
             if Blocks::ALL_BLOCKS.include?elem.value
               bb = Blocks::ALL_BLOCKS[elem.value]
-              #if not Bake.options.oldLinkOrder
-              collect_recursive(bb, levels-1) if (Bake.options.oldLinkOrder || levels == 2)
-              if (!Bake.options.oldLinkOrder)
-                collect_recursive(bb, 2) 
-                #addOwnLib(bb) 
-              end
-              
+              collect_recursive(bb, levels-1)
             else
               # TODO: warning or error?
             end
@@ -138,9 +119,8 @@ module Bake
     def self.calcLibElements(block)
       lib_elements = [] # value = array pairs [type, name/path string]
 
-      loopover = Bake.options.oldLinkOrder ? block.config.libStuff : block.bes
+      loopover = block.config.libStuff
       loopover.each do |l|
-        pdir = l.parent.get_project_dir
         if (Metamodel::UserLibrary === l)
           ln = l.name
           ls = nil
@@ -149,10 +129,10 @@ module Bake
             ls = block.convPath(l.name[0..pos-1], l)
             ln = l.name[pos+1..-1]
           end
-          lib_elements << LibElement.new(LibElement::SEARCH_PATH, ls, pdir) if !ls.nil?
-          lib_elements << LibElement.new(LibElement::USERLIB, ln, pdir)
+          lib_elements << LibElement.new(LibElement::SEARCH_PATH, ls) if !ls.nil?
+          lib_elements << LibElement.new(LibElement::USERLIB, ln)
         elsif (Metamodel::ExternalLibrarySearchPath === l)
-          lib_elements << LibElement.new(LibElement::SEARCH_PATH, block.convPath(l), pdir)
+          lib_elements << LibElement.new(LibElement::SEARCH_PATH, block.convPath(l))
         elsif (Metamodel::ExternalLibrary === l)
           ln = l.name
           ls = nil
@@ -162,14 +142,14 @@ module Bake
             ln = l.name[pos+1..-1]
           end
           if l.search
-            lib_elements << LibElement.new(LibElement::SEARCH_PATH, ls, pdir) if !ls.nil?
-            lib_elements << LibElement.new(LibElement::LIB, ln, pdir)
+            lib_elements << LibElement.new(LibElement::SEARCH_PATH, ls) if !ls.nil?
+            lib_elements << LibElement.new(LibElement::LIB, ln)
           else
             ln = ls + "/" + ln unless ls.nil?
-            lib_elements << LibElement.new(LibElement::LIB_WITH_PATH, ln, pdir)
+            lib_elements << LibElement.new(LibElement::LIB_WITH_PATH, ln)
           end
         elsif (Metamodel::Dependency === l)
-          lib_elements << LibElement.new(LibElement::DEPENDENCY, l.name+","+l.config, pdir)
+          lib_elements << LibElement.new(LibElement::DEPENDENCY, l.name+","+l.config)
         end
 
       end

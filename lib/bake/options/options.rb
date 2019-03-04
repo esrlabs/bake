@@ -23,7 +23,7 @@ module Bake
     attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads, :skipBuildingLine # Boolean
-    attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :oldLinkOrder, :prebuild, :printTime, :json, :wparse, :caseSensitivityCheck, :fileCmd, :mergeInc, :mergeIncMain # Boolean
+    attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :prebuild, :printTime, :json, :wparse, :caseSensitivityCheck, :fileCmd, :mergeInc, :mergeIncMain # Boolean
     attr_reader :threads, :socket # Fixnum
     attr_reader :vars, :include_filter_args # map
     attr_reader :verbose
@@ -49,7 +49,6 @@ module Bake
       @prebuild = false
       @printTime = false
       @buildDirDelimiter = "/"
-      @oldLinkOrder = true
       @conversion_info = false
       @envToolchain = false
       @analyze = false
@@ -161,7 +160,6 @@ module Bake
       add_option(["--version"                                    ], lambda {     Bake::Usage.version                     })
       add_option(["--list",               "--show_configs"       ], lambda {     @showConfigs = true                     })
       add_option(["--compilation-db"                             ], lambda { |x,dummy| @cc2j_filename = (x ? x : "compile_commands.json" )})
-      add_option(["--link-beta",          "--link-beta"          ], lambda {     @oldLinkOrder = false                   })
       add_option(["--build_",                                    ], lambda {     @buildDirDelimiter = "_"                })
 
       # deprecated and not replaced by new command
