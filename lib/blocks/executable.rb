@@ -79,7 +79,8 @@ module Bake
       def execute
         Dir.chdir(@projectDir) do
           childs = @block.getBlocks(:childs)
-          if childs.any? { |b| b.result == false }
+          
+          if @block.bes.select{|d| Metamodel::Dependency === d}.any? { |d| ALL_BLOCKS["#{d.name},#{d.config}"].result == false }
             if Bake.options.stopOnFirstError
               Blocks::Block.set_delayed_result
               return true

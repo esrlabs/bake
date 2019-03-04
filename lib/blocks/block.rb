@@ -349,7 +349,6 @@ module Bake
         @config.writeEnvVars()
         Thread.current[:lastCommand] = nil
         allSteps = (preSteps + mainSteps + postSteps)
-
         # check if we have to delay the output (if the last step of this block is not in a thread)
         @outputStep = nil
         allSteps.each { |step| @outputStep = independent?(method, step) ? step : nil }

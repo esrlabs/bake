@@ -100,6 +100,10 @@ module Bake
           blockIncs = []
           blockDefs = {:CPP => [], :C => [], :ASM => []}
           blocks.each do |block|
+            block.calcFileTcs
+            block.calcIncludes
+            block.calcDefines
+            block.calcFlags 
             if Bake.options.consoleOutput_fullnames
               blockIncs += block.include_list.map { |i| File.expand_path(i, block.projectDir)  }
             else

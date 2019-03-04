@@ -235,12 +235,24 @@ module Bake
     
     def makeIncs
       Blocks::ALL_BLOCKS.each do |name,block|
+        bes2 = []
         block.bes.each do |inc|
+          noAdd = false
           if Metamodel::IncludeDir === inc
               next if block.config != inc.parent
               Dir.chdir(block.projectDir) do
                 if inc.name == "___ROOTS___" # TODO, ARRAY!
-                  xx =  Bake.options.roots.map { |r| File.rel_from_to_project(block.projectDir,r.dir,false) }
+                  #xx =  Bake.options.roots.map { |r| File.rel_from_to_project(block.projectDir,r.dir,false) }
+                  Bake.options.roots.each do |r|
+                    i = Metamodel::IncludeDir.new
+                    i.name = r.dir
+                    i.inherit = inc.inherit
+                    i.inject = inc.inject
+                    i.infix = inc.infix
+                    bes2 << i
+                  end
+                  noAdd = true
+                  next
                 end
                 i = block.convPath(inc,nil,true)
                 xx = Pathname.new(i).cleanpath
@@ -248,7 +260,10 @@ module Bake
                 inc.name  = xx
               end
           end
+          bes2 << inc unless noAdd
         end
+        block.bes = bes2
+        
       end
     end
 

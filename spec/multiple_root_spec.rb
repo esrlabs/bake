@@ -68,6 +68,15 @@ describe "Multiple root" do
     Bake.startBake("rrmeta/a/b/c/d", ["test"])
     expect(ExitHelper.exit_code).to be == 0
   end
+  
+  it 'roots.bake' do
+    Bake.startBake("root1/mainRoots", ["test2", "-v2", "-w", "spec/testdata/root2", "-w", "spec/testdata/root2/lib2/ls"])
+
+    expect($mystring.include?("g++ -c -MD -MF build/test1_mainRoots_test2/src/main1.d -I../../root2 -I../../root2/lib2/ls -o build/test1_mainRoots_test2/src/main1.o src/main1.cpp")).to be == true    
+    expect($mystring.include?("g++ -c -MD -MF build/test2/src/main2.d -Iinclude -I../../root2 -I../../root2/lib2/ls -o build/test2/src/main2.o src/main2.cpp")).to be == true    
+
+    expect(ExitHelper.exit_code).to be == 0
+  end  
 
 end
 

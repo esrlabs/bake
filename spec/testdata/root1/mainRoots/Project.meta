@@ -1,0 +1,18 @@
+Project {
+
+  Responsible {
+    Person "TBD", email: "TBD@TBD.com"
+  }
+
+  LibraryConfig test1 {
+    Files "src/main1.cpp"
+    IncludeDir "$(Roots)", inherit: true
+  }
+
+  LibraryConfig test2 {
+    Files "src/main2.cpp"
+    IncludeDir "include"
+    Dependency config: test1
+    DefaultToolchain GCC
+  }
+}
