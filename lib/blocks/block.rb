@@ -79,7 +79,6 @@ module Bake
         @tcs = tcs
         @bes = []
         @lib_elements = []
-        #@lib_elements = Bake::LibElements.calcLibElements(self)
 
         calcOutputDir
       end

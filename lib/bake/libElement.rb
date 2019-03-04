@@ -42,7 +42,7 @@ module Bake
     def self.adaptPath(path, block, prefix)
       adaptedPath = path
       if not File.is_absolute?(path)
-        prefix = File.rel_from_to_project(@@projectDir, block.projectDir)
+        prefix ||= File.rel_from_to_project(@@projectDir, block.projectDir)
         adaptedPath = prefix + path if prefix
         adaptedPath = Pathname.new(adaptedPath).cleanpath.to_s
       end
@@ -102,7 +102,6 @@ module Bake
             @@linker_libs_array << lpf if @@linker[:LIST_MODE] == false
   
           when LibElement::DEPENDENCY
-            break if levels == 2
             if Blocks::ALL_BLOCKS.include?elem.value
               bb = Blocks::ALL_BLOCKS[elem.value]
               collect_recursive(bb, levels-1)
@@ -119,8 +118,7 @@ module Bake
     def self.calcLibElements(block)
       lib_elements = [] # value = array pairs [type, name/path string]
 
-      loopover = block.config.libStuff
-      loopover.each do |l|
+      block.config.libStuff.each do |l|
         if (Metamodel::UserLibrary === l)
           ln = l.name
           ls = nil

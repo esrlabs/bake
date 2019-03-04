@@ -40,7 +40,6 @@ end
 
 
 
-$tsum = 0 
 
 module Bake
 
@@ -405,19 +404,13 @@ module Bake
       end
 
       def execute
-
-        
-        #Dir.chdir(@projectDir) do
-
           return true if @config.files.empty?
           
-        SyncOut.mutex.synchronize do
-
-          calcFileTcs
-          calcIncludes
-          calcDefines # not for files with changed tcs
-          calcFlags   # not for files with changed tcs
-        
+          SyncOut.mutex.synchronize do
+            calcFileTcs
+            calcIncludes
+            calcDefines # not for files with changed tcs
+            calcFlags   # not for files with changed tcs
             calcSources
             calcObjects
             prepareIncludes
@@ -599,57 +592,30 @@ module Bake
         @source_files
       end
 
-      def mapInclude(inc, orgBlock)
-
-        if inc.name == "___ROOTS___"
-          return Bake.options.roots.map { |r| File.rel_from_to_project(@projectDir,r.dir,false) }
-        end
-
-        i = orgBlock.convPath(inc,nil,true)
-        if orgBlock != @block
-          if not File.is_absolute?(i)
-            i = File.rel_from_to_project(@projectDir,orgBlock.config.parent.get_project_dir) + i
-          end
-        end
-
-        Pathname.new(i).cleanpath
-      end
-
       def calcIncludesInternal(block)
         @blocksRead << block
-        #puts block.bes.length
         block.bes.each do |be|
           if Metamodel::IncludeDir === be
-            
-            
             if be.inherit == true || block == @block
-              #puts "FOUNDDDDDDDDDDD"
-              
-              mappedInc = File.rel_from_to_project(@projectDir,be.name,false)  #mapInclude(be, block)
-              #puts mappedInc
+              mappedInc = File.rel_from_to_project(@projectDir,be.name,false)
               @include_list << mappedInc
               @include_merge[mappedInc] = block.config.mergeInc if !@include_merge.has_key?(mappedInc)
               @system_includes << mappedInc if be.system
             end
           elsif Metamodel::Dependency === be
-            #if @block == block
-              childBlock = Blocks::ALL_BLOCKS[be.name + "," + be.config]
-              calcIncludesInternal(childBlock) if !@blocksRead.include?(childBlock)
-            #end
+            childBlock = Blocks::ALL_BLOCKS[be.name + "," + be.config]
+            calcIncludesInternal(childBlock) if !@blocksRead.include?(childBlock)
           end
         end
       end
 
       def calcIncludes
-
         @blocksRead = Set.new
         @include_list = []
         @include_merge = {}
         @system_includes = Set.new
         calcIncludesInternal(@block) # includeDir and child dependencies with inherit: true
-        #exit(1)
         @include_list = @include_list.flatten.uniq
-
       end
 
       def prepareIncludes

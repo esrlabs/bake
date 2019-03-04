@@ -113,7 +113,7 @@ module Bake
       end if configSteps
     end
 
-    def addDependencies2(block, config)
+    def addSubDependencies(block, config)
       subDeps = []
       config.depInc.each do |dep|
         if (Metamodel::Dependency === dep)
@@ -122,9 +122,8 @@ module Bake
               blockRef = Blocks::ALL_BLOCKS[configRef.qname]
               break if blockRef.visited
               blockRef.visited = true
-              subDeps += addDependencies2(block, configRef)
+              subDeps += addSubDependencies(block, configRef)
               subDeps << dep
-              #puts "Ahaa" if dep.name.include?"M_cfg"
               break
             end
           end
@@ -150,19 +149,14 @@ module Bake
       end
     
     end
-    
+
     def addDependencies(block, config)
-      
-      block.bes = block.config.depInc#.each do |be|
-    #    block.bes << be if Metamodel::IncludeDir === be || Metamodel::Dependency === be
-    #  end
-      
       Blocks::ALL_BLOCKS.each do |bname, b|
         b.visited = false
       end
-      #puts "ui1" if block.config.qname == "application,max"
-      bes2 = []
-      block.bes.each do |dep|
+
+      block.bes = []
+      block.config.depInc.each do |dep|
         if (Metamodel::Dependency === dep)
           @referencedConfigs[dep.name].each do |configRef|
             if configRef.name == dep.config
@@ -177,22 +171,14 @@ module Bake
               end
   
               block.dependencies << qname if not Bake.options.project# and not Bake.options.filename
-              deps2 = addDependencies2(block, configRef)
-              bes2 += deps2
+              subDeps = addSubDependencies(block, configRef)
+              block.bes += subDeps
               break
             end
           end
-          bes2 << dep
-        else
-          bes2 << dep
         end
+        block.bes << dep
       end
-      #puts "ui2" if block.config.qname == "application,max"
-      block.bes = bes2
-      #if block.config.qname == "application,max"
-     #   block.bes.each {|b|  puts b.name if Metamodel::Dependency === b }
-      #end
-      #exit(1)
     end
 
     def calcPrebuildBlocks
@@ -244,30 +230,26 @@ module Bake
       Blocks::ALL_BLOCKS.each do |name,block|
         bes2 = []
         block.bes.each do |inc|
-          noAdd = false
+          rootsFound = false
           if Metamodel::IncludeDir === inc
-              #next if block.config != inc.parent
-              Dir.chdir(block.projectDir) do
-                if inc.name == "___ROOTS___" # TODO, ARRAY!
-                  #xx =  Bake.options.roots.map { |r| File.rel_from_to_project(block.projectDir,r.dir,false) }
-                  Bake.options.roots.each do |r|
-                    i = Metamodel::IncludeDir.new
-                    i.name = r.dir
-                    i.inherit = inc.inherit
-                    i.inject = inc.inject
-                    i.infix = inc.infix
-                    bes2 << i
-                  end
-                  noAdd = true
-                  next
+            Dir.chdir(block.projectDir) do
+              if inc.name == "___ROOTS___"
+                Bake.options.roots.each do |r|
+                  i = Metamodel::IncludeDir.new
+                  i.name = r.dir
+                  i.inherit = inc.inherit
+                  i.inject = inc.inject
+                  i.infix = inc.infix
+                  bes2 << i
                 end
+                rootsFound = true
+              else
                 i = block.convPath(inc,nil,true)
-                xx = Pathname.new(i).cleanpath
-                xx = File.expand_path(xx)
-                inc.name  = xx
+                inc.name  = File.expand_path(Pathname.new(i).cleanpath)
               end
+            end
           end
-          bes2 << inc if !noAdd
+          bes2 << inc if !rootsFound
         end
         block.bes = bes2
       end
@@ -287,53 +269,33 @@ module Bake
           if (config == mainConfig)
             @correctOrder << block
           end
-            #addIncludes(block, config)
         end
       end
       Blocks::ALL_BLOCKS.each do |name,block|
         block.dependencies.uniq!
       end
 
-      #puts "G1"
-
       # inject dependencies
       num_interations = 0
       begin
-        #t1 = Time.now
         if (num_interations > 0) and Bake.options.debug and Bake.options.verbose >= 3
           puts "Inject dependencies, iteration #{num_interations}:"
-          #Blocks::ALL_BLOCKS.each do |name,block|
-          #  puts block.config.qname
-          #  block.dependencies.each { |d| puts "- #{d}" }
-          #end
         end
-        #puts "inj"
         
         counter = 0
-        #@sum = 0
-        #Blocks::ALL_BLOCKS.each do |name,block|
-        
         @correctOrder.each do |block|
           name = block.config.qname
-          #puts name
-          #puts name
-          ifr = []
-          iba = []
           difr = []
           diba = []
           block.bes.each do |d|
             if Metamodel::Dependency === d
               next if d.inject == ""
               dqname = "#{d.name},#{d.config}"
-              #puts dqname if name == "application,max"
-              #puts name
               dblock = Blocks::ALL_BLOCKS[dqname]
               next if name == dqname
               if d.inject == "front"
-                ifr.unshift(dblock)
                 difr << d
                else
-                iba << dblock
                 diba << d
               end
             elsif Metamodel::IncludeDir === d
@@ -349,26 +311,14 @@ module Bake
           block.bes.each do |dep|
             next unless Metamodel::Dependency === dep
             fde = Blocks::ALL_BLOCKS[dep.name+","+dep.config]
-            
-            # next if (!fde.config.respond_to?(:files)) || fde.config.files.empty?
             l1 = fde.bes.length 
             fde.bes = (difr +  fde.bes + diba).uniq
             l2 = fde.bes.length 
             counter += 1 if (l2 != l1)
-            if name =="application,max"
-              #puts difr
-              #exit(1)
-            end
-            #difr.each { |f| fde.config.addBaseElement(MergeConfig::cloneModelElement(f),0) }
-            #diba.each { |f| fde.config.addBaseElement(MergeConfig::cloneModelElement(f)) }
           end
         end
         num_interations += 1
-        #puts "counter: #{counter}"
-        #t2 = Time.now
-        #puts (t2-t1)
       end while counter > 0
-      #exit(1)
     end
 
     def makeDot

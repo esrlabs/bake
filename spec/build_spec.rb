@@ -401,8 +401,6 @@ describe "Building" do
     Bake.startBake("includeOrder/main", ["test1", "-v2"])
     expect(ExitHelper.exit_code).to be == 0
     expect($mystring.include?("-IM1 -IB21 -IB22 -IB11 -IB12 -IB31 -IB32 -IM2")).to be == true
-# new:                         -IM1 -IB11 -IB21 -IB22 -IB31 -IB32 -IB12 -IM2
-
   end
 
   it 'system include' do
