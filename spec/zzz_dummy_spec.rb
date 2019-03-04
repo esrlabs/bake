@@ -11,11 +11,10 @@ require 'fileutils'
 
 module Bake
 
-describe "Ensure" do
+describe "LastTestReached" do
 
   it 'end reached' do
-    $endReached = true
-    print "<END REACHED>"
+    # do nothing
   end
 
 end

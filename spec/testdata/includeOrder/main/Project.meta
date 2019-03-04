@@ -1,23 +1,26 @@
 Project {
 
 
-  CustomConfig testBase1 {
+  LibraryConfig testBase1 {
     IncludeDir "B11", inherit: true
     Dependency config: testBase3
     IncludeDir "B12", inherit: true
+    Files "src/main1.cpp"
   }
 
-  CustomConfig testBase2 {
+  LibraryConfig testBase2 {
     IncludeDir "B21", inherit: true
     IncludeDir "B22", inherit: true
     Dependency config: testBase1
+    Files "src/main2.cpp"
   }
 
-  CustomConfig testBase3 {
+  LibraryConfig testBase3 {
     Dependency config: testBase2
     IncludeDir "B31", inherit: true
     Dependency config: testBase1
     IncludeDir "B32", inherit: true
+    Files "src/main3.cpp"
   }
 
   # expected: -IM1 -IB21 -IB22 -IB11 -IB12 -IB31 -IB32 -IM2

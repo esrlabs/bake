@@ -34,8 +34,6 @@ require 'tocxx'
 
 module Bake
 
-  $endReached = false
-
   def self.startBake(proj, opt)
     Bake.options = Options.new(["-m", "spec/testdata/#{proj}"].concat(opt))
     Bake.options.parse_options()
@@ -90,10 +88,19 @@ module Bake
 
   RSpec.configure do |config|
 
-    config.before(:each) do
+    config.before(:all) do |the_test|
+      puts "Testing #{the_test.class}:"
+    end
+    
+    config.after(:all) do |the_test|
+      puts "\nDONE"
+    end
+    
+    config.before(:each) do |the_test|
       Bake::cleanup
       Bake::clean_testdata
 
+      
       @backup_stdout = STDOUT.dup
       @backup_stderr = STDERR.dup
       @fstdout = Tempfile.open("captured_stdout")
@@ -117,12 +124,8 @@ module Bake
 
       ExitHelper.reset_exit_code
       Bake::clean_testdata
-      if ($endReached)
-        print $mystring
-      else
-        if !the_test.instance_variable_get(:@exception).nil?
-          puts $mystring
-        end
+      if !the_test.instance_variable_get(:@exception).nil?
+        puts $mystring
       end
     end
 

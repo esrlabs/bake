@@ -80,7 +80,8 @@ module Bake
         Dir.chdir(@projectDir) do
           childs = @block.getBlocks(:childs)
           
-          if @block.bes.select{|d| Metamodel::Dependency === d}.any? { |d| ALL_BLOCKS["#{d.name},#{d.config}"].result == false }
+          subBlocks = @block.bes.select{|d| Metamodel::Dependency === d}.map { |d| ALL_BLOCKS["#{d.name},#{d.config}"] }
+          if subBlocks.any? { |d| d.result == false }
             if Bake.options.stopOnFirstError
               Blocks::Block.set_delayed_result
               return true
@@ -90,7 +91,7 @@ module Bake
           end
 
           allSources = []
-          (childs + [@block]).each do |b|
+          (subBlocks + [@block]).each do |b|
             Dir.chdir(b.projectDir) do
               b.getCompileBlocks.each do |c|
                 allSources += c.calcSources(true, true).map { |s| File.expand_path(s) }

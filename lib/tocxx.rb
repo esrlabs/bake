@@ -115,18 +115,23 @@ module Bake
 
     def addDependencies2(block, config)
       subDeps = []
-      config.dependency.each do |dep|
-        @referencedConfigs[dep.name].each do |configRef|
-          if configRef.name == dep.config
-            blockRef = Blocks::ALL_BLOCKS[configRef.qname]
-            break if blockRef.visited
-            blockRef.visited = true
-            subDeps += addDependencies2(block, configRef)
-            subDeps << dep
-            #puts "Ahaa" if dep.name.include?"M_cfg"
-            break
+      config.libStuff.each do |dep|
+        if (Metamodel::Dependency === dep)
+          @referencedConfigs[dep.name].each do |configRef|
+            if configRef.name == dep.config
+              blockRef = Blocks::ALL_BLOCKS[configRef.qname]
+              break if blockRef.visited
+              blockRef.visited = true
+              subDeps += addDependencies2(block, configRef)
+              subDeps << dep
+              #puts "Ahaa" if dep.name.include?"M_cfg"
+              break
+            end
           end
+        else
+          subDeps << dep
         end
+          
       end
       if subDeps.empty? && @corOrderActive
         @correctOrder << Blocks::ALL_BLOCKS[config.qname]
@@ -177,8 +182,10 @@ module Bake
               break
             end
           end
+          bes2 << dep
+        else
+          bes2 << dep
         end
-        bes2 << dep
       end
       #puts "ui2" if block.config.qname == "application,max"
       block.bes = bes2
@@ -239,7 +246,7 @@ module Bake
         block.bes.each do |inc|
           noAdd = false
           if Metamodel::IncludeDir === inc
-              next if block.config != inc.parent
+              #next if block.config != inc.parent
               Dir.chdir(block.projectDir) do
                 if inc.name == "___ROOTS___" # TODO, ARRAY!
                   #xx =  Bake.options.roots.map { |r| File.rel_from_to_project(block.projectDir,r.dir,false) }
@@ -260,10 +267,9 @@ module Bake
                 inc.name  = xx
               end
           end
-          bes2 << inc unless noAdd
+          bes2 << inc if !noAdd
         end
         block.bes = bes2
-        
       end
     end
 
