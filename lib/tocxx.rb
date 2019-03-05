@@ -259,6 +259,24 @@ module Bake
       end
     end
 
+    def sortIncs
+      Blocks::ALL_BLOCKS.each do |name,block|
+        foundMyself = false
+        front = []
+        back = []
+        block.bes.each do |inc|
+          if Metamodel::Dependency === inc && inc.name == block.projectName && inc.config == block.config.name
+            foundMyself = true
+          elsif Metamodel::Dependency === inc && foundMyself
+            back << inc
+          else
+            front << inc
+          end
+        end
+        block.bes = front + back
+      end
+    end
+
     def makeGraph
       mainConfig = @referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
       @referencedConfigs.each do |projName, configs|
@@ -320,8 +338,8 @@ module Bake
             next unless Metamodel::Dependency === dep
             fde = Blocks::ALL_BLOCKS[dep.name+","+dep.config]
             l1 = fde.bes.length 
-            fde.bes = (difr +  fde.bes + diba).uniq.select {|d| !(Metamodel::Dependency === d) || d.name != dep.name || d.config != dep.config }
-            l2 = fde.bes.length 
+            fde.bes = (difr + fde.bes + diba).uniq
+            l2 = fde.bes.length
             counter += 1 if (l2 != l1)
           end
         end
@@ -632,6 +650,8 @@ module Bake
           makeGraph
           puts "Profiling #{Time.now - $timeStart}: make includes..." if Bake.options.profiling
           makeIncs
+          puts "Profiling #{Time.now - $timeStart}: sorting includes..." if Bake.options.profiling
+          sortIncs
           if Bake.options.dot
             puts "Profiling #{Time.now - $timeStart}: make dot..." if Bake.options.profiling
             makeDot

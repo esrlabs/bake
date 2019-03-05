@@ -1,0 +1,43 @@
+Project default: test {
+
+  CustomConfig first {
+    IncludeDir "first", inherit: true
+  }
+  
+  CustomConfig second {
+    IncludeDir "second", inherit: true
+  }
+
+  CustomConfig third {
+    IncludeDir "third", inherit: true
+  }
+
+  CustomConfig forth {
+    IncludeDir "forth", inherit: true
+  }
+  
+  CustomConfig fifth {
+    IncludeDir "fifth", inherit: true
+  }
+
+  CustomConfig sixth {
+    IncludeDir "sixth", inherit: true
+  }
+
+  LibraryConfig test {
+    Files "src/a.cpp"
+    DefaultToolchain GCC
+  }
+
+}
+
+Adapt {
+  LibraryConfig test, type: extend {
+    Dependency config: first, inject: front
+    Dependency config: second, inject: front
+    Dependency config: third, inject: back
+    Dependency config: forth, inject: front
+    Dependency config: fifth, inject: back
+    Dependency config: sixth, inject: back
+    }
+}

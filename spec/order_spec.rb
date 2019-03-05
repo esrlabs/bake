@@ -22,6 +22,11 @@ describe "Order" do
     expect($mystring.include?("build/test/p4"+Bake::Toolchain.outputEnding+" build/test/dummy.o -lexP4a ../p5/build/test_p4_test/libp5.a -lexP5a -lexP5b -lexP5c -lexP5d -lexP4b ../p6/build/test_p4_test/libp6.a -lexP6a -lexP6b ../p7/build/test_p4_test/libp7.a -lexP7 -lexP6c -lexP6d -lexP4c")).to be == true
   end
 
+  it 'mix front and back' do
+    Bake.startBake("injectTwice/main", ["test", "-v2"])
+    expect($mystring.include?("-Ifirst -Isecond -Iforth -Ithird -Ififth -Isixth")).to be == true
+  end
+
 end
 
 end
