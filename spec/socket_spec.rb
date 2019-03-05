@@ -14,7 +14,7 @@ module Bake
 describe "Socket Handler" do
 
   it 'socket option invalid' do
-    expect { Bake.startBake("set_set/A", ["test", "--socket"]) }.to raise_error(SystemExit)
+    Bake.startBake("set_set/A", ["test", "--socket"])
     expect($mystring.include?("Argument for option --socket missing")).to be == true
   end
 

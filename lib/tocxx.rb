@@ -128,7 +128,7 @@ module Bake
             end
           end
         else # IncludeDir
-          subDeps << dep
+          subDeps << dep if dep.inherit == "true"
         end
           
       end

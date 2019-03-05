@@ -598,6 +598,7 @@ module Bake
           if Metamodel::IncludeDir === be
             if be.inherit == true || block == @block
               mappedInc = File.rel_from_to_project(@projectDir,be.name,false)
+              mappedInc  = "." if mappedInc.empty?
               @include_list << mappedInc
               @include_merge[mappedInc] = block.config.mergeInc if !@include_merge.has_key?(mappedInc)
               @system_includes << mappedInc if be.system

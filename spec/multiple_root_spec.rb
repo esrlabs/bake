@@ -27,7 +27,7 @@ describe "Multiple root" do
 
   it 'wrong root' do
     expect(File.exists?("spec/testdata/root1/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
-    expect { Bake.startBake("root1/main", ["test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2/lib3", "--adapt", "nols"]) }.to raise_error(SystemExit)
+    Bake.startBake("root1/main", ["test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2/lib3", "--adapt", "nols"])
     expect(ExitHelper.exit_code).to be > 0
     expect($mystring.split("lib3 does not exist").length).to be == 2
   end
@@ -41,7 +41,7 @@ describe "Multiple root" do
 
   it 'invalid root' do
     expect(File.exists?("spec/testdata/root1/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
-    expect { Bake.startBake("root1/main", ["test", "-w", "spec/testdata/GIBTS_DOCH_GAR_NICHT", "--adapt", "nols"]) }.to raise_error(SystemExit)
+    Bake.startBake("root1/main", ["test", "-w", "spec/testdata/GIBTS_DOCH_GAR_NICHT", "--adapt", "nols"])
     expect($mystring.split("Error: Directory spec/testdata/GIBTS_DOCH_GAR_NICHT does not exist").length).to be == 2
   end
 
