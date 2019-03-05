@@ -32,34 +32,47 @@ describe "InjectDeps" do
 
     testStr = ":\n"+
       "main,test2StepA\n"+
+      "- main,test2StepE\n"+
+      "- main,test2StepF\n"+
+      "- main,test2StepC2\n"+
       "- main,test2StepC\n"+
+      "- main,test2StepB2\n"+
       "- main,test2StepB\n"+
+      "- main,test2StepD2\n"+
       "- main,test2StepD\n"+
       "main,test2StepC\n"+
+      "- main,test2StepC2\n"+
+      "- main,test2StepB2\n"+
+      "- main,test2StepD2\n"+
       "- main,test2StepE\n"+
       "- main,test2StepF\n"+
-      "- main,test2StepC2\n"+
       "main,test2StepB\n"+
+      "- main,test2StepC2\n"+
+      "- main,test2StepB2\n"+
+      "- main,test2StepD2\n"+
       "- main,test2StepE\n"+
-      "- main,test2StepB2\n"+
       "main,test2StepD\n"+
+      "- main,test2StepC2\n"+
+      "- main,test2StepB2\n"+
+      "- main,test2StepD2\n"+
       "- main,test2StepF\n"+
-      "- main,test2StepD2\n"+
       "main,test2StepE\n"+
-      "- main,test2StepB2\n"+
       "- main,test2StepC2\n"+
+      "- main,test2StepB2\n"+
+      "- main,test2StepD2\n"+
       "main,test2StepF\n"+
-      "- main,test2StepD2\n"+
       "- main,test2StepC2\n"+
+      "- main,test2StepB2\n"+
+      "- main,test2StepD2\n"+
       "main,test2StepC2\n"+
-      "- main,test2StepD2\n"+
       "- main,test2StepB2\n"+
+      "- main,test2StepD2\n"+
       "main,test2StepB2\n"+
-      "- main,test2StepD2\n"+
       "- main,test2StepC2\n"+
+      "- main,test2StepD2\n"+
       "main,test2StepD2\n"+
-      "- main,test2StepB2\n"+
-      "- main,test2StepC2"
+      "- main,test2StepC2\n"+
+      "- main,test2StepB2\n"
     expect($mystring.include?testStr).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
@@ -68,30 +81,38 @@ describe "InjectDeps" do
     Bake.startBake("injectDeps/main", ["testA", "-v3", "--debug"])
 
     testStr = ":\n"+
-      "main,testA\n"+
-      "- main,testB\n"+
-      "- main,testC\n"+
-      "- main,testF\n"+
-      "main,testB\n"+
-      "- main,testG\n"+
-      "- main,testD\n"+
-      "- main,testF\n"+
-      "main,testC\n"+
-      "- main,testD\n"+
-      "- main,testG\n"+
-      "- main,testF\n"+
-      "main,testF\n"+
-      "- main,testG\n"+
-      "main,testD\n"+
-      "- main,testG\n"+
-      "- main,testE\n"+
-      "- main,testF\n"+
-      "main,testG\n"+
-      "- main,testF\n"+
-      "main,testE\n"+
-      "- main,testG\n"+
-      "- main,testB\n"+
-      "- main,testF"
+    "main,testA\n"+
+    "- main,testE\n"+
+    "- main,testD\n"+
+    "- main,testB\n"+
+    "- main,testG\n"+
+    "- main,testC\n"+
+    "- main,testF\n"+
+    "main,testB\n"+
+    "- main,testG\n"+
+    "- main,testE\n"+
+    "- main,testD\n"+
+    "- main,testF\n"+
+    "main,testC\n"+
+    "- main,testG\n"+
+    "- main,testB\n"+
+    "- main,testE\n"+
+    "- main,testD\n"+
+    "- main,testF\n"+
+    "main,testF\n"+
+    "- main,testG\n"+
+    "main,testD\n"+
+    "- main,testG\n"+
+    "- main,testB\n"+
+    "- main,testE\n"+
+    "- main,testF\n"+
+    "main,testG\n"+
+    "- main,testF\n"+
+    "main,testE\n"+
+    "- main,testG\n"+
+    "- main,testD\n"+
+    "- main,testB\n"+
+    "- main,testF\n"
     expect($mystring.include?testStr).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end

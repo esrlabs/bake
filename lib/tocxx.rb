@@ -127,7 +127,7 @@ module Bake
               break
             end
           end
-        else
+        else # IncludeDir
           subDeps << dep
         end
           
@@ -173,11 +173,13 @@ module Bake
               block.dependencies << qname if not Bake.options.project# and not Bake.options.filename
               subDeps = addSubDependencies(block, configRef)
               block.bes += subDeps
+              block.bes << dep
               break
             end
           end
+        else
+          block.bes << dep
         end
-        block.bes << dep
       end
     end
 
@@ -232,20 +234,22 @@ module Bake
         block.bes.each do |inc|
           rootsFound = false
           if Metamodel::IncludeDir === inc
-            Dir.chdir(block.projectDir) do
-              if inc.name == "___ROOTS___"
-                Bake.options.roots.each do |r|
-                  i = Metamodel::IncludeDir.new
-                  i.name = r.dir
-                  i.inherit = inc.inherit
-                  i.inject = inc.inject
-                  i.infix = inc.infix
-                  bes2 << i
+            if inc.name == "___ROOTS___"
+              Bake.options.roots.each do |r|
+                i = Metamodel::IncludeDir.new
+                i.name = r.dir
+                i.inherit = inc.inherit
+                i.inject = inc.inject
+                i.infix = inc.infix
+                bes2 << i
+              end
+              rootsFound = true
+            else
+              if inc.parent == block.config 
+                Dir.chdir(block.projectDir) do
+                  i = block.convPath(inc,nil,true)
+                  inc.name  = File.expand_path(Pathname.new(i).cleanpath)
                 end
-                rootsFound = true
-              else
-                i = block.convPath(inc,nil,true)
-                inc.name  = File.expand_path(Pathname.new(i).cleanpath)
               end
             end
           end
@@ -280,6 +284,10 @@ module Bake
       begin
         if (num_interations > 0) and Bake.options.debug and Bake.options.verbose >= 3
           puts "Inject dependencies, iteration #{num_interations}:"
+          Blocks::ALL_BLOCKS.each do |name,block|
+            puts block.config.qname
+            block.bes.select{|b| Metamodel::Dependency === b}.each { |d| puts "- #{d.name},#{d.config}" }
+          end
         end
         
         counter = 0
@@ -312,7 +320,7 @@ module Bake
             next unless Metamodel::Dependency === dep
             fde = Blocks::ALL_BLOCKS[dep.name+","+dep.config]
             l1 = fde.bes.length 
-            fde.bes = (difr +  fde.bes + diba).uniq
+            fde.bes = (difr +  fde.bes + diba).uniq.select {|d| !(Metamodel::Dependency === d) || d.name != dep.name || d.config != dep.config }
             l2 = fde.bes.length 
             counter += 1 if (l2 != l1)
           end

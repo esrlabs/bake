@@ -78,7 +78,6 @@ module Bake
 
       def execute
         Dir.chdir(@projectDir) do
-          childs = @block.getBlocks(:childs)
           
           subBlocks = @block.bes.select{|d| Metamodel::Dependency === d}.map { |d| ALL_BLOCKS["#{d.name},#{d.config}"] }
           if subBlocks.any? { |d| d.result == false }
@@ -94,10 +93,12 @@ module Bake
           (subBlocks + [@block]).each do |b|
             Dir.chdir(b.projectDir) do
               b.getCompileBlocks.each do |c|
-                allSources += c.calcSources(true, true).map { |s| File.expand_path(s) }
+                srcs = c.calcSources(true, true).map { |s| File.expand_path(s) }
+                allSources += srcs
               end
             end
           end
+          
           duplicateSources = allSources.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
           duplicateSources.each do |d|
             Bake.formatter.printError("Source compiled more than once: #{d}")
