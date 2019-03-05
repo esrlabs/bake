@@ -614,16 +614,29 @@ module Bake
           Bake.options.analyze = @defaultToolchain[:COMPILER][:CPP][:COMPILE_FLAGS].include?"analyze"
           Bake.options.eclipseOrder = @mainConfig.defaultToolchain.eclipseOrder
 
+          puts "Profiling #{Time.now - $timeStart}: create base toolchains..." if Bake.options.profiling
           createBaseTcsForConfig
+          puts "Profiling #{Time.now - $timeStart}: substitute variables..." if Bake.options.profiling
           substVars
+          puts "Profiling #{Time.now - $timeStart}: toolchains..." if Bake.options.profiling
           createTcsForConfig
           @@linkBlock = 0
           @prebuild = nil
-          calcPrebuildBlocks if Bake.options.prebuild
+          if Bake.options.prebuild
+            puts "Profiling #{Time.now - $timeStart}: create prebuild blocks..." if Bake.options.profiling
+            calcPrebuildBlocks
+          end
+          puts "Profiling #{Time.now - $timeStart}: make blocks..." if Bake.options.profiling
           makeBlocks
+          puts "Profiling #{Time.now - $timeStart}: make graph..." if Bake.options.profiling
           makeGraph
+          puts "Profiling #{Time.now - $timeStart}: make includes..." if Bake.options.profiling
           makeIncs
-          makeDot if Bake.options.dot
+          if Bake.options.dot
+            puts "Profiling #{Time.now - $timeStart}: make dot..." if Bake.options.profiling
+            makeDot
+          end
+          puts "Profiling #{Time.now - $timeStart}: convert to building blocks..." if Bake.options.profiling
           convert2bb
 
         ensure
@@ -647,6 +660,8 @@ module Bake
 
         ideAbort = false
         Blocks::Block.reset_delayed_result
+
+        puts "Profiling #{Time.now - $timeStart}: start build..." if Bake.options.profiling
 
         begin
           Blocks::Block.init_threads()

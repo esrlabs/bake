@@ -11,6 +11,8 @@ STDERR.sync = true
 require 'tocxx'
 require 'socket'
 
+puts "Profiling #{Time.now - $timeStart}: ruby includes parsed..." if ARGV.include?("--profiling")
+
 module Bake
 
   earlyExit = nil
@@ -20,6 +22,7 @@ module Bake
       ExitHelper.exit(1)
     end
 
+    puts "Profiling #{Time.now - $timeStart}: parse options..." if ARGV.include?("--profiling")
     Bake.options = Options.new(ARGV)
     Bake.options.parse_options
 

@@ -23,7 +23,7 @@ module Bake
     attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :cc2j_filename # String
     attr_reader :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads, :skipBuildingLine # Boolean
-    attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :prebuild, :printTime, :json, :wparse, :caseSensitivityCheck, :fileCmd, :mergeInc, :mergeIncMain # Boolean
+    attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :prebuild, :printTime, :json, :wparse, :caseSensitivityCheck, :fileCmd, :mergeInc, :mergeIncMain, :profiling # Boolean
     attr_reader :threads, :socket # Fixnum
     attr_reader :vars, :include_filter_args # map
     attr_reader :verbose
@@ -85,6 +85,7 @@ module Bake
       @main_project_name = ""
       @adapt = []
       @syncedOutput = false
+      @profiling = false
       @diabCaseCheck = false
       @defines = []
       @fileCmd = false
@@ -101,6 +102,7 @@ module Bake
       add_option(["-r"                                           ], lambda {     @stopOnFirstError = true                })
       add_option(["-O"                                           ], lambda {     @syncedOutput = true                    })
       add_option(["--rebuild"                                    ], lambda {     @rebuild = true                         })
+      add_option(["--profiling"                                  ], lambda {     @profiling = true                         })
       add_option(["--prepro"                                     ], lambda {     @prepro = true                          })
       add_option(["--link-only",          "--link_only"          ], lambda {     @linkOnly = true;                       })
       add_option(["--compile-only",       "--compile_only"       ], lambda {     @compileOnly = true;                    })

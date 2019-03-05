@@ -35,11 +35,14 @@ require 'tocxx'
 module Bake
 
   def self.startBake(proj, opt)
-    Bake.options = Options.new(["-m", "spec/testdata/#{proj}"].concat(opt))
-    Bake.options.parse_options()
-    tocxx = Bake::ToCxx.new
-    tocxx.doit()
-    Bake::cleanup
+    begin
+      Bake.options = Options.new(["-m", "spec/testdata/#{proj}"].concat(opt))
+      Bake.options.parse_options()
+      tocxx = Bake::ToCxx.new
+      tocxx.doit()
+      Bake::cleanup
+    rescue Exception
+    end
   end
 
   def self.startBakeWithPath(path, proj, opt)
