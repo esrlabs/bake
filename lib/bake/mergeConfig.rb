@@ -41,7 +41,7 @@ module Bake
     def replace()
       if Metamodel::BaseConfig_INTERNAL === @child &&
         Metamodel::BaseConfig_INTERNAL ===  @parent
-        if @child.mergeInc != "" && parent.mergeInc != "no"
+        if @child.mergeInc != "" && @parent.mergeInc != "no"
           @parent.mergeInc = @child.mergeInc
         end
       end

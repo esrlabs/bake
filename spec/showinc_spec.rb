@@ -12,8 +12,8 @@ module Bake
 
 
   incsTestStr1 = " includes\n"+
-      "  A/include\n"+
       "  ../sub/include\n"+
+      "  A/include\n"+
       "  subst\n"+
       "  incluuude\n"+
       "  C:\\gaga\n"+

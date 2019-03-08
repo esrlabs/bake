@@ -39,10 +39,10 @@ describe "Merge-Inc" do
 
     expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Iinclude/c1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Iinclude/c1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
-    expect($mystring.include?("g++ -c -MD -MF build/test2_main_test2/src/c2.d -Ibuild/test2_main_test2/mergedIncludes1 -o build/test2_main_test2/src/c2.o src/c2.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test2_main_test2/src/c2.d -Iinclude/c2 -o build/test2_main_test2/src/c2.o src/c2.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test3_main_test2/src/c3.d -Ibuild/test3_main_test2/mergedIncludes1 -o build/test3_main_test2/src/c3.o src/c3.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test4_main_test2/src/c4.d -Ibuild/test4_main_test2/mergedIncludes1 -o build/test4_main_test2/src/c4.o src/c4.cpp")).to be == true
-    expect($mystring.include?("g++ -c -MD -MF build/test2/src/c2.d -Iinclude/c1 -Iinclude/c2 -I../lib/include/c1 -Ibuild/test2/mergedIncludes1 -o build/test2/src/c2.o src/c2.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test2/src/c2.d -Iinclude/c1 -Iinclude/c2 -I../lib/include/c1 -I../lib/include/c2 -Ibuild/test2/mergedIncludes1 -o build/test2/src/c2.o src/c2.cpp")).to be == true
 
     expect(ExitHelper.exit_code).to be == 0
   end
@@ -52,10 +52,10 @@ describe "Merge-Inc" do
 
     expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Iinclude/c1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Iinclude/c1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
-    expect($mystring.include?("g++ -c -MD -MF build/test2_main_test2/src/c2.d -Ibuild/test2_main_test2/mergedIncludes1 -o build/test2_main_test2/src/c2.o src/c2.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test2_main_test2/src/c2.d -Iinclude/c2 -o build/test2_main_test2/src/c2.o src/c2.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test3_main_test2/src/c3.d -Ibuild/test3_main_test2/mergedIncludes1 -o build/test3_main_test2/src/c3.o src/c3.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test4_main_test2/src/c4.d -Ibuild/test4_main_test2/mergedIncludes1 -o build/test4_main_test2/src/c4.o src/c4.cpp")).to be == true
-    expect($mystring.include?("g++ -c -MD -MF build/test2/src/c2.d -Iinclude/c1 -Iinclude/c2 -I../lib/include/c1 -Ibuild/test2/mergedIncludes1 -o build/test2/src/c2.o src/c2.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test2/src/c2.d -Iinclude/c1 -Iinclude/c2 -I../lib/include/c1 -I../lib/include/c2 -Ibuild/test2/mergedIncludes1 -o build/test2/src/c2.o src/c2.cpp")).to be == true
 
     expect(ExitHelper.exit_code).to be == 0
   end

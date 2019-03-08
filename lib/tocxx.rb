@@ -129,7 +129,7 @@ module Bake
             end
           end
         else
-          subDeps << dep
+          subDeps << dep if dep.inherit
         end
           
       end
@@ -243,6 +243,7 @@ module Bake
                 i.inherit = inc.inherit
                 i.inject = inc.inject
                 i.infix = inc.infix
+                i.parent = inc.parent
                 bes2 << i
               end
               rootsFound = true
