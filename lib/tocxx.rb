@@ -353,14 +353,19 @@ module Bake
         end
         num_interations += 1
       end while counter > 0
+    end
+
+    def makeUniq
       Blocks::ALL_BLOCKS.each do |name,block|
-        block.bes.uniq! do |b|
-          if Metamodel::Dependency === b
-            b.name+","+b.config
-          else
-            b.name
-          end
+        bes2 = []
+        blockSet = Set.new
+        block.bes.each do |b|
+          n = Metamodel::Dependency === b ? b.name+","+b.config : b.name
+          next if blockSet.include?n
+          blockSet << n
+          bes2 << b
         end
+        block.bes = bes2
       end
     end
 
@@ -667,8 +672,8 @@ module Bake
           makeGraph
           puts "Profiling #{Time.now - $timeStart}: make includes..." if Bake.options.profiling
           makeIncs
-          puts "Profiling #{Time.now - $timeStart}: sorting includes..." if Bake.options.profiling
-          #sortIncs
+          puts "Profiling #{Time.now - $timeStart}: make uniq..." if Bake.options.profiling
+          makeUniq
           if Bake.options.dot
             puts "Profiling #{Time.now - $timeStart}: make dot..." if Bake.options.profiling
             makeDot
