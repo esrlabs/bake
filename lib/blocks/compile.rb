@@ -595,7 +595,7 @@ module Bake
       end
 
       def calcIncludesInternal(block)
-        # puts "#{block.projectName},#{block.configName}"
+        # puts "#{block.projectName},#{block.configName} " + block.to_s
         noDeps = @blocksRead.include?(block)
         @blocksRead << block
         block.bes.each do |be|
@@ -614,6 +614,10 @@ module Bake
           elsif Metamodel::Dependency === be
             if (!noDeps)
               childBlock = Blocks::ALL_BLOCKS[be.name + "," + be.config]
+              if block.projectName == be.parent.parent.name &&
+                block.configName == be.parent.name
+                next if @blocksRead.include?(childBlock)
+              end
               calcIncludesInternal(childBlock)
             end
           end

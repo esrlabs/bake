@@ -122,6 +122,7 @@ module Bake
               blockRef = Blocks::ALL_BLOCKS[configRef.qname]
               break if blockRef.visited
               blockRef.visited = true
+
               subDeps += addSubDependencies(block, configRef)
               subDeps << dep
               break
@@ -130,7 +131,7 @@ module Bake
         end
           
       end
-      @correctOrder << block
+      @correctOrder << Blocks::ALL_BLOCKS[config.qname] if @corOrderActive
       return subDeps
     end
     
@@ -150,6 +151,7 @@ module Bake
       Blocks::ALL_BLOCKS.each do |bname, b|
         b.visited = false
       end
+      block.visited = true
 
       block.bes = []
       block.config.depInc.each do |dep|
@@ -166,11 +168,11 @@ module Bake
   
               block.dependencies << qname if not Bake.options.project# and not Bake.options.filename
               if !blockRef.visited
+                blockRef.visited = true
                 subDeps = addSubDependencies(block, configRef)
                 block.bes += subDeps
               end
               block.bes << dep
-              blockRef.visited = true
               break
             end
           end
@@ -257,24 +259,6 @@ module Bake
       end
     end
 
-    def sortIncs
-      Blocks::ALL_BLOCKS.each do |name,block|
-        foundMyself = false
-        front = []
-        back = []
-        block.bes.each do |inc|
-          if Metamodel::Dependency === inc && inc.name == block.projectName && inc.config == block.config.name
-            foundMyself = true
-          elsif Metamodel::Dependency === inc && foundMyself
-            back << inc
-          else
-            front << inc
-          end
-        end
-        block.bes = front + back
-      end
-    end
-
     def makeGraph
       mainConfig = @referencedConfigs[Bake.options.main_project_name].select { |c| c.name == Bake.options.build_config }.first
       @referencedConfigs.each do |projName, configs|
@@ -330,6 +314,7 @@ module Bake
                 diba << d
               end
               d.inject = "" # this prevents injecting to injected deps
+              d.infix = ""
             end
           end
           next if difr.empty? && diba.empty?
@@ -360,7 +345,7 @@ module Bake
         bes2 = []
         blockSet = Set.new
         block.bes.each do |b|
-          n = Metamodel::Dependency === b ? b.name+","+b.config : b.name
+          n = Metamodel::Dependency === b ? b.name+","+b.config : b.name + "," + b.inherit.to_s
           next if blockSet.include?n
           blockSet << n
           bes2 << b
