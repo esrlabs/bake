@@ -607,7 +607,7 @@ module Bake
               if !@include_set.include?(mappedInc) # todo set!!
                 @include_list << mappedInc
                 @include_set << mappedInc
-                @include_merge[mappedInc] = block.config.mergeInc if !@include_merge.has_key?(mappedInc)
+                @include_merge[mappedInc] = be.parent.mergeInc if !@include_merge.has_key?(mappedInc)
                 @system_includes << mappedInc if be.system
               end
             end
@@ -638,7 +638,7 @@ module Bake
 
         
         calcIncludesInternal(@block) # includeDir and child dependencies with inherit: true
-        #exit(1)
+        # exit(1)
         @include_list = @include_list.flatten.uniq
       end
 
@@ -667,8 +667,9 @@ module Bake
             end
             merging = true
 
-            toCopy = Dir.glob(idirs+"/**/*").reject { |file| f = file.split("/").last; f.start_with?(".") || f == "build" }.
-                                             select {|file| /^\.(h|i)/ === File.extname(file) }
+            toCopy = Dir.glob(idirs+"/**/*").
+              reject { |file| file.start_with?(idirs+"/build/") || file.start_with?(idirs+"/.") }.
+              select { |file| File.file?(file) && /^\.(h|i)/ === File.extname(file) }
             toCopy.each do |t|
               dest = mdir+t[idirs.length..-1]
               destDirs << File.dirname(dest)

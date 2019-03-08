@@ -406,7 +406,7 @@ describe "Building" do
   it 'system include' do
     Bake.startBake("systemInclude/main", ["test", "-v2"])
     expect(ExitHelper.exit_code).to be == 0
-    expect($mystring.include?("-Wall -Iinclude/a -isysteminclude/b -iinclude/c -isysteminclude/d -o")).to be == true
+    expect($mystring.include?("-Wall -Iinclude/a -isysteminclude/b -Iinclude/c -isysteminclude/d -o")).to be == true
   end
 
   it 'call a sub main exists' do

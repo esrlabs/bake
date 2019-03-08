@@ -128,6 +128,8 @@ module Bake
               break
             end
           end
+        else
+          subDeps << dep
         end
           
       end
