@@ -115,7 +115,7 @@ module Bake
 
     def addSubDependencies(block, config)
       subDeps = []
-      config.depInc.each do |dep|
+      config.depInc.reverse.each do |dep|
         if (Metamodel::Dependency === dep)
           @referencedConfigs[dep.name].each do |configRef|
             if configRef.name == dep.config
@@ -123,18 +123,14 @@ module Bake
               break if blockRef.visited
               blockRef.visited = true
               subDeps += addSubDependencies(block, configRef)
-              subDeps << dep
+              subDeps << dep#
               break
             end
           end
-        #else # IncludeDir
-        #  subDeps << dep if dep.inherit == true
         end
           
       end
-      if subDeps.empty? && @corOrderActive
-        @correctOrder << Blocks::ALL_BLOCKS[config.qname]
-      end
+      @correctOrder << block
       return subDeps
     end
     
@@ -284,14 +280,14 @@ module Bake
       @referencedConfigs.each do |projName, configs|
         configs.each do |config|
           block = Blocks::ALL_BLOCKS[config.qname]
-          @corOrderActive = false
           if (config == mainConfig)
             @correctOrder = []
             @corOrderActive = true
           end
           addDependencies(block, config)
           if (config == mainConfig)
-            @correctOrder << block
+            @correctOrder  << block
+            @corOrderActive = false
           end
         end
       end
@@ -299,8 +295,6 @@ module Bake
         block.dependencies.uniq!
       end
 
-
-      
       # inject dependencies
       num_interations = 0
       begin
@@ -313,22 +307,14 @@ module Bake
         end
 
         counter = 0
-        @correctOrder.reverse.each do |block|
+        @correctOrder.each do |block|
           name = block.config.qname
           difr = []
           diba = []
           block.bes.each do |d|
             if Metamodel::Dependency === d
-              if d.name =="bap"
-                #puts "AHA"
-                #puts d.config
-                #puts d.inject
-                #puts block.projectName
-                #puts block.configName
-              end 
               next if d.inject == ""
               dqname = "#{d.name},#{d.config}"
-              dblock = Blocks::ALL_BLOCKS[dqname]
               next if name == dqname
               if d.inject == "front"
                 difr << d
@@ -367,7 +353,15 @@ module Bake
         end
         num_interations += 1
       end while counter > 0
-
+      Blocks::ALL_BLOCKS.each do |name,block|
+        block.bes.uniq! do |b|
+          if Metamodel::Dependency === b
+            b.name+","+b.config
+          else
+            b.name
+          end
+        end
+      end
     end
 
     def makeDot
