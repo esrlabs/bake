@@ -115,7 +115,7 @@ module Bake
 
     def addSubDependencies(block, config)
       subDeps = []
-      config.depInc.reverse.each do |dep|
+      config.depInc.each do |dep|
         if (Metamodel::Dependency === dep)
           @referencedConfigs[dep.name].each do |configRef|
             if configRef.name == dep.config
@@ -123,7 +123,7 @@ module Bake
               break if blockRef.visited
               blockRef.visited = true
               subDeps += addSubDependencies(block, configRef)
-              subDeps << dep#
+              subDeps << dep
               break
             end
           end
@@ -286,7 +286,7 @@ module Bake
           end
           addDependencies(block, config)
           if (config == mainConfig)
-            @correctOrder  << block
+            @correctOrder.unshift(block)
             @corOrderActive = false
           end
         end
@@ -307,7 +307,7 @@ module Bake
         end
 
         counter = 0
-        @correctOrder.each do |block|
+        @correctOrder.reverse.each do |block|
           name = block.config.qname
           difr = []
           diba = []
