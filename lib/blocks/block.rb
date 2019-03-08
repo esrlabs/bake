@@ -22,7 +22,7 @@ module Bake
       @@delayed_result = true
       @@threads = []
 
-      attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :prebuild, :output_dir, :tcs
+      attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :configName, :prebuild, :output_dir, :tcs
       attr_accessor :visited, :inDeps, :result, :bes
 
       def startupSteps

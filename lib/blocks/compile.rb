@@ -413,7 +413,9 @@ module Bake
             calcFlags   # not for files with changed tcs
             calcSources
             calcObjects
+            puts "Profiling #{Time.now - $timeStart}: prepareIncludes (#{@projectName+","+@config.name}) start..." if Bake.options.profiling
             prepareIncludes
+            puts "Profiling #{Time.now - $timeStart}: prepareIncludes (#{@projectName+","+@config.name}) stop..." if Bake.options.profiling
           end
 
           fileListBlock = Set.new if Bake.options.filelist
@@ -593,29 +595,46 @@ module Bake
       end
 
       def calcIncludesInternal(block)
+        # puts "#{block.projectName},#{block.configName}"
+        noDeps = @blocksRead.include?(block)
         @blocksRead << block
         block.bes.each do |be|
           if Metamodel::IncludeDir === be
+            # puts "-- #{be.name}"
             if be.inherit == true || block == @block
               mappedInc = File.rel_from_to_project(@projectDir,be.name,false)
               mappedInc  = "." if mappedInc.empty?
-              @include_list << mappedInc
-              @include_merge[mappedInc] = block.config.mergeInc if !@include_merge.has_key?(mappedInc)
-              @system_includes << mappedInc if be.system
+              if !@include_set.include?(mappedInc) # todo set!!
+                @include_list << mappedInc
+                @include_set << mappedInc
+                @include_merge[mappedInc] = block.config.mergeInc if !@include_merge.has_key?(mappedInc)
+                @system_includes << mappedInc if be.system
+              end
             end
           elsif Metamodel::Dependency === be
-            childBlock = Blocks::ALL_BLOCKS[be.name + "," + be.config]
-            calcIncludesInternal(childBlock) if !@blocksRead.include?(childBlock)
+            if (!noDeps)
+              childBlock = Blocks::ALL_BLOCKS[be.name + "," + be.config]
+              calcIncludesInternal(childBlock)
+            end
           end
         end
       end
 
       def calcIncludes
         @blocksRead = Set.new
+        @include_set = Set.new
         @include_list = []
         @include_merge = {}
         @system_includes = Set.new
+        
+          #puts @block.bes.length
+          #@block.bes.each {|b| puts "#{b.class}: #{b.name}, #{b.respond_to?(:config) ? b.config : ""}"}
+          #exit(1)
+        
+
+        
         calcIncludesInternal(@block) # includeDir and child dependencies with inherit: true
+        #exit(1)
         @include_list = @include_list.flatten.uniq
       end
 
@@ -624,6 +643,9 @@ module Bake
         inmerge = false
         mdir = nil
         include_list_new = []
+        filesToCopy = {}
+        destDirs = Set.new
+        merging = false
         @include_list.reverse.each do |idir|
           idirs = idir.to_s
           idirs = File.expand_path(idirs, @projectDir) if !File.is_absolute?(idirs)
@@ -636,8 +658,18 @@ module Bake
               FileUtils.mkdir_p(mdir)
               inmerge = true
             end
-            toCopy = Dir.glob(idirs+"/*").reject { |file| f = file.split("/").last; f.start_with?(".") || f == "build" }
-            FileUtils.cp_r(toCopy, mdir, :preserve => true)
+            if !merging
+              puts "Profiling #{Time.now - $timeStart}: glob..." if Bake.options.profiling
+            end
+            merging = true
+
+            toCopy = Dir.glob(idirs+"/**/*").reject { |file| f = file.split("/").last; f.start_with?(".") || f == "build" }.
+                                             select {|file| /^\.(h|i)/ === File.extname(file) }
+            toCopy.each do |t|
+              dest = mdir+t[idirs.length..-1]
+              destDirs << File.dirname(dest)
+              filesToCopy[t] = dest
+            end
             include_list_new << (@block.output_dir+"/mergedIncludes#{mergeCounter}")
           else
             if (inmerge)
@@ -645,6 +677,17 @@ module Bake
             end
             include_list_new << idir
           end
+        end
+        if merging
+          sizeWarning = 100000
+          sum = filesToCopy.keys.inject(0) do |sum,t|
+            si = File.size(t)
+            puts "Size warning (>#{sizeWarning} byte): #{t} has #{si} byte" if si > sizeWarning and Bake.options.profiling
+            sum + si
+          end
+          puts "Profiling #{Time.now - $timeStart}: copy #{sum} byte in #{filesToCopy.length} files..." if Bake.options.profiling
+          destDirs.each {|d| FileUtils.mkdir_p(d)}
+          filesToCopy.each {|t, dest| FileUtils.cp_r(t, dest, :preserve => true) }
         end
         @include_list = include_list_new.uniq.reverse
 

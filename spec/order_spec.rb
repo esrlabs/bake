@@ -24,7 +24,7 @@ describe "Order" do
 
   it 'mix front and back' do
     Bake.startBake("injectTwice/main", ["test", "-v2"])
-    expect($mystring.include?("-Ifirst -Isecond -Iforth -Ithird -Ififth -Isixth")).to be == true
+    expect($mystring.include?("-Ifirst -Isecond -Ithird -Iforth -Ififth -Isixth")).to be == true
   end
 
 end

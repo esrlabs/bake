@@ -127,8 +127,8 @@ module Bake
               break
             end
           end
-        else # IncludeDir
-          subDeps << dep if dep.inherit == true
+        #else # IncludeDir
+        #  subDeps << dep if dep.inherit == true
         end
           
       end
@@ -162,8 +162,6 @@ module Bake
             if configRef.name == dep.config
               qname = configRef.qname
               blockRef = Blocks::ALL_BLOCKS[qname]
-              break if blockRef.visited
-              blockRef.visited = true
   
               if configRef.private && configRef.parent.name != config.parent.name
                 Bake.formatter.printError("#{config.parent.name} (#{config.name}) depends on #{configRef.parent.name} (#{configRef.name}) which is private.", configRef)
@@ -171,9 +169,12 @@ module Bake
               end
   
               block.dependencies << qname if not Bake.options.project# and not Bake.options.filename
-              subDeps = addSubDependencies(block, configRef)
-              block.bes += subDeps
+              if !blockRef.visited
+                subDeps = addSubDependencies(block, configRef)
+                block.bes += subDeps
+              end
               block.bes << dep
+              blockRef.visited = true
               break
             end
           end
@@ -181,6 +182,7 @@ module Bake
           block.bes << dep
         end
       end
+      
     end
 
     def calcPrebuildBlocks
@@ -297,6 +299,8 @@ module Bake
         block.dependencies.uniq!
       end
 
+
+      
       # inject dependencies
       num_interations = 0
       begin
@@ -307,44 +311,63 @@ module Bake
             block.bes.select{|b| Metamodel::Dependency === b}.each { |d| puts "- #{d.name},#{d.config}" }
           end
         end
-        
+
         counter = 0
-        @correctOrder.each do |block|
+        @correctOrder.reverse.each do |block|
           name = block.config.qname
           difr = []
           diba = []
           block.bes.each do |d|
             if Metamodel::Dependency === d
+              if d.name =="bap"
+                #puts "AHA"
+                #puts d.config
+                #puts d.inject
+                #puts block.projectName
+                #puts block.configName
+              end 
               next if d.inject == ""
               dqname = "#{d.name},#{d.config}"
               dblock = Blocks::ALL_BLOCKS[dqname]
               next if name == dqname
               if d.inject == "front"
                 difr << d
-               else
+              elsif d.inject == "back"
                 diba << d
               end
+              d.inject = "" # this prevents injecting to injected deps
+              d.setInjected
             elsif Metamodel::IncludeDir === d
               if d.inject == "front" || d.infix == "front"
                 difr << d
               elsif d.inject == "back" || d.infix == "back" 
                 diba << d
               end
+              d.inject = "" # this prevents injecting to injected deps
             end
           end
           next if difr.empty? && diba.empty?
 
           block.bes.each do |dep|
             next unless Metamodel::Dependency === dep
+            if dep.injected?
+              difr2 = difr.select{|d| Metamodel::IncludeDir === d }
+              diba2 = diba.select{|d| Metamodel::IncludeDir === d }
+            else
+              difr2 = difr
+              diba2 = diba
+            end
+          
             fde = Blocks::ALL_BLOCKS[dep.name+","+dep.config]
             l1 = fde.bes.length 
-            fde.bes = (difr + fde.bes + diba).uniq
+            fde.bes = (difr2 + fde.bes + diba2).uniq # .select{|d| !(Metamodel::Dependency===d) || d.name != dep.name || d.config != dep.config }
             l2 = fde.bes.length
             counter += 1 if (l2 != l1)
           end
         end
         num_interations += 1
       end while counter > 0
+
     end
 
     def makeDot
@@ -651,7 +674,7 @@ module Bake
           puts "Profiling #{Time.now - $timeStart}: make includes..." if Bake.options.profiling
           makeIncs
           puts "Profiling #{Time.now - $timeStart}: sorting includes..." if Bake.options.profiling
-          sortIncs
+          #sortIncs
           if Bake.options.dot
             puts "Profiling #{Time.now - $timeStart}: make dot..." if Bake.options.profiling
             makeDot

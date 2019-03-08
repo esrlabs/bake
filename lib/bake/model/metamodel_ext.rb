@@ -23,6 +23,15 @@ module Bake
 
       end
 
+      module Dependency::ClassModule
+        def setInjected
+          @injected = true
+        end
+        def injected?
+          @injected ||= false
+        end
+      end
+      
       module BaseConfig_INTERNAL::ClassModule
         def qname
           @qname ||= parent.name + "," + name
