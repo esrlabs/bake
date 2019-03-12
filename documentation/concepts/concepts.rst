@@ -13,3 +13,4 @@ Concepts
     prebuild
     inject
     cache
+    merge

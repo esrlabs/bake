@@ -62,8 +62,6 @@ module Bake
       puts " --crc32 <string>         Calulates the CRC32 of string (0x4C11DB7, init 0, final xor 0, input and result not reflected), used for Uid variable calculation"
       puts " --diab-case-check        When compiling with DCC, this switches to the case check on Windows machines. No actual compilation is done."
       puts " --file-cmd               Writes arguments into a file and hands it over the compiler/archiver/linker. Works only for supported compilers."
-      puts " --merge-inc              Merges includes together, so the compiler gets only one include directory (applies to all configs which mergeInc attribute is not set)."
-      puts " --merge-inc-main         Same as --merge-inc, but does the merge only for the main project."
       puts " --link-beta              Improved linking, order of libs changed. Experimental."
       puts " --build_                 DEPRECATED: build directories will be build_<name> instead of build/<name>"
       puts " --version                Print version."

@@ -515,11 +515,6 @@ describe "Merging Configs" do
     expect($mystring.include?("Oooooh")).to be == false
   end
 
-  it 'inherit correct for merge' do
-    Bake.startBake("mergeInc/main", ["test", "--rebuild"])
-    expect($mystring.include?("Rebuilding done.")).to be == true
-  end
-
   it 'multi inheritence' do
     Bake.startBake("merge/main", ["testMulti"])
 

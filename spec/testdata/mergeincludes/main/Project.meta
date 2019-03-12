@@ -8,13 +8,19 @@ Project {
   ExecutableConfig test2 {
     Files "src/c2.cpp"
     Dependency config: test1
-    IncludeDir "include/c2", inherit: true
+    IncludeDir "include/c2"
     Dependency lib, config: test1
     Dependency lib, config: test2
     Dependency lib, config: test3
     Dependency lib, config: test4
-    IncludeDir "lib/include/c2", inherit: true
+    IncludeDir "lib/include/c2"
     DefaultToolchain GCC
   }
+  
+  ExecutableConfig test3, mergeInc: "yes" {
+    Files "src/c2.cpp"
+    Dependency config: test1
+    DefaultToolchain GCC
+  }  
 
 }

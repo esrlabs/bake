@@ -1,0 +1,7 @@
+Project {
+
+  ExecutableConfig test4, mergeInc: "broken" {
+    Files "src/c2.cpp"
+    DefaultToolchain GCC
+  }  
+}

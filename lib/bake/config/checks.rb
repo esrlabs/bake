@@ -78,11 +78,9 @@ module Bake
             end
           end if config.respond_to?("includeDir")
 
-          config.dependency.each do |d|
-            if not ["front", "back", ""].include?d.inject
-              Bake.formatter.printError("inject of Dependency must be 'front' or 'back'", d)
-              ExitHelper.exit(1)
-            end
+          if not ["", "yes", "no"].include?config.mergeInc
+            Bake.formatter.printError("Allowed modes are 'yes', 'no' and unset.",config)
+            ExitHelper.exit(1)
           end
 
         end

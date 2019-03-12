@@ -653,7 +653,7 @@ module Bake
         @include_list.reverse.each do |idir|
           idirs = idir.to_s
           idirs = File.expand_path(idirs, @projectDir) if !File.is_absolute?(idirs)
-          tomerge = (@include_merge[idir] == "yes" || (@include_merge[idir] == "" && (Bake.options.mergeInc || (Bake.options.mergeIncMain && Bake.options.main_project_name == @projectName))))
+          tomerge = (@include_merge[idir] != "no" && @config.mergeInc == "yes")
           if (tomerge)
             if (!inmerge)
               mergeCounter += 1
