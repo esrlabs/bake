@@ -119,7 +119,8 @@
 <dt>A configuration, e.g. a LibraryConfig, can have a mergeInc flag:</dt>
 <dd><ul class="first last simple">
 <li>“no” = none of the include folders of this config will ever be merged.</li>
-<li>“yes” = all include folders inclusive inherited include folders will be merged when compiling this config (except include folders which configs have explicit mergeInc “no”).</li>
+<li>“yes” = inherited include folders will be merged when compiling this config (except include folders which configs have explicit mergeInc “no”).</li>
+<li>“all” = all include folders will be merged when compiling this config (except include folders which configs have explicit mergeInc “no”).</li>
 <li>unset = when building THIS config no include folders are merged.</li>
 </ul>
 </dd>
@@ -144,6 +145,10 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Not ALL files from an include folder are copied. The folder &lt;projectDir&gt;/build/ and everything beginning with &lt;projectDir&gt;/. will be ignored. Only files with ending h* and i* are copied.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For MISRA checking use “yes”, not “all”, otherwise MISRA tooling does not know which header file belongs to the current project.</p>
 </div>
 </div>
 

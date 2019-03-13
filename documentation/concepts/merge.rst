@@ -5,7 +5,8 @@ Some projects might compile faster if header files are copied into one folder.
 
 A configuration, e.g. a LibraryConfig, can have a mergeInc flag:
     - "no" = none of the include folders of this config will ever be merged.
-    - "yes" = all include folders inclusive inherited include folders will be merged when compiling this config (except include folders which configs have explicit mergeInc "no").
+    - "yes" = inherited include folders will be merged when compiling this config (except include folders which configs have explicit mergeInc "no").
+    - "all" = all include folders will be merged when compiling this config (except include folders which configs have explicit mergeInc "no").
     - unset = when building THIS config no include folders are merged.
 
 Usually only very few configs should have mergeInc "no". This might be necessary if source files have broken include directives.
@@ -33,3 +34,7 @@ To enable mergeInc via Adapt for all configs:
 .. note::
 
     Not ALL files from an include folder are copied. The folder <projectDir>/build/ and everything beginning with <projectDir>/. will be ignored. Only files with ending h* and i* are copied.
+
+.. note::
+
+    For MISRA checking use "yes", not "all", otherwise MISRA tooling does not know which header file belongs to the current project.

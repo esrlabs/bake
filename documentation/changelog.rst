@@ -1,9 +1,9 @@
 Changelog
 =========
 
-March 12, 2019 - bake-toolkit 2.51.0
+March 13, 2019 - bake-toolkit 2.51.0
     * Changed: refactored calculating include folders. Now it's much faster than before! However, the order of include folders may have changed for ambiguous configurations.
-    * Changed: merge include feature refactored after getting some feedback.
+    * Changed: merge-include feature refactored after getting some feedback.
 
 February 7, 2019 - bake-toolkit 2.50.0
     * Added: command line option "--merge-inc" which copies all include files into one temprary folder and invokes the compiler with just one include path.

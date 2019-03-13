@@ -669,7 +669,8 @@ function showPrivate() {
 function showMergeInc() {
     ddrivetip("mergeInc", "No","0..1","-",
         "If set to \"no\", the IncludeDirs will NEVER be merged.<br>"+
-        "If set to \"yes\", all IncludeDirs will merged when compiling this config (except for IncludeDirs which configs have mergeInc \"no\".<br>"+
+        "If set to \"yes\", inherited IncludeDirs will merged when compiling this config (except for IncludeDirs which configs have mergeInc \"no\".<br>"+
+        "If set to \"all\", all IncludeDirs will merged when compiling this config (except for IncludeDirs which configs have mergeInc \"no\".<br>"+
         "If unset, IncludeDirs will not be merged when compiling this config.")
 }
 
