@@ -229,6 +229,7 @@ z-index: 100;
               <span class="hideRadio" onMouseover="showLibraryConfig()" onMouseout="notip()" id="libraryConfig">LibraryConfig</span> |
               <span class="hideRadio" onMouseover="showCustomConfig()" onMouseout="notip()" id="customConfig">CustomConfig</span> &#60;name&#62;,
               <span class="help" onMouseover="showExtends()" onMouseout="notip()">extends</span>: &#60;parent(s)&#62;,
+              <span class="help" onMouseover="showMergeInc()" onMouseout="notip()">mergeInc</span>: yes|no,
               <span class="help" onMouseover="showPrivate()" onMouseout="notip()">private</span>: true|false {<br><br>
 
               <span><span style="background-color:#EEEEEE;" class="show">
@@ -665,6 +666,14 @@ function showPrivate() {
     ddrivetip("private", "No","0..1","false","If true, the config cannot be referenced directly outside of this project.")
 }
 
+function showMergeInc() {
+    ddrivetip("mergeInc", "No","0..1","-",
+        "If set to \"no\", the IncludeDirs will NEVER be merged.<br>"+
+        "If set to \"yes\", inherited IncludeDirs will merged when compiling this config (except for IncludeDirs which configs have mergeInc \"no\".<br>"+
+        "If set to \"all\", all IncludeDirs will merged when compiling this config (except for IncludeDirs which configs have mergeInc \"no\".<br>"+
+        "If unset, IncludeDirs will not be merged when compiling this config.")
+}
+
 function showFiles() {
   str = 'Specifies the files to build.<br>'+
     'It\'s valid to specify a single file, e.g.<br>'+
@@ -914,7 +923,7 @@ function showOnlyDirectDeps() {
 
 
 var offsetxpoint=20 //Customize x offset of tooltip
-var offsetypoint=20 //Customize y offset of tooltip
+var offsetypoint=30 //Customize y offset of tooltip
 var ie=document.all
 var ns6=document.getElementById && !document.all
 var enabletip=false

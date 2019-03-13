@@ -5,6 +5,7 @@
 ./concepts/concepts.html
 ./concepts/inject.html
 ./concepts/link_order.html
+./concepts/merge.html
 ./concepts/parallel.html
 ./concepts/prebuild.html
 ./concepts/the_main_project.html
