@@ -13,7 +13,7 @@ module Bake
 
 describe "Merge-Inc" do
 
-  it 'normal build with one sub yes' do
+  it 'normal build with one sub all' do
     Bake.startBake("mergeincludes/main", ["test2", "-v2"])
 
     expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Iinclude/c1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
@@ -30,24 +30,25 @@ describe "Merge-Inc" do
     Bake.startBake("mergeincludes/main", ["test2", "-v2", "--adapt", "merge_main"])
 
     expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Iinclude/c1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
-    expect($mystring.include?("g++ -c -MD -MF build/test3_main_test2/src/c3.d -Ibuild/test3_main_test2/mergedIncludes1 -o build/test3_main_test2/src/c3.o src/c3.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Iinclude/c1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test4_main_test2/src/c4.d -Iinclude/c4 -o build/test4_main_test2/src/c4.o src/c4.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test3_main_test2/src/c3.d -Ibuild/test3_main_test2/mergedIncludes1 -o build/test3_main_test2/src/c3.o src/c3.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test2_main_test2/src/c2.d -Iinclude/c2 -o build/test2_main_test2/src/c2.o src/c2.cpp")).to be == true
-    expect($mystring.include?("g++ -c -MD -MF build/test2/src/c2.d -Ibuild/test2/mergedIncludes2 -I../lib/include/c2 -Ibuild/test2/mergedIncludes1 -o build/test2/src/c2.o src/c2.")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test2/src/c2.d -Ibuild/test2/mergedIncludes3 -Iinclude/c2 -Ibuild/test2/mergedIncludes2 -I../lib/include/c2 -Ibuild/test2/mergedIncludes1 -o build/test2/src/c2.o src/c2.cpp")).to be == true
 
+    
     expect(ExitHelper.exit_code).to be == 0
   end
 
 it 'build with merge all' do
     Bake.startBake("mergeincludes/main", ["test2", "-v2", "--adapt", "merge_all"])
 
-    expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Ibuild/test1_main_test2/mergedIncludes1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
-    expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Ibuild/test1_main_test2/mergedIncludes1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Iinclude/c1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Iinclude/c1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test2_main_test2/src/c2.d -Iinclude/c2 -o build/test2_main_test2/src/c2.o src/c2.cpp")).to be == true
-    expect($mystring.include?("g++ -c -MD -MF build/test3_main_test2/src/c3.d -Ibuild/test3_main_test2/mergedIncludes1 -o build/test3_main_test2/src/c3.o src/c3.cpp")).to be == true
-    expect($mystring.include?("g++ -c -MD -MF build/test4_main_test2/src/c4.d -Ibuild/test4_main_test2/mergedIncludes1 -o build/test4_main_test2/src/c4.o src/c4.cpp")).to be == true
-    expect($mystring.include?("g++ -c -MD -MF build/test2/src/c2.d -Ibuild/test2/mergedIncludes2 -I../lib/include/c2 -Ibuild/test2/mergedIncludes1 -o build/test2/src/c2.o src/c2.")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test3_main_test2/src/c3.d -Iinclude/c3 -o build/test3_main_test2/src/c3.o src/c3.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test4_main_test2/src/c4.d -Iinclude/c4 -o build/test4_main_test2/src/c4.o src/c4.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test2/src/c2.d -Ibuild/test2/mergedIncludes3 -Iinclude/c2 -Ibuild/test2/mergedIncludes2 -I../lib/include/c2 -Ibuild/test2/mergedIncludes1 -o build/test2/src/c2.o src/c2.cpp")).to be == true
 
     expect(ExitHelper.exit_code).to be == 0
   end
@@ -83,6 +84,42 @@ it 'build with merge all' do
     expect($mystring.include?("Allowed modes are")).to be == true
 
     expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'build with all main' do
+    Bake.startBake("mergeincludes/main", ["test2", "-v2", "--adapt", "all_main"])
+
+    expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Iinclude/c1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test3_main_test2/src/c3.d -Ibuild/test3_main_test2/mergedIncludes1 -o build/test3_main_test2/src/c3.o src/c3.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Iinclude/c1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test4_main_test2/src/c4.d -Iinclude/c4 -o build/test4_main_test2/src/c4.o src/c4.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test2_main_test2/src/c2.d -Iinclude/c2 -o build/test2_main_test2/src/c2.o src/c2.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test2/src/c2.d -Ibuild/test2/mergedIncludes2 -I../lib/include/c2 -Ibuild/test2/mergedIncludes1 -o build/test2/src/c2.o src/c2.")).to be == true
+
+    expect(ExitHelper.exit_code).to be == 0
+  end
+
+it 'build with all all' do
+    Bake.startBake("mergeincludes/main", ["test2", "-v2", "--adapt", "all_all"])
+
+    expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Ibuild/test1_main_test2/mergedIncludes1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test1_main_test2/src/c1.d -Ibuild/test1_main_test2/mergedIncludes1 -o build/test1_main_test2/src/c1.o src/c1.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test2_main_test2/src/c2.d -Iinclude/c2 -o build/test2_main_test2/src/c2.o src/c2.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test3_main_test2/src/c3.d -Ibuild/test3_main_test2/mergedIncludes1 -o build/test3_main_test2/src/c3.o src/c3.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test4_main_test2/src/c4.d -Ibuild/test4_main_test2/mergedIncludes1 -o build/test4_main_test2/src/c4.o src/c4.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test2/src/c2.d -Ibuild/test2/mergedIncludes2 -I../lib/include/c2 -Ibuild/test2/mergedIncludes1 -o build/test2/src/c2.o src/c2.")).to be == true
+
+    expect(ExitHelper.exit_code).to be == 0
+  end  
+
+  it 'build with merge all with subs' do
+      Bake.startBake("mergeincludes/main", ["test6", "-v2"])
+
+    expect($mystring.include?("g++ -c -MD -MF build/test4_main_test6/src/c1.d -Iinclude/c1 -o build/test4_main_test6/src/c1.o src/c1.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test5_main_test6/src/c2.d -Iinclude/c2 -Ibuild/test5_main_test6/mergedIncludes1 -o build/test5_main_test6/src/c2.o src/c2.cpp")).to be == true
+    expect($mystring.include?("g++ -c -MD -MF build/test6/src/c3.d -Ibuild/test6/mergedIncludes1 -o build/test6/src/c3.o src/c3.cpp")).to be == true
+
+    expect(ExitHelper.exit_code).to be == 0
   end
 
 end

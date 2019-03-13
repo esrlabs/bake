@@ -20,7 +20,11 @@ module Bake
 
     def self.localFile(str)
       return true if (not is_valid?) || (not @@options.qacfilefilter)
-      projects.any? { |fil| str.include?(fil+"/") and not str.include?(fil+"/test/") and not str.include?(fil+"/mock/") and not str.include?(fil+"/.qacdata/") }
+      projects.any? { |fil| str.include?(fil+"/") &&
+        !str.include?(fil+"/test/") &&
+        !str.include?(fil+"/mock/") &&
+        !str.include?(fil+"/.qacdata/") &&
+        !str.include?("/mergedIncludes") }
     end
 
     def self.writeFilter(filter)

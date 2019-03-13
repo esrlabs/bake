@@ -1,0 +1,3 @@
+Adapt {
+  CustomConfig __MAIN__, project: __MAIN__, type: extend, mergeInc: "all"
+}

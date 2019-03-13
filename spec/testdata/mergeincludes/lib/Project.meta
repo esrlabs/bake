@@ -10,7 +10,7 @@ Project {
     IncludeDir "include/c2", inherit: true
   }
 
-  LibraryConfig test3, mergeInc: "yes" {
+  LibraryConfig test3, mergeInc: "all" {
     Files "src/c3.cpp"
     IncludeDir "include/c3", inherit: true
   }

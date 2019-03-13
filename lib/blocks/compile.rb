@@ -607,7 +607,17 @@ module Bake
               if !@include_set.include?(mappedInc) # todo set!!
                 @include_list << mappedInc
                 @include_set << mappedInc
-                @include_merge[mappedInc] = be.parent.mergeInc if !@include_merge.has_key?(mappedInc)
+                if !@include_merge.has_key?(mappedInc)
+                  if be.parent.mergeInc == "no"
+                    @include_merge[mappedInc] = false
+                  elsif @config.mergeInc == "all"
+                    @include_merge[mappedInc] = true
+                  elsif @block.config != be.parent && @config.mergeInc == "yes"
+                    @include_merge[mappedInc] = true
+                  else
+                    @include_merge[mappedInc] = false
+                  end
+                end
                 @system_includes << mappedInc if be.system
               end
             end
@@ -653,8 +663,7 @@ module Bake
         @include_list.reverse.each do |idir|
           idirs = idir.to_s
           idirs = File.expand_path(idirs, @projectDir) if !File.is_absolute?(idirs)
-          tomerge = (@include_merge[idir] != "no" && @config.mergeInc == "yes")
-          if (tomerge)
+          if @include_merge[idir]
             if (!inmerge)
               mergeCounter += 1
               mdir = File.expand_path(@block.output_dir+"/mergedIncludes#{mergeCounter}", @projectDir)
@@ -669,11 +678,15 @@ module Bake
 
             toCopy = Dir.glob(idirs+"/**/*").
               reject { |file| file.start_with?(idirs+"/build/") || file.start_with?(idirs+"/.") }.
-              select { |file| File.file?(file) && /^\.(h|i)/ === File.extname(file) }
+              select { |file| File.file?(file) && /^\.(h|i|cfg)/ === File.extname(file) }
             toCopy.each do |t|
               dest = mdir+t[idirs.length..-1]
               destDirs << File.dirname(dest)
-              filesToCopy[t] = dest
+              if filesToCopy.has_key?(t)
+                filesToCopy[t] << dest
+              else
+                filesToCopy[t] = [dest]
+              end
             end
             include_list_new << (@block.output_dir+"/mergedIncludes#{mergeCounter}")
           else
@@ -692,7 +705,11 @@ module Bake
           end
           puts "Profiling #{Time.now - $timeStart}: copy #{sum} byte in #{filesToCopy.length} files..." if Bake.options.profiling
           destDirs.each {|d| FileUtils.mkdir_p(d)}
-          filesToCopy.each {|t, dest| FileUtils.cp_r(t, dest, :preserve => true) }
+          filesToCopy.each do |t, dest|
+            dest.each do |d|
+              FileUtils.cp_r(t, d, :preserve => true)
+            end
+          end
         end
         @include_list = include_list_new.uniq.reverse
 

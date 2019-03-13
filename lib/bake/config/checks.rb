@@ -78,8 +78,8 @@ module Bake
             end
           end if config.respond_to?("includeDir")
 
-          if not ["", "yes", "no"].include?config.mergeInc
-            Bake.formatter.printError("Allowed modes are 'yes', 'no' and unset.",config)
+          if not ["", "yes", "no", "all"].include?config.mergeInc
+            Bake.formatter.printError("Allowed modes are 'all', 'yes', 'no' and unset.",config)
             ExitHelper.exit(1)
           end
 

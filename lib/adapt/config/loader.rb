@@ -48,8 +48,8 @@ module Bake
           Bake.formatter.printError("Allowed types are 'replace', 'remove', 'extend' and 'push_front'.",c)
           ExitHelper.exit(1)
         end
-        if not ["", "yes", "no"].include?c.mergeInc
-          Bake.formatter.printError("Allowed modes are 'yes', 'no' and unset.",c)
+        if not ["", "yes", "no", "all"].include?c.mergeInc
+          Bake.formatter.printError("Allowed modes are 'all', 'yes', 'no' and unset.",c)
           ExitHelper.exit(1)
         end
       end

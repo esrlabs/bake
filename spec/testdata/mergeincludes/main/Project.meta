@@ -23,4 +23,20 @@ Project {
     DefaultToolchain GCC
   }  
 
+  LibraryConfig test4, mergeInc: "yes" {
+    IncludeDir "include/c1", inherit: true
+    Files "src/c1.cpp"
+  }
+  LibraryConfig test5, mergeInc: "yes" {
+    IncludeDir "include/c2", inherit: true
+    Files "src/c2.cpp"
+    Dependency config: test4
+  }
+  ExecutableConfig test6, mergeInc: "yes" {
+    Dependency config: test4
+    Dependency config: test5
+    Files "src/c3.cpp"
+    DefaultToolchain GCC
+  }
+
 }
