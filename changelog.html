@@ -115,6 +115,12 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>March 21, 2019 - bake-toolkit 2.51.1</dt>
+<dd><ul class="first last simple">
+<li>Bugfix: under certain cases the same Adapt.meta could be found twice which results into a warning</li>
+<li>Changed: if a cmd of a Set (variable) returns with !=0, the output of cmd is now printed out to get an idea why it has failed</li>
+</ul>
+</dd>
 <dt>March 13, 2019 - bake-toolkit 2.51.0</dt>
 <dd><ul class="first last simple">
 <li>Changed: refactored calculating include folders. Now it’s much faster than before! However, the order of include folders may have changed for ambiguous configurations.</li>
