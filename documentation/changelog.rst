@@ -1,6 +1,10 @@
 Changelog
 =========
 
+March 21, 2019 - bake-toolkit 2.51.1
+    * Bugfix: under certain cases the same Adapt.meta could be found twice which results into a warning
+    * Changed: if a cmd of a Set (variable) returns with !=0, the output of cmd is now printed out to get an idea why it has failed
+
 March 13, 2019 - bake-toolkit 2.51.0
     * Changed: refactored calculating include folders. Now it's much faster than before! However, the order of include folders may have changed for ambiguous configurations.
     * Changed: merge-include feature refactored after getting some feedback.

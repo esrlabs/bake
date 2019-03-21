@@ -63,7 +63,7 @@ module Bake
           r = r + Bake.options.main_project_name # glob would not work otherwise on windows (ruby bug?)
         end
         Bake.options.adapt.each do |a|
-          adaptBaseName = a + "/Adapt.meta"
+          adaptBaseName = File.expand_path(a + "/Adapt.meta")
           potentialAdapts << adaptBaseName  if File.exists?adaptBaseName
         end
         potentialAdapts.concat(Root.search_to_depth(r, "Adapt.meta", root.depth))

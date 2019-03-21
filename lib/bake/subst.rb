@@ -116,6 +116,7 @@ module Bake
             consoleOutput = e.message
           end
           if (cmd_result == false)
+            puts consoleOutput
             Bake.formatter.printError("Command not successful: #{cmd.join(" ")}", s)
             ExitHelper.exit(1)
           end
