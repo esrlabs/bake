@@ -24,6 +24,7 @@ module Bake
     attr_reader :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads, :skipBuildingLine # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :prebuild, :printTime, :json, :wparse, :caseSensitivityCheck, :fileCmd, :profiling # Boolean
+    attr_reader :dotAndCompile
     attr_reader :threads, :socket # Fixnum
     attr_reader :vars, :include_filter_args # map
     attr_reader :verbose
@@ -89,6 +90,7 @@ module Bake
       @diabCaseCheck = false
       @defines = []
       @fileCmd = false
+      @dotAndCompile = false
 
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| @main_dir = x                           })
@@ -130,7 +132,8 @@ module Bake
       add_option(["--socket"                                     ], lambda { |x| @socket = String === x ? x.to_i : x     })
       add_option(["--toolchain-info",     "--toolchain_info"     ], lambda { |x| ToolchainInfo.showToolchain(x)          })
       add_option(["--toolchain-names",    "--toolchain_names"    ], lambda {     ToolchainInfo.showToolchainList         })
-      add_option(["--dot",                                       ], lambda { |x| @dot = x                                })
+      add_option(["--dot",                                       ], lambda { |x| @dot = x; @dotAndCompile = false        })
+      add_option(["--dotc",                                      ], lambda { |x| @dot = x; @dotAndCompile = true         })
       add_option(["--do",                 "--include_filter"     ], lambda { |x| set_filter(x)                           })
       add_option(["--omit",               "--exclude_filter"     ], lambda { |x| @exclude_filter << x                    })
       add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })

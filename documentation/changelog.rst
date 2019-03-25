@@ -1,6 +1,9 @@
 Changelog
 =========
 
+March 25, 2019 - bake-toolkit 2.51.2
+    * Added: --dotc creates the dot graph AND compiles the projects as usual (in comparison to --dot)
+
 March 21, 2019 - bake-toolkit 2.51.1
     * Bugfix: under certain cases the same Adapt.meta could be found twice which results into a warning
     * Changed: if a cmd of a Set (variable) returns with !=0, the output of cmd is now printed out to get an idea why it has failed

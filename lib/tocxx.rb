@@ -358,7 +358,6 @@ module Bake
     end
 
     def makeDot
-
         File.open(Bake.options.dot, 'w') do |file|
           puts "Creating #{Bake.options.dot}"
 
@@ -428,7 +427,7 @@ module Bake
           file.write "}\n"
         end
 
-        ExitHelper.exit(0)
+        ExitHelper.exit(0) if !Bake.options.dotAndCompile
     end
 
     def convert2bb
