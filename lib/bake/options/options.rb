@@ -24,7 +24,7 @@ module Bake
     attr_reader :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads, :skipBuildingLine # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :prebuild, :printTime, :json, :wparse, :caseSensitivityCheck, :fileCmd, :profiling # Boolean
-    attr_reader :dotAndCompile
+    attr_reader :dotAndCompile, :show_roots
     attr_reader :threads, :socket # Fixnum
     attr_reader :vars, :include_filter_args # map
     attr_reader :verbose
@@ -91,6 +91,7 @@ module Bake
       @defines = []
       @fileCmd = false
       @dotAndCompile = false
+      @show_roots = false
 
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| @main_dir = x                           })
@@ -109,7 +110,7 @@ module Bake
       add_option(["--no-autodir",         "--no_autodir"         ], lambda {     @no_autodir = true                      })
 
       add_option(["--create"                                     ], lambda { |x| Bake::Create.proj(x)                    })
-      add_option(["--conversion-info",    "--conversion_info"    ], lambda {     @conversion_info = true                 })
+      add_option(["--conversion-info",    "--conversion_info"    ], lambda {     @conversion_info = true; @syncedOutput = true })
       add_option(["--file-list",          "--file_list"          ], lambda {     @filelist = Set.new                     })
       add_option(["--filter-paths"                               ], lambda {     @projectPaths = true                    })
       add_option(["--qac"                                        ], lambda {     @qac = true                             })
@@ -165,6 +166,8 @@ module Bake
 
       # deprecated and not replaced by new command
       add_option(["--show_include_paths"                         ], lambda {     @show_includes = true                   })
+        
+      add_option(["--roots"                                      ], lambda {     @show_roots = true                      })
 
     end
 
@@ -189,6 +192,11 @@ module Bake
       end
 
       @roots = Root.uniq(@roots)
+      
+      if @show_roots
+        puts @roots.map {|r| r.dir }
+        ExitHelper.exit(0)
+      end
 
       @adapt.uniq!
 

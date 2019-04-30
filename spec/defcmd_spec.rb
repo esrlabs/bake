@@ -71,7 +71,111 @@ describe "Define on command line" do
     expect($mystring.include?(incsTestStrDefCmdJson)).to be == true
   end
 
+  it 'conversion info p1' do
+    Bake.startBake("multiProj/main", ["test1", "--conversion-info", "-p", "lib,testSub1"])
+    str = "START_INFO\n"+
+          " BAKE_PROJECTDIR"
+    expect($mystring.include?(str)).to be == true
+    str = "multiProj/lib\n"+
+          " BAKE_SOURCES\n"+
+          " BAKE_INCLUDES\n"+
+          " BAKE_DEFINES\n"+
+          "  D2\n"+
+          "  D1\n"+
+          " BAKE_DEPENDENCIES\n"+
+          " BAKE_DEPENDENCIES_FILTERED\n"+
+          "END_INFO"
+    expect($mystring.include?(str)).to be == true
+  end
 
+  it 'conversion info p2' do
+    Bake.startBake("multiProj/main", ["test1", "--conversion-info", "-p", "lib,testSub2"])
+    str = "START_INFO\n"+
+          " BAKE_PROJECTDIR"
+    expect($mystring.include?(str)).to be == true
+    str = "multiProj/lib\n"+
+          " BAKE_SOURCES\n"+
+          " BAKE_INCLUDES\n"+
+          "  incLib\n"+
+          " BAKE_DEFINES\n"+
+          "  D2\n"+
+          "  D1\n"+
+          " BAKE_DEPENDENCIES\n"+
+          " BAKE_DEPENDENCIES_FILTERED\n"+
+          "END_INFO"
+    expect($mystring.include?(str)).to be == true
+  end
+
+  it 'conversion info p3' do
+    Bake.startBake("multiProj/main", ["test1", "--conversion-info", "-p", "main,testLib1"])
+    str = "START_INFO\n"+
+          " BAKE_PROJECTDIR"
+    expect($mystring.include?(str)).to be == true
+    str = "multiProj/main\n"+
+          " BAKE_SOURCES\n"+
+          "  src/nix.cpp\n"+
+          " BAKE_INCLUDES\n"+
+          "  incMainC\n"+
+          "  incMainD\n"+
+          " BAKE_DEFINES\n"+
+          "  D2\n"+
+          "  D6\n"+
+          "  D1\n"+
+          "  D5\n"+
+          " BAKE_DEPENDENCIES\n"+
+          " BAKE_DEPENDENCIES_FILTERED\n"+
+          "END_INFO"
+    expect($mystring.include?(str)).to be == true
+  end  
+
+  it 'conversion info p4' do
+    Bake.startBake("multiProj/main", ["test1", "--conversion-info", "-p", "main,test1"])
+    str = "START_INFO\n"+
+          " BAKE_PROJECTDIR"
+    expect($mystring.include?(str)).to be == true
+    str = "multiProj/main\n"+
+          " BAKE_SOURCES\n"+
+          "  src/main.cpp\n"+
+          " BAKE_INCLUDES\n"+
+          "  incMainA\n"+
+          "  incMainB\n"+
+          " BAKE_DEFINES\n"+
+          "  D2\n"+
+          "  D4\n"+
+          "  D1\n"+
+          "  D3\n"+
+          " BAKE_DEPENDENCIES\n"+
+          " BAKE_DEPENDENCIES_FILTERED\n"+
+          "END_INFO"
+    expect($mystring.include?(str)).to be == true
+  end 
+  
+  it 'conversion info all' do
+    Bake.startBake("multiProj/main", ["test1", "--conversion-info"])
+    str = "START_INFO\n"+
+          " BAKE_PROJECTDIR"
+    expect($mystring.split(str).length).to be == 5
+    str = "multiProj/main\n"+
+          " BAKE_SOURCES\n"+
+          "  src/main.cpp\n"+
+          " BAKE_INCLUDES\n"+
+          "  incMainA\n"+
+          "  incMainB\n"+
+          " BAKE_DEFINES\n"+
+          "  D2\n"+
+          "  D4\n"+
+          "  D1\n"+
+          "  D3\n"+
+          " BAKE_DEPENDENCIES\n"+
+          "  lib,testSub1\n"+
+          "  lib,testSub2\n"+
+          "  main,testLib1\n"+
+          " BAKE_DEPENDENCIES_FILTERED\n"+
+          "  lib,testSub1\n"+
+          "  lib,testSub2\n"+
+          "END_INFO"
+    expect($mystring.include?(str)).to be == true
+  end 
 
 end
 

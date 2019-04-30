@@ -64,6 +64,10 @@ module Bake
       def set_library(library)
         @library = library
       end
+      
+      def qname()
+        @projectName + "," + @configName
+      end
 
       def initialize(config, referencedConfigs, prebuild, tcs)
         @inDeps = false
@@ -210,6 +214,7 @@ module Bake
       end
 
       def isBuildBlock?
+        return true if Bake.options.conversion_info
         @isBuildBlock ||= calcIsBuildBlock
       end
 

@@ -12,6 +12,10 @@ module Bake
 
       def execute
         Dir.chdir(@projectDir) do
+          calcFileTcs
+          calcIncludes
+          calcDefines
+          calcFlags
           calcSources
 
           puts "START_INFO"
@@ -24,9 +28,9 @@ module Bake
           puts " BAKE_DEFINES"
           (@block.tcs[:COMPILER][:CPP][:DEFINES] + @block.tcs[:COMPILER][:C][:DEFINES] + @block.tcs[:COMPILER][:ASM][:DEFINES]).uniq.each { |s| puts "  #{s}" }
           puts " BAKE_DEPENDENCIES"
-          @block.dependencies.each { |dep| puts "  #{dep.projectName}" }
+          @block.dependencies.each { |dep| puts "  #{ALL_BLOCKS[dep].qname}" }
           puts " BAKE_DEPENDENCIES_FILTERED"
-          @block.dependencies.each { |dep| puts "  #{dep.projectName}" unless @projectName == dep.projectName or dep.projectName == "gmock" or dep.projectName == "gtest" }
+          @block.dependencies.each { |dep| pn = ALL_BLOCKS[dep].projectName; puts "  #{ALL_BLOCKS[dep].qname}" unless @projectName == pn || pn == "gmock" || pn == "gtest" }
           puts "END_INFO"
         end
         return true
