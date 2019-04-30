@@ -4,7 +4,8 @@ module Bake
   class GCCCompilerErrorParser < ErrorParser
 
     def initialize()
-      @error_expression = /([^:]+):([0-9]+)[:0-9]* (catastrophic |fatal )*([A-Za-z\._]+): (.+)/
+      @error_expression =  /([^:]+):([0-9]+)[:0-9]* (catastrophic |fatal )*([A-Za-z\._]+): (.+)/
+      @error_expression2 = /([^:]+)\(([0-9]+)\): (catastrophic |fatal )*([A-Za-z\._]+): (.+)/
     end
 
     def scan_lines(consoleOutput, proj_dir)
@@ -13,6 +14,7 @@ module Bake
       consoleOutput[0].each_line do |l|
         d = ErrorDesc.new
         scan_res = l.gsub(/\r\n?/, "").scan(@error_expression)
+        scan_res = l.gsub(/\r\n?/, "").scan(@error_expression2) if !(scan_res.length > 0)
         if scan_res.length > 0
           d.file_name = File.expand_path(scan_res[0][0], proj_dir)
           d.line_number = scan_res[0][1].to_i
