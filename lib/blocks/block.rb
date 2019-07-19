@@ -553,6 +553,7 @@ module Bake
       def calcOutputDir
         if @tcs[:OUTPUT_DIR] != nil
           p = convPath(@tcs[:OUTPUT_DIR])
+          p = p[2..-1] if p.start_with?("./")
           @output_dir = p
         else
           qacPart = Bake.options.qac ? (".qac" + Bake.options.buildDirDelimiter) : ""
