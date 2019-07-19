@@ -137,6 +137,7 @@ module Bake
 
       class Files < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
+        has_attr 'compileOnly', Boolean, :defaultValueLiteral => "false"
         contains_many 'define', Define, 'parent'
         contains_many 'flags', Flags, 'parent'
       end

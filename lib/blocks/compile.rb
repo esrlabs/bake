@@ -47,7 +47,7 @@ module Bake
 
     class Compile < BlockBase
 
-      attr_reader :objects, :include_list
+      attr_reader :objects, :include_list, :source_files_ignored_in_lib
 
       def mutex
         @mutex ||= Mutex.new
@@ -526,7 +526,7 @@ module Bake
               end
             end
             @object_files[source] = object
-            @objects << object
+            @objects << object unless @source_files_ignored_in_lib.include?(source)
           end
         end
       end
@@ -534,6 +534,7 @@ module Bake
       def calcSources(cleaning = false, keep = false)
         return @source_files if @source_files and not @source_files.empty?
         @source_files = []
+        @source_files_ignored_in_lib = []
 
         exclude_files = Set.new
         @config.excludeFiles.each do |pr|
@@ -559,6 +560,7 @@ module Bake
             next if source_files.include?(f)
             source_files << f
             @source_files << f
+            @source_files_ignored_in_lib << f if sources.compileOnly
           end
         end
 
@@ -591,7 +593,7 @@ module Bake
           end
         end
 
-        @source_files
+        return @source_files
       end
 
       def calcIncludesInternal(block)

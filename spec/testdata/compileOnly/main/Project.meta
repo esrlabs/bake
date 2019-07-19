@@ -1,0 +1,20 @@
+Project default: test {
+
+  LibraryConfig test1 {
+    Files "src/*1a.cpp", compileOnly: true
+    Files "src/lib1b.cpp"
+  }
+
+  LibraryConfig test2 {
+    Files "src/lib2.cpp", compileOnly: true
+  }
+
+  ExecutableConfig test {
+    Files "src/lib.cpp", compileOnly: true
+    Files "src/main.cpp"
+    Dependency config: test1
+    Dependency config: test2
+    DefaultToolchain GCC
+  }
+
+}
