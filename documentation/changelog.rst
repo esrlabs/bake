@@ -5,6 +5,7 @@ March 25, 2019 - bake-toolkit 2.52.0
     * Added: "Scope" as additional adapt conditions
     * Added: all conditions like "toolchain" support list format, e.g. "GCC;CLANG"
     * Added: "compileOnly" annotation for "Files" which means that they shall be compiled, but not archived or linked (experimental feature, might be changed in future)
+    * Added: improved GCC compiler error parser
 
 March 25, 2019 - bake-toolkit 2.51.2
     * Added: --dotc creates the dot graph AND compiles the projects as usual (in comparison to --dot)

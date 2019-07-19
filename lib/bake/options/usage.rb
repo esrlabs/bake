@@ -54,6 +54,7 @@ module Bake
       puts " --incs-and-defs=json     Prints includes and defines of all projects in json format"
       puts " --incs-and-defs=bake     Used by IDEs plugins"
       puts " --conversion-info        Prints infos for an external tool which converts bake configs for other build systems"
+      puts " --roots                  Prints all workspace roots"
       puts " --file-list              Writes all sources and headers used by a SINGLE config into '<config output folder>/file-list.txt'."
       puts "                          Writes all sources and headers used by ALL configs into '<main config output folder/global-file-list.txt'."
       puts " --prebuild               Does not build configs which are marked as 'prebuild', this feature is used for distributions."
