@@ -93,15 +93,30 @@ An *Adapt* can have up to four attributes:
 - **mainConfig**: name of the main config
 - **mainProject**: name of the main project
 
-The "Adapt* configs will be only applied if all these attributes are either empty or true ("AND" operation). Example:
+User defined conditions are specified in **Scopes**.
+
+The *Adapt* configs will be only applied if all these conditions are true ("AND" operation). Example:
 
 .. code-block:: text
 
     Adapt toolchain: GCC, os: Windows {
+      Scope target, value: powerPC
+      Scope somethingElse, value: "option1;option2"
       ...
     }
 
-Here the *Adapt* configs will be applied if toolchain is GCC on Windows.
+Here the *Adapt* configs will be applied if toolchain is GCC on Windows and if target is powerPc and somethingElse either option1 or option2.
+
+User defined scopes must be also specified at the configs to be adapted:
+
+.. code-block:: text
+
+    LibraryConfig Lib {
+      Scope target, value: powerPC
+      Files "*.cpp"
+      ...
+    }
+
 
 .. note::
 
@@ -307,6 +322,7 @@ The "*" wildcard is allowed:
 .. code-block:: text
 
     Adapt mainProject: HERE, mainConfig: HERE ... {
+      Scope fasel, value: HERE
       SomeConfig HERE, project: HERE ... {
         ....
       }
@@ -330,7 +346,17 @@ Example:
 .. code-block:: text
 
     Adapt mainProject: "projA;projB", mainConfig: "UnitTest*;SomeOther" ... {
+      Scope fasel, value: "option*;fasel"
       SomeConfig "libA;libX*", project: "can*;*lin" ... {
         ....
       }
     }
+    
+.. code-block:: text
+
+    LibraryConfig Lib {
+      Scope target, value: "z4a;z4b"
+        ....
+      }
+    }
+    

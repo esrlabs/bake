@@ -1,0 +1,67 @@
+Project {
+
+  CustomConfig test_GCC {
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test_GCC23 {
+    Scope toolchain, value: GCC2
+    Scope toolchain, value: GCC3
+    DefaultToolchain GCC
+  }
+  
+}
+Adapt {
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC_no", echo: off
+    }
+  }
+}
+
+Adapt toolchain: GCC {
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC_old", echo: off
+    }
+  }
+}
+
+Adapt {
+  Scope toolchain, value: GCC
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC_new", echo: off
+    }
+  }
+}
+
+Adapt toolchain: GCC {
+  Scope toolchain, value: GCC
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC_both", echo: off
+    }
+  }
+}
+
+Adapt {
+  Scope toolchain, value: GCC2
+  Scope toolchain, value: GCC3
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC23", echo: off
+    }
+  }
+}
+
+Adapt {
+  Scope toolchain, value: GCC2
+  Scope toolchain, value: GCC3
+  Scope toolchain, value: GCC4
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC234", echo: off
+    }
+  }
+}

@@ -1,0 +1,63 @@
+Project {
+
+  CustomConfig test_z4a {
+    Scope target, value: "z4a"
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test_z4ab {
+    Scope target, value: "z4a"
+    Scope target, value: "z4b"
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test_z4abo {
+    Scope target, value: "z4a;z4b"
+    DefaultToolchain GCC
+  }
+
+}
+
+Adapt toolchain: GCC {
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo no_target", echo: off
+    }
+  }
+}
+
+Adapt toolchain: GCC {
+  Scope target, value: "z4a"
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo target_z4a", echo: off
+    }
+  }
+}
+
+Adapt toolchain: GCC {
+  Scope target, value: "z4b"
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo target_z4b", echo: off
+    }
+  }
+}
+
+Adapt toolchain: GCC {
+  Scope target, value: "z4a;z4b"
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo target_z4ab", echo: off
+    }
+  }
+}
+
+Adapt toolchain: GCC {
+  Scope target, value: "*a;*b"
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo target_wild_z4ab", echo: off
+    }
+  }
+}

@@ -209,13 +209,24 @@ Adapt {
 <li><strong>mainConfig</strong>: name of the main config</li>
 <li><strong>mainProject</strong>: name of the main project</li>
 </ul>
-<p>The “Adapt* configs will be only applied if all these attributes are either empty or true (“AND” operation). Example:</p>
+<p>User defined conditions are specified in <strong>Scopes</strong>.</p>
+<p>The <em>Adapt</em> configs will be only applied if all these conditions are true (“AND” operation). Example:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt toolchain: GCC, os: Windows {
+  Scope target, value: powerPC
+  Scope somethingElse, value: &quot;option1;option2&quot;
   ...
 }
 </pre></div>
 </div>
-<p>Here the <em>Adapt</em> configs will be applied if toolchain is GCC on Windows.</p>
+<p>Here the <em>Adapt</em> configs will be applied if toolchain is GCC on Windows and if target is powerPc and somethingElse either option1 or option2.</p>
+<p>User defined scopes must be also specified at the configs to be adapted:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>LibraryConfig Lib {
+  Scope target, value: powerPC
+  Files &quot;*.cpp&quot;
+  ...
+}
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You can write “If” instead of “Adapt”:</p>
@@ -384,6 +395,7 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
 <h2>Wildcards<a class="headerlink" href="#wildcards" title="Permalink to this headline">¶</a></h2>
 <p>The “*” wildcard is allowed:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt mainProject: HERE, mainConfig: HERE ... {
+  Scope fasel, value: HERE
   SomeConfig HERE, project: HERE ... {
     ....
   }
@@ -402,7 +414,15 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
 <p>Additionally to the wildcards, a list of projects/configs can be specified separared with “;”.</p>
 <p>Example:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt mainProject: &quot;projA;projB&quot;, mainConfig: &quot;UnitTest*;SomeOther&quot; ... {
+  Scope fasel, value: &quot;option*;fasel&quot;
   SomeConfig &quot;libA;libX*&quot;, project: &quot;can*;*lin&quot; ... {
+    ....
+  }
+}
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>LibraryConfig Lib {
+  Scope target, value: &quot;z4a;z4b&quot;
     ....
   }
 }

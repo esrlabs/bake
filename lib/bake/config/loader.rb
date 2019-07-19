@@ -87,13 +87,7 @@ module Bake
 
       # check if config has to be manipulated
       @adaptConfigs.each do |c|
-
-        if isMain
-          @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
-          @mainProjectName = config.parent.name
-          @mainConfigName = config.name
-        end
-
+        
         projSplitted = c.project.split(";")
         confSplitted = c.name.split(";")
         projPatterns = projSplitted.map { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ }
@@ -107,13 +101,28 @@ module Bake
             || (isMain and confSplitted.any? {|p| p == "__MAIN__"}) \
             || confSplitted.any? {|p| p == "__ALL__"}
 
-            conditionProjPattern = c.parent.mainProject.split(";").map { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ }
-            conditionConfPattern = c.parent.mainConfig.split(";").map { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ }
+            adaptHash = c.parent.getHash
 
-            adaptCondition = (c.parent.toolchain == ""   || c.parent.toolchain == @defaultToolchainName) &&
-              (c.parent.os == ""          || c.parent.os == Utils::OS.name) &&
-              (c.parent.mainProject == "" || conditionProjPattern.any? {|p| p.match(@mainProjectName)}) &&
-              (c.parent.mainConfig ==  "" || conditionConfPattern.any? {|p| p.match(@mainConfigName)})
+            configHash = {
+              "toolchain"   => [@defaultToolchainName],
+              "os"          => [Utils::OS.name],
+              "mainProject" => [@mainProjectName],
+              "mainConfig"  => [@mainConfigName]
+            }
+            config.scopes.each do |s|
+              configHash[s.name] = [] unless configHash.has_key?(s.name)
+              configHash[s.name] += s.value.split(";")
+            end
+        
+            checkCondition = lambda {|name,value|
+              return true if adaptHash[name].empty?
+              if !configHash.has_key?(name)
+                return adaptHash[name].any?{|ah| ah.empty?}
+              end
+              adaptHash[name].any? { |ah| configHash[name].any?{|ch| ah.match(ch)}}
+            }
+
+            adaptCondition = adaptHash.all? {|name,value| checkCondition.call(name, value)}
 
             invertLogic = (Bake::Metamodel::Unless === c.parent)
             next if (adaptCondition && invertLogic) || (!adaptCondition && !invertLogic)

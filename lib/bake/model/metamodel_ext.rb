@@ -32,6 +32,27 @@ module Bake
         end
       end
       
+      module Adapt::ClassModule
+        def mapValue(str)
+          str.split(";").map { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ }
+        end
+        def calcHash()
+          @hash = {}
+          deprecated = ["toolchain", "mainConfig", "mainProject", "os"]
+          deprecated.each do |d|
+            @hash[d] = self.send(d).empty? ? [] : mapValue(self.send(d))
+          end
+          self.scopes.each do |s|
+            @hash[s.name] = [] unless @hash.has_key?(s.name)
+            @hash[s.name] += mapValue(s.value)
+          end
+          @hash
+        end
+        def getHash
+          @hash ||= calcHash()
+        end
+      end
+      
       module BaseConfig_INTERNAL::ClassModule
         def qname
           @qname ||= parent.name + "," + name

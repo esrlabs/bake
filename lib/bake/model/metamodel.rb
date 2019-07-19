@@ -30,6 +30,11 @@ module Bake
 
     CompilerType = RGen::MetamodelBuilder::DataTypes::Enum.new( :name => "CompilerType", :literals => [:CPP, :C, :ASM])
 
+    class Scope < ModelElement
+      has_attr 'name', String, :defaultValueLiteral => ""
+      has_attr 'value', String, :defaultValueLiteral => ""
+    end
+
     class Flags < ModelElement
       has_attr 'overwrite', String, :defaultValueLiteral => ""
       has_attr 'add', String, :defaultValueLiteral => ""
@@ -277,6 +282,7 @@ module Bake
         has_attr 'project', String, :defaultValueLiteral => ""
         has_attr 'private', Boolean, :defaultValueLiteral => "false"
         has_attr 'mergeInc', String, :defaultValueLiteral => ""
+        contains_many 'scopes', Scope, 'parent'
         contains_one 'description', Description, 'parent'
         contains_one 'startupSteps', StartupSteps, 'parent'
         contains_one 'preSteps', PreSteps, 'parent'
@@ -337,6 +343,7 @@ module Bake
         has_attr 'mainProject', String, :defaultValueLiteral => ""
         has_attr 'mainConfig', String, :defaultValueLiteral => ""
         contains_many 'config', BaseConfig_INTERNAL, 'parent'
+        contains_many 'scopes', Scope, 'parent'
       end
 
       class If < Adapt

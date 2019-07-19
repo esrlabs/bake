@@ -1,0 +1,77 @@
+Project {
+
+  CustomConfig test {
+    Scope toolchain, value: GCC2
+    Scope flash, value: low
+    Scope target, value: z4a
+    DefaultToolchain GCC
+  }
+  
+}
+
+Adapt toolchain: "GCC2" {
+  Scope flash, value: high
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC2_high", echo: off
+    }
+  }
+}
+
+Adapt toolchain: "GCC2" {
+  Scope flash, value: low
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC2_low", echo: off
+    }
+  }
+}
+
+Adapt toolchain: "GCC2" {
+  Scope flash, value: low
+  Scope target, value: z4a
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC2_la", echo: off
+    }
+  }
+}
+
+Adapt toolchain: "GCC2" {
+  Scope target, value: z4b
+  Scope flash, value: low
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC2_bl", echo: off
+    }
+  }
+}
+
+Adapt toolchain: "GCC2" {
+  Scope target, value: z4a
+  Scope flash, value: "high;low"
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC2_hla", echo: off
+    }
+  }
+}
+
+Adapt  {
+  Scope target, value: z4a
+  Scope flash, value: "high;low"
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC_hla", echo: off
+    }
+  }
+}
+
+Adapt mainConfig: test {
+  CustomConfig __MAIN__, type: extend {
+    PreSteps {
+      CommandLine "echo GCC_test", echo: off
+    }
+  }
+}
+
