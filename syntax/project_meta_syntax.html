@@ -350,7 +350,7 @@ z-index: 100;
 
               <span id="libExe_part"><span class="show" style="background-color:#EEEEEE;">
 &nbsp; &nbsp; <span class="mycomment"># Valid for ExecutableConfig and LibraryConfig</span><br><br>
-&nbsp; &nbsp; <span class="help" onMouseover="showFiles()" onMouseout="notip()">Files</span> &#60;pattern&#62; {<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showFiles()" onMouseout="notip()">Files</span> &#60;pattern&#62;, <span class="help" onMouseover="showCompileOnly()" onMouseout="notip()">compileOnly</span>: true|false {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; }<br>
@@ -656,6 +656,10 @@ function showCuda() {
   str = 'Enables Cuda hack.<br>'+
     'Adds some prefixes in front of dependency flags.'
   ddrivetip("cuda", "No","0..1","false",str)
+}
+
+function showCompileOnly() {
+    ddrivetip("compileOnly", "No","0..1","false","If set, the files will not be archived or linked.")
 }
 
 function showExtends() {
