@@ -267,7 +267,7 @@ describe "Prebuilding" do
   it 'Warnings' do
     Bake.startBake("prebuild/main", ["testPre6", "--prebuild"])
 
-    expect($mystring.split("Warning: prebuild project testWrong not found").length).to be == 2
+    expect($mystring.split("Info: prebuild project testWrong not found").length).to be == 2
     expect($mystring.split("Warning: prebuild config testWrong of project main not found").length).to be == 2
     expect($mystring.split("****").length).to be == 1
 
@@ -368,7 +368,7 @@ describe "Prebuilding" do
       FileUtils.rm_rf(o)
     end
 
-    Bake.startBake("prebuild/main", ["testPre5", "-p", "lib2,testb", "--prebuild", "-c", "-v2"])
+    Bake.startBake("prebuild/main", ["testPre5", "-p", "lib2,testb", "--prebuild", "-c", "-v2", "-r"])
     expect($mystring.include?("**** Checking 1 of 1: lib2 (testb) ****")).to be == true
     expect($mystring.include?("Deleting file build/testb_main_testPre5/liblib2.a")).to be == false
   end

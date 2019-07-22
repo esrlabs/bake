@@ -38,6 +38,7 @@ module Bake
 
       def clean
         # nothing to do here
+        return true
       end
 
     end

@@ -153,6 +153,7 @@ module Bake
               end
             end
           end
+          return true
         else
           return cleanProjectDir()
         end

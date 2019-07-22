@@ -194,7 +194,7 @@ module Bake
               pName = projName
               if not except.name.empty?
                 if not @referencedConfigs.keys.include? except.name
-                  Bake.formatter.printWarning("Warning: prebuild project #{except.name} not found")
+                  Bake.formatter.printInfo("Info: prebuild project #{except.name} not found")
                   next
                 end
                 pName = except.name
