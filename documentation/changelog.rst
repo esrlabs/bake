@@ -2,25 +2,26 @@ Changelog
 =========
 
 July xx, 2019 - bake-toolkit 2.53
-    * Bugfix: bakery regex did not take comments into account when parsing Project.meta
-    * Added: "strict" attribute to match only the specified Adapt config type
+    * Bugfix: bakery regex did not take comments into account when parsing Project.meta.
+    * Added: "strict" attribute to match only the specified Adapt config type.
+    * Added: Option to enforce a variable to be set. If variable is unset, an error will be reported.
 
 July 23, 2019 - bake-toolkit 2.52.1
-    * Bugfix: --prebuild feature did not work well with -c/--rebuild in combination with -r
+    * Bugfix: --prebuild feature did not work well with -c/--rebuild in combination with -r.
 
 July 22, 2019 - bake-toolkit 2.52.0
-    * Added: "Scope" as additional adapt conditions
-    * Added: all conditions like "toolchain" support list format, e.g. "GCC;CLANG"
-    * Added: "compileOnly" annotation for "Files" which means that they shall be compiled, but not archived or linked (experimental feature, might be changed in future)
-    * Added: improved GCC compiler error parser
-    * Cosmetic: when enforcing local paths e.g. for outputDir, "./" will be removed for nicer output
+    * Added: "Scope" as additional adapt conditions.
+    * Added: all conditions like "toolchain" support list format, e.g. "GCC;CLANG".
+    * Added: "compileOnly" annotation for "Files" which means that they shall be compiled, but not archived or linked (experimental feature, might be changed in future).
+    * Added: improved GCC compiler error parser.
+    * Cosmetic: when enforcing local paths e.g. for outputDir, "./" will be removed for nicer output.
 
 March 25, 2019 - bake-toolkit 2.51.2
-    * Added: --dotc creates the dot graph AND compiles the projects as usual (in comparison to --dot)
+    * Added: --dotc creates the dot graph AND compiles the projects as usual (in comparison to --dot).
 
 March 21, 2019 - bake-toolkit 2.51.1
-    * Bugfix: under certain cases the same Adapt.meta could be found twice which results into a warning
-    * Changed: if a cmd of a Set (variable) returns with !=0, the output of cmd is now printed out to get an idea why it has failed
+    * Bugfix: under certain cases the same Adapt.meta could be found twice which results into a warning.
+    * Changed: if a cmd of a Set (variable) returns with !=0, the output of cmd is now printed out to get an idea why it has failed.
 
 March 13, 2019 - bake-toolkit 2.51.0
     * Changed: refactored calculating include folders. Now it's much faster than before! However, the order of include folders may have changed for ambiguous configurations.

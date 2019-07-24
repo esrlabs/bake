@@ -14,4 +14,102 @@ Project {
     DefaultToolchain GCC
   }
 
+  #####################
+
+  CustomConfig Failure_EmptyUserVar {
+    PreSteps {
+      CommandLine "echo -->$(Nothing)", echo: off
+      CommandLine "echo -->$(Nothing!)", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  #####################
+
+  CustomConfig Failure_EmptyProjVar1 {
+    PreSteps {
+      CommandLine "echo _$(ProjectDir, foo)_", echo: off
+      CommandLine "echo _$(ProjectDir!, bla)_", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig Failure_EmptyProjVar2 {
+    PreSteps {
+      CommandLine "echo _$(ProjectDir, foo)_", echo: off
+      CommandLine "echo _$(ProjectDir, bla!)_", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  #####################
+
+  CustomConfig Failure_EmptyOutVar1 {
+    PreSteps {
+      CommandLine "echo _$(OutputDir, foo)_", echo: off
+      CommandLine "echo _$(OutputDir!, bla)_", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig Failure_EmptyOutVar2 {
+    PreSteps {
+      CommandLine "echo _$(OutputDir, foo)_", echo: off
+      CommandLine "echo _$(OutputDir, bla!)_", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  #####################
+
+  CustomConfig Failure_EmptyOutVar3 {
+    PreSteps {
+      CommandLine "echo _$(OutputDir, foo, $(ConfigName))_", echo: off
+      CommandLine "echo _$(OutputDir, bla, $(ConfigName)!)_", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig Failure_EmptyOutVar4 {
+    PreSteps {
+      CommandLine "echo _$(OutputDir, foo, $(ConfigName))_", echo: off
+      CommandLine "echo _$(OutputDir, bla!, $(ConfigName))_", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig Failure_EmptyOutVar5 {
+    PreSteps {
+      CommandLine "echo _$(OutputDir, foo, $(ConfigName))_", echo: off
+      CommandLine "echo _$(OutputDir!, bla, $(ConfigName))_", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  #####################
+
+  CustomConfig Failure_EmptyOutVar6 {
+    PreSteps {
+      CommandLine "echo _$(OutputDir, $(ProjectName), foo)_", echo: off
+      CommandLine "echo _$(OutputDir, $(ProjectName), bla!)_", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig Failure_EmptyOutVar7 {
+    PreSteps {
+      CommandLine "echo _$(OutputDir, $(ProjectName), foo)_", echo: off
+      CommandLine "echo _$(OutputDir, $(ProjectName)!, bla)_", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig Failure_EmptyOutVar8 {
+    PreSteps {
+      CommandLine "echo _$(OutputDir, $(ProjectName), foo)_", echo: off
+      CommandLine "echo _$(OutputDir!, $(ProjectName), bla)_", echo: off
+    }
+    DefaultToolchain GCC
+  }
+
 }

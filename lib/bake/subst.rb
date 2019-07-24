@@ -45,6 +45,18 @@ module Bake
      end
     end
 
+    def self.empty(elem, var, mandatory, str)
+      if mandatory
+        Bake.formatter.printError("Variable '$(#{var})' cannot be substituted, because #{str}", elem ? elem : @@config)
+        ExitHelper.exit(1)
+      else
+        if Bake.options.verbose > 0
+          msg = "Substitute variable '$(#{var})' with empty string, because #{str}"
+          Bake.formatter.printInfo(msg, elem ? elem : @@config)
+        end
+      end
+    end
+
     def self.itute(config, projName, isMainProj, toolchain, referencedConfigs, configTcMap)
       @@lazy = true
       @@config = config
@@ -168,9 +180,17 @@ module Bake
 
         substStr << str[posSubst..posStart-1] if posStart>0
 
-        var = str[posStart+2..posEnd-1]
+        var = str[posStart+2..posEnd-1].strip
+        mandatory = false
 
         splittedVar = var.split(",").map { |v| v.strip() }
+        splittedVar.each_with_index do |s,i|
+          if s.end_with?("!")
+            mandatory = true
+            splittedVar[i] = s[0..-2]
+          end
+        end
+        var = splittedVar.join(", ")
 
         if Bake.options.vars.has_key?(var)
           substStr << Bake.options.vars[var]
@@ -215,10 +235,7 @@ module Bake
               config = configs.first
               substStr << File.rel_from_to_project(@@projDir,config.get_project_dir,false)
             else
-              if Bake.options.verbose > 0
-                msg = "Substitute variable '$(#{var})' with empty string, because project #{out_proj_name} not found"
-                Bake.formatter.printInfo(msg, elem ? elem : @@config)
-              end
+              empty(elem, var, mandatory, "project #{out_proj_name} not found")
             end
           end
         elsif var == "OutputDir" or (splittedVar.length == 3 and splittedVar[0] == "OutputDir")
@@ -271,22 +288,13 @@ module Bake
                 end
               end
             else
-              if Bake.options.verbose > 0
-                msg = "Substitute variable '$(#{var})' with empty string, because config #{out_conf_name} not found for project #{out_proj_name}"
-                Bake.formatter.printInfo(msg, elem ? elem : @@config)
-              end
+              empty(elem, var, mandatory, "config #{out_conf_name} not found for project #{out_proj_name}")
             end
           else
-            if Bake.options.verbose > 0
-              msg = "Substitute variable '$(#{var})' with empty string, because project #{out_proj_name} not found"
-              Bake.formatter.printInfo(msg, elem ? elem : @@config)
-            end
+            empty(elem, var, mandatory, "project #{out_proj_name} not found")
           end
         elsif splittedVar.length > 1 and splittedVar[0] == "OutputDir"
-          if Bake.options.verbose > 0
-            msg = "Substitute variable '$(#{var})' with empty string, because syntax of complex variable OutputDir is not $(OutputDir,<project name>,<config name>)"
-            Bake.formatter.printInfo(msg, elem ? elem : @@config)
-          end
+          empty(elem, var, mandatory, "syntax of complex variable OutputDir is not $(OutputDir,<project name>,<config name>)")
         elsif var == "Time"
           substStr << Time.now.to_s
         elsif var == "Hostname"
@@ -321,13 +329,8 @@ module Bake
         elsif ENV[var]
           substStr << ENV[var]
         else
-          if Bake.options.verbose >= 2 && !(["ASMCompilerPrefix", "CompilerPrefix", "ArchiverPrefix", "LinkerPrefix"].include?(var))
-            msg = "Substitute variable '$(#{var})' with empty string"
-            if elem
-              Bake.formatter.printInfo(msg, elem)
-            else
-              Bake.formatter.printInfo(msg +  " in the toolchain", @@config)
-            end
+          if !(["ASMCompilerPrefix", "CompilerPrefix", "ArchiverPrefix", "LinkerPrefix"].include?(var))
+            empty(elem, var, mandatory, "it's not set") if mandatory || Bake.options.verbose >= 2
           end
         end
 

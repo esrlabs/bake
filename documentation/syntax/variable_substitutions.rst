@@ -6,7 +6,8 @@ bake allows you to use
 - predefined
 - environment
 
-variables in your Project.meta file. Every environment and predefined variable can be overwritten by the user. If a variable is not found at all, it will be set to an empty string.
+variables in your Project.meta file. Every environment and predefined variable can be overwritten by the user.
+If a variable is not found at all, it will be set to an empty string (see below how to change that default behaviour).
 
 Using variables
 ***************
@@ -156,6 +157,24 @@ Example:
 - cmd: "bake ... --do run=--gtest_repeat=2"
 - Project.meta: $(FilterArguments, --gtest_repeat)
 - result: 2
+
+Mandatory variables
+*******************
+
+If a variable is not found at all, it will be set to an empty string.
+This can be changed to an error with a "!" sign:
+
+.. code-block:: console
+
+    $(PATH_TO_ABC!)
+    $(OutputDir!, application, Debug)
+
+For convenience, the "!" can be used on every parameter (which means exactly the same as using on the first parameter). 
+    
+.. code-block:: console
+
+    $(OutputDir, application!, Debug)
+    $(OutputDir, application, Debug!)
 
 Notes and warnings
 ******************

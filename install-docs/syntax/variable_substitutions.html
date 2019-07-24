@@ -89,6 +89,7 @@
 <li><a class="reference internal" href="#environment-variables">Environment variables</a></li>
 <li><a class="reference internal" href="#nested-variables">Nested variables</a></li>
 <li><a class="reference internal" href="#complex-variables">Complex variables</a></li>
+<li><a class="reference internal" href="#mandatory-variables">Mandatory variables</a></li>
 <li><a class="reference internal" href="#notes-and-warnings">Notes and warnings</a></li>
 </ul>
 </li>
@@ -129,7 +130,8 @@
 <li>predefined</li>
 <li>environment</li>
 </ul>
-<p>variables in your Project.meta file. Every environment and predefined variable can be overwritten by the user. If a variable is not found at all, it will be set to an empty string.</p>
+<p>variables in your Project.meta file. Every environment and predefined variable can be overwritten by the user.
+If a variable is not found at all, it will be set to an empty string (see below how to change that default behaviour).</p>
 <div class="section" id="using-variables">
 <h2>Using variables<a class="headerlink" href="#using-variables" title="Permalink to this headline">¶</a></h2>
 <p>Variables can be used using the following syntax:</p>
@@ -316,6 +318,20 @@ bakeqac), otherwise “no”.</td>
 <li>Project.meta: $(FilterArguments, –gtest_repeat)</li>
 <li>result: 2</li>
 </ul>
+</div>
+<div class="section" id="mandatory-variables">
+<h2>Mandatory variables<a class="headerlink" href="#mandatory-variables" title="Permalink to this headline">¶</a></h2>
+<p>If a variable is not found at all, it will be set to an empty string.
+This can be changed to an error with a “!” sign:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span><span class="o">(</span>PATH_TO_ABC!<span class="o">)</span>
+<span class="gp">$</span><span class="o">(</span>OutputDir!, application, Debug<span class="o">)</span>
+</pre></div>
+</div>
+<p>For convenience, the “!” can be used on every parameter (which means exactly the same as using on the first parameter).</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span><span class="o">(</span>OutputDir, application!, Debug<span class="o">)</span>
+<span class="gp">$</span><span class="o">(</span>OutputDir, application, Debug!<span class="o">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="notes-and-warnings">
 <h2>Notes and warnings<a class="headerlink" href="#notes-and-warnings" title="Permalink to this headline">¶</a></h2>

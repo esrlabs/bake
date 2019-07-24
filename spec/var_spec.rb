@@ -13,6 +13,97 @@ module Bake
 
 describe "VarSubst" do
 
+  it 'mandatory userVar' do
+    Bake.startBake("var/main", ["Failure_EmptyUserVar"])
+    expect(($mystring.include?"Info: Substitute variable '$(Nothing)' with empty string, because it's not set")).to be == false
+    expect(($mystring.include?"Error: Variable '$(Nothing)' cannot be substituted, because it's not set")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory userVar verbose2' do
+    Bake.startBake("var/main", ["Failure_EmptyUserVar", "-v2"])
+    expect(($mystring.include?"Info: Substitute variable '$(Nothing)' with empty string, because it's not set")).to be == true
+    expect(($mystring.include?"Error: Variable '$(Nothing)' cannot be substituted, because it's not set")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory projVar1' do
+    Bake.startBake("var/main", ["Failure_EmptyProjVar1"])
+    expect(($mystring.include?"Info: Substitute variable '$(ProjectDir, foo)' with empty string, because project foo not found")).to be == true
+    expect(($mystring.include?"Error: Variable '$(ProjectDir, bla)' cannot be substituted, because project bla not found")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory projVar2' do
+    Bake.startBake("var/main", ["Failure_EmptyProjVar2"])
+    expect(($mystring.include?"Info: Substitute variable '$(ProjectDir, foo)' with empty string, because project foo not found")).to be == true
+    expect(($mystring.include?"Error: Variable '$(ProjectDir, bla)' cannot be substituted, because project bla not found")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory projVar2 verbose 0' do
+    Bake.startBake("var/main", ["Failure_EmptyProjVar2", "-v0"])
+    expect(($mystring.include?"Info: Substitute variable '$(ProjectDir, foo)' with empty string, because project foo not found")).to be == false
+    expect(($mystring.include?"Error: Variable '$(ProjectDir, bla)' cannot be substituted, because project bla not found")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory outVar1' do
+    Bake.startBake("var/main", ["Failure_EmptyOutVar1"])
+    expect(($mystring.include?"Info: Substitute variable '$(OutputDir, foo)' with empty string, because syntax of complex variable OutputDir is not $(OutputDir,<project name>,<config name>)")).to be == true
+    expect(($mystring.include?"Error: Variable '$(OutputDir, bla)' cannot be substituted, because syntax of complex variable OutputDir is not $(OutputDir,<project name>,<config name>)")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory outVar2' do
+    Bake.startBake("var/main", ["Failure_EmptyOutVar2"])
+    expect(($mystring.include?"Info: Substitute variable '$(OutputDir, foo)' with empty string, because syntax of complex variable OutputDir is not $(OutputDir,<project name>,<config name>)")).to be == true
+    expect(($mystring.include?"Error: Variable '$(OutputDir, bla)' cannot be substituted, because syntax of complex variable OutputDir is not $(OutputDir,<project name>,<config name>)")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory outVar3' do
+    Bake.startBake("var/main", ["Failure_EmptyOutVar3"])
+    expect(($mystring.include?"Info: Substitute variable '$(OutputDir, foo, Failure_EmptyOutVar3)' with empty string, because project foo not found")).to be == true
+    expect(($mystring.include?"Error: Variable '$(OutputDir, bla, Failure_EmptyOutVar3)' cannot be substituted, because project bla not found")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory outVar4' do
+    Bake.startBake("var/main", ["Failure_EmptyOutVar4"])
+    expect(($mystring.include?"Info: Substitute variable '$(OutputDir, foo, Failure_EmptyOutVar4)' with empty string, because project foo not found")).to be == true
+    expect(($mystring.include?"Error: Variable '$(OutputDir, bla, Failure_EmptyOutVar4)' cannot be substituted, because project bla not found")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory outVar5' do
+    Bake.startBake("var/main", ["Failure_EmptyOutVar5"])
+    expect(($mystring.include?"Info: Substitute variable '$(OutputDir, foo, Failure_EmptyOutVar5)' with empty string, because project foo not found")).to be == true
+    expect(($mystring.include?"Error: Variable '$(OutputDir, bla, Failure_EmptyOutVar5)' cannot be substituted, because project bla not found")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory outVar6' do
+    Bake.startBake("var/main", ["Failure_EmptyOutVar6"])
+    expect(($mystring.include?"Info: Substitute variable '$(OutputDir, main, foo)' with empty string, because config foo not found for project main")).to be == true
+    expect(($mystring.include?"Error: Variable '$(OutputDir, main, bla)' cannot be substituted, because config bla not found for project main")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory outVar7' do
+    Bake.startBake("var/main", ["Failure_EmptyOutVar7"])
+    expect(($mystring.include?"Info: Substitute variable '$(OutputDir, main, foo)' with empty string, because config foo not found for project main")).to be == true
+    expect(($mystring.include?"Error: Variable '$(OutputDir, main, bla)' cannot be substituted, because config bla not found for project main")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
+  it 'mandatory outVar8' do
+    Bake.startBake("var/main", ["Failure_EmptyOutVar8"])
+    expect(($mystring.include?"Info: Substitute variable '$(OutputDir, main, foo)' with empty string, because config foo not found for project main")).to be == true
+    expect(($mystring.include?"Error: Variable '$(OutputDir, main, bla)' cannot be substituted, because config bla not found for project main")).to be == true
+    expect(ExitHelper.exit_code).to be > 0
+  end
+
   it 'vars should be substed' do
     Bake.startBake("cache/main", ["test", "--do", "var"])
 
@@ -87,9 +178,10 @@ describe "VarSubst" do
 
   it 'complex outputdir' do
     Bake.startBake("multiProj/main", ["test1"])
-    expect(($mystring.include?"Substitute variable '$(OutputDir,testSub2)' with empty string, because syntax of complex variable OutputDir is not $(OutputDir,<project name>,<config name>)")).to be == true
-    expect(($mystring.include?"Substitute variable '$(OutputDir,main,fasel)' with empty string, because config fasel not found for project main")).to be == true
-    expect(($mystring.include?"Substitute variable '$(OutputDir,bla,fasel)' with empty string, because project bla not found")).to be == true
+    expect(($mystring.include?"Substitute variable '$(OutputDir, testSub2)' with empty string, because syntax of complex variable OutputDir is not $(OutputDir,<project name>,<config name>)")).to be == true
+
+    expect(($mystring.include?"Substitute variable '$(OutputDir, main, fasel)' with empty string, because config fasel not found for project main")).to be == true
+    expect(($mystring.include?"Substitute variable '$(OutputDir, bla, fasel)' with empty string, because project bla not found")).to be == true
 
     expect(($mystring.include?"from testSub1 1: ../main/build/test1")).to be == true
     expect(($mystring.include?"from testSub1 2: ../main/build/testLib1_main_test1")).to be == true
