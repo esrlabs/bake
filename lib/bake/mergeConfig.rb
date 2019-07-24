@@ -198,6 +198,10 @@ module Bake
      end
 
     def merge(type)
+      if (@child.strict == true) && !(@child.class == @parent.class)
+        return
+      end
+
       s = StringIO.new
       ser = RText::Serializer.new(Language)
 
@@ -207,7 +211,7 @@ module Bake
         s.puts "\n>>>> parent <<<<"
         ser.serialize(@parent, s)
       end
-
+      
       if (type == :remove)
         removeChilds(@child, @parent)
       elsif (type == :replace)

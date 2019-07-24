@@ -91,6 +91,7 @@
 <li><a class="reference internal" href="#effectiveness">Effectiveness</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#config-type">Config type</a></li>
 <li><a class="reference internal" href="#occurrences">Occurrences</a></li>
 <li><a class="reference internal" href="#apply-order">Apply order</a></li>
 <li><a class="reference internal" href="#types">Types</a><ul>
@@ -274,6 +275,19 @@ Remember the example from the beginning?</p>
 </pre></div>
 </div>
 <p>It is possible to mix the keywords with reals project or config names.</p>
+</div>
+</div>
+<div class="section" id="config-type">
+<h2>Config type<a class="headerlink" href="#config-type" title="Permalink to this headline">¶</a></h2>
+<p>In most cases the type of the config does not matter. To adapt an attribute or element, the only important thing is that it’s valid in the config of the project AND in the config of the adapt file.</p>
+<p>E.g. to adapt a Dependency, the config type is not relevant, Dependency is valid in both cases.</p>
+<p>To adapt the ArtifactName, which is exclusively useable in ExecutableConfigs, you need in both cases an ExecutableConfig.</p>
+<p>If you want to match the <em>Adapt</em> ONLY for the config type specified in the adapt file, use the strict attribute:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt {
+  ExecutableConfig ..., strict: true {
+    ...
+  }
+</pre></div>
 </div>
 </div>
 <div class="section" id="occurrences">

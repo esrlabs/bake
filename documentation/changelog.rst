@@ -3,6 +3,7 @@ Changelog
 
 July xx, 2019 - bake-toolkit 2.53
     * Bugfix: bakery regex did not take comments into account when parsing Project.meta
+    * Added: "strict" attribute to match only the specified Adapt config type
 
 July 23, 2019 - bake-toolkit 2.52.1
     * Bugfix: --prebuild feature did not work well with -c/--rebuild in combination with -r

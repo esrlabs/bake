@@ -177,6 +177,25 @@ If you want to apply the changes to all configs, write:
 
 It is possible to mix the keywords with reals project or config names.
 
+Config type
+-----------
+
+In most cases the type of the config does not matter. To adapt an attribute or element, the only important thing is that it's valid in the config of the project AND in the config of the adapt file.
+
+E.g. to adapt a Dependency, the config type is not relevant, Dependency is valid in both cases.
+
+To adapt the ArtifactName, which is exclusively useable in ExecutableConfigs, you need in both cases an ExecutableConfig.
+
+If you want to match the *Adapt* ONLY for the config type specified in the adapt file, use the strict attribute:
+
+.. code-block:: text
+
+    Adapt {
+      ExecutableConfig ..., strict: true {
+        ...
+      }
+
+
 Occurrences
 -----------
 

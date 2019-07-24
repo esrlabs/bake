@@ -1,0 +1,18 @@
+Project default: UnitTest {
+
+  CustomConfig IncludeOnly {
+    IncludeDir include, inherit: true
+  }
+  
+  LibraryConfig Lib {
+    Files "src/lib.cpp"
+    Dependency config: IncludeOnly
+  }
+  
+  ExecutableConfig UnitTest {
+    Files "src/main.cpp"
+    Dependency config: Lib
+    DefaultToolchain GCC
+  }
+
+}

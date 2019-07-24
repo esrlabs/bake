@@ -1,0 +1,39 @@
+Adapt {
+
+  ExecutableConfig __ALL__, project: __ALL__, type: extend, strict: true {
+    PostSteps{
+      CommandLine "echo adaptEt_$(ConfigName)", echo: off
+    }
+  }
+
+  ExecutableConfig __ALL__, project: __ALL__, type: extend, strict: false {
+    PostSteps{
+      CommandLine "echo adaptEf_$(ConfigName)", echo: off
+    }
+  }
+
+  LibraryConfig __ALL__, project: __ALL__, type: extend, strict: true {
+    PostSteps{
+      CommandLine "echo adaptLt_$(ConfigName)", echo: off
+    }
+  }
+
+  LibraryConfig __ALL__, project: __ALL__, type: extend, strict: false {
+    PostSteps{
+      CommandLine "echo adaptLf_$(ConfigName)", echo: off
+    }
+  }
+
+  CustomConfig __ALL__, project: __ALL__, type: extend, strict: true {
+    PostSteps{
+      CommandLine "echo adaptCt_$(ConfigName)", echo: off
+    }
+  }
+
+  CustomConfig __ALL__, project: __ALL__, type: extend, strict: false {
+    PostSteps{
+      CommandLine "echo adaptCf_$(ConfigName)", echo: off
+    }
+  }
+
+}

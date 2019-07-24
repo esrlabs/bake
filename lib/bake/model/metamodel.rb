@@ -279,6 +279,7 @@ module Bake
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'extends', String, :defaultValueLiteral => ""
         has_attr 'type', String, :defaultValueLiteral => ""
+        has_attr 'strict', Boolean, :defaultValueLiteral => "false"
         has_attr 'project', String, :defaultValueLiteral => ""
         has_attr 'private', Boolean, :defaultValueLiteral => "false"
         has_attr 'mergeInc', String, :defaultValueLiteral => ""

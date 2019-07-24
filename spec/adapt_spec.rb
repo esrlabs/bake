@@ -14,6 +14,33 @@ module Bake
 
 describe "Adapt" do
 
+  it 'strict' do
+    Bake.startBake("adaptStrict/main", ["--adapt",  "strict"])
+    expect($mystring.include?("adaptEf_IncludeOnly")).to be == true
+    expect($mystring.include?("adaptLf_IncludeOnly")).to be == true
+    expect($mystring.include?("adaptCf_IncludeOnly")).to be == true
+
+    expect($mystring.include?("adaptEt_IncludeOnly")).to be == false
+    expect($mystring.include?("adaptLt_IncludeOnly")).to be == false
+    expect($mystring.include?("adaptCt_IncludeOnly")).to be == true
+
+    expect($mystring.include?("adaptEf_Lib")).to be == true
+    expect($mystring.include?("adaptLf_Lib")).to be == true
+    expect($mystring.include?("adaptCf_Lib")).to be == true
+
+    expect($mystring.include?("adaptEt_Lib")).to be == false
+    expect($mystring.include?("adaptLt_Lib")).to be == true
+    expect($mystring.include?("adaptCt_Lib")).to be == false
+
+    expect($mystring.include?("adaptEf_UnitTest")).to be == true
+    expect($mystring.include?("adaptLf_UnitTest")).to be == true
+    expect($mystring.include?("adaptCf_UnitTest")).to be == true
+      
+    expect($mystring.include?("adaptEt_UnitTest")).to be == true
+    expect($mystring.include?("adaptLt_UnitTest")).to be == false
+    expect($mystring.include?("adaptCt_UnitTest")).to be == false
+end
+  
   it 'MultipleAdapt without comma' do
     Bake.startBake("adapt/main", ["test_multi", "--adapt",  "simpleA", "--adapt", "simpleB"])
     expect($mystring.include?("SIMPLEA")).to be == true
