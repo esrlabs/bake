@@ -10,7 +10,13 @@ require 'fileutils'
 
 module Bake
 
-describe "bake" do
+describe "bakery" do
+
+  it 'suppress comments' do
+    str = `ruby bin/bakery -m spec/testdata/bakeryComment/main1 -b gaga`
+    puts str
+    expect(str.include?("1 of 1 builds ok")).to be == true
+  end
 
   it 'collection double' do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b double --adapt nols`

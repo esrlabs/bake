@@ -1,0 +1,3 @@
+Collection gaga {
+  Project "*", config: "test1test"
+}

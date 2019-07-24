@@ -1,0 +1,13 @@
+Project {
+
+  CustomConfig test1test {
+    CommandLine "echo test1test", echo: off
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test2test {
+    CommandLine "echo test2test", echo: off
+    DefaultToolchain GCC
+  }
+
+}
