@@ -1,10 +1,12 @@
 Changelog
 =========
 
-July xx, 2019 - bake-toolkit 2.53
+July 26, 2019 - bake-toolkit 2.53
     * Bugfix: bakery regex did not take comments into account when parsing Project.meta.
     * Added: "strict" attribute to match only the specified Adapt config type.
     * Added: Option to enforce a variable to be set. If variable is unset, an error will be reported.
+    * Changed: using "libtool" and "-static -o" instead of "ar" and "r" for Clang on Mac.
+    * Changed: ``"`` will be escaped to ``\\\"`` in compile_commands.json.
 
 July 23, 2019 - bake-toolkit 2.52.1
     * Bugfix: --prebuild feature did not work well with -c/--rebuild in combination with -r.

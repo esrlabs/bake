@@ -115,11 +115,13 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
-<dt>July xx, 2019 - bake-toolkit 2.53</dt>
+<dt>July 26, 2019 - bake-toolkit 2.53</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: bakery regex did not take comments into account when parsing Project.meta.</li>
 <li>Added: “strict” attribute to match only the specified Adapt config type.</li>
 <li>Added: Option to enforce a variable to be set. If variable is unset, an error will be reported.</li>
+<li>Changed: using “libtool” and “-static -o” instead of “ar” and “r” for Clang on Mac.</li>
+<li>Changed: <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> will escaped to <code class="docutils literal notranslate"><span class="pre">\\\&quot;</span></code> in compile_commands.json.</li>
 </ul>
 </dd>
 <dt>July 23, 2019 - bake-toolkit 2.52.1</dt>

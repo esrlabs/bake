@@ -1,0 +1,11 @@
+Project default: test {
+
+  ExecutableConfig test {
+    Files "src/main.cpp"
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Define "IOSTREAM=\"iostream\""
+      } 
+    }
+  }
+}

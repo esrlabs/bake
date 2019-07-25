@@ -116,10 +116,14 @@ describe "ShowInc" do
     expect(ar.length).to be == 3
   end
 
+  it 'compilation-db escaping flags' do
+    Bake.startBake("quoteCompileCommandsDb/main", ["--compilation-db"])
+    f = File.read('compile_commands.json')
+    ar = JSON.parse(f)
+    expect(ar.any? { |cmds| cmds["command"].include?("-DIOSTREAM=\\\"iostream\\\"") }).to be == true
+  end
+
 end
-
-
-
 
 
 end
