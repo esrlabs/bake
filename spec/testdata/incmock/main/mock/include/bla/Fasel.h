@@ -1,0 +1,1 @@
+#define DEF 0

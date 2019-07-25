@@ -1,0 +1,7 @@
+Project default: test {
+  LibraryConfig test {
+    IncludeDir "mock/include"
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
+}
