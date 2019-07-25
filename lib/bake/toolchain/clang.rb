@@ -29,8 +29,14 @@ module Bake
     CLANG_CHAIN[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS] = Provider.default[:COMPILER][:ASM][:SOURCE_FILE_ENDINGS]
     CLANG_CHAIN[:COMPILER][:ASM][:PREFIX] = Provider.default[:COMPILER][:ASM][:PREFIX]
 
-    CLANG_CHAIN[:ARCHIVER][:COMMAND] = "ar"
-    CLANG_CHAIN[:ARCHIVER][:ARCHIVE_FLAGS] = "r"
+    if Bake::Utils::OS::name == "Mac"
+      CLANG_CHAIN[:ARCHIVER][:COMMAND] = "libtool"
+      CLANG_CHAIN[:ARCHIVER][:ARCHIVE_FLAGS] = "-static -o"
+    else
+      CLANG_CHAIN[:ARCHIVER][:COMMAND] = "ar"
+      CLANG_CHAIN[:ARCHIVER][:ARCHIVE_FLAGS] = "r"
+    end
+
     CLANG_CHAIN[:ARCHIVER][:ERROR_PARSER] = gccCompilerErrorParser
 
     CLANG_CHAIN[:LINKER][:COMMAND] = "clang++"
