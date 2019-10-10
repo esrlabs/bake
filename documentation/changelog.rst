@@ -1,6 +1,10 @@
 Changelog
 =========
 
+October XX, 2019 - bake-toolkit 2.54
+    * Added: ArtifactExtension in Project.meta to configure the filename extension of the artifacts.
+
+
 July 26, 2019 - bake-toolkit 2.53
     * Bugfix: bakery regex did not take comments into account when parsing Project.meta.
     * Added: "strict" attribute to match only the specified Adapt config type.

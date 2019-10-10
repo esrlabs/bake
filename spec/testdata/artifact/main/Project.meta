@@ -1,0 +1,55 @@
+Project {
+
+  LibraryConfig test_Default_lib {
+    Files "src/lib.cpp"
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test_ArtifactName_lib {
+    Files "src/lib.cpp"
+    DefaultToolchain GCC
+    ArtifactName "LNameL"
+  }
+
+  LibraryConfig test_ArtifactExtension_lib {
+    Files "src/lib.cpp"
+    DefaultToolchain GCC
+    ArtifactExtension "LExtL"
+  }
+
+  LibraryConfig test_ArtifactNameExtension_lib {
+    Files "src/lib.cpp"
+    DefaultToolchain GCC
+    ArtifactName "LNameL"
+    ArtifactExtension "LExtL"
+  }
+
+  ExecutableConfig test_Default_exe {
+    Files "src/main.cpp"
+    Dependency config: test_Default_lib
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_ArtifactName_exe {
+    Files "src/main.cpp"
+    Dependency config: test_ArtifactName_lib
+    DefaultToolchain GCC
+    ArtifactName "ENameE"
+  }
+
+  ExecutableConfig test_ArtifactExtension_exe {
+    Files "src/main.cpp"
+    Dependency config: test_ArtifactExtension_lib
+    DefaultToolchain GCC
+    ArtifactExtension "EExtE"
+  }
+
+  ExecutableConfig test_ArtifactNameExtension_exe {
+    Files "src/main.cpp"
+    Dependency config: test_ArtifactNameExtension_lib
+    DefaultToolchain GCC
+    ArtifactName "ENameE"
+    ArtifactExtension "EExtE"
+  }
+
+}

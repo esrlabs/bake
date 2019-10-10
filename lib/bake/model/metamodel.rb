@@ -268,6 +268,10 @@ module Bake
         has_attr 'name', String, :defaultValueLiteral => ""
       end
 
+      class ArtifactExtension < ModelElement
+        has_attr 'name', String, :defaultValueLiteral => "default"
+      end
+
       class Set < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'value', String, :defaultValueLiteral => ""
@@ -309,6 +313,7 @@ module Bake
         contains_many 'files', Files, 'parent'
         contains_many 'excludeFiles', ExcludeFiles, 'parent'
         contains_one 'artifactName', ArtifactName, 'parent'
+        contains_one 'artifactExtension', ArtifactExtension, 'parent'
       end
 
       class ExecutableConfig < BuildConfig_INTERNAL

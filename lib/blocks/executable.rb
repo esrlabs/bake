@@ -24,7 +24,15 @@ module Bake
         if not @config.artifactName.nil? and @config.artifactName.name != ""
           baseFilename = @config.artifactName.name
         else
-          baseFilename = "#{@projectName}#{Bake::Toolchain.outputEnding(@block.tcs)}"
+          if !@config.artifactExtension.nil? && @config.artifactExtension.name != "default"
+            extension = ".#{@config.artifactExtension.name}"
+          else
+            extension = Bake::Toolchain.outputEnding(@block.tcs)
+          end
+          baseFilename = "#{@projectName}#{extension}"
+        end
+        if !baseFilename.include?(".")
+          baseFilename += Bake::Toolchain.outputEnding(@block.tcs)
         end
         @exe_name ||= File.join([@block.output_dir, baseFilename])
       end
@@ -52,6 +60,7 @@ module Bake
         return "because linkOnly was specified" if Bake.options.linkOnly
 
         # exe
+        puts @exe_name
         return "because executable does not exist" if not File.exists?(@exe_name)
 
         eTime = File.mtime(@exe_name)
