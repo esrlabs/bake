@@ -41,6 +41,7 @@
 ./syntax/syntax.html
 ./syntax/variable_substitutions.html
 ./tips_and_tricks/bakeclean.html
+./tips_and_tricks/compilation_db.html
 ./tips_and_tricks/cuda.html
 ./tips_and_tricks/dot.html
 ./tips_and_tricks/how_to_use_bake_with_cygwin.html

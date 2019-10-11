@@ -115,6 +115,17 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>October 11, 2019 - bake-toolkit 2.54</dt>
+<dd><ul class="first last simple">
+<li>Added: ArtifactExtension in Project.meta to configure the filename extension of the artifacts.</li>
+<li>Added: Internal developer feature “-Z metadata=&lt;json&gt;” for MISRA tooling</li>
+<li>Changed: Duplicate flags will not be removed anymore (use cases exist where they’re needed)</li>
+<li>Bugfix: (Windows only) If a case mismatch is detected between Files definition in Project.meta and filesystem, the compilation will be aborted.</li>
+<li>Added: The filename for –dot can be omitted, default is &lt;main config name&gt;.dot in main project dir.</li>
+<li>Added: –dot-project-level to write project-level-dependencies in dot files insted of config-level.</li>
+<li>Changed: The modules in dot files now have full path for better post processing (the labels stay the same).</li>
+</ul>
+</dd>
 <dt>July 26, 2019 - bake-toolkit 2.53</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: bakery regex did not take comments into account when parsing Project.meta.</li>
