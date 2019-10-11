@@ -616,8 +616,8 @@ end
 
   it 'Toolchain extend full 2' do
     Bake.startBake("adapt/main", ["test_tool2", "--rebuild", "--adapt",  "tool_extend_full", "-v2"])
-    expect($mystring.include?("-DASMC=3 -DASMD=4 -DASMC=30 -DCPPD=4 -DASMA=1 -DASMB=2 -DASMA=10")).to be == true
-    expect($mystring.include?("-DCCCC=3 -DCCCD=4 -DCCCC=30 -DCPPD=4 -DCCCA=1 -DCCCB=2 -DCCCA=10")).to be == true
+    expect($mystring.include?("-DASMC=3 -DASMD=4 -DASMC=30 -DASMD=4 -DASMA=1 -DASMB=2 -DASMA=10")).to be == true
+    expect($mystring.include?("-DCCCC=3 -DCCCD=4 -DCCCC=30 -DCCCD=4 -DCCCA=1 -DCCCB=2 -DCCCA=10")).to be == true
     expect($mystring.include?("-DCPPC=3 -DCPPD=4 -DCPPC=30 -DCPPD=4 -DCPPA=1 -DCPPB=2 -DCPPA=10")).to be == true
     expect($mystring.include?("-LPATHA -LPATHB -LPATHA0")).to be == true
     expect($mystring.include?("-LPATHC -LPATHD -LPATHC0 -LPATHE -LPATHF -LPATHE0")).to be == true
