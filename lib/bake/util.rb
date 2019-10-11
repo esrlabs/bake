@@ -31,7 +31,7 @@ def adjustFlags(orgStr, flags)
 
     if f.add != ""
       Bake::Utils::flagSplit(f.add, false).each do |a|
-        orgSplitted << a unless orgSplitted.any? { |o| o==a }
+        orgSplitted << a # allow duplicate flags # unless orgSplitted.any? { |o| o==a }
       end
     end
 

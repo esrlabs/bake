@@ -1,5 +1,19 @@
 Project {
 
+  LibraryConfig test_Default_flags {
+    Files "src/lib.cpp"
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Flags "-x1 -x2 -x1"
+      }
+    }
+    Toolchain {
+      Compiler CPP {
+        Flags add: "-x2 -x1"
+      }
+    }
+  }
+  
   LibraryConfig test_Default_lib {
     Files "src/lib.cpp"
     DefaultToolchain GCC
@@ -68,4 +82,15 @@ Project {
     }
   }
 
+}
+
+Adapt {
+  LibraryConfig test_Default_flags, type: extend {
+    Toolchain {
+      Compiler CPP {
+        Flags add: "-x3 -x1"
+        Flags add: "-x3 -x1"
+      }
+    }
+  }
 }

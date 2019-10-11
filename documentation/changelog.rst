@@ -4,6 +4,7 @@ Changelog
 October XX, 2019 - bake-toolkit 2.54
     * Added: ArtifactExtension in Project.meta to configure the filename extension of the artifacts.
     * Added: Developer feature "-Z metadata=<json> for MISRA tooling
+    * Changed: duplicate flags will not be removed anymore (there are use cases where they are needed)
 
 
 July 26, 2019 - bake-toolkit 2.53

@@ -50,7 +50,7 @@ describe "Flags" do
     df = DummyFlags.new("","-f -x -g","")
     df2 = DummyFlags.new("","-f -h","")
     orgStr = "-x -y -z"
-    expect(adjustFlags(orgStr,[df, df2])).to be == "-x -y -z -f -g -h"
+    expect(adjustFlags(orgStr,[df, df2])).to be == "-x -y -z -f -x -g -f -h"
   end
 
   it 'remove' do
@@ -73,6 +73,10 @@ describe "Flags" do
     expect(adjustFlags(orgStr,[df,df1,df2])).to be == "-c -h -e"
   end
 
+it 'duplicate' do
+  Bake.startBake("artifact/main", ["test_Default_flags", "-v2"])
+  expect(($mystring.include?"lib.d -x1 -x2 -x1 -x2 -x1 -x3 -x1 -x3 -x1 -o ")).to be == true
+end
 
 end
 
