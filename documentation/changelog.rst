@@ -6,6 +6,7 @@ October XX, 2019 - bake-toolkit 2.54
     * Added: Developer feature "-Z metadata=<json> for MISRA tooling
     * Changed: duplicate flags will not be removed anymore (there are use cases where they are needed)
     * Bugfix: If a case mismatch is detected between Files definition in Project.meta and filesystem, the compilation will be aborted now.
+    * Added: The filename for --dot can be omitted now, a file <main config name>.dot in in main project dir is created by default.
 
 
 July 26, 2019 - bake-toolkit 2.53

@@ -20,7 +20,7 @@ module Bake
 
   class Options < Parser
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
-    attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :cc2j_filename # String
+    attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :dotFilename, :cc2j_filename # String
     attr_reader :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads, :skipBuildingLine # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :prebuild, :printTime, :json, :wparse, :caseSensitivityCheck, :fileCmd, :profiling # Boolean
@@ -47,7 +47,8 @@ module Bake
       @qac = false
       @projectPaths = false
       @wparse = false
-      @dot = nil
+      @dot = false
+      @dotFilename = nil
       @prebuild = false
       @printTime = false
       @buildDirDelimiter = "/"
@@ -136,8 +137,8 @@ module Bake
       add_option(["--socket"                                     ], lambda { |x| @socket = String === x ? x.to_i : x     })
       add_option(["--toolchain-info",     "--toolchain_info"     ], lambda { |x| ToolchainInfo.showToolchain(x)          })
       add_option(["--toolchain-names",    "--toolchain_names"    ], lambda {     ToolchainInfo.showToolchainList         })
-      add_option(["--dot",                                       ], lambda { |x| @dot = x; @dotAndCompile = false        })
-      add_option(["--dotc",                                      ], lambda { |x| @dot = x; @dotAndCompile = true         })
+      add_option(["--dot",                                       ], lambda { |x,dummy| @dot = true; @dotFilename = x; @dotAndCompile = false        })
+      add_option(["--dotc",                                      ], lambda { |x,dummy| @dot = true; @dotFilename = x; @dotAndCompile = true         })
       add_option(["--do",                 "--include_filter"     ], lambda { |x| set_filter(x)                           })
       add_option(["--omit",               "--exclude_filter"     ], lambda { |x| @exclude_filter << x                    })
       add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })

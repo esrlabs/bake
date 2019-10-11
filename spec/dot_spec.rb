@@ -75,7 +75,12 @@ describe "Dot" do
     expect(content.include?"subgraph \"cluster_lib1\"").to be == false
     expect(content.include?"subgraph \"cluster_lib2\"").to be == false
   end
-
+  
+  it 'Default filename' do
+    Bake.startBake("prebuild/main", ["testPre1", "--dot", "-p", "main,testPre1"])
+    expect(ExitHelper.exit_code).to be == 0
+    content = File.exist?("spec/testdata/prebuild/main/testPre1.dot")
+  end
 
 end
 

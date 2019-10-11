@@ -5,8 +5,9 @@ In larger workspaces it's often hard to understand the dependency structure. Wit
 
 .. code-block:: console
 
-    bake ... --dot <dot filename>
+    bake ... --dot [<dot filename>]
 
+If filename is omitted, a file <main config name>.dot in main project dir is created.
 The dot file is a text file with all dependencies included. It is easy to render an image, e.g. with
 
 .. code-block:: console
