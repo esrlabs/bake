@@ -129,9 +129,9 @@ describe "bakery" do
   end
 
   it 'collection option not ok' do
-    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 --dot --adapt nols`
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b Combined -w spec/testdata/root1 -w spec/testdata/root2 --dotty --adapt nols`
     puts str
-    expect(str.include?("Argument for option --dot missing")).to be == true
+    expect(str.include?("Error: Option --dotty unknown")).to be == true
   end
 
   it 'collection project arg ok' do
@@ -143,7 +143,7 @@ describe "bakery" do
   it 'collection project arg not ok' do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b ProjectInvalidArgs -w spec/testdata/root1 --adapt nols`
     puts str
-    expect(str.include?("Argument for option --dot missing")).to be == true
+    expect(str.include?("Error: Option --dotty unknown")).to be == true
   end
 
   it 'recursive test 1' do

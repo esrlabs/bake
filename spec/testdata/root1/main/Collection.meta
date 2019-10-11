@@ -62,7 +62,7 @@ Collection ProjectArgs {
 }
 
 Collection ProjectInvalidArgs {
-  Project main, config: test, args: "--dot"
+  Project main, config: test, args: "--dotty"
 }
 
 Collection Quoted {

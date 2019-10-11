@@ -34,6 +34,7 @@ module Bake
     attr_reader :diabCaseCheck
     attr_reader :defines
     attr_reader :dev_features
+    attr_reader :dotShowProjOnly
 
 
     def initialize(argv)
@@ -95,6 +96,7 @@ module Bake
       @dotAndCompile = false
       @show_roots = false
       @dev_features = []
+      @dotShowProjOnly = false
 
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| @main_dir = x                           })
@@ -139,6 +141,7 @@ module Bake
       add_option(["--toolchain-names",    "--toolchain_names"    ], lambda {     ToolchainInfo.showToolchainList         })
       add_option(["--dot",                                       ], lambda { |x,dummy| @dot = true; @dotFilename = x; @dotAndCompile = false        })
       add_option(["--dotc",                                      ], lambda { |x,dummy| @dot = true; @dotFilename = x; @dotAndCompile = true         })
+      add_option(["--dot-project-level",                         ], lambda { @dot = true; @dotShowProjOnly = true        })
       add_option(["--do",                 "--include_filter"     ], lambda { |x| set_filter(x)                           })
       add_option(["--omit",               "--exclude_filter"     ], lambda { |x| @exclude_filter << x                    })
       add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })

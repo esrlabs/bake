@@ -42,6 +42,7 @@ module Bake
       puts " --dot [<filename>]       Creates a .dot file of the config dependencies, compilation does not take place."
       puts "                          If filename is omitted, a file <main config name>.dot in main project dir is created."
       puts " --dotc [<filename>]      Same as --dot, but with compilation."
+      puts " --dot-project-level      Dependencies for dot on project level, not on config level."
       puts " --do <name>[=<arg>]      Includes elements with this filter name (can be used multiple times)."
       puts "                          Optional arguments which can be accessed in Project.meta via $(FilterArguments, <name>)."
       puts "                          'PRE', 'POST', 'STARTUP', 'EXIT' or 'CLEAN' includes all according steps."

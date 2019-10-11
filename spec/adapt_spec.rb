@@ -620,7 +620,7 @@ end
     expect($mystring.include?("-DCCCC=3 -DCCCD=4 -DCCCC=30 -DCCCD=4 -DCCCA=1 -DCCCB=2 -DCCCA=10")).to be == true
     expect($mystring.include?("-DCPPC=3 -DCPPD=4 -DCPPC=30 -DCPPD=4 -DCPPA=1 -DCPPB=2 -DCPPA=10")).to be == true
     expect($mystring.include?("-LPATHA -LPATHB -LPATHA0")).to be == true
-    expect($mystring.include?("-LPATHC -LPATHD -LPATHC0 -LPATHE -LPATHF -LPATHE0")).to be == true
+    expect($mystring.include?("-LPATHC -LPATHD -LPATHC0 -LPATHD -LPATHE -LPATHF -LPATHE0 -LPATHF")).to be == true
   end
 
   it 'Toolchain remove 0' do

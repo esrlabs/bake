@@ -39,11 +39,11 @@ module Bake
       return [block, arg]
     end
 
-    def has_parameter?(argument)
+    def num_parameter?(argument)
       b, inPlaceArg = get_block(argument)
-      return false unless b
-      return false if inPlaceArg
-      b.parameters.length >= 1
+      return 0 unless b
+      return 0 if inPlaceArg
+      return b.parameters.length
     end
 
     def parse_internal(ignore_invalid, subOptions = nil)
@@ -55,11 +55,14 @@ module Bake
 
             # used in bake config, must be passed from bakery to bake
             if subOptions and subOptions.valid?arg
-              if subOptions.has_parameter?(arg)
+              num = subOptions.num_parameter?(arg)
+              if num > 0
                 if pos+1 < @argv.length and @argv[pos+1][0] != "-"
                   pos = pos + 1
                 else
-                  raise "Argument for option #{arg} missing"
+                  if num != 2 # default 
+                    raise "Argument for option #{arg} missing"
+                  end
                 end
               end
             end

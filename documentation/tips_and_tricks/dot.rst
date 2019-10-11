@@ -33,3 +33,5 @@ Which results in:
 
 .. image:: ../_static/dotP.png
 .. image:: ../_static/dotPC.png
+
+With --dot-project-level the depenencies are written on project level, not on config level.
