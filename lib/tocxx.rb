@@ -677,7 +677,9 @@ module Bake
                 f.puts "{"
                 f.puts "  \"module_path\":  \"#{mainBlock.projectDir}\","
                 f.puts "  \"config_name\":  \"#{@mainConfig.name}\","
-                f.puts "  \"artifact\":     \"#{mainBlock.mainSteps.last.calcArtifactName}\","
+                Dir.chdir(mainBlock.projectDir) do
+                  f.puts "  \"artifact\":     \"#{File.expand_path(mainBlock.mainSteps.last.calcArtifactName)}\","
+                end
                 f.puts "  \"compiler_c\":   \"#{@defaultToolchain[:COMPILER][:C][:COMMAND]}\","
                 f.puts "  \"compiler_cxx\": \"#{@defaultToolchain[:COMPILER][:CPP][:COMMAND]}\","
                 f.puts "  \"flags_c\":      \"#{@defaultToolchain[:COMPILER][:C][:FLAGS]}\","

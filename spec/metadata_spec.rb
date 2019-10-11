@@ -19,7 +19,8 @@ describe "Metadata" do
     data = JSON.parse(File.read("spec/testdata/artifact/main/build/x.json"))
     expect(data["module_path"].end_with?( "spec/testdata/artifact/main")).to be == true
     expect(data["config_name"]).to be  == "test_metadata_exe"
-    expect(data["artifact"]).to be     == "build/test_metadata_exe/main#{Bake::Toolchain.outputEnding}"
+    expect(data["artifact"].end_with?("build/test_metadata_exe/main#{Bake::Toolchain.outputEnding}")).to be == true
+    expect(File.is_absolute?(data["artifact"])).to be == true
     expect(data["compiler_c"]).to be   == "gcc"
     expect(data["compiler_cxx"]).to be == "cppcom"
     expect(data["flags_c"]).to be      == ""
@@ -33,7 +34,8 @@ describe "Metadata" do
     data = JSON.parse(File.read("spec/testdata/artifact/main/build/x.json"))
     expect(data["module_path"].end_with?( "spec/testdata/artifact/main")).to be == true
     expect(data["config_name"]).to be  == "test_metadata_lib"
-    expect(data["artifact"]).to be     == "build/test_metadata_lib/libmain.a"
+    expect(data["artifact"].end_with?("build/test_metadata_lib/libmain.a")).to be == true
+    expect(File.is_absolute?(data["artifact"])).to be == true
     expect(data["compiler_c"]).to be   == "gcc"
     expect(data["compiler_cxx"]).to be == "g++"
     expect(data["flags_c"]).to be      == "-cf1 -cf2"
