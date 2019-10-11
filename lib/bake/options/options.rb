@@ -33,6 +33,7 @@ module Bake
     attr_reader :roots # Root array
     attr_reader :diabCaseCheck
     attr_reader :defines
+    attr_reader :dev_features
 
 
     def initialize(argv)
@@ -92,6 +93,7 @@ module Bake
       @fileCmd = false
       @dotAndCompile = false
       @show_roots = false
+      @dev_features = []
 
       add_option(["-b",                   ""                     ], lambda { |x| set_build_config(x)                     })
       add_option(["-m"                                           ], lambda { |x| @main_dir = x                           })
@@ -114,6 +116,7 @@ module Bake
       add_option(["--file-list",          "--file_list"          ], lambda {     @filelist = Set.new                     })
       add_option(["--filter-paths"                               ], lambda {     @projectPaths = true                    })
       add_option(["--qac"                                        ], lambda {     @qac = true                             })
+      add_option(["-Z"                                           ], lambda { |x| @dev_features <<  x                     })
 
       add_option(["--generate-doc",       "--docu"               ], lambda {     @docu = true                            })
 

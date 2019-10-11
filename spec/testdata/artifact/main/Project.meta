@@ -51,5 +51,21 @@ Project {
     ArtifactName "ENameE"
     ArtifactExtension "EExtE"
   }
+  
+  ExecutableConfig test_metadata_exe {
+    DefaultToolchain GCC {
+      Compiler CPP, command: "cppcom" {
+        Flags "-cppf1 -ccpf2"
+      }
+    }
+  }
+  
+  LibraryConfig test_metadata_lib {
+    DefaultToolchain GCC {
+      Compiler C {
+        Flags "-cf1 -cf2"
+      }
+    }
+  }
 
 }

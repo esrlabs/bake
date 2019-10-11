@@ -667,6 +667,30 @@ module Bake
           end
           puts "Profiling #{Time.now - $timeStart}: convert to building blocks..." if Bake.options.profiling
           convert2bb
+          
+          metadata_json = Bake.options.dev_features.first { |x| x.start_with?("metadata=") }
+          if metadata_json
+            metadata_file = metadata_json[9..-1]
+            mainBlock = Blocks::ALL_BLOCKS[@mainConfig.parent.name + "," + @mainConfig.name]
+            if Metamodel::ExecutableConfig === mainBlock.config || Metamodel::LibraryConfig === mainBlock.config
+              File.open(metadata_file, "w") do |f|
+                f.puts "{"
+                f.puts "  \"module_path\":  \"#{mainBlock.projectDir}\","
+                f.puts "  \"config_name\":  \"#{@mainConfig.name}\","
+                f.puts "  \"artifact\":     \"#{mainBlock.mainSteps.last.calcArtifactName}\","
+                f.puts "  \"compiler_c\":   \"#{@defaultToolchain[:COMPILER][:C][:COMMAND]}\","
+                f.puts "  \"compiler_cxx\": \"#{@defaultToolchain[:COMPILER][:CPP][:COMMAND]}\","
+                f.puts "  \"flags_c\":      \"#{@defaultToolchain[:COMPILER][:C][:FLAGS]}\","
+                f.puts "  \"flags_cxx\":    \"#{@defaultToolchain[:COMPILER][:CPP][:FLAGS]}\""
+                f.puts "}"
+              end
+              puts "File #{metadata_file} written."
+              ExitHelper.exit(0)
+            else
+              Bake.formatter.printError("Error: dev-feature metadata is only for LibraryConfig for ExecutableConfig.")
+              ExitHelper.exit(1)
+            end
+          end
 
         ensure
           if Bake.options.show_includes || Bake.options.show_includes_and_defines
