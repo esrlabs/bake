@@ -12,6 +12,12 @@ module Bake
 
 describe "Building" do
 
+  it 'case sensitivity error' do
+    Bake.startBake("artifact/main", ["test_Default_error"])
+    expect(ExitHelper.exit_code).to be > 0
+    expect($mystring.include?("Error: Case sensitivity error for source file 'src/l*B.c?p'")).to be == true
+  end
+
   it 'search Project.meta' do
     expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == false
     Bake.startBake("simple/main/src", ["test_ok"])

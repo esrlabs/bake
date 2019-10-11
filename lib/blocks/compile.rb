@@ -549,6 +549,14 @@ module Bake
           pr = pr[2..-1] if pr.start_with?"./"
 
           res = Dir.glob_dir(pr, @projectDir).sort
+          regExSearch = pr.gsub("*",".*").gsub("?",".")
+          if !res.all?{|r| r.match(/#{regExSearch}/)}
+            if res.all?{|r| r.match(/#{regExSearch}/i)}
+              Bake.formatter.printError("Case sensitivity error for source file '#{pr}'", sources)
+              raise SystemCommandFailed.new
+            end
+          end
+          puts res
           if res.length == 0 and cleaning == false
             if not pr.include?"*" and not pr.include?"?"
               Bake.formatter.printError("Source file '#{pr}' not found", sources)

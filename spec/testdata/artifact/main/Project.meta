@@ -19,6 +19,11 @@ Project {
     DefaultToolchain GCC
   }
 
+  LibraryConfig test_Default_error {
+    Files "src/l*B.c?p"
+    DefaultToolchain GCC
+  }
+
   LibraryConfig test_ArtifactName_lib {
     Files "src/lib.cpp"
     DefaultToolchain GCC
