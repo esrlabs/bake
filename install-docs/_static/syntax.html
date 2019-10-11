@@ -194,6 +194,7 @@ z-index: 100;
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showExcludeFiles()" onMouseout="notip()">ExcludeFiles</span> &#60;pattern&#62;<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showArtifactName()" onMouseout="notip()">ArtifactName</span> &#60;name&#62;<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showArtifactExtension()" onMouseout="notip()">ArtifactExtension</span> &#60;ext&#62;<br>
 </span><br></span>
 
               <span id="exe_part"><span class="show" style="background-color:#EEEEEE;">
@@ -607,6 +608,12 @@ function showArtifactName() {
   str = 'The artifact name inclusive file ending.<br>'+
     'The artifact will be placed in the output directory.'
   ddrivetip("ArtifactName","No","0..1","Executable: project name + toolchain dependent file ending. Library: 'lib' + project name + '.a'",str)
+}
+
+function showArtifactExtension() {
+  str = 'The artifact extension, e.g. "exe".<br>'+
+    'If ArtifactName is also specified, ArtifactExtension has no effect.'
+  ddrivetip("ArtifactExtension","No","0..1","toolchain dependent file ending",str)
 }
 
 function showMakefileCustom() {

@@ -11,7 +11,7 @@ Additional features
     qac
     bakeclean
     cuda
-
+    compilation_db
 
 Unnecessary includes
 ********************
