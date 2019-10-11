@@ -115,10 +115,11 @@
   <div class="section" id="generating-dot-graphs">
 <h1>Generating dot graphs<a class="headerlink" href="#generating-dot-graphs" title="Permalink to this headline">¶</a></h1>
 <p>In larger workspaces it’s often hard to understand the dependency structure. With bake you can generate a dot file (see <a class="reference external" href="http://www.graphviz.org">http://www.graphviz.org</a>):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bake ... --dot &lt;dot filename&gt;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bake ... --dot [&lt;dot filename&gt;]</span>
 </pre></div>
 </div>
-<p>The dot file is a text file with all dependencies included. It is easy to render an image, e.g. with</p>
+<p>If filename is omitted, a file &lt;main config name&gt;.dot in main project dir is created.
+The dot file is a text file with all dependencies included. It is easy to render an image, e.g. with</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">tred &lt;dot filename&gt; | dot -Tpng -o &lt;png image filename&gt;</span>
 </pre></div>
 </div>
@@ -138,6 +139,7 @@
 <p>Which results in:</p>
 <img alt="../_images/dotP.png" src="../_images/dotP.png" />
 <img alt="../_images/dotPC.png" src="../_images/dotPC.png" />
+<p>With –dot-project-level the depenencies are written on project level, not on config level.</p>
 </div>
 
 

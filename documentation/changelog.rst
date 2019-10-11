@@ -1,13 +1,14 @@
 Changelog
 =========
 
-October XX, 2019 - bake-toolkit 2.54
+October 11, 2019 - bake-toolkit 2.54
     * Added: ArtifactExtension in Project.meta to configure the filename extension of the artifacts.
-    * Added: Developer feature "-Z metadata=<json> for MISRA tooling
-    * Changed: duplicate flags will not be removed anymore (there are use cases where they are needed)
-    * Bugfix: If a case mismatch is detected between Files definition in Project.meta and filesystem, the compilation will be aborted now.
-    * Added: The filename for --dot can be omitted now, a file <main config name>.dot in in main project dir is created by default.
-
+    * Added: Internal developer feature "-Z metadata=<json>" for MISRA tooling
+    * Changed: Duplicate flags will not be removed anymore (use cases exist where they're needed)
+    * Bugfix: (Windows only) If a case mismatch is detected between Files definition in Project.meta and filesystem, the compilation will be aborted.
+    * Added: The filename for --dot can be omitted, default is <main config name>.dot in main project dir.
+    * Added: --dot-project-level to write project-level-dependencies in dot files insted of config-level.
+    * Changed: The modules in dot files now have full path for better post processing (the labels stay the same).
 
 July 26, 2019 - bake-toolkit 2.53
     * Bugfix: bakery regex did not take comments into account when parsing Project.meta.
