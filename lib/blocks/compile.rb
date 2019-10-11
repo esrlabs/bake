@@ -556,7 +556,6 @@ module Bake
               raise SystemCommandFailed.new
             end
           end
-          puts res
           if res.length == 0 and cleaning == false
             if not pr.include?"*" and not pr.include?"?"
               Bake.formatter.printError("Source file '#{pr}' not found", sources)

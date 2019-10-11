@@ -75,7 +75,7 @@ describe "Set" do
     expect(($mystring.include?"-set")).to be == false
     expect(($mystring.split("-DX=").length)).to be == 3
 
-    expect(($mystring.include?"main.d -O2 -DXtestFlagSubX")).to be == true
+    expect(($mystring.include?"main.d -O2 -O2 -DXtestFlagSubX")).to be == true
     expect(($mystring.include?"main.d -DXtestFlagX")).to be == true
 
     expect(($mystring.include?"-DtestFlagSub")).to be == true
