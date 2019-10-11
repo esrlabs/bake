@@ -60,7 +60,6 @@ module Bake
         return "because linkOnly was specified" if Bake.options.linkOnly
 
         # exe
-        puts @exe_name
         return "because executable does not exist" if not File.exists?(@exe_name)
 
         eTime = File.mtime(@exe_name)

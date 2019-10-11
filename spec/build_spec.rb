@@ -14,8 +14,13 @@ describe "Building" do
 
   it 'case sensitivity error' do
     Bake.startBake("artifact/main", ["test_Default_error"])
-    expect(ExitHelper.exit_code).to be > 0
-    expect($mystring.include?("Error: Case sensitivity error for source file 'src/l*B.c?p'")).to be == true
+    if Utils::OS.windows?
+      expect(ExitHelper.exit_code).to be > 0
+      expect($mystring.include?("Error: Case sensitivity error for source file 'src/l*B.c?p'")).to be == true
+    else
+      expect(ExitHelper.exit_code).to be == 0
+      expect($mystring.include?("Info: Source file pattern 'src/l*B.c?p' does not match to any file")).to be == true
+    end
   end
 
   it 'search Project.meta' do
