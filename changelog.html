@@ -115,6 +115,12 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>October 14, 2019 - bake-toolkit 2.54.1</dt>
+<dd><ul class="first last simple">
+<li>Reverted: The change from 2.54: “(Windows only) If a case mismatch is detected between Files definition in Project.meta and filesystem, the compilation will be aborted.”</li>
+<li>Added: Instead, the correct flags and defines will be used when specified at “Files” level in Project.meta. They will not be discarded anymore on case mismatch.</li>
+</ul>
+</dd>
 <dt>October 11, 2019 - bake-toolkit 2.54</dt>
 <dd><ul class="first last simple">
 <li>Added: ArtifactExtension in Project.meta to configure the filename extension of the artifacts.</li>
