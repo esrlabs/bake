@@ -100,7 +100,6 @@ module Bake
           blockIncs = []
           blockDefs = {:CPP => [], :C => [], :ASM => []}
           blocks.each do |block|
-            block.calcFileTcs
             block.calcIncludes
             block.calcDefines
             block.calcFlags 

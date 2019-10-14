@@ -12,15 +12,31 @@ module Bake
 
 describe "Building" do
 
-  it 'case sensitivity error' do
-    Bake.startBake("artifact/main", ["test_Default_error"])
-    if Utils::OS.windows?
-      expect(ExitHelper.exit_code).to be > 0
-      expect($mystring.include?("Error: Case sensitivity error for source file 'src/l*B.c?p'")).to be == true
-    else
-      expect(ExitHelper.exit_code).to be == 0
-      expect($mystring.include?("Info: Source file pattern 'src/l*B.c?p' does not match to any file")).to be == true
-    end
+  it 'filetcs1' do
+    Bake.startBake("filetcs/main", ["test_1", "-v2"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect($mystring.include?("a1.d -DA -o ")).to be == true
+    expect($mystring.include?("a2.d -DA -o ")).to be == true
+    expect($mystring.include?("a3.d -DA -o ")).to be == true
+    expect($mystring.include?("a4.d -DA -o ")).to be == true
+  end
+
+  it 'filetcs2' do
+    Bake.startBake("filetcs/main", ["test_2", "-v2"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect($mystring.include?("a1.d -DA -o ")).to be == true
+    expect($mystring.include?("a2.d -DB -o ")).to be == true
+    expect($mystring.include?("a3.d -DB -o ")).to be == true
+    expect($mystring.include?("a4.d -DB -o ")).to be == true
+  end
+
+  it 'filetcs3' do
+    Bake.startBake("filetcs/main", ["test_3", "-v2"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect($mystring.include?("a1.d -o ")).to be == true
+    expect($mystring.include?("a2.d -DA -o ")).to be == true
+    expect($mystring.include?("a3.d -DC -o ")).to be == true
+    expect($mystring.include?("a4.d -o ")).to be == true
   end
 
   it 'search Project.meta' do

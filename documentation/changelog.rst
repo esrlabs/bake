@@ -1,6 +1,10 @@
 Changelog
 =========
 
+October 14, 2019 - bake-toolkit 2.54.1
+    * Reverted: The change from 2.54: "(Windows only) If a case mismatch is detected between Files definition in Project.meta and filesystem, the compilation will be aborted."
+    * Added: Instead, the correct flags and defines will be used when specified at "Files" level in Project.meta. They will not be discarded anymore on case mismatch. 
+
 October 11, 2019 - bake-toolkit 2.54
     * Added: ArtifactExtension in Project.meta to configure the filename extension of the artifacts.
     * Added: Internal developer feature "-Z metadata=<json>" for MISRA tooling

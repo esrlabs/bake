@@ -409,7 +409,6 @@ module Bake
           return true if @config.files.empty?
           
           SyncOut.mutex.synchronize do
-            calcFileTcs
             calcIncludes
             calcDefines # not for files with changed tcs
             calcFlags   # not for files with changed tcs
@@ -537,6 +536,7 @@ module Bake
         return @source_files if @source_files and not @source_files.empty?
         @source_files = []
         @source_files_ignored_in_lib = []
+        @fileTcs = {}
 
         exclude_files = Set.new
         @config.excludeFiles.each do |pr|
@@ -549,13 +549,6 @@ module Bake
           pr = pr[2..-1] if pr.start_with?"./"
 
           res = Dir.glob_dir(pr, @projectDir).sort
-          regExSearch = pr.gsub("*",".*").gsub("?",".")
-          if !res.all?{|r| r.match(/#{regExSearch}/)}
-            if res.all?{|r| r.match(/#{regExSearch}/i)}
-              Bake.formatter.printError("Case sensitivity error for source file '#{pr}'", sources)
-              raise SystemCommandFailed.new
-            end
-          end
           if res.length == 0 and cleaning == false
             if not pr.include?"*" and not pr.include?"?"
               Bake.formatter.printError("Source file '#{pr}' not found", sources)
@@ -564,11 +557,15 @@ module Bake
               Bake.formatter.printInfo("Source file pattern '#{pr}' does not match to any file", sources)
             end
           end
+          if (sources.define.length > 0 or sources.flags.length > 0)
+            icf = integrateCompilerFile(Utils.deep_copy(@block.tcs),sources)
+          end
           res.each do |f|
             next if exclude_files.include?(f)
             next if source_files.include?(f)
             source_files << f
             @source_files << f
+            @fileTcs[f] = icf if icf
             @source_files_ignored_in_lib << f if sources.compileOnly
           end
         end
@@ -754,25 +751,6 @@ module Bake
         @flag_array = {}
         [:CPP, :C, :ASM].each do |type|
           @flag_array[type] = getFlags(@block.tcs[:COMPILER][type])
-        end
-      end
-
-      def calcFileTcs
-        @fileTcs = {}
-        @config.files.each do |f|
-          if (f.define.length > 0 or f.flags.length > 0)
-            if f.name.include?"*"
-              Bake.formatter.printWarning("Toolchain settings not allowed for file pattern #{f.name}", f)
-              err_res = ErrorDesc.new
-              err_res.file_name = @config.file_name
-              err_res.line_number = f.line_number
-              err_res.severity = ErrorParser::SEVERITY_WARNING
-              err_res.message = "Toolchain settings not allowed for file patterns"
-              Bake::IDEInterface.instance.set_errors([err_res])
-            else
-              @fileTcs[f.name] = integrateCompilerFile(Utils.deep_copy(@block.tcs),f)
-            end
-          end
         end
       end
 

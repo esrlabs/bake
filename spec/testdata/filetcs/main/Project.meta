@@ -1,0 +1,37 @@
+Project {
+
+  LibraryConfig test_1 {
+    Files "src/a*.cpp" {
+      Define "A"
+    }
+    Files "src/a1.cpp" {
+      Define "B"
+    }
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test_2 {
+    Files "src/a1.cpp" {
+      Define "A"
+    }
+    Files "src/a*.cpp" {
+      Define "B"
+    }
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test_3 {
+    Files "src/a2*.cpp" {
+      Define "A"
+    }
+    Files "src/a2*.cpp" {
+      Define "B"
+    }
+    Files "src/a3*.cpp" {
+      Define "C"
+    }
+    Files "src/a*.cpp"
+    DefaultToolchain GCC
+  }
+
+}

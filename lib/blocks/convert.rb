@@ -12,7 +12,6 @@ module Bake
 
       def execute
         Dir.chdir(@projectDir) do
-          calcFileTcs
           calcIncludes
           calcDefines
           calcFlags
