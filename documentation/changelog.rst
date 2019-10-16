@@ -1,6 +1,13 @@
 Changelog
 =========
 
+October 16, 2019 - bake-toolkit 2.54.2
+     * Added: Developer feature no-error-parser
+     * Added: "toolchain" in metadata
+     * Fixed: variables now resolved in metadata
+     * Fixed: File specific toolchain handling was broken in 2.54.1 
+     * Changed: ArtifactExtension can be used to extend ArtifactName
+
 October 14, 2019 - bake-toolkit 2.54.1
     * Reverted: The change from 2.54: "(Windows only) If a case mismatch is detected between Files definition in Project.meta and filesystem, the compilation will be aborted."
     * Added: Instead, the correct flags and defines will be used when specified at "Files" level in Project.meta. They will not be discarded anymore on case mismatch. 
