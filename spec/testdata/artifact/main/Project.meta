@@ -72,9 +72,10 @@ Project {
   }
   
   ExecutableConfig test_metadata_exe {
+    Set VAR, value: "-gaga"
     DefaultToolchain GCC {
       Compiler CPP, command: "cppcom" {
-        Flags "-cppf1 -ccpf2"
+        Flags "-cppf1 -ccpf2 $(VAR)"
       }
     }
   }

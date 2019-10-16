@@ -561,11 +561,11 @@ module Bake
             icf = integrateCompilerFile(Utils.deep_copy(@block.tcs),sources)
           end
           res.each do |f|
+            @fileTcs[f] = icf if icf && !@fileTcs.has_key?(f)
             next if exclude_files.include?(f)
             next if source_files.include?(f)
             source_files << f
             @source_files << f
-            @fileTcs[f] = icf if icf
             @source_files_ignored_in_lib << f if sources.compileOnly
           end
         end

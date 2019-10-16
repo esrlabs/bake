@@ -34,4 +34,15 @@ Project {
     DefaultToolchain GCC
   }
 
+  LibraryConfig test_4 {
+    Files "src/a2.cpp"
+    Files "src/a2*.cpp" {
+      Define "B"
+    }
+    Files "src/a2.cpp" {
+      Define "C"
+    }
+    DefaultToolchain GCC
+  }
+
 }

@@ -39,6 +39,12 @@ describe "Building" do
     expect($mystring.include?("a4.d -o ")).to be == true
   end
 
+  it 'filetcs4' do
+    Bake.startBake("filetcs/main", ["test_4", "-v2"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect($mystring.include?("a2.d -DB -o ")).to be == true
+  end
+
   it 'search Project.meta' do
     expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == false
     Bake.startBake("simple/main/src", ["test_ok"])

@@ -21,12 +21,14 @@ module Bake
         if not @config.artifactName.nil? and @config.artifactName.name != ""
           baseFilename = @config.artifactName.name
         else
-          if !@config.artifactExtension.nil? && @config.artifactExtension.name != "default"
-            extension = ".#{@config.artifactExtension.name}"
-          else
-            extension =".a"
+          baseFilename = "lib#{@projectName}.a"
+        end
+        if !@config.artifactExtension.nil? && @config.artifactExtension.name != "default"
+          extension = ".#{@config.artifactExtension.name}"
+          if baseFilename.include?(".")
+            baseFilename = baseFilename.split(".")[0...-1].join(".")
           end
-          baseFilename = "lib#{@projectName}#{extension}"
+          baseFilename += ".#{@config.artifactExtension.name}"
         end
         @archive_name ||= File.join([@block.output_dir, baseFilename])
       end

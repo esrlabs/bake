@@ -48,7 +48,7 @@ describe "Artifact" do
   it 'ArtifactNameExtension exe' do
     Bake.startBake("artifact/main", ["test_ArtifactNameExtension_exe"])
     expect(($mystring.include?"build/test_ArtifactNameExtension_lib_main_test_ArtifactNameExtension_exe/LNameL")).to be == true
-    expect(($mystring.include?" build/test_ArtifactNameExtension_exe/ENameE#{Bake::Toolchain.outputEnding}")).to be == true
+    expect(($mystring.include?" build/test_ArtifactNameExtension_exe/ENameE.EExtE")).to be == true
     expect(($mystring.include?" LExtL")).to be == false
     expect(($mystring.include?" EExtE")).to be == false
 

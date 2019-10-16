@@ -1,0 +1,13 @@
+Project default: test {
+
+  ExecutableConfig test1 {
+    Files "x.cpp"
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test2 {
+    Files "y.cpp"
+    DefaultToolchain GCC
+  }
+
+}

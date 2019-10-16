@@ -23,16 +23,16 @@ module Bake
       def calcArtifactName
         if not @config.artifactName.nil? and @config.artifactName.name != ""
           baseFilename = @config.artifactName.name
+          baseFilename += Bake::Toolchain.outputEnding(@block.tcs) if !baseFilename.include?(".")
         else
-          if !@config.artifactExtension.nil? && @config.artifactExtension.name != "default"
-            extension = ".#{@config.artifactExtension.name}"
-          else
-            extension = Bake::Toolchain.outputEnding(@block.tcs)
-          end
-          baseFilename = "#{@projectName}#{extension}"
+          baseFilename = "#{@projectName}#{Bake::Toolchain.outputEnding(@block.tcs)}"
         end
-        if !baseFilename.include?(".")
-          baseFilename += Bake::Toolchain.outputEnding(@block.tcs)
+        if !@config.artifactExtension.nil? && @config.artifactExtension.name != "default"
+          extension = ".#{@config.artifactExtension.name}"
+          if baseFilename.include?(".")
+            baseFilename = baseFilename.split(".")[0...-1].join(".")
+          end
+          baseFilename += ".#{@config.artifactExtension.name}"
         end
         @exe_name ||= File.join([@block.output_dir, baseFilename])
       end

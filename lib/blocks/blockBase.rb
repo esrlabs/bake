@@ -127,7 +127,13 @@ module Bake
           if error_parser
             begin
               x = [console_output]
-              error_descs, console_output_full, incList = error_parser.scan_lines(x, @projectDir)
+              if metadata_json = Bake.options.dev_features.include?("no-error-parser")
+                error_descs = []
+                console_output_full = x[0]
+                incList = []
+              else
+                error_descs, console_output_full, incList = error_parser.scan_lines(x, @projectDir)
+              end
 
               console_output = x[0]
               console_output = console_output_full if Bake.options.consoleOutput_fullnames
@@ -135,9 +141,13 @@ module Bake
               ret = error_descs.any? { |e| e.severity == ErrorParser::SEVERITY_ERROR }
 
               console_output.gsub!(/[\r]/, "")
-              Bake.formatter.format(console_output, error_descs, error_parser) unless console_output.empty?
+              if metadata_json = Bake.options.dev_features.include?("no-error-parser")
+                puts console_output
+              else
+                Bake.formatter.format(console_output, error_descs, error_parser) unless console_output.empty?
+                Bake::IDEInterface.instance.set_errors(error_descs)
+              end
 
-              Bake::IDEInterface.instance.set_errors(error_descs)
             rescue Exception => e
               Bake.formatter.printWarning("Parsing output failed (maybe language not set to English?): " + e.message)
               Bake.formatter.printWarning("Original output:")
