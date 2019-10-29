@@ -4,7 +4,7 @@ module Bake
   class TaskingCompilerErrorParser < ErrorParser
 
     def initialize()
-      @error_expression  = /.* (.+): \[\"(.+)\" ([0-9]+)\/*[0-9]+\] (.*)/
+      @error_expression  = /.* (.+): \[\"(.+)\" ([0-9]+)\/*[0-9]*\] (.*)/
       @error_expression2 = /.* (.+): (.+) “(.*)”/
     end
 
