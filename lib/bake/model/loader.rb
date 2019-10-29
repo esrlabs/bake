@@ -71,7 +71,9 @@ module Bake
         end
       })
 
-      Utils.gitIgnore(File.dirname(filename)+"/.bake") 
+      if !Bake.options.dry
+        Utils.gitIgnore(File.dirname(filename)+"/.bake")
+      end
 
       frag = @model.fragments[0]
       @model.remove_fragment(frag)

@@ -257,9 +257,7 @@ module Bake
             config = configs.select {|c| c.name == out_conf_name }.first
             if config
               out_dir = nil
-              r = /\$\s*\(\s*OutputDir/
-              if (config.toolchain and config.toolchain.outputDir and config.toolchain.outputDir != "" and
-                (attrName == nil || attrName != "outputDir" || ! r === config.toolchain.outputDir))
+              if (config.toolchain and config.toolchain.outputDir and config.toolchain.outputDir != "")
                 out_dir = config.toolchain.outputDir
               else
                 out_dir = @@configTcMap[config][:OUTPUT_DIR]

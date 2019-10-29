@@ -203,7 +203,7 @@ describe "compiler" do
     expect(res[1].message).to be == "cannot open preprocessing output file"
 
     expect(res[2].severity).to be == 1
-    expect(res[1].file_name.end_with?("here.cpp")).to be == true
+    expect(res[2].file_name.end_with?("here.cpp")).to be == true
     expect(res[2].line_number).to be == 123
     expect(res[2].message).to be == "so funny"
 
