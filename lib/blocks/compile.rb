@@ -255,7 +255,7 @@ module Bake
         end
 
         if not (cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile))
-          BlockBase.prepareOutput(File.expand_path(object,@projectDir), @block)
+          BlockBase.prepareOutput(File.expand_path(object,@projectDir))
           outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
           realCmd = Bake.options.fileCmd ? calcFileCmd(cmd, onlyCmd, object, compiler) : cmd 
           printCmd(realCmd, "#{outputType} #{@projectName} (#{@config.name}): #{source}", reason, false)
@@ -418,6 +418,8 @@ module Bake
             prepareIncludes
             puts "Profiling #{Time.now - $timeStart}: prepareIncludes (#{@projectName+","+@config.name}) stop..." if Bake.options.profiling
           end
+
+          Utils.gitIgnore(@block.output_dir) if !Bake.options.dry
 
           fileListBlock = Set.new if Bake.options.filelist
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|

@@ -7,7 +7,9 @@ module Bake
     def self.gitIgnore(folder)
       FileUtils::mkdir_p(folder)
       gitignore = folder + "/.gitignore"
-      File.write(gitignore, ".") unless File.exist?(gitignore)
+      if !File.exist?(gitignore)
+        File.write(gitignore, ".\n")
+      end
     end
 
     def self.flagSplit(str, removeQuotes)

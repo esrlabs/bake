@@ -17,7 +17,7 @@ module Bake
       end
 
       def calcLinkerScript
-        if Metamodel::LibraryConfig === @config 
+        if Metamodel::LibraryConfig === @config
           @linker_script = nil
         else
           @linker_script = @config.linkerScript.nil? ? nil : @block.convPath(@config.linkerScript)

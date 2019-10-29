@@ -26,16 +26,16 @@ module Bake
         end
       end
 
-      def self.prepareOutput(filename, block)
+      def self.prepareOutput(filename, block = nil)
         return if Bake.options.dry
         filename = File.expand_path(filename, @projectDir)
         begin
           if File.exists?(filename)
             FileUtils.rm(filename)
           else
-            Utils.gitIgnore(block.output_dir)
             FileUtils::mkdir_p(File.dirname(filename))
           end
+          Utils.gitIgnore(block.output_dir) if block
         rescue Exception => e
           if Bake.options.debug
             puts e.message
