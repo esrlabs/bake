@@ -64,6 +64,7 @@ module Bake
           line = line.split("#")[0].strip.gsub(/[\\]/,'/')
           if line != ""
             root = Root.extract_depth(line)
+            root.dir = root.dir[0..-2] if root.dir.end_with?("/")
             if !File.is_absolute?(root.dir)
               root.dir = File.expand_path(File.dirname(rootsFile) + "/" + root.dir)
             end
