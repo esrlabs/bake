@@ -41,7 +41,7 @@ module Bake
 
     def self.resolveOutputDir()
       @@outputDirUnresolved.each do |elem|
-        subst(elem)
+        subst(elem) if elem
      end
     end
 
@@ -156,7 +156,7 @@ module Bake
 
     end
 
-    def self.substString(str, elem=nil)
+    def self.substString(str, elem=nil, attrName=nil)
       substStr = ""
       posSubst = 0
       while (true)
@@ -256,8 +256,10 @@ module Bake
             configs = @@referencedConfigs[out_proj_name]
             config = configs.select {|c| c.name == out_conf_name }.first
             if config
-               out_dir = nil
-              if (config.toolchain and config.toolchain.outputDir and config.toolchain.outputDir != "")
+              out_dir = nil
+              r = /\$\s*\(\s*OutputDir/
+              if (config.toolchain and config.toolchain.outputDir and config.toolchain.outputDir != "" and
+                (attrName == nil || attrName != "outputDir" || ! r === config.toolchain.outputDir))
                 out_dir = config.toolchain.outputDir
               else
                 out_dir = @@configTcMap[config][:OUTPUT_DIR]
@@ -272,6 +274,10 @@ module Bake
               end
 
               if (out_dir.include?"$(")
+                if !elem
+                  Bake.formatter.printError("Variable OutputDir not used correctly in this config", @@config)
+                  ExitHelper.exit(1)
+                end
                 substStr << str[posStart..posEnd]
                 @@outputDirUnresolved << elem
               else
@@ -368,7 +374,7 @@ module Bake
         return if Metamodel::DefaultToolchain === elem
         return if Metamodel::Toolchain === elem.class
         next if a.eType.name != "EString"
-        substStr = substString(elem.getGeneric(a.name), elem)
+        substStr = substString(elem.getGeneric(a.name), elem, a.name)
         elem.setGeneric(a.name, substStr)
       end
 

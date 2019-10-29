@@ -171,7 +171,7 @@ module Bake
           else
             ToCxx.linkBlock
 
-            BlockBase.prepareOutput(@exe_name)
+            BlockBase.prepareOutput(@exe_name, @block)
 
             printCmd(cmdLinePrint, "Linking   #{@projectName} (#{@config.name}): #{@exe_name}", reason, false)
             BlockBase.writeCmdLineFile(cmd, cmdLineFile)

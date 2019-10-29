@@ -789,7 +789,7 @@ module Bake
         if Bake.options.filelist && !Bake.options.dry
           mainBlock = Blocks::ALL_BLOCKS[Bake.options.main_project_name+","+Bake.options.build_config]
           Dir.chdir(mainBlock.projectDir) do
-            FileUtils.mkdir_p(mainBlock.output_dir)
+            Utils.gitIgnore(mainBlock.output_dir)
             File.open(mainBlock.output_dir + "/" + "global-file-list.txt", 'wb') do |f|
               Bake.options.filelist.sort.each do |entry|
                 f.puts(entry)

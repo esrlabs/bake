@@ -3,6 +3,12 @@ require 'rbconfig'
 module Bake
 
   module Utils
+    
+    def self.gitIgnore(folder)
+      FileUtils::mkdir_p(folder)
+      gitignore = folder + "/.gitignore"
+      File.write(gitignore, ".") unless File.exist?(gitignore)
+    end
 
     def self.flagSplit(str, removeQuotes)
       return [] if str == ""

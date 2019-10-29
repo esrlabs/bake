@@ -255,7 +255,7 @@ module Bake
         end
 
         if not (cmdLineCheck and BlockBase.isCmdLineEqual?(cmd, cmdLineFile))
-          BlockBase.prepareOutput(File.expand_path(object,@projectDir))
+          BlockBase.prepareOutput(File.expand_path(object,@projectDir), @block)
           outputType = Bake.options.analyze ? "Analyzing" : (Bake.options.prepro ? "Preprocessing" : "Compiling")
           realCmd = Bake.options.fileCmd ? calcFileCmd(cmd, onlyCmd, object, compiler) : cmd 
           printCmd(realCmd, "#{outputType} #{@projectName} (#{@config.name}): #{source}", reason, false)
@@ -461,7 +461,7 @@ module Bake
             Bake.options.filelist.merge(fileListBlock.merge(fileListBlock))
 
             odir = File.expand_path(@block.output_dir, @projectDir)
-            FileUtils.mkdir_p(odir)
+            Utils.gitIgnore(odir)
             File.open(odir + "/" + "file-list.txt", 'wb') do |f|
               fileListBlock.sort.each do |entry|
                 f.puts(entry)
@@ -676,7 +676,7 @@ module Bake
               mergeCounter += 1
               mdir = File.expand_path(@block.output_dir+"/mergedIncludes#{mergeCounter}", @projectDir)
               FileUtils.rm_rf(mdir)
-              FileUtils.mkdir_p(mdir)
+              Utils.gitIgnore(mdir)
               inmerge = true
             end
             if !merging
@@ -712,7 +712,7 @@ module Bake
             sum + si
           end
           puts "Profiling #{Time.now - $timeStart}: copy #{sum} byte in #{filesToCopy.length} files..." if Bake.options.profiling
-          destDirs.each {|d| FileUtils.mkdir_p(d)}
+          destDirs.each {|d| Utils.gitIgnore(d) }
           filesToCopy.each do |t, dest|
             dest.each do |d|
               FileUtils.cp_r(t, d, :preserve => true)

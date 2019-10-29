@@ -121,7 +121,7 @@ module Bake
 
             begin
               success = true
-              BlockBase.prepareOutput(File.expand_path(@archive_name, @projectDir))
+              BlockBase.prepareOutput(File.expand_path(@archive_name, @projectDir), @block)
               BlockBase.writeCmdLineFile(cmd, cmdLineFile)
               consoleOutput = ""
 

@@ -71,6 +71,8 @@ module Bake
         end
       })
 
+      Utils.gitIgnore(File.dirname(filename)+"/.bake") 
+
       frag = @model.fragments[0]
       @model.remove_fragment(frag)
       frag

@@ -66,8 +66,8 @@ def self.executeQacli(cmd, adminStepAndImmediateOutput = false)
   processTimeout = false
 
   loop do
-    FileUtils.rm_rf @options.qacdata if adminStepAndImmediateOutput
-    FileUtils::mkdir_p @options.qacdata
+    FileUtils.rm_rf(@options.qacdata) if adminStepAndImmediateOutput
+    Utils.gitIgnore(@options.qacdata)
 
     cmdDupped = cmd.dup
     cmdDupped << @options.qacdata
@@ -226,7 +226,7 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
 ###### STEP 2: BUILD ######
 
   if success and (@options.qacstep.nil? or @options.qacstep.include?"analyze")
-    FileUtils::mkdir_p @options.qacdata
+    Utils.gitIgnore(@options.qacdata)
 
     cmd = qaExe + ["analyze", "-b"]
 
@@ -287,7 +287,7 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
 ###### STEP 3: RESULT ######
 
   if success and (@options.qacstep.nil? or @options.qacstep.include?"view")
-    FileUtils::mkdir_p @options.qacdata
+    Utils.gitIgnore(@options.qacdata)
 
     puts "bakeqac: printing results..."
 
@@ -453,7 +453,7 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
 ###### STEP 4b: REPORT SUR (OPTIONAL) ######
 
   if success and !@options.qacstep.nil? and @options.qacstep.include?("report")
-    FileUtils::mkdir_p @options.qacdata
+    Utils.gitIgnore(@options.qacdata)
 
     puts "bakeqac: generating SUR report..."
 
@@ -467,7 +467,7 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
 ###### STEP 4c: REPORT RCR (OPTIONAL) ######
 
   if success and !@options.qacstep.nil? and @options.qacstep.include?("report")
-    FileUtils::mkdir_p @options.qacdata
+    Utils.gitIgnore(@options.qacdata)
 
     puts "bakeqac: generating RCR report..."
 
@@ -481,7 +481,7 @@ $cmdRemoveLocks = qaExe + ["admin", "--qaf-project", @options.qacdata, "--remove
 ###### STEP 5: REPORT MDR (OPTIONAL) ######
 
   if success and !@options.qacstep.nil? and @options.qacstep.include?("mdr")
-    FileUtils::mkdir_p @options.qacdata
+    Utils.gitIgnore(@options.qacdata)
 
     puts "bakeqac: generating MDR report..."
 

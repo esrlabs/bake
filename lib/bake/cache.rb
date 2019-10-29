@@ -30,7 +30,9 @@ module Bake
         else
           @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta." + sanitize_filename(Bake.options.build_config) + qacStr + ".cache"
         end
-        FileUtils.mkdir_p(File.dirname(@cacheFilename)) if !Bake.options.dry
+        if !Bake.options.dry
+          Utils.gitIgnore(File.dirname(@cacheFilename)) 
+        end
       end
 
       def load_cache

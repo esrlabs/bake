@@ -26,14 +26,15 @@ module Bake
         end
       end
 
-      def self.prepareOutput(filename)
+      def self.prepareOutput(filename, block)
         return if Bake.options.dry
         filename = File.expand_path(filename, @projectDir)
         begin
           if File.exists?(filename)
             FileUtils.rm(filename)
           else
-            FileUtils.mkdir_p(File.dirname(filename))
+            Utils.gitIgnore(block.output_dir)
+            FileUtils::mkdir_p(File.dirname(filename))
           end
         rescue Exception => e
           if Bake.options.debug
@@ -217,7 +218,7 @@ module Bake
 
         cmdFile = orgOut + ".file" + postfix
         cmdFileLong = File.expand_path(cmdFile, @projectDir)
-        FileUtils.mkdir_p(File.dirname(cmdFileLong))
+        Utils.gitIgnore(File.dirname(cmdFileLong))
         File.open(cmdFileLong, "w") { |f| f.puts argsFlat }
         return onlyCmd + ["#{tcs[:FILE_COMMAND]}#{cmdFile}"]
       end
