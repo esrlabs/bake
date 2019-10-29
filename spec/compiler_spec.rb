@@ -186,6 +186,29 @@ describe "compiler" do
     res, fullnames, includeList = ep.scan_lines(x,nil)
   end
 
+  it 'tasking compiler parsing' do
+    tp = TaskingCompilerErrorParser.new
+
+    x = ["bla bla\n"+
+      "Tasking ptc F1719: cannot open preprocessing output file “build/Lib_core_1_Ccp22_A0/src/ethernet/MACAddress.d”\n"+
+      "hey WXXX: [\"here.cpp\" 123] so funny"]
+
+    res, fullnames, includeList = tp.scan_lines(x,nil)
+
+    expect(res[0].severity).to be == 255
+
+    expect(res[1].severity).to be == 2
+    expect(res[1].file_name.end_with?("build/Lib_core_1_Ccp22_A0/src/ethernet/MACAddress.d")).to be == true
+    expect(res[1].line_number).to be == 0
+    expect(res[1].message).to be == "cannot open preprocessing output file"
+
+    expect(res[2].severity).to be == 1
+    expect(res[1].file_name.end_with?("here.cpp")).to be == true
+    expect(res[2].line_number).to be == 123
+    expect(res[2].message).to be == "so funny"
+
+  end
+
 end
 
 end
