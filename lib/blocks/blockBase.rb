@@ -37,10 +37,10 @@ module Bake
           end
           Utils.gitIgnore(block.output_dir) if block
         rescue Exception => e
-          if Bake.options.debug
+          #if Bake.options.debug
             puts e.message
             puts e.backtrace
-          end
+          #end
         end
       end
 
