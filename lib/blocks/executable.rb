@@ -17,7 +17,11 @@ module Bake
       end
 
       def calcLinkerScript
-        @linker_script = @config.linkerScript.nil? ? nil : @block.convPath(@config.linkerScript)
+        if Metamodel::LibraryConfig === @config 
+          @linker_script = nil
+        else
+          @linker_script = @config.linkerScript.nil? ? nil : @block.convPath(@config.linkerScript)
+        end
       end
 
       def calcArtifactName
@@ -43,6 +47,11 @@ module Bake
 
       def calcMapFile
         @mapfile = nil
+        if Metamodel::LibraryConfig === @config
+          def @config.mapFile
+            Metamodel::MapFile.new
+          end
+        end
         if (not Bake.options.docu) and (not @config.mapFile.nil?)
           if @config.mapFile.name == ""
             @mapfile = @exe_name.chomp(File.extname(@exe_name)) + ".map"

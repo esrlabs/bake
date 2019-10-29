@@ -505,15 +505,13 @@ module Bake
               block.mainSteps << compile
             end
             if not Bake.options.filename and not Bake.options.analyze
-              if Metamodel::LibraryConfig === config
-                block.mainSteps << Blocks::Library.new(block, config, @referencedConfigs, compile)
-              else
+              if Metamodel::ExecutableConfig === config || (Bake.options.dev_features.include?("enforce-executable-config") && config == @mainConfig)
                 block.mainSteps << Blocks::Executable.new(block, config, @referencedConfigs, compile) unless block.prebuild
+              else
+                block.mainSteps << Blocks::Library.new(block, config, @referencedConfigs, compile)
               end
             end
           end
-
-
 
         end
       end
@@ -716,7 +714,12 @@ module Bake
                 f.puts "  \"module_path\":  \"#{mainBlock.projectDir}\","
                 f.puts "  \"config_name\":  \"#{@mainConfig.name}\","
                 Dir.chdir(mainBlock.projectDir) do
-                  f.puts "  \"artifact\":     \"#{File.expand_path(mainBlock.mainSteps.last.calcArtifactName)}\","
+                  if Blocks::Library === mainBlock.mainSteps.last || Blocks::Executable === mainBlock.mainSteps.last
+                    aName = File.expand_path(mainBlock.mainSteps.last.calcArtifactName)
+                  else
+                    aName = ""
+                  end
+                  f.puts "  \"artifact\":     \"#{aName}\","
                 end
                 f.puts "  \"compiler_c\":   \"#{@defaultToolchain[:COMPILER][:C][:COMMAND]}\","
                 f.puts "  \"compiler_cxx\": \"#{@defaultToolchain[:COMPILER][:CPP][:COMMAND]}\","
