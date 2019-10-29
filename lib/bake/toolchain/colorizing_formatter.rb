@@ -12,7 +12,7 @@ module Bake
     def setColorScheme(scheme)
 
       if (scheme != :black and scheme != :white and scheme != :none)
-        Bake.formatter.printError("Error: color scheme must be 'black' or 'white'")
+        Bake.formatter.printError("Error: color scheme must be 'black', 'white' or 'none'")
         ExitHelper.exit(1)
       end
       @scheme = scheme

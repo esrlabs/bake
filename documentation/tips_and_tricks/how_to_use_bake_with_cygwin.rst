@@ -53,7 +53,7 @@ Note, that these steps differ depending on the Cygwin version, installed package
 
 #. Start the build
 
-    Use the parameter "-a black" or "-a white" depending on the background color of your shell.
+    Use the parameter "-a black" or "-a white" depending on the background color of your shell ("-a none" is default).
     Depending on your Cygwin installation, you have to call "bake.bat" instead of "bake". To avoid this, create an alias, e.g:
 
     .. code-block:: console

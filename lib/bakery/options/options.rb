@@ -35,7 +35,7 @@ module Bake
       puts " [-b] <name>           Name of the collection to build."
       puts " -m <dir>              Directory containing the collection file (default is current directory)."
       puts " -r                    Stop on first error."
-      puts " -a <scheme>           Use ansi color sequences (console must support it). Possible values are 'white' and 'black'."
+      puts " -a <scheme>           Use ansi color sequences (console must support it). Possible values are 'white', 'black' and 'none' (default)."
       puts " -h, --help            Print this help."
       puts " -w <root>[,<depth>]   Add a workspace root (can be used multiple times). Additionally the search depth can be specified (>=0)."
       puts "                       If no root is specified, the parent directory of Collection.meta is added automatically."

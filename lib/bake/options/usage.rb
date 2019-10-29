@@ -18,7 +18,7 @@ module Bake
       puts " -p <dir>                 Project to build/clean (default is main project)"
       puts " -f <name>                Build/Clean this file only."
       puts " -c                       Clean the file/project."
-      puts " -a <scheme>              Use ansi color sequences (console must-- support it). Possible values are 'white' and 'black'."
+      puts " -a <scheme>              Use ansi color sequences (console must support it). Possible values are 'white', 'black' and 'none' (default)."
       puts " -v<level>                Verbose level from 0 to 3, whereas -v0 is less, -v1 is normal (default) and -v2 and -v3 are more verbose."
       puts " -r                       Stop on first error."
       puts " -w <root>[,<depth>]      Add a workspace root (can be used multiple times). Additionally the search depth can be specified (>=0)."
