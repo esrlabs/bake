@@ -1,12 +1,18 @@
 Changelog
 =========
 
+November 4, 2019 - bake-toolkit 2.54.3
+     * Added: Folders in roots.bake can end with "/" now.
+     * Added: Improved Tasking error parser.
+     * Added: .gitignore files are created if not existing in ".bake" and build folders.
+     * Added: Developer feature "enforce-executable-config" added which converts a main LibraryConfig to ExecutableConfig on-the-fly.
+
 October 16, 2019 - bake-toolkit 2.54.2
-     * Added: Developer feature no-error-parser
-     * Added: "toolchain" in metadata
-     * Fixed: variables now resolved in metadata
-     * Fixed: File specific toolchain handling was broken in 2.54.1 
-     * Changed: ArtifactExtension can be used to extend ArtifactName
+     * Added: Developer feature no-error-parser.
+     * Added: "toolchain" in metadata.
+     * Fixed: Variables now resolved in metadata.
+     * Fixed: File specific toolchain handling was broken in 2.54.1.
+     * Changed: ArtifactExtension can be used to extend ArtifactName.
 
 October 14, 2019 - bake-toolkit 2.54.1
     * Reverted: The change from 2.54: "(Windows only) If a case mismatch is detected between Files definition in Project.meta and filesystem, the compilation will be aborted."
