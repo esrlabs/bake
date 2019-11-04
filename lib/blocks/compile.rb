@@ -419,7 +419,8 @@ module Bake
             puts "Profiling #{Time.now - $timeStart}: prepareIncludes (#{@projectName+","+@config.name}) stop..." if Bake.options.profiling
           end
 
-          Utils.gitIgnore(@block.output_dir) if !Bake.options.dry
+          odir = File.expand_path(@block.output_dir, @projectDir)
+          Utils.gitIgnore(odir) if !Bake.options.dry
 
           fileListBlock = Set.new if Bake.options.filelist
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|
@@ -462,8 +463,6 @@ module Bake
           if Bake.options.filelist && !Bake.options.dry
             Bake.options.filelist.merge(fileListBlock.merge(fileListBlock))
 
-            odir = File.expand_path(@block.output_dir, @projectDir)
-            Utils.gitIgnore(odir)
             File.open(odir + "/" + "file-list.txt", 'wb') do |f|
               fileListBlock.sort.each do |entry|
                 f.puts(entry)

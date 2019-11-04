@@ -35,12 +35,12 @@ module Bake
           else
             FileUtils::mkdir_p(File.dirname(filename))
           end
-          Utils.gitIgnore(block.output_dir) if block
+          Utils.gitIgnore(File.expand_path(block.output_dir, @projectDir)) if block
         rescue Exception => e
-          #if Bake.options.debug
+          if Bake.options.debug
             puts e.message
             puts e.backtrace
-          #end
+          end
         end
       end
 
