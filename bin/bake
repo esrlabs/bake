@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby
 
+if RUBY_VERSION[0..1] == "1."
+   puts ("Error: Ruby 1.x not supported anymore. Use Ruby 2.0 or greater.")
+   exit 1
+ end
+
 $timeStart = Time.now
 
 $:.unshift(File.dirname(__FILE__)+"/../lib")
@@ -17,11 +22,6 @@ module Bake
 
   earlyExit = nil
   begin
-    if RUBY_VERSION[0..1] == "1."
-      Bake.formatter.printError("Error: Ruby 1.x not supported anymore. Use Ruby 2.0 or greater.")
-      ExitHelper.exit(1)
-    end
-
     puts "Profiling #{Time.now - $timeStart}: parse options..." if ARGV.include?("--profiling")
     Bake.options = Options.new(ARGV)
     Bake.options.parse_options

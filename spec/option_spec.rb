@@ -48,7 +48,13 @@ describe "Option Parser" do
   it 'should provide a flag to specify number of compile threads' do
     Bake.options = Options.new([])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
-    expect(Bake.options.threads).to be == 8 # default
+    if RUBY_VERSION.split(".")[0].to_i > 2 || RUBY_VERSION.split(".")[1].to_i >= 2
+      require 'etc'
+      defNumThreads = Etc.nprocessors
+    else
+      defNumThreads = 8
+    end
+    expect(Bake.options.threads).to be == defNumThreads
 
     Bake.options = Options.new(["-j"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)

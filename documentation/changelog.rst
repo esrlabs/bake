@@ -1,6 +1,9 @@
 Changelog
 =========
 
+XX, 2019 - bake-toolkit 2.55.0
+     * Added: default number of compiling threads is now equal to the number of logical processors instead of hardcoded 8 (only for Ruby >= 2.2).
+
 November 4, 2019 - bake-toolkit 2.54.3
      * Added: Folders in roots.bake can end with "/" now.
      * Added: Improved Tasking error parser.

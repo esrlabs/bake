@@ -33,7 +33,7 @@ module Bake
       puts " --no-case-check          Disables case-sensitivity-check of included header files (only relative paths on Windows are checked)."
       puts " --generate-doc           Builds docu instead of compiling sources."
       puts " --ignore-cache           Rereads the original meta files - usefull if workspace structure has been changed."
-      puts " -j <num>                 Set NUMBER of parallel compiled files (default is 8)."
+      puts " -j <num>                 Set NUMBER of parallel compiled files (default is number of logical processors or 8 for Ruby <= 2.1)."
       puts " -O                       The output will be synchronized per configuration. Note, this delays output."
       puts " -D <define>              Adds this define to the compiler commands"
       puts " --socket <num>           Set SOCKET for sending errors, receiving commands, etc. - used by e.g. Eclipse."

@@ -80,7 +80,12 @@ module Bake
       @linkOnly = false
       @compileOnly = false
       @no_autodir = false
-      @threads = 8
+      if RUBY_VERSION.split(".")[0].to_i > 2 || RUBY_VERSION.split(".")[1].to_i >= 2
+        require 'etc'
+        @threads = Etc.nprocessors
+      else
+        @threads = 8
+      end
       @roots = []
       @socket = 0
       @include_filter = []
