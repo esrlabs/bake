@@ -16,12 +16,11 @@ def adjustFlags(orgStr, flags)
     if f.overwrite != ""
       orgSplitted = Bake::Utils::flagSplit(f.overwrite, false)
     end
-
     if f.remove != ""
       rmSplitted = Bake::Utils::flagSplit(f.remove, false)
       orgSplitted.delete_if {|o| rmSplitted.any? { |r|
         begin
-          o.match("\\A"+r+"\\Z")
+          o.match(/\A#{Regexp.escape(r)}\z/) || o.match(/\A#{r}\z/)
         rescue Exception => e
           Bake.formatter.printError(e.message, f)
           Bake::ExitHelper.exit(1)

@@ -73,10 +73,16 @@ describe "Flags" do
     expect(adjustFlags(orgStr,[df,df1,df2])).to be == "-c -h -e"
   end
 
-it 'duplicate' do
-  Bake.startBake("artifact/main", ["test_Default_flags", "-v2"])
-  expect(($mystring.include?"lib.d -x1 -x2 -x1 -x2 -x1 -x3 -x1 -x3 -x1 -o ")).to be == true
-end
+  it 'duplicate' do
+    Bake.startBake("artifact/main", ["test_Default_flags", "-v2"])
+    expect(($mystring.include?"lib.d -x1 -x2 -x1 -x2 -x1 -x3 -x1 -x3 -x1 -o ")).to be == true
+  end
+
+  it 'remove string with needs to be escaped for regex' do
+    Bake.startBake("flags/main", ["-v2", "--adapt", "spec/testdata/flags/main"])
+    expect(($mystring.include?"build/test/x.d -std=gnu++14 -g -o build/test/x.o")).to be == true
+  end
+
 
 end
 

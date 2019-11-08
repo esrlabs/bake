@@ -1,0 +1,22 @@
+Project default: test {
+  LibraryConfig test {
+    Files "x.cpp"
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Flags add: "-std=gnu++14 -std=gnu++15  -std=gnu++16"
+      }
+    }
+  }
+}
+
+Adapt {
+  LibraryConfig test, type: extend {
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Flags remove: "-std=gnu++11"
+        Flags remove: "-std=gnu\\+\\+15"
+        Flags remove: "-std.*6"
+      }
+    }
+  }
+}

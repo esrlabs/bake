@@ -1,0 +1,9 @@
+Adapt {
+  LibraryConfig test, project: "*", type: extend {
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Flags add: "-std=gnu++11 -g"
+      }
+    }
+  }
+}

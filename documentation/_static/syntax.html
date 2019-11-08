@@ -633,8 +633,8 @@ function showCommandlineCustom() {
 }
 
 function flagExample() {
-    return  "<br>For removing flags use regular expressions which can be interpreted by ruby.<br>"+
-    "Regex options for start and stop string are automatically added in order to avoid substring matches.<br><br>"+
+    return  "<br>For removing flags use plain strings or regular expressions which can be interpreted by ruby (both is checked!).<br>"+
+    "Flags will be only removed if matching completely (not only a substring).<br><br>"+
     "Flag strings are always splitted at spaces and computed individually.<br><br>"+
     "<b>Examples:</b><br>"+
     "&nbsp;&nbsp; <i>Flags \"-x -y\"</i> overwrites the inherited flags<br><br>"+
