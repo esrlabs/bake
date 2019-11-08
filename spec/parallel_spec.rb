@@ -50,7 +50,7 @@ describe "Parallel" do
 
       checks
     }
-    Bake.startBake("parallel/C",[])
+    Bake.startBake("parallel/C",["-j8"])
     t.join()
     checks = t.value
     expect(checks.all?{|c| c}).to be == true

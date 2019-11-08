@@ -13,7 +13,7 @@ module Bake
 describe "Independent" do
 
   it 'Presteps' do
-    Bake.startBake("independent/main", ["test_pre_abcd"])
+    Bake.startBake("independent/main", ["test_pre_abcd", "-j8"])
     expect(ExitHelper.exit_code).to be == 0
     expect($mystring.include?("Building done")).to be == true
 
@@ -38,7 +38,7 @@ describe "Independent" do
   end
 
   it 'Presteps block' do
-    Bake.startBake("independent/main", ["test_pre_abcd", "-O"])
+    Bake.startBake("independent/main", ["test_pre_abcd", "-O", "-j8"])
     expect(ExitHelper.exit_code).to be == 0
     expect($mystring.include?("Building done")).to be == true
 
@@ -62,7 +62,7 @@ describe "Independent" do
   end
 
   it 'Poststeps' do
-    Bake.startBake("independent/main", ["test_post_abcd"])
+    Bake.startBake("independent/main", ["test_post_abcd", "-j8"])
     expect(ExitHelper.exit_code).to be == 0
     expect($mystring.include?("Building done")).to be == true
 
@@ -87,7 +87,7 @@ describe "Independent" do
   end
 
   it 'Poststeps block' do
-    Bake.startBake("independent/main", ["test_post_abcd", "-O"])
+    Bake.startBake("independent/main", ["test_post_abcd", "-O", "-j8"])
     expect(ExitHelper.exit_code).to be == 0
     expect($mystring.include?("Building done")).to be == true
 
@@ -111,7 +111,7 @@ describe "Independent" do
   end
 
   it 'MainSteps' do
-    Bake.startBake("independent/main", ["test_abcd"])
+    Bake.startBake("independent/main", ["test_abcd", "-j8"])
     expect(ExitHelper.exit_code).to be == 0
     expect($mystring.include?("Building done")).to be == true
 
@@ -136,7 +136,7 @@ describe "Independent" do
   end
 
   it 'MainSteps block' do
-    Bake.startBake("independent/main", ["test_abcd", "-O"])
+    Bake.startBake("independent/main", ["test_abcd", "-O", "-j8"])
     expect(ExitHelper.exit_code).to be == 0
     expect($mystring.include?("Building done")).to be == true
 
@@ -160,7 +160,7 @@ describe "Independent" do
   end
 
   it 'Lib' do
-    Bake.startBake("independent/main", ["test_lib_abcd"])
+    Bake.startBake("independent/main", ["test_lib_abcd", "-j8"])
     expect(ExitHelper.exit_code).to be == 0
     expect($mystring.include?("Building done")).to be == true
 
@@ -175,7 +175,7 @@ describe "Independent" do
   end
 
   it 'Lib Block' do
-    Bake.startBake("independent/main", ["test_lib_abcd", "-O"])
+    Bake.startBake("independent/main", ["test_lib_abcd", "-O", "-j8"])
     expect(ExitHelper.exit_code).to be == 0
     expect($mystring.include?("Building done")).to be == true
 
