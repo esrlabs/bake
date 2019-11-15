@@ -3,47 +3,28 @@
 $:.unshift(File.dirname(__FILE__)+"/../lib")
 
 require_relative '../lib/format/bake_format'
-begin
-  if ARGV.size == 2
-    indent = '  '
-    input = ARGV[0]
-    output = ARGV[1]
-  elsif ARGV.size == 3
-    indent = ARGV[0]
-    indent = indent.split('=')
-    raise 'indent must have =' unless indent.size == 2
-    raise 'indent must start with --indent' unless indent.first == '--indent'
-    indent = indent.last
-    input = ARGV[1]
-    output = ARGV[2]
-  else
-    raise 'cannot understand'
-  end
-rescue
-  puts [
-    "Usage: #{__FILE__} [--indent=string] input output",
-    "  --indent=string, indent defaults to two spaces.",
-    "    Note, you can escape a tab in bash by ctrl-vTAB with sourrounding \" e.g. \"--input=    \"",
-    "  input, filename or '-' for stdin",
-    "  output, filename, '-' for stdout, '--' for same as input file"
-  ].join("\n")
-  exit 1
-end
+require_relative '../lib/format/options/options'
+
+$options = Bake::BakeFormatOptions.new(ARGV)
+$options.parse_options()
 
 data =
-  if input == '-'
+  if $options.input == '-'
     STDIN.read
   else
-    File.read(input)
+    File.read($options.input)
   end
 
 out =
-  if output == '-'
+  if $options.output == '-'
     STDOUT
-  elsif output == '--'
-    out = input == STDIN ? STDOUT : File.open(input, 'w')
+  elsif $options.output == '--'
+    out = ($options.input == '-') ? STDOUT : File.open($options.input, 'w')
   else
-    File.open(output, 'w')
+    File.open($options.output, 'w')
   end
 
-bake_format(data, out, indent)
+start_line = $options.start_line || 0
+end_line = $options.end_line || data.lines.count
+
+bake_format(data, out, $options.indent, start_line, end_line)
