@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.dirname(__FILE__)+"/../lib")
+
+require 'logger'
+
+require 'rtext/default_loader'
+require 'rtext/default_service_provider'
+require 'rtext/service'
+require 'rgen/environment'
+require 'rgen/fragment/fragmented_model'
+
+require_relative '../lib/bake/model/language'
+require_relative '../lib/bake/model/metamodel'
+require_relative '../lib/rtext-service/options/options'
+
+$options = Bake::BakeRtextServiceOptions.new(ARGV)
+$options.parse_options()
+
+model = RGen::Fragment::FragmentedModel.new(:env => @env)
+patterns = $options.patterns.map { |dir| File.join(dir, "{Project,Adapt}.meta") }
+
+loader = RText::DefaultLoader.new(
+  Bake::Language,
+  model,
+  :file_provider => proc { Dir.glob(patterns) })
+
+bake_service_provider = RText::DefaultServiceProvider.new(Bake::Language, model, loader)
+
+logger = Logger.new(STDOUT)
+logger.level =
+  case $options.loglevel
+  when 'debug' then Logger::DEBUG
+  when 'info' then Logger::INFO
+  when 'warn' then Logger::WARN
+  when 'error' then Logger::ERROR
+  when 'fatal' then Logger::FATAL
+  else Logger::INFO
+  end
+
+on_startup = -> {
+  Bake::Version.printBakeRtextServiceVersion
+  puts "Idle timeout #{$options.timeout} seconds, log level '#{$options.loglevel}'"
+}
+
+rtext_rervice = RText::Service.new(bake_service_provider,
+  { :timeout => $options.timeout, :logger => logger, :on_startup => on_startup })
+rtext_rervice.run()
