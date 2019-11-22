@@ -36,6 +36,7 @@
 ./syntax/adapt_configs.html
 ./syntax/auto_adjustment.html
 ./syntax/derive_configs.html
+./syntax/environment.html
 ./syntax/prefix.html
 ./syntax/project_meta_syntax.html
 ./syntax/syntax.html
