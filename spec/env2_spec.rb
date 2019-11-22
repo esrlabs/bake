@@ -12,19 +12,27 @@ require 'fileutils'
 
 module Bake
 
+  def self.setEnvToolchainSettings
+    ENV["BAKE_C_COMPILER"] = "ccomp"
+    ENV["BAKE_CPP_COMPILER"] = "cppcomp"
+    ENV["BAKE_ASM_COMPILER"] = "asmcomp"
+    ENV["BAKE_ARCHIVER"] = "archi"
+    ENV["BAKE_LINKER"] = "linki"
+    ENV["BAKE_C_FLAGS"] = "cflags"
+    ENV["BAKE_CPP_FLAGS"] = "cppflags"
+    ENV["BAKE_ASM_FLAGS"] = "asmflags"
+    ENV["BAKE_ARCHIVER_FLAGS"] = "aflags"
+    ENV["BAKE_LINKER_FLAGS"] = "lflags"
+  end
+
 describe "env toolchain" do
 
+  after(:all) do
+    Bake::clearEnvToolchainSettings
+  end
+
   it 'without vars, without env' do
-    ENV["BAKE_C_COMPILER"] = nil
-    ENV["BAKE_CPP_COMPILER"] = nil
-    ENV["BAKE_ASM_COMPILER"] = nil
-    ENV["BAKE_ARCHIVER"] = nil
-    ENV["BAKE_LINKER"] = nil
-    ENV["BAKE_C_FLAGS"] = nil
-    ENV["BAKE_CPP_FLAGS"] = nil
-    ENV["BAKE_ASM_FLAGS"] = nil
-    ENV["BAKE_ARCHIVER_FLAGS"] = nil
-    ENV["BAKE_LINKER_FLAGS"] = nil
+    Bake::clearEnvToolchainSettings
 
     Bake.startBake("env2/main", ["test_exe_without", "-v2", "--dry", "-O"])
     expect(ExitHelper.exit_code).to be == 0
@@ -37,16 +45,7 @@ describe "env toolchain" do
   end
 
   it 'without vars, with env' do
-    ENV["BAKE_C_COMPILER"] = "ccomp"
-    ENV["BAKE_CPP_COMPILER"] = "cppcomp"
-    ENV["BAKE_ASM_COMPILER"] = "asmcomp"
-    ENV["BAKE_ARCHIVER"] = "archi"
-    ENV["BAKE_LINKER"] = "linki"
-    ENV["BAKE_C_FLAGS"] = "cflags"
-    ENV["BAKE_CPP_FLAGS"] = "cppflags"
-    ENV["BAKE_ASM_FLAGS"] = "asmflags"
-    ENV["BAKE_ARCHIVER_FLAGS"] = "aflags"
-    ENV["BAKE_LINKER_FLAGS"] = "lflags"
+    Bake::setEnvToolchainSettings
 
     Bake.startBake("env2/main", ["test_exe_without", "-v2", "--dry", "-O"])
     expect(ExitHelper.exit_code).to be == 0
@@ -59,16 +58,7 @@ describe "env toolchain" do
   end
 
   it 'with vars, without env' do
-    ENV["BAKE_C_COMPILER"] = nil
-    ENV["BAKE_CPP_COMPILER"] = nil
-    ENV["BAKE_ASM_COMPILER"] = nil
-    ENV["BAKE_ARCHIVER"] = nil
-    ENV["BAKE_LINKER"] = nil
-    ENV["BAKE_C_FLAGS"] = nil
-    ENV["BAKE_CPP_FLAGS"] = nil
-    ENV["BAKE_ASM_FLAGS"] = nil
-    ENV["BAKE_ARCHIVER_FLAGS"] = nil
-    ENV["BAKE_LINKER_FLAGS"] = nil
+    Bake::clearEnvToolchainSettings
 
     Bake.startBake("env2/main", ["test_exe_with", "-v2", "--dry", "-O"])
     expect(ExitHelper.exit_code).to be == 0
@@ -81,16 +71,7 @@ describe "env toolchain" do
   end
 
   it 'with vars, with env' do
-    ENV["BAKE_C_COMPILER"] = "ccomp"
-    ENV["BAKE_CPP_COMPILER"] = "cppcomp"
-    ENV["BAKE_ASM_COMPILER"] = "asmcomp"
-    ENV["BAKE_ARCHIVER"] = "archi"
-    ENV["BAKE_LINKER"] = "linki"
-    ENV["BAKE_C_FLAGS"] = "cflags"
-    ENV["BAKE_CPP_FLAGS"] = "cppflags"
-    ENV["BAKE_ASM_FLAGS"] = "asmflags"
-    ENV["BAKE_ARCHIVER_FLAGS"] = "aflags"
-    ENV["BAKE_LINKER_FLAGS"] = "lflags"
+    Bake::setEnvToolchainSettings
 
     Bake.startBake("env2/main", ["test_exe_with", "-v2", "--dry", "-O"])
     expect(ExitHelper.exit_code).to be == 0

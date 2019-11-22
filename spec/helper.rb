@@ -34,6 +34,19 @@ require 'tocxx'
 
 module Bake
 
+  def self.clearEnvToolchainSettings
+    ENV["BAKE_C_COMPILER"] = nil
+    ENV["BAKE_CPP_COMPILER"] = nil
+    ENV["BAKE_ASM_COMPILER"] = nil
+    ENV["BAKE_ARCHIVER"] = nil
+    ENV["BAKE_LINKER"] = nil
+    ENV["BAKE_C_FLAGS"] = nil
+    ENV["BAKE_CPP_FLAGS"] = nil
+    ENV["BAKE_ASM_FLAGS"] = nil
+    ENV["BAKE_ARCHIVER_FLAGS"] = nil
+    ENV["BAKE_LINKER_FLAGS"] = nil
+  end
+
   def self.startBake(proj, opt)
     begin
       Bake.options = Options.new(["-m", "spec/testdata/#{proj}"].concat(opt))
@@ -92,6 +105,7 @@ module Bake
   RSpec.configure do |config|
 
     config.before(:all) do |the_test|
+      Bake::clearEnvToolchainSettings
       puts "Testing #{the_test.class}:"
     end
     
