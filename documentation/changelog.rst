@@ -3,6 +3,8 @@ Changelog
 
 XX, 2019 - bake-toolkit 2.55.0
      * Added: default number of compiling threads is now equal to the number of logical processors instead of hardcoded 8 (only for Ruby >= 2.2).
+     * Added: possibility to overwrite bake internal defaults for toolchain commands and flags
+     * Bugfix: "remove" attribute of "Flags" now correctly supports regex 
 
 November 4, 2019 - bake-toolkit 2.54.3
      * Added: Folders in roots.bake can end with "/" now.

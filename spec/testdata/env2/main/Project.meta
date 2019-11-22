@@ -1,0 +1,49 @@
+Project {
+
+  LibraryConfig test_lib_without {
+    Files "src/x.cpp"
+    Files "src/y.c"
+  }
+
+  ExecutableConfig test_exe_without {
+    Files "src/z.s"
+    Dependency config: test_lib_without
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test_lib_with {
+    Files "src/x.cpp"
+    Files "src/y.c"
+    Toolchain {
+      Compiler CPP, command: "gaga1"
+      Compiler C,   command: "gaga2"
+      Archiver command: "gaga4"
+    }
+  }
+
+  ExecutableConfig test_exe_with {
+    Files "src/z.s"
+    Dependency config: test_lib_with
+    DefaultToolchain GCC {
+      Compiler CPP {
+        Flags add: "-gugu1"
+      }
+      Compiler C {
+        Flags add: "-gugu2"
+      }
+      Compiler ASM, command: "gaga3" {
+        Flags add: "-gugu3"
+      }
+      Archiver {
+        Flags add: "-gugu4"
+      }
+    }
+    Toolchain {
+      Linker command: "gaga5" {
+        Flags add: "-gugu5"
+      }
+    }
+  }
+
+
+}

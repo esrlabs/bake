@@ -122,3 +122,29 @@ def add_line_if_no_comment(array, str)
   s = str.split("#")[0].strip
   array << s unless s.empty?
 end
+
+def fill_compiler_env(dt)
+  env = ENV["BAKE_C_COMPILER"]
+  dt[:COMPILER][:C][:COMMAND] = env if env && !env.empty?
+  env = ENV["BAKE_CPP_COMPILER"]
+  dt[:COMPILER][:CPP][:COMMAND] = env if env && !env.empty?
+  env = ENV["BAKE_ASM_COMPILER"]
+  dt[:COMPILER][:ASM][:COMMAND] = env if env && !env.empty?
+  env = ENV["BAKE_ARCHIVER"]
+  dt[:ARCHIVER][:COMMAND] = env if env && !env.empty?
+  env = ENV["BAKE_LINKER"]
+  dt[:LINKER][:COMMAND] = env if env && !env.empty?
+
+  env = ENV["BAKE_C_FLAGS"]
+  dt[:COMPILER][:C][:FLAGS] = env if env && !env.empty?
+  env = ENV["BAKE_CPP_FLAGS"]
+  dt[:COMPILER][:CPP][:FLAGS] = env if env && !env.empty?
+  env = ENV["BAKE_ASM_FLAGS"]
+  dt[:COMPILER][:ASM][:FLAGS] = env if env && !env.empty?
+  env = ENV["BAKE_ARCHIVER_FLAGS"]
+  dt[:ARCHIVER][:FLAGS] = env if env && !env.empty?
+  env = ENV["BAKE_LINKER_FLAGS"]
+  dt[:LINKER][:FLAGS] = env if env && !env.empty?
+
+  return dt
+end
