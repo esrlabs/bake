@@ -25,7 +25,7 @@ out =
   end
 
 if ($options.start_line != nil) && ($options.end_line != nil)
-  bake_format_in_range(data, out, $options.indent, start_line, end_line)
+  bake_format_in_range(data, out, $options.indent, $options.start_line, $options.end_line)
 else
   bake_format(data, out, $options.indent)
 end

@@ -29,4 +29,10 @@ describe 'bake_format' do
     bake_format("test {\n\n}", output, "\t")
     expect(output.string).to eq("test {\n\n}\n")
   end
+
+  it "should not format the lines which are not in range" do
+    output = StringIO.new
+    bake_format_in_range("test {\n\ntest2\ntest3\n}\n", output, "\t", 0, 2)
+    expect(output.string).to eq("test {\n\n\ttest2\ntest3\n}\n")
+  end
 end
