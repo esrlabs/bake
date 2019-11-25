@@ -20,10 +20,10 @@ def bake_format_in_range(data, output, indent, start_line, end_line)
       end
 
     if index.between?(start_line, end_line)
-      l = (prefix + l.strip)
+      l = (prefix + l.strip).rstrip
     end
 
-    output.puts(l.rstrip)
+    output.puts(l)
   end
   output.close
 end
