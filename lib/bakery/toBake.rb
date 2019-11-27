@@ -31,6 +31,9 @@ module Bake
     @options.roots.each do |root|
       col.project.each do |p|
         projs = Root.search_to_depth(root.dir,p.name + "/Project.meta", root.depth)
+        if File.basename(root.dir) == p.name && File.exist?(root.dir + "/Project.meta")
+          projs << root.dir + "/Project.meta"
+        end
         if projs.length == 0
           toBuildPattern << BuildPattern.new(nil, nil, p.args, p) # remember it for sorted info printout
         end

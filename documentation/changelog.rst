@@ -1,6 +1,9 @@
 Changelog
 =========
 
+November 27, 2019 - bake-toolkit 2.55.1
+     * Bugfix: If a project is directly in the workspace root, it could not be referenced in Collection.meta. 
+
 November 21, 2019 - bake-toolkit 2.55.0
      * Added: default number of compiling threads is now equal to the number of logical processors instead of hardcoded 8 (only for Ruby >= 2.2).
      * Added: possibility to overwrite bake internal defaults for toolchain commands and flags
