@@ -667,8 +667,8 @@ module Bake
           end
 
           @defaultToolchain = Utils.deep_copy(basedOnToolchain)
-          Bake.options.envToolchain = true if (basedOn.include?"_ENV")
-
+          @defaultToolchain = fill_compiler_env(@defaultToolchain)
+    
           integrateToolchain(@defaultToolchain, @mainConfig.defaultToolchain)
 
           # todo: cleanup this hack

@@ -19,7 +19,7 @@ module Bake
   end
 
   class Options < Parser
-    attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :envToolchain, :showConfigs
+    attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :showConfigs
     attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :dotFilename, :cc2j_filename # String
     attr_reader :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads, :skipBuildingLine # Boolean
@@ -54,7 +54,6 @@ module Bake
       @printTime = false
       @buildDirDelimiter = "/"
       @conversion_info = false
-      @envToolchain = false
       @analyze = false
       @eclipseOrder = false
       @showConfigs = false

@@ -10,3 +10,4 @@ Syntax
     adapt_configs
     auto_adjustment
     prefix
+    environment
