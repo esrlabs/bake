@@ -22,6 +22,7 @@ module Bake
 
     def self.printBakeRtextServiceVersion()
       printBakeVersion("-rtext-service")
+    end
 
     def self.printBakeFormatVersion()
       printBakeVersion("-format")
