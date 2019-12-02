@@ -1,6 +1,9 @@
 Changelog
 =========
 
+xx, 2019 - bake-toolkit 2.55.1
+     * Bugfix: Removed debug output for compilation-db, accidentally added with 2.53.
+
 November 27, 2019 - bake-toolkit 2.55.1
      * Bugfix: If a project is directly in the workspace root, it could not be referenced in Collection.meta. 
 
