@@ -19,6 +19,10 @@ module Bake
     def self.printBakecleanVersion()
       printBakeVersion("clean")
     end
+
+    def self.printBakeFormatVersion()
+      printBakeVersion("-format")
+    end
   end
 
   expectedRGen = "0.8.2"
