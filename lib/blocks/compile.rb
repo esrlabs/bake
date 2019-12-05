@@ -249,7 +249,6 @@ module Bake
             srcFilePath = File.join(@projectDir, srcFilePath)
             cmdJson[source] = srcFilePath
           end
-          puts cmdJson
           cmdJson.gsub!("\"" , "\\\"")
           Blocks::CC2J << { :directory => @projectDir, :command => cmdJson, :file => srcFilePath }
         end
