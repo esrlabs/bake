@@ -117,7 +117,7 @@ module Bake
             checkCondition = lambda {|name,value|
               return true if adaptHash[name].empty?
               if !configHash.has_key?(name)
-                return adaptHash[name].any?{|ah| ah.empty?}
+                return adaptHash[name].any?{|ah| ah.match("")}
               end
               adaptHash[name].any? { |ah| configHash[name].any?{|ch| ah.match(ch)}}
             }
