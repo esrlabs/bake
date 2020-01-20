@@ -115,6 +115,14 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>January 20, 2020 - bake-toolkit 2.56.0</dt>
+<dd><ul class="first last simple">
+<li>Added: new cmd argument –lines &lt;start_line&gt;:&lt;end_line&gt; for bake-format tool which tells to format lines only in range between start and end lines.</li>
+<li>Added: new bake-rtext-service cmd tool, which runs the RText language protocol server and can be used by the IDE to provide the syntax highlighting, auto completion, errors annotation and model navigation.</li>
+<li>Bugfix: Removed debug output for compilation-db, accidentally added with 2.53.</li>
+<li>Bugfix: fixed an exception using scopes for adapts.</li>
+</ul>
+</dd>
 <dt>November 27, 2019 - bake-toolkit 2.55.1</dt>
 <dd><ul class="first last simple">
 <li>Bugfix: If a project is directly in the workspace root, it could not be referenced in Collection.meta.</li>

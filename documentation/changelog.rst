@@ -1,10 +1,11 @@
 Changelog
 =========
 
-xx, 2019 - bake-toolkit 2.56.0
-     * Bugfix: Removed debug output for compilation-db, accidentally added with 2.53.
+January 20, 2020 - bake-toolkit 2.56.0
      * Added: new cmd argument --lines <start_line>:<end_line> for bake-format tool which tells to format lines only in range between start and end lines.
      * Added: new bake-rtext-service cmd tool, which runs the RText language protocol server and can be used by the IDE to provide the syntax highlighting, auto completion, errors annotation and model navigation.
+     * Bugfix: Removed debug output for compilation-db, accidentally added with 2.53.
+     * Bugfix: fixed an exception using scopes for adapts.
 
 November 27, 2019 - bake-toolkit 2.55.1
      * Bugfix: If a project is directly in the workspace root, it could not be referenced in Collection.meta. 
