@@ -24,9 +24,7 @@ matrix:
 
 install:
  - export FLAGS="--no-ri --no-rdoc"
- - echo $TRAVIS_RUBY_VERSION
- - rver=$(ruby -v | cut -c 5-10)
- - if [ $rver == 2.6.4 || $rver == 2.7.0 ]; then export FLAGS="--no-document"; fi
+ - if [ $TRAVIS_RUBY_VERSION == 2.6.4 ] || [ $TRAVIS_RUBY_VERSION == 2.7.0 ]; then export FLAGS="--no-document"; fi
  - gem install coveralls $FLAGS
  - gem install simplecov -v 0.14.1 $FLAGS
  - gem install rtext -v 0.9.0 $FLAGS
