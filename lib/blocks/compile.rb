@@ -175,7 +175,7 @@ module Bake
 
         Thread.current[:filelist].add(File.expand_path(source, @projectDir)) if Bake.options.filelist
 
-        if @fileTcs.include?(source)
+        if @fileTcs[source]
           compiler = @fileTcs[source][:COMPILER][type]
           defines = getDefines(compiler)
           flags = getFlags(compiler)
@@ -561,7 +561,7 @@ module Bake
             icf = integrateCompilerFile(Utils.deep_copy(@block.tcs),sources)
           end
           res.each do |f|
-            @fileTcs[f] = icf if icf && !@fileTcs.has_key?(f)
+            @fileTcs[f] = icf if !@fileTcs.has_key?(f)
             next if exclude_files.include?(f)
             next if source_files.include?(f)
             source_files << f

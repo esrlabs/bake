@@ -1,0 +1,15 @@
+Project default: test {
+  LibraryConfig test {
+    Files "src/a.cpp" {
+      Define "X"
+    }
+    Files "src/b.cpp"
+    Files "src/*.cpp" {
+      Define "Y"
+    }
+    Files "src/d.cpp" {
+      Define "Z"
+    }
+    DefaultToolchain GCC
+  }
+}
