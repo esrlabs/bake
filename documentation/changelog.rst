@@ -1,6 +1,18 @@
 Changelog
 =========
 
+February 20, 2020 - bake-toolkit 2.57.0
+     * Bugfix: if a file is explicitly defined in Project.meta, the flags/defines must not be overwritten even if flags/defines were defined later via a file pattern.
+
+       .. code-block:: console
+
+           Files "src/main.cpp" # must not be complied with "-abc"
+           Files "src/*.cpp" {
+             Flags "-abc"
+           }
+
+     * Added: support for Ruby 2.7.x.
+
 January 20, 2020 - bake-toolkit 2.56.0
      * Added: new cmd argument --lines <start_line>:<end_line> for bake-format tool which tells to format lines only in range between start and end lines.
      * Added: new bake-rtext-service cmd tool, which runs the RText language protocol server and can be used by the IDE to provide the syntax highlighting, auto completion, errors annotation and model navigation.

@@ -28,6 +28,13 @@ Gem::Specification.new do |s|
   s.add_dependency("highline", "=1.7.8")
   s.add_dependency("concurrent-ruby", "=1.0.5")
   s.add_dependency("colored", "=1.2")
+
+  if RUBY_VERSION.split(.)[0].to_i == 2 && RUBY_VERSION.split(.)[1].to_i >= 7
+    s.add_dependency("colored")
+    s.add_dependency("thwait")
+    s.add_dependency("e2mmap")
+  end
+
   s.add_development_dependency("rake", "12.2.1")
   s.add_development_dependency("rspec")
   s.add_development_dependency("simplecov")
