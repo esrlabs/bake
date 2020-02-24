@@ -115,6 +115,20 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>February 20, 2020 - bake-toolkit 2.57.0</dt>
+<dd><ul class="first last">
+<li><p class="first">Bugfix: if a file is explicitly defined in Project.meta, the flags/defines must not be overwritten even if flags/defines were defined later via a file pattern.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Files &quot;src/main.cpp&quot; # must not be complied with &quot;-abc&quot;</span>
+<span class="go">Files &quot;src/*.cpp&quot; {</span>
+<span class="go">  Flags &quot;-abc&quot;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Added: support for Ruby 2.7.x.</p>
+</li>
+</ul>
+</dd>
 <dt>January 20, 2020 - bake-toolkit 2.56.0</dt>
 <dd><ul class="first last simple">
 <li>Added: new cmd argument –lines &lt;start_line&gt;:&lt;end_line&gt; for bake-format tool which tells to format lines only in range between start and end lines.</li>
