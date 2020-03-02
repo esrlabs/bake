@@ -561,7 +561,14 @@ module Bake
             icf = integrateCompilerFile(Utils.deep_copy(@block.tcs),sources)
           end
           res.each do |f|
-            @fileTcs[f] = icf if !@fileTcs.has_key?(f)
+            if @fileTcs.has_key?(f)
+              singleFile = res.length == 1 && res[0] == pr
+              if singleFile && icf
+                Bake.formatter.printWarning("Flags/Defines for '#{sources.name}' will be ignored", sources)
+              end
+            else
+              @fileTcs[f] = icf
+            end
             next if exclude_files.include?(f)
             next if source_files.include?(f)
             source_files << f
