@@ -76,12 +76,16 @@ module Bake
           else
             option, inPlaceArg = get_block(arg)
             hasArgument = (pos+1 < @argv.length and @argv[pos+1][0] != "-")
-            if option.parameters.length == 3 && (hasArgument || inPlaceArg)
-              if inPlaceArg
-                option.call(inPlaceArg, nil, nil)
+            if option.parameters.length == 3
+              if (hasArgument || inPlaceArg)
+                if inPlaceArg
+                  option.call(inPlaceArg, nil, nil)
+                else
+                  option.call(@argv[pos+1], nil, nil) # do not use inplace value
+                  pos = pos + 1
+                end
               else
-                option.call(@argv[pos+1], nil, nil) # do not use inplace value
-                pos = pos + 1
+                option.call(nil, nil, nil)
               end
             elsif option.parameters.length == 2
               if hasArgument

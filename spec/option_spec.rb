@@ -58,7 +58,7 @@ describe "Option Parser" do
 
     Bake.options = Options.new(["-j"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
-    expect($mystring.include?("Argument for option -j missing")).to be == true
+    expect($mystring.include?("Argument for option -j missing")).to be == false
 
     Bake.options = Options.new(["-j", "aaaaah"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)

@@ -344,6 +344,7 @@ module Bake
     end
 
     def set_threads(num)
+      return if num == nil # -j without number shall behave the same as not set
       checkNum(num)
       @threads = String === num ? num.to_i : num
       if @threads <= 0
