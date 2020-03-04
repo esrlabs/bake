@@ -1,6 +1,17 @@
 Changelog
 =========
 
+March 4, 2020 - bake-toolkit 2.58.0
+     * Added: -j without number means that bake is using as many threads as cores are available.
+     * Cosmetic: Added a warning if in Project.meta Flags/Defines are specified for a specific file but ignored due to a previous definition.
+
+       .. code-block:: console
+
+           Files "src/*.cpp" # has higher priority (in this case *.cpp shall be have no additional flags/defines)
+           Files "src/main.cpp" {
+             Flags "-abc"    # ignored, overruled by file pattern above --> warning
+           }
+
 February 20, 2020 - bake-toolkit 2.57.0
      * Bugfix: if a file is explicitly defined in Project.meta, the flags/defines must not be overwritten even if flags/defines were defined later via a file pattern.
 
