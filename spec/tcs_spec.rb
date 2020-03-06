@@ -20,7 +20,7 @@ describe "tcs" do
     expect($mystring.include?("a.d -DX -o")).to be == true
     expect($mystring.include?("b.d -o")).to be == true
     expect($mystring.include?("c.d -DY -o")).to be == true
-    expect($mystring.include?("d.d -DY -o")).to be == true
+    expect($mystring.include?("d.d -DZ -o")).to be == true
   end
 
 end
