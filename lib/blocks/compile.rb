@@ -562,7 +562,7 @@ module Bake
           end
           res.each do |f|
             singleFile = res.length == 1 && res[0] == pr
-            if !@fileTcs.has_key?(f) || singleFile
+            if ((!@fileTcs.has_key?(f)) || singleFile)
               @fileTcs[f] = icf
             end
             next if exclude_files.include?(f)
