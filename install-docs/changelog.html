@@ -115,11 +115,17 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>March 6, 2020 - bake-toolkit 2.59.0</dt>
+<dd><ul class="first last simple">
+<li>Partly reverted changes introduced in 2.57.0. New behaviour:
+“Files” specific Flags/Defines are still first-is-best, but if Flags/Defines are specified for a single file it overrules previous definitions.</li>
+</ul>
+</dd>
 <dt>March 4, 2020 - bake-toolkit 2.58.0</dt>
 <dd><ul class="first last">
 <li><p class="first">Added: -j without number means that bake is using as many threads as cores are available.</p>
 </li>
-<li><p class="first">Cosmetic: Added a warning if in Project.meta Flags/Defines are specified for a specific file but ignored due to a previous definition.</p>
+<li><p class="first">Cosmetic: Added a warning if in Project.meta Flags/Defines are specified for a single file but ignored due to a previous definition.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Files &quot;src/*.cpp&quot; # has higher priority (in this case *.cpp shall be have no additional flags/defines)</span>
 <span class="go">Files &quot;src/main.cpp&quot; {</span>
 <span class="go">  Flags &quot;-abc&quot;    # ignored, overruled by file pattern above --&gt; warning</span>

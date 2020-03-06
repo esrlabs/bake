@@ -1,9 +1,13 @@
 Changelog
 =========
 
+March 6, 2020 - bake-toolkit 2.59.0
+     * Partly reverted changes introduced in 2.57.0. New behaviour:
+       "Files" specific Flags/Defines are still first-is-best, but if Flags/Defines are specified for a single file it overrules previous definitions.
+
 March 4, 2020 - bake-toolkit 2.58.0
      * Added: -j without number means that bake is using as many threads as cores are available.
-     * Cosmetic: Added a warning if in Project.meta Flags/Defines are specified for a specific file but ignored due to a previous definition.
+     * Cosmetic: Added a warning if in Project.meta Flags/Defines are specified for a single file but ignored due to a previous definition.
 
        .. code-block:: console
 
