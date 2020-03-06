@@ -12,39 +12,6 @@ module Bake
 
 describe "Building" do
 
-  it 'filetcs1' do
-    Bake.startBake("filetcs/main", ["test_1", "-v2"])
-    expect(ExitHelper.exit_code).to be == 0
-    expect($mystring.include?("a1.d -DA -o ")).to be == true
-    expect($mystring.include?("a2.d -DA -o ")).to be == true
-    expect($mystring.include?("a3.d -DA -o ")).to be == true
-    expect($mystring.include?("a4.d -DA -o ")).to be == true
-  end
-
-  it 'filetcs2' do
-    Bake.startBake("filetcs/main", ["test_2", "-v2"])
-    expect(ExitHelper.exit_code).to be == 0
-    expect($mystring.include?("a1.d -DA -o ")).to be == true
-    expect($mystring.include?("a2.d -DB -o ")).to be == true
-    expect($mystring.include?("a3.d -DB -o ")).to be == true
-    expect($mystring.include?("a4.d -DB -o ")).to be == true
-  end
-
-  it 'filetcs3' do
-    Bake.startBake("filetcs/main", ["test_3", "-v2"])
-    expect(ExitHelper.exit_code).to be == 0
-    expect($mystring.include?("a1.d -o ")).to be == true
-    expect($mystring.include?("a2.d -DA -o ")).to be == true
-    expect($mystring.include?("a3.d -DC -o ")).to be == true
-    expect($mystring.include?("a4.d -o ")).to be == true
-  end
-
-  it 'filetcs4' do
-    Bake.startBake("filetcs/main", ["test_4", "-v2"])
-    expect(ExitHelper.exit_code).to be == 0
-    expect($mystring.include?("a2.d -o ")).to be == true
-  end
-
   it 'search Project.meta' do
     expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == false
     Bake.startBake("simple/main/src", ["test_ok"])
