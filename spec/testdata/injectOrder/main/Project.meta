@@ -1,0 +1,16 @@
+Project default: test_m {
+
+  CustomConfig test_1 {
+    CommandLine "echo test_config_1", echo: off
+  }
+
+  CustomConfig test_2 {
+    CommandLine "echo test_config_2", echo: off
+  }
+
+  CustomConfig test_m {
+    Dependency config: test_2
+    Dependency config: test_1, inject: front
+    DefaultToolchain GCC
+  }
+}

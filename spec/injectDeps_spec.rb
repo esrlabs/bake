@@ -102,6 +102,16 @@ describe "InjectDeps" do
     expect($mystring.include?testStr).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
+  
+  it 'Order' do
+      Bake.startBake("injectOrder/main", ["-j1"])
+  
+    pos1 = $mystring.index("test_config_1")
+    pos2 = $mystring.index("test_config_2")
+
+    expect(pos1).to be < pos2
+    expect(ExitHelper.exit_code).to be == 0
+  end
 
 end
 

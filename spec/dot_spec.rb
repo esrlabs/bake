@@ -162,6 +162,16 @@ end
     expect(content.include?("digraph \"main\"")).to be == true
   end
 
+  it 'Injected dep' do
+    Bake.startBake("injectOrder/main", ["--dot", "spec/testdata/injectOrder/testdot.dot"])
+    expect(ExitHelper.exit_code).to be == 0
+    content = File.read("spec/testdata/injectOrder/testdot.dot")
+
+    expect(Bake.checkDep(content, "main,test_2","main,test_1")).to be == true
+    expect(Bake.checkDep(content, "main,test_m","main,test_1")).to be == true
+    expect(Bake.checkDep(content, "main,test_m","main,test_2")).to be == true
+  end
+
 end
 
 end
