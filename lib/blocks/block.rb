@@ -23,7 +23,7 @@ module Bake
       @@threads = []
 
       attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :configName, :prebuild, :output_dir, :tcs
-      attr_accessor :visited, :inDeps, :result, :bes
+      attr_accessor :visited, :inDeps, :result, :bes, :besDirect
 
       def startupSteps
         @startupSteps ||= []
@@ -82,6 +82,7 @@ module Bake
         @result = true
         @tcs = tcs
         @bes = []
+        @besDirect = []
         @lib_elements = []
 
         calcOutputDir

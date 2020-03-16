@@ -156,6 +156,7 @@ module Bake
       block.visited = true
 
       block.bes = []
+      block.besDirect = []
       block.config.depInc.each do |dep|
         if (Metamodel::Dependency === dep)
           @referencedConfigs[dep.name].each do |configRef|
@@ -175,6 +176,7 @@ module Bake
                 block.bes += subDeps
               end
               block.bes << dep
+              block.besDirect << dep
               break
             end
           end
@@ -334,6 +336,7 @@ module Bake
             fde = Blocks::ALL_BLOCKS[dep.name+","+dep.config]
             l1 = fde.bes.length 
             fde.bes = (difr2 + fde.bes + diba2).uniq # .select{|d| !(Metamodel::Dependency===d) || d.name != dep.name || d.config != dep.config }
+            fde.besDirect = (difr2 + fde.besDirect + diba2).uniq
             l2 = fde.bes.length
             counter += 1 if (l2 != l1)
           end
@@ -410,14 +413,14 @@ module Bake
             depsToProj = []
             configs.each do |config|
               the_c = Blocks::ALL_BLOCKS[config.parent.name+","+config.name]
-              the_c.bes.each do |d|
+              the_c.besDirect.each do |d|
                 next if Metamodel::IncludeDir === d
                 if onlyProjectName
                   next if config.parent.name != onlyProjectName && d.name != onlyProjectName
                   if onlyConfigName
                     leftSide  = config.name        == onlyConfigName && config.parent.name == onlyProjectName
                     rightSide = d.config           == onlyConfigName && d.name             == onlyProjectName
-                    next if not leftSide and not rightSide
+                    next if !leftSide && !rightSide
                   end
                 end
                 if Bake.options.dotShowProjOnly
