@@ -331,7 +331,6 @@ module Bake
               difr2 = difr
               diba2 = diba
             end
-          
             fde = Blocks::ALL_BLOCKS[dep.name+","+dep.config]
             l1 = fde.bes.length 
             fde.bes = (difr2 + fde.bes + diba2).uniq # .select{|d| !(Metamodel::Dependency===d) || d.name != dep.name || d.config != dep.config }
@@ -410,7 +409,9 @@ module Bake
           @referencedConfigs.each do |projName, configs|
             depsToProj = []
             configs.each do |config|
-              config.dependency.each do |d|
+              the_c = Blocks::ALL_BLOCKS[config.parent.name+","+config.name]
+              the_c.bes.each do |d|
+                next if Metamodel::IncludeDir === d
                 if onlyProjectName
                   next if config.parent.name != onlyProjectName && d.name != onlyProjectName
                   if onlyConfigName

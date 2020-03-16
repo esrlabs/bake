@@ -278,9 +278,11 @@ module Bake
       end
 
       def callDeps(method)
+        return true if Bake.options.project
         depResult = true
-        dependencies.each do |dep|
-          depResult = (ALL_BLOCKS[dep].send(method) and depResult)
+        bes.each do |dep|
+          next if Metamodel::IncludeDir === dep
+          depResult = (ALL_BLOCKS[dep.name+","+dep.config].send(method) and depResult)
           break if (!depResult) && Bake.options.stopOnFirstError
         end
         return depResult
