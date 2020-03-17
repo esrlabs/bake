@@ -1,6 +1,10 @@
 Changelog
 =========
 
+March 17, 2020 - bake-toolkit 2.60.0
+     * Bugfix: the build order of configs were wrong when injecting dependencies.
+       If e.g. a dependency to a generator was injected to a library, it could happen that the library was built before the generator was executed.
+
 March 6, 2020 - bake-toolkit 2.59.0
      * Partly reverted changes introduced in 2.57.0. New behaviour:
        "Files" specific Flags/Defines are still first-is-best, but if Flags/Defines are specified for a single file it overrules previous definitions.
