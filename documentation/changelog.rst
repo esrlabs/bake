@@ -1,6 +1,9 @@
 Changelog
 =========
 
+March 20, 2020 - bake-toolkit 2.60.1
+     * Changed: dependencies are now injected to other injected dependencies. This should solve some bugs, hopefully it does not introduce other problems.
+
 March 17, 2020 - bake-toolkit 2.60.0
      * Bugfix: the build order of configs were wrong when injecting dependencies.
        If e.g. a dependency to a generator was injected to a library, it could happen that the library was built before the generator was executed.

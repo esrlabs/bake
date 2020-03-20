@@ -93,6 +93,7 @@ describe "InjectDeps" do
       "- main,testE\n"+
       "- main,testF\n"+
       "main,testG\n"+
+      "- main,testF\n"+
       "main,testE\n"+
       "- main,testG\n"+
       "- main,testD\n"+

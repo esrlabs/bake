@@ -326,16 +326,11 @@ module Bake
 
           block.bes.each do |dep|
             next unless Metamodel::Dependency === dep
-            if dep.injected?
-              difr2 = difr.select{|d| Metamodel::IncludeDir === d }
-              diba2 = diba.select{|d| Metamodel::IncludeDir === d }
-            else
-              difr2 = difr
-              diba2 = diba
-            end
+            difr2 = difr.select{|d| Metamodel::IncludeDir === d || d != dep}
+            diba2 = diba.select{|d| Metamodel::IncludeDir === d || d != dep}
             fde = Blocks::ALL_BLOCKS[dep.name+","+dep.config]
             l1 = fde.bes.length 
-            fde.bes = (difr2 + fde.bes + diba2).uniq # .select{|d| !(Metamodel::Dependency===d) || d.name != dep.name || d.config != dep.config }
+            fde.bes = (difr2 + fde.bes + diba2).uniq
             fde.besDirect = (difr2 + fde.besDirect + diba2).uniq
             l2 = fde.bes.length
             counter += 1 if (l2 != l1)
