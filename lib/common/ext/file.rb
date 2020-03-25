@@ -4,6 +4,12 @@ class File
 
   SLASH = '/'
 
+  @@warnedCase = []
+
+  def self.cleanupWarnings
+    @@warnedCase.clear
+  end
+
   def self.is_absolute?(filename)
     filename[0] == SLASH or filename[1] == ':'
   end
@@ -45,7 +51,20 @@ class File
     end
 
     while i < max
-        break if toSplitted[i] != fromSplitted[i]
+      if toSplitted[i] != fromSplitted[i]
+        if Bake.options.verbose >= 1
+          if toSplitted[i].casecmp(fromSplitted[i]) == 0
+            if !@@warnedCase.include?(fromSplitted[0..i].join("/"))
+              fromsj = fromSplitted[0..i].join("/")
+              tosj = toSplitted[0..i].join("/")
+              @@warnedCase << fromsj
+              @@warnedCase << tosj
+              Bake.formatter.printWarning("Warning: different cases for folders \"#{fromsj}\" and \"#{tosj}\" detected.")
+            end
+          end
+        end
+        break
+      end
       i += 1
     end
     j = i

@@ -1,4 +1,5 @@
 require_relative "../blocks/block"
+require_relative "ext/file"
 
 module Bake
 
@@ -9,6 +10,7 @@ module Bake
       Bake::IDEInterface.instance.set_abort(false)
       Blocks::Block.reset_block_counter
       Blocks::Block.reset_delayed_result
+      File.cleanupWarnings
     end
 
 end
