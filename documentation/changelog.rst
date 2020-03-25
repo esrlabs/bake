@@ -1,7 +1,10 @@
 Changelog
 =========
 
-March 20, 2020 - bake-toolkit 2.60.1
+March 25, 2020 - bake-toolkit 2.60.2
+     * Added: a warning is printed if two folders differ only in letter case either on file system or due to (Windows) shell issues.
+
+March 20, 2020 - bake-toolkit 2.60.1 (not officially released)
      * Changed: dependencies are now injected to other injected dependencies. This should solve some bugs, hopefully it does not introduce other problems.
 
 March 17, 2020 - bake-toolkit 2.60.0
