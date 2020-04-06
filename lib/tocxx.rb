@@ -701,7 +701,17 @@ module Bake
             makeDot
           end
 
-          
+          if !Bake.options.cc2j_filename
+            if !@mainConfig.cdb.nil?
+              Bake.options.cc2j_filename = @mainConfig.cdb.name
+              if !File.is_absolute?(Bake.options.cc2j_filename)
+                Bake.options.cc2j_filename = File.join(
+                  File.rel_from_to_project(Dir.pwd, @mainConfig.parent.get_project_dir, false),
+                  Bake.options.cc2j_filename)
+              end
+            end
+          end
+
           metadata_json = Bake.options.dev_features.detect { |x| x.start_with?("metadata=") }
           if metadata_json
             metadata_file = metadata_json[9..-1]
@@ -785,7 +795,14 @@ module Bake
 
         if Bake.options.cc2j_filename
           require "json"
-          File.write(Bake.options.cc2j_filename, JSON.pretty_generate(Blocks::CC2J))
+          begin 
+            Bake.formatter.printInfo("Info: writing compilation database #{Bake.options.cc2j_filename}") if Bake.options.verbose >= 1
+            File.write(Bake.options.cc2j_filename, JSON.pretty_generate(Blocks::CC2J))
+          rescue Exception => ex
+            Bake.formatter.printError("Error: could not write compilation database: #{ex.message}")
+            puts ex.backtrace if Bake.options.debug
+            result = false
+          end
         end
 
         if Bake.options.filelist && !Bake.options.dry

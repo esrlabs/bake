@@ -81,24 +81,19 @@ module Bake
 
   def self.clean_testdata()
     if not $noCleanTestData
-      r = Dir.glob("spec/testdata/**/test*")
-      r.each { |f| FileUtils.rm_rf(f) }
-      r = Dir.glob("spec/testdata/**/.bake")
-      r.each { |f| FileUtils.rm_rf(f) }
-      r = Dir.glob("spec/testdata/**/build")
-      r.each { |f| FileUtils.rm_rf(f) }
-      r = Dir.glob("spec/testdata/**/build_*")
-      r.each { |f| FileUtils.rm_rf(f) }
-      r = Dir.glob("spec/testdata/**/*.json")
-      r.each { |f| FileUtils.rm_rf(f) }
-      r = Dir.glob("**/.qacdata")
-      r.each { |f| FileUtils.rm_rf(f) }
-      r = Dir.glob("**/testQacData")
-      r.each { |f| FileUtils.rm_rf(f) }
-
-      FileUtils.rm_rf("spec/testdata/make/main/obj")
-      FileUtils.rm_rf("spec/testdata/make/main/project")
-      FileUtils.rm_rf("spec/testdata/make/main/project.exe")
+      [ "spec/testdata/**/test*",
+        "spec/testdata/**/.bake",
+        "spec/testdata/**/build",
+        "spec/testdata/**/build_*",
+        "**/.qacdata",
+        "**/testQacData",
+        "**/*.json",
+        "spec/testdata/make/main/obj",
+        "spec/testdata/make/main/project",
+        "spec/testdata/make/main/project.exe"
+      ].each do |gp|
+        Dir.glob(gp).each { |f| FileUtils.rm_rf(f) }
+      end
     end
   end
 

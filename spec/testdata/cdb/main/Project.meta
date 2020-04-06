@@ -1,0 +1,26 @@
+Project {
+
+  ExecutableConfig base, private: true {
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test_none, extends: base
+  
+  ExecutableConfig test_default, extends: base {
+    CompilationDB
+  }
+
+  ExecutableConfig test_wd, extends: base {
+    CompilationDB "$(WorkingDir)/cdb.json"
+  }
+
+  ExecutableConfig test_pd, extends: base {
+    CompilationDB "$(ProjectDir)/cdb.json"
+  }
+
+  ExecutableConfig test_od, extends: base {
+    CompilationDB "$(OutputDir)/cdb.json"
+  }
+
+}

@@ -202,6 +202,8 @@ module Bake
           substStr << Bake.options.main_project_name
         elsif var == "MainProjectDir"
           substStr << Bake.options.main_dir
+        elsif var == "WorkingDir"
+          substStr << Bake.options.working_dir
         elsif var == "ConfigName"
          substStr << @@configName
         elsif var == "ToolchainName" and defined?@@toolchainName

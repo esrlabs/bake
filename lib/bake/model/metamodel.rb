@@ -131,6 +131,10 @@ module Bake
         has_attr 'text', String, :defaultValueLiteral => ""
       end
 
+      class CompilationDB < ModelElement
+        has_attr 'name', String, :defaultValueLiteral => "$(WorkingDir)/compile_commands.json"
+      end
+
       class RequiredBakeVersion < ModelElement
         has_attr 'minimum', String, :defaultValueLiteral => ""
         has_attr 'maximum', String, :defaultValueLiteral => ""
@@ -299,6 +303,7 @@ module Bake
         contains_one 'toolchain', Toolchain, 'parent'
         contains_many 'set', Set, 'parent'
         contains_many 'prebuild', Prebuild, 'parent'
+        contains_one 'cdb', CompilationDB, 'parent'
 
         module ClassModule
           def ident

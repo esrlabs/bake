@@ -19,8 +19,8 @@ module Bake
   end
 
   class Options < Parser
-    attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :showConfigs
-    attr_reader :main_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :dotFilename, :cc2j_filename # String
+    attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :showConfigs, :cc2j_filename
+    attr_reader :main_dir, :working_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :dotFilename # String
     attr_reader :include_filter, :exclude_filter, :adapt # String List
     attr_reader :conversion_info, :stopOnFirstError, :clean, :rebuild, :show_includes, :show_includes_and_defines, :projectPaths, :qac, :dry, :syncedOutput, :debug_threads, :skipBuildingLine # Boolean
     attr_reader :linkOnly, :compileOnly, :no_autodir, :clobber, :docu, :debug, :prepro, :prebuild, :printTime, :json, :wparse, :caseSensitivityCheck, :fileCmd, :profiling # Boolean
@@ -193,6 +193,7 @@ module Bake
         Bake.formatter.printError("Error: Project.meta not found in #{searchDir} or upwards")
         ExitHelper.exit(1)
       end
+      set_working_dir()
 
       def_roots = Root.calc_roots_bake(@main_dir)
       @roots += def_roots
@@ -321,6 +322,10 @@ module Bake
       check_valid_dir(dir)
       @main_dir = File.expand_path(dir.gsub(/[\\]/,'/'))
       @main_project_name = File::basename(@main_dir)
+    end
+
+    def set_working_dir()
+      @working_dir = File.expand_path(Dir.pwd.gsub(/[\\]/,'/'))
     end
 
     def set_root(dir)
