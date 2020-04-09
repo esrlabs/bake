@@ -123,6 +123,43 @@ describe "ShowInc" do
     expect(ar.any? { |cmds| cmds["command"].include?("-DIOSTREAM=\\\"iostream\\\"") }).to be == true
   end
 
+  it 'cdb in meta none without cmd arg' do
+    expect(Dir.glob('**/*.json').length).to be == 0
+    Bake.startBake("cdb/main", ["test_none"])
+    expect(Dir.glob('**/*.json').length).to be == 0
+  end
+
+  it 'cdb in meta default without cmd arg' do
+    expect(Dir.glob('**/*.json').length).to be == 0
+    Bake.startBake("cdb/main", ["test_default"])
+    expect(File.exist?('compile_commands.json')).to be == true
+  end
+
+  it 'cdb in meta working dir without cmd arg' do
+    expect(Dir.glob('**/*.json').length).to be == 0
+    Bake.startBake("cdb/main", ["test_wd"])
+    expect(File.exist?('cdb.json')).to be == true
+  end
+
+  it 'cdb in meta output dir without cmd arg' do
+    expect(Dir.glob('**/*.json').length).to be == 0
+    Bake.startBake("cdb/main", ["test_od"])
+    expect(File.exist?('spec/testdata/cdb/main/build/test_od/cdb.json')).to be == true
+  end
+
+  it 'cdb in meta project dir without cmd arg' do
+    expect(Dir.glob('**/*.json').length).to be == 0
+    Bake.startBake("cdb/main", ["test_pd"])
+    expect(File.exist?('spec/testdata/cdb/main/cdb.json')).to be == true
+  end
+
+  it 'cdb in meta project dir with cmd arg' do
+    expect(Dir.glob('**/*.json').length).to be == 0
+    Bake.startBake("cdb/main", ["test_pd", "--compilation-db", "test.json"])
+    expect(File.exist?('spec/testdata/cdb/main/cdb.json')).to be == false
+    expect(File.exist?('test.json')).to be == true
+  end
+
 end
 
 

@@ -740,7 +740,7 @@ module Bake
               puts "File #{metadata_file} written."
               ExitHelper.exit(0)
             else
-              Bake.formatter.printError("Error: dev-feature metadata is only for LibraryConfig for ExecutableConfig.")
+              Bake.formatter.printError("Error: dev-feature metadata is only for LibraryConfig or ExecutableConfig.")
               ExitHelper.exit(1)
             end
           end
