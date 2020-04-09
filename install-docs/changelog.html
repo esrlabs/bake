@@ -115,9 +115,22 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
+<dt>April .., 2020 - bake-toolkit 2.61</dt>
+<dd><ul class="first last">
+<li><p class="first">Added: <em>Variable $(WorkingDir)</em> which points to the directory from which bake was called.</p>
+</li>
+<li><p class="first">Added: <em>CompilationDB &lt;file&gt;</em> as option for main configs to generate compilation database. “–compilation-db” from command line will overrule this.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ExecutableConfig Release {</span>
+<span class="go">  CompilationDB &quot;$(ProjectDir)/compile_commands.json&quot;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
 <dt>March 25, 2020 - bake-toolkit 2.60.2</dt>
 <dd><ul class="first last simple">
-<li>Added: a warning is printed if two folders differ only in letter case either on file system or due to (Windows) shell issues.</li>
+<li>Added: a warning is printed if two folders differ only in letter case either on file system or due to (Windows) shell issues. Example:</li>
 </ul>
 </dd>
 <dt>March 20, 2020 - bake-toolkit 2.60.1 (not officially released)</dt>

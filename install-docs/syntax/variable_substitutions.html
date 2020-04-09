@@ -213,69 +213,73 @@ directory of the current config</td>
 config</td>
 <td>build/lib_some_Debug</td>
 </tr>
-<tr class="row-even"><td><em>$(ArtifactName)</em></td>
+<tr class="row-even"><td><em>$(WorkingDir)</em></td>
+<td>Directory from which bake is called</td>
+<td>c:/Workspaces/Project</td>
+</tr>
+<tr class="row-odd"><td><em>$(ArtifactName)</em></td>
 <td>Evaluates to the artifact.</td>
 <td>bootloader_1.0.elf</td>
 </tr>
-<tr class="row-odd"><td><em>$(ArtifactNameBase)</em></td>
+<tr class="row-even"><td><em>$(ArtifactNameBase)</em></td>
 <td>Evaluates to the base artifact name
 (Without file exension)</td>
 <td>bootloader_1.0</td>
 </tr>
-<tr class="row-even"><td><em>$(Time)</em></td>
+<tr class="row-odd"><td><em>$(Time)</em></td>
 <td>Evaluates to the current time</td>
 <td>2012-12-24 20:00:00 +0200</td>
 </tr>
-<tr class="row-odd"><td><em>$(Hostname)</em></td>
+<tr class="row-even"><td><em>$(Hostname)</em></td>
 <td>Evaluates to the hostname</td>
 <td>MY_COMPUTER</td>
 </tr>
-<tr class="row-even"><td><em>$(Uid)</em></td>
+<tr class="row-odd"><td><em>$(Uid)</em></td>
 <td>CRC32 over relative path to MainProjectDir
 plus MainConfigName, e.g.
 “../libs/utils,Debug”</td>
 <td>03FAB429</td>
 </tr>
-<tr class="row-odd"><td><em>$(CPPPath)</em></td>
+<tr class="row-even"><td><em>$(CPPPath)</em></td>
 <td>Evaluates to the base path of the
 c++ compiler</td>
 <td>/usr/bin</td>
 </tr>
-<tr class="row-even"><td><em>$(CPath)</em></td>
+<tr class="row-odd"><td><em>$(CPath)</em></td>
 <td>Evaluates to the base path of the
 c compiler</td>
 <td>/usr/bin</td>
 </tr>
-<tr class="row-odd"><td><em>$(ASMPath)</em></td>
+<tr class="row-even"><td><em>$(ASMPath)</em></td>
 <td>Evaluates to the base path of the
 assembler</td>
 <td>/usr/bin</td>
 </tr>
-<tr class="row-even"><td><em>$(ArchiverPath)</em></td>
+<tr class="row-odd"><td><em>$(ArchiverPath)</em></td>
 <td>Evaluates to the base path of the
 archiver</td>
 <td>/usr/bin</td>
 </tr>
-<tr class="row-odd"><td><em>$(LinkerPath)</em></td>
+<tr class="row-even"><td><em>$(LinkerPath)</em></td>
 <td>Evaluates to the base path of the
 linker</td>
 <td>/usr/bin</td>
 </tr>
-<tr class="row-even"><td><em>$(ToolchainName)</em></td>
+<tr class="row-odd"><td><em>$(ToolchainName)</em></td>
 <td>Names of the used DefaultToolchain</td>
 <td>GCC</td>
 </tr>
-<tr class="row-odd"><td><em>$(/)</em></td>
+<tr class="row-even"><td><em>$(/)</em></td>
 <td>Evalutes to the directory path seperator of
 the current platform</td>
 <td>Windows: \, Other: /</td>
 </tr>
-<tr class="row-even"><td><em>$(:)</em></td>
+<tr class="row-odd"><td><em>$(:)</em></td>
 <td>Evaluates to the path variable seperator
 of the current platform</td>
 <td>Windows: ;, Other: :</td>
 </tr>
-<tr class="row-odd"><td><em>$(QacActive)</em></td>
+<tr class="row-even"><td><em>$(QacActive)</em></td>
 <td>Evaluates to “yes” if QAC is running (via
 bakeqac), otherwise “no”.</td>
 <td>yes, no</td>

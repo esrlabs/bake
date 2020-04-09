@@ -71,6 +71,8 @@ Variable                                    Description                         
 *$(OutputDir,projName,confName)*            Evaluates to the output dir of a specific           build/lib_some_Debug
                                             config
 
+*$(WorkingDir)*                             Directory from which bake is called                 c:/Workspaces/Project
+
 *$(ArtifactName)*                           Evaluates to the artifact.                          bootloader_1.0.elf
 
 *$(ArtifactNameBase)*                       Evaluates to the base artifact name                 bootloader_1.0

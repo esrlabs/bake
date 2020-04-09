@@ -1,8 +1,18 @@
 Changelog
 =========
 
+April .., 2020 - bake-toolkit 2.61
+     * Added: *Variable $(WorkingDir)* which points to the directory from which bake was called.
+     * Added: *CompilationDB <file>* as option for main configs to generate compilation database. "--compilation-db" from command line will overrule this.
+
+       .. code-block:: console
+
+           ExecutableConfig Release {
+             CompilationDB "$(ProjectDir)/compile_commands.json"
+           }
+
 March 25, 2020 - bake-toolkit 2.60.2
-     * Added: a warning is printed if two folders differ only in letter case either on file system or due to (Windows) shell issues.
+     * Added: a warning is printed if two folders differ only in letter case either on file system or due to (Windows) shell issues. Example:
 
 March 20, 2020 - bake-toolkit 2.60.1 (not officially released)
      * Changed: dependencies are now injected to other injected dependencies. This should solve some bugs, hopefully it does not introduce other problems.

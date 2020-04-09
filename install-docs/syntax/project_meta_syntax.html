@@ -344,7 +344,9 @@ z-index: 100;
 &nbsp; &nbsp; <span class="help" onMouseover="showPrebuild()" onMouseout="notip()">Prebuild</span> {<br>
 &nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showExcept()" onMouseout="notip()">Except</span> &#60;project&#62;,
               <span class="help" onMouseover="showExceptConfig()" onMouseout="notip()">config</span>: &#60;name&#62;<br>
-&nbsp; &nbsp; }<br></span><br>
+&nbsp; &nbsp; }<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showCDB()" onMouseout="notip()">CompilationDB</span> &#60;filename&#62;<br>
+</span><br>
 
 </span>
 
@@ -820,10 +822,16 @@ function showExcept() {
 }
 
 function showExceptConfig() {
-  str = 'Defines a config which shall not be skipped. If omitted, all configs of the apprpriate project are not skipped.'
+  str = 'Defines a config which shall not be skipped. If omitted, all configs of the appropriate project are not skipped.'
   ddrivetip("Toolchain", "No","0..1","Every config is skipped",str)
 }
 
+function showCDB() {
+  str = "Generates a compilation database in json.<br>"+
+    "<b>Example:</b><br>"+
+    "<i>CompilationDB \"$(ProjectDir)/db.json\"</i>"
+  ddrivetip("CompilationDB", "No","0..1","None. If CompilationDB is specified without an explicit filename, $(WorkspaceDir)/compile_commands.json is used.",str)
+}
 
 function showToolchainProject() {
   str = 'Toolchain adaptions for a project.'
