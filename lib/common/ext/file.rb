@@ -52,7 +52,7 @@ class File
 
     while i < max
       if toSplitted[i] != fromSplitted[i]
-        if Bake.options.verbose >= 1
+        if Bake.options.verbose >= 1 && Bake.options.caseSensitivityCheck
           if toSplitted[i].casecmp(fromSplitted[i]) == 0
             if !@@warnedCase.include?(fromSplitted[0..i].join("/"))
               fromsj = fromSplitted[0..i].join("/")

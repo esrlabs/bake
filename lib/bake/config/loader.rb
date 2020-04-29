@@ -141,23 +141,6 @@ module Bake
       [config, configname]
     end
 
-    def symlinkCheck(filename)
-      dirOfProjMeta = File.dirname(filename)
-      Dir.chdir(dirOfProjMeta) do
-        if Dir.pwd != dirOfProjMeta and File.dirname(Dir.pwd) != File.dirname(dirOfProjMeta)
-          isSym = false
-          begin
-            isSym = File.symlink?(dirOfProjMeta)
-          rescue
-          end
-          if isSym
-            Bake.formatter.printError("Symlinks only allowed with the same parent dir as the target: #{dirOfProjMeta} --> #{Dir.pwd}", filename)
-            ExitHelper.exit(1)
-          end
-        end
-      end
-    end
-
     def checkVerFormat(ver)
       return true if ver.empty?
       return false if ver.length > 3
@@ -200,6 +183,7 @@ module Bake
     def loadProjMeta(filename)
 
       Bake::Configs::Checks.symlinkCheck(filename)
+      Bake::Configs::Checks.sanityFolderName(filename)
 
       f = @loader.load(filename)
 

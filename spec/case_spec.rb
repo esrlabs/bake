@@ -132,6 +132,15 @@ describe "Case" do
     end
   end
 
+  it 'sanity check folder name' do
+    if Bake::Utils::OS.windows?
+      Bake.startBake("simPle/main", ["test_ok"])
+      expect($mystring.include?("'simPle' not found")).to be == true
+      expect($mystring.include?("Alternatives: 'simple'.")).to be == true
+      expect(ExitHelper.exit_code).to be == 0
+    end
+  end
+
 end
 
 end

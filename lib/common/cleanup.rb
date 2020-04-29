@@ -1,5 +1,6 @@
 require_relative "../blocks/block"
 require_relative "ext/file"
+require_relative "../bake/config/checks"
 
 module Bake
 
@@ -10,7 +11,8 @@ module Bake
       Bake::IDEInterface.instance.set_abort(false)
       Blocks::Block.reset_block_counter
       Blocks::Block.reset_delayed_result
-      File.cleanupWarnings
+      Configs::Checks.cleanupWarnings
+      
     end
 
 end

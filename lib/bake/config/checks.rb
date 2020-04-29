@@ -3,6 +3,12 @@ module Bake
 
     class Checks
 
+      @@warnedCase = []
+    
+      def self.cleanupWarnings
+        @@warnedCase.clear
+      end
+
       def self.symlinkCheck(filename)
         dirOfProjMeta = File.dirname(filename)
         Dir.chdir(dirOfProjMeta) do
@@ -17,6 +23,27 @@ module Bake
               ExitHelper.exit(1)
             end
           end
+        end
+      end
+      
+      def self.sanityFolderName(dorg)
+        return if !Bake.options.caseSensitivityCheck
+        return if Bake.options.verbose < 1
+        d = dorg
+        while (d != File.dirname(d))
+          b = File.basename(d)
+          dnew = File.dirname(d)
+          Dir.chdir(dnew) do
+            files = Dir.glob("*")
+            if !files.include?(b)
+              possible = files.select{ |f| f.casecmp(b)==0 }
+              if possible.length > 0 && !@@warnedCase.include?(d)
+                @@warnedCase << d
+                Bake.formatter.printWarning("Warning: '#{b}' not found in '#{dnew}'. Alternatives: #{possible.map{|p| "'#{p}'"}.join(", ")}. Maybe a typo happened while entering a folder in the shell?")
+              end
+            end
+          end
+          d = dnew
         end
       end
 

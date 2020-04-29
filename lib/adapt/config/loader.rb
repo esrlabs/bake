@@ -15,6 +15,7 @@ module Bake
     def loadProjMeta(filename, filenum)
 
       Bake::Configs::Checks.symlinkCheck(filename)
+      Bake::Configs::Checks.sanityFolderName(filename)
 
       f = @loader.load(filename)
 
