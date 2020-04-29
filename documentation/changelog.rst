@@ -10,6 +10,7 @@ April .., 2020 - bake-toolkit 2.61
            ExecutableConfig Release {
              CompilationDB "$(ProjectDir)/compile_commands.json"
            }
+     * Bugfix: build config could not be set after -j without number, e.g. "bake -j UnitTestBase"
 
 March 25, 2020 - bake-toolkit 2.60.2
      * Added: a warning is printed if two folders differ only in letter case either on file system or due to (Windows) shell issues. Example:

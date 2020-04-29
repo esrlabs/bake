@@ -81,8 +81,8 @@ module Bake
                 if inPlaceArg
                   option.call(inPlaceArg, nil, nil)
                 else
-                  option.call(@argv[pos+1], nil, nil) # do not use inplace value
-                  pos = pos + 1
+                  ignore = option.call(@argv[pos+1], nil, nil) # do not use inplace value
+                  pos = pos + 1 if ignore != :ignore
                 end
               else
                 option.call(nil, nil, nil)

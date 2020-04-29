@@ -341,16 +341,21 @@ module Bake
       end
     end
 
-    def checkNum(num)
+    def checkNum(num, quite = false)
       if String === num && !/\A\d+\z/.match(num)
-        Bake.formatter.printError("Error: #{num} is not a positive number")
-        ExitHelper.exit(1)
+        if !quite
+          Bake.formatter.printError("Error: #{num} is not a positive number")
+          ExitHelper.exit(1)
+        else
+          return false
+        end
       end
+      return true
     end
 
     def set_threads(num)
       return if num == nil # -j without number shall behave the same as not set
-      checkNum(num)
+      return :ignore if !checkNum(num, true)
       @threads = String === num ? num.to_i : num
       if @threads <= 0
         Bake.formatter.printError("Error: number of threads must be > 0")

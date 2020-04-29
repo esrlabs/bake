@@ -62,10 +62,27 @@ describe "Option Parser" do
 
     Bake.options = Options.new(["-j", "aaaaah"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
+    if RUBY_VERSION.split(".")[0].to_i > 2 || RUBY_VERSION.split(".")[1].to_i >= 2
+      require 'etc'
+      n_threads = Etc.nprocessors
+    else
+      n_threads = 8
+    end
+    expect(Bake.options.threads).to be == n_threads
 
     Bake.options = Options.new(["-j", "2"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
     expect(Bake.options.threads).to be == 2
+  end
+
+  it 'take argument after j as build config is not number' do
+    Bake.startBake("simple/main", ["-j", "test_ok"])
+    expect(ExitHelper.exit_code).to be == 0
+    Bake.startBake("simple/main", ["test_ok", "-j"])
+    expect(ExitHelper.exit_code).to be == 0
+    Bake.startBake("simple/main", ["-j", "test_ok", "test_nenene"])
+    expect(ExitHelper.exit_code).to be > 0
+    expect($mystring.include?("Cannot set build config 'test_nenene', because build config is already set to 'test_ok'")).to be == true
   end
 
   it 'should provide a config names with default' do
