@@ -1,7 +1,7 @@
 Changelog
 =========
 
-April .., 2020 - bake-toolkit 2.61
+May 4, 2020 - bake-toolkit 2.61
      * Added: possibility to specify additional root files with -w (they doesn't need to be called roots.bake).
        There are different use cases for this, e.g. having a Collection.meta outside the workspace.
      * Added: *Variable $(WorkingDir)* which points to the directory from which bake was called.
@@ -14,6 +14,7 @@ April .., 2020 - bake-toolkit 2.61
            }
      * Bugfix: build config could not be set after -j without number, e.g. "bake -j UnitTestBase"
      * Added: additional folder name case check on Windows (similar to the one from 2.60.2 but it covers other use cases)
+     * Added: *Adapt scope* feature now also takes scopes from main config into account, not only from the to-be-adapted config.
 
 March 25, 2020 - bake-toolkit 2.60.2
      * Added: a warning is printed if two folders differ only in letter case either on file system or due to (Windows) shell issues. Example:

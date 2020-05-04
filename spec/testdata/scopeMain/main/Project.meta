@@ -1,0 +1,9 @@
+Project default: test {
+  ExecutableConfig test {
+    Scope target, value: "a;b"
+    Scope cpu, value: "x"
+    Dependency lib
+    Files "src/main.cpp"
+    DefaultToolchain GCC
+  }
+}

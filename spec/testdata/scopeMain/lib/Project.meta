@@ -1,0 +1,63 @@
+Project default: test {
+  CustomConfig test {
+    Scope target, value: "c"
+    CommandLine "echo TEST$(UT)TEST", echo: off
+  }
+}
+
+If {
+  Scope target, value: "a;x"
+  CustomConfig test, type: extend {
+    PreSteps {
+      CommandLine "echo TargetA", echo: off
+    }
+    Set UT, value: "A"
+  }
+}
+
+If {
+  Scope target, value: b
+  CustomConfig test, type: extend {
+    PreSteps {
+      CommandLine "echo TargetB", echo: off
+    }
+    Set UT, value: "B"
+  }
+}
+
+If {
+  Scope target, value: c
+  CustomConfig test, type: extend {
+    PreSteps {
+      CommandLine "echo TargetC", echo: off
+    }
+  }
+}
+
+If {
+  Scope target, value: d
+  CustomConfig test, type: extend {
+    PreSteps {
+      CommandLine "echo TargetD", echo: off
+    }
+    Set UT, value: "D"
+  }
+}
+
+If {
+  Scope cpu, value: x
+  CustomConfig test, type: extend {
+    PreSteps {
+      CommandLine "echo CpuX", echo: off
+    }
+  }
+}
+
+Unless {
+  Scope cpu, value: y
+  CustomConfig test, type: extend {
+    PreSteps {
+      CommandLine "echo NotCpuY", echo: off
+    }
+  }
+}

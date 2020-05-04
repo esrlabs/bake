@@ -70,6 +70,7 @@ module Bake
     end
 
     def getFullProject(projName, configs, configname, isMain)
+      
 
       configname = resolveConfigName(configs, configname)
 
@@ -83,6 +84,21 @@ module Bake
         @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
         @mainProjectName = config.parent.name
         @mainConfigName = config.name
+        @configHashMain = {}
+      end
+
+      configHash = {
+        "toolchain"   => [@defaultToolchainName],
+        "os"          => [Utils::OS.name],
+        "mainProject" => [@mainProjectName],
+        "mainConfig"  => [@mainConfigName]
+      }
+      config.scopes.each do |s|
+        configHash[s.name] = [] unless configHash.has_key?(s.name)
+        configHash[s.name] += s.value.split(";")
+        if isMain
+          @configHashMain[s.name] = configHash[s.name].dup
+        end
       end
 
       # check if config has to be manipulated
@@ -103,17 +119,17 @@ module Bake
 
             adaptHash = c.parent.getHash
 
-            configHash = {
-              "toolchain"   => [@defaultToolchainName],
-              "os"          => [Utils::OS.name],
-              "mainProject" => [@mainProjectName],
-              "mainConfig"  => [@mainConfigName]
-            }
-            config.scopes.each do |s|
-              configHash[s.name] = [] unless configHash.has_key?(s.name)
-              configHash[s.name] += s.value.split(";")
+            if !isMain
+              @configHashMain.each do |k,v|
+                if configHash.has_key?(k)
+                  configHash[k] += v
+                  configHash[k].uniq!
+                else
+                  configHash[k] = v
+                end
+              end
             end
-        
+
             checkCondition = lambda {|name,value|
               return true if adaptHash[name].empty?
               if !configHash.has_key?(name)

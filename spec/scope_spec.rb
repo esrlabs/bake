@@ -77,6 +77,18 @@ describe "scope" do
     expect(ExitHelper.exit_code).to be == 0
   end
 
+  it 'main scope' do
+    Bake.startBake("scopeMain/main", ["test"])
+    expect($mystring.include?("TargetA")).to be == true
+    expect($mystring.include?("TargetB")).to be == true
+    expect($mystring.include?("TargetC")).to be == true
+    expect($mystring.include?("TargetD")).to be == false
+    expect($mystring.include?("CpuX")).to be == true
+    expect($mystring.include?("NotCpuY")).to be == true
+    expect($mystring.include?("TESTBTEST")).to be == true
+    expect(ExitHelper.exit_code).to be == 0
+  end
+
 end
 
 end

@@ -107,7 +107,7 @@ The *Adapt* configs will be only applied if all these conditions are true ("AND"
 
 Here the *Adapt* configs will be applied if toolchain is GCC on Windows and if target is powerPc and somethingElse either option1 or option2.
 
-User defined scopes must be also specified at the configs to be adapted:
+User defined scopes must be also specified **in the config to be adapted** or in **main config**:
 
 .. code-block:: text
 
