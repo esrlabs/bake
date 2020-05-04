@@ -96,7 +96,7 @@ describe "Multiple root" do
   end
 
   it 'Collection outside workspace with -w' do
-    str = `ruby bin/bakery -m spec/testdata/collectionOutside/coll test -w spec/testdata/root1/mainAutoRoot/roots.bake`
+    str = `ruby bin/bakery -m spec/testdata/collectionOutside/coll test -w spec/testdata/root1/mainAutoRoot/roots.bake --adapt nols`
     puts str
     expect(str.include?("1 of 1 builds ok")).to be == true
     expect(str.include?("bake -m spec/testdata/root1/main")).to be == true
