@@ -76,7 +76,32 @@ describe "Multiple root" do
     expect($mystring.include?("g++ -c -MD -MF build/test2/src/main2.d -Iinclude -I../../root2 -I../../root2/lib2/ls -o build/test2/src/main2.o src/main2.cpp")).to be == true    
 
     expect(ExitHelper.exit_code).to be == 0
-  end  
+  end
+
+  it 'roots.bake specified via -2' do
+    Bake.startBake("root1/mainRoot1", ["test", "-w", "spec/testdata/root1/onlyRoot2/manualRoots.txt", "-w", "spec/testdata/root2"])
+
+    expect($mystring.include?("root2 (depth: 1)")).to be == true    
+    expect($mystring.include?("root2 (depth: max)")).to be == true    
+    expect($mystring.include?("root1 (depth: 1)")).to be == true    
+
+    expect(ExitHelper.exit_code).to be == 0
+  end
+
+  it 'Collection outside workspace without -w' do
+    str = `ruby bin/bakery -m spec/testdata/collectionOutside/coll test`
+    puts str
+    expect(str.include?("0 of 0 builds ok")).to be == true
+    expect(ExitHelper.exit_code).to be == 0
+  end
+
+  it 'Collection outside workspace with -w' do
+    str = `ruby bin/bakery -m spec/testdata/collectionOutside/coll test -w spec/testdata/root1/mainAutoRoot/roots.bake`
+    puts str
+    expect(str.include?("1 of 1 builds ok")).to be == true
+    expect(str.include?("bake -m spec/testdata/root1/main")).to be == true
+    expect(ExitHelper.exit_code).to be == 0
+  end
 
 end
 

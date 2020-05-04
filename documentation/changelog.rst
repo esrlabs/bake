@@ -2,6 +2,8 @@ Changelog
 =========
 
 April .., 2020 - bake-toolkit 2.61
+     * Added: possibility to specify additional root files with -w (they doesn't need to be called roots.bake).
+       There are different use cases for this, e.g. having a Collection.meta outside the workspace.
      * Added: *Variable $(WorkingDir)* which points to the directory from which bake was called.
      * Added: *CompilationDB <file>* as option for main configs to generate compilation database. "--compilation-db" from command line will overrule this.
 

@@ -58,7 +58,7 @@ module Bake
 
     def self.calc_roots_bake(dir)
       def_roots = []
-      rootsFile = searchRootsFile(dir)
+      rootsFile = (File.file?(dir) ? dir : searchRootsFile(dir))
       if (rootsFile)
         File.open(rootsFile).each do |line|
           line = line.split("#")[0].strip.gsub(/[\\]/,'/')

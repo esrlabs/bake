@@ -329,10 +329,14 @@ module Bake
     end
 
     def set_root(dir)
-      root = Root.extract_depth(dir)
-      check_valid_dir(root.dir)
-      root.dir  = File.expand_path(root.dir.gsub(/[\\]/,'/'))
-      @roots << root
+      if File.file?(dir)
+        @roots += Root.calc_roots_bake(dir)
+      else
+        root = Root.extract_depth(dir)
+        check_valid_dir(root.dir)
+        root.dir  = File.expand_path(root.dir.gsub(/[\\]/,'/'))
+        @roots << root
+      end
     end
 
     def set_adapt(name)

@@ -117,6 +117,9 @@
 <dl class="docutils">
 <dt>April .., 2020 - bake-toolkit 2.61</dt>
 <dd><ul class="first last">
+<li><p class="first">Added: possibility to specify additional root files with -w (doesn’t need to be called roots.bake).
+There are different use caes for this, e.g. having a Collection.meta outside the workspace.</p>
+</li>
 <li><p class="first">Added: <em>Variable $(WorkingDir)</em> which points to the directory from which bake was called.</p>
 </li>
 <li><p class="first">Added: <em>CompilationDB &lt;file&gt;</em> as option for main configs to generate compilation database. “–compilation-db” from command line will overrule this.</p>
@@ -125,6 +128,10 @@
 <span class="go">}</span>
 </pre></div>
 </div>
+</li>
+<li><p class="first">Bugfix: build config could not be set after -j without number, e.g. “bake -j UnitTestBase”</p>
+</li>
+<li><p class="first">Added: additional folder name case check on Windows (similar to the one from 2.60.2 but it covers other use cases)</p>
 </li>
 </ul>
 </dd>
