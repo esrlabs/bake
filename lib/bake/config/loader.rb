@@ -87,20 +87,6 @@ module Bake
         @configHashMain = {}
       end
 
-      configHash = {
-        "toolchain"   => [@defaultToolchainName],
-        "os"          => [Utils::OS.name],
-        "mainProject" => [@mainProjectName],
-        "mainConfig"  => [@mainConfigName]
-      }
-      config.scopes.each do |s|
-        configHash[s.name] = [] unless configHash.has_key?(s.name)
-        configHash[s.name] += s.value.split(";")
-        if isMain
-          @configHashMain[s.name] = configHash[s.name].dup
-        end
-      end
-
       # check if config has to be manipulated
       @adaptConfigs.each do |c|
         
@@ -118,6 +104,17 @@ module Bake
             || confSplitted.any? {|p| p == "__ALL__"}
 
             adaptHash = c.parent.getHash
+
+            configHash = {
+              "toolchain"   => [@defaultToolchainName],
+              "os"          => [Utils::OS.name],
+              "mainProject" => [@mainProjectName],
+              "mainConfig"  => [@mainConfigName]
+            }
+            config.scopes.each do |s|
+              configHash[s.name] = [] unless configHash.has_key?(s.name)
+              configHash[s.name] += s.value.split(";")
+            end
 
             if !isMain
               @configHashMain.each do |k,v|
@@ -150,6 +147,13 @@ module Bake
             end
 
           end
+        end
+      end
+
+      if isMain
+        config.scopes.each do |s|
+          @configHashMain[s.name] = [] unless @configHashMain.has_key?(s.name)
+          @configHashMain[s.name] += s.value.split(";")
         end
       end
 
