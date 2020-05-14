@@ -131,7 +131,6 @@ module Bake
               if metadata_json = Bake.options.dev_features.include?("no-error-parser")
                 error_descs = []
                 console_output_full = x[0]
-                incList = []
               else
                 error_descs, console_output_full, incList = error_parser.scan_lines(x, @projectDir)
               end

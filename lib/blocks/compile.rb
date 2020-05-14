@@ -264,16 +264,17 @@ module Bake
           success = true
           consoleOutput = ""
           incList = nil
+
           if !Bake.options.diabCaseCheck
             success, consoleOutput = ProcessHelper.run(realCmd, false, false, nil, [0], @projectDir) if !Bake.options.dry
             incList = process_result(realCmd, consoleOutput, compiler[:ERROR_PARSER], nil, reason, success)
           end
 
-          if type != :ASM and not Bake.options.analyze and not Bake.options.prepro
+          if type != :ASM && !Bake.options.analyze && !Bake.options.prepro
             Dir.mutex.synchronize do
               if !Bake.options.diabCaseCheck
                 Dir.chdir(@projectDir) do
-                  incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE]) if incList.nil?
+                  incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE], compiler[:COMMAND]) if incList.nil?
                   Compile.write_depfile(source, incList, dep_filename_conv, @projectDir)
                 end
               end
@@ -291,7 +292,7 @@ module Bake
                       raise SystemCommandFailed.new
                     end
                     Dir.chdir(@projectDir) do
-                      incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE])
+                      incList = Compile.read_depfile(dep_filename, @projectDir, @block.tcs[:COMPILER][:DEP_FILE_SINGLE_LINE], compiler[:COMMAND])
                       Compile.write_depfile(source, incList, dep_filename_conv, @projectDir)
                     end
                     ergs = consoleOutput.scan(/# \d+ "([^"]+)" \d+/)
@@ -341,14 +342,12 @@ module Bake
             SyncOut.flushOutput()
           end
         end
-
-
-
       end
 
-      def self.read_depfile(dep_filename, projDir, lineType)
+      def self.read_depfile(dep_filename, projDir, lineType, command)
         deps = []
         begin
+          lineType = :single if command.include?("cafeCC")
           if lineType == :single
             File.readlines(dep_filename).each do |line|
               splitted = line.split(": ")

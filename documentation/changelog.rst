@@ -1,6 +1,9 @@
 Changelog
 =========
 
+May 14, 2020 - bake-toolkit 2.62.0
+     * Added: bake now understands dependency files from Axivion, which makes incremental build possible.
+
 May 4, 2020 - bake-toolkit 2.61.0
      * Added: possibility to specify additional root files with -w (they doesn't need to be called roots.bake).
        There are different use cases for this, e.g. having a Collection.meta outside the workspace.
