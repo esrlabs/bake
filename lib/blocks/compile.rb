@@ -344,7 +344,7 @@ module Bake
         end
       end
 
-      def self.read_depfile(dep_filename, projDir, lineType, command)
+      def self.read_depfile(dep_filename, projDir, lineType, command = "")
         deps = []
         begin
           lineType = :single if command.include?("cafeCC")
