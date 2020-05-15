@@ -355,14 +355,14 @@ module Bake
       def callSteps(method)
         @config.writeEnvVars()
         Thread.current[:lastCommand] = nil
-        allSteps = (preSteps + mainSteps + postSteps)
+        @allSteps = (preSteps + mainSteps + postSteps)
         # check if we have to delay the output (if the last step of this block is not in a thread)
         @outputStep = nil
-        allSteps.each { |step| @outputStep = independent?(method, step) ? step : nil }
-        while !allSteps.empty?
+        @allSteps.each { |step| @outputStep = independent?(method, step) ? step : nil }
+        while !@allSteps.empty?
           parallel = []
-          while allSteps.first && independent?(method, allSteps.first)
-            parallel << allSteps.shift
+          while @allSteps.first && independent?(method, @allSteps.first)
+            parallel << @allSteps.shift
           end
           if parallel.length > 0
             execute_in_thread(parallel) {
@@ -383,7 +383,7 @@ module Bake
                end
              }
           else
-            step = allSteps.shift
+            step = @allSteps.shift
             Blocks::Block::waitForAllThreads()
             @result = executeStep(step, method) if @result
             @outputStep = nil if !@result && blockAbort?(@result)
@@ -404,13 +404,29 @@ module Bake
           return true
         end
 
-        return true if (@visited)
-        @visited = true
+        SyncOut.mutex.synchronize do
+          if @visited
+            while !defined?(@allSteps) || !@allSteps.empty?
+              sleep(0.1)
+            end
+            return true # maybe to improve later (return false if step has a failed non-independent step)
+          end
+          @visited = true
+        end
 
         @inDeps = true
-        depResult = callDeps(:execute)
+        begin
+          depResult = callDeps(:execute)
+        rescue Exception => e
+          @allSteps = []
+          raise
+        end
+
         @inDeps = false
-        return @result && depResult if blockAbort?(depResult)
+        if blockAbort?(depResult)
+          @allSteps = []
+          return @result && depResult 
+        end
 
         Bake::IDEInterface.instance.set_build_info(@projectName, @configName)
         begin
@@ -445,8 +461,9 @@ module Bake
               SyncOut.discardStreams()
             end
           end
+          @allSteps = []
         end
-
+        
         return (depResult && @result)
       end
 
