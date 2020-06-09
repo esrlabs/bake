@@ -1,0 +1,9 @@
+Project {
+
+  LibraryConfig test_lib1 {
+    IncludeDir "include", inherit: true
+    IncludeDir "proj1/include"
+    IncludeDir "proj1/include2", inherit: true
+  }
+
+}

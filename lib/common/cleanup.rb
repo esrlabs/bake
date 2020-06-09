@@ -12,7 +12,7 @@ module Bake
       Blocks::Block.reset_block_counter
       Blocks::Block.reset_delayed_result
       Configs::Checks.cleanupWarnings
-      
+      ToCxx::reset_include_deps
     end
 
 end

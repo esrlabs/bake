@@ -1,0 +1,7 @@
+Project {
+
+  LibraryConfig test_lib1 {
+    Dependency proj3, config: test_lib1
+  }
+
+}

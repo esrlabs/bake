@@ -1,6 +1,10 @@
 Changelog
 =========
 
+Juni XX, 20202 - bake-toolkit 2.63.0
+    * Added: Internal developer feature "-Z dep-overview=<json>" for intelligent CIs.
+
+
 May 14, 2020 - bake-toolkit 2.62.0
      * Added: bake now understands dependency files from Axivion, which makes incremental build possible.
 

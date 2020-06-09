@@ -1,0 +1,15 @@
+Project {
+
+  LibraryConfig test_main1 {
+    Dependency proj1, config: test_lib1
+    Dependency proj2, config: test_lib1
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test_main2 {
+    IncludeDir "proj1/include"
+    IncludeDir "proj4/include"
+    DefaultToolchain GCC
+  }
+
+}

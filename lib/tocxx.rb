@@ -45,9 +45,18 @@ module Bake
   class ToCxx
 
     @@linkBlock = 0
+    @@include_deps = {}
 
     def self.linkBlock
       @@linkBlock = 1
+    end
+    
+    def self.include_deps
+      @@include_deps
+    end
+
+    def self.reset_include_deps
+      @@include_deps = {}
     end
 
     def initialize
@@ -228,6 +237,21 @@ module Bake
 
           block = Blocks::Block.new(config, @referencedConfigs, prebuild, @configTcMap[config])
           Blocks::ALL_BLOCKS[config.qname] = block
+        end
+      end
+    end
+    
+    def makeDepOverview
+      return if !Bake.options.dev_features.any? {|feature| feature.start_with?("dep-overview=") }
+      Blocks::ALL_BLOCKS.each do |name,block|
+        block.bes.each do |depInc|
+          @@include_deps[block.projectDir] = Set.new if !@@include_deps.has_key?(block.projectDir)
+          if (Metamodel::Dependency === depInc)
+            c = @referencedConfigs[depInc.name].detect { |configRef| configRef.name == depInc.config }
+            @@include_deps[block.projectDir] << Blocks::ALL_BLOCKS[c.qname].projectDir
+          else
+            @@include_deps[block.projectDir] << depInc.name
+          end
         end
       end
     end
@@ -692,6 +716,8 @@ module Bake
           makeGraph
           puts "Profiling #{Time.now - $timeStart}: make includes..." if Bake.options.profiling
           makeIncs
+          puts "Profiling #{Time.now - $timeStart}: make dep overview..." if Bake.options.profiling
+          makeDepOverview
           puts "Profiling #{Time.now - $timeStart}: make uniq..." if Bake.options.profiling
           makeUniq
           puts "Profiling #{Time.now - $timeStart}: convert to building blocks..." if Bake.options.profiling

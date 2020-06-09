@@ -24,6 +24,8 @@ require_relative "../lib/bakery/buildPattern"
 require_relative '../lib/common/ext/stdout'
 require_relative '../lib/common/cleanup'
 
+require 'json'
+
 module Bake
 
   @options = BakeryOptions.new(ARGV)
@@ -104,6 +106,7 @@ module Bake
 
   exitValue = 0
   abort = false
+  @ideps = {}
   @toBuild.each do |bp|
     currentRun += 1
     p = File.dirname(bp.proj)
@@ -135,6 +138,12 @@ module Bake
       puts e.message
     end
 
+    if Bake.options.dev_features.detect { |x| x.start_with?("dep-overview=") }
+      Bake::ToCxx.include_deps.each do |pdir, deps|
+        @ideps[pdir] = Set.new if !@ideps.has_key?(pdir)
+        @ideps[pdir].merge(deps)
+      end
+    end
     Bake::cleanup
     ExitHelper.reset_exit_code
 
@@ -147,6 +156,22 @@ module Bake
         break
       end
     end
+  end
+  
+  dep_json = Bake.options.dev_features.detect { |x| x.start_with?("dep-overview=") }
+  if dep_json
+    # remove duplicates
+    @ideps.each do |m,d| 
+      d.delete_if {|d_tbc| d_tbc.start_with?(m) }
+      d.delete_if {|d_tbc| d.any? {|any_d| d_tbc != any_d && d_tbc.start_with?(any_d + "/") } }
+    end
+    # generate format for output
+    ideps = []
+    @ideps.each do |m,d|
+      ideps << {"module" => m, "dependencies" => d.sort.to_a}
+    end
+    # output
+    File.write(dep_json[13..-1], JSON.pretty_generate(ideps))
   end
 
   print "\n"

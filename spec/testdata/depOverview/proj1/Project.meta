@@ -1,0 +1,8 @@
+Project {
+
+  LibraryConfig test_lib1 {
+    IncludeDir "include", inherit: true
+    Dependency proj2, config: test_lib1
+  }
+
+}
