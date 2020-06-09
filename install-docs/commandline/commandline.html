@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Commandline &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../_static/js/jquery-fix.js"></script>
+    <script src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -139,13 +139,13 @@
 <div class="section" id="the-most-important-options">
 <h2>The most important options<a class="headerlink" href="#the-most-important-options" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li><em>-b</em> the build configuration name</li>
-<li><em>-m</em> the main project directory (default is current directory)</li>
-<li><em>-p</em> the project to build (if not specified, the main project will be built with all dependencies)</li>
+<li><p><em>-b</em> the build configuration name</p></li>
+<li><p><em>-m</em> the main project directory (default is current directory)</p></li>
+<li><p><em>-p</em> the project to build (if not specified, the main project will be built with all dependencies)</p></li>
 </ol>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All configs of the project will be built, which is usually just one config, but if you have more than one config of the project in the workspace, use a comma separator.</p>
+<p class="admonition-title">Note</p>
+<p>All configs of the project will be built, which is usually just one config, but if you have more than one config of the project in the workspace, use a comma separator.</p>
 </div>
 </div>
 <div class="section" id="examples">
@@ -156,9 +156,9 @@
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>It is possible to omit <em>-b</em>:</p>
-<div class="last highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug
 </pre></div>
 </div>
 </div>
@@ -196,14 +196,13 @@
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1,3 -w w:/root2/libA,0 -r -a black -p bspAbc
 </pre></div>
 </div>
-<dl class="docutils">
-<dt>In this example the following folders are checked:</dt>
-<dd><ul class="first last simple">
-<li>w:/root1/Project.meta</li>
-<li>w:/root1/*/Project.meta</li>
-<li>w:/root1/*/*/Project.meta</li>
-<li>w:/root1/*/*/*/Project.meta</li>
-<li>w:/root2/libA/Project.meta</li>
+<dl class="simple">
+<dt>In this example the following folders are checked:</dt><dd><ul class="simple">
+<li><p>w:/root1/Project.meta</p></li>
+<li><p>w:/root1/*/Project.meta</p></li>
+<li><p>w:/root1/*/*/Project.meta</p></li>
+<li><p>w:/root1/*/*/*/Project.meta</p></li>
+<li><p>w:/root2/libA/Project.meta</p></li>
 </ul>
 </dd>
 </dl>
@@ -221,8 +220,8 @@
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">All files matching the pattern will be compiled (no wildcards allowed)</p>
+<p class="admonition-title">Note</p>
+<p>All files matching the pattern will be compiled (no wildcards allowed)</p>
 </div>
 </div>
 </div>
@@ -241,13 +240,13 @@ Instead, you can write them into a file. This file can be also specified with -w
 </div>
 <p>You can specify more than one roots file or mix it with root folders if you like.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last"><em>IN ANY CASE</em> an additional <strong>roots.bake</strong> file is searched from the main folder upwards. The first file found is used.</p>
+<p class="admonition-title">Note</p>
+<p><em>IN ANY CASE</em> an additional <strong>roots.bake</strong> file is searched from the main folder upwards. The first file found is used.</p>
 </div>
 <p>If one or more -w are specified and a roots.bake is found, they will be merged. First -w, then roots.bake.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If -w and roots.bake are neither specified nor found, the <strong>default workspace root</strong> is the parent directory of the main project.</p>
+<p class="admonition-title">Note</p>
+<p>If -w and roots.bake are neither specified nor found, the <strong>default workspace root</strong> is the parent directory of the main project.</p>
 </div>
 </div>
 </div>
@@ -265,7 +264,7 @@ Instead, you can write them into a file. This file can be also specified with -w
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
     </p>
   </div>
 </footer>

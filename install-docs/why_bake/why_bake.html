@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Why you should use bake &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../_static/js/jquery-fix.js"></script>
+    <script src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Install bake" href="../install/install_bake.html" />
-    <link rel="prev" title="bake 2.48.1" href="../index.html" />
+    <link rel="prev" title="bake 2.62.0" href="../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -121,75 +121,75 @@
 just take 2 minutes and have a look at our design goals and see if they fit what you are looking for.</p>
 <div class="section" id="bake-design-goals">
 <h2>bake design goals<a class="headerlink" href="#bake-design-goals" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="39%" />
-<col width="61%" />
+<col style="width: 39%" />
+<col style="width: 61%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Goal</th>
-<th class="head">Reasoning</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Goal</p></th>
+<th class="head"><p>Reasoning</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><ul class="first last simple">
-<li>It must be only a build tool</li>
+<tbody>
+<tr class="row-even"><td><ul class="simple">
+<li><p>It must be only a build tool</p></li>
 </ul>
 </td>
-<td>We want to focus your energy in providing a good and fast build tool.</td>
+<td><p>We want to focus your energy in providing a good and fast build tool.</p></td>
 </tr>
-<tr class="row-odd"><td><ul class="first last simple">
-<li>It must be a command line tool</li>
+<tr class="row-odd"><td><ul class="simple">
+<li><p>It must be a command line tool</p></li>
 </ul>
 </td>
-<td>Sticking to the unix and single purpose philosophy, we think proving a command line tool
-is the easiest way to be easily used and integrated with other tools. <strong>IDE independence!</strong></td>
+<td><p>Sticking to the unix and single purpose philosophy, we think proving a command line tool
+is the easiest way to be easily used and integrated with other tools. <strong>IDE independence!</strong></p></td>
 </tr>
-<tr class="row-even"><td><ul class="first last simple">
-<li>It must be easy to configure</li>
+<tr class="row-even"><td><ul class="simple">
+<li><p>It must be easy to configure</p></li>
 </ul>
 </td>
-<td>We want the developer to be able to focus on coding and testing, not on reading and searching
+<td><p>We want the developer to be able to focus on coding and testing, not on reading and searching
 hours through the build tool documentation.
-<strong>A build tool should be easy to use and not hard to maintain!</strong></td>
+<strong>A build tool should be easy to use and not hard to maintain!</strong></p></td>
 </tr>
-<tr class="row-odd"><td><ul class="first last simple">
-<li>The configuration must not be a meta language</li>
+<tr class="row-odd"><td><ul class="simple">
+<li><p>The configuration must not be a meta language</p></li>
 </ul>
 </td>
-<td>We want our configurations to be WYSIWYG (What You See Is What You Get).
+<td><p>We want our configurations to be WYSIWYG (What You See Is What You Get).
 We don’t want developers to spend hours in searching for a configuration error
-where multiple other config and script generation steps are in between.</td>
+where multiple other config and script generation steps are in between.</p></td>
 </tr>
-<tr class="row-even"><td><ul class="first last simple">
-<li>The configurations of large projects must be easy to understand</li>
+<tr class="row-even"><td><ul class="simple">
+<li><p>The configurations of large projects must be easy to understand</p></li>
 </ul>
 </td>
-<td>In large projects, build configurations usually get pretty complex and big, therefore
+<td><p>In large projects, build configurations usually get pretty complex and big, therefore
 generally just a few people understand the build process. This makes the maintenance
 dependent on those people. This is a single point of failure and it should be avoided,
-in our opinion.</td>
+in our opinion.</p></td>
 </tr>
-<tr class="row-odd"><td><ul class="first last simple">
-<li>It must be fast</li>
+<tr class="row-odd"><td><ul class="simple">
+<li><p>It must be fast</p></li>
 </ul>
 </td>
-<td>We personally aren’t fans of waiting for the build. We rather build, test and then do a kicker
-break!</td>
+<td><p>We personally aren’t fans of waiting for the build. We rather build, test and then do a kicker
+break!</p></td>
 </tr>
-<tr class="row-even"><td><ul class="first last simple">
-<li>It should be lightweight</li>
+<tr class="row-even"><td><ul class="simple">
+<li><p>It should be lightweight</p></li>
 </ul>
 </td>
-<td>Lightweight here means: less dependencies, because dependencies can hinder people from getting their
-setup up and running.</td>
+<td><p>Lightweight here means: less dependencies, because dependencies can hinder people from getting their
+setup up and running.</p></td>
 </tr>
-<tr class="row-odd"><td><ul class="first last simple">
-<li>It must be easy to use different versions of the build tool</li>
+<tr class="row-odd"><td><ul class="simple">
+<li><p>It must be easy to use different versions of the build tool</p></li>
 </ul>
 </td>
-<td>Sometimes it is necessary to break compatibility to embrace progress, even though
-it should be easy to switch between different versions of the tool.</td>
+<td><p>Sometimes it is necessary to break compatibility to embrace progress, even though
+it should be easy to switch between different versions of the tool.</p></td>
 </tr>
 </tbody>
 </table>
@@ -209,7 +209,7 @@ it should be easy to switch between different versions of the tool.</td>
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
     </p>
   </div>
 </footer>

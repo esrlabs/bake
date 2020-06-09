@@ -103,6 +103,10 @@ module Bake
               Bake.formatter.printError("IncludeDir must have inject OR infix (deprecated)", inc)
               ExitHelper.exit(1)
             end
+            if (inc.name.empty? || inc.name[0] == " ")
+              Bake.formatter.printError("IncludeDir must not be empty or start with a space", inc)
+              ExitHelper.exit(1)
+            end
           end if config.respond_to?("includeDir")
 
           if not ["", "yes", "no", "all"].include?config.mergeInc

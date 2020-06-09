@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>The build hierarchy &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../_static/js/jquery-fix.js"></script>
+    <script src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -120,12 +120,11 @@
 <h1>The build hierarchy<a class="headerlink" href="#the-build-hierarchy" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="build-graph">
 <h2>Build graph<a class="headerlink" href="#build-graph" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>Depending on the contents of the Project.meta files, a build graph will be generated:</dt>
-<dd><ul class="first last simple">
-<li>An ExecutableConfig usually specifies files to compile, dependencies to other projects and linker stuff.</li>
-<li>A LibraryConfig usually specifies files to compile and archive.</li>
-<li>A CustomConfig usually defines a custom step.</li>
+<dl class="simple">
+<dt>Depending on the contents of the Project.meta files, a build graph will be generated:</dt><dd><ul class="simple">
+<li><p>An ExecutableConfig usually specifies files to compile, dependencies to other projects and linker stuff.</p></li>
+<li><p>A LibraryConfig usually specifies files to compile and archive.</p></li>
+<li><p>A CustomConfig usually defines a custom step.</p></li>
 </ul>
 </dd>
 </dl>
@@ -139,19 +138,17 @@
 <div><a class="reference internal image-reference" href="../_images/bake_build_hierachy.png"><img alt="../_images/bake_build_hierachy.png" src="../_images/bake_build_hierachy.png" style="width: 75.0%; height: 793.5px;" /></a>
 </div></blockquote>
 <p>Steps are executed bottom-up. If one step fails, all steps above won’t be executed.</p>
-<dl class="docutils">
-<dt>If for example:</dt>
-<dd><ul class="first last simple">
-<li>PreStepMain 2 fails</li>
-<li>at least one file of library B does not compile</li>
+<dl class="simple">
+<dt>If for example:</dt><dd><ul class="simple">
+<li><p>PreStepMain 2 fails</p></li>
+<li><p>at least one file of library B does not compile</p></li>
 </ul>
 </dd>
-<dt>then:</dt>
-<dd><ul class="first last simple">
-<li>library B will not be created</li>
-<li>files of the main project will not be compiled</li>
-<li>main project will not be linked</li>
-<li>post step of main project will not be executed</li>
+<dt>then:</dt><dd><ul class="simple">
+<li><p>library B will not be created</p></li>
+<li><p>files of the main project will not be compiled</p></li>
+<li><p>main project will not be linked</p></li>
+<li><p>post step of main project will not be executed</p></li>
 </ul>
 </dd>
 </dl>
@@ -171,7 +168,7 @@
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
     </p>
   </div>
 </footer>

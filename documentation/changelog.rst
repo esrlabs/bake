@@ -3,6 +3,7 @@ Changelog
 
 Juni XX, 20202 - bake-toolkit 2.63.0
     * Added: Internal developer feature "-Z dep-overview=<json>" for intelligent CIs.
+    * Added: Forbid include dirs with a leading space, e.g. *IncludeDir " include"* which is now treated as an error.
 
 
 May 14, 2020 - bake-toolkit 2.62.0

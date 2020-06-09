@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>QACPP for MISRA and cyclomatic complexity &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../_static/js/jquery-fix.js"></script>
+    <script src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -137,10 +137,10 @@
 </pre></div>
 </div>
 <ul class="simple">
-<li>The first command creates the qac project database.</li>
-<li>The second command builds and analyzes the files.</li>
-<li>The third command prints out the result unfiltered.</li>
-<li>The forth and fifth commands generate reports. You may replace the python scripts in PRQA to adapt the output.</li>
+<li><p>The first command creates the qac project database.</p></li>
+<li><p>The second command builds and analyzes the files.</p></li>
+<li><p>The third command prints out the result unfiltered.</p></li>
+<li><p>The forth and fifth commands generate reports. You may replace the python scripts in PRQA to adapt the output.</p></li>
 </ul>
 <p>Please note, that “view” is not necessary to generate the reports.</p>
 </div>
@@ -171,7 +171,7 @@ MCPP has to installed next to <em>PRQA-Framework-2.x.x</em> (in this case MCPP_H
 Alternatively set the MCPP_HOME variable explicitly when MCPP is installed somewhere else.</p>
 <p>If not specified otherwise, cct, rcf and acf will be automatically chosen.</p>
 <ul>
-<li><p class="first">Configuration compiler template (cct): Only GCC is supported. bakeqac tries to get the platform and the GCC version and calculates the path to the right cct file. To overwrite this behaviour, specify one or more ccts:</p>
+<li><p>Configuration compiler template (cct): Only GCC is supported. bakeqac tries to get the platform and the GCC version and calculates the path to the right cct file. To overwrite this behaviour, specify one or more ccts:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --cct &lt;first&gt; --cct &lt;second&gt;</span>
 </pre></div>
 </div>
@@ -184,19 +184,19 @@ Alternatively set the MCPP_HOME variable explicitly when MCPP is installed somew
 <p>If –cct is not used, bakeqac uses a built-in cct file as mentioned above. Additionally, it searched for a file named qac.cct up to root and appends the content to the original cct file.
 This may be used to add additional configuration parameters which are compiler independent, e.q. “-n 1234” suppresses warning 1234.</p>
 </li>
-<li><p class="first">Rule configuration file (rcf): Can be specified with:</p>
+<li><p>Rule configuration file (rcf): Can be specified with:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --rcf &lt;rcf&gt;</span>
 </pre></div>
 </div>
 <p>If not specified, bakeqac uses $(MCPP_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf.</p>
 </li>
-<li><p class="first">Analysis configuration file (acf): Can be specified with:</p>
+<li><p>Analysis configuration file (acf): Can be specified with:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --acf &lt;acf&gt;</span>
 </pre></div>
 </div>
 <p>If not specified, $(QAC_HOME)/config/acf/default.acf will be used.</p>
 </li>
-<li><p class="first">You can also specify the qacdata folder, default is <em>.qacdata</em>:</p>
+<li><p>You can also specify the qacdata folder, default is <em>.qacdata</em>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacdata anotherFolder</span>
 </pre></div>
 </div>
@@ -207,8 +207,8 @@ This may be used to add additional configuration parameters which are compiler i
 <h2>Step 2: analyze<a class="headerlink" href="#step-2-analyze" title="Permalink to this headline">¶</a></h2>
 <p>This is the main step. Use exactly the same options for bakeqac as for bake. A few things have to be mentioned:</p>
 <ul class="simple">
-<li><em>–compile-only</em> will be automatically added</li>
-<li><em>–rebuild</em> will be automatically added</li>
+<li><p><em>–compile-only</em> will be automatically added</p></li>
+<li><p><em>–rebuild</em> will be automatically added</p></li>
 </ul>
 <p>The output will be filtered per default (warnings) . To get unfiltered output, write:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacnomsgfilter</span>
@@ -219,9 +219,9 @@ This may be used to add additional configuration parameters which are compiler i
 <h2>Step 3: view<a class="headerlink" href="#step-3-view" title="Permalink to this headline">¶</a></h2>
 <p>Results are also filtered in this step if not specified otherwise:</p>
 <ul class="simple">
-<li>Only results from compiled bake projects will be shown (which does not apply to e.g. compiler libraries). To narrow the results, use the <em>-p</em> option.</li>
-<li>Files from subfolders test and mock will be filtered out.</li>
-<li>Files from projects gtest and gmock will be filtered out.</li>
+<li><p>Only results from compiled bake projects will be shown (which does not apply to e.g. compiler libraries). To narrow the results, use the <em>-p</em> option.</p></li>
+<li><p>Files from subfolders test and mock will be filtered out.</p></li>
+<li><p>Files from projects gtest and gmock will be filtered out.</p></li>
 </ul>
 <p>To shall ALL files:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacnofilefilter</span>
@@ -306,7 +306,7 @@ The suppression syntax is “METRIC STCYC &lt;accepted complexity&gt;” and mus
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
     </p>
   </div>
 </footer>

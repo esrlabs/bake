@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Adapt configs &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../_static/js/jquery-fix.js"></script>
+    <script src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -140,8 +140,8 @@
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>There are two major use cases:</p>
 <ul class="simple">
-<li>Changing the configs from outside, e.g. injecting a toolchain.</li>
-<li>Changing the configs depending on variables like the operating system.</li>
+<li><p>Changing the configs from outside, e.g. injecting a toolchain.</p></li>
+<li><p>Changing the configs depending on variables like the operating system.</p></li>
 </ul>
 <p>Both is possible with the <em>Adapt</em> feature.</p>
 </div>
@@ -153,10 +153,10 @@
 </div>
 <p>bake searches for <em>abc/def</em> in this priority:</p>
 <ul class="simple">
-<li><em>&lt;current directory&gt;/abc/def</em></li>
-<li><em>&lt;main project directory&gt;/abc/def</em></li>
-<li><em>&lt;workspace root&gt;/abc/def</em> (done for all roots)</li>
-<li><em>abc/def/Adapt.meta</em> recursively in all workspace roots (note, that <em>/Adapt.meta</em> is automatically appended here)</li>
+<li><p><em>&lt;current directory&gt;/abc/def</em></p></li>
+<li><p><em>&lt;main project directory&gt;/abc/def</em></p></li>
+<li><p><em>&lt;workspace root&gt;/abc/def</em> (done for all roots)</p></li>
+<li><p><em>abc/def/Adapt.meta</em> recursively in all workspace roots (note, that <em>/Adapt.meta</em> is automatically appended here)</p></li>
 </ul>
 <p>If found, the configs from the adapt file are parsed:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt {
@@ -205,10 +205,10 @@ Adapt {
 <h3>Condition<a class="headerlink" href="#condition" title="Permalink to this headline">¶</a></h3>
 <p>An <em>Adapt</em> can have up to four attributes:</p>
 <ul class="simple">
-<li><strong>toolchain</strong>: e.g. GCC</li>
-<li><strong>os</strong>: can be Windows, Mac, Linux, Unix (which is != Linux)</li>
-<li><strong>mainConfig</strong>: name of the main config</li>
-<li><strong>mainProject</strong>: name of the main project</li>
+<li><p><strong>toolchain</strong>: e.g. GCC</p></li>
+<li><p><strong>os</strong>: can be Windows, Mac, Linux, Unix (which is != Linux)</p></li>
+<li><p><strong>mainConfig</strong>: name of the main config</p></li>
+<li><p><strong>mainProject</strong>: name of the main project</p></li>
 </ul>
 <p>User defined conditions are specified in <strong>Scopes</strong>.</p>
 <p>The <em>Adapt</em> configs will be only applied if all these conditions are true (“AND” operation). Example:</p>
@@ -229,8 +229,8 @@ Adapt {
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You can write “If” instead of “Adapt”:</p>
+<p class="admonition-title">Note</p>
+<p>You can write “If” instead of “Adapt”:</p>
 </div>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>If toolchain: GCC, os: Windows {
   ...
@@ -238,8 +238,8 @@ Adapt {
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">It is possible to negate the conditions with “Unless”:</p>
+<p class="admonition-title">Note</p>
+<p>It is possible to negate the conditions with “Unless”:</p>
 </div>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Unless toolchain: GCC, os: Windows {
   ...
@@ -262,9 +262,9 @@ Remember the example from the beginning?</p>
 <p>This config is applied only to the config “test” of the main project.</p>
 <p>__MAIN__, __ALL__ and __THIS__ are keywords:</p>
 <ul class="simple">
-<li><strong>__MAIN__</strong> means the main project or main config</li>
-<li><strong>__ALL__</strong> means all projects or configs</li>
-<li><strong>__THIS__</strong> is only valid for project name, which can be used for <em>Adapts</em> within a Project.meta to restrict the adaption to the current project. This is the default for <em>Adapts</em> in Project.meta.</li>
+<li><p><strong>__MAIN__</strong> means the main project or main config</p></li>
+<li><p><strong>__ALL__</strong> means all projects or configs</p></li>
+<li><p><strong>__THIS__</strong> is only valid for project name, which can be used for <em>Adapts</em> within a Project.meta to restrict the adaption to the current project. This is the default for <em>Adapts</em> in Project.meta.</p></li>
 </ul>
 <p>If you want to apply the changes only to the top level config, write:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ExecutableConfig __MAIN__, project: __MAIN__, ...
@@ -333,10 +333,10 @@ Adapt toolchain: GCC {
 </div>
 <p>The type can be</p>
 <ul class="simple">
-<li><strong>replace</strong></li>
-<li><strong>remove</strong></li>
-<li><strong>extend</strong></li>
-<li><strong>push_front</strong></li>
+<li><p><strong>replace</strong></p></li>
+<li><p><strong>remove</strong></p></li>
+<li><p><strong>extend</strong></p></li>
+<li><p><strong>push_front</strong></p></li>
 </ul>
 <div class="section" id="type-extend">
 <h3>Type: extend<a class="headerlink" href="#type-extend" title="Permalink to this headline">¶</a></h3>
@@ -458,7 +458,7 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
     </p>
   </div>
 </footer>

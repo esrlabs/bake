@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Quickstart &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../_static/js/jquery-fix.js"></script>
+    <script src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -115,25 +115,22 @@
   <div class="section" id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
 <ol class="arabic">
-<li><dl class="first docutils">
-<dt>Create a project directory.</dt>
-<dd><div class="first last highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> mkdir my_project
+<li><dl>
+<dt>Create a project directory.</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> mkdir my_project
 </pre></div>
 </div>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Switch to the project directory.</dt>
-<dd><div class="first last highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> <span class="nb">cd</span> my_project
+<li><dl>
+<dt>Switch to the project directory.</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> <span class="nb">cd</span> my_project
 </pre></div>
 </div>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Use the bake –create option to auto generate a basic project.</dt>
-<dd><div class="first highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~/my_project$</span> bake --create exe
+<li><dl>
+<dt>Use the bake –create option to auto generate a basic project.</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~/my_project$</span> bake --create exe
 <span class="go">-- bake 2.10.3, ruby 2.1.2p95, platform x86_64-darwin13.0 --</span>
 <span class="go">Project created.</span>
 
@@ -141,7 +138,7 @@
 </pre></div>
 </div>
 <p>This will provide you with the following basic project structure which is ready to use:</p>
-<div class="last highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">my_project</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">my_project</span>
 <span class="go">|</span>
 <span class="go">|-- Project.meta</span>
 <span class="go">|-- include</span>
@@ -152,9 +149,8 @@
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Build the project.</dt>
-<dd><div class="first highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~/my_project$</span> bake
+<li><dl>
+<dt>Build the project.</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~/my_project$</span> bake
 <span class="go">-- bake 2.10.3, ruby 2.1.2p95, platform x86_64-darwin13.0 --</span>
 <span class="go">Info: cache not found, reloading meta information</span>
 <span class="go">Loading /Users/NiCoretti/my_project/Project.meta</span>
@@ -181,9 +177,9 @@
 <span class="go">Time: 00:00 minutes</span>
 </pre></div>
 </div>
-<div class="last admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The default main.cpp which is created by bake does nothing except returning the exit code 0.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default main.cpp which is created by bake does nothing except returning the exit code 0.</p>
 </div>
 </dd>
 </dl>
@@ -204,7 +200,7 @@
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
     </p>
   </div>
 </footer>

@@ -1,0 +1,23 @@
+Project {
+
+  LibraryConfig test_1 {
+    IncludeDir
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test_2 {
+    IncludeDir ""
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test_3 {
+    IncludeDir " "
+    DefaultToolchain GCC
+  }
+
+  LibraryConfig test_4 {
+    IncludeDir" include"
+    DefaultToolchain GCC
+  }
+
+}

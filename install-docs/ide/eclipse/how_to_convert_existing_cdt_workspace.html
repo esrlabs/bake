@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>How to convert existing CDT workspaces &#8212; bake documentation</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../../_static/js/jquery-fix.js"></script>
+    <script src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -119,32 +119,31 @@ Only one developer in a team has to convert the workspace only once!
 Conversion means, that Project.meta files are generated and filled with the informationen from the <cite>.project</cite> and <cite>.cproject</cite>
 files. bake does not read the <cite>.project</cite> and <cite>.cproject</cite> files, only the <cite>Project.meta</cite> files.</p>
 <p>The converter is an export wizard, which can be found under <cite>File-&gt;Export</cite> or in the context menu of the Project Explorer</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="51%" />
-<col width="49%" />
+<col style="width: 51%" />
+<col style="width: 49%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><img alt="../../_images/SelectExport.png" class="first last" src="../../_images/SelectExport.png" />
+<tbody>
+<tr class="row-odd"><td><img alt="../../_images/SelectExport.png" src="../../_images/SelectExport.png" />
 </td>
-<td><img alt="../../_images/Script.png" class="first last" src="../../_images/Script.png" />
+<td><img alt="../../_images/Script.png" src="../../_images/Script.png" />
 </td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<ul class="last simple">
-<li>The conversion is not a 1:1 conversion. That means, that the tool can only be 99% perfect. There might by some small issues, which have to be adapted manually. You can find it out by simply trying to build your project with bake.</li>
-<li>It is possible to specify a ruby script in the wizard window, which can do these manual adaptions. This can make sense, if you want to convert the workspace several times before completely switching to bake.</li>
-<li>To convert only a subset of projects instead of the whole workspace, select the appropriate projects in the Project Explorer before starting the export wizard. Ensure that the checkbox shown above is marked.</li>
-<li><dl class="first docutils">
-<dt>If you are satisfied with the results, replace the .cproject and .project files in your repository. (Steps to do with .cproject and .project files)</dt>
-<dd><ul class="first last">
-<li>Delete the files</li>
-<li>Remove the projects from your workspace in Eclipse (but do not delete the contents from your disk)</li>
-<li>Import the projects again via the bake import wizard to generate wrapper files for Eclipse</li>
-<li>Commit the change to your source control system</li>
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The conversion is not a 1:1 conversion. That means, that the tool can only be 99% perfect. There might by some small issues, which have to be adapted manually. You can find it out by simply trying to build your project with bake.</p></li>
+<li><p>It is possible to specify a ruby script in the wizard window, which can do these manual adaptions. This can make sense, if you want to convert the workspace several times before completely switching to bake.</p></li>
+<li><p>To convert only a subset of projects instead of the whole workspace, select the appropriate projects in the Project Explorer before starting the export wizard. Ensure that the checkbox shown above is marked.</p></li>
+<li><dl class="simple">
+<dt>If you are satisfied with the results, replace the .cproject and .project files in your repository. (Steps to do with .cproject and .project files)</dt><dd><ul>
+<li><p>Delete the files</p></li>
+<li><p>Remove the projects from your workspace in Eclipse (but do not delete the contents from your disk)</p></li>
+<li><p>Import the projects again via the bake import wizard to generate wrapper files for Eclipse</p></li>
+<li><p>Commit the change to your source control system</p></li>
 </ul>
 </dd>
 </dl>
@@ -152,8 +151,8 @@ files. bake does not read the <cite>.project</cite> and <cite>.cproject</cite> f
 </ul>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Do not commit these <cite>.projec`t and `.cproject</cite> files anymore. Instead, commit the changes in <cite>Project.meta</cite> files.
+<p class="admonition-title">Warning</p>
+<p>Do not commit these <cite>.projec`t and `.cproject</cite> files anymore. Instead, commit the changes in <cite>Project.meta</cite> files.
 You still need <cite>.cproject</cite> and <cite>.project</cite> files for working under Eclipse,
 that’s why you have to import the projects again via the bake import wizard.</p>
 </div>
@@ -172,7 +171,7 @@ that’s why you have to import the projects again via the bake import wizard.</
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
     </p>
   </div>
 </footer>

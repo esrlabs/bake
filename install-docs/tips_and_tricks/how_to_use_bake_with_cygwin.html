@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>How to use bake with cygwin &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../_static/js/jquery-fix.js"></script>
+    <script src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -118,34 +118,34 @@
 There is one major reason: Cygwin supports <strong>colored output</strong> via ansi escape sequences.
 Note, that these steps differ depending on the Cygwin version, installed packages and configuration.</p>
 <ol class="arabic">
-<li><p class="first">Get rid of the cygdrive prefix</p>
+<li><p>Get rid of the cygdrive prefix</p>
 <blockquote>
 <div><a class="reference internal image-reference" href="../_images/cygwin_mount.png"><img alt="../_images/cygwin_mount.png" src="../_images/cygwin_mount.png" style="width: 50.0%; height: 65.5px;" /></a>
 <p>As you see, “c:” is now “/c” and not “/cygdrive/c” anymore.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>In newer Cygwin versions, this is not permanent. To make it permanent,
 add the following line to /etc/fstab (can be found in your Cygwin installation directory):</p>
-<div class="last highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">none / cygdrive binary,posix=0,user 0 0</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">none / cygdrive binary,posix=0,user 0 0</span>
 </pre></div>
 </div>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first">Get rid of the Cygwin ruby</p>
+<li><p>Get rid of the Cygwin ruby</p>
 <blockquote>
 <div><a class="reference internal image-reference" href="../_images/cygwin_ruby.png"><img alt="../_images/cygwin_ruby.png" src="../_images/cygwin_ruby.png" style="width: 50.0%; height: 80.5px;" /></a>
 <p>Easiest way is to rename the Cygwin ruby, which makes the original ruby visible.
 This is only necessary if you have ruby installed in our Cygwin environment.</p>
 </div></blockquote>
 </li>
-<li><p class="first">Add tty to CYGWIN option</p>
+<li><p>Add tty to CYGWIN option</p>
 <blockquote>
 <div><a class="reference internal image-reference" href="../_images/cygwin_tty.png"><img alt="../_images/cygwin_tty.png" src="../_images/cygwin_tty.png" style="width: 70.0%; height: 378.0px;" /></a>
 <p>“tty” must be added to the CYGWIN system variable.</p>
 </div></blockquote>
 </li>
-<li><p class="first">Switch to raw mode</p>
+<li><p>Switch to raw mode</p>
 <blockquote>
 <div><p>The ctrl-c handler in Cygwin only works for programs compiled with the correct Cygwin libs. This does not apply to
 most ruby installations. Hitting ctrl-c may interrupt the compiler, but bake does not get this signal.</p>
@@ -156,7 +156,7 @@ most ruby installations. Hitting ctrl-c may interrupt the compiler, but bake doe
 <p>Now bake can read ctrl-c as raw character on stdin. Bake will abort after all subprocesses - like the running compilation steps - have returned.</p>
 </div></blockquote>
 </li>
-<li><p class="first">Start the build</p>
+<li><p>Start the build</p>
 <blockquote>
 <div><p>Use the parameter “-a black” or “-a white” depending on the background color of your shell (“-a none” is default).
 Depending on your Cygwin installation, you have to call “bake.bat” instead of “bake”. To avoid this, create an alias, e.g:</p>
@@ -181,7 +181,7 @@ Depending on your Cygwin installation, you have to call “bake.bat” instead o
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
     </p>
   </div>
 </footer>

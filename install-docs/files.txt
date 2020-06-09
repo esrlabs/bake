@@ -169,10 +169,12 @@
 ./_static/Import.png
 ./_static/InstallNewSoftware.png
 ./_static/jquery-3.2.1.js
+./_static/jquery-3.5.1.js
 ./_static/jquery.js
 ./_static/js/jquery-1.11.0.min.js
 ./_static/js/jquery-fix.js
 ./_static/keys.png
+./_static/language_data.js
 ./_static/Lib.meta
 ./_static/Licenses.png
 ./_static/logo_tiny_32.ico
