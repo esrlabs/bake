@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>The main project &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../_static/js/jquery-fix.js"></script>
+    <script src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -127,36 +128,36 @@ The main project can have a DefaultToolchain definition, which is valid for all 
 <p>To build a project, you have to specify</p>
 <blockquote>
 <div><ul class="simple">
-<li>the main project</li>
-<li>the config of the main project which references the project to build</li>
-<li>the (sub)project to build if applicable</li>
+<li><p>the main project</p></li>
+<li><p>the config of the main project which references the project to build</p></li>
+<li><p>the (sub)project to build if applicable</p></li>
 </ul>
 </div></blockquote>
 <div class="section" id="advantages">
 <h2>Advantages<a class="headerlink" href="#advantages" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>Reducing the number of build configurations (toolchain settings like debug or release flags can be set outside of the project)</li>
-<li>Most projects do not have any compiler definitions anymore</li>
-<li>Only flags which must be used or flags which must not be used have to be specified in the projects</li>
-<li>Changing compiler definitions for all projects can be done easily in the main project build configuration</li>
+<li><p>Reducing the number of build configurations (toolchain settings like debug or release flags can be set outside of the project)</p></li>
+<li><p>Most projects do not have any compiler definitions anymore</p></li>
+<li><p>Only flags which must be used or flags which must not be used have to be specified in the projects</p></li>
+<li><p>Changing compiler definitions for all projects can be done easily in the main project build configuration</p></li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="50%" />
-<col width="50%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Project.meta of Main (Debug and Release)</th>
-<th class="head">Project.meta of Sub (only one build config!)</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Project.meta of Main (Debug and Release)</p></th>
+<th class="head"><p>Project.meta of Sub (only one build config!)</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Project</span> <span class="p">{</span>
+<tbody>
+<tr class="row-even"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Project</span> <span class="p">{</span>
 
     <span class="n">ExecutableConfig</span> <span class="n">Debug</span> <span class="p">{</span>
         <span class="n">Dependency</span> <span class="n">Sub</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Lib</span>
@@ -185,7 +186,7 @@ The main project can have a DefaultToolchain definition, which is valid for all 
 </pre></div>
 </div>
 </td>
-<td><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Project</span> <span class="p">{</span>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Project</span> <span class="p">{</span>
 
     <span class="n">LibraryConfig</span> <span class="n">Lib</span> <span class="p">{</span>
         <span class="n">Files</span> <span class="s2">&quot;**/*.cpp&quot;</span>
@@ -200,8 +201,8 @@ The main project can have a DefaultToolchain definition, which is valid for all 
 </tbody>
 </table>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">A main project must have a DefaultToolchain - but it’s allowed to leave that definition empty.</p>
+<p class="admonition-title">Note</p>
+<p>A main project must have a DefaultToolchain - but it’s allowed to leave that definition empty.</p>
 </div>
 </div>
 <div class="section" id="output-directory">
@@ -211,8 +212,8 @@ That’s why the output directory of a project cannot be simply the build config
 Therefore the output directory names are:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Main project: $(MainConfigName) like in regular Eclipse CDT builds</li>
-<li>Subprojects: $(MainConfigName)_$(MainProjectName) instead of the config name of the subproject</li>
+<li><p>Main project: $(MainConfigName) like in regular Eclipse CDT builds</p></li>
+<li><p>Subprojects: $(MainConfigName)_$(MainProjectName) instead of the config name of the subproject</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -231,7 +232,7 @@ Therefore the output directory names are:</p>
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
     </p>
   </div>
 </footer>

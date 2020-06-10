@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Merge Includes &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../_static/js/jquery-fix.js"></script>
+    <script src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -115,13 +116,12 @@
   <div class="section" id="merge-includes">
 <h1>Merge Includes<a class="headerlink" href="#merge-includes" title="Permalink to this headline">¶</a></h1>
 <p>Some projects might compile faster if header files are copied into one folder.</p>
-<dl class="docutils">
-<dt>A configuration, e.g. a LibraryConfig, can have a mergeInc flag:</dt>
-<dd><ul class="first last simple">
-<li>“no” = none of the include folders of this config will ever be merged.</li>
-<li>“yes” = inherited include folders will be merged when compiling this config (except include folders which configs have explicit mergeInc “no”).</li>
-<li>“all” = all include folders will be merged when compiling this config (except include folders which configs have explicit mergeInc “no”).</li>
-<li>unset = when building THIS config no include folders are merged.</li>
+<dl class="simple">
+<dt>A configuration, e.g. a LibraryConfig, can have a mergeInc flag:</dt><dd><ul class="simple">
+<li><p>“no” = none of the include folders of this config will ever be merged.</p></li>
+<li><p>“yes” = inherited include folders will be merged when compiling this config (except include folders which configs have explicit mergeInc “no”).</p></li>
+<li><p>“all” = all include folders will be merged when compiling this config (except include folders which configs have explicit mergeInc “no”).</p></li>
+<li><p>unset = when building THIS config no include folders are merged.</p></li>
 </ul>
 </dd>
 </dl>
@@ -139,16 +139,16 @@
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When mergeInc is set to “no”, this cannot be overwritten by Adapt. In fact, this is the only thing which cannot be overwritten!</p>
+<p class="admonition-title">Note</p>
+<p>When mergeInc is set to “no”, this cannot be overwritten by Adapt. In fact, this is the only thing which cannot be overwritten!</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Not ALL files from an include folder are copied. The folder &lt;projectDir&gt;/build/ and everything beginning with &lt;projectDir&gt;/. will be ignored. Only files with ending h* and i* are copied.</p>
+<p class="admonition-title">Note</p>
+<p>Not ALL files from an include folder are copied. The folder &lt;projectDir&gt;/build/ and everything beginning with &lt;projectDir&gt;/. will be ignored. Only files with ending h* and i* are copied.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For MISRA checking use “yes”, not “all”, otherwise MISRA tooling does not know which header file belongs to the current project.</p>
+<p class="admonition-title">Note</p>
+<p>For MISRA checking use “yes”, not “all”, otherwise MISRA tooling does not know which header file belongs to the current project.</p>
 </div>
 </div>
 
@@ -165,7 +165,7 @@
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
     </p>
   </div>
 </footer>

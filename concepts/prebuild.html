@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Prebuild configurations for distributions &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../_static/js/jquery-fix.js"></script>
+    <script src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -120,8 +121,8 @@
 <p>This is a useful feature if you want to make a part of workspace available for third party without changing the configuration.</p>
 <p>There are two major use cases:</p>
 <ul class="simple">
-<li>Only a few projects shall be closed source (e.g. to hide some algorithms)</li>
-<li>Only a few projects shall be open source (e.g. if a supplier has integrate a library)</li>
+<li><p>Only a few projects shall be closed source (e.g. to hide some algorithms)</p></li>
+<li><p>Only a few projects shall be open source (e.g. if a supplier has integrate a library)</p></li>
 </ul>
 <p>Both is possible with bake, but the current UI is optimized for the latter one.</p>
 <p>Add in the Project.meta the following code:</p>
@@ -150,11 +151,11 @@
 <div class="section" id="typical-workflow">
 <h2>Typical workflow<a class="headerlink" href="#typical-workflow" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li>Compiling the workspace completely without prebuild feature.</li>
-<li>Executing a distribution script which copies all relevant files to a distribution directory.
+<li><p>Compiling the workspace completely without prebuild feature.</p></li>
+<li><p>Executing a distribution script which copies all relevant files to a distribution directory.
 Make sure to add all header files of prebuilt libraries if they are needed for other non-prebuilt libraries.
-You may use the dependency files in the output directory for that script.</li>
-<li>In the distribution folder use “–prebuild” when compiling the workspace.</li>
+You may use the dependency files in the output directory for that script.</p></li>
+<li><p>In the distribution folder use “–prebuild” when compiling the workspace.</p></li>
 </ol>
 </div>
 </div>
@@ -172,7 +173,7 @@ You may use the dependency files in the output directory for that script.</li>
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
     </p>
   </div>
 </footer>
