@@ -124,6 +124,13 @@ module Bake
           resPathMagic = inc[1..-1].join("/") # within self
           resPathMagic = "." if resPathMagic == ""
           res << resPathMagic
+          if warnIfLocal
+            if resPathMagic == "."
+              Bake.formatter.printInfo("\"#{d}\" uses path magic in IncludeDir, please use \".\" instead", elem)
+            else
+              Bake.formatter.printInfo("\"#{d}\" uses path magic in IncludeDir, please omit \"#{inc[0]}/\" or use \"./#{resPathMagic}\"", elem) if warnIfLocal
+            end
+          end
         elsif @referencedConfigs.include?(inc[0])
           dirOther = @referencedConfigs[inc[0]].first.parent.get_project_dir
           resPathMagic = File.rel_from_to_project(@projectDir, dirOther, false)
@@ -131,17 +138,19 @@ module Bake
           resPathMagic = resPathMagic + "/" + postfix if postfix != ""
           resPathMagic = "." if resPathMagic == ""
           res << resPathMagic
+          Bake.formatter.printInfo("\"#{d}\" uses path magic in IncludeDir, please use a Dependency to \"#{inc[0]}\" instead", elem) if warnIfLocal
         end
 
         if File.exists?(@projectDir + "/" + d) # prio 2: local, e.g. "include"
           res << d
         end
 
-        # prioo 3: check if dir exists without Project.meta entry
+        # prio 3: check if dir exists without Project.meta entry
         Bake.options.roots.each do |r|
           absIncDir = r.dir+"/"+d
           if File.exists?(absIncDir)
             res << File.rel_from_to_project(@projectDir,absIncDir,false)
+            Bake.formatter.printInfo("\"#{d}\" uses path magic in IncludeDir, please create a Project.meta in \"#{absIncDir}\" or upwards and use a Dependency instead", elem) if warnIfLocal && res.length == 1
           end
         end
 

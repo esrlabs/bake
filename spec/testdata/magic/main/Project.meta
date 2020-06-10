@@ -5,4 +5,15 @@ Project {
     Dependency lib2
     DefaultToolchain GCC
   }
+  
+  
+  LibraryConfig test_2 {
+    Files "src/main.cpp"
+    IncludeDir "main/include"
+    IncludeDir "main"
+    Dependency lib3
+    IncludeDir "lib3/include"
+    IncludeDir "lib4/include"
+    DefaultToolchain GCC
+  }
 }
