@@ -63,7 +63,7 @@ module Bake
       le = block.library ? block.library : (block.executable ? block.executable : nil)
       if le
         cb = le.compileBlock
-        if !cb.nil?
+        if !cb.nil? && !cb.object_files_ignored_in_lib.nil?
           cb.object_files_ignored_in_lib.each do |ldirect|
             adaptedPath, prefix = adaptPath(ldirect, block, prefix)
             if (!block.prebuild or File.exist?adaptedPath)
