@@ -5,8 +5,6 @@ matrix:
         - os: linux
           rvm: "2.0.0"
         - os: linux
-          rvm: "2.1.10"
-        - os: linux
           rvm: "2.2.5"
         - os: linux
           rvm: "2.3.6"

@@ -60,6 +60,19 @@ module Bake
           @@source_libraries << adaptedPath
         end
       end
+      le = block.library ? block.library : (block.executable ? block.executable : nil)
+      if le
+        cb = le.compileBlock
+        if !cb.nil?
+          cb.object_files_ignored_in_lib.each do |ldirect|
+            adaptedPath, prefix = adaptPath(ldirect, block, prefix)
+            if (!block.prebuild or File.exist?adaptedPath)
+              @@linker_libs_array << adaptedPath
+              @@source_libraries << adaptedPath
+            end
+          end
+        end
+      end
     end
 
     def self.collect_recursive(block, levels = -1)

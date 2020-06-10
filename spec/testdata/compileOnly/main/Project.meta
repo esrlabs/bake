@@ -17,4 +17,21 @@ Project default: test {
     DefaultToolchain GCC
   }
 
+  LibraryConfig test1_ld {
+    Files "src/*1a.cpp", linkDirectly: true
+    Files "src/lib1b.cpp"
+  }
+
+  LibraryConfig test2_ld {
+    Files "src/lib2.cpp", linkDirectly: true
+  }
+
+  ExecutableConfig test_ld {
+    Files "src/lib.cpp", linkDirectly: true
+    Files "src/main.cpp"
+    Dependency config: test1_ld
+    Dependency config: test2_ld
+    DefaultToolchain GCC
+  }
+
 }

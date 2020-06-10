@@ -94,7 +94,6 @@
 ./_images/visualstudio-code.png
 ./_images/WrongSelect.png
 ./_static/AddRepository.png
-./_static/ajax-loader.gif
 ./_static/AvailableSoftware.png
 ./_static/bake_build_hierachy.png
 ./_static/bake_tagcloud.png
@@ -141,10 +140,8 @@
 ./_static/bootswatch-3.3.7/yeti/bootstrap.min.css
 ./_static/buildFile.png
 ./_static/buildMain.png
-./_static/comment-bright.png
-./_static/comment-close.png
-./_static/comment.png
 ./_static/console.png
+./_static/custom.css
 ./_static/cvsp.png
 ./_static/cyclo.png
 ./_static/cygwin_mount.png
@@ -160,15 +157,12 @@
 ./_static/dot.png
 ./_static/dotP.png
 ./_static/dotPC.png
-./_static/down-pressed.png
-./_static/down.png
 ./_static/eclipse.png
 ./_static/emacs.png
 ./_static/file.png
 ./_static/FirstSelect.png
 ./_static/Import.png
 ./_static/InstallNewSoftware.png
-./_static/jquery-3.2.1.js
 ./_static/jquery-3.5.1.js
 ./_static/jquery.js
 ./_static/js/jquery-1.11.0.min.js
@@ -205,8 +199,6 @@
 ./_static/TrustMe.png
 ./_static/underscore-1.3.1.js
 ./_static/underscore.js
-./_static/up-pressed.png
-./_static/up.png
 ./_static/vim.png
 ./_static/visualstudio-code.png
 ./_static/visualstudio-pro.png
@@ -220,5 +212,4 @@
 ./_static/vs_show_config.png
 ./_static/vs_update.png
 ./_static/vs_update_site.png
-./_static/websupport.js
 ./_static/WrongSelect.png

@@ -22,7 +22,7 @@ module Bake
       @@delayed_result = true
       @@threads = []
 
-      attr_reader :lib_elements, :projectDir, :library, :config, :projectName, :configName, :prebuild, :output_dir, :tcs
+      attr_reader :lib_elements, :projectDir, :library, :executable, :config, :projectName, :configName, :prebuild, :output_dir, :tcs
       attr_accessor :visited, :inDeps, :result, :bes, :besDirect
 
       def startupSteps
@@ -64,7 +64,11 @@ module Bake
       def set_library(library)
         @library = library
       end
-      
+
+      def set_executable(executable)
+        @executable = executable
+      end
+
       def qname()
         @projectName + "," + @configName
       end
@@ -74,6 +78,7 @@ module Bake
         @prebuild = prebuild
         @visited = false
         @library = nil
+        @executable = nil
         @config = config
         @referencedConfigs = referencedConfigs
         @projectName = config.parent.name

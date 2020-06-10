@@ -6,6 +6,7 @@
     <title>Changelog &#8212; bake documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -118,6 +119,7 @@
 <dt>Juni XX, 20202 - bake-toolkit 2.63.0</dt><dd><ul class="simple">
 <li><p>Added: Internal developer feature “-Z dep-overview=&lt;json&gt;” for intelligent CIs.</p></li>
 <li><p>Added: Forbid include dirs with a leading space, e.g. <em>IncludeDir ” include”</em> which is now treated as an error.</p></li>
+<li><p>Added: Files have an optional attribute “linkDirectly”, which means they are not included in the lib, but linked directly to the executable.</p></li>
 </ul>
 </dd>
 <dt>May 14, 2020 - bake-toolkit 2.62.0</dt><dd><ul class="simple">

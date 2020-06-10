@@ -6,6 +6,7 @@
     <title>The Syntax of the Project.meta file &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -353,7 +354,7 @@ z-index: 100;
 
               <span id="libExe_part"><span class="show" style="background-color:#EEEEEE;">
 &nbsp; &nbsp; <span class="mycomment"># Valid for ExecutableConfig and LibraryConfig</span><br><br>
-&nbsp; &nbsp; <span class="help" onMouseover="showFiles()" onMouseout="notip()">Files</span> &#60;pattern&#62;, <span class="help" onMouseover="showCompileOnly()" onMouseout="notip()">compileOnly</span>: true|false {<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showFiles()" onMouseout="notip()">Files</span> &#60;pattern&#62;, <span class="help" onMouseover="showCompileOnly()" onMouseout="notip()">compileOnly</span>: true|false, <span class="help" onMouseover="showLinkDirectly()" onMouseout="notip()">linkDirectly</span>: true|false {<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
 &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
 &nbsp; &nbsp; }<br>
@@ -664,6 +665,10 @@ function showCuda() {
 
 function showCompileOnly() {
     ddrivetip("compileOnly", "No","0..1","false","If set, the files will not be archived or linked.")
+}
+
+function showLinkDirectly() {
+    ddrivetip("linkDirectly", "No","0..1","false","If set, the files will not be archived but linked directly to the executable.")
 }
 
 function showExtends() {

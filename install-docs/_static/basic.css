@@ -379,7 +379,6 @@ table.align-center {
 }
 
 table.align-default {
-    text-align: left;
     margin-left: auto;
     margin-right: auto;
 }

@@ -47,7 +47,7 @@ module Bake
 
     class Compile < BlockBase
 
-      attr_reader :objects, :include_list, :source_files_ignored_in_lib
+      attr_reader :objects, :include_list, :source_files_ignored_in_lib, :object_files_ignored_in_lib
 
       def mutex
         @mutex ||= Mutex.new
@@ -513,6 +513,7 @@ module Bake
       end
 
       def calcObjects
+        @object_files_ignored_in_lib = []
         @source_files.each do |source|
           type = get_source_type(source)
           if not type.nil?
@@ -526,7 +527,13 @@ module Bake
               end
             end
             @object_files[source] = object
-            @objects << object unless @source_files_ignored_in_lib.include?(source)
+            if @source_files_ignored_in_lib.include?(source)
+              if @source_files_link_directly.include?(source)
+                @object_files_ignored_in_lib << object
+              end
+            else
+              @objects << object
+            end
           end
         end
       end
@@ -535,6 +542,7 @@ module Bake
         return @source_files if @source_files and not @source_files.empty?
         @source_files = []
         @source_files_ignored_in_lib = []
+        @source_files_link_directly = []
         @fileTcs = {}
 
         exclude_files = Set.new
@@ -564,11 +572,17 @@ module Bake
             if ((!@fileTcs.has_key?(f)) || singleFile)
               @fileTcs[f] = icf
             end
-            next if exclude_files.include?(f)
-            next if source_files.include?(f)
+            if source_files.include?(f) || exclude_files.include?(f)
+              if (singleFile)
+                @source_files_ignored_in_lib << f if sources.compileOnly || sources.linkDirectly
+                @source_files_link_directly << f if sources.linkDirectly
+              end
+              next
+            end
             source_files << f
             @source_files << f
-            @source_files_ignored_in_lib << f if sources.compileOnly
+            @source_files_ignored_in_lib << f if sources.compileOnly || sources.linkDirectly
+            @source_files_link_directly << f if sources.linkDirectly
           end
         end
 

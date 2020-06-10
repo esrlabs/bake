@@ -4,7 +4,7 @@ Changelog
 Juni XX, 20202 - bake-toolkit 2.63.0
     * Added: Internal developer feature "-Z dep-overview=<json>" for intelligent CIs.
     * Added: Forbid include dirs with a leading space, e.g. *IncludeDir " include"* which is now treated as an error.
-
+    * Added: Files have an optional attribute "linkDirectly", which means they are not included in the lib, but linked directly to the executable.
 
 May 14, 2020 - bake-toolkit 2.62.0
      * Added: bake now understands dependency files from Axivion, which makes incremental build possible.

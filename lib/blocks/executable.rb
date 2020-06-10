@@ -6,9 +6,13 @@ module Bake
 
     class Executable < BlockBase
 
+      attr_reader :compileBlock
+
       def initialize(block, config, referencedConfigs, compileBlock)
         super(block, config, referencedConfigs)
         @compileBlock = compileBlock
+
+        block.set_executable(self)
 
         calcArtifactName
         calcMapFile
