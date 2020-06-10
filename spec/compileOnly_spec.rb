@@ -44,7 +44,7 @@ describe "compileOnly" do
     expect($mystring.include?("ar -rc build/test1_ld_main_test_ld/libmain.a build/test1_ld_main_test_ld/src/lib1b.o")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test_ld/src/lib.d -o build/test_ld/src/lib.o src/lib.cpp")).to be == true
     expect($mystring.include?("g++ -c -MD -MF build/test_ld/src/main.d -o build/test_ld/src/main.o src/main.cpp")).to be == true
-    expect($mystring.include?("g++ -o build/test_ld/main.exe build/test_ld/src/main.o build/test_ld/src/lib.o build/test1_ld_main_test_ld/src/lib1a.o build/test1_ld_main_test_ld/libmain.a build/test2_ld_main_test_ld/src/lib2.o")).to be == true
+    expect($mystring.include?("g++ -o build/test_ld/main#{Bake::Toolchain.outputEnding} build/test_ld/src/main.o build/test_ld/src/lib.o build/test1_ld_main_test_ld/src/lib1a.o build/test1_ld_main_test_ld/libmain.a build/test2_ld_main_test_ld/src/lib2.o")).to be == true
 
     expect(ExitHelper.exit_code).to be == 0
   end

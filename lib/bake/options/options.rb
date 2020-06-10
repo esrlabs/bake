@@ -11,13 +11,6 @@ require_relative '../../common/crc32'
 
 module Bake
 
-  def self.options
-    @@options
-  end
-  def self.options=(options)
-    @@options = options
-  end
-
   class Options < Parser
     attr_accessor :build_config, :nocache, :analyze, :eclipseOrder, :showConfigs, :cc2j_filename
     attr_reader :main_dir, :working_dir, :project, :filename, :main_project_name, :buildDirDelimiter, :dot, :dotFilename # String
@@ -391,6 +384,14 @@ module Bake
       @include_filter_args[splitted[0]] = splitted[1] if splitted.length == 2
     end
 
+  end
+
+  def self.options
+    @@options ||= Options.new([])
+  end
+
+  def self.options=(options)
+    @@options = options
   end
 
 end
