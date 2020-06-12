@@ -116,10 +116,12 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl>
-<dt>Juni XX, 20202 - bake-toolkit 2.63.0</dt><dd><ul class="simple">
+<dt>Juni 10, 2020 - bake-toolkit 2.63.0</dt><dd><ul class="simple">
+<li><p>Bugfix: bake did not wait for a non-indepenent step (e.g. a generator) if it can be reached via multiple ways in the dependency hierarchy.</p></li>
 <li><p>Added: Internal developer feature “-Z dep-overview=&lt;json&gt;” for intelligent CIs.</p></li>
-<li><p>Added: Forbid include dirs with a leading space, e.g. <em>IncludeDir ” include”</em> which is now treated as an error.</p></li>
-<li><p>Added: Files have an optional attribute “linkDirectly”, which means they are not included in the lib, but linked directly to the executable.</p></li>
+<li><p>Added: Forbid include dirs with a leading space, e.g. <em>IncludeDir ” include”</em>.</p></li>
+<li><p>Added: An info is printed out if path magic is used in IncludeDir.</p></li>
+<li><p>Added: Files have an optional attribute “linkDirectly”, which means they are not archived in a lib, but linked directly to the executable.</p></li>
 </ul>
 </dd>
 <dt>May 14, 2020 - bake-toolkit 2.62.0</dt><dd><ul class="simple">

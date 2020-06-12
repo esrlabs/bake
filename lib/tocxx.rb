@@ -254,6 +254,7 @@ module Bake
           end
         end
       end
+      ExitHelper.exit(0)
     end
     
     def makeIncs
