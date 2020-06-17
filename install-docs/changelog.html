@@ -116,7 +116,12 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl>
-<dt>Juni 10, 2020 - bake-toolkit 2.63.0</dt><dd><ul class="simple">
+<dt>June 17, 2020 - bake-toolkit 2.63.1</dt><dd><ul class="simple">
+<li><p>Changed: “-Z dep-overview=&lt;json&gt;” exists now after writing the information into the json file</p></li>
+<li><p>Added: Warning in bakery if referenced projects or configs cannot be found</p></li>
+</ul>
+</dd>
+<dt>June 10, 2020 - bake-toolkit 2.63.0</dt><dd><ul class="simple">
 <li><p>Bugfix: bake did not wait for a non-indepenent step (e.g. a generator) if it can be reached via multiple ways in the dependency hierarchy.</p></li>
 <li><p>Added: Internal developer feature “-Z dep-overview=&lt;json&gt;” for intelligent CIs.</p></li>
 <li><p>Added: Forbid include dirs with a leading space, e.g. <em>IncludeDir ” include”</em>.</p></li>
