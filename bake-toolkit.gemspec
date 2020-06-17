@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_dependency("colored", "=1.2")
   s.add_dependency("thwait")
   s.add_dependency("e2mmap")
-  s.add_development_dependency("rake", "12.2.1")
+  s.add_development_dependency("rake", ">=12.3.3")
   s.add_development_dependency("rspec")
   s.add_development_dependency("simplecov")
   s.add_development_dependency("coveralls")
