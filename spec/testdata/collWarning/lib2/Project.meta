@@ -1,0 +1,11 @@
+Project {
+
+  CustomConfig test1 {
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test2 {
+    DefaultToolchain GCC
+  }
+
+}

@@ -1,7 +1,11 @@
 Changelog
 =========
 
-Juni 10, 2020 - bake-toolkit 2.63.0
+June 17, 2020 - bake-toolkit 2.63.1
+    * Changed: "-Z dep-overview=<json>" exists now after writing the information into the json file
+    * Added: Warning in bakery if referenced projects or configs cannot be found
+
+June 10, 2020 - bake-toolkit 2.63.0
     * Bugfix: bake did not wait for a non-indepenent step (e.g. a generator) if it can be reached via multiple ways in the dependency hierarchy.
     * Added: Internal developer feature "-Z dep-overview=<json>" for intelligent CIs.
     * Added: Forbid include dirs with a leading space, e.g. *IncludeDir " include"*.

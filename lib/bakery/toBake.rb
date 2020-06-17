@@ -35,7 +35,7 @@ module Bake
           projs << root.dir + "/Project.meta"
         end
         if projs.length == 0
-          toBuildPattern << BuildPattern.new(nil, nil, p.args, p) # remember it for sorted info printout
+          Bake.formatter.printWarning("pattern does not match any project: #{p.name}", p)
         end
         projs.each do |f|
           toBuildPattern << BuildPattern.new(f, "^"+p.config.gsub("*","(\\w*)")+"$", p.args, p)
@@ -56,6 +56,10 @@ module Bake
           end
         end
       end
+    end
+
+    toBuildPattern.select {|bp| !bp.coll_p.isFound}.map {|bp| bp.coll_p}.uniq.each do |p|
+      Bake.formatter.printWarning("pattern does not match any config: #{p.config}", p)
     end
 
     col.exclude.each do |p|

@@ -1,0 +1,19 @@
+Collection Part1 {
+  Project main, config: test1
+  Exclude main, config: test1
+}
+
+Collection Part2 {
+  Project "*", config: "test2"
+  Project "lib1", config: "test2"
+  Project "doesNotExist3", config: "test*"
+  Project "*", config: "doesNotExist4"
+}
+
+Collection Part3 {
+  Project "main", config: "test*"
+  Project "doesNotExist1", config: "test*"
+  Project "main", config: "doesNotExist2"
+  SubCollection Part2
+  SubCollection Part1
+}

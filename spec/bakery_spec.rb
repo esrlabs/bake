@@ -169,6 +169,16 @@ describe "bakery" do
     expect(str.include?("3 of 3 builds ok")).to be == true
   end
 
+  it 'warnings not existing' do
+    str = `ruby bin/bakery -m spec/testdata/collWarning/main Part3`
+    puts str
+    expect(str.include?("collWarning/main/Collection.meta:15: Warning: pattern does not match any project: doesNotExist1")).to be == true
+    expect(str.include?("collWarning/main/Collection.meta:16: Warning: pattern does not match any config: doesNotExist2")).to be == true
+    expect(str.include?("collWarning/main/Collection.meta:9: Warning: pattern does not match any project: doesNotExist3")).to be == true
+    expect(str.include?("collWarning/main/Collection.meta:10: Warning: pattern does not match any config: doesNotExist4")).to be == true
+    expect(str.include?("4 of 4 builds ok")).to be == true
+  end
+
 end
 
 end
