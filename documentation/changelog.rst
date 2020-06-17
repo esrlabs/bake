@@ -2,7 +2,7 @@ Changelog
 =========
 
 June 17, 2020 - bake-toolkit 2.63.1
-    * Changed: "-Z dep-overview=<json>" exists now after writing the information into the json file
+    * Changed: "-Z dep-overview=<json>" exits now after writing the information into the json file
     * Added: Warning in bakery if referenced projects or configs cannot be found
 
 June 10, 2020 - bake-toolkit 2.63.0
