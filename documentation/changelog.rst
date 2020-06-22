@@ -1,9 +1,12 @@
 Changelog
 =========
 
+June 22, 2020 - bake-toolkit 2.63.2
+    * Changed: bake does not abort anymore if cache files cannot be written.
+
 June 17, 2020 - bake-toolkit 2.63.1
-    * Changed: "-Z dep-overview=<json>" exits now after writing the information into the json file
-    * Added: Warning in bakery if referenced projects or configs cannot be found
+    * Changed: "-Z dep-overview=<json>" exits now after writing the information into the json file.
+    * Added: Warning in bakery if referenced projects or configs cannot be found.
 
 June 10, 2020 - bake-toolkit 2.63.0
     * Bugfix: bake did not wait for a non-indepenent step (e.g. a generator) if it can be reached via multiple ways in the dependency hierarchy.

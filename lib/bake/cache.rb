@@ -31,7 +31,7 @@ module Bake
           @cacheFilename = Bake.options.main_dir+"/.bake/Project.meta." + sanitize_filename(Bake.options.build_config) + qacStr + ".cache"
         end
         if !Bake.options.dry
-          Utils.gitIgnore(File.dirname(@cacheFilename)) 
+          Utils.gitIgnore(File.dirname(@cacheFilename), :silent) 
         end
       end
 
@@ -187,10 +187,16 @@ module Bake
         cache.adapt_filenames = AdaptConfig.filenames
         bbdump = Marshal.dump(cache)
         begin
-          File.delete(@cacheFilename)
-        rescue
+          File.open(@cacheFilename, 'wb') {|file| file.write(bbdump) }
+        rescue Exception=>e
+          if Bake.options.verbose >= 3
+            Bake.formatter.printWarning("Warning: Could not write cache file #{@cacheFilename}")
+            if Bake.options.debug
+              puts e.message
+              puts e.backtrace
+            end
+          end
         end
-        File.open(@cacheFilename, 'wb') {|file| file.write(bbdump) }
         Bake.options.nocache = false
       end
 

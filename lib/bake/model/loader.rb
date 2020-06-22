@@ -9,6 +9,7 @@ require 'rgen/util/file_cache_map'
 
 require 'rtext/default_loader'
 
+require_relative '../../common/ext/rgen'
 require_relative '../../common/exit_helper'
 require_relative '../toolchain/colorizing_formatter'
 require_relative '../options/options'

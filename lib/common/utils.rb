@@ -4,11 +4,21 @@ module Bake
 
   module Utils
     
-    def self.gitIgnore(folder)
-      FileUtils::mkdir_p(folder)
+    def self.gitIgnore(folder, mode = :report)
       gitignore = folder + "/.gitignore"
-      if !File.exist?(gitignore)
-        File.write(gitignore, ".\n")
+      begin
+        FileUtils::mkdir_p(folder)
+        if !File.exist?(gitignore)
+          File.write(gitignore, ".\n")
+        end
+      rescue Exception=>e
+        if mode != :silent && Bake.options.verbose >= 3
+          Bake.formatter.printWarning("Warning: Could not write file #{gitignore}")
+          if Bake.options.debug
+            puts e.message
+            puts e.backtrace
+          end
+        end
       end
     end
 
