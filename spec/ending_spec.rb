@@ -41,6 +41,8 @@ describe "Ending" do
     expect(File.exists?("spec/testdata/ending/keep/build/test/src/file2.c.o")).to be == true
     expect($mystring.include?("Building done.")).to be == true
 
+    sleep 2
+
     Bake.startBake("ending/keep", [])
     expect($mystring.include?("Compiling")).to be == false
     expect($mystring.split("Building done.").length).to be == 3

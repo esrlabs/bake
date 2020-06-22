@@ -21,7 +21,7 @@ describe "Export" do
   end
 
   before(:each) do
-    sleep 1 # needed for timestamp tests
+    sleep 2 # needed for timestamp tests
   end
 
   it 'With file rebuild' do
