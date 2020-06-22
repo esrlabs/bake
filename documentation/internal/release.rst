@@ -1,6 +1,11 @@
 How to release
 **************
 
+Prerequisites
+-----------------
+- pip install sphinx
+- pip install sphinx_bootstrap_theme
+
 git code and test
 -----------------
 
@@ -32,7 +37,7 @@ gem
 - Build gem with "gem build bake-toolkit.gemspec"
 - Push gem to rubygems
 
-final
+Final
 -----------------
 
 - Announce the release in bake channel (ESRLabs internal)

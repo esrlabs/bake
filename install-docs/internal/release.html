@@ -3,6 +3,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How to release &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -12,10 +13,6 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/language_data.js"></script>
-    <script src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script src="../_static/js/jquery-fix.js"></script>
-    <script src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -24,6 +21,10 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
 
@@ -83,11 +84,12 @@
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">How to release</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
 <li><a class="reference internal" href="#git-code-and-test">git code and test</a></li>
 <li><a class="reference internal" href="#git-docu">git docu</a></li>
 <li><a class="reference internal" href="#git-admin">git admin</a></li>
 <li><a class="reference internal" href="#gem">gem</a></li>
-<li><a class="reference internal" href="#final">final</a></li>
+<li><a class="reference internal" href="#final">Final</a></li>
 </ul>
 </li>
 </ul>
@@ -117,10 +119,17 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12 content">
+    <div class="body col-md-12 content" role="main">
       
   <div class="section" id="how-to-release">
 <h1>How to release<a class="headerlink" href="#how-to-release" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>pip install sphinx</p></li>
+<li><p>pip install sphinx_bootstrap_theme</p></li>
+</ul>
+</div>
 <div class="section" id="git-code-and-test">
 <h2>git code and test<a class="headerlink" href="#git-code-and-test" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -157,7 +166,7 @@
 </ul>
 </div>
 <div class="section" id="final">
-<h2>final<a class="headerlink" href="#final" title="Permalink to this headline">¶</a></h2>
+<h2>Final<a class="headerlink" href="#final" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Announce the release in bake channel (ESRLabs internal)</p></li>
 </ul>
@@ -177,7 +186,7 @@
     </p>
     <p>
         &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.1.<br/>
     </p>
   </div>
 </footer>
