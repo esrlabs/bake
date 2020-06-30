@@ -361,6 +361,10 @@ module Bake
     end
 
     def set_verbose(num)
+      if num.nil?
+        Bake.formatter.printError("Error: verbose must be between 0 and 3")
+        ExitHelper.exit(1)
+      end
       checkNum(num)
       @verbose = String === num ? num.to_i : num
       if @verbose < 0 || verbose > 3
