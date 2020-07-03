@@ -7,7 +7,6 @@ require_relative '../common/utils'
 require_relative '../bake/toolchain/colorizing_formatter'
 require_relative '../bake/config/loader'
 
-
 begin
   module Kernel32
     require 'fiddle'
@@ -38,7 +37,7 @@ begin
     x = longname(shortname(file))
   end
 
-rescue LoadError
+rescue Fiddle::DLError
 
   def realname file
     file
