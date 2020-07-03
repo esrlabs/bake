@@ -9,36 +9,42 @@ require_relative '../bake/config/loader'
 
 
 begin
-require 'Win32API'
+  module Kernel32
+    require 'fiddle'
+    require 'fiddle/import'
+    require 'fiddle/types'
+    extend Fiddle::Importer
+    dlload 'kernel32'
+    include Fiddle::Win32Types
+    extern 'DWORD GetLongPathName(LPCSTR, LPSTR, DWORD)'
+    extern 'DWORD GetShortPathName(LPCSTR, LPSTR, DWORD)'
+  end
 
-def longname short_name
-  max_path = 1024
-  long_name = " " * max_path
-  lfn_size = Win32API.new("kernel32", "GetLongPathName", ['P','P','L'],'L').call(short_name, long_name, max_path)
-  return long_name[0..lfn_size-1]
-end
+  def longname short_name
+    max_path = 1024
+    long_name = " " * max_path
+    lfn_size = Kernel32.GetLongPathName(short_name, long_name, max_path)
+    return long_name[0..lfn_size-1]
+  end
 
-def shortname long_name
-  max_path = 1024
-  short_name = " " * max_path
-  lfn_size = Win32API.new("kernel32", "GetShortPathName", ['P','P','L'],'L').call(long_name, short_name, max_path)
-  return short_name[0..lfn_size-1]
-end
+  def shortname long_name
+    max_path = 1024
+    short_name = " " * max_path
+    lfn_size = Kernel32.GetShortPathName(long_name, short_name, max_path)
+    return short_name[0..lfn_size-1]
+  end
 
-def realname file
-    longname(shortname(file))
-end
+  def realname file
+    x = longname(shortname(file))
+  end
 
 rescue LoadError
 
-def realname file
+  def realname file
     file
-end
+  end
 
 end
-
-
-
 
 
 module Bake
@@ -312,6 +318,7 @@ module Bake
                     incList.each do |dep|
                       if dep.length<2 || dep[1] != ":"
                         real = realname(dep)
+                      puts "BBB"
                         if dep != real && dep.upcase == real.upcase
                           wrongCase << [dep, real]
                         end
