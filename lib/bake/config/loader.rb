@@ -161,7 +161,7 @@ module Bake
       [config, configname]
     end
 
-    def checkVerFormat(ver)
+    def self.checkVerFormat(ver)
       return true if ver.empty?
       return false if ver.length > 3
       ver.each do |v|
@@ -170,7 +170,7 @@ module Bake
       true
     end
 
-    def bailOutVer(reqVersion)
+    def self.bailOutVer(reqVersion)
       text1 = (reqVersion.minimum.empty? ? "" : "minimum = #{reqVersion.minimum}")
       text2 = ((reqVersion.minimum.empty? or reqVersion.maximum.empty?) ? "" : ", ")
       text3 = (reqVersion.maximum.empty? ? "" : "maximum = #{reqVersion.maximum}")
@@ -178,7 +178,7 @@ module Bake
       ExitHelper.exit(1)
     end
 
-    def checkVer(reqVersion)
+    def self.checkVer(reqVersion)
       return if reqVersion.nil?
       min = reqVersion.minimum.split(".")
       max = reqVersion.maximum.split(".")
@@ -217,7 +217,7 @@ module Bake
       proj = projRoots[0]
 
       reqVersion = proj.getRequiredBakeVersion
-      checkVer(reqVersion)
+      Bake::Config::checkVer(reqVersion)
 
       configs = proj.getConfig
       Bake::Configs::Checks::commonMetamodelCheck(configs, filename)
@@ -236,6 +236,7 @@ module Bake
       adaptRoots = f.root_elements.select { |re| Metamodel::Adapt === re }
       if adaptRoots.length > 0
         adaptRoots.each do |adapt|
+          Bake::Config::checkVer(adapt.requiredBakeVersion)
           adapt.mainProject = @mainProjectName if adapt.mainProject == "__THIS__"
           adaptConfigs = adapt.getConfig
           AdaptConfig.checkSyntax(adaptConfigs, filename, true)

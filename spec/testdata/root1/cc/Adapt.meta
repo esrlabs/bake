@@ -1,0 +1,11 @@
+Adapt {
+
+  RequiredBakeVersion minimum: "2.64.0"
+
+  ExecutableConfig __MAIN__, project: __MAIN__, type: extend {
+    CompilationCheck include: "{src,include}/**/*"
+    CompilationCheck ignore:  "{src,include}/**/*.{md,inc,s,hpp,lnk,org,per}"
+    CompilationCheck ignore:  "{src,include}/**/documentation.h"
+  }
+
+}

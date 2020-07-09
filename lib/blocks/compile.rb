@@ -52,7 +52,7 @@ module Bake
 
     class Compile < BlockBase
 
-      attr_reader :objects, :include_list, :source_files_ignored_in_lib, :object_files_ignored_in_lib
+      attr_reader :objects, :source_files, :include_list, :source_files_ignored_in_lib, :object_files_ignored_in_lib
 
       def mutex
         @mutex ||= Mutex.new
@@ -317,7 +317,6 @@ module Bake
                     incList.each do |dep|
                       if dep.length<2 || dep[1] != ":"
                         real = realname(dep)
-                      puts "BBB"
                         if dep != real && dep.upcase == real.upcase
                           wrongCase << [dep, real]
                         end

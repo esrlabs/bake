@@ -5,7 +5,7 @@ Project {
   }
 
   LibraryConfig test  {
-    Files "**/*.cpp"
+    Files "**/lib2.cpp"
     IncludeDir "include"
     DefaultToolchain GCC
   }

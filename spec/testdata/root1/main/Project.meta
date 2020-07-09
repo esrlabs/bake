@@ -18,6 +18,8 @@ Project {
         Flags "$(NOSTDLIB)"
       }
     }
+    CompilationCheck ignore: "include/notIncludeThisOne.h"
+    CompilationCheck exclude: "include/main.h"
   }
 
   ExecutableConfig wrongConfig {

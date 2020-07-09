@@ -36,6 +36,7 @@ require_relative 'common/abortException'
 
 require_relative 'adapt/config/loader'
 require "thwait"
+require 'pathname'
 
 module Bake
 
@@ -852,6 +853,84 @@ module Bake
           if Bake.options.linkOnly and @@linkBlock == 0
             Bake.formatter.printSuccess("\nNothing to link.")
           else
+            # CompilationCheck
+            if !Bake.options.project &&
+               !Bake.options.filename &&
+               !Bake.options.linkOnly &&
+               !Bake.options.prepro &&
+               !Bake.options.compileOnly &&
+               !Bake.options.clean
+
+              ccChecks = []
+              ccIncludes = Set.new
+              ccExcludes = Set.new
+              ccIgnores = Set.new
+              @referencedConfigs.each do |projName, configs|
+                configs.compilationCheck.each do |cc|
+                  ccChecks << cc
+                end
+              end
+              ccChecks.each do |cc|
+                Dir.chdir(cc.parent.parent.get_project_dir) do
+                  Dir.glob(cc.include).each {|f| ccIncludes << File.expand_path(f)}
+                  Dir.glob(cc.exclude).each {|f| ccExcludes << File.expand_path(f)}
+                  Dir.glob(cc.ignore) .each {|f| ccIgnores  << File.expand_path(f)}
+                end
+              end
+              ccIncludes -= ccIgnores
+              ccExcludes -= ccIgnores
+              ccIncludes -= ccExcludes
+
+              if !ccIncludes.empty? || !ccExcludes.empty?
+                inCompilation = Set.new
+                Blocks::ALL_BLOCKS.each do |name,block|
+                  block.mainSteps.each do |b|
+                    if Blocks::Compile === b
+                      b.source_files.each do |s|
+                        inCompilation << File.expand_path(s, b.projectDir)
+                        type = b.get_source_type(s)
+                        if type != :ASM
+                          b.objects.each do |o|
+                            dep_filename = b.calcDepFile(o, type)
+                            dep_filename_conv = b.calcDepFileConv(dep_filename)
+                            File.readlines(File.expand_path(dep_filename_conv, b.projectDir)).map{|line| line.strip}.each do |dep|
+                              header = File.expand_path(dep, b.projectDir)
+                              if File.exist?(header)
+                                inCompilation << header
+                              end
+                            end
+                          end
+                        end
+                      end
+                    end
+                  end
+                end
+                pnPwd = Pathname.new(Dir.pwd)
+                ccNotIncluded = (ccIncludes - inCompilation).to_a
+                ccNotExcluded = inCompilation.select {|i| ccExcludes.include?(i) }
+                ccNotIncluded.each do |cc|
+                  cc = Pathname.new(cc).relative_path_from(pnPwd)
+                  Bake.formatter.printWarning("Warning: file not included in build: #{cc}")
+                end
+                ccNotExcluded.each do |cc|
+                  cc = Pathname.new(cc).relative_path_from(pnPwd)
+                  Bake.formatter.printWarning("Warning: file not excluded in build: #{cc}")
+                end
+
+                if Bake.options.verbose >= 3
+                  if ccNotIncluded.empty? && ccNotExcluded.empty?
+                    Bake.formatter.printInfo("Info: CompilationCheck passed")
+                  end
+                end
+
+              elsif !ccChecks.empty?
+                if Bake.options.verbose >= 3
+                  Bake.formatter.printInfo("Info: CompilationCheck passed")
+                end
+              end
+            end
+            
+            
             Bake.formatter.printSuccess("\n#{taskType} done.")
           end
         end

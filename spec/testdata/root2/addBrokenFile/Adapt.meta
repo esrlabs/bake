@@ -1,0 +1,7 @@
+Adapt {
+
+  LibraryConfig test, project: lib2, type: extend {
+    Files "src/broken.cpp"
+  }
+
+}

@@ -1,4 +1,5 @@
 require_relative '../../bake/model/loader'
+require_relative '../../bake/config/loader'
 require_relative '../../bake/config/checks'
 
 module Bake
@@ -22,6 +23,10 @@ module Bake
       if f.root_elements.any? { |re| ! Metamodel::Adapt === re }
         Bake.formatter.printError("Config file must have only 'Adapt' elements as roots", filename)
         ExitHelper.exit(1)
+      end
+
+      f.root_elements.each do |a|
+        Bake::Config::checkVer(a.requiredBakeVersion)
       end
 
       configs = []

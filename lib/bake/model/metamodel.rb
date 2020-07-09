@@ -284,6 +284,12 @@ module Bake
         has_attr 'env', Boolean, :defaultValueLiteral => "false"
       end
 
+      class CompilationCheck < ModelElement
+        has_attr 'exclude', String, :defaultValueLiteral => ""
+        has_attr 'include', String, :defaultValueLiteral => ""
+        has_attr 'ignore', String, :defaultValueLiteral => ""
+      end
+
       class BaseConfig_INTERNAL < ModelElement
         has_attr 'name', String, :defaultValueLiteral => ""
         has_attr 'extends', String, :defaultValueLiteral => ""
@@ -305,6 +311,7 @@ module Bake
         contains_many 'set', Set, 'parent'
         contains_many 'prebuild', Prebuild, 'parent'
         contains_one 'cdb', CompilationDB, 'parent'
+        contains_many 'compilationCheck', CompilationCheck, 'parent'
 
         module ClassModule
           def ident
@@ -356,6 +363,7 @@ module Bake
         has_attr 'mainConfig', String, :defaultValueLiteral => ""
         contains_many 'config', BaseConfig_INTERNAL, 'parent'
         contains_many 'scopes', Scope, 'parent'
+        contains_one 'requiredBakeVersion', RequiredBakeVersion, 'parent'
       end
 
       class If < Adapt
