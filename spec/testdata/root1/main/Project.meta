@@ -20,6 +20,7 @@ Project {
     }
     CompilationCheck ignore: "include/notIncludeThisOne.h"
     CompilationCheck exclude: "include/main.h"
+    CompilationCheck include: "$(ProjectDir, lib1)/**/fourth*"
   }
 
   ExecutableConfig wrongConfig {

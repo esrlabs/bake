@@ -5,9 +5,11 @@ Project {
   }
 
   LibraryConfig test {
-    Files "**/*.cpp"
+    Files "**/lib1.cpp"
+    Files "**/anotherOne.cpp"
     IncludeDir "include"
     DefaultToolchain GCC
+    CompilationCheck include: "**/third*"
   }
 
   LibraryConfig cuda {

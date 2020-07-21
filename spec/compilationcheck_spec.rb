@@ -18,7 +18,9 @@ describe "CompilationCheck" do
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/main/src/main.c")).to be == true
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/main/include/notIncludeThisOne2.h")).to be == true
     expect($mystring.include?("Warning: file not excluded in build: spec/testdata/root1/main/include/main.h")).to be == true
-    expect($mystring.split("file not included").length).to be == 3
+    expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/lib1/src/fourthOne.cpp")).to be == true
+    expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/lib1/src/thirdOne.cpp")).to be == true
+    expect($mystring.split("file not included").length).to be == 5
     expect($mystring.split("file not excluded").length).to be == 2
     expect(ExitHelper.exit_code).to be == 0
   end
@@ -28,12 +30,14 @@ describe "CompilationCheck" do
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/main/src/main.c")).to be == true
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/main/include/notIncludeThisOne2.h")).to be == true
     expect($mystring.include?("Warning: file not excluded in build: spec/testdata/root1/main/include/main.h")).to be == true
-    expect($mystring.split("file not included").length).to be == 3
+    expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/lib1/src/fourthOne.cpp")).to be == true
+    expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/lib1/src/thirdOne.cpp")).to be == true
+    expect($mystring.split("file not included").length).to be == 5
     expect($mystring.split("file not excluded").length).to be == 2
     expect(ExitHelper.exit_code).to be == 0
     
     Bake.startBake("root1/main", ["test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2", "--adapt", "cc", "--link-only"])
-    expect($mystring.split("file not included").length).to be == 3
+    expect($mystring.split("file not included").length).to be == 5
     expect($mystring.split("file not excluded").length).to be == 2
     expect(ExitHelper.exit_code).to be == 0
   end
