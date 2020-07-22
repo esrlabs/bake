@@ -8,10 +8,8 @@ Adapt {
     CompilationCheck ignore:  "{src,include}/**/documentation.h"
   }
 
-  Adapt {
-    ExecutableConfig __MAIN__, project: __MAIN__, type: remove {
-      LinkerScript
-    }
+  ExecutableConfig __MAIN__, project: __MAIN__, type: remove {
+    LinkerScript
   }
 
 }
