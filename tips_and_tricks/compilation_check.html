@@ -87,6 +87,7 @@
 <li><a class="reference internal" href="#">Compilation Check</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#adapt">Adapt</a></li>
+<li><a class="reference internal" href="#build">Build</a></li>
 </ul>
 </ul>
 </li>
@@ -177,6 +178,19 @@
 <span class="go">bake UnitTestBase --adapt ccheck ...</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="build">
+<h1>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h1>
+<p>The check is only executed for full builds (inclusive –rebuild).</p>
+<p>It is not be executed for:</p>
+<ul class="simple">
+<li><p>project only</p></li>
+<li><p>file only</p></li>
+<li><p>link only</p></li>
+<li><p>compile only</p></li>
+<li><p>clean</p></li>
+<li><p>preprocessor</p></li>
+</ul>
 </div>
 
 
