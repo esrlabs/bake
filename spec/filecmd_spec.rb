@@ -18,7 +18,7 @@ describe "FileCmd" do
 
     expect($mystring.include?("g++ -c -MD -MF build/test_main_test/src/lib2.d -Iinclude -o build/test_main_test/src/lib2.o src/lib2.cpp")).to be == true
     expect($mystring.include?("ar -rc build/test_main_test/liblib2.a build/test_main_test/src/lib2.o")).to be == true
-    expect($mystring.include?("g++ -nostdlib -o build/test/main#{Bake::Toolchain.outputEnding} build/test/src/main.o ../lib1/build/test_main_test/liblib1.a ../../root2/lib2/build/test_main_test/liblib2.a")).to be == true
+    expect($mystring.include?("g++ -o build/test/main#{Bake::Toolchain.outputEnding} build/test/src/main.o ../lib1/build/test_main_test/liblib1.a ../../root2/lib2/build/test_main_test/liblib2.a")).to be == true
 
     expect(File.exist?("spec/testdata/root2/lib2/build/test_main_test/src/lib2.o.file")).to be == false
     expect(File.exist?("spec/testdata/root2/lib2/build/test_main_test/liblib2.a.file")).to be == false
