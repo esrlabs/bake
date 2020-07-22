@@ -42,6 +42,7 @@
 ./syntax/syntax.html
 ./syntax/variable_substitutions.html
 ./tips_and_tricks/bakeclean.html
+./tips_and_tricks/compilation_check.html
 ./tips_and_tricks/compilation_db.html
 ./tips_and_tricks/cuda.html
 ./tips_and_tricks/dot.html

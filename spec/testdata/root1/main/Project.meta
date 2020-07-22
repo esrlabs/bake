@@ -15,7 +15,7 @@ Project {
     Set NOSTDLIB, cmd: "ruby ../../../../rake_helper/nostdlib.rb"
     DefaultToolchain GCC {
       Linker {
-        Flags "$(NOSTDLIB)"
+      #  Flags "$(NOSTDLIB)"
       }
     }
     CompilationCheck ignore: "include/notIncludeThisOne.h"

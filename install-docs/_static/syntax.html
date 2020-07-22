@@ -184,6 +184,7 @@ z-index: 100;
               <span class="help" onMouseover="showExceptConfig()" onMouseout="notip()">config</span>: &#60;name&#62;<br>
 &nbsp; &nbsp; }<br>
 &nbsp; &nbsp; <span class="help" onMouseover="showCDB()" onMouseout="notip()">CompilationDB</span> &#60;filename&#62;<br>
+&nbsp; &nbsp; <span class="help" onMouseover="showCCheck()" onMouseout="notip()">CompilationCheck</span> include: &#60;pattern&#62; exclude: &#60;pattern&#62; ignore: &#60;pattern&#62;<br>
 </span><br>
 
 </span>
@@ -673,6 +674,16 @@ function showCDB() {
     "<b>Example:</b><br>"+
     "<i>CompilationDB \"$(ProjectDir)/db.json\"</i>"
   ddrivetip("CompilationDB", "No","0..1","None. If CompilationDB is specified without an explicit filename, $(WorkspaceDir)/compile_commands.json is used.",str)
+}
+
+function showCCheck() {
+  str = "Checks if files are included or excluded in build.<br>"+
+    "Priority if files are mentioned multiple times: ignore > exclude > include.<br>"+
+    "In case a check fails, bake will print a warning.<br>"+
+    "<b>Examples:</b><br>"+
+    "<i>CompilationCheck include: \"include/*.h\", ignore: \"include/ignoreThis.h\"</i><br>"+
+    "<i>CompilationCheck include: \"$(ProjectDir, anotherLib)/src/important*\"</i>"
+  ddrivetip("CompilationCheck", "No","0..n","-",str)
 }
 
 function showToolchainProject() {

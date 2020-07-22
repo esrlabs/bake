@@ -12,6 +12,7 @@ Additional features
     bakeclean
     cuda
     compilation_db
+    compilation_check
 
 Unnecessary includes
 ********************

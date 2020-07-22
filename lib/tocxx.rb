@@ -872,9 +872,9 @@ module Bake
               end
               ccChecks.each do |cc|
                 Dir.chdir(cc.parent.parent.get_project_dir) do
-                  Dir.glob(cc.include).each {|f| ccIncludes << File.expand_path(f)}
-                  Dir.glob(cc.exclude).each {|f| ccExcludes << File.expand_path(f)}
-                  Dir.glob(cc.ignore) .each {|f| ccIgnores  << File.expand_path(f)}
+                  Dir.glob(cc.include).select {|f| File.file?(f)}.each {|f| ccIncludes << File.expand_path(f)}
+                  Dir.glob(cc.exclude).select {|f| File.file?(f)}.each {|f| ccExcludes << File.expand_path(f)}
+                  Dir.glob(cc.ignore). select {|f| File.file?(f)}.each {|f| ccIgnores  << File.expand_path(f)}
                 end
               end
               ccIncludes -= ccIgnores
@@ -914,7 +914,7 @@ module Bake
                 end
                 ccNotExcluded.each do |cc|
                   cc = Pathname.new(cc).relative_path_from(pnPwd)
-                  Bake.formatter.printWarning("Warning: file not excluded in build: #{cc}")
+                  Bake.formatter.printWarning("Warning: file not excluded from build: #{cc}")
                 end
 
                 if Bake.options.verbose >= 3

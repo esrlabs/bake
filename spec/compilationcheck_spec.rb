@@ -17,7 +17,7 @@ describe "CompilationCheck" do
     Bake.startBake("root1/main", ["test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2", "--adapt", "cc"])
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/main/src/main.c")).to be == true
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/main/include/notIncludeThisOne2.h")).to be == true
-    expect($mystring.include?("Warning: file not excluded in build: spec/testdata/root1/main/include/main.h")).to be == true
+    expect($mystring.include?("Warning: file not excluded from build: spec/testdata/root1/main/include/main.h")).to be == true
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/lib1/src/fourthOne.cpp")).to be == true
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/lib1/src/thirdOne.cpp")).to be == true
     expect($mystring.split("file not included").length).to be == 5
@@ -29,7 +29,7 @@ describe "CompilationCheck" do
     Bake.startBake("root1/main", ["test", "-w", "spec/testdata/root1", "-w", "spec/testdata/root2", "--adapt", "cc", "--rebuild"])
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/main/src/main.c")).to be == true
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/main/include/notIncludeThisOne2.h")).to be == true
-    expect($mystring.include?("Warning: file not excluded in build: spec/testdata/root1/main/include/main.h")).to be == true
+    expect($mystring.include?("Warning: file not excluded from build: spec/testdata/root1/main/include/main.h")).to be == true
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/lib1/src/fourthOne.cpp")).to be == true
     expect($mystring.include?("Warning: file not included in build: spec/testdata/root1/lib1/src/thirdOne.cpp")).to be == true
     expect($mystring.split("file not included").length).to be == 5

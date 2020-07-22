@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Additional features &#8212; bake documentation</title>
+    <title>Compilation Check &#8212; bake documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
@@ -16,8 +16,8 @@
     <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="The Bakery" href="the_bakery.html" />
-    <link rel="prev" title="Visual Studio Code" href="../ide/vsc/vsc.html" />
+    <link rel="next" title="Performance" href="../performance/performance.html" />
+    <link rel="prev" title="Compilation Database" href="compilation_db.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -63,7 +63,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Additional features</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tips_and_tricks.html">Additional features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -84,11 +84,9 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Additional features</a><ul>
-<li><a class="reference internal" href="#unnecessary-includes">Unnecessary includes</a></li>
-<li><a class="reference internal" href="#symlinks-and-junctions">Symlinks and junctions</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Compilation Check</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#adapt">Adapt</a></li>
 </ul>
 </ul>
 </li>
@@ -118,44 +116,66 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="additional-features">
-<h1>Additional features<a class="headerlink" href="#additional-features" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="the_bakery.html">The Bakery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_use_bake_with_cygwin.html">How to use bake with cygwin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="the_clang.html">Clang Analyze</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dot.html">Generating dot graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qac.html">QACPP for MISRA and cyclomatic complexity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bakeclean.html">bakeclean</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cuda.html">Cuda</a></li>
-<li class="toctree-l1"><a class="reference internal" href="compilation_db.html">Compilation Database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="compilation_check.html">Compilation Check</a></li>
-<li class="toctree-l1"><a class="reference internal" href="compilation_check.html#usage">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="compilation_check.html#adapt">Adapt</a></li>
-</ul>
+  <div class="section" id="compilation-check">
+<h1>Compilation Check<a class="headerlink" href="#compilation-check" title="Permalink to this headline">¶</a></h1>
+<p>To ensure that files are included in or excluded from the build, use CompilationCheck.</p>
 </div>
-<div class="section" id="unnecessary-includes">
-<h2>Unnecessary includes<a class="headerlink" href="#unnecessary-includes" title="Permalink to this headline">¶</a></h2>
-<p>If a library or executable is successfully build with “-v”, unnecessary includes are printed out:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Info: Include to ../sub1/include/ seems to be unnecessary</span>
-<span class="go">Info: Include to ../sub2/include/ seems to be unnecessary</span>
+<div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ExecutableConfig {</span>
+<span class="go">  ...</span>
+<span class="go">  CompilationCheck include: &quot;{src,include}/**/*&quot;, ignore: &quot;include/internal/*&quot;, exclude: &quot;src/test.cpp&quot;</span>
+<span class="go">}</span>
 </pre></div>
 </div>
-<p>This features depends on the compiler dependency files. For projects with assembler files, the list might be incorrect.
-However, remove the IncludeDir statements from the Project.meta and check it out.</p>
+<p>It can be used multiple times, e.g.:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">CompilationCheck include: &quot;{src,include}/**/*&quot;</span>
+<span class="go">CompilationCheck ignore:  &quot;{src,include}/**/*.{md,inc,s,hpp,lnk,org,per}&quot;</span>
+<span class="go">CompilationCheck ignore:  &quot;{src,include}/**/documentation.h&quot;  }</span>
+</pre></div>
 </div>
-<div class="section" id="symlinks-and-junctions">
-<h2>Symlinks and junctions<a class="headerlink" href="#symlinks-and-junctions" title="Permalink to this headline">¶</a></h2>
-<dl class="simple">
-<dt>It is possible to use symlinks (Linux) or junctions (Windows) when working with git. Best practice:</dt><dd><ul class="simple">
-<li><p>Link all used projects into _one_ directory (e.g. from application repository and basis software repository).</p></li>
-<li><p>Use this directory when working with bake, Eclipse, etc.</p></li>
-<li><p>Specify “-w &lt;absolute_path_to_working_dir&gt;.</p></li>
-<li><p>To sync/commit from/to svn, use the original directories created by git.</p></li>
+<p>It is also possible to reference different projects:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">CompilationCheck exclude: &quot;$(ProjectDir, anotherLib)/src/nope.cpp&quot;</span>
+</pre></div>
+</div>
+<p>Every CompilationCheck from all used configs are taken into account.</p>
+<p>The attributes:</p>
+<ul class="simple">
+<li><p>include: Files must be included in the build.</p></li>
+<li><p>exclude: Files must be excluded from the build. This overrules include.</p></li>
+<li><p>ignore: Overrules include and exclude.</p></li>
 </ul>
-</dd>
-</dl>
+<p>If a check fails, bake will print out a warning, e.g.:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">**** Building 3 of 3: main (test) ****</span>
+<span class="go">Compiling main (test): src/main.cpp</span>
+<span class="go">Linking   main (test): build/test/main.exe</span>
+<span class="go">Warning: file not included in build: src/someFile.cpp</span>
+<span class="go">Warning: file not included in build: src/anotherFile.cpp</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adapt">
+<h1>Adapt<a class="headerlink" href="#adapt" title="Permalink to this headline">¶</a></h1>
+<p>The typical use case is to include files in a general Adapt.meta file and to ignore them locally in a Project.meta file, e.g.:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> in ccheck/Adapt.meta
+<span class="go">Adapt {</span>
+<span class="go">  RequiredBakeVersion minimum: &quot;2.64.0&quot;</span>
+<span class="go">  ExecutableConfig &quot;UnitTestBase*&quot;, project: __MAIN__, type: extend {</span>
+<span class="go">    CompilationCheck include: &quot;{src,include}/**/*&quot;</span>
+<span class="go">  }</span>
+<span class="go">}</span>
+
+<span class="go">...</span>
+
+<span class="gp">#</span> in a Project.meta
+<span class="go">ExecutableConfig UnitTestBase {</span>
+<span class="go">  ...</span>
+<span class="go">  CompilationCheck ignore: &quot;include/draft/**/*&quot;</span>
+<span class="go">}</span>
+
+<span class="gp">#</span> in the shell
+<span class="go">bake UnitTestBase --adapt ccheck ...</span>
+</pre></div>
 </div>
 </div>
 

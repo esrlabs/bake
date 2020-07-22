@@ -1,6 +1,10 @@
 Changelog
 =========
 
+July 22, 2020 - bake-toolkit 2.64.0
+    * Added: CompilationCheck to check for included/excluded files in a build
+    * Cosmetic: internally using fiddle instead of Win32Api (getting rid of deprecated warning when starting bake)
+
 June 22, 2020 - bake-toolkit 2.63.2
     * Changed: bake does not abort anymore if cache files cannot be written.
 
