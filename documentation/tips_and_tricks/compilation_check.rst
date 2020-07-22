@@ -70,3 +70,17 @@ The typical use case is to include files in a general Adapt.meta file and to ign
 
   # in the shell
   bake UnitTestBase --adapt ccheck ...
+
+Build
+*****
+
+The check is only executed for full builds (inclusive --rebuild).
+
+It is not be executed for:
+
+- project only
+- file only
+- link only
+- compile only
+- clean
+- preprocessor
