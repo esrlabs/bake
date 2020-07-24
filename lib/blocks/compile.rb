@@ -52,7 +52,7 @@ module Bake
 
     class Compile < BlockBase
 
-      attr_reader :objects, :source_files, :include_list, :source_files_ignored_in_lib, :object_files_ignored_in_lib
+      attr_reader :objects, :source_files, :source_files_compiled, :include_list, :source_files_ignored_in_lib, :object_files_ignored_in_lib
 
       def mutex
         @mutex ||= Mutex.new
@@ -426,6 +426,7 @@ module Bake
           Utils.gitIgnore(odir) if !Bake.options.dry
 
           fileListBlock = Set.new if Bake.options.filelist
+          @source_files_compiled = @source_files.dup
           compileJobs = Multithread::Jobs.new(@source_files) do |jobs|
             while source = jobs.get_next_or_nil do
 
@@ -544,7 +545,7 @@ module Bake
       end
 
       def calcSources(cleaning = false, keep = false)
-        return @source_files if @source_files and not @source_files.empty?
+        return @source_files if @source_files && !@source_files.empty?
         @source_files = []
         @source_files_ignored_in_lib = []
         @source_files_link_directly = []

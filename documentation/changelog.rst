@@ -1,6 +1,9 @@
 Changelog
 =========
 
+July 24, 2020 - bake-toolkit 2.64.1
+    * Bugfix: CompilationCheck did not work correctly in special configurations, e.g. LibraryConfig without files
+
 July 22, 2020 - bake-toolkit 2.64.0
     * Added: CompilationCheck to check for included/excluded files in a build
     * Cosmetic: internally using fiddle instead of Win32Api (getting rid of deprecated warning when starting bake)

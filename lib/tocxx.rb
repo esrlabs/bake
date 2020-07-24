@@ -885,8 +885,8 @@ module Bake
                 inCompilation = Set.new
                 Blocks::ALL_BLOCKS.each do |name,block|
                   block.mainSteps.each do |b|
-                    if Blocks::Compile === b
-                      b.source_files.each do |s|
+                    if Blocks::Compile === b && !b.source_files_compiled.nil?
+                      b.source_files_compiled.each do |s|
                         inCompilation << File.expand_path(s, b.projectDir)
                         type = b.get_source_type(s)
                         if type != :ASM
