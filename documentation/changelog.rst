@@ -1,6 +1,9 @@
 Changelog
 =========
 
+July 24, 2020 - bake-toolkit 2.64.2
+    * Added: experimental dev-feature "retry-linking" (not for public use)
+
 July 24, 2020 - bake-toolkit 2.64.1
     * Bugfix: CompilationCheck did not work correctly in special configurations, e.g. LibraryConfig without files
 

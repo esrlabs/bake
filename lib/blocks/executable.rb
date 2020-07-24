@@ -190,7 +190,11 @@ module Bake
             BlockBase.writeCmdLineFile(cmd, cmdLineFile)
             success = true
             consoleOutput = ""
-            success, consoleOutput = ProcessHelper.run(realCmd, false, false, outPipe) if !Bake.options.dry
+            retry_linking = Bake.options.dev_features.include?("retry-linking") ? 5 : 1
+            begin
+              success, consoleOutput = ProcessHelper.run(realCmd, false, false, outPipe) if !Bake.options.dry
+              retry_linking -= 1
+            end while !success && retry_linking > 0
             process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, reason, success)
 
             check_config_file()
