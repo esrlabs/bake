@@ -193,10 +193,12 @@ module Bake
             retry_linking = Bake.options.dev_features.include?("retry-linking") ? 5 : 1
             begin
               success, consoleOutput = ProcessHelper.run(realCmd, false, false, outPipe) if !Bake.options.dry
+              process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, reason, success)
+            rescue Exception
               retry_linking -= 1
-            end while !success && retry_linking > 0
-            process_result(cmdLinePrint, consoleOutput, linker[:ERROR_PARSER], nil, reason, success)
-
+              retry if !success && retry_linking > 0
+              raise
+            end
             check_config_file()
           end
 
