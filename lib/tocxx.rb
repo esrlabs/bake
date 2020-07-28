@@ -889,7 +889,7 @@ module Bake
                       b.source_files_compiled.each do |s|
                         inCompilation << File.expand_path(s, b.projectDir)
                         type = b.get_source_type(s)
-                        if type != :ASM
+                        if type != :ASM && b.object_files && b.object_files.has_key?(s)
                           o = b.object_files[s]
                           dep_filename = b.calcDepFile(o, type)
                           dep_filename_conv = b.calcDepFileConv(dep_filename)

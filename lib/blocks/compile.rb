@@ -561,7 +561,7 @@ module Bake
           pr = sources.name
           pr = pr[2..-1] if pr.start_with?"./"
 
-          res = Dir.glob_dir(pr, @projectDir).sort
+          res = Dir.glob_dir(pr, @projectDir).select {|f| !get_source_type(f).nil?}.sort
           if res.length == 0 and cleaning == false
             if not pr.include?"*" and not pr.include?"?"
               Bake.formatter.printError("Source file '#{pr}' not found", sources)
