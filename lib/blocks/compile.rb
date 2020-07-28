@@ -52,7 +52,7 @@ module Bake
 
     class Compile < BlockBase
 
-      attr_reader :objects, :source_files, :source_files_compiled, :include_list, :source_files_ignored_in_lib, :object_files_ignored_in_lib
+      attr_reader :objects, :source_files, :source_files_compiled, :include_list, :source_files_ignored_in_lib, :object_files_ignored_in_lib, :object_files
 
       def mutex
         @mutex ||= Mutex.new
