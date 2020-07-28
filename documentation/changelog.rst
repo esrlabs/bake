@@ -1,6 +1,9 @@
 Changelog
 =========
 
+July 28, 2020 - bake-toolkit 2.64.4
+    * Bugfix: Fixed the check in 2.64.3. 
+
 July 28, 2020 - bake-toolkit 2.64.3
     * Bugfix: Algorithm for CompilationCheck had quadratic instead of linear complexity. 
 
