@@ -133,14 +133,18 @@ module Bake
         return false
       end
 
+      def calcObjectBasename(object)
+        File.basename(object, File.extname(object))
+      end
+
       def calcCmdlineFile(object)
-        File.expand_path(object[0..-3] + ".cmdline", @projectDir)
+        File.expand_path(calcObjectBasename(object) + ".cmdline", @projectDir)
       end
 
       def calcDepFile(object, type)
         dep_filename = nil
         if type != :ASM
-          dep_filename = object[0..-3] + ".d"
+          dep_filename = calcObjectBasename(object) + ".d"
         end
         dep_filename
       end

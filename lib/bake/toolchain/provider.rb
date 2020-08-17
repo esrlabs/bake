@@ -88,6 +88,7 @@ module Bake
           :PREFIX => "$(ArchiverPrefix)",
           :ARCHIVE_FLAGS => "",
           :ARCHIVE_FLAGS_SPACE => true,
+          :ARCHIVE_FILE_ENDING => ".a",
           :FLAGS => "",
           :ERROR_PARSER => nil,
           :FILE_COMMAND => ""
@@ -163,6 +164,7 @@ require_relative '../toolchain/diab'
 require_relative '../toolchain/gcc'
 require_relative '../toolchain/clang'
 require_relative '../toolchain/clang_analyze'
+require_relative '../toolchain/clang_bitcode'
 require_relative '../toolchain/ti'
 require_relative '../toolchain/greenhills'
 require_relative '../toolchain/keil'
