@@ -134,7 +134,7 @@ module Bake
       end
 
       def calcObjectBasename(object)
-        File.basename(object, File.extname(object))
+        object.chomp(File.extname(object))
       end
 
       def calcCmdlineFile(object)
