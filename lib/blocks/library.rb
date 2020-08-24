@@ -18,10 +18,13 @@ module Bake
       end
 
       def calcArtifactName
+        archiver = @block.tcs[:ARCHIVER]
+        fileEnding = archiver[:ARCHIVE_FILE_ENDING]
+
         if not @config.artifactName.nil? and @config.artifactName.name != ""
           baseFilename = @config.artifactName.name
         else
-          baseFilename = "lib#{@projectName}.a"
+          baseFilename = "lib#{@projectName}#{fileEnding}"
         end
         if !@config.artifactExtension.nil? && @config.artifactExtension.name != "default"
           extension = ".#{@config.artifactExtension.name}"
