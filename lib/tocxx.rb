@@ -859,6 +859,7 @@ module Bake
                !Bake.options.linkOnly &&
                !Bake.options.prepro &&
                !Bake.options.compileOnly &&
+               !Bake.options.dry &&
                !Bake.options.clean
 
               ccChecks = []
