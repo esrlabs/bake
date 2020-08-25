@@ -2,6 +2,7 @@ require_relative '../bake/libElement'
 require_relative '../bake/model/metamodel'
 require_relative '../common/abortException'
 require_relative "../multithread/job"
+gem "thwait", "0.1.0"
 require "thwait"
 
 module Bake

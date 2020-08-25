@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency("highline", "=1.7.8")
   s.add_dependency("concurrent-ruby", "=1.0.5")
   s.add_dependency("colored", "=1.2")
-  s.add_dependency("thwait")
+  s.add_dependency("thwait", "=0.1.0")
   s.add_dependency("e2mmap")
   s.add_development_dependency("rake", ">=12.3.3")
   s.add_development_dependency("rspec")
