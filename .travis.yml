@@ -29,7 +29,7 @@ install:
  - gem install rgen -v 0.8.2 $FLAGS
  - gem install highline -v ">= 1.6.0" $FLAGS
  - gem install concurrent-ruby -v 1.0.5 $FLAGS
- - gem install thwait $FLAGS
+ - gem install thwait -v 0.1.0 $FLAGS
  - gem install e2mmap $FLAGS
  - gem install colored $FLAGS
  - gem install rspec $FLAGS

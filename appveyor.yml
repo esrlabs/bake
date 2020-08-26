@@ -17,6 +17,7 @@ install:
   - gem install rgen -v 0.8.2 %flags%
   - gem install highline -v ">= 1.6.0" %flags%
   - gem install concurrent-ruby -v 1.0.5 %flags%
+  - gem install thwait -v 0.1.0 %flags%
   - gem install colored %flags%
   - gem install rspec %flags%
 
