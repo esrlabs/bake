@@ -117,6 +117,12 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl>
+<dt>August 26, 2020 - bake-toolkit 2.65.0</dt><dd><ul class="simple">
+<li><p>Bugfix: Dependency to gem thwait 0.1.0 instead of latest version (they messed it up, latest gem might abort the builds on some systems)</p></li>
+<li><p>Bugfix: Skip CompilationCheck on dry run</p></li>
+<li><p>Added: CLANG_BITCODE toolchain</p></li>
+</ul>
+</dd>
 <dt>July 28, 2020 - bake-toolkit 2.64.4</dt><dd><ul class="simple">
 <li><p>Bugfix: Fixed the check in 2.64.3.</p></li>
 </ul>
@@ -135,7 +141,7 @@
 </dd>
 <dt>July 22, 2020 - bake-toolkit 2.64.0</dt><dd><ul class="simple">
 <li><p>Added: CompilationCheck to check for included/excluded files in a build</p></li>
-<li><p>Cosmetic: internally using fiddle instead of Win32Api (getting rid of deprecated warning when starting bake)</p></li>
+<li><p>Cosmetic: Internally using fiddle instead of Win32Api (getting rid of deprecated warning when starting bake)</p></li>
 </ul>
 </dd>
 <dt>June 22, 2020 - bake-toolkit 2.63.2</dt><dd><ul class="simple">
