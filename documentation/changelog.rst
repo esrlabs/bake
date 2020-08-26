@@ -1,6 +1,11 @@
 Changelog
 =========
 
+August 26, 2020 - bake-toolkit 2.65.0
+    * Bugfix: Dependency to gem thwait 0.1.0 instead of latest version (they messed it up, latest gem might abort the builds on some systems)
+    * Bugfix: Skip CompilationCheck on dry run
+    * Added: CLANG_BITCODE toolchain
+
 July 28, 2020 - bake-toolkit 2.64.4
     * Bugfix: Fixed the check in 2.64.3. 
 
@@ -15,7 +20,7 @@ July 24, 2020 - bake-toolkit 2.64.1
 
 July 22, 2020 - bake-toolkit 2.64.0
     * Added: CompilationCheck to check for included/excluded files in a build
-    * Cosmetic: internally using fiddle instead of Win32Api (getting rid of deprecated warning when starting bake)
+    * Cosmetic: Internally using fiddle instead of Win32Api (getting rid of deprecated warning when starting bake)
 
 June 22, 2020 - bake-toolkit 2.63.2
     * Changed: bake does not abort anymore if cache files cannot be written.
