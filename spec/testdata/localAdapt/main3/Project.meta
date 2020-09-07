@@ -1,0 +1,16 @@
+Project default: test {
+  CustomConfig test {
+    Dependency main4
+    DefaultToolchain GCC
+    CommandLine "echo hello main3", echo: off
+  }
+}
+
+If mainProject: __THIS__ {
+  CustomConfig test, type: extend {
+    StartupSteps {
+      CommandLine "echo start this test", echo: off
+    }
+  }
+
+}

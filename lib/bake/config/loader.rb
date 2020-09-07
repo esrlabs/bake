@@ -237,7 +237,7 @@ module Bake
       if adaptRoots.length > 0
         adaptRoots.each do |adapt|
           Bake::Config::checkVer(adapt.requiredBakeVersion)
-          adapt.mainProject = @mainProjectName if adapt.mainProject == "__THIS__"
+          adapt.mainProject = proj.name if adapt.mainProject == "__THIS__"
           adaptConfigs = adapt.getConfig
           AdaptConfig.checkSyntax(adaptConfigs, filename, true)
           adaptConfigs.each do |ac|

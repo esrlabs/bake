@@ -1,6 +1,10 @@
 Changelog
 =========
 
+September 7, 2020 - bake-toolkit 2.65.1
+    * Bugfix: __THIS__ in Project.meta was resolved to main project name, not local project name
+    * Bugfix: Fixed an exception with old Ruby versions where "fiddle" is not available
+
 August 26, 2020 - bake-toolkit 2.65.0
     * Bugfix: Dependency to gem thwait 0.1.0 instead of latest version (they messed it up, latest gem might abort the builds on some systems)
     * Bugfix: Skip CompilationCheck on dry run

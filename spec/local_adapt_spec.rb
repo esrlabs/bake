@@ -95,6 +95,19 @@ describe "Local Adapt" do
     expect($mystring.include?("ADAPT_09")).to be == false
   end
 
+  it '__THIS__ applies to local project' do
+    Bake.startBake("localAdapt/main3", ["test"])
+    expect($mystring.include?("start this test")).to be == true
+    expect($mystring.include?("hello main3")).to be == true
+    expect($mystring.include?("hello main4")).to be == true
+  end
+
+  it '__THIS__ does not apply to main project' do
+    Bake.startBake("localAdapt/main4", ["test"])
+    expect($mystring.include?("start this test")).to be == false
+    expect($mystring.include?("hello main3")).to be == true
+    expect($mystring.include?("hello main4")).to be == true
+  end
 
 end
 

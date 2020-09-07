@@ -37,7 +37,7 @@ begin
     x = longname(shortname(file))
   end
 
-rescue Fiddle::DLError
+rescue Exception
 
   def realname file
     file
