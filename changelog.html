@@ -117,6 +117,11 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl>
+<dt>September 7, 2020 - bake-toolkit 2.65.1</dt><dd><ul class="simple">
+<li><p>Bugfix: __THIS__ in Project.meta was resolved to main project name, not local project name</p></li>
+<li><p>Bugfix: Fixed an exception with old Ruby versions where “fiddle” is not available</p></li>
+</ul>
+</dd>
 <dt>August 26, 2020 - bake-toolkit 2.65.0</dt><dd><ul class="simple">
 <li><p>Bugfix: Dependency to gem thwait 0.1.0 instead of latest version (they messed it up, latest gem might abort the builds on some systems)</p></li>
 <li><p>Bugfix: Skip CompilationCheck on dry run</p></li>
