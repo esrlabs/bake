@@ -1,6 +1,9 @@
 Changelog
 =========
 
+..., 2020 - bake-toolkit 2...
+    * Added: now Adapts can be also filtered
+
 September 7, 2020 - bake-toolkit 2.65.1
     * Bugfix: __THIS__ in Project.meta was resolved to main project name, not local project name
     * Bugfix: Fixed an exception with old Ruby versions where "fiddle" is not available

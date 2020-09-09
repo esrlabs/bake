@@ -1,0 +1,34 @@
+Project default: test {
+  CustomConfig test, filter: test1, default: off {
+    PreSteps {
+      CommandLine "echo test1_cl", echo: off
+    }
+  }
+  CustomConfig test, filter: test2, default: off {
+    PreSteps {
+      CommandLine "echo test2_cl", echo: off
+    }
+  }
+}
+
+Adapt filter: ada1, default: off {
+  CustomConfig test, type: extend {
+    PreSteps {
+      CommandLine "echo ada1_cl", echo: off
+    }
+  }
+}
+
+Adapt filter: ada2, default: off {
+  CustomConfig test, type: extend {
+    PreSteps {
+      CommandLine "echo ada2_cl", echo: off
+    }
+  }
+}
+
+Adapt {
+  CustomConfig __MAIN__, project: __MAIN__, type: extend {
+    DefaultToolchain GCC
+  }
+}

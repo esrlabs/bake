@@ -113,7 +113,8 @@ module Bake
           applyFilterOnElement(elem)
         end
       end
-      toRemove.each { |r| r.parent = nil }
+      toRemove.each { |r| r.parent = nil if r.respond_to?(:parent=) }
+      return toRemove
     end
 
     def applyFilterOnElement(elem)
@@ -167,7 +168,8 @@ module Bake
         ExitHelper.exit(1)
       end
 
-      applyFilterOnArray(frag.root_elements)
+      tor = applyFilterOnArray(frag.root_elements)
+      frag.root_elements.delete_if {|re| tor.include?(re)}
 
       return frag
 

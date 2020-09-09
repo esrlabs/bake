@@ -1,0 +1,7 @@
+Adapt filter: ada2, default: off {
+  CustomConfig test, project: __ALL__, type: extend {
+    PreSteps {
+      CommandLine "echo ada2_cl", echo: off
+    }
+  }
+}
