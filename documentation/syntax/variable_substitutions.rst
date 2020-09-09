@@ -171,8 +171,8 @@ This can be changed to an error with a "!" sign:
     $(PATH_TO_ABC!)
     $(OutputDir!, application, Debug)
 
-For convenience, the "!" can be used on every parameter (which means exactly the same as using on the first parameter). 
-    
+For convenience, the "!" can be used on every parameter (which means exactly the same as using on the first parameter).
+
 .. code-block:: console
 
     $(OutputDir, application!, Debug)

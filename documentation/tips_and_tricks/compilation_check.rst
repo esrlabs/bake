@@ -7,7 +7,7 @@ Usage
 *****
 
 .. code-block:: console
-  
+
   ExecutableConfig {
     ...
     CompilationCheck include: "{src,include}/**/*", ignore: "include/internal/*", exclude: "src/test.cpp"
@@ -16,7 +16,7 @@ Usage
 It can be used multiple times, e.g.:
 
 .. code-block:: console
-  
+
   CompilationCheck include: "{src,include}/**/*"
   CompilationCheck ignore:  "{src,include}/**/*.{md,inc,s,hpp,lnk,org,per}"
   CompilationCheck ignore:  "{src,include}/**/documentation.h"  }
@@ -24,7 +24,7 @@ It can be used multiple times, e.g.:
 It is also possible to reference different projects:
 
 .. code-block:: console
-  
+
   CompilationCheck exclude: "$(ProjectDir, anotherLib)/src/nope.cpp"
 
 Every CompilationCheck from all used configs are taken into account.
@@ -38,7 +38,7 @@ The attributes:
 If a check fails, bake will print out a warning, e.g.:
 
 .. code-block:: console
-  
+
   **** Building 3 of 3: main (test) ****
   Compiling main (test): src/main.cpp
   Linking   main (test): build/test/main.exe
@@ -52,14 +52,14 @@ The typical use case is to include files in a general Adapt.meta file and to ign
 
 .. code-block:: console
 
-  # in ccheck/Adapt.meta  
+  # in ccheck/Adapt.meta
   Adapt {
     RequiredBakeVersion minimum: "2.64.0"
     ExecutableConfig "UnitTestBase*", project: __MAIN__, type: extend {
       CompilationCheck include: "{src,include}/**/*"
     }
   }
-  
+
   ...
 
   # in a Project.meta

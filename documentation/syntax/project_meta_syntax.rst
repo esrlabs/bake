@@ -45,21 +45,21 @@ Syntax
 .. parsed-literal::
 
     :ref:`project` :ref:`default <defaultConfig>`: <name> {
-     
+
       :ref:`description` <text>
-    
+
       :ref:`requiredBakeVersion` minimum: <major.minor.patch>, maximum: <major.minor.patch>
-    
+
       :ref:`responsible` {
         :ref:`person` <name>, :ref:`email`: <adr>
       }
-    
+
       # 0..n configs
       :ref:`executableConfig` | :ref:`libraryConfig` | :ref:`customConfig` <name>, :ref:`extends`: <parent(s)>,
         :ref:`mergeInc`: yes|no, :ref:`private`: true|false {
-    
+
         # Valid for all config types
-    
+
         :ref:`description` <text>
         :ref:`includeDir` <dir>, :ref:`inherit`: true|false, :ref:`inject`: front|back, :ref:`system`: true|false
         :ref:`set` <variable>, value: <value> | cmd: <line>, :ref:`env`: true|false
@@ -131,9 +131,9 @@ Syntax
         }
         :ref:`compilationDB` <filename>
         :ref:`compilationCheck` include: <pattern> exclude: <pattern> ignore: <pattern>
-    
+
         # Valid for ExecutableConfig and LibraryConfig
-    
+
         :ref:`files` <pattern>, :ref:`compileOnly`: true|false, :ref:`linkDirectly`: true|false {
           :ref:`Flags <filesFlags>` <define> <flags>, add: <flags>, remove: <flags>
           :ref:`Flags <filesDefine>` <define>
@@ -141,20 +141,20 @@ Syntax
         :ref:`excludeFiles` <pattern>
         :ref:`artifactName` <name>
         :ref:`artifactExtension` <ext>
-    
+
         # Valid for ExecutableConfig
-    
+
         :ref:`linkerScript` <script>
         :ref:`mapFile` <name>
-    
-    
+
+
         # Valid for CustomConfig
-        
+
         :ref:`makefile` | :ref:`commandLine` | :ref:`sleep` | :ref:`makeDir` | :ref:`remove` | :ref:`touch` | :ref:`copy` | :ref:`move` ... # zero of one of these
-    
+
       }
     }
-    
+
     Adapt toolchain: <name>, os: <name>, mainProject: <name>, mainConfig: <name> {
       # See Adapt documention for details.
     }
@@ -1067,7 +1067,7 @@ CompilationDB
 | Generates a compilation database in json.
 | Example:
 | *CompilationDB "$(ProjectDir)/db.json"*
-    
+
 *Mandatory: no, quantity: 0..1, default: None. If CompilationDB is specified without an explicit filename, $(WorkspaceDir)/compile_commands.json is used.*
 
 .. _compilationCheck:
@@ -1081,7 +1081,7 @@ CompilationCheck
 | Examples:
 | *CompilationCheck include: "include/\*.h", ignore: "include/ignoreThis.h"*
 | *CompilationCheck include: "$(ProjectDir, anotherLib)/src/important"*
-    
+
 *Mandatory: no, quantity: 0..n, default: -*
 
 .. _linkerScript:
@@ -1090,7 +1090,7 @@ LinkerScript
 ----------------
 
 Specifies the name including path of the linker script.
-    
+
 *Mandatory: no, quantity: 0..1, default: -*
 
 .. _mapFile:
@@ -1100,7 +1100,7 @@ MapFile
 
 | A mapfile will be written by the linker.
 | If name attribute is omitted, the mapfile will be "$(OutputDir)/$(ArtifactNameBase).map".
-    
+
 *Mandatory: no, quantity: 0..1, default: No mapfile will be written*
 
 .. _artifactName:

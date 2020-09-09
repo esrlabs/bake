@@ -370,7 +370,7 @@ Example:
         ....
       }
     }
-    
+
 .. code-block:: text
 
     LibraryConfig Lib {
@@ -378,4 +378,4 @@ Example:
         ....
       }
     }
-    
+
