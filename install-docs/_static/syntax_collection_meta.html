@@ -71,32 +71,6 @@ z-index: 100;
 <script type="text/javascript">
 
 
-function showCollection() {
-  str = 'This is a collection of builds. The name must be unique within this file.'
-  ddrivetip("Collection", "Yes", "1..n", "-",str)
-}
-
-function showProject() {
-  str = "Specify the projects with it's configs to build. It is possible to use \"*\" as wildcards."
-  ddrivetip("Project", "Yes,", "1..n", "-",str)
-}
-
-function showConfig() {
-  str = "Specify the configs. It is possible to use \"*\" as wildcard."
-  ddrivetip("config", "Yes", "-", "-",str)
-}
-
-function showExclude() {
-  str = "Specify the projects with it's configs to exclude from build. It is possible to use \"*\" as wildcards."
-  ddrivetip("Exclude", "No", "0..n", "-",str)
-}
-
-function showSubCollection() {
-	  str = 'This references another collection.'
-	  ddrivetip("SubCollection", "No", "0..n", "-",str)
-	}
-
-
 
 var offsetxpoint=20 //Customize x offset of tooltip
 var offsetypoint=20 //Customize y offset of tooltip

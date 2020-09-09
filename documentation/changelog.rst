@@ -3,6 +3,7 @@ Changelog
 
 ..., 2020 - bake-toolkit 2...
     * Added: now Adapts can be also filtered
+    * Cosmetic: replaced mouse-over-javascripts in syntax pages of the documentation by static texts.
 
 September 7, 2020 - bake-toolkit 2.65.1
     * Bugfix: __THIS__ in Project.meta was resolved to main project name, not local project name
@@ -14,10 +15,10 @@ August 26, 2020 - bake-toolkit 2.65.0
     * Added: CLANG_BITCODE toolchain
 
 July 28, 2020 - bake-toolkit 2.64.4
-    * Bugfix: Fixed the check in 2.64.3. 
+    * Bugfix: Fixed the check in 2.64.3.
 
 July 28, 2020 - bake-toolkit 2.64.3
-    * Bugfix: Algorithm for CompilationCheck had quadratic instead of linear complexity. 
+    * Bugfix: Algorithm for CompilationCheck had quadratic instead of linear complexity.
 
 July 24, 2020 - bake-toolkit 2.64.2
     * Added: experimental dev-feature "retry-linking" (not for public use)
@@ -105,12 +106,12 @@ January 20, 2020 - bake-toolkit 2.56.0
      * Bugfix: fixed an exception using scopes for adapts.
 
 November 27, 2019 - bake-toolkit 2.55.1
-     * Bugfix: If a project is directly in the workspace root, it could not be referenced in Collection.meta. 
+     * Bugfix: If a project is directly in the workspace root, it could not be referenced in Collection.meta.
 
 November 21, 2019 - bake-toolkit 2.55.0
      * Added: default number of compiling threads is now equal to the number of logical processors instead of hardcoded 8 (only for Ruby >= 2.2).
      * Added: possibility to overwrite bake internal defaults for toolchain commands and flags
-     * Bugfix: "remove" attribute of "Flags" now correctly supports regex 
+     * Bugfix: "remove" attribute of "Flags" now correctly supports regex
 
 November 4, 2019 - bake-toolkit 2.54.3
      * Added: Folders in roots.bake can end with "/" now.
@@ -127,7 +128,7 @@ October 16, 2019 - bake-toolkit 2.54.2
 
 October 14, 2019 - bake-toolkit 2.54.1
     * Reverted: The change from 2.54: "(Windows only) If a case mismatch is detected between Files definition in Project.meta and filesystem, the compilation will be aborted."
-    * Added: Instead, the correct flags and defines will be used when specified at "Files" level in Project.meta. They will not be discarded anymore on case mismatch. 
+    * Added: Instead, the correct flags and defines will be used when specified at "Files" level in Project.meta. They will not be discarded anymore on case mismatch.
 
 October 11, 2019 - bake-toolkit 2.54
     * Added: ArtifactExtension in Project.meta to configure the filename extension of the artifacts.

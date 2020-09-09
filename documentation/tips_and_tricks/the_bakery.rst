@@ -14,62 +14,101 @@ The most important options are the collection name (*-b*) and the collection dir
 
 Examples:
 
-    Build all unit tests:
+Build all unit tests:
 
-    .. code-block:: console
+.. code-block:: console
 
-        bakery -b AllUnitTests
+    bakery -b AllUnitTests
 
-    It is possible to omit *-b*:
+It is possible to omit *-b*:
 
-    .. code-block:: console
+.. code-block:: console
 
-        bakery AllUnitTests
+    bakery AllUnitTests
 
-    Clean all unit tests:
+Clean all unit tests:
 
-    .. code-block:: console
+.. code-block:: console
 
-        bakery -b AllUnitTests -c
+    bakery -b AllUnitTests -c
 
-    Build all unit tests, workspace checked out into two roots, console supports colors, stop on first error, run the unittests after build:
+Build all unit tests, workspace checked out into two roots, console supports colors, stop on first error, run the unittests after build:
 
-    .. code-block:: console
+.. code-block:: console
 
-        bakery -b AllUnitTests -m w:/root1/mainProj -w w:/root2 -r -a black --do run
+    bakery -b AllUnitTests -m w:/root1/mainProj -w w:/root2 -r -a black --do run
 
 
 Syntax of Collection.meta
 *************************
-Move the mouse cursor over the blue elements to display more information.
 
-.. raw:: html
-    :file: ../_static/syntax_collection_meta.html
+Note: use hash marks (#) for comments.
 
-.. note::
+.. parsed-literal::
 
-    * Use double quotes (") if the strings have wildcards
-    * Use hash marks (#) for comments.
 
-Example:
+    :ref:`collection` <name> {
+      :ref:`Project <projectCollection>` <name>, config: <name>, args: <arguments>
+      :ref:`exclude` <name>, config: <name>
+      :ref:`subCollection` <name>
+    }
 
-    .. code-block:: text
+.. _collection:
 
-        Collection AllUnitTests {
-            Project "*", config: UnitTest
-        }
-        Collection UnitTestLibsWithoutBsp {
-            Project "*", config: "UnitTestLib*"
-            Exclude "bsp*", config: "*"
-        }
-        Collection MySpecialCollection {
-            Project Main1, config: Debug
-            Project Main2, config: Release
-            Project Sub3, config: Debug
-            SubCollection UnitTestLibsWithoutBsp
-        }
-        Collection MainWithBakeArgs {
-            Project Main, config: Debug, args: "--adapt Debug --rebuild"
-        }
+Collection
+----------
+
+This is a collection of builds. The name must be unique within this file.
+
+*Mandatory: yes, quantity: 1..n, default: -*
+
+.. _projectCollection:
+
+Project
+-------
+
+Specify the projects with it's configs to build. It is possible to use "*" as wildcards.
+
+*Mandatory: yes, quantity: 1..n, default: -*
+
+.. _exclude:
+
+Exclude
+-------
+
+Specify the projects with it's configs to exclude from build. It is possible to use "*" as wildcards.
+
+*Mandatory: yes, quantity: 0..n, default: -*
+
+.. _subCollection:
+
+SubCollection
+-------------
+
+This references another collection.
+
+*Mandatory: no, quantity: 0..n, default: -*
+
+Example of Collection.meta
+**************************
+
+.. code-block:: text
+
+    Collection AllUnitTests {
+        Project "*", config: UnitTest
+    }
+    Collection UnitTestLibsWithoutBsp {
+        Project "*", config: "UnitTestLib*"
+        Exclude "bsp*", config: "*"
+    }
+    Collection MySpecialCollection {
+        Project Main1, config: Debug
+        Project Main2, config: Release
+        Project Sub3, config: Debug
+        SubCollection UnitTestLibsWithoutBsp
+    }
+    Collection MainWithBakeArgs {
+        Project Main, config: Debug, args: "--adapt Debug --rebuild"
+    }
 
 
