@@ -1,7 +1,8 @@
 Changelog
 =========
 
-..., 2020 - bake-toolkit 2...
+September 18, 2020 - bake-toolkit 2.65.2
+    * Bugfix: if pathname length of dependency file is > 255 on Windows, the compilation check might break.
     * Added: now Adapts can be also filtered
     * Cosmetic: replaced mouse-over-javascripts in syntax pages of the documentation by static texts.
 
