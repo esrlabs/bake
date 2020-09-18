@@ -85,10 +85,97 @@
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">The Syntax of the Project.meta file</a><ul>
-<li><a class="reference internal" href="#instructions-for-the-interactive-syntax-viewer">Instructions for the Interactive Syntax Viewer</a></li>
+<li><a class="reference internal" href="#config-types">Config types</a></li>
 <li><a class="reference internal" href="#filter">Filter</a></li>
 <li><a class="reference internal" href="#notes">Notes</a></li>
-<li><a class="reference internal" href="#syntax">Syntax</a></li>
+<li><a class="reference internal" href="#syntax">Syntax</a><ul>
+<li><a class="reference internal" href="#project">Project</a></li>
+<li><a class="reference internal" href="#default-project">default (Project)</a></li>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#requiredbakeversion">RequiredBakeVersion</a></li>
+<li><a class="reference internal" href="#responsible">Responsible</a></li>
+<li><a class="reference internal" href="#person">Person</a></li>
+<li><a class="reference internal" href="#email">email</a></li>
+<li><a class="reference internal" href="#executableconfig">ExecutableConfig</a></li>
+<li><a class="reference internal" href="#libraryconfig">LibraryConfig</a></li>
+<li><a class="reference internal" href="#customconfig">CustomConfig</a></li>
+<li><a class="reference internal" href="#extends">extends</a></li>
+<li><a class="reference internal" href="#mergeinc">mergeInc</a></li>
+<li><a class="reference internal" href="#private">private</a></li>
+<li><a class="reference internal" href="#includedir">IncludeDir</a></li>
+<li><a class="reference internal" href="#inherit">inherit</a></li>
+<li><a class="reference internal" href="#inject">inject</a></li>
+<li><a class="reference internal" href="#system">system</a></li>
+<li><a class="reference internal" href="#set">Set</a></li>
+<li><a class="reference internal" href="#env">env</a></li>
+<li><a class="reference internal" href="#dependency">Dependency</a></li>
+<li><a class="reference internal" href="#config-dependency">config (Dependency)</a></li>
+<li><a class="reference internal" href="#externallibrary">ExternalLibrary</a></li>
+<li><a class="reference internal" href="#search">search</a></li>
+<li><a class="reference internal" href="#userlibrary">UserLibrary</a></li>
+<li><a class="reference internal" href="#externallibrarysearchpath">ExternalLibrarySearchPath</a></li>
+<li><a class="reference internal" href="#presteps">PreSteps</a></li>
+<li><a class="reference internal" href="#poststeps">PostSteps</a></li>
+<li><a class="reference internal" href="#startupsteps">StartupSteps</a></li>
+<li><a class="reference internal" href="#exitsteps">ExitSteps</a></li>
+<li><a class="reference internal" href="#cleansteps">CleanSteps</a></li>
+<li><a class="reference internal" href="#makefile">Makefile</a></li>
+<li><a class="reference internal" href="#lib">lib</a></li>
+<li><a class="reference internal" href="#target">target</a></li>
+<li><a class="reference internal" href="#pathto">pathTo</a></li>
+<li><a class="reference internal" href="#noclean">noClean</a></li>
+<li><a class="reference internal" href="#changeworkingdir">changeWorkingDir</a></li>
+<li><a class="reference internal" href="#echo-commandline-makefile-sleep">echo (CommandLine, Makefile, Sleep)</a></li>
+<li><a class="reference internal" href="#independent">independent</a></li>
+<li><a class="reference internal" href="#validexitcodes">validExitCodes</a></li>
+<li><a class="reference internal" href="#flags-makefile">Flags (makefile)</a></li>
+<li><a class="reference internal" href="#commandline">CommandLine</a></li>
+<li><a class="reference internal" href="#sleep">Sleep</a></li>
+<li><a class="reference internal" href="#makedir">MakeDir</a></li>
+<li><a class="reference internal" href="#remove">Remove</a></li>
+<li><a class="reference internal" href="#touch">Touch</a></li>
+<li><a class="reference internal" href="#copy">Copy</a></li>
+<li><a class="reference internal" href="#move">Move</a></li>
+<li><a class="reference internal" href="#echo-makedir-remove-touch-copy-move">echo (MakeDir, Remove, Touch, Copy, Move)</a></li>
+<li><a class="reference internal" href="#defaulttoolchain">DefaultToolchain</a></li>
+<li><a class="reference internal" href="#toolchain">Toolchain</a></li>
+<li><a class="reference internal" href="#outputdir">outputdir</a></li>
+<li><a class="reference internal" href="#eclipseorder">eclipseOrder</a></li>
+<li><a class="reference internal" href="#compiler">Compiler</a></li>
+<li><a class="reference internal" href="#archiver">Archiver</a></li>
+<li><a class="reference internal" href="#linker">Linker</a></li>
+<li><a class="reference internal" href="#docu">Docu</a></li>
+<li><a class="reference internal" href="#command">command</a></li>
+<li><a class="reference internal" href="#prefix">prefix</a></li>
+<li><a class="reference internal" href="#keepobjfileendings">keepObjFileEndings</a></li>
+<li><a class="reference internal" href="#srcfileendings">SrcFileEndings</a></li>
+<li><a class="reference internal" href="#onlydirectdeps">onlyDirectDeps</a></li>
+<li><a class="reference internal" href="#cuda">cuda</a></li>
+<li><a class="reference internal" href="#flags-defaulttoolchain">Flags (DefaultToolchain)</a></li>
+<li><a class="reference internal" href="#flags-toolchain">Flags (Toolchain)</a></li>
+<li><a class="reference internal" href="#flags-files">Flags (Files)</a></li>
+<li><a class="reference internal" href="#define-defaulttoolchain">Define (DefaultToolchain)</a></li>
+<li><a class="reference internal" href="#toolchaindefine">Flags (Toolchain)</a></li>
+<li><a class="reference internal" href="#define-files">Define (Files)</a></li>
+<li><a class="reference internal" href="#libprefixflags">LibPrefixFlags</a></li>
+<li><a class="reference internal" href="#libpostfixflags">LibPostfixFlags</a></li>
+<li><a class="reference internal" href="#internaldefines">InternalDefines</a></li>
+<li><a class="reference internal" href="#internalincludes">InternalIncludes</a></li>
+<li><a class="reference internal" href="#files">Files</a></li>
+<li><a class="reference internal" href="#excludefiles">ExcludeFiles</a></li>
+<li><a class="reference internal" href="#compileonly">compileOnly</a></li>
+<li><a class="reference internal" href="#linkdirectly">linkDirectly</a></li>
+<li><a class="reference internal" href="#prebuild">Prebuild</a></li>
+<li><a class="reference internal" href="#except">Except</a></li>
+<li><a class="reference internal" href="#config-except">config (Except)</a></li>
+<li><a class="reference internal" href="#compilationdb">CompilationDB</a></li>
+<li><a class="reference internal" href="#compilationcheck">CompilationCheck</a></li>
+<li><a class="reference internal" href="#linkerscript">LinkerScript</a></li>
+<li><a class="reference internal" href="#mapfile">MapFile</a></li>
+<li><a class="reference internal" href="#artifactname">ArtifactName</a></li>
+<li><a class="reference internal" href="#artifactextension">ArtifactExtension</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -122,12 +209,9 @@
       
   <div class="section" id="the-syntax-of-the-project-meta-file">
 <h1>The Syntax of the Project.meta file<a class="headerlink" href="#the-syntax-of-the-project-meta-file" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="instructions-for-the-interactive-syntax-viewer">
-<h2>Instructions for the Interactive Syntax Viewer<a class="headerlink" href="#instructions-for-the-interactive-syntax-viewer" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Move the mouse cursor over the blue elements to display more information.</p></li>
-<li><p>Three config types exist: ExecutableConfig, LibraryConfig and CustomConfig. Move the mouse cursor over these elements to display the supported content.</p></li>
-</ul>
+<div class="section" id="config-types">
+<h2>Config types<a class="headerlink" href="#config-types" title="Permalink to this headline">¶</a></h2>
+<p>Three config types exist: ExecutableConfig, LibraryConfig and CustomConfig. Some elements are only valid for specific types.</p>
 </div>
 <div class="section" id="filter">
 <h2>Filter<a class="headerlink" href="#filter" title="Permalink to this headline">¶</a></h2>
@@ -163,876 +247,782 @@
 </div>
 <div class="section" id="syntax">
 <h2>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head></head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
-<body >
-
-<style type="text/css">
-
-#dhtmltooltip{
-position: absolute;
-width: 150px;
-border: 2px solid black;
-padding: 2px;
-background-color: lightyellow;
-visibility: hidden;
-z-index: 100;
-}
-
-</style>
-
-<style type="text/css">
-.hide {
-    display:none;
- }
-.show {
-    display:block
- }
-.showInline {
-    display:inline
- }
- .help {
-    color:blue
- }
-.showRadio {
-    font-weight:bold;color:blue;text-decoration:overline underline
- }
-.hideRadio {
-    color:#AAAAFF;
- }
-.mycomment {
-    color:green
- }
-</style>
-
-
-
-
-
-<table border="1" style="font-family:monospace"; font-size:10><td>
-
-<span class="help" onMouseover="showProject()" onMouseout="notip()">Project</span> <span class="help" onMouseover="showDefaultConfig()" onMouseout="notip()">default</span>: &#60;name&#62; {<br>
-&nbsp; <br>
-
-&nbsp; <span class="help" onMouseover="showDescription()" onMouseout="notip()">Description</span>  &#60;text&#62;<br><br>
-
-&nbsp; <span class="help" onMouseover="showVersion()" onMouseout="notip()">RequiredBakeVersion</span> minimum: &#60;major.minor.patch&#62;, maximum: &#60;major.minor.patch&#62;<br><br>
-
-&nbsp; <span class="help" onMouseover="showResponsible()" onMouseout="notip()">Responsible</span>  {<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showPerson()" onMouseout="notip()">Person</span> &#60;name&#62;,
-              <span class="help" onMouseover="showPersonEmail()" onMouseout="notip()">email</span>: &#60;adr&#62;<br>
-&nbsp; }<br><br>
-
-&nbsp; <span class="mycomment"># 0..n configs</span><br>
-&nbsp; <span class="showRadio" onMouseover="showExecutableConfig()" onMouseout="notip()" id="executableConfig">ExecutableConfig</span> |
-              <span class="hideRadio" onMouseover="showLibraryConfig()" onMouseout="notip()" id="libraryConfig">LibraryConfig</span> |
-              <span class="hideRadio" onMouseover="showCustomConfig()" onMouseout="notip()" id="customConfig">CustomConfig</span> &#60;name&#62;,
-              <span class="help" onMouseover="showExtends()" onMouseout="notip()">extends</span>: &#60;parent(s)&#62;,
-              <span class="help" onMouseover="showMergeInc()" onMouseout="notip()">mergeInc</span>: yes|no,
-              <span class="help" onMouseover="showPrivate()" onMouseout="notip()">private</span>: true|false {<br><br>
-
-              <span><span style="background-color:#EEEEEE;" class="show">
-&nbsp; &nbsp; <span class="mycomment"># Valid for all config types</span><br><br>
-&nbsp; &nbsp; <span class="help" onMouseover="showDescription()" onMouseout="notip()">Description</span>  &#60;text&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showIncludeDir()" onMouseout="notip()">IncludeDir</span> &#60;dir&#62;, <span class="help" onMouseover="showInherit()" onMouseout="notip()">inherit</span>: true|false, <span class="help" onMouseover="showInfix()" onMouseout="notip()">inject</span>: front|back, <span class="help" onMouseover="showSystemInclude()" onMouseout="notip()">system</span>: true|false<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showSet()" onMouseout="notip()">Set</span> &#60;variable&#62;, value: &#60;value&#62; | cmd: &#60;line&#62;, <span class="help" onMouseover="showEnv()" onMouseout="notip()">env</span>: true|false<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showDependency()" onMouseout="notip()">Dependency</span> &#60;project&#62;,
-              <span class="help" onMouseover="showDependencyConfig()" onMouseout="notip()">config</span>: &#60;name&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showExternalLibrary()" onMouseout="notip()">ExternalLibrary</span> &#60;lib&#62;,
-                            <span class="help" onMouseover="showExternalLibrarySearch()" onMouseout="notip()">search</span>: true|false<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showUserLibrary()" onMouseout="notip()">UserLibrary</span> &#60;lib&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showExternalLibrarySearchPath()" onMouseout="notip()">ExternalLibrarySearchPath</span> &#60;path&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showPreSteps()" onMouseout="notip()">PreSteps</span> {<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefile()" onMouseout="notip()">Makefile</span> &#60;file&#62;,
-                                          <span class="help" onMouseover="showMakefileLib()" onMouseout="notip()">lib</span>: &#60;lib&#62;,
-                                          <span class="help" onMouseover="showMakefileTarget()" onMouseout="notip()">target</span>: &#60;target&#62;,
-                                          <span class="help" onMouseover="showMakefilePathTo()" onMouseout="notip()">pathTo</span>: &#60;paths&#62;,
-                                          <span class="help" onMouseover="showNoClean()" onMouseout="notip()">noClean</span>: true|false,
-                                          <span class="help" onMouseover="showChangeWorkingDir()" onMouseout="notip()">changeWorkingDir</span>: true|false,
-                                          <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
-                                          <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
-                                          <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62; {<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakefileFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; }<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCommandLine()" onMouseout="notip()">CommandLine</span> &#60;line&#62;,
-                                          <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
-                                          <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false,
-                                          <span class="help" onMouseover="showValidExitCodes()" onMouseout="notip()">validExitCodes</span>: &#60;[array]&#62;<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showSleep()" onMouseout="notip()">Sleep</span> &#60;seconds&#62;,
-                                          <span class="help" onMouseover="showEcho()" onMouseout="notip()">echo</span>: on|off,
-                                          <span class="help" onMouseover="showInde()" onMouseout="notip()">independent</span>: true|false<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMakeDir()" onMouseout="notip()">MakeDir</span> &#60;directory&#62;,
-                                          <span class="help" onMouseover="showEchoFileutils()" onMouseout="notip()">echo</span>: on|off<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showRemove()" onMouseout="notip()">Remove</span> &#60;file or directory&#62;,
-                                          <span class="help" onMouseover="showEchoFileutils()" onMouseout="notip()">echo</span>: on|off<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showTouch()" onMouseout="notip()">Touch</span> &#60;file or directory&#62;,
-                                          <span class="help" onMouseover="showEchoFileutils()" onMouseout="notip()">echo</span>: on|off<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCopy()" onMouseout="notip()">Copy</span> &#60;file or directory&#62;,
-                                          to: &#60;file or directory&#62;,
-                                          <span class="help" onMouseover="showEchoFileutils()" onMouseout="notip()">echo</span>: on|off<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showMove()" onMouseout="notip()">Move</span> &#60;file or directory&#62;,
-                                          to: &#60;file or directory&#62;,
-                                          <span class="help" onMouseover="showEchoFileutils()" onMouseout="notip()">echo</span>: on|off<br>
-
-
-&nbsp; &nbsp; }<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showPostSteps()" onMouseout="notip()">PostSteps</span> {<br>
-&nbsp; &nbsp; &nbsp; <span class="mycomment"># Same as for PreSteps</span><br>
-&nbsp; &nbsp; }<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showStartupSteps()" onMouseout="notip()">StartupSteps</span> {<br>
-&nbsp; &nbsp; &nbsp; <span class="mycomment"># Same as for PreSteps</span><br>
-&nbsp; &nbsp; }<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showExitSteps()" onMouseout="notip()">ExitSteps</span> {<br>
-&nbsp; &nbsp; &nbsp; <span class="mycomment"># Same as for PreSteps</span><br>
-&nbsp; &nbsp; }<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showCleanSteps()" onMouseout="notip()">CleanSteps</span> {<br>
-&nbsp; &nbsp; &nbsp; <span class="mycomment"># Same as for PreSteps</span><br>
-&nbsp; &nbsp; }<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showDefaultToolchain()" onMouseout="notip()">DefaultToolchain</span> &#60;basedOn&#62;, <span class="help" onMouseover="showOutputDir()" onMouseout="notip()">outputDir</span>: &#60;dir&#62;, <span class="help" onMouseover="showEclipseOrder()" onMouseout="notip()">eclipseOrder</span>: true|false {<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C,
-                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
-                                          <span class="help" onMouseover="showPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62;,
-                                          <span class="help" onMouseover="keepObjFileEndings()" onMouseout="notip()">keepObjFileEndings</span>: true|false {</i><br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showInternalDefines()" onMouseout="notip()">InternalDefines</span> &#60;file&#62;<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showSrcFileEndings()" onMouseout="notip()">SrcFileEndings</span> &#60;file&#62;<br>
-&nbsp; &nbsp; &nbsp; }<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultArchiver()" onMouseout="notip()">Archiver</span>
-                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
-                                          <span class="help" onMouseover="showArchiverPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; }<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultLinker()" onMouseout="notip()">Linker</span>
-                                          <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
-                                          <span class="help" onMouseover="showLinkerPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62;,
-                                          <span class="help" onMouseover="showOnlyDirectDeps()" onMouseout="notip()">onlyDirectDeps</span>: true|false {</i><br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefaultFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPrefixFlags()" onMouseout="notip()">LibPrefixFlags</span> &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPostfixFlags()" onMouseout="notip()">LibPostfixFlags</span> &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; }<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showInternalIncludes()" onMouseout="notip()">InternalIncludes</span> &#60;file&#62;<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDocu()" onMouseout="notip()">Docu</span> &#60;cmdLine&#62;<br>
-&nbsp; &nbsp; }<br>
-
-
-&nbsp; &nbsp; <span class="help" onMouseover="showToolchainProject()" onMouseout="notip()">Toolchain</span> <span class="help" onMouseover="showOutputDir()" onMouseout="notip()">outputDir</span>: &#60;dir&#62; {<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showCompiler()" onMouseout="notip()">Compiler</span> ASM | CPP | C,
-                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
-                                         <span class="help" onMouseover="showCuda()" onMouseout="notip()">cuda</span>: true|false,
-                                         <span class="help" onMouseover="showPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showSrcFileEndings()" onMouseout="notip()">SrcFileEndings</span> &#60;file&#62;<br>
-&nbsp; &nbsp; &nbsp; }<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showArchiver()" onMouseout="notip()">Archiver</span>
-                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
-                                         <span class="help" onMouseover="showArchiverPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62; {</i><br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; }<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLinker()" onMouseout="notip()">Linker</span>
-                                         <span class="help" onMouseover="showCommand()" onMouseout="notip()">command</span>: &#60;cmd&#62;,
-                                         <span class="help" onMouseover="showLinkerPrefix()" onMouseout="notip()">prefix</span>: &#60;prefix&#62;,
-                                         <span class="help" onMouseover="showOnlyDirectDeps()" onMouseout="notip()">onlyDirectDeps</span>: true|false {</i><br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPrefixFlags()" onMouseout="notip()">LibPrefixFlags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showLibPostfixFlags()" onMouseout="notip()">LibPostfixFlags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62<br>
-&nbsp; &nbsp; &nbsp; }<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showDocu()" onMouseout="notip()">Docu</span> &#60;cmdLine&#62;<br>
-&nbsp; &nbsp; }<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showPrebuild()" onMouseout="notip()">Prebuild</span> {<br>
-&nbsp; &nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showExcept()" onMouseout="notip()">Except</span> &#60;project&#62;,
-              <span class="help" onMouseover="showExceptConfig()" onMouseout="notip()">config</span>: &#60;name&#62;<br>
-&nbsp; &nbsp; }<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showCDB()" onMouseout="notip()">CompilationDB</span> &#60;filename&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showCCheck()" onMouseout="notip()">CompilationCheck</span> include: &#60;pattern&#62; exclude: &#60;pattern&#62; ignore: &#60;pattern&#62;<br>
-</span><br>
-
-</span>
-
-              <span id="libExe_part"><span class="show" style="background-color:#EEEEEE;">
-&nbsp; &nbsp; <span class="mycomment"># Valid for ExecutableConfig and LibraryConfig</span><br><br>
-&nbsp; &nbsp; <span class="help" onMouseover="showFiles()" onMouseout="notip()">Files</span> &#60;pattern&#62;, <span class="help" onMouseover="showCompileOnly()" onMouseout="notip()">compileOnly</span>: true|false, <span class="help" onMouseover="showLinkDirectly()" onMouseout="notip()">linkDirectly</span>: true|false {<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesFlags()" onMouseout="notip()">Flags</span> &#60;flags&#62;, add: &#60;flags&#62;, remove: &#60;flags&#62;<br>
-&nbsp; &nbsp; &nbsp; <span class="help" onMouseover="showFilesDefine()" onMouseout="notip()">Define</span> &#60;define&#62;<br>
-&nbsp; &nbsp; }<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showExcludeFiles()" onMouseout="notip()">ExcludeFiles</span> &#60;pattern&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showArtifactName()" onMouseout="notip()">ArtifactName</span> &#60;name&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showArtifactExtension()" onMouseout="notip()">ArtifactExtension</span> &#60;ext&#62;<br>
-</span><br></span>
-
-              <span id="exe_part"><span class="show" style="background-color:#EEEEEE;">
-&nbsp; &nbsp; <span class="mycomment"># Valid for ExecutableConfig</span><br><br>
-&nbsp; &nbsp; <span class="help" onMouseover="showLinkerScript()" onMouseout="notip()">LinkerScript</span> &#60;script&#62;<br>
-&nbsp; &nbsp; <span class="help" onMouseover="showMapFile()" onMouseout="notip()">MapFile</span> &#60;name&#62;<br>
-</span><br></span>
-
-              <span id="custom_part" class="hide"><span style="background-color:#EEEEEE;" class="show">
-&nbsp; &nbsp; <span class="mycomment"># Valid for CustomConfig</span><br>
-&nbsp; &nbsp; <span class="mycomment"># Same as for PreSteps</span><br>
-
-&nbsp; &nbsp; <br></span><br></span>
-&nbsp; }<br>
-}<br><br>
-Adapt toolchain: &#60;name&#62;, os: &#60;name&#62;, mainProject: &#60;name&#62;, mainConfig: &#60;name&#62; {<br>
-&nbsp; <span class="mycomment"># See Adapt documention for details.</span><br>
-}<br>
-
-
-<div id="dhtmltooltip"></div>
-
-<script type="text/javascript">
-
-
-function showProject() {
-  str = 'A bake project is very similiar to a project in Eclipse, Visual Studio, etc.<br>'+
-    'The name of the project is the directory name of the Project.meta file.'
-  ddrivetip("Project", "Yes", "1", "-",str)
-}
-
-function showDefaultConfig() {
-  str = 'Default configuration which is used if not explicitly specified on command line or Dependency definition.<br><br>'+
-    'Examples:<br>'+
-    '# Project.meta:<br>'+
-    'Dependency canDriver # uses default config of canDriver project<br>'+
-    '# Command line:<br>'+
-    'bake -m folder/dir/projABC # builds default config of project projABC'
-  ddrivetip("default", "No", "-", "-",str)
-}
-
-function showResponsible() {
-  str = "Specify all responsible persons of the project."
-  ddrivetip("Responsible", "No,", "0..1", "-",str)
-}
-
-function showDescription() {
-  str = 'Description of the project or config.'
-  ddrivetip("Description", "No", "0..1", "-",str)
-}
-
-function showVersion() {
-  str = 'If specified, the build will be aborted if bake version is lower than mininum or greater than maximum.<br>'+
-    'It is possible to define only minimum, only maximim or both version thresholds.<br>'+
-    'Minor and patch version numbers are optional.'
-  ddrivetip("RequiredBakeVersion", "No", "0..1", "-",str)
-}
-
-function showPerson() {
-  str = 'Person who is responsible for the project.'
-  ddrivetip("Person", "No", "0..1", "-",str)
-}
-
-function showPersonEmail() {
-  str = 'Use always double quotes (") for the email address.'
-  ddrivetip("email", "No", "-", "-",str)
-}
-
-function showExecutableConfig() {
-  document.getElementById('libExe_part').className="show"
-  document.getElementById('exe_part').className="show"
-  document.getElementById('custom_part').className="hide"
-  document.getElementById('executableConfig').className="showRadio"
-  document.getElementById('libraryConfig').className="hideRadio"
-  document.getElementById('customConfig').className="hideRadio"
-
-  str = 'This is usually the main config of an application.'
-  ddrivetip("ExecutableConfig", "No","0..n","-",str)
-}
-
-function showLibraryConfig() {
-  document.getElementById('libExe_part').className="show"
-  document.getElementById('exe_part').className="hide"
-  document.getElementById('custom_part').className="hide"
-  document.getElementById('executableConfig').className="hideRadio"
-  document.getElementById('libraryConfig').className="showRadio"
-  document.getElementById('customConfig').className="hideRadio"
-
-  str = 'This config is used for a source library. The library will be linked automatically to the executable.'
-  ddrivetip("LibraryConfig", "No","0..n","-",str)
-}
-
-function showCustomConfig() {
-  document.getElementById('libExe_part').className="hide"
-  document.getElementById('exe_part').className="hide"
-  document.getElementById('custom_part').className="show"
-  document.getElementById('executableConfig').className="hideRadio"
-  document.getElementById('libraryConfig').className="hideRadio"
-  document.getElementById('customConfig').className="showRadio"
-
-  str = 'This config is used for special projects, e.g. for Makefile projects.<br>'+
-    'It is valid to leave a CustomConfig completely empty - nothing will be done in that case.'
-  ddrivetip("CustomConfig", "No","0..n","-",str)
-}
-
-function showExternalLibrary() {
-  str = 'Every config can specify libs which have to be linked to the executable.<br>'+
-    'It\'s possible to add a path, e.g.:<br>'+
-    '<i> &nbsp; &nbsp; ExternalLibrary "xy/z/ab"</i><br>'+
-    'In this case the lib "ab" is added to the linker command line as well as the lib search path "xy/z".<br>'+
-    'Note, that the linker will look for "libab.a".'
-  ddrivetip("ExternalLibrary", "No","0..n","-",str)
-}
-
-function showExternalLibrarySearch() {
-  str = 'If the attribute "search: false" is specified, the lib will not be searched but linked with the full name, e.g.<br>'+
-    '<i> &nbsp; &nbsp; ExternalLibrary "xy/z/libpq.a", search: false</i><br>'+
-    'will link "xy/z/libpq.a" to the executable.<br>'+
-    'It is also possible to specify an object file when using "search: false".'
-  ddrivetip("search", "No","-","true",str)
-}
-
-function showUserLibrary() {
-  str = 'A user library will be linked <i>before</i> any other libraries or objects to the executable.<br>'+
-    'It is also possible to specify an object file.<br>'+
-    'The library will be searched like an ExternalLibrary, but with the full name, e.g.<br>'+
-    '<i> &nbsp; &nbsp; UserLibrary "xy/z/libUser.a"</i><br>'+
-    '<i> &nbsp; &nbsp; UserLibrary "xy/z/something.o"</i><br>'+
-    'will link "libUser.a" and "something.o" before regular objects and libraries.<br>'+
-    '"xy/z" will be added as an ExternalLibrarySearchPath.'
-  ddrivetip("UserLibrary", "No","0..n","-",str)
-}
-
-function showExternalLibrarySearchPath() {
-  str = 'The linker looks for libraries in search paths.<br>'+
-    'Search paths can be defined implicitly by ExternalLibrary/UserLibrary or explicitly by this tag.'
-  ddrivetip("ExternalLibrarySearchPath", "No","0..n","-",str)
-}
-
-function showPreSteps() {
-  str = 'PreSteps are executed before compiling files of the project.<br>'+
-    'The number of steps are not limited.<br>'+
-    'If a step fails, all further steps of the project will be skipped.'
-  ddrivetip("PreSteps", "No","0..1","-",str)
-}
-
-function showPostSteps() {
-  str = 'PostSteps are executed after the main task of the project, e.g. linking an executable.<br>'+
-    'The number of steps are not limited.<br>'+
-    'If a step fails, all further steps of the project will be skipped.'
-  ddrivetip("PostSteps", "No","0..1","-",str)
-}
-
-function showStartupSteps() {
-  str = 'StartupSteps of ALL projects are executed before building the first project.<br>'+
-    'The number of steps are not limited.'
-  ddrivetip("StartupSteps", "No","0..1","-",str)
-}
-
-function showExitSteps() {
-  str = 'ExitSteps of ALL projects are executed after building complete workspace even if the build has failed.<br>'+
-    'The number of steps are not limited.'
-  ddrivetip("ExitSteps", "No","0..1","-",str)
-}
-
-function showCleanSteps() {
-  str = 'CleanSteps are executed when calling bake with "-c" or "--rebuild".<br>'+
-    'The number of steps are not limited.<br>'+
-    'If a step fails, all further steps will be skipped.'
-  ddrivetip("CleanSteps", "No","0..1","-",str)
-}
-
-function showEcho() {
-  str = '"on" means the command line is shown in output, "off" means the command line is not shown.'
-  ddrivetip("echo", "No","-","on",str)
-}
-
-function showEchoFileutils() {
-  str = '"on" means a debug output is shown'
-  ddrivetip("echo", "No","-","on",str)
-}
-
-function showInde() {
-  str = '"true" means the step can be built in parallel to other projects. "false" means everything before must be completed, the step runs exclusively.'
-  ddrivetip("independent", "No","-","false",str)
-}
-
-function showValidExitCodes() {
-  str = 'Define it as an array, e.g.:<br>'+
-    '..., validExitCodes: [200,201,202]'
-  ddrivetip("validExitCodes", "No","-","[0]",str)
-}
-
-function getMakefileDesc() {
-  return 'Makefile to be started, e.g.:<br>'+
-    '<i> &nbsp; &nbsp; Makefile "subDir/makefile"</i><br>'+
-    'Before executing the makefile, bake sets the environment variables<br>'+
-    ' &nbsp; &nbsp; $(BAKE_XX_COMMAND) and $(BAKE_XX_FLAGS),<br>'+
-    'whereas XX is one of <br>'+
-    ' &nbsp; &nbsp; CPP, C, ASM, AR or LD.'
-}
-
-function showMakefile() {
-  ddrivetip("Makefile", "No","0..n","-",getMakefileDesc())
-}
-
-function showMakefileLib() {
-  str = 'If the result of the makefile is a library which shall be linked to the executable, name it here.'
-  ddrivetip("lib", "No","-","-",str)
-}
-
-function showMakefileTarget() {
-  str = 'The target of the makefile.'
-  ddrivetip("target", "No","-","all",str)
-}
-
-function showMakefilePathTo() {
-  str = 'Comma separated list, e.g. "common, abc, xy".<br>'+
-    'The makefile can use variables like $(PATH_TO_common). This is very useful if paths to other projects are needed in the makefile.<br>'+
-    'Remember that more than one workspace root can exist and a hardcoded "../common" is not reliable in that case.<br>'+
-    '$(PATH_TO_common) will result in the path from the parent directory of the current project to the common project without the common directory itself. '+
-    'So if the current project and the common project have the same parent folder, the string will be empty.<br>'+
-    'Example:<br>'+
-    'makefile: c:\\workspaceroot\\yourProject\\makefile<br>'+
-    'usage in makefile: gcc -I$../../$(PATH_TO_common)common/include ...<br>'+
-    'It\'s done like this due to compatibility reasons.'
-  ddrivetip("pathTo", "No","-","-",str)
-}
-
-function showNoClean() {
-  str = 'If project is cleaned (e.g. with command line argument -c), the target "clean" will be executed unless noClean is set to true.'
-  ddrivetip("noClean", "No","0..1","false",str)
-}
-
-function showChangeWorkingDir() {
-	  str = 'If set to false, the working directory will be the project directory instead of the makefile directory.'
-	  ddrivetip("changeWorkingDir", "No","0..1","true",str)
-	}
-
-function showMakefileFlags() {
-      ddrivetip("Flags", "No","0..n","-j","Additional makefile flags.")
-}
-
-function getCommandLineDesc() {
-  return 'A command to execute, e.g.:<br>'+
-    '<i> &nbsp; &nbsp; CommandLine "ddump -Ruv -y 0xFFFFF -oRelease/application.bin Release/application.elf"</i><br>'+
-    '<i> &nbsp; &nbsp; CommandLine "echo Hello world!"</i><br>'
-}
-
-function showCommandLine() {
-  ddrivetip("CommandLine", "No","0..n","-",getCommandLineDesc())
-}
-
-function showSleep() {
-  ddrivetip("Sleep", "No","0..n","0.0","Sleep in seconds, floats are allowed.")
-}
-
-function showMakeDir() {
-  ddrivetip("MakeDir", "No","0..n","-","A file or folder will be created.")
-}
-
-function showRemove() {
-  ddrivetip("Remove", "No","0..n","-","A file or folder will be removed.")
-}
-
-function showTouch() {
-  ddrivetip("Touch", "No","0..n","-","A file or folder will be touched.")
-}
-
-function showCopy() {
-  ddrivetip("Copy", "No","0..n","-","A file or folder will be copied.")
-}
-
-function showMove() {
-  ddrivetip("Move", "No","0..n","-","A file or folder will be moved.")
-}
-
-function showEclipseOrder() {
-  str = 'If not specified or false, all files are compiled in order of appearance in Project.meta. '+
-  'If the filename is a glob pattern, files are sorted alphabetically.<p>'+
-  'If true, files are compiled in alphabetical order within a folder, '+
-  'but the folders are sorted in reverse alphabetical order.<br>'+
-  'This is only used for backward compatibility.'
-  ddrivetip("eclipseOrder", "No","-","false",str)
-}
-
-function showOutputDir() {
-  str = 'Specifies the output folder.<p>'+
-    'Use always relative paths, not absolute paths due to portability.<p>'+
-    'Use always "/" and not "\\".<p>'+
-    'If the first part of the path is equal to a project name, it is used as a shortcut to this project root. <br>'+
-    'To avoid this magic, use something like this: <br>'+
-    '<i> &nbsp; &nbsp; IncludeDir "./abc/include"</i><br>'
-  ddrivetip("outputdir", "No","0..1","-",str)
-}
-
-function showCuda() {
-  str = 'Enables Cuda hack.<br>'+
-    'Adds some prefixes in front of dependency flags.'
-  ddrivetip("cuda", "No","0..1","false",str)
-}
-
-function showCompileOnly() {
-    ddrivetip("compileOnly", "No","0..1","false","If set, the files will not be archived or linked.")
-}
-
-function showLinkDirectly() {
-    ddrivetip("linkDirectly", "No","0..1","false","If set, the files will not be archived but linked directly to the executable.")
-}
-
-function showExtends() {
-    ddrivetip("extends", "No","0..1","-","Inherit settings from parent config(s).<br>For more information see docu page 'Derive configs'.")
-}
-
-function showPrivate() {
-    ddrivetip("private", "No","0..1","false","If true, the config cannot be referenced directly outside of this project.")
-}
-
-function showMergeInc() {
-    ddrivetip("mergeInc", "No","0..1","-",
-        "If set to \"no\", the IncludeDirs will NEVER be merged.<br>"+
-        "If set to \"yes\", inherited IncludeDirs will merged when compiling this config (except for IncludeDirs which configs have mergeInc \"no\".<br>"+
-        "If set to \"all\", all IncludeDirs will merged when compiling this config (except for IncludeDirs which configs have mergeInc \"no\".<br>"+
-        "If unset, IncludeDirs will not be merged when compiling this config.")
-}
-
-function showFiles() {
-  str = 'Specifies the files to build.<br>'+
-    'It\'s valid to specify a single file, e.g.<br>'+
-    '<i> &nbsp; &nbsp; Files "src/abc/def.asm"</i><br>'+
-    'or a pattern, e.g.<br>'+
-    '<i> &nbsp; &nbsp; Files "*/**/.cpp"</i><br>'+
-    'which builds all files with the ending ".cpp" in all subdirectories.<br>'+
-    'Note: ".." is not allowed in the file path. All files must be located within the project.<br>'+
-    'Note: if patterns are used, Flags and Define are ignored.'
-  ddrivetip("Files", "No","0..n","-",str)
-}
-
-function showExcludeFiles() {
-  str = 'Used to ignore files or directories.<br>'+
-    'ExcludeFiles has higher priority than Files.'
-  ddrivetip("ExcludeFiles", "No","0..n","-",str)
-}
-
-function showIncludeDir() {
-  str = 'Specifies the include directories for the assembler, C and C++ compiler.<p>'+
-    'Use always relative paths, not absolute paths due to portability.<p>'+
-    'Use always "/" and not "\\".<p>'+
-    'It is possible to work with different workspace roots. Do not include something like this: <br>'+
-    '<i> &nbsp; &nbsp; IncludeDir "../abc/include"</i><br>'+
-    'but<br>'+
-    '<i> &nbsp; &nbsp; IncludeDir "abc/include"</i><br>'+
-    'because it may happen, that abc does not exist in the same root as the current project. The path to abc will be calculated automatically.<p>'+
-    'To include directories of the current project, the project name can be omitted like this:<br>'+
-    '<i> &nbsp; &nbsp; IncludeDir "include"</i><br>'+
-    '<i> &nbsp; &nbsp; IncludeDir "generated/include"</i><br>'
-  ddrivetip("IncludeDir", "No","0..n","-",str)
-}
-
-function showInherit() {
-  str = 'Inherits the include to all projects, which depend on this project.'
-  ddrivetip("inherit", "No","0..1","false",str)
-}
-
-function showInfix() {
-  str = 'Injects the include path to all childs, either at the front (e.g. for mocking code) or at the end.'
-  ddrivetip("inject", "No","0..1","-",str)
-}
-
-function showSystemInclude() {
-  str = 'If supported from the compiler, the system include flag will be used instead of the normal include flag.<br>'+
-    'Example: in gcc "-isystem" instead of "-I" is used.<br>'+
-    'Note: system include definition overrules normal include definition if both are defined.'
-  ddrivetip("system", "false","0..1","-",str)
-}
-
-function showSet() {
-  str = 'Sets a variable for this and all dependent projects.<br>'+
-  'The variable can be a simple value or the result of a cmd, e.g. \"cat myVar.txt\".'
-    ddrivetip("Set", "No","0..n","-",str)
-}
-
-function showEnv() {
-  str = 'Stores the variable also in system environment, which makes it available in everything which is executed by bake, e.g. in Pre- and PostSteps.'
-    ddrivetip("env", "No","-","false",str)
-}
-
-function showDependency() {
-  str = 'Specifies another project to be built before this project.<br>'+
-    'The archive, linker libs and search paths are imported from this project to the this project automatically.<br>'+
-    'If you omit the project, the current project will be used.<br>'+
-    'If you omit the config name, the default config will be used.<br>'+
-    '<b>Examples:</b><br>'+
-    '&nbsp;&nbsp; <i>Dependency gtest, config: lib<br>'+
-    '&nbsp;&nbsp; Dependency "my/folder/proj"</i>'
-    ddrivetip("Dependency", "No","0..n","-",str)
-}
-
-function showDependencyConfig() {
-  str = 'Config name of the project to build.'
-    ddrivetip("config", "Yes","-","-",str)
-}
-
-function showLinkerScript() {
-  str = 'Specifies the name including path of the linker script.'
-  ddrivetip("Dependency", "No","0..1","-",str)
-}
-
-function showMapFile() {
-  str = 'A mapfile will be written by the linker.'
-  ddrivetip("MapFile", "No","0..1","If name attribute is omitted: $(OutputDir)/$(ArtifactNameBase).map",str)
-}
-
-function showArtifactName() {
-  str = 'The artifact name inclusive file ending.<br>'+
-    'The artifact will be placed in the output directory.'
-  ddrivetip("ArtifactName","No","0..1","Executable: project name + toolchain dependent file ending. Library: 'lib' + project name + '.a'",str)
-}
-
-function showArtifactExtension() {
-  str = 'The artifact extension, e.g. "exe".<br>'+
-    'If ArtifactName is also specified, ArtifactExtension has no effect.'
-  ddrivetip("ArtifactExtension","No","0..1","toolchain dependent file ending",str)
-}
-
-function showMakefileCustom() {
-  document.getElementById('makefile_part').className="showInline"
-  document.getElementById('commandline_part').className="hide"
-  document.getElementById('makefile').className="showRadio"
-  document.getElementById('commandline').className="hideRadio"
-  ddrivetip("Makefile", "No","0..1 - Either Makefile or CommandLine","-",getMakefileDesc())
-}
-
-function showCommandlineCustom() {
-  document.getElementById('makefile_part').className="hide"
-  document.getElementById('commandline_part').className="showInline"
-  document.getElementById('makefile').className="hideRadio"
-  document.getElementById('commandline').className="showRadio"
-  ddrivetip("CommandLine", "No","0..1 - Either Makefile or CommandLine","-",getCommandLineDesc())
-}
-
-function flagExample() {
-    return  "<br>For removing flags use plain strings or regular expressions which can be interpreted by ruby (both is checked!).<br>"+
-    "Flags will be only removed if matching completely (not only a substring).<br><br>"+
-    "Flag strings are always splitted at spaces and computed individually.<br><br>"+
-    "<b>Examples:</b><br>"+
-    "&nbsp;&nbsp; <i>Flags \"-x -y\"</i> overwrites the inherited flags<br><br>"+
-    "&nbsp;&nbsp; <i>Flags add: \"-x -y\"</i> adds -x and -y if not exist<br><br>"+
-    "&nbsp;&nbsp; <i>Flags remove: \"-x -y\"</i> removes -x and -y if exist<br><br>"+
-    "&nbsp;&nbsp; It is possible to combine the attributes like this:<br>"+
-    "&nbsp;&nbsp; <i>Flags remove: \"-x\", add: \"-y\"</i><br><br>"+
-    "&nbsp;&nbsp; To remove -g followed by any string, e.g. -g3, the command is:<br>"+
-    "&nbsp;&nbsp; <i>Flags remove: \"-g.*\"</i><br>"+
-    "&nbsp;&nbsp; An inherited flag string \"-abc -g3 -xy\" will end up in \"-abc -xy\"."
-}
-
-function showPrebuild() {
-  str = 'If defined, all configs of the workspace will be skipped per default. Must be actived by the commandline option "--prebuild"'
-  ddrivetip("Prebuild", "No","0..1","No project/config is skipped",str)
-}
-
-function showExcept() {
-  str = 'Defines a project which shall not be skipped. If project name is omitted, the current project is used.'
-  ddrivetip("Except", "No","0..n","Every project is skipped",str)
-}
-
-function showExceptConfig() {
-  str = 'Defines a config which shall not be skipped. If omitted, all configs of the appropriate project are not skipped.'
-  ddrivetip("Toolchain", "No","0..1","Every config is skipped",str)
-}
-
-function showCDB() {
-  str = "Generates a compilation database in json.<br>"+
-    "<b>Example:</b><br>"+
-    "<i>CompilationDB \"$(ProjectDir)/db.json\"</i>"
-  ddrivetip("CompilationDB", "No","0..1","None. If CompilationDB is specified without an explicit filename, $(WorkspaceDir)/compile_commands.json is used.",str)
-}
-
-function showCCheck() {
-  str = "Checks if files are included or excluded in build.<br>"+
-    "Priority if files are mentioned multiple times: ignore > exclude > include.<br>"+
-    "In case a check fails, bake will print a warning.<br>"+
-    "<b>Examples:</b><br>"+
-    "<i>CompilationCheck include: \"include/*.h\", ignore: \"include/ignoreThis.h\"</i><br>"+
-    "<i>CompilationCheck include: \"$(ProjectDir, anotherLib)/src/important*\"</i>"
-  ddrivetip("CompilationCheck", "No","0..n","-",str)
-}
-
-function showToolchainProject() {
-  str = 'Toolchain adaptions for a project.'
-  ddrivetip("Toolchain", "No","0..1","The DefaultToolchain settings from the main project",str)
-}
-
-function showDefaultToolchain() {
-  str = 'Settings which are valid for all projects and files unless they will be overwritten.<br>'+
-    'The attribute "basedOn" specifies the basic toolchain configuration provided by bake, e.g. "GCC", "Diab", etc.'
-  ddrivetip("DefaultToolchain", "In main project","0..1","-",str)
-}
-
-function showFilesFlags() {
-  ddrivetip("Flags", "No","0..n","Flags from project","Flags from the project can be overwritten, extended or (partly) removed.<br>"+flagExample())
-}
-
-function showFilesDefine() {
-  ddrivetip("Define", "No","0..n","-","Defines which are valid only for a specific file.")
-}
-
-function showFlags() {
-  ddrivetip("Flags", "No","0..n","Flags from DefaultToolchain","Flags from the DefaultToolchain can be overwritten, extended or (partly) removed.<br>"+flagExample())
-}
-
-function showDefine() {
-  ddrivetip("Define", "No","0..n","-","Defines valid for all files in the project.")
-}
-
-function showLibPrefixFlags() {
-  ddrivetip("LibPrefixFlags", "No","0..n","-","Linker libs can be prefixed if needed, e.g. with \"-Wl,--whole-archive\".")
-}
-
-function showLibPostfixFlags() {
-  ddrivetip("LibPostfixFlags", "No","0..n","-","Linker libs can be postfixed if needed, e.g. with \"-Wl,--no-whole-archive\".")
-}
-
-function showCompiler() {
-  ddrivetip("Compiler", "No","0..3 (for each compiler type: ASM, CPP, C)","-","Flags and defines can be specified independently for each compiler type.")
-}
-
-function showArchiver() {
-  ddrivetip("Archiver", "No","0..1","-","Settings for the archiver.")
-}
-
-function showLinker() {
-  ddrivetip("Linker", "No","0..1","-","Makes sense only for ExecutableConfigs.")
-}
-
-function showDocu() {
-  ddrivetip("Docu", "No","0..1","-","Command to build the documentation. e.g.:<br>doxygen main.cfg")
-}
-
-function showDefaultFlags() {
-  ddrivetip("Flags", "No","0..n","-","Default flags.")
-}
-
-function showDefaultDefine() {
-  ddrivetip("Define", "No","0..n","-","Defines which are valid for all files.")
-}
-
-function showInternalDefines() {
-  ddrivetip("InternalDefines", "No","0..1","-","File with list of compiler internal defines.<br>One define per line.<br>Empty lines and comments with # are allowed.")
-}
-
-function showInternalIncludes() {
-  ddrivetip("InternalIncludes", "No","0..1","-","File with list of compiler internal include folders.<br>One folder per line.<br>Empty lines and comments with # are allowed.")
-}
-
-function showDefaultCompiler() {
-  ddrivetip("Compiler", "No","0..3 (for each compiler type: ASM, CPP, C)","-","Default compiler settings.")
-}
-
-function showDefaultArchiver() {
-  ddrivetip("Archiver", "No","0..1","-","Default settings for the archiver.")
-}
-
-function showDefaultLinker() {
-  ddrivetip("Linker", "No","0..1","-","Default settings for the linker.")
-}
-
-function showCommand() {
-  ddrivetip("command", "No","-","Depending on toolchain, e.g. \"gcc\"","Change command, e.g. \"$(PATH_TO_EXE)/gcc_speciale.exe\"")
-}
-
-function showPrefix() {
-  ddrivetip("prefix", "No","-","$(CompilerPrefix)","Wrapper for compiler, e.g. a (s)ccache. If variable is not set, no prefix is used.<br>You can use the adapt feature to set the variable or overwrite the prefix.")
-}
-
-function keepObjFileEndings() {
-  ddrivetip("keepObjFileEndings", "No","-","false","If false (default), the original source file endings will be cutted off (e.g. file1.cpp to file1.o), otherwise kept (file1.cpp.o).")
-}
-
-function showSrcFileEndings() {
-  ddrivetip("SrcFileEndings", "No","-","-","List of all source file endings with dot and comma separated which are handled by this CPP, C or ASM compiler, e.g. \".cpp, .c, .cxx\".<br>The list must not be empty.")
-}
-
-function showArchiverPrefix() {
-  ddrivetip("prefix", "No","-","$(ArchiverPrefix)","Wrapper for archiver. If variable is not set, no prefix is used.<br>You can use the adapt feature to set the variable or overwrite the prefix.")
-}
-
-function showLinkerPrefix() {
-  ddrivetip("prefix", "No","-","$(LinkerPrefix)","Wrapper for linker. If variable is not set, no prefix is used.<br>You can use the adapt feature to set the variable or overwrite the prefix.")
-}
-
-function showOnlyDirectDeps() {
-  ddrivetip("onlyDirectDeps", "No","-","false","If set to true, only first level libraries will be linked (not sub-dependencies from dependencies).")
-}
-
-
-var offsetxpoint=20 //Customize x offset of tooltip
-var offsetypoint=30 //Customize y offset of tooltip
-var ie=document.all
-var ns6=document.getElementById && !document.all
-var enabletip=false
-if (ie||ns6)
-var tipobj=document.all? document.all["dhtmltooltip"] : document.getElementById? document.getElementById("dhtmltooltip") : ""
-
-function ietruebody(){
-return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
-}
-
-function ddrivetip(item, manda, quan, def, desc){
-if (ns6||ie){
-
-var abc=ie&&!window.opera? ietruebody().clientWidth : window.innerWidth
-
-tipobj.style.width=(abc/2-offsetxpoint*2).toString()+"px"
-tipobj.style.backgroundColor="#DDFFDD"
-tipobj.innerHTML="<b><u>"+item+"</u><br><br>Mandatory:</b> "+manda+"<br><b>Quantity</b>: "+quan+"<br><b>Default</b>: "+def+"<br><br><b>Description</b>:<br>"+desc
-enabletip=true
-return false
-}
-}
-
-function positiontip(e){
-if (enabletip){
-var curX=(ns6)?e.offsetX : event.clientX+ietruebody().scrollLeft;
-var curY=(ns6)?e.pageY-80 : event.clientY+ietruebody().scrollTop;
-//Find out how close the mouse is to the corner of the window
-var rightedge=ie&&!window.opera? ietruebody().clientWidth-event.clientX-offsetxpoint : window.innerWidth-e.clientX-offsetxpoint
-var bottomedge=ie&&!window.opera? ietruebody().clientHeight-event.clientY-offsetypoint*2 : window.innerHeight-e.clientY-offsetypoint
-var bottom=ie&&!window.opera? ietruebody().clientHeight : window.innerHeight
-
-var leftedge=(offsetxpoint<0)? offsetxpoint*(-1) : offsetxpoint
-
-//if the horizontal distance isn't enough to accomodate the width of the context menu
-if (rightedge<tipobj.offsetWidth+offsetxpoint/2)
-//move the horizontal position of the menu to the left by it's width
-tipobj.style.left=ie? ietruebody().scrollLeft+event.clientX-tipobj.offsetWidth-offsetxpoint+"px" : window.pageXOffset+e.clientX-tipobj.offsetWidth-offsetxpoint+"px"
-else if (curX<leftedge)
-tipobj.style.left="5px"
-else
-//position the horizontal position of the menu where the mouse is positioned
-tipobj.style.left=curX+offsetxpoint+"px"
-
-//same concept with the vertical position
-if (bottomedge<tipobj.offsetHeight)
-tipobj.style.top=ie? ietruebody().scrollTop+bottom-tipobj.offsetHeight-offsetypoint+"px" : window.pageYOffset+bottom-tipobj.offsetHeight-offsetypoint+"px"
-else
-tipobj.style.top=curY+offsetypoint+"px"
-tipobj.style.visibility="visible"
-}
-}
-
-
-function notip(){
-if (ns6||ie){
-enabletip=false
-tipobj.style.visibility="hidden"
-tipobj.style.left="-1000px"
-tipobj.style.backgroundColor=''
-tipobj.style.width=''
-}
-}
-
-document.onmousemove=positiontip
-
-</script>
-
-</td></table>
-
-</body>
-</html>
+<pre class="literal-block"><a class="reference internal" href="#project"><span class="std std-ref">Project</span></a> <a class="reference internal" href="#defaultconfig"><span class="std std-ref">default</span></a>: &lt;name&gt; {
+
+  <a class="reference internal" href="#description"><span class="std std-ref">Description</span></a> &lt;text&gt;
+
+  <a class="reference internal" href="#requiredbakeversion"><span class="std std-ref">RequiredBakeVersion</span></a> minimum: &lt;major.minor.patch&gt;, maximum: &lt;major.minor.patch&gt;
+
+  <a class="reference internal" href="#responsible"><span class="std std-ref">Responsible</span></a> {
+    <a class="reference internal" href="#person"><span class="std std-ref">Person</span></a> &lt;name&gt;, <a class="reference internal" href="#email"><span class="std std-ref">email</span></a>: &lt;adr&gt;
+  }
+
+  # 0..n configs
+  <a class="reference internal" href="#executableconfig"><span class="std std-ref">ExecutableConfig</span></a> | <a class="reference internal" href="#libraryconfig"><span class="std std-ref">LibraryConfig</span></a> | <a class="reference internal" href="#customconfig"><span class="std std-ref">CustomConfig</span></a> &lt;name&gt;, <a class="reference internal" href="#extends"><span class="std std-ref">extends</span></a>: &lt;parent(s)&gt;,
+    <a class="reference internal" href="#mergeinc"><span class="std std-ref">mergeInc</span></a>: yes|no, <a class="reference internal" href="#private"><span class="std std-ref">private</span></a>: true|false {
+
+    # Valid for all config types
+
+    <a class="reference internal" href="#description"><span class="std std-ref">Description</span></a> &lt;text&gt;
+    <a class="reference internal" href="#includedir"><span class="std std-ref">IncludeDir</span></a> &lt;dir&gt;, <a class="reference internal" href="#inherit"><span class="std std-ref">inherit</span></a>: true|false, <a class="reference internal" href="#inject"><span class="std std-ref">inject</span></a>: front|back, <a class="reference internal" href="#system"><span class="std std-ref">system</span></a>: true|false
+    <a class="reference internal" href="#set"><span class="std std-ref">Set</span></a> &lt;variable&gt;, value: &lt;value&gt; | cmd: &lt;line&gt;, <a class="reference internal" href="#env"><span class="std std-ref">env</span></a>: true|false
+    <a class="reference internal" href="#dependency"><span class="std std-ref">Dependency</span></a> &lt;project&gt;, <a class="reference internal" href="#configdependency"><span class="std std-ref">config</span></a>: &lt;name&gt;
+    <a class="reference internal" href="#externallibrary"><span class="std std-ref">ExternalLibrary</span></a> &lt;lib&gt;, <a class="reference internal" href="#searchexternallibrary"><span class="std std-ref">search</span></a>: true|false
+    <a class="reference internal" href="#userlibrary"><span class="std std-ref">UserLibrary</span></a> &lt;lib&gt;
+    <a class="reference internal" href="#externallibrarysearchpath"><span class="std std-ref">ExternalLibrarySearchPath</span></a> &lt;path&gt;
+    <a class="reference internal" href="#presteps"><span class="std std-ref">PreSteps</span></a> {
+      <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a> &lt;file&gt;, <a class="reference internal" href="#makefilelib"><span class="std std-ref">lib</span></a>: &lt;lib&gt;, <a class="reference internal" href="#makefiletarget"><span class="std std-ref">target</span></a>: &lt;target&gt;, <a class="reference internal" href="#makefilepathto"><span class="std std-ref">pathTo</span></a>: &lt;paths&gt;, <a class="reference internal" href="#makefilenoclean"><span class="std std-ref">noClean</span></a>: true|false,
+        <a class="reference internal" href="#makefilechangeworkingdir"><span class="std std-ref">changeWorkingDir</span></a>: true|false, <a class="reference internal" href="#echononfileutils"><span class="std std-ref">echo</span></a>: on|off, <a class="reference internal" href="#independent"><span class="std std-ref">independent</span></a>: true|false, <a class="reference internal" href="#validexitcodes"><span class="std std-ref">validExitCodes</span></a>: &lt;[array]&gt; {
+        <a class="reference internal" href="#makefileflags"><span class="std std-ref">Flags</span></a> &lt;flags&gt;
+      }
+      <a class="reference internal" href="#commandline"><span class="std std-ref">CommandLine</span></a> &lt;line&gt;, <a class="reference internal" href="#echononfileutils"><span class="std std-ref">echo</span></a>: on|off, <a class="reference internal" href="#independent"><span class="std std-ref">independent</span></a>: true|false, <a class="reference internal" href="#validexitcodes"><span class="std std-ref">validExitCodes</span></a>: &lt;[array]&gt;
+      <a class="reference internal" href="#sleep"><span class="std std-ref">Sleep</span></a> &lt;seconds&gt;, <a class="reference internal" href="#echononfileutils"><span class="std std-ref">echo</span></a>: on|off, <a class="reference internal" href="#independent"><span class="std std-ref">independent</span></a>: true|false
+      <a class="reference internal" href="#makedir"><span class="std std-ref">MakeDir</span></a> &lt;directory&gt;, <a class="reference internal" href="#echofileutils"><span class="std std-ref">echo</span></a>: on|off
+      <a class="reference internal" href="#remove"><span class="std std-ref">Remove</span></a> &lt;file or directory&gt;, <a class="reference internal" href="#echofileutils"><span class="std std-ref">echo</span></a>: on|off
+      <a class="reference internal" href="#touch"><span class="std std-ref">Touch</span></a> &lt;file or directory&gt;, <a class="reference internal" href="#echofileutils"><span class="std std-ref">echo</span></a>: on|off
+      <a class="reference internal" href="#copy"><span class="std std-ref">Copy</span></a> &lt;file or directory&gt;, to: &lt;file or directory&gt;, <a class="reference internal" href="#echofileutils"><span class="std std-ref">echo</span></a>: on|off
+      <a class="reference internal" href="#move"><span class="std std-ref">Move</span></a> &lt;file or directory&gt;, to: &lt;file or directory&gt;, <a class="reference internal" href="#echofileutils"><span class="std std-ref">echo</span></a>: on|off
+    }
+    <a class="reference internal" href="#poststeps"><span class="std std-ref">PostSteps</span></a> {
+      # Same as for PreSteps
+    }
+    <a class="reference internal" href="#startupsteps"><span class="std std-ref">StartupSteps</span></a> {
+      # Same as for PreSteps
+    }
+    <a class="reference internal" href="#exitsteps"><span class="std std-ref">ExitSteps</span></a> {
+      # Same as for PreSteps
+    }
+    <a class="reference internal" href="#cleansteps"><span class="std std-ref">CleanSteps</span></a> {
+      # Same as for PreSteps
+    }
+    <a class="reference internal" href="#defaulttoolchain"><span class="std std-ref">DefaultToolchain</span></a> &lt;basedOn&gt;, <a class="reference internal" href="#outputdir"><span class="std std-ref">outputdir</span></a>: &lt;dir&gt;, <a class="reference internal" href="#eclipseorder"><span class="std std-ref">eclipseOrder</span></a>: true|false {
+      <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a> ASM | CPP | C, <a class="reference internal" href="#command"><span class="std std-ref">command</span></a>: &lt;cmd&gt;, <a class="reference internal" href="#prefix"><span class="std std-ref">prefix</span></a>: &lt;prefix&gt;, <a class="reference internal" href="#keepobjfileendings"><span class="std std-ref">keepObjFileEndings</span></a>: true|false {
+        <a class="reference internal" href="#defaultflags"><span class="std std-ref">Flags</span></a> &lt;flags&gt;
+        <a class="reference internal" href="#defaultdefine"><span class="std std-ref">Flags</span></a> &lt;define&gt;
+        <a class="reference internal" href="#internaldefines"><span class="std std-ref">InternalDefines</span></a> &lt;file&gt;
+        SrcFileEndings &lt;endings&gt;
+      }
+      <a class="reference internal" href="#archiver"><span class="std std-ref">Archiver</span></a> <a class="reference internal" href="#command"><span class="std std-ref">command</span></a>: &lt;cmd&gt;, <a class="reference internal" href="#prefix"><span class="std std-ref">prefix</span></a>: &lt;prefix&gt; {
+        <a class="reference internal" href="#defaultflags"><span class="std std-ref">Flags</span></a> &lt;flags&gt;
+      }
+      <a class="reference internal" href="#linker"><span class="std std-ref">Linker</span></a> <a class="reference internal" href="#command"><span class="std std-ref">command</span></a>: &lt;cmd&gt;, <a class="reference internal" href="#prefix"><span class="std std-ref">prefix</span></a>: &lt;prefix&gt;, <a class="reference internal" href="#onlydirectdeps"><span class="std std-ref">onlyDirectDeps</span></a>: true|false {
+        <a class="reference internal" href="#defaultflags"><span class="std std-ref">Flags</span></a> &lt;flags&gt;
+        <a class="reference internal" href="#libprefixflags"><span class="std std-ref">LibPrefixFlags</span></a> &lt;flags&gt;
+        <a class="reference internal" href="#libpostfixflags"><span class="std std-ref">LibPostfixFlags</span></a> &lt;flags&gt;
+      }
+      <a class="reference internal" href="#internalincludes"><span class="std std-ref">InternalIncludes</span></a> &lt;file&gt;
+      <a class="reference internal" href="#docu"><span class="std std-ref">Docu</span></a> &lt;cmdLine&gt;
+    }
+    <a class="reference internal" href="#toolchain"><span class="std std-ref">Toolchain</span></a> <a class="reference internal" href="#outputdir"><span class="std std-ref">outputdir</span></a>: &lt;dir&gt; {
+      <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a> ASM | CPP | C, <a class="reference internal" href="#command"><span class="std std-ref">command</span></a>: &lt;cmd&gt;, <a class="reference internal" href="#cuda"><span class="std std-ref">cuda</span></a>: true|false, <a class="reference internal" href="#prefix"><span class="std std-ref">prefix</span></a>: &lt;prefix&gt; {
+        <a class="reference internal" href="#toolchainflags"><span class="std std-ref">Flags</span></a> &lt;flags&gt;, add: &lt;flags&gt;, remove: &lt;flags&gt;
+        <a class="reference internal" href="#toolchaindefine"><span class="std std-ref">Flags</span></a> &lt;define&gt; &lt;define&gt;
+        <a class="reference internal" href="#srcfileendings"><span class="std std-ref">SrcFileEndings</span></a> &lt;file&gt;
+      }
+      <a class="reference internal" href="#archiver"><span class="std std-ref">Archiver</span></a> <a class="reference internal" href="#command"><span class="std std-ref">command</span></a>: &lt;cmd&gt;, <a class="reference internal" href="#prefix"><span class="std std-ref">prefix</span></a>: &lt;prefix&gt; {
+        <a class="reference internal" href="#toolchainflags"><span class="std std-ref">Flags</span></a> &lt;flags&gt;, add: &lt;flags&gt;, remove: &lt;flags&gt;
+      }
+      <a class="reference internal" href="#linker"><span class="std std-ref">Linker</span></a> <a class="reference internal" href="#command"><span class="std std-ref">command</span></a>: &lt;cmd&gt;, <a class="reference internal" href="#prefix"><span class="std std-ref">prefix</span></a>: &lt;prefix&gt;, <a class="reference internal" href="#onlydirectdeps"><span class="std std-ref">onlyDirectDeps</span></a>: true|false {
+        <a class="reference internal" href="#toolchainflags"><span class="std std-ref">Flags</span></a> &lt;flags&gt;, add: &lt;flags&gt;, remove: &lt;flags&gt;
+        <a class="reference internal" href="#libprefixflags"><span class="std std-ref">LibPrefixFlags</span></a> &lt;flags&gt;, add: &lt;flags&gt;, remove: &lt;flags&gt;
+        <a class="reference internal" href="#libpostfixflags"><span class="std std-ref">LibPostfixFlags</span></a> &lt;flags&gt;, add: &lt;flags&gt;, remove: &lt;flags&gt;
+      }
+      <a class="reference internal" href="#docu"><span class="std std-ref">Docu</span></a> &lt;cmdLine&gt;
+    }
+    <a class="reference internal" href="#prebuild"><span class="std std-ref">Prebuild</span></a> {
+        <a class="reference internal" href="#except"><span class="std std-ref">Except</span></a> &lt;project&gt;, <a class="reference internal" href="#configexcept"><span class="std std-ref">config</span></a>: &lt;name&gt;
+    }
+    <a class="reference internal" href="#compilationdb"><span class="std std-ref">CompilationDB</span></a> &lt;filename&gt;
+    <a class="reference internal" href="#compilationcheck"><span class="std std-ref">CompilationCheck</span></a> include: &lt;pattern&gt; exclude: &lt;pattern&gt; ignore: &lt;pattern&gt;
+
+    # Valid for ExecutableConfig and LibraryConfig
+
+    <a class="reference internal" href="#files"><span class="std std-ref">Files</span></a> &lt;pattern&gt;, <a class="reference internal" href="#compileonly"><span class="std std-ref">compileOnly</span></a>: true|false, <a class="reference internal" href="#linkdirectly"><span class="std std-ref">linkDirectly</span></a>: true|false {
+      <a class="reference internal" href="#filesflags"><span class="std std-ref">Flags</span></a> &lt;define&gt; &lt;flags&gt;, add: &lt;flags&gt;, remove: &lt;flags&gt;
+      <a class="reference internal" href="#filesdefine"><span class="std std-ref">Flags</span></a> &lt;define&gt;
+    }
+    <a class="reference internal" href="#excludefiles"><span class="std std-ref">ExcludeFiles</span></a> &lt;pattern&gt;
+    <a class="reference internal" href="#artifactname"><span class="std std-ref">ArtifactName</span></a> &lt;name&gt;
+    <a class="reference internal" href="#artifactextension"><span class="std std-ref">ArtifactExtension</span></a> &lt;ext&gt;
+
+    # Valid for ExecutableConfig
+
+    <a class="reference internal" href="#linkerscript"><span class="std std-ref">LinkerScript</span></a> &lt;script&gt;
+    <a class="reference internal" href="#mapfile"><span class="std std-ref">MapFile</span></a> &lt;name&gt;
+
+
+    # Valid for CustomConfig
+
+    <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a> | <a class="reference internal" href="#commandline"><span class="std std-ref">CommandLine</span></a> | <a class="reference internal" href="#sleep"><span class="std std-ref">Sleep</span></a> | <a class="reference internal" href="#makedir"><span class="std std-ref">MakeDir</span></a> | <a class="reference internal" href="#remove"><span class="std std-ref">Remove</span></a> | <a class="reference internal" href="#touch"><span class="std std-ref">Touch</span></a> | <a class="reference internal" href="#copy"><span class="std std-ref">Copy</span></a> | <a class="reference internal" href="#move"><span class="std std-ref">Move</span></a> ... # zero of one of these
+
+  }
+}
+
+Adapt toolchain: &lt;name&gt;, os: &lt;name&gt;, mainProject: &lt;name&gt;, mainConfig: &lt;name&gt; {
+  # See Adapt documention for details.
+}</pre>
+<div class="section" id="project">
+<span id="id1"></span><h3>Project<a class="headerlink" href="#project" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">A bake project is very similar to a project in Eclipse, Visual Studio, etc.</div>
+<div class="line">The name of the project is the directory name of the Project.meta file.</div>
+</div>
+<p><em>Mandatory: yes, quantity: 1, default: -</em></p>
+</div>
+<div class="section" id="default-project">
+<span id="defaultconfig"></span><h3>default (Project)<a class="headerlink" href="#default-project" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#project"><span class="std std-ref">Project</span></a>.</p>
+<p>Default configuration which is used if not explicitly specified on command line or Dependency definition.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Project.meta:</span>
+<span class="n">Dependency</span> <span class="n">canDriver</span> <span class="c1"># uses default config of canDriver project</span>
+<span class="c1"># Command line:</span>
+<span class="n">bake</span> <span class="o">-</span><span class="n">m</span> <span class="n">folder</span><span class="o">/</span><span class="nb">dir</span><span class="o">/</span><span class="n">projABC</span> <span class="c1"># builds default config of project projABC</span>
+</pre></div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="description">
+<span id="id2"></span><h3>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p>Description of the project or config.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="requiredbakeversion">
+<span id="id3"></span><h3>RequiredBakeVersion<a class="headerlink" href="#requiredbakeversion" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">If specified, the build will be aborted if bake version is lower than mininum or greater than maximum.</div>
+<div class="line">It is possible to define only minimum, only maximum or both version thresholds.</div>
+<div class="line">Minor and patch version numbers are optional.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="responsible">
+<span id="id4"></span><h3>Responsible<a class="headerlink" href="#responsible" title="Permalink to this headline">¶</a></h3>
+<p>Specify all responsible persons of the project.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="person">
+<span id="id5"></span><h3>Person<a class="headerlink" href="#person" title="Permalink to this headline">¶</a></h3>
+<p>Person who is responsible for the project.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="email">
+<span id="id6"></span><h3>email<a class="headerlink" href="#email" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#person"><span class="std std-ref">Person</span></a>.</p>
+<p>Use always double quotes (“) for the email address.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="executableconfig">
+<span id="id7"></span><h3>ExecutableConfig<a class="headerlink" href="#executableconfig" title="Permalink to this headline">¶</a></h3>
+<p>This is usually the main config of an application.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="libraryconfig">
+<span id="id8"></span><h3>LibraryConfig<a class="headerlink" href="#libraryconfig" title="Permalink to this headline">¶</a></h3>
+<p>This config is used for a source library. The library will be linked automatically to the executable.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="customconfig">
+<span id="id9"></span><h3>CustomConfig<a class="headerlink" href="#customconfig" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">This config is used for special projects, e.g. for Makefile projects.</div>
+<div class="line">It’s valid to leave a CustomConfig completely empty - nothing will be done in that case.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="extends">
+<span id="id10"></span><h3>extends<a class="headerlink" href="#extends" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#executableconfig"><span class="std std-ref">ExecutableConfig</span></a>, <a class="reference internal" href="#libraryconfig"><span class="std std-ref">LibraryConfig</span></a> or <a class="reference internal" href="#customconfig"><span class="std std-ref">CustomConfig</span></a>.</p>
+<p>Inherit settings from parent config(s). For more information see docu page <a class="reference internal" href="derive_configs.html"><span class="doc">Derive configs</span></a>.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="mergeinc">
+<span id="id11"></span><h3>mergeInc<a class="headerlink" href="#mergeinc" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#executableconfig"><span class="std std-ref">ExecutableConfig</span></a>, <a class="reference internal" href="#libraryconfig"><span class="std std-ref">LibraryConfig</span></a> or <a class="reference internal" href="#customconfig"><span class="std std-ref">CustomConfig</span></a>.</p>
+<div class="line-block">
+<div class="line">If set to “no”, the IncludeDirs will NEVER be merged.</div>
+<div class="line">If set to “yes”, inherited IncludeDirs will merged when compiling this config except for IncludeDirs which configs have mergeInc.</div>
+<div class="line">If set to “all”, all IncludeDirs will merged when compiling this config except for IncludeDirs which configs have mergeInc.</div>
+<div class="line">If unset, IncludeDirs will not be merged when compiling this config.</div>
+</div>
+<p>See also <a class="reference internal" href="../concepts/merge.html"><span class="doc">Merge Includes</span></a>.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: &lt;unset&gt;</em></p>
+</div>
+<div class="section" id="private">
+<span id="id12"></span><h3>private<a class="headerlink" href="#private" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#executableconfig"><span class="std std-ref">ExecutableConfig</span></a>, <a class="reference internal" href="#libraryconfig"><span class="std std-ref">LibraryConfig</span></a> or <a class="reference internal" href="#customconfig"><span class="std std-ref">CustomConfig</span></a>.</p>
+<p>If true, the config cannot be referenced directly outside of this project.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="includedir">
+<span id="id13"></span><h3>IncludeDir<a class="headerlink" href="#includedir" title="Permalink to this headline">¶</a></h3>
+<p>Specifies the include directories for the assembler, C and C++ compiler.</p>
+<p>Use always relative paths, not absolute paths due to portability.</p>
+<p>Use always “/” and not “\”.</p>
+<div class="line-block">
+<div class="line">It is possible to work with different workspace roots. Do not include something like this:</div>
+<div class="line"><em>IncludeDir “../abc/include”</em></div>
+<div class="line">but</div>
+<div class="line"><em>IncludeDir “abc/include”</em></div>
+<div class="line">because it may happen, that abc does not exist in the same root as the current project. The path to abc will be calculated automatically.</div>
+</div>
+<div class="line-block">
+<div class="line">To include directories of the current project, the project name can be omitted like this:</div>
+<div class="line"><em>IncludeDir “include”</em></div>
+<div class="line"><em>IncludeDir “generated/include”</em></div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="inherit">
+<span id="id14"></span><h3>inherit<a class="headerlink" href="#inherit" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#includedir"><span class="std std-ref">IncludeDir</span></a>.</p>
+<p>Inherits the include to all projects, which depend on this project.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="inject">
+<span id="id15"></span><h3>inject<a class="headerlink" href="#inject" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#includedir"><span class="std std-ref">IncludeDir</span></a> or <a class="reference internal" href="#dependency"><span class="std std-ref">Dependency</span></a>.</p>
+<p>Injects the element to all childs, either at the front (e.g. for mocking code) or at the back.</p>
+<p>Avoid to inject dependencies, it will get a mess.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="system">
+<span id="id16"></span><h3>system<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#includedir"><span class="std std-ref">IncludeDir</span></a>.</p>
+<div class="line-block">
+<div class="line">If supported from the compiler, the system include flag will be used instead of the normal include flag.</div>
+<div class="line">For example in gcc “-isystem” instead of “-I” is used.</div>
+<div class="line">Note: system include definition overrules normal include definition if both are defined.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="set">
+<span id="id17"></span><h3>Set<a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Sets a variable for this and all dependent projects.</div>
+<div class="line">The variable can be a simple value or the result of a cmd, e.g. “cat myVar.txt”.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="env">
+<span id="id18"></span><h3>env<a class="headerlink" href="#env" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#set"><span class="std std-ref">Set</span></a>.</p>
+<p>Stores the variable also in system environment, which makes it available in everything which is executed by bake, e.g. in Pre- and PostSteps.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="dependency">
+<span id="id19"></span><h3>Dependency<a class="headerlink" href="#dependency" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Specifies another project to be built before this project.</div>
+<div class="line">The archives, linker libs and search paths are inherited from this project automatically.</div>
+</div>
+<div class="line-block">
+<div class="line">If you omit the project, the current project will be used.</div>
+<div class="line">If you omit the config name, the default config will be used.</div>
+</div>
+<div class="line-block">
+<div class="line">Examples:</div>
+<div class="line"><em>Dependency gtest, config: lib</em></div>
+<div class="line"><em>Dependency “my/folder/proj”</em></div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="config-dependency">
+<span id="configdependency"></span><h3>config (Dependency)<a class="headerlink" href="#config-dependency" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#dependency"><span class="std std-ref">Dependency</span></a>.</p>
+<p>Config name of the dependent project.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: &lt;default config of the dependent project&gt;</em></p>
+</div>
+<div class="section" id="externallibrary">
+<span id="id20"></span><h3>ExternalLibrary<a class="headerlink" href="#externallibrary" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Every config can specify libs which have to be linked to the executable.</div>
+<div class="line">It’s possible to add a path, e.g.:</div>
+<div class="line"><em>ExternalLibrary “xy/z/ab”</em></div>
+<div class="line">In this case the lib “ab” is added to the linker command line as well as the lib search path “xy/z”.</div>
+<div class="line">Note, that the linker will look for “libab.a”.’</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="search">
+<span id="searchexternallibrary"></span><h3>search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#externallibrary"><span class="std std-ref">ExternalLibrary</span></a>.</p>
+<div class="line-block">
+<div class="line">If the attribute “search: false” is specified, the lib will not be searched but linked with the full name, e.g.</div>
+<div class="line"><em>ExternalLibrary “xy/z/libpq.a”, search: false</em></div>
+<div class="line">will link “xy/z/libpq.a” to the executable.</div>
+<div class="line">It’s also possible to specify an object file when using “search: false”.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="userlibrary">
+<span id="id21"></span><h3>UserLibrary<a class="headerlink" href="#userlibrary" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">A user library will be linked <em>before</em> any other libraries or objects to the executable.</div>
+<div class="line">It is also possible to specify an object file.</div>
+<div class="line">The library will be searched like an ExternalLibrary, but with the full name, e.g.</div>
+<div class="line"><em>UserLibrary “xy/z/libUser.a”</em></div>
+<div class="line"><em>UserLibrary “xy/z/something.o”</em></div>
+<div class="line">will link “libUser.a” and “something.o” before regular objects and libraries.</div>
+<div class="line">“xy/z” will be added as an ExternalLibrarySearchPath.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="externallibrarysearchpath">
+<span id="id22"></span><h3>ExternalLibrarySearchPath<a class="headerlink" href="#externallibrarysearchpath" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">The linker looks for libraries in search paths.</div>
+<div class="line">Search paths can be defined implicitly by ExternalLibrary/UserLibrary or explicitly by this tag.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="presteps">
+<span id="id23"></span><h3>PreSteps<a class="headerlink" href="#presteps" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">PreSteps are executed before compiling files of the config.</div>
+<div class="line">The number of steps is not limited.</div>
+<div class="line">If a step fails, all further steps of the config will be skipped.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="poststeps">
+<span id="id24"></span><h3>PostSteps<a class="headerlink" href="#poststeps" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">PostSteps are executed after the main task of the project, e.g. linking an executable.</div>
+<div class="line">The number of steps is not limited.</div>
+<div class="line">If a step fails, all further steps of the config will be skipped.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="startupsteps">
+<span id="id25"></span><h3>StartupSteps<a class="headerlink" href="#startupsteps" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">StartupSteps of ALL configs are executed before building the first config.</div>
+<div class="line">The number of steps is not limited.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="exitsteps">
+<span id="id26"></span><h3>ExitSteps<a class="headerlink" href="#exitsteps" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">ExitSteps of ALL configs are executed after building complete workspace even if the build has failed.</div>
+<div class="line">The number of steps is not limited.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="cleansteps">
+<span id="id27"></span><h3>CleanSteps<a class="headerlink" href="#cleansteps" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">CleanSteps are executed when calling bake with “-c” or “–rebuild”.</div>
+<div class="line">The number of steps is not limited.</div>
+<div class="line">If a step fails, all further steps will be skipped.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="makefile">
+<span id="id28"></span><h3>Makefile<a class="headerlink" href="#makefile" title="Permalink to this headline">¶</a></h3>
+<p>Makefile to be started, e.g.: <em>Makefile “subDir/makefile”</em></p>
+<p>Before executing the makefile, bake sets the environment variables $(BAKE_XX_COMMAND) and $(BAKE_XX_FLAGS),
+whereas XX is one of CPP, C, ASM, AR or LD.</p>
+<p><em>Mandatory: no, quantity in steps: 0..n, quantity in CustomConfig: 0..1, default: -</em></p>
+</div>
+<div class="section" id="lib">
+<span id="makefilelib"></span><h3>lib<a class="headerlink" href="#lib" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>.</p>
+<p>If the result of the makefile is a library which shall be linked to the executable, name it here.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="target">
+<span id="makefiletarget"></span><h3>target<a class="headerlink" href="#target" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>.</p>
+<p>The target of the makefile.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: all</em></p>
+</div>
+<div class="section" id="pathto">
+<span id="makefilepathto"></span><h3>pathTo<a class="headerlink" href="#pathto" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>.</p>
+<div class="line-block">
+<div class="line">Comma separated list, e.g. “common, abc, xy”.</div>
+<div class="line">The makefile can use variables like $(PATH_TO_common). This is very useful if paths to other projects are needed in the makefile.</div>
+<div class="line">Remember that more than one workspace root can exist and a hardcoded “../common” is not reliable in that case.</div>
+<div class="line">$(PATH_TO_common) will result in the path from the parent directory of the current project to the common project without the common directory itself.</div>
+<div class="line">If the current project and the common project have the same parent folder, the string will be empty.</div>
+<div class="line">Example:</div>
+<div class="line">makefile: <em>c:\workspaceroot\yourProject\makefile</em></div>
+<div class="line">usage in makefile: <em>gcc -I$../../$(PATH_TO_common)common/include …</em></div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="noclean">
+<span id="makefilenoclean"></span><h3>noClean<a class="headerlink" href="#noclean" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>.</p>
+<p>If project is cleaned (e.g. with command line argument -c), the target “clean” will be executed unless noClean is set to true.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="changeworkingdir">
+<span id="makefilechangeworkingdir"></span><h3>changeWorkingDir<a class="headerlink" href="#changeworkingdir" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>.</p>
+<p>If set to false, the working directory will be the project directory instead of the makefile directory.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: true</em></p>
+</div>
+<div class="section" id="echo-commandline-makefile-sleep">
+<span id="echononfileutils"></span><h3>echo (CommandLine, Makefile, Sleep)<a class="headerlink" href="#echo-commandline-makefile-sleep" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>, <a class="reference internal" href="#commandline"><span class="std std-ref">CommandLine</span></a> and <a class="reference internal" href="#sleep"><span class="std std-ref">Sleep</span></a>.</p>
+<p>“on” means the command line is shown in output, “off” means the command line is not shown.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: on</em></p>
+</div>
+<div class="section" id="independent">
+<span id="id29"></span><h3>independent<a class="headerlink" href="#independent" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>, <a class="reference internal" href="#commandline"><span class="std std-ref">CommandLine</span></a> and <a class="reference internal" href="#sleep"><span class="std std-ref">Sleep</span></a>.</p>
+<div class="line-block">
+<div class="line">“true” means the step can be built in parallel to other projects.</div>
+<div class="line">“false” means everything before must be completed, the step runs exclusively.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="validexitcodes">
+<span id="id30"></span><h3>validExitCodes<a class="headerlink" href="#validexitcodes" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a> and <a class="reference internal" href="#commandline"><span class="std std-ref">CommandLine</span></a>.</p>
+<div class="line-block">
+<div class="line">Define it as an array, e.g.:</div>
+<div class="line"><em>…, validExitCodes: [200,201,202]</em></div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: [0]</em></p>
+</div>
+<div class="section" id="flags-makefile">
+<span id="makefileflags"></span><h3>Flags (makefile)<a class="headerlink" href="#flags-makefile" title="Permalink to this headline">¶</a></h3>
+<p>Additional makefile flags.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -j</em></p>
+</div>
+<div class="section" id="commandline">
+<span id="id31"></span><h3>CommandLine<a class="headerlink" href="#commandline" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">A command to execute, e.g.:</div>
+<div class="line"><em>CommandLine “ddump -Ruv -y 0xFFFFF -oRelease/application.bin Release/application.elf”</em></div>
+<div class="line"><em>CommandLine “echo Hello world!”</em></div>
+</div>
+<p><em>Mandatory: no, quantity in steps: 0..n, quantity in CustomConfig: 0..1, default: -</em></p>
+</div>
+<div class="section" id="sleep">
+<span id="id32"></span><h3>Sleep<a class="headerlink" href="#sleep" title="Permalink to this headline">¶</a></h3>
+<p>Sleep in seconds, floats are allowed.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: 0.0</em></p>
+</div>
+<div class="section" id="makedir">
+<span id="id33"></span><h3>MakeDir<a class="headerlink" href="#makedir" title="Permalink to this headline">¶</a></h3>
+<p>A file or folder will be created.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="remove">
+<span id="id34"></span><h3>Remove<a class="headerlink" href="#remove" title="Permalink to this headline">¶</a></h3>
+<p>A file or folder will be removed.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="touch">
+<span id="id35"></span><h3>Touch<a class="headerlink" href="#touch" title="Permalink to this headline">¶</a></h3>
+<p>A file or folder will be touched.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="copy">
+<span id="id36"></span><h3>Copy<a class="headerlink" href="#copy" title="Permalink to this headline">¶</a></h3>
+<p>A file or folder will be moved.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="move">
+<span id="id37"></span><h3>Move<a class="headerlink" href="#move" title="Permalink to this headline">¶</a></h3>
+<p>A file or folder will be copied.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="echo-makedir-remove-touch-copy-move">
+<span id="echofileutils"></span><h3>echo (MakeDir, Remove, Touch, Copy, Move)<a class="headerlink" href="#echo-makedir-remove-touch-copy-move" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#makedir"><span class="std std-ref">MakeDir</span></a>, <a class="reference internal" href="#remove"><span class="std std-ref">Remove</span></a>, <a class="reference internal" href="#touch"><span class="std std-ref">Touch</span></a>, <a class="reference internal" href="#copy"><span class="std std-ref">Copy</span></a> and <a class="reference internal" href="#move"><span class="std std-ref">Move</span></a>.</p>
+<p>“on” means a debug output is shown.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: on</em></p>
+</div>
+<div class="section" id="defaulttoolchain">
+<span id="id38"></span><h3>DefaultToolchain<a class="headerlink" href="#defaulttoolchain" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Settings which are valid for all configs unless they will be overwritten.</div>
+<div class="line">The attribute “basedOn” specifies the basic toolchain configuration provided by bake, e.g. “GCC”, “Diab”, etc.</div>
+</div>
+<p><em>Mandatory: in main config, quantity: 1, default: -</em></p>
+</div>
+<div class="section" id="toolchain">
+<span id="id39"></span><h3>Toolchain<a class="headerlink" href="#toolchain" title="Permalink to this headline">¶</a></h3>
+<p>Toolchain settings for a specific config.’</p>
+<p><em>Mandatory: no, quantity: 0..1, default: the DefaultToolchain settings from the main config</em></p>
+</div>
+<div class="section" id="outputdir">
+<span id="id40"></span><h3>outputdir<a class="headerlink" href="#outputdir" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#defaulttoolchain"><span class="std std-ref">DefaultToolchain</span></a> and <a class="reference internal" href="#toolchain"><span class="std std-ref">Toolchain</span></a>.</p>
+<div class="line-block">
+<div class="line">Specifies the output folder.</div>
+<div class="line">Use always relative paths, not absolute paths due to portability.</div>
+<div class="line">Use always “/” and not “\”.</div>
+</div>
+<div class="line-block">
+<div class="line">If the first part of the path is equal to a project name, it is used as a shortcut to this project root.</div>
+<div class="line">To avoid this magic, use something like this:</div>
+<div class="line"><em>IncludeDir “./abc/include”</em></div>
+</div>
+<div class="line-block">
+<div class="line"><em>Mandatory: no, quantity: 0..1,</em></div>
+<div class="line"><em>default for main config: &lt;project root&gt;/build/&lt;configName&gt;,</em></div>
+<div class="line"><em>default for every other config: &lt;project root&gt;/build/&lt;configName&gt;_&lt;mainProjectName&gt;_&lt;mainConfigName&gt;</em></div>
+</div>
+</div>
+<div class="section" id="eclipseorder">
+<span id="id41"></span><h3>eclipseOrder<a class="headerlink" href="#eclipseorder" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#defaulttoolchain"><span class="std std-ref">DefaultToolchain</span></a>.</p>
+<div class="line-block">
+<div class="line">If not specified or false, all files are compiled in order of appearance in Project.meta.</div>
+<div class="line">If the filename is a glob pattern, files are sorted alphabetically.</div>
+</div>
+<div class="line-block">
+<div class="line">If true, files are compiled in alphabetical order within a folder, but the folders are sorted in reverse alphabetical order.</div>
+<div class="line">This is only used for backward compatibility. Will be removed in future.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="compiler">
+<span id="id42"></span><h3>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h3>
+<p>Flags and defines can be specified independently for each compiler type (ASM, CPP, C).</p>
+<p><em>Mandatory: no, quantity: 0..3, default: -</em></p>
+</div>
+<div class="section" id="archiver">
+<span id="id43"></span><h3>Archiver<a class="headerlink" href="#archiver" title="Permalink to this headline">¶</a></h3>
+<p>Settings for the archiver.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="linker">
+<span id="id44"></span><h3>Linker<a class="headerlink" href="#linker" title="Permalink to this headline">¶</a></h3>
+<p>Settings for the linker.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="docu">
+<span id="id45"></span><h3>Docu<a class="headerlink" href="#docu" title="Permalink to this headline">¶</a></h3>
+<p>Command to build the documentation. e.g.: <em>doxygen main.cfg</em></p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="command">
+<span id="id46"></span><h3>command<a class="headerlink" href="#command" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>, <a class="reference internal" href="#archiver"><span class="std std-ref">Archiver</span></a>, <a class="reference internal" href="#linker"><span class="std std-ref">Linker</span></a>.</p>
+<p>Changes the predefined command, e.g. “gcc”.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="prefix">
+<span id="id47"></span><h3>prefix<a class="headerlink" href="#prefix" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>, <a class="reference internal" href="#archiver"><span class="std std-ref">Archiver</span></a>, <a class="reference internal" href="#linker"><span class="std std-ref">Linker</span></a>.</p>
+<div class="line-block">
+<div class="line">Wrapper for the command, e.g. a (s)ccache.</div>
+<div class="line">If variable is not set, no prefix is used.</div>
+<div class="line">You can use the adapt feature to set the variable or overwrite the prefix.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: $(CompilerPrefix), $(ArchiverPrefix) or $(LinkerPrefix)</em></p>
+</div>
+<div class="section" id="keepobjfileendings">
+<span id="id48"></span><h3>keepObjFileEndings<a class="headerlink" href="#keepobjfileendings" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>.</p>
+<p>If false, the original source file endings will be cut off (e.g. file1.cpp to file1.o), otherwise kept (file1.cpp.o).</p>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="srcfileendings">
+<span id="id49"></span><h3>SrcFileEndings<a class="headerlink" href="#srcfileendings" title="Permalink to this headline">¶</a></h3>
+<p>List of all source file endings with dot and comma separated which are handled by this CPP, C or ASM compiler,
+e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="onlydirectdeps">
+<span id="id50"></span><h3>onlyDirectDeps<a class="headerlink" href="#onlydirectdeps" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#linker"><span class="std std-ref">Linker</span></a>.</p>
+<p>If set to true, only first level libraries will be linked (not sub-dependencies from dependencies).</p>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="cuda">
+<span id="id51"></span><h3>cuda<a class="headerlink" href="#cuda" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>.</p>
+<div class="line-block">
+<div class="line">Enables Cuda hack.</div>
+<div class="line">Adds some prefixes in front of dependency flags.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="flags-defaulttoolchain">
+<span id="defaultflags"></span><h3>Flags (DefaultToolchain)<a class="headerlink" href="#flags-defaulttoolchain" title="Permalink to this headline">¶</a></h3>
+<p>Default flags.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="flags-toolchain">
+<span id="toolchainflags"></span><h3>Flags (Toolchain)<a class="headerlink" href="#flags-toolchain" title="Permalink to this headline">¶</a></h3>
+<p>Flags from the DefaultToolchain can be overwritten, extended or (partly) removed.</p>
+<div class="line-block">
+<div class="line">For removing flags use plain strings or regular expressions which can be interpreted by ruby (both is checked).</div>
+<div class="line">Flags will be only removed if matching completely (not only a substring).</div>
+<div class="line">Flag strings are always splitted at spaces and computed individually.</div>
+</div>
+<div class="line-block">
+<div class="line">Examples:</div>
+<div class="line"><em>Flags “-x -y”</em> overwrites the inherited flags</div>
+<div class="line"><em>Flags add: “-x -y”</em> adds -x and -y if not exist</div>
+<div class="line"><em>Flags remove: “-x -y”</em> removes -x and -y if exist</div>
+<div class="line">It is possible to combine the attributes like this:</div>
+<div class="line"><em>Flags remove: “-x”, add: “-y”</em></div>
+<div class="line">To remove -g followed by any string, e.g. -g3, the command is:</div>
+<div class="line"><em>Flags remove: “-g.*”</em></div>
+<div class="line">An inherited flag string “-abc -g3 -xy” will end up in “-abc -xy”.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: Flags from DefaultToolchain”</em></p>
+</div>
+<div class="section" id="flags-files">
+<span id="filesflags"></span><h3>Flags (Files)<a class="headerlink" href="#flags-files" title="Permalink to this headline">¶</a></h3>
+<p>Flags from the Toolchain can be overwritten, extended or (partly) removed, see above.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="define-defaulttoolchain">
+<span id="defaultdefine"></span><h3>Define (DefaultToolchain)<a class="headerlink" href="#define-defaulttoolchain" title="Permalink to this headline">¶</a></h3>
+<p>Defines which are valid for all files.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="toolchaindefine">
+<span id="id52"></span><h3>Flags (Toolchain)<a class="headerlink" href="#toolchaindefine" title="Permalink to this headline">¶</a></h3>
+<p>Defines which are valid for the files of this config.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="define-files">
+<span id="filesdefine"></span><h3>Define (Files)<a class="headerlink" href="#define-files" title="Permalink to this headline">¶</a></h3>
+<p>Defines which are valid only for these specific files.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="libprefixflags">
+<span id="id53"></span><h3>LibPrefixFlags<a class="headerlink" href="#libprefixflags" title="Permalink to this headline">¶</a></h3>
+<p>Linker libs can be prefixed if needed, e.g. with “-Wl,–whole-archive”.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="libpostfixflags">
+<span id="id54"></span><h3>LibPostfixFlags<a class="headerlink" href="#libpostfixflags" title="Permalink to this headline">¶</a></h3>
+<p>Linker libs can be postfixed if needed, e.g. with “-Wl,–no-whole-archive”.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="internaldefines">
+<span id="id55"></span><h3>InternalDefines<a class="headerlink" href="#internaldefines" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">File with list of compiler internal defines.</div>
+<div class="line">One define per line.</div>
+<div class="line">Empty lines and comments with # are allowed.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="internalincludes">
+<span id="id56"></span><h3>InternalIncludes<a class="headerlink" href="#internalincludes" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">File with list of compiler internal include folders.</div>
+<div class="line">One folder per line.</div>
+<div class="line">Empty lines and comments with # are allowed.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="files">
+<span id="id57"></span><h3>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Specifies the files to build.</div>
+<div class="line">It’s valid to specify a single file, e.g.</div>
+<div class="line"><em>Files “src/abc/def.asm”</em></div>
+<div class="line">or a pattern, e.g.</div>
+<div class="line"><em>Files “*/**/.cpp”</em></div>
+<div class="line">which builds all files with the ending “.cpp” in all subdirectories.</div>
+<div class="line">Note: “..” is not allowed in the file path. All files must be located within the project.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="excludefiles">
+<span id="id58"></span><h3>ExcludeFiles<a class="headerlink" href="#excludefiles" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Used to ignore files or directories.</div>
+<div class="line">ExcludeFiles has higher priority than Files.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="compileonly">
+<span id="id59"></span><h3>compileOnly<a class="headerlink" href="#compileonly" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#files"><span class="std std-ref">Files</span></a>.</p>
+<p>If set to true, the files will not be archived or linked.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="linkdirectly">
+<span id="id60"></span><h3>linkDirectly<a class="headerlink" href="#linkdirectly" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#files"><span class="std std-ref">Files</span></a>.</p>
+<p>If set to true, the files will not be archived but linked directly to the executable.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
+</div>
+<div class="section" id="prebuild">
+<span id="id61"></span><h3>Prebuild<a class="headerlink" href="#prebuild" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">If defined, all configs of the workspace will be skipped per default.</div>
+<div class="line">Must be activated by the commandline option “–prebuild”.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: No project/config is skipped</em></p>
+</div>
+<div class="section" id="except">
+<span id="id62"></span><h3>Except<a class="headerlink" href="#except" title="Permalink to this headline">¶</a></h3>
+<p>Defines a project which shall not be skipped. If project name is omitted, the current project is used.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: Every project is skipped</em></p>
+</div>
+<div class="section" id="config-except">
+<span id="configexcept"></span><h3>config (Except)<a class="headerlink" href="#config-except" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#except"><span class="std std-ref">Except</span></a>.</p>
+<p>Defines a config which shall not be skipped. If omitted, all configs of the appropriate project are not skipped.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: Every config is skipped</em></p>
+</div>
+<div class="section" id="compilationdb">
+<span id="id63"></span><h3>CompilationDB<a class="headerlink" href="#compilationdb" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Generates a compilation database in json.</div>
+<div class="line">Example:</div>
+<div class="line"><em>CompilationDB “$(ProjectDir)/db.json”</em></div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: None. If CompilationDB is specified without an explicit filename, $(WorkspaceDir)/compile_commands.json is used.</em></p>
+</div>
+<div class="section" id="compilationcheck">
+<span id="id64"></span><h3>CompilationCheck<a class="headerlink" href="#compilationcheck" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Checks if files are included or excluded in build.</div>
+<div class="line">Priority if files are mentioned multiple times: ignore &gt; exclude &gt; include.</div>
+<div class="line">In case a check fails, bake will print a warning.</div>
+<div class="line">Examples:</div>
+<div class="line"><em>CompilationCheck include: “include/*.h”, ignore: “include/ignoreThis.h”</em></div>
+<div class="line"><em>CompilationCheck include: “$(ProjectDir, anotherLib)/src/important”</em></div>
+</div>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="linkerscript">
+<span id="id65"></span><h3>LinkerScript<a class="headerlink" href="#linkerscript" title="Permalink to this headline">¶</a></h3>
+<p>Specifies the name including path of the linker script.</p>
+<p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
+</div>
+<div class="section" id="mapfile">
+<span id="id66"></span><h3>MapFile<a class="headerlink" href="#mapfile" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">A mapfile will be written by the linker.</div>
+<div class="line">If name attribute is omitted, the mapfile will be “$(OutputDir)/$(ArtifactNameBase).map”.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: No mapfile will be written</em></p>
+</div>
+<div class="section" id="artifactname">
+<span id="id67"></span><h3>ArtifactName<a class="headerlink" href="#artifactname" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">The artifact name inclusive file ending.</div>
+<div class="line">The artifact will be placed in the output directory.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default executable: project name + toolchain dependent file ending, default library: ‘lib’ + project name + ‘.a’</em></p>
+</div>
+<div class="section" id="artifactextension">
+<span id="id68"></span><h3>ArtifactExtension<a class="headerlink" href="#artifactextension" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">The artifact extension, e.g. “exe”.</div>
+<div class="line">If ArtifactName is also specified, ArtifactExtension has no effect.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1, default: toolchain dependent file ending</em></p>
+</div>
 </div>
 </div>
 
