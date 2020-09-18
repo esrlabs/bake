@@ -894,10 +894,13 @@ module Bake
                           o = b.object_files[s]
                           dep_filename = b.calcDepFile(o, type)
                           dep_filename_conv = b.calcDepFileConv(dep_filename)
-                          File.readlines(File.expand_path(dep_filename_conv, b.projectDir)).map{|line| line.strip}.each do |dep|
-                            header = File.expand_path(dep, b.projectDir)
-                            if File.exist?(header)
-                              inCompilation << header
+                          fname = File.expand_path(dep_filename_conv, b.projectDir)
+                          if File.exist?(fname)
+                            File.readlines(fname).map{|line| line.strip}.each do |dep|
+                              header = File.expand_path(dep, b.projectDir)
+                              if File.exist?(header)
+                                inCompilation << header
+                              end
                             end
                           end
                         end
