@@ -116,7 +116,7 @@ module Bake
               configHash[s.name] += s.value.split(";")
             end
 
-            if !isMain
+            if !isMain && @configHashMain
               @configHashMain.each do |k,v|
                 if configHash.has_key?(k)
                   configHash[k] += v

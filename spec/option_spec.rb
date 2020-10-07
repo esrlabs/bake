@@ -115,6 +115,11 @@ describe "Option Parser" do
     expect($mystring.include?("No configuration with a DefaultToolchain found")).to be == true
   end
 
+  it 'list works with adapt' do
+    Bake.startBake("adapt/main", ["--list"])
+    expect($mystring.include?("* test_multi")).to be == true
+  end
+
   it 'should provide a license' do
     Bake.options = Options.new(["--license"])
     expect { Bake.options.parse_options() }.to raise_error(SystemExit)
