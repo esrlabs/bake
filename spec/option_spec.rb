@@ -128,6 +128,16 @@ describe "Option Parser" do
     expect($mystring.include?("cxxproject")).to be == true
   end
 
+  it 'circular extends fails with --list' do
+    Bake.startBake("circularExtends/main", ["--list"])
+    expect($mystring.include?("circularExtends/main/Project.meta: Error: Config extends to circular loop: test4->test2->test4")).to be == true
+  end
+
+  it 'circular extends fails with build' do
+    Bake.startBake("circularExtends/main", [])
+    expect($mystring.include?("circularExtends/main/Project.meta: Error: Config extends to circular loop: test->test2->test4->test2")).to be == true
+  end
+
 end
 
 end

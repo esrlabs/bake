@@ -1,0 +1,13 @@
+Project default: test {
+
+  CustomConfig test3
+
+  CustomConfig test4, extends: test2
+
+  CustomConfig test2, extends: "test3,test4"
+
+  CustomConfig test, extends: test2 {
+    DefaultToolchain GCC
+  }
+
+}

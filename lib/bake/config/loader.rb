@@ -26,8 +26,7 @@ module Bake
       return configname
     end
 
-    def getFullProjectInternal(configs, configname, isMain) # note: configs is never empty
-
+    def getFullProjectInternal(configs, configname, isMain, extendStack) # note: configs is never empty
       configname = resolveConfigName(configs, configname)
 
       if isMain
@@ -60,7 +59,11 @@ module Bake
       if config.extends != ""
         config.extends.split(",").map {|ex| ex.strip}.reverse.each do |ex|
           if (ex != "")
-            parent,parentConfigName = getFullProjectInternal(configs, ex, isMain)
+            if extendStack.include?(ex)
+              Bake.formatter.printError("Config extends to circular loop: #{(extendStack << ex).join("->")}", configs[0].file_name)
+              ExitHelper.exit(1)
+            end
+            parent,parentConfigName = getFullProjectInternal(configs, ex, isMain, extendStack << ex)
             MergeConfig.new(config, parent).merge(:merge)
           end
         end
@@ -70,15 +73,13 @@ module Bake
     end
 
     def getFullProject(projName, configs, configname, isMain)
-      
-
       configname = resolveConfigName(configs, configname)
 
       if @fullProjects.has_key?(projName + "," + configname)
         return @fullProjects[projName + "," + configname]
       end
 
-      config, configname = getFullProjectInternal(configs, configname, isMain)
+      config, configname = getFullProjectInternal(configs, configname, isMain, [configname])
 
       if isMain
         @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
