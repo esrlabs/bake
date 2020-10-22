@@ -32,6 +32,9 @@ module Bake
     if Bake::Utils::OS::name == "Mac"
       CLANG_CHAIN[:ARCHIVER][:COMMAND] = "libtool"
       CLANG_CHAIN[:ARCHIVER][:ARCHIVE_FLAGS] = "-static -o"
+    elsif Bake::Utils::OS::name == "Windows"
+      CLANG_CHAIN[:ARCHIVER][:COMMAND] = "clang"
+      CLANG_CHAIN[:ARCHIVER][:ARCHIVE_FLAGS] = "-fuse-ld=llvm-lib -o"
     else
       CLANG_CHAIN[:ARCHIVER][:COMMAND] = "ar"
       CLANG_CHAIN[:ARCHIVER][:ARCHIVE_FLAGS] = "r"
