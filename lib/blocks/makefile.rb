@@ -17,14 +17,16 @@ module Bake
         @projectDir = config.get_project_dir
         @path_to = ""
         @flags = adjustFlags("",config.flags) if config.flags
-        @makefile = config.name
+        @makefile = block.convPath(config.name)
         @target = config.target != "" ? config.target : "all"
         calcPathTo(referencedConfigs)
         calcCommandLine
         calcCleanLine
         calcEnv
 
-        block.lib_elements << LibElement.new(LibElement::LIB_WITH_PATH, config.lib) if config.lib != ""
+        if config.lib != ""
+          block.lib_elements << LibElement.new(LibElement::LIB_WITH_PATH, block.convPath(config.lib))
+        end 
       end
 
       def calcEnv

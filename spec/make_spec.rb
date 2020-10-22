@@ -84,6 +84,19 @@ describe "Makefile" do
     expect($mystring.include?(str)).to be == true
   end
 
+  it 'path magic for makefile' do
+    Bake.startBake("make/main3",  ["test"])
+    expect($mystring.include?("make all")).to be == true
+    expect($mystring.include?("Building done.")).to be == true
+  end
+
+  it 'path magic for makefile' do
+    Bake.startBake("make/main3",  ["test2"])
+    expect($mystring.include?("make all")).to be == true
+    expect($mystring.include?("../main2/dummy/out/somelib.a")).to be == true
+    expect($mystring.include?("Building done.")).to be == false
+  end
+
 end
 
 end

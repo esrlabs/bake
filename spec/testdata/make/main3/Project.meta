@@ -1,0 +1,15 @@
+Project {
+
+  CustomConfig test {
+    Makefile "main/makefile/makefile"
+    DefaultToolchain GCC
+  }
+
+  ExecutableConfig test2 {
+    Dependency dummy, config: test2
+    PreSteps {
+      Makefile "main/makefile/makefile", lib: "dummy/out/somelib.a"
+    }
+    DefaultToolchain GCC
+  }
+}
