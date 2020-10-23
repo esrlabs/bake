@@ -117,6 +117,17 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl>
+<dt>October 23, 2020 - bake-toolkit 2.66</dt><dd><ul>
+<li><p>Bugfix: –list failed when Project.meta contains an Adapt</p></li>
+<li><p>Bugfix: circular extension of projects not detected during load</p></li>
+<li><p>Changed: llvm-lib is now used to archive when using Clang on Windows</p></li>
+<li><p>Added: Automatic path completion for Makefile command, e.g.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Makefile &quot;someProject/Makefile&quot;, target: all, lib: &quot;someProject/output/libresult.a&quot;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
 <dt>September 18, 2020 - bake-toolkit 2.65.2</dt><dd><ul class="simple">
 <li><p>Bugfix: if pathname length of dependency file is &gt; 255 on Windows, the compilation check might break.</p></li>
 <li><p>Added: now Adapts can be also filtered</p></li>
