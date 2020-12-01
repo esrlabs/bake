@@ -34,7 +34,6 @@ describe "bakery" do
     str = `ruby bin/bakery -m spec/testdata/root1/main -b gigi --adapt nols`
     puts str
     expect(str.include?("0 of 0 builds ok")).to be == true
-
   end
 
   it 'collection working' do
@@ -177,6 +176,13 @@ describe "bakery" do
     expect(str.include?("collWarning/main/Collection.meta:9: Warning: pattern does not match any project: doesNotExist3")).to be == true
     expect(str.include?("collWarning/main/Collection.meta:10: Warning: pattern does not match any config: doesNotExist4")).to be == true
     expect(str.include?("4 of 4 builds ok")).to be == true
+  end
+
+  it 'collection exclude directory' do
+    str = `ruby bin/bakery -m spec/testdata/root1/main -b ExcludeDir --adapt nols`
+    puts str
+    expect(str.include?("lib1")).to be == true
+    expect(str.include?("1 of 1 builds ok")).to be == true
   end
 
 end
