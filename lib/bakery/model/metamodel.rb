@@ -25,6 +25,10 @@ module Bake
       has_attr 'name', String, :defaultValueLiteral => ""
       has_attr 'config', String, :defaultValueLiteral => ""
     end
+
+    class ExcludeDir < ModelElement
+      has_attr 'name', String, :defaultValueLiteral => ""
+    end
     class SubCollection < ModelElement
       has_attr 'name', String, :defaultValueLiteral => ""
     end
@@ -32,6 +36,7 @@ module Bake
       has_attr 'name', String, :defaultValueLiteral => ""
       contains_many 'project', Project, 'collection'
       contains_many 'exclude', Exclude, 'collection'
+      contains_many 'exclude_dir', ExcludeDir, 'collection'
       contains_many 'collections', SubCollection, 'collection'
     end
 

@@ -50,6 +50,7 @@ Note: use hash marks (#) for comments.
     :ref:`collection` <name> {
       :ref:`Project <projectCollection>` <name>, config: <name>, args: <arguments>
       :ref:`exclude` <name>, config: <name>
+      :ref:`excludeDir` <name>
       :ref:`subCollection` <name>
     }
 
@@ -78,7 +79,16 @@ Exclude
 
 Specify the projects with it's configs to exclude from build. It is possible to use "*" as wildcards.
 
-*Mandatory: yes, quantity: 0..n, default: -*
+*Mandatory: no, quantity: 0..n, default: -*
+
+.. _excludeDir:
+
+ExcludeDir
+----------
+
+Specify the directory relative to the Collection.meta. All projects inside it will be excluded from the build.
+
+*Mandatory: no, quantity: 0..n, default: -*
 
 .. _subCollection:
 
@@ -100,6 +110,7 @@ Example of Collection.meta
     Collection UnitTestLibsWithoutBsp {
         Project "*", config: "UnitTestLib*"
         Exclude "bsp*", config: "*"
+        EcludeDir "path/to/some/folder"
     }
     Collection MySpecialCollection {
         Project Main1, config: Debug

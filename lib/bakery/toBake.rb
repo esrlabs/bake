@@ -67,10 +67,17 @@ module Bake
       p.config = "^"+p.config.gsub("*","(\\w*)")+"$"
     end
 
+    col.exclude_dir.each do |e|
+      e.name = File.expand_path(e.name, @options.collection_dir)
+    end
+
     toBuild.delete_if do |bp|
       exclude = false
       col.exclude.each do |p|
         exclude = true if (bp.proj.match(p.name) != nil and bp.conf.match(p.config) != nil)
+      end
+      col.exclude_dir.each do |e|
+        exclude = true if bp.proj.start_with?(e.name)
       end
       exclude
     end

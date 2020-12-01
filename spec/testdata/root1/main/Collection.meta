@@ -68,3 +68,9 @@ Collection ProjectInvalidArgs {
 Collection Quoted {
   Project main, config: "quo-te:d"
 }
+
+Collection ExcludeDir {
+  Project "lib1", config: "test"
+  Project "lib3", config: "*"
+  ExcludeDir "../lib3"
+}
