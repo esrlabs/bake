@@ -201,11 +201,14 @@ module Bake
         contains_many 'except', Except, 'parent'
       end
 
-      class Step < ModelElement
-        has_attr 'name', String, :defaultValueLiteral => ""
+      class StepBase < ModelElement
         has_attr 'echo', String, :defaultValueLiteral => "on"
         has_attr 'independent', Boolean, :defaultValueLiteral => "false"
         has_many_attr 'validExitCodes', Integer
+      end
+
+      class Step < StepBase
+        has_attr 'name', String, :defaultValueLiteral => ""
       end
 
       class Makefile < Step
@@ -238,27 +241,28 @@ module Bake
         has_attr 'name', String, :defaultValueLiteral => "0.0"
       end
 
-      class CommandLine < Step
+      class CommandLine < StepBase
+        has_many_attr 'name', String, :defaultValueLiteral => ""
       end
 
       class PreSteps < ModelElement
-        contains_many 'step', Step, 'parent'
+        contains_many 'step', StepBase, 'parent'
       end
 
       class PostSteps < ModelElement
-        contains_many 'step', Step, 'parent'
+        contains_many 'step', StepBase, 'parent'
       end
 
       class ExitSteps < ModelElement
-        contains_many 'step', Step, 'parent'
+        contains_many 'step', StepBase, 'parent'
       end
 
       class CleanSteps < ModelElement
-        contains_many 'step', Step, 'parent'
+        contains_many 'step', StepBase, 'parent'
       end
 
       class StartupSteps < ModelElement
-        contains_many 'step', Step, 'parent'
+        contains_many 'step', StepBase, 'parent'
       end
 
       class LinkerScript < ModelElement
@@ -348,7 +352,7 @@ module Bake
       end
 
       class CustomConfig < BaseConfig_INTERNAL
-        contains_one 'step', Step, 'parent'
+        contains_one 'step', StepBase, 'parent'
         module ClassModule
           def color
             "red"

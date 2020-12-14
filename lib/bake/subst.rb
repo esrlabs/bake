@@ -374,8 +374,14 @@ module Bake
         return if Metamodel::DefaultToolchain === elem
         return if Metamodel::Toolchain === elem.class
         next if a.eType.name != "EString"
-        substStr = substString(elem.getGeneric(a.name), elem, a.name)
-        elem.setGeneric(a.name, substStr)
+        value = elem.getGeneric(a.name)
+        if value.kind_of?(Array)
+          substArr = value.map { |s| substString(s, elem, a.name) }
+          elem.setGeneric(a.name, substArr)
+        else
+          substStr = substString(value, elem, a.name)
+          elem.setGeneric(a.name, substStr)
+        end
       end
 
       childsRefs = elem.class.ecore.eAllReferences.select{|r| r.containment}
