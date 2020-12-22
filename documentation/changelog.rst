@@ -2,7 +2,8 @@ Changelog
 =========
 
 ???, 2021 - bake-toolkit 2.67
-    * Add variable $(OriginalDir), which points to the directory of the containing meta file. Useful for relative paths from Adapt files.
+    * Add variable *$(OriginalDir)*, which points to the directory of the containing meta file. Useful for relative paths from Adapt files.
+    * Add *ExcludeDir* to bakery meta language. Up to now it was only possible to exclude by project name (with wildcards), but not complete folder trees.
 
 October 23, 2020 - bake-toolkit 2.66
     * Bugfix: --list failed when Project.meta contains an Adapt

@@ -91,6 +91,7 @@
 <li><a class="reference internal" href="#collection">Collection</a></li>
 <li><a class="reference internal" href="#project">Project</a></li>
 <li><a class="reference internal" href="#exclude">Exclude</a></li>
+<li><a class="reference internal" href="#excludedir">ExcludeDir</a></li>
 <li><a class="reference internal" href="#subcollection">SubCollection</a></li>
 </ul>
 </li>
@@ -162,6 +163,7 @@ The most important options are the collection name (<em>-b</em>) and the collect
 <pre class="literal-block"><a class="reference internal" href="#collection"><span class="std std-ref">Collection</span></a> &lt;name&gt; {
   <a class="reference internal" href="#projectcollection"><span class="std std-ref">Project</span></a> &lt;name&gt;, config: &lt;name&gt;, args: &lt;arguments&gt;
   <a class="reference internal" href="#exclude"><span class="std std-ref">Exclude</span></a> &lt;name&gt;, config: &lt;name&gt;
+  <a class="reference internal" href="#excludedir"><span class="std std-ref">ExcludeDir</span></a> &lt;name&gt;
   <a class="reference internal" href="#subcollection"><span class="std std-ref">SubCollection</span></a> &lt;name&gt;
 }</pre>
 <div class="section" id="collection">
@@ -177,10 +179,15 @@ The most important options are the collection name (<em>-b</em>) and the collect
 <div class="section" id="exclude">
 <span id="id2"></span><h3>Exclude<a class="headerlink" href="#exclude" title="Permalink to this headline">¶</a></h3>
 <p>Specify the projects with it’s configs to exclude from build. It is possible to use “*” as wildcards.</p>
-<p><em>Mandatory: yes, quantity: 0..n, default: -</em></p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
+</div>
+<div class="section" id="excludedir">
+<span id="id3"></span><h3>ExcludeDir<a class="headerlink" href="#excludedir" title="Permalink to this headline">¶</a></h3>
+<p>Specify the directory relative to the Collection.meta. All projects inside it will be excluded from the build.</p>
+<p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
 <div class="section" id="subcollection">
-<span id="id3"></span><h3>SubCollection<a class="headerlink" href="#subcollection" title="Permalink to this headline">¶</a></h3>
+<span id="id4"></span><h3>SubCollection<a class="headerlink" href="#subcollection" title="Permalink to this headline">¶</a></h3>
 <p>This references another collection.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
@@ -193,6 +200,7 @@ The most important options are the collection name (<em>-b</em>) and the collect
 Collection UnitTestLibsWithoutBsp {
     Project &quot;*&quot;, config: &quot;UnitTestLib*&quot;
     Exclude &quot;bsp*&quot;, config: &quot;*&quot;
+    EcludeDir &quot;path/to/some/folder&quot;
 }
 Collection MySpecialCollection {
     Project Main1, config: Debug
