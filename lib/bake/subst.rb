@@ -227,6 +227,13 @@ module Bake
             args = Bake.options.include_filter_args[splittedVar[1]]
             substStr << args if args
           end
+        elsif var == "OriginalDir"
+          org = File.dirname(elem.org_file_name)
+          if (org == @@projDir)
+            substStr << @@projDir
+          else
+            substStr << File.rel_from_to_project(@@projDir,File.dirname(elem.org_file_name),false)
+          end
         elsif var == "ProjectDir" or (splittedVar.length == 2 and splittedVar[0] == "ProjectDir")
           if (var == "ProjectDir")
             substStr << @@projDir

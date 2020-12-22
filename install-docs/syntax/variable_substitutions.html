@@ -219,69 +219,74 @@ config</p></td>
 <td><p>Directory from which bake is called</p></td>
 <td><p>c:/Workspaces/Project</p></td>
 </tr>
-<tr class="row-odd"><td><p><em>$(ArtifactName)</em></p></td>
+<tr class="row-odd"><td><p><em>$(OriginalDir)</em></p></td>
+<td><p>Directory of the containing meta file.
+Useful for relative paths from Adapt files.</p></td>
+<td><p>c:/Root/admin/adapt/coverage</p></td>
+</tr>
+<tr class="row-even"><td><p><em>$(ArtifactName)</em></p></td>
 <td><p>Evaluates to the artifact.</p></td>
 <td><p>bootloader_1.0.elf</p></td>
 </tr>
-<tr class="row-even"><td><p><em>$(ArtifactNameBase)</em></p></td>
+<tr class="row-odd"><td><p><em>$(ArtifactNameBase)</em></p></td>
 <td><p>Evaluates to the base artifact name
 (Without file exension)</p></td>
 <td><p>bootloader_1.0</p></td>
 </tr>
-<tr class="row-odd"><td><p><em>$(Time)</em></p></td>
+<tr class="row-even"><td><p><em>$(Time)</em></p></td>
 <td><p>Evaluates to the current time</p></td>
 <td><p>2012-12-24 20:00:00 +0200</p></td>
 </tr>
-<tr class="row-even"><td><p><em>$(Hostname)</em></p></td>
+<tr class="row-odd"><td><p><em>$(Hostname)</em></p></td>
 <td><p>Evaluates to the hostname</p></td>
 <td><p>MY_COMPUTER</p></td>
 </tr>
-<tr class="row-odd"><td><p><em>$(Uid)</em></p></td>
+<tr class="row-even"><td><p><em>$(Uid)</em></p></td>
 <td><p>CRC32 over relative path to MainProjectDir
 plus MainConfigName, e.g.
 “../libs/utils,Debug”</p></td>
 <td><p>03FAB429</p></td>
 </tr>
-<tr class="row-even"><td><p><em>$(CPPPath)</em></p></td>
+<tr class="row-odd"><td><p><em>$(CPPPath)</em></p></td>
 <td><p>Evaluates to the base path of the
 c++ compiler</p></td>
 <td><p>/usr/bin</p></td>
 </tr>
-<tr class="row-odd"><td><p><em>$(CPath)</em></p></td>
+<tr class="row-even"><td><p><em>$(CPath)</em></p></td>
 <td><p>Evaluates to the base path of the
 c compiler</p></td>
 <td><p>/usr/bin</p></td>
 </tr>
-<tr class="row-even"><td><p><em>$(ASMPath)</em></p></td>
+<tr class="row-odd"><td><p><em>$(ASMPath)</em></p></td>
 <td><p>Evaluates to the base path of the
 assembler</p></td>
 <td><p>/usr/bin</p></td>
 </tr>
-<tr class="row-odd"><td><p><em>$(ArchiverPath)</em></p></td>
+<tr class="row-even"><td><p><em>$(ArchiverPath)</em></p></td>
 <td><p>Evaluates to the base path of the
 archiver</p></td>
 <td><p>/usr/bin</p></td>
 </tr>
-<tr class="row-even"><td><p><em>$(LinkerPath)</em></p></td>
+<tr class="row-odd"><td><p><em>$(LinkerPath)</em></p></td>
 <td><p>Evaluates to the base path of the
 linker</p></td>
 <td><p>/usr/bin</p></td>
 </tr>
-<tr class="row-odd"><td><p><em>$(ToolchainName)</em></p></td>
+<tr class="row-even"><td><p><em>$(ToolchainName)</em></p></td>
 <td><p>Names of the used DefaultToolchain</p></td>
 <td><p>GCC</p></td>
 </tr>
-<tr class="row-even"><td><p><em>$(/)</em></p></td>
+<tr class="row-odd"><td><p><em>$(/)</em></p></td>
 <td><p>Evalutes to the directory path seperator of
 the current platform</p></td>
 <td><p>Windows: \, Other: /</p></td>
 </tr>
-<tr class="row-odd"><td><p><em>$(:)</em></p></td>
+<tr class="row-even"><td><p><em>$(:)</em></p></td>
 <td><p>Evaluates to the path variable seperator
 of the current platform</p></td>
 <td><p>Windows: ;, Other: :</p></td>
 </tr>
-<tr class="row-even"><td><p><em>$(QacActive)</em></p></td>
+<tr class="row-odd"><td><p><em>$(QacActive)</em></p></td>
 <td><p>Evaluates to “yes” if QAC is running (via
 bakeqac), otherwise “no”.</p></td>
 <td><p>yes, no</p></td>

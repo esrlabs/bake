@@ -257,6 +257,15 @@ describe "VarSubst" do
     expect(ExitHelper.exit_code).to be == 0
   end
 
+  it 'original dir' do
+    Bake.startBake("original/main", ["--adapt", "folder1"])
+    expect(($mystring.include?"main to folder1: ../sub/folder1")).to be == true
+    expect(($mystring.include?"folder2 to main\: ../../main")).to be == true
+    expect(($mystring.match(/main to main:.*spec\/testdata\/original\/main/))).not_to be_nil
+    expect(ExitHelper.exit_code).to be == 0
+  end
+
 end
 
 end
+

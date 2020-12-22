@@ -73,6 +73,9 @@ Variable                                    Description                         
 
 *$(WorkingDir)*                             Directory from which bake is called                 c:/Workspaces/Project
 
+*$(OriginalDir)*                            Directory of the containing meta file.              c:/Root/admin/adapt/coverage
+                                            Useful for relative paths from Adapt files.
+
 *$(ArtifactName)*                           Evaluates to the artifact.                          bootloader_1.0.elf
 
 *$(ArtifactNameBase)*                       Evaluates to the base artifact name                 bootloader_1.0

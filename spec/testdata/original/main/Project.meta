@@ -1,0 +1,17 @@
+Project default: test {
+  CustomConfig test {
+    Dependency folder2
+    PreSteps {
+      CommandLine "echo main to main: $(OriginalDir)", echo: off
+    }
+    DefaultToolchain GCC
+  }
+}
+
+Adapt {
+  CustomConfig test, project: folder2, type: extend {
+    PreSteps {
+      CommandLine "echo folder2 to main: $(OriginalDir)", echo: off
+    }
+  }
+}

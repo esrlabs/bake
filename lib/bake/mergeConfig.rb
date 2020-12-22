@@ -22,6 +22,7 @@ module Bake
     def self.cloneModelElement(obj)
       cpy = obj.class.new
       cpy.file_name = obj.file_name
+      cpy.org_file_name = obj.file_name
       obj.class.ecore.eAllStructuralFeatures.each do |f|
         value = obj.getGeneric(f.name)
         if f.is_a?(RGen::ECore::EReference) && f.containment
