@@ -140,6 +140,7 @@
 <li><a class="reference internal" href="#defaulttoolchain">DefaultToolchain</a></li>
 <li><a class="reference internal" href="#toolchain">Toolchain</a></li>
 <li><a class="reference internal" href="#outputdir">outputdir</a></li>
+<li><a class="reference internal" href="#outputdirpostfix">outputdirPostfix</a></li>
 <li><a class="reference internal" href="#eclipseorder">eclipseOrder</a></li>
 <li><a class="reference internal" href="#compiler">Compiler</a></li>
 <li><a class="reference internal" href="#archiver">Archiver</a></li>
@@ -295,7 +296,8 @@
     <a class="reference internal" href="#cleansteps"><span class="std std-ref">CleanSteps</span></a> {
       # Same as for PreSteps
     }
-    <a class="reference internal" href="#defaulttoolchain"><span class="std std-ref">DefaultToolchain</span></a> &lt;basedOn&gt;, <a class="reference internal" href="#outputdir"><span class="std std-ref">outputdir</span></a>: &lt;dir&gt;, <a class="reference internal" href="#eclipseorder"><span class="std std-ref">eclipseOrder</span></a>: true|false {
+    <a class="reference internal" href="#defaulttoolchain"><span class="std std-ref">DefaultToolchain</span></a> &lt;basedOn&gt;, <a class="reference internal" href="#outputdir"><span class="std std-ref">outputdir</span></a>: &lt;dir&gt;, <a class="reference internal" href="#outputdirpostfix"><span class="std std-ref">outputdirPostfix</span></a>: &lt;postfix&gt;,
+      <a class="reference internal" href="#eclipseorder"><span class="std std-ref">eclipseOrder</span></a>: true|false {
       <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a> ASM | CPP | C, <a class="reference internal" href="#command"><span class="std std-ref">command</span></a>: &lt;cmd&gt;, <a class="reference internal" href="#prefix"><span class="std std-ref">prefix</span></a>: &lt;prefix&gt;, <a class="reference internal" href="#keepobjfileendings"><span class="std std-ref">keepObjFileEndings</span></a>: true|false {
         <a class="reference internal" href="#defaultflags"><span class="std std-ref">Flags</span></a> &lt;flags&gt;
         <a class="reference internal" href="#defaultdefine"><span class="std std-ref">Flags</span></a> &lt;define&gt;
@@ -313,7 +315,7 @@
       <a class="reference internal" href="#internalincludes"><span class="std std-ref">InternalIncludes</span></a> &lt;file&gt;
       <a class="reference internal" href="#docu"><span class="std std-ref">Docu</span></a> &lt;cmdLine&gt;
     }
-    <a class="reference internal" href="#toolchain"><span class="std std-ref">Toolchain</span></a> <a class="reference internal" href="#outputdir"><span class="std std-ref">outputdir</span></a>: &lt;dir&gt; {
+    <a class="reference internal" href="#toolchain"><span class="std std-ref">Toolchain</span></a> <a class="reference internal" href="#outputdir"><span class="std std-ref">outputdir</span></a>: &lt;dir&gt;, <a class="reference internal" href="#outputdirpostfix"><span class="std std-ref">outputdirPostfix</span></a>: &lt;postfix&gt; {
       <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a> ASM | CPP | C, <a class="reference internal" href="#command"><span class="std std-ref">command</span></a>: &lt;cmd&gt;, <a class="reference internal" href="#cuda"><span class="std std-ref">cuda</span></a>: true|false, <a class="reference internal" href="#prefix"><span class="std std-ref">prefix</span></a>: &lt;prefix&gt; {
         <a class="reference internal" href="#toolchainflags"><span class="std std-ref">Flags</span></a> &lt;flags&gt;, add: &lt;flags&gt;, remove: &lt;flags&gt;
         <a class="reference internal" href="#toolchaindefine"><span class="std std-ref">Flags</span></a> &lt;define&gt; &lt;define&gt;
@@ -771,8 +773,19 @@ whereas XX is one of CPP, C, ASM, AR or LD.</p>
 <div class="line"><em>default for every other config: &lt;project root&gt;/build/&lt;configName&gt;_&lt;mainProjectName&gt;_&lt;mainConfigName&gt;</em></div>
 </div>
 </div>
+<div class="section" id="outputdirpostfix">
+<span id="id41"></span><h3>outputdirPostfix<a class="headerlink" href="#outputdirpostfix" title="Permalink to this headline">¶</a></h3>
+<p>Attribute of <a class="reference internal" href="#defaulttoolchain"><span class="std std-ref">DefaultToolchain</span></a> and <a class="reference internal" href="#toolchain"><span class="std std-ref">Toolchain</span></a>.</p>
+<div class="line-block">
+<div class="line">Specifies a postfix for the output folder.</div>
+</div>
+<div class="line-block">
+<div class="line">It’s intended to be used by special builds like MISRA checks.</div>
+</div>
+<p><em>Mandatory: no, quantity: 0..1,, default: -</em></p>
+</div>
 <div class="section" id="eclipseorder">
-<span id="id41"></span><h3>eclipseOrder<a class="headerlink" href="#eclipseorder" title="Permalink to this headline">¶</a></h3>
+<span id="id42"></span><h3>eclipseOrder<a class="headerlink" href="#eclipseorder" title="Permalink to this headline">¶</a></h3>
 <p>Attribute of <a class="reference internal" href="#defaulttoolchain"><span class="std std-ref">DefaultToolchain</span></a>.</p>
 <div class="line-block">
 <div class="line">If not specified or false, all files are compiled in order of appearance in Project.meta.</div>
@@ -785,33 +798,33 @@ whereas XX is one of CPP, C, ASM, AR or LD.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
 </div>
 <div class="section" id="compiler">
-<span id="id42"></span><h3>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h3>
+<span id="id43"></span><h3>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h3>
 <p>Flags and defines can be specified independently for each compiler type (ASM, CPP, C).</p>
 <p><em>Mandatory: no, quantity: 0..3, default: -</em></p>
 </div>
 <div class="section" id="archiver">
-<span id="id43"></span><h3>Archiver<a class="headerlink" href="#archiver" title="Permalink to this headline">¶</a></h3>
+<span id="id44"></span><h3>Archiver<a class="headerlink" href="#archiver" title="Permalink to this headline">¶</a></h3>
 <p>Settings for the archiver.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
 </div>
 <div class="section" id="linker">
-<span id="id44"></span><h3>Linker<a class="headerlink" href="#linker" title="Permalink to this headline">¶</a></h3>
+<span id="id45"></span><h3>Linker<a class="headerlink" href="#linker" title="Permalink to this headline">¶</a></h3>
 <p>Settings for the linker.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
 </div>
 <div class="section" id="docu">
-<span id="id45"></span><h3>Docu<a class="headerlink" href="#docu" title="Permalink to this headline">¶</a></h3>
+<span id="id46"></span><h3>Docu<a class="headerlink" href="#docu" title="Permalink to this headline">¶</a></h3>
 <p>Command to build the documentation. e.g.: <em>doxygen main.cfg</em></p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
 </div>
 <div class="section" id="command">
-<span id="id46"></span><h3>command<a class="headerlink" href="#command" title="Permalink to this headline">¶</a></h3>
+<span id="id47"></span><h3>command<a class="headerlink" href="#command" title="Permalink to this headline">¶</a></h3>
 <p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>, <a class="reference internal" href="#archiver"><span class="std std-ref">Archiver</span></a>, <a class="reference internal" href="#linker"><span class="std std-ref">Linker</span></a>.</p>
 <p>Changes the predefined command, e.g. “gcc”.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
 </div>
 <div class="section" id="prefix">
-<span id="id47"></span><h3>prefix<a class="headerlink" href="#prefix" title="Permalink to this headline">¶</a></h3>
+<span id="id48"></span><h3>prefix<a class="headerlink" href="#prefix" title="Permalink to this headline">¶</a></h3>
 <p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>, <a class="reference internal" href="#archiver"><span class="std std-ref">Archiver</span></a>, <a class="reference internal" href="#linker"><span class="std std-ref">Linker</span></a>.</p>
 <div class="line-block">
 <div class="line">Wrapper for the command, e.g. a (s)ccache.</div>
@@ -821,25 +834,25 @@ whereas XX is one of CPP, C, ASM, AR or LD.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: $(CompilerPrefix), $(ArchiverPrefix) or $(LinkerPrefix)</em></p>
 </div>
 <div class="section" id="keepobjfileendings">
-<span id="id48"></span><h3>keepObjFileEndings<a class="headerlink" href="#keepobjfileendings" title="Permalink to this headline">¶</a></h3>
+<span id="id49"></span><h3>keepObjFileEndings<a class="headerlink" href="#keepobjfileendings" title="Permalink to this headline">¶</a></h3>
 <p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>.</p>
 <p>If false, the original source file endings will be cut off (e.g. file1.cpp to file1.o), otherwise kept (file1.cpp.o).</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
 </div>
 <div class="section" id="srcfileendings">
-<span id="id49"></span><h3>SrcFileEndings<a class="headerlink" href="#srcfileendings" title="Permalink to this headline">¶</a></h3>
+<span id="id50"></span><h3>SrcFileEndings<a class="headerlink" href="#srcfileendings" title="Permalink to this headline">¶</a></h3>
 <p>List of all source file endings with dot and comma separated which are handled by this CPP, C or ASM compiler,
 e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
 </div>
 <div class="section" id="onlydirectdeps">
-<span id="id50"></span><h3>onlyDirectDeps<a class="headerlink" href="#onlydirectdeps" title="Permalink to this headline">¶</a></h3>
+<span id="id51"></span><h3>onlyDirectDeps<a class="headerlink" href="#onlydirectdeps" title="Permalink to this headline">¶</a></h3>
 <p>Attribute of <a class="reference internal" href="#linker"><span class="std std-ref">Linker</span></a>.</p>
 <p>If set to true, only first level libraries will be linked (not sub-dependencies from dependencies).</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
 </div>
 <div class="section" id="cuda">
-<span id="id51"></span><h3>cuda<a class="headerlink" href="#cuda" title="Permalink to this headline">¶</a></h3>
+<span id="id52"></span><h3>cuda<a class="headerlink" href="#cuda" title="Permalink to this headline">¶</a></h3>
 <p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>.</p>
 <div class="line-block">
 <div class="line">Enables Cuda hack.</div>
@@ -884,7 +897,7 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
 <div class="section" id="toolchaindefine">
-<span id="id52"></span><h3>Flags (Toolchain)<a class="headerlink" href="#toolchaindefine" title="Permalink to this headline">¶</a></h3>
+<span id="id53"></span><h3>Flags (Toolchain)<a class="headerlink" href="#toolchaindefine" title="Permalink to this headline">¶</a></h3>
 <p>Defines which are valid for the files of this config.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
@@ -894,17 +907,17 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
 <div class="section" id="libprefixflags">
-<span id="id53"></span><h3>LibPrefixFlags<a class="headerlink" href="#libprefixflags" title="Permalink to this headline">¶</a></h3>
+<span id="id54"></span><h3>LibPrefixFlags<a class="headerlink" href="#libprefixflags" title="Permalink to this headline">¶</a></h3>
 <p>Linker libs can be prefixed if needed, e.g. with “-Wl,–whole-archive”.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
 <div class="section" id="libpostfixflags">
-<span id="id54"></span><h3>LibPostfixFlags<a class="headerlink" href="#libpostfixflags" title="Permalink to this headline">¶</a></h3>
+<span id="id55"></span><h3>LibPostfixFlags<a class="headerlink" href="#libpostfixflags" title="Permalink to this headline">¶</a></h3>
 <p>Linker libs can be postfixed if needed, e.g. with “-Wl,–no-whole-archive”.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
 <div class="section" id="internaldefines">
-<span id="id55"></span><h3>InternalDefines<a class="headerlink" href="#internaldefines" title="Permalink to this headline">¶</a></h3>
+<span id="id56"></span><h3>InternalDefines<a class="headerlink" href="#internaldefines" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">File with list of compiler internal defines.</div>
 <div class="line">One define per line.</div>
@@ -913,7 +926,7 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
 </div>
 <div class="section" id="internalincludes">
-<span id="id56"></span><h3>InternalIncludes<a class="headerlink" href="#internalincludes" title="Permalink to this headline">¶</a></h3>
+<span id="id57"></span><h3>InternalIncludes<a class="headerlink" href="#internalincludes" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">File with list of compiler internal include folders.</div>
 <div class="line">One folder per line.</div>
@@ -922,7 +935,7 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
 </div>
 <div class="section" id="files">
-<span id="id57"></span><h3>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
+<span id="id58"></span><h3>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">Specifies the files to build.</div>
 <div class="line">It’s valid to specify a single file, e.g.</div>
@@ -935,7 +948,7 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
 <div class="section" id="excludefiles">
-<span id="id58"></span><h3>ExcludeFiles<a class="headerlink" href="#excludefiles" title="Permalink to this headline">¶</a></h3>
+<span id="id59"></span><h3>ExcludeFiles<a class="headerlink" href="#excludefiles" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">Used to ignore files or directories.</div>
 <div class="line">ExcludeFiles has higher priority than Files.</div>
@@ -943,19 +956,19 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
 <div class="section" id="compileonly">
-<span id="id59"></span><h3>compileOnly<a class="headerlink" href="#compileonly" title="Permalink to this headline">¶</a></h3>
+<span id="id60"></span><h3>compileOnly<a class="headerlink" href="#compileonly" title="Permalink to this headline">¶</a></h3>
 <p>Attribute of <a class="reference internal" href="#files"><span class="std std-ref">Files</span></a>.</p>
 <p>If set to true, the files will not be archived or linked.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
 </div>
 <div class="section" id="linkdirectly">
-<span id="id60"></span><h3>linkDirectly<a class="headerlink" href="#linkdirectly" title="Permalink to this headline">¶</a></h3>
+<span id="id61"></span><h3>linkDirectly<a class="headerlink" href="#linkdirectly" title="Permalink to this headline">¶</a></h3>
 <p>Attribute of <a class="reference internal" href="#files"><span class="std std-ref">Files</span></a>.</p>
 <p>If set to true, the files will not be archived but linked directly to the executable.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
 </div>
 <div class="section" id="prebuild">
-<span id="id61"></span><h3>Prebuild<a class="headerlink" href="#prebuild" title="Permalink to this headline">¶</a></h3>
+<span id="id62"></span><h3>Prebuild<a class="headerlink" href="#prebuild" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">If defined, all configs of the workspace will be skipped per default.</div>
 <div class="line">Must be activated by the commandline option “–prebuild”.</div>
@@ -963,7 +976,7 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: No project/config is skipped</em></p>
 </div>
 <div class="section" id="except">
-<span id="id62"></span><h3>Except<a class="headerlink" href="#except" title="Permalink to this headline">¶</a></h3>
+<span id="id63"></span><h3>Except<a class="headerlink" href="#except" title="Permalink to this headline">¶</a></h3>
 <p>Defines a project which shall not be skipped. If project name is omitted, the current project is used.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: Every project is skipped</em></p>
 </div>
@@ -974,7 +987,7 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: Every config is skipped</em></p>
 </div>
 <div class="section" id="compilationdb">
-<span id="id63"></span><h3>CompilationDB<a class="headerlink" href="#compilationdb" title="Permalink to this headline">¶</a></h3>
+<span id="id64"></span><h3>CompilationDB<a class="headerlink" href="#compilationdb" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">Generates a compilation database in json.</div>
 <div class="line">Example:</div>
@@ -983,7 +996,7 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: None. If CompilationDB is specified without an explicit filename, $(WorkspaceDir)/compile_commands.json is used.</em></p>
 </div>
 <div class="section" id="compilationcheck">
-<span id="id64"></span><h3>CompilationCheck<a class="headerlink" href="#compilationcheck" title="Permalink to this headline">¶</a></h3>
+<span id="id65"></span><h3>CompilationCheck<a class="headerlink" href="#compilationcheck" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">Checks if files are included or excluded in build.</div>
 <div class="line">Priority if files are mentioned multiple times: ignore &gt; exclude &gt; include.</div>
@@ -995,12 +1008,12 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
 <div class="section" id="linkerscript">
-<span id="id65"></span><h3>LinkerScript<a class="headerlink" href="#linkerscript" title="Permalink to this headline">¶</a></h3>
+<span id="id66"></span><h3>LinkerScript<a class="headerlink" href="#linkerscript" title="Permalink to this headline">¶</a></h3>
 <p>Specifies the name including path of the linker script.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
 </div>
 <div class="section" id="mapfile">
-<span id="id66"></span><h3>MapFile<a class="headerlink" href="#mapfile" title="Permalink to this headline">¶</a></h3>
+<span id="id67"></span><h3>MapFile<a class="headerlink" href="#mapfile" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">A mapfile will be written by the linker.</div>
 <div class="line">If name attribute is omitted, the mapfile will be “$(OutputDir)/$(ArtifactNameBase).map”.</div>
@@ -1008,7 +1021,7 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: No mapfile will be written</em></p>
 </div>
 <div class="section" id="artifactname">
-<span id="id67"></span><h3>ArtifactName<a class="headerlink" href="#artifactname" title="Permalink to this headline">¶</a></h3>
+<span id="id68"></span><h3>ArtifactName<a class="headerlink" href="#artifactname" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">The artifact name inclusive file ending.</div>
 <div class="line">The artifact will be placed in the output directory.</div>
@@ -1016,7 +1029,7 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..1, default executable: project name + toolchain dependent file ending, default library: ‘lib’ + project name + ‘.a’</em></p>
 </div>
 <div class="section" id="artifactextension">
-<span id="id68"></span><h3>ArtifactExtension<a class="headerlink" href="#artifactextension" title="Permalink to this headline">¶</a></h3>
+<span id="id69"></span><h3>ArtifactExtension<a class="headerlink" href="#artifactextension" title="Permalink to this headline">¶</a></h3>
 <div class="line-block">
 <div class="line">The artifact extension, e.g. “exe”.</div>
 <div class="line">If ArtifactName is also specified, ArtifactExtension has no effect.</div>

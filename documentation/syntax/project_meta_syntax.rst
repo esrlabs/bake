@@ -92,7 +92,8 @@ Syntax
         :ref:`cleanSteps` {
           # Same as for PreSteps
         }
-        :ref:`defaultToolchain` <basedOn>, :ref:`outputDir`: <dir>, :ref:`eclipseOrder`: true|false {
+        :ref:`defaultToolchain` <basedOn>, :ref:`outputDir`: <dir>, :ref:`outputDirPostfix`: <postfix>,
+          :ref:`eclipseOrder`: true|false {
           :ref:`compiler` ASM | CPP | C, :ref:`command`: <cmd>, :ref:`prefix`: <prefix>, :ref:`keepObjFileEndings`: true|false {
             :ref:`Flags <defaultFlags>` <flags>
             :ref:`Flags <defaultDefine>` <define>
@@ -110,7 +111,7 @@ Syntax
           :ref:`internalIncludes` <file>
           :ref:`docu` <cmdLine>
         }
-        :ref:`toolchain` :ref:`outputDir`: <dir> {
+        :ref:`toolchain` :ref:`outputDir`: <dir>, :ref:`outputDirPostfix`: <postfix> {
           :ref:`compiler` ASM | CPP | C, :ref:`command`: <cmd>, :ref:`cuda`: true|false, :ref:`prefix`: <prefix> {
             :ref:`Flags <toolchainFlags>` <flags>, add: <flags>, remove: <flags>
             :ref:`Flags <toolchainDefine>` <define> <define>
@@ -754,6 +755,19 @@ Attribute of :ref:`defaultToolchain` and :ref:`toolchain`.
 | *Mandatory: no, quantity: 0..1,*
 | *default for main config: <project root>/build/<configName>,*
 | *default for every other config: <project root>/build/<configName>_<mainProjectName>_<mainConfigName>*
+
+.. _outputdirPostfix:
+
+outputdirPostfix
+----------------
+
+Attribute of :ref:`defaultToolchain` and :ref:`toolchain`.
+
+| Specifies a postfix for the output folder.
+
+| It's intended to be used by special builds like MISRA checks.
+
+*Mandatory: no, quantity: 0..1,, default: -*
 
 .. _eclipseOrder:
 
