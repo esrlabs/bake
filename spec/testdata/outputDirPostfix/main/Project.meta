@@ -1,0 +1,23 @@
+Project default: test {
+
+  LibraryConfig testdep {
+    Files "src/x.cpp"
+  }
+
+  LibraryConfig test {
+    Files "src/x.cpp"
+    Dependency config: testdep
+    DefaultToolchain GCC, outputDirPostfix: "_$(ConfigName)"
+  }
+
+}
+
+Adapt {
+  LibraryConfig test, type: extend {
+    PreSteps {
+      CommandLine "echo test: $(OutputDir)", echo: off
+      CommandLine "echo test_dep: $(OutputDir, main, testdep)", echo: off
+    }
+    Toolchain outputDirPostfix: "_abc"
+  }
+}

@@ -128,6 +128,14 @@ describe "OutputDir" do
     expect($mystring.include?("main: main/testMain/main/testMain")).to be == true
   end
 
+  it 'OutputDirPostfix' do
+    Bake.startBake("outputDirPostfix/main", [])
+    expect($mystring.include?("test: build/test_abc")).to be == true
+    expect($mystring.include?("test_dep: build/testdep_main_test_testdep")).to be == true
+    expect(File.exist?("spec/testdata/outputDirPostfix/main/build/test_abc/libmain.a")).to be == true
+    expect(File.exist?("spec/testdata/outputDirPostfix/main/build/testdep_main_test_testdep/libmain.a")).to be == true
+  end
+
 end
 
 

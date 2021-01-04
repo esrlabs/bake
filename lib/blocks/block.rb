@@ -598,6 +598,9 @@ module Bake
             @output_dir = "build" + Bake.options.buildDirDelimiter + qacPart + @config.name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
           end
         end
+        if @tcs[:OUTPUT_DIR_POSTFIX] != nil
+          @output_dir = @output_dir + @tcs[:OUTPUT_DIR_POSTFIX] 
+        end
       end
 
     end

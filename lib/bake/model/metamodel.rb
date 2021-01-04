@@ -97,6 +97,7 @@ module Bake
       class DefaultToolchain < ModelElement
         has_attr 'basedOn', String, :defaultValueLiteral => ""
         has_attr 'outputDir', String, :defaultValueLiteral => ""
+        has_attr 'outputDirPostfix', String, :defaultValueLiteral => ""
         has_attr 'eclipseOrder', Boolean, :defaultValueLiteral => "false"
         has_attr 'keepObjFileEndings', Boolean, :defaultValueLiteral => "false"
         contains_many 'compiler', Compiler, 'parent'
@@ -109,6 +110,7 @@ module Bake
 
       class Toolchain < ModelElement
         has_attr 'outputDir', String, :defaultValueLiteral => ""
+        has_attr 'outputDirPostfix', String, :defaultValueLiteral => ""
         contains_many 'compiler', Compiler, 'parent'
         contains_one 'archiver', Archiver, 'parent'
         contains_one 'linker', Linker, 'parent'

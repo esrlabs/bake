@@ -265,12 +265,18 @@ module Bake
             configs = @@referencedConfigs[out_proj_name]
             config = configs.select {|c| c.name == out_conf_name }.first
             if config
-              out_dir = nil
-              if (config.toolchain and config.toolchain.outputDir and config.toolchain.outputDir != "")
+
+              if config.toolchain && config.toolchain.outputDir && config.toolchain.outputDir != ""
                 out_dir = config.toolchain.outputDir
               else
                 out_dir = @@configTcMap[config][:OUTPUT_DIR]
               end
+              if config.toolchain && config.toolchain.outputDirPostfix && config.toolchain.outputDirPostfix != ""
+                out_dir_postfix = config.toolchain.outputDirPostfix
+              else
+                out_dir_postfix = @@configTcMap[config][:OUTPUT_DIR_POSTFIX]
+              end
+
               if not out_dir
                 qacPart = Bake.options.qac ? (".qac" + Bake.options.buildDirDelimiter) : ""
                 if out_proj_name == Bake.options.main_project_name and out_conf_name == Bake.options.build_config
@@ -279,6 +285,7 @@ module Bake
                   out_dir = "build" + Bake.options.buildDirDelimiter + qacPart + out_conf_name + "_" + Bake.options.main_project_name + "_" + Bake.options.build_config
                 end
               end
+              out_dir += out_dir_postfix if out_dir_postfix
 
               if (out_dir.include?"$(")
                 if !elem
