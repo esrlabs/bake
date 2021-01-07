@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
   s.add_dependency("e2mmap", "=0.1.0")
   s.add_development_dependency("rake", '=12.3.3')
   s.add_development_dependency("rspec", '=3.10.0')
-  s.add_development_dependency("simplecov", "=0.14.1")
+  s.add_development_dependency("simplecov", "=0.16.1")
   s.add_development_dependency("coveralls", "=0.8.23")
   s.executables = ["bake", "bakery", "bake-doc", "bakeqac", "bakeclean", "bake-format", "bake-rtext-service"]
   s.licenses    = ['MIT']

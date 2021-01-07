@@ -12,13 +12,13 @@ install:
   - SET PATH=C:\Ruby%ruby_version%\bin;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;%PATH%
   - if %ruby_version% == 25 set flags=--no-document
   - if %ruby_version% == 22 set flags=--no-rdoc --no-ri
-  - gem install rtext -v 0.9.0 %flags%
-  - gem install rgen -v 0.8.2 %flags%
-  - gem install highline -v ">= 1.6.0" %flags%
-  - gem install concurrent-ruby -v 1.0.5 %flags%
-  - gem install thwait -v 0.1.0 %flags%
-  - gem install colored %flags%
-  - gem install rspec %flags%
+  - gem install rtext           -v 0.9.0  %flags%
+  - gem install rgen            -v 0.8.2  %flags%
+  - gem install highline        -v 1.7.8  %flags%
+  - gem install concurrent-ruby -v 1.0.5  %flags%
+  - gem install thwait          -v 0.1.0  %flags%
+  - gem install colored         -v 1.2    %flags%
+  - gem install rspec           -v 3.10.0 %flags%
 
 test_script:
   - rake appveyor
