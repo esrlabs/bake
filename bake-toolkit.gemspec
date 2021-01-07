@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.name = "bake-toolkit"
   s.version = PKG_VERSION
   s.summary = "Build tool to compile C/C++ projects fast and easy."
+  s.homepage = "https://github.com/esrlabs/bake"
   s.description = "See documentation for more details"
   s.files = PKG_FILES
   s.require_path = "lib"
@@ -29,11 +30,11 @@ Gem::Specification.new do |s|
   s.add_dependency("concurrent-ruby", "=1.0.5")
   s.add_dependency("colored", "=1.2")
   s.add_dependency("thwait", "=0.1.0")
-  s.add_dependency("e2mmap")
-  s.add_development_dependency("rake", ">=12.3.3")
-  s.add_development_dependency("rspec")
-  s.add_development_dependency("simplecov")
-  s.add_development_dependency("coveralls")
+  s.add_dependency("e2mmap", "=0.1.0")
+  s.add_development_dependency("rake", '=12.3.3')
+  s.add_development_dependency("rspec", '=3.10.0')
+  s.add_development_dependency("simplecov", "=0.14.1")
+  s.add_development_dependency("coveralls", "=0.8.23")
   s.executables = ["bake", "bakery", "bake-doc", "bakeqac", "bakeclean", "bake-format", "bake-rtext-service"]
   s.licenses    = ['MIT']
   s.required_ruby_version = '>= 2.0'

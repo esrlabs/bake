@@ -29,26 +29,22 @@ module Bake
     end
   end
 
-  expectedRGen = "0.8.2"
-  expectedRText = "0.9.0"
-  expectedConcurrent = "1.0.5"
+  deps = [
+    ["rgen", "0.8.2"],
+    ["rtext", "0.9.0"],
+    ["concurrent-ruby", "1.0.5"],
+    ["highline", "1.7.8"],
+    ["colored", "1.2"],
+    ["thwait", "0.1.0"],
+    ["e2mmap", "0.1.0"]]
 
-  begin
-    gem "rgen", "=#{expectedRGen}"
-  rescue Exception => e
-    puts "Warning: Failed to load rgen #{expectedRGen}, using latest version"
-  end
-
-  begin
-    gem "rtext", "=#{expectedRText}"
-  rescue Exception => e
-    puts "Warning: Failed to load rtext #{expectedRText}, using latest version"
-  end
-
-  begin
-    gem "concurrent-ruby", "=#{expectedConcurrent}"
-  rescue Exception => e
-    puts "Warning: Failed to load concurrent-ruby #{expectedConcurrent}, using latest version"
+  deps.each do |d|
+    begin
+      gem d[0], "=#{d[1]}"
+    rescue Exception => e
+      puts "Error: Failed to load gem #{d[0]} #{d[1]}, please reinstall bake-toolkit."
+      exit -1
+    end
   end
 
 end
