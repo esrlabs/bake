@@ -17,6 +17,7 @@ install:
   - gem install highline        -v 1.7.8  %flags%
   - gem install concurrent-ruby -v 1.0.5  %flags%
   - gem install thwait          -v 0.1.0  %flags%
+  - gem install e2mmap          -v 0.1.0  %flags%
   - gem install colored         -v 1.2    %flags%
   - gem install rspec           -v 3.10.0 %flags%
   - gem install coveralls       -v 0.8.23 %flags%
