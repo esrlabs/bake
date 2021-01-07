@@ -19,6 +19,8 @@ install:
   - gem install thwait          -v 0.1.0  %flags%
   - gem install colored         -v 1.2    %flags%
   - gem install rspec           -v 3.10.0 %flags%
+  - gem install coveralls       -v 0.8.23 %flags%
+  - gem install simplecov       -v 0.14.1 %flags%
 
 test_script:
   - rake appveyor
