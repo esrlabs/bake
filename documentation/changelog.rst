@@ -5,6 +5,7 @@ January 7, 2021 - bake-toolkit 2.67.0
     * Add variable *$(OriginalDir)*, which points to the directory of the containing meta file. Useful for relative paths from Adapt files.
     * Add *outputDirPostfix* to (Default)Toolchain. It can be used for special builds like MISRA checkers.
     * Add *ExcludeDir* to bakery. Up to now it was only possible to exclude by project name (with wildcards), but not complete folder trees.
+    * Add robustness measure: now every dependency from bake to other gems is specified with hardcoded version on installation time and runtime.
 
 October 23, 2020 - bake-toolkit 2.66
     * Bugfix: --list failed when Project.meta contains an Adapt
