@@ -1,33 +1,28 @@
 bake 2.67.0
-==========================================
+===========
+
 bake, building software **fast** and **easy**!
 
-=======================================            =======================================
-\                                                  \
-=======================================            =======================================
-.. image:: _static/bake_tagcloud.png               **Start to bake**
+.. image:: _static/bake_tagcloud.png
+    :width: 300px
+.. toctree::
+    :maxdepth: 2
+    :caption: Start to bake
 
-                                                   .. toctree::
-                                                        :maxdepth: 2
+    source/why_bake/why_bake
+    source/install/install_bake
+    source/quickstart/quickstart
+    source/concepts/concepts
+    source/syntax/syntax
+    source/commandline/commandline
+    source/ide/ide_integrations
+    source/tips_and_tricks/tips_and_tricks
+    source/performance/performance
+    source/known_issues
+    source/changelog
+    source/license
 
-                                                        why_bake/why_bake
-                                                        install/install_bake
-                                                        quickstart/quickstart
-                                                        concepts/concepts
-                                                        syntax/syntax
-                                                        commandline/commandline
-                                                        ide/ide_integrations
-                                                        tips_and_tricks/tips_and_tricks
-                                                        performance/performance
-                                                        known_issues
-                                                        changelog
-                                                        license
+.. toctree::
+    :maxdepth: 1
 
-                                                   .. toctree::
-                                                        :maxdepth: 1
-
-                                                        internal/internal
-=======================================            =======================================
-
-
-
+    source/internal/internal
