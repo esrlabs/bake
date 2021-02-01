@@ -56,6 +56,9 @@ module Bake
         cb = block.library.compileBlock
         if (block.prebuild and File.exist?adaptedPath) or
            (!cb.nil? and !(cb.calcSources(true, true) - cb.source_files_ignored_in_lib).empty?)
+          if Bake.options.consoleOutput_fullnames
+            adaptedPath = File.expand_path(adaptedPath, @projectDir)
+          end
           @@linker_libs_array << adaptedPath
           @@source_libraries << adaptedPath
         end
@@ -67,6 +70,9 @@ module Bake
           cb.object_files_ignored_in_lib.each do |ldirect|
             adaptedPath, prefix = adaptPath(ldirect, block, prefix)
             if (!block.prebuild or File.exist?adaptedPath)
+              if Bake.options.consoleOutput_fullnames
+                adaptedPath = File.expand_path(adaptedPath, @projectDir)
+              end
               @@linker_libs_array << adaptedPath
               @@source_libraries << adaptedPath
             end

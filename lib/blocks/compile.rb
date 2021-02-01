@@ -524,10 +524,16 @@ module Bake
 
       def calcObjects
         @object_files_ignored_in_lib = []
-        @source_files.each do |source|
+        @source_files.map! do |source|
           type = get_source_type(source)
           if not type.nil?
             object = get_object_file(source)
+
+            if Bake.options.consoleOutput_fullnames
+              object = File.expand_path(object, @projectDir)
+              source = File.expand_path(source, @projectDir)
+            end
+
             if @objects.include?object
               @object_files.each do |k,v|
                 if (v == object) # will be found exactly once
@@ -545,6 +551,7 @@ module Bake
               @objects << object
             end
           end
+          source
         end
       end
 
@@ -629,16 +636,18 @@ module Bake
       end
 
       def calcIncludesInternal(block)
-        # puts "#{block.projectName},#{block.configName} " + block.to_s
         noDeps = @blocksRead.include?(block)
         @blocksRead << block
         block.bes.each do |be|
           if Metamodel::IncludeDir === be
-            # puts "-- #{be.name}"
             if be.inherit == true || block == @block
-              mappedInc = File.rel_from_to_project(@projectDir,be.name,false)
-              mappedInc  = "." if mappedInc.empty?
-              if !@include_set.include?(mappedInc) # todo set!!
+              if Bake.options.consoleOutput_fullnames
+                mappedInc = be.name
+              else
+                mappedInc = File.rel_from_to_project(@projectDir,be.name,false)
+                mappedInc  = "." if mappedInc.empty?
+              end
+              if !@include_set.include?(mappedInc)
                 @include_list << mappedInc
                 @include_set << mappedInc
                 if !@include_merge.has_key?(mappedInc)
@@ -674,15 +683,7 @@ module Bake
         @include_list = []
         @include_merge = {}
         @system_includes = Set.new
-        
-          #puts @block.bes.length
-          #@block.bes.each {|b| puts "#{b.class}: #{b.name}, #{b.respond_to?(:config) ? b.config : ""}"}
-          #exit(1)
-        
-
-        
         calcIncludesInternal(@block) # includeDir and child dependencies with inherit: true
-        # exit(1)
         @include_list = @include_list.flatten.uniq
       end
 

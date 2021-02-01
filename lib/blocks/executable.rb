@@ -43,6 +43,9 @@ module Bake
           baseFilename += ".#{@config.artifactExtension.name}"
         end
         @exe_name ||= File.join([@block.output_dir, baseFilename])
+        if Bake.options.consoleOutput_fullnames
+          @exe_name = File.expand_path(@exe_name, @projectDir)
+        end
       end
 
       def calcCmdlineFile()

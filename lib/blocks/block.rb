@@ -601,6 +601,9 @@ module Bake
         if @tcs[:OUTPUT_DIR_POSTFIX] != nil
           @output_dir = @output_dir + @tcs[:OUTPUT_DIR_POSTFIX] 
         end
+        if Bake.options.consoleOutput_fullnames
+          @output_dir = File.expand_path(@output_dir, @projectDir)
+        end
       end
 
     end
