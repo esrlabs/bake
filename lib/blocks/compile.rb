@@ -255,7 +255,7 @@ module Bake
           cmdJson = cmd.is_a?(Array) ? cmd.join(' ') : cmd
           srcFilePath = source
           if Bake.options.consoleOutput_fullnames
-            srcFilePath = File.join(@projectDir, srcFilePath)
+            srcFilePath = File.join(@projectDir, srcFilePath) if !File.is_absolute?(srcFilePath)
             cmdJson[source] = srcFilePath
           end
           cmdJson.gsub!("\"" , "\\\"")

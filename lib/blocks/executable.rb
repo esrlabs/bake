@@ -46,6 +46,7 @@ module Bake
         if Bake.options.consoleOutput_fullnames
           @exe_name = File.expand_path(@exe_name, @projectDir)
         end
+        return @exe_name
       end
 
       def calcCmdlineFile()

@@ -37,6 +37,7 @@ module Bake
         if Bake.options.consoleOutput_fullnames
           @archive_name = File.expand_path(@archive_name, @projectDir)
         end
+        return @archive_name
       end
 
       def calcCmdlineFile()
