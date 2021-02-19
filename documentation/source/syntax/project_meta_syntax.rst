@@ -646,9 +646,22 @@ Additional makefile flags.
 CommandLine
 -----------
 
-| A command to execute, e.g.:
-| *CommandLine "ddump -Ruv -y 0xFFFFF -oRelease/application.bin Release/application.elf"*
-| *CommandLine "echo Hello world!"*
+A command to execute, e.g.:
+
+.. code-block:: console
+
+    CommandLine "ddump -Ruv -y 0xFFFFF -oRelease/application.bin Release/application.elf"
+    CommandLine "echo Hello world!"
+
+The command line string cannot be wrapped into multiple lines. If the command line gets long and
+unreadable, use an array to split the string, e.g.
+
+.. code-block:: console
+
+    CommandLine ["myCommand --which is --very",
+                 "--long and --can be splitted"]
+
+The array is internally joined to an string again with spaces in between.
 
 *Mandatory: no, quantity in steps: 0..n, quantity in CustomConfig: 0..1, default: -*
 
