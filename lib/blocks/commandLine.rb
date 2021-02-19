@@ -8,7 +8,7 @@ module Bake
 
       def initialize(config)
         @config = config # Bake::Metamodel::CommandLine
-        @commandLine = config.name
+        @commandLine = config.name.kind_of?(Array) ? config.name.join(' ') : config.name
         @projectDir = config.get_project_dir
       end
 

@@ -26,4 +26,12 @@ Project {
     DefaultToolchain GCC
   }
 
+  CustomConfig test3 {
+    PostSteps {
+      CommandLine ["echo", "COMMAND1"], echo: off
+    }
+
+    DefaultToolchain GCC
+  }
+
 }
