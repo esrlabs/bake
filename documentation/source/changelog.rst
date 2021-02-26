@@ -4,6 +4,8 @@ Changelog
 January XXXXX, 2021 - bake-toolkit 2.68.0
     * Enhance **--abs-paths** so it affects not only error messages but also sources, objects, includes, library and executable names.
     * Switch theme of documentation from Bootstrap to ReadTheDocs.
+    * Add project filter to adapt command line option.
+    * Add array syntax for *CommandLine* to wrap very long lines.
 
 January 7, 2021 - bake-toolkit 2.67.0
     * Add variable *$(OriginalDir)*, which points to the directory of the containing meta file. Useful for relative paths from Adapt files.

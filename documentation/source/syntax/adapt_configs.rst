@@ -358,7 +358,7 @@ Example (the configs of the Adapt are applied if the main config name starts wit
 Lists
 -----
 
-Additionally to the wildcards, a list of projects/configs can be specified separared with ";".
+Additionally to the wildcards, a list of projects/configs can be specified separated with ";".
 
 Example:
 
@@ -379,3 +379,19 @@ Example:
       }
     }
 
+Command line filter
+-------------------
+
+To apply adapt files to specific projects only, the usage can be restricted with square brackets:
+
+.. code-block:: text
+
+    --adapt abc[libraryA;libraryB]
+
+In this case the Adapt.meta in abc is applied to libraryA and libraryB only. Note that further restrictions in the adapt file are still effective.
+
+Lists and wildcards can be used as described above, e.g.:
+
+.. code-block:: text
+
+    --adapt abc[__MAIN__;*driver],xy/Adapt.meta[*can*;*lin*]

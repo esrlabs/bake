@@ -1,0 +1,10 @@
+Project {
+
+  CustomConfig test_lib1 {
+    CommandLine "echo lib1", echo: off
+  }
+
+  CustomConfig test_lib2 {
+    CommandLine "echo lib2", echo: off
+  }
+}

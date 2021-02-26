@@ -643,7 +643,7 @@ module Bake
           if Bake.options.showConfigs
             al = AdaptConfig.new
             adaptConfigs = al.load()
-            Config.new.printConfigs(adaptConfigs)
+            Config.new.printConfigs(adaptConfigs.map{|c| c[:configs]}.flatten)
           else
             cache = CacheAccess.new()
             @referencedConfigs = cache.load_cache unless Bake.options.nocache
@@ -652,8 +652,8 @@ module Bake
               al = AdaptConfig.new
               adaptConfigs = al.load()
 
-              @loadedConfig = Config.new
-              @referencedConfigs = @loadedConfig.load(adaptConfigs)
+              loadedConfig = Config.new
+              @referencedConfigs = loadedConfig.load(adaptConfigs)
 
               cache.write_cache(@referencedConfigs, adaptConfigs)
             end

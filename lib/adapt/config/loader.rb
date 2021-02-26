@@ -69,7 +69,7 @@ module Bake
           r = r + Bake.options.main_project_name # glob would not work otherwise on windows (ruby bug?)
         end
         Bake.options.adapt.each do |a|
-          adaptBaseName = File.expand_path(a + "/Adapt.meta")
+          adaptBaseName = File.expand_path(a.gsub(/\(.*\)/,"") + "/Adapt.meta")
           potentialAdapts << adaptBaseName  if File.exists?adaptBaseName
         end
         potentialAdapts.concat(Root.search_to_depth(r, "Adapt.meta", root.depth))
@@ -80,13 +80,19 @@ module Bake
 
     def chooseProjectFilenames(potentialAdapts)
       @@filenames = []
-      Bake.options.adapt.each do |a|
-        a.gsub!(/\\/,"/")
+      Bake.options.adapt.each do |aComplete|
+        aComplete.gsub!(/\\/,"/")
+        a = aComplete.gsub(/\[.*\]/,"")
+        projFilter = aComplete.scan(/\[(.*)\]/)
+        if projFilter && projFilter.length > 0
+          projFilter = projFilter[0][0].split(";").map {|a| a.strip}
+        end
+
         found = false
 
         # from working dir
         if File.exist?(a) && File.file?(a)
-          @@filenames << File.expand_path(a)
+          @@filenames << {:file => File.expand_path(a), :projs => projFilter}
           found = true
         end
         next if found
@@ -94,7 +100,7 @@ module Bake
         # from main dir
         Dir.chdir Bake.options.main_dir do
           if File.exist?(a) && File.file?(a)
-            @@filenames << (Bake.options.main_dir + "/" + a)
+            @@filenames << {:file => (Bake.options.main_dir + "/" + a), :projs => projFilter}
             found = true
           end
         end
@@ -105,7 +111,7 @@ module Bake
           r = root.dir
           Dir.chdir r do
             if File.exist?(a) && File.file?(a)
-              @@filenames << (r + "/" + a)
+              @@filenames << {:file => (r + "/" + a), :projs => projFilter}
               found = true
             end
           end
@@ -119,7 +125,7 @@ module Bake
           Bake.formatter.printError("Adaption project #{a} not found")
           ExitHelper.exit(1)
         else
-          @@filenames << adapts[0]
+          @@filenames << {:file => adapts[0], :projs => projFilter}
           if (adapts.length > 1)
             Bake.formatter.printWarning("Adaption project #{a} exists more than once")
             chosen = " (chosen)"
@@ -144,7 +150,9 @@ module Bake
 
       configs = []
       @@filenames.each_with_index do |f,i|
-        configs.concat(loadProjMeta(f, i+1))
+        loadProjMeta(f[:file], i+1).each do |c|
+          configs << {:configs => c, :projs => f[:projs]}
+        end
       end
 
       return configs

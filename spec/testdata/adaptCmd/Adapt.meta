@@ -1,0 +1,7 @@
+Adapt {
+  CustomConfig __ALL__, project: __MAIN__, type: extend {
+    PostSteps {
+      CommandLine "echo ad2main_$(ProjectName)_$(ConfigName)", echo: off
+    }
+  }
+}

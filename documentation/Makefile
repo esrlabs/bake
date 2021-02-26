@@ -14,3 +14,4 @@ fix: Makefile
 %: Makefile
 	@ruby _check/main.rb
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" -W $(SPHINXOPTS) $(O)
+	@cp -r _build/html/. ../install-docs/

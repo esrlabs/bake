@@ -1,0 +1,15 @@
+Adapt {
+  CustomConfig __ALL__, project: __ALL__, type: extend {
+    PostSteps {
+      CommandLine "echo ad1all_$(ProjectName)_$(ConfigName)", echo: off
+    }
+  }
+}
+
+Adapt {
+  CustomConfig __ALL__, project: "li*;gaga", type: extend {
+    PostSteps {
+      CommandLine "echo ad1lib_$(ProjectName)_$(ConfigName)", echo: off
+    }
+  }
+}

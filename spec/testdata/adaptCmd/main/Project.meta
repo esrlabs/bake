@@ -1,0 +1,14 @@
+Project default: test_main1 {
+
+  CustomConfig test_main2 {
+    CommandLine "echo main2", echo: off
+  }
+
+  CustomConfig test_main1 {
+    CommandLine "echo main1", echo: off
+    Dependency config: test_main2
+    Dependency lib, config: test_lib1
+    Dependency lib, config: test_lib2
+    DefaultToolchain GCC
+  }
+}

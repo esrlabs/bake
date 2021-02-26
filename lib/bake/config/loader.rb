@@ -89,64 +89,75 @@ module Bake
       end
 
       # check if config has to be manipulated
-      @adaptConfigs.each do |c|
-        
-        projSplitted = c.project.split(";")
-        confSplitted = c.name.split(";")
-        projPatterns = projSplitted.map { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ }
-        confPatterns = confSplitted.map { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ } 
+      @adaptConfigs.each do |cHash|
 
-        if projPatterns.any? {|p| p.match(config.parent.name) } \
-          || (projName == Bake.options.main_project_name and projSplitted.any? {|p| p == "__MAIN__"}) \
-          || projSplitted.any? {|p| p == "__ALL__"}
-            
-          if confPatterns.any? {|p| p.match(config.name)} \
-            || (isMain and confSplitted.any? {|p| p == "__MAIN__"}) \
-            || confSplitted.any? {|p| p == "__ALL__"}
+        c = cHash[:configs]
 
-            adaptHash = c.parent.getHash
+        projSplitted    = c.project.split(";")
+        confSplitted    = c.name.split(";")
+        projSplittedCmd = cHash[:projs]
 
-            configHash = {
-              "toolchain"   => [@defaultToolchainName],
-              "os"          => [Utils::OS.name],
-              "mainProject" => [@mainProjectName],
-              "mainConfig"  => [@mainConfigName]
-            }
-            config.scopes.each do |s|
-              configHash[s.name] = [] unless configHash.has_key?(s.name)
-              configHash[s.name] += s.value.split(";")
-            end
+        projPatterns    = projSplitted.map    { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ }
+        confPatterns    = confSplitted.map    { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ }
+        projPatternsCmd = projSplittedCmd.map { |p| /\A#{p.gsub("*", "(\\w*)")}\z/ } if projSplittedCmd 
 
-            if !isMain && @configHashMain
-              @configHashMain.each do |k,v|
-                if configHash.has_key?(k)
-                  configHash[k] += v
-                  configHash[k].uniq!
-                else
-                  configHash[k] = v
+        if projSplittedCmd.empty? \
+          || projPatternsCmd.any? {|p| p.match(config.parent.name) } \
+          || (projName == Bake.options.main_project_name and projSplittedCmd.any? {|p| p == "__MAIN__"}) \
+          || projSplittedCmd.any? {|p| p == "__ALL__"}
+  
+          if projPatterns.any? {|p| p.match(config.parent.name) } \
+            || (projName == Bake.options.main_project_name and projSplitted.any? {|p| p == "__MAIN__"}) \
+            || projSplitted.any? {|p| p == "__ALL__"}
+              
+            if confPatterns.any? {|p| p.match(config.name)} \
+              || (isMain and confSplitted.any? {|p| p == "__MAIN__"}) \
+              || confSplitted.any? {|p| p == "__ALL__"}
+  
+              adaptHash = c.parent.getHash
+  
+              configHash = {
+                "toolchain"   => [@defaultToolchainName],
+                "os"          => [Utils::OS.name],
+                "mainProject" => [@mainProjectName],
+                "mainConfig"  => [@mainConfigName]
+              }
+              config.scopes.each do |s|
+                configHash[s.name] = [] unless configHash.has_key?(s.name)
+                configHash[s.name] += s.value.split(";")
+              end
+  
+              if !isMain && @configHashMain
+                @configHashMain.each do |k,v|
+                  if configHash.has_key?(k)
+                    configHash[k] += v
+                    configHash[k].uniq!
+                  else
+                    configHash[k] = v
+                  end
                 end
               end
-            end
-
-            checkCondition = lambda {|name,value|
-              return true if adaptHash[name].empty?
-              if !configHash.has_key?(name)
-                return adaptHash[name].any?{|ah| ah.match("")}
+  
+              checkCondition = lambda {|name,value|
+                return true if adaptHash[name].empty?
+                if !configHash.has_key?(name)
+                  return adaptHash[name].any?{|ah| ah.match("")}
+                end
+                adaptHash[name].any? { |ah| configHash[name].any?{|ch| ah.match(ch)}}
+              }
+  
+              adaptCondition = adaptHash.all? {|name,value| checkCondition.call(name, value)}
+  
+              invertLogic = (Bake::Metamodel::Unless === c.parent)
+              next if (adaptCondition && invertLogic) || (!adaptCondition && !invertLogic)
+  
+              MergeConfig.new(c, config).merge(c.type.to_sym)
+  
+              if isMain # can be changed after adapt
+                @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
               end
-              adaptHash[name].any? { |ah| configHash[name].any?{|ch| ah.match(ch)}}
-            }
 
-            adaptCondition = adaptHash.all? {|name,value| checkCondition.call(name, value)}
-
-            invertLogic = (Bake::Metamodel::Unless === c.parent)
-            next if (adaptCondition && invertLogic) || (!adaptCondition && !invertLogic)
-
-            MergeConfig.new(c, config).merge(c.type.to_sym)
-
-            if isMain # can be changed after adapt
-              @defaultToolchainName = config.defaultToolchain.basedOn unless config.defaultToolchain.nil?
             end
-
           end
         end
       end
@@ -244,7 +255,7 @@ module Bake
           adaptConfigs.each do |ac|
             ac.project = proj.name if ac.project == "__THIS__" || ac.project == ""
           end
-          @adaptConfigs.concat(adaptConfigs)
+          @adaptConfigs << {:configs => adaptConfigs, :projs => nil}
         end
       end
 
