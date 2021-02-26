@@ -1,0 +1,1669 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Changelog &mdash; bake  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/logo_tiny_32.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="License" href="license.html" />
+    <link rel="prev" title="Known Issues" href="known_issues.html" />
+    <link href="../_static/rtd_theme_overrides.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> bake
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Start to bake</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="internal/internal.html">Internal developing notes</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">bake</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Changelog</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/changelog.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<dl>
+<dt>January XXXXX, 2021 - bake-toolkit 2.68.0</dt><dd><ul class="simple">
+<li><p>Enhance <strong>–abs-paths</strong> so it affects not only error messages but also sources, objects, includes, library and executable names.</p></li>
+<li><p>Switch theme of documentation from Bootstrap to ReadTheDocs.</p></li>
+<li><p>Add project filter to adapt command line option.</p></li>
+<li><p>Add array syntax for <em>CommandLine</em> to wrap very long lines.</p></li>
+</ul>
+</dd>
+<dt>January 7, 2021 - bake-toolkit 2.67.0</dt><dd><ul class="simple">
+<li><p>Add variable <em>$(OriginalDir)</em>, which points to the directory of the containing meta file. Useful for relative paths from Adapt files.</p></li>
+<li><p>Add <em>outputDirPostfix</em> to (Default)Toolchain. It can be used for special builds like MISRA checkers.</p></li>
+<li><p>Add <em>ExcludeDir</em> to bakery. Up to now it was only possible to exclude by project name (with wildcards), but not complete folder trees.</p></li>
+<li><p>Add robustness measure: now every dependency from bake to other gems is specified with hardcoded version on installation time and runtime.</p></li>
+</ul>
+</dd>
+<dt>October 23, 2020 - bake-toolkit 2.66</dt><dd><ul>
+<li><p>Bugfix: –list failed when Project.meta contains an Adapt</p></li>
+<li><p>Bugfix: circular extension of projects not detected during load</p></li>
+<li><p>Changed: llvm-lib is now used to archive when using Clang on Windows</p></li>
+<li><p>Added: Automatic path completion for Makefile command, e.g.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Makefile &quot;someProject/Makefile&quot;, target: all, lib: &quot;someProject/output/libresult.a&quot;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
+<dt>September 18, 2020 - bake-toolkit 2.65.2</dt><dd><ul class="simple">
+<li><p>Bugfix: if pathname length of dependency file is &gt; 255 on Windows, the compilation check might break.</p></li>
+<li><p>Added: now Adapts can be also filtered</p></li>
+<li><p>Cosmetic: replaced mouse-over-javascripts in syntax pages of the documentation by static texts.</p></li>
+</ul>
+</dd>
+<dt>September 7, 2020 - bake-toolkit 2.65.1</dt><dd><ul class="simple">
+<li><p>Bugfix: __THIS__ in Project.meta was resolved to main project name, not local project name</p></li>
+<li><p>Bugfix: Fixed an exception with old Ruby versions where “fiddle” is not available</p></li>
+</ul>
+</dd>
+<dt>August 26, 2020 - bake-toolkit 2.65.0</dt><dd><ul class="simple">
+<li><p>Bugfix: Dependency to gem thwait 0.1.0 instead of latest version (they messed it up, latest gem might abort the builds on some systems)</p></li>
+<li><p>Bugfix: Skip CompilationCheck on dry run</p></li>
+<li><p>Added: CLANG_BITCODE toolchain</p></li>
+</ul>
+</dd>
+<dt>July 28, 2020 - bake-toolkit 2.64.4</dt><dd><ul class="simple">
+<li><p>Bugfix: Fixed the check in 2.64.3.</p></li>
+</ul>
+</dd>
+<dt>July 28, 2020 - bake-toolkit 2.64.3</dt><dd><ul class="simple">
+<li><p>Bugfix: Algorithm for CompilationCheck had quadratic instead of linear complexity.</p></li>
+</ul>
+</dd>
+<dt>July 24, 2020 - bake-toolkit 2.64.2</dt><dd><ul class="simple">
+<li><p>Added: experimental dev-feature “retry-linking” (not for public use)</p></li>
+</ul>
+</dd>
+<dt>July 24, 2020 - bake-toolkit 2.64.1</dt><dd><ul class="simple">
+<li><p>Bugfix: CompilationCheck did not work correctly in special configurations, e.g. LibraryConfig without files</p></li>
+</ul>
+</dd>
+<dt>July 22, 2020 - bake-toolkit 2.64.0</dt><dd><ul class="simple">
+<li><p>Added: CompilationCheck to check for included/excluded files in a build</p></li>
+<li><p>Cosmetic: Internally using fiddle instead of Win32Api (getting rid of deprecated warning when starting bake)</p></li>
+</ul>
+</dd>
+<dt>June 22, 2020 - bake-toolkit 2.63.2</dt><dd><ul class="simple">
+<li><p>Changed: bake does not abort anymore if cache files cannot be written.</p></li>
+</ul>
+</dd>
+<dt>June 17, 2020 - bake-toolkit 2.63.1</dt><dd><ul class="simple">
+<li><p>Changed: “-Z dep-overview=&lt;json&gt;” exits now after writing the information into the json file.</p></li>
+<li><p>Added: Warning in bakery if referenced projects or configs cannot be found.</p></li>
+</ul>
+</dd>
+<dt>June 10, 2020 - bake-toolkit 2.63.0</dt><dd><ul class="simple">
+<li><p>Bugfix: bake did not wait for a non-indepenent step (e.g. a generator) if it can be reached via multiple ways in the dependency hierarchy.</p></li>
+<li><p>Added: Internal developer feature “-Z dep-overview=&lt;json&gt;” for intelligent CIs.</p></li>
+<li><p>Added: Forbid include dirs with a leading space, e.g. <em>IncludeDir ” include”</em>.</p></li>
+<li><p>Added: An info is printed out if path magic is used in IncludeDir.</p></li>
+<li><p>Added: Files have an optional attribute “linkDirectly”, which means they are not archived in a lib, but linked directly to the executable.</p></li>
+</ul>
+</dd>
+<dt>May 14, 2020 - bake-toolkit 2.62.0</dt><dd><ul class="simple">
+<li><p>Added: bake now understands dependency files from Axivion, which makes incremental build possible.</p></li>
+</ul>
+</dd>
+<dt>May 4, 2020 - bake-toolkit 2.61.0</dt><dd><ul>
+<li><p>Added: possibility to specify additional root files with -w (they doesn’t need to be called roots.bake).
+There are different use cases for this, e.g. having a Collection.meta outside the workspace.</p></li>
+<li><p>Added: Variable <em>$(WorkingDir)</em> which points to the directory from which bake was called.</p></li>
+<li><p>Added: <em>CompilationDB &lt;file&gt;</em> as option for main configs to generate compilation database. “–compilation-db” from command line will overrule this.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ExecutableConfig Release {</span>
+<span class="go">  CompilationDB &quot;$(ProjectDir)/compile_commands.json&quot;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Bugfix: build config could not be set after -j without number, e.g. “bake -j UnitTestBase”</p></li>
+<li><p>Added: additional folder name case check on Windows (similar to the one from 2.60.2 but it covers other use cases)</p></li>
+<li><p>Added: <em>Adapt scope</em> feature now also takes scopes from main config into account, not only from the to-be-adapted config.</p></li>
+</ul>
+</dd>
+<dt>March 25, 2020 - bake-toolkit 2.60.2</dt><dd><ul class="simple">
+<li><p>Added: a warning is printed if two folders differ only in letter case either on file system or due to (Windows) shell issues. Example:</p></li>
+</ul>
+</dd>
+<dt>March 20, 2020 - bake-toolkit 2.60.1 (not officially released)</dt><dd><ul class="simple">
+<li><p>Changed: dependencies are now injected to other injected dependencies. This should solve some bugs, hopefully it does not introduce other problems.</p></li>
+</ul>
+</dd>
+<dt>March 17, 2020 - bake-toolkit 2.60.0</dt><dd><ul class="simple">
+<li><p>Bugfix: the build order of configs were wrong when injecting dependencies.
+If e.g. a dependency to a generator was injected to a library, it could happen that the library was built before the generator was executed.</p></li>
+</ul>
+</dd>
+<dt>March 6, 2020 - bake-toolkit 2.59.0</dt><dd><ul class="simple">
+<li><p>Partly reverted changes introduced in 2.57.0. New behaviour:
+“Files” specific Flags/Defines are still first-is-best, but if Flags/Defines are specified for a single file it overrules previous definitions.</p></li>
+</ul>
+</dd>
+<dt>March 4, 2020 - bake-toolkit 2.58.0</dt><dd><ul>
+<li><p>Added: -j without number means that bake is using as many threads as cores are available.</p></li>
+<li><p>Cosmetic: Added a warning if in Project.meta Flags/Defines are specified for a single file but ignored due to a previous definition.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Files &quot;src/*.cpp&quot; # has higher priority (in this case *.cpp shall be have no additional flags/defines)</span>
+<span class="go">Files &quot;src/main.cpp&quot; {</span>
+<span class="go">  Flags &quot;-abc&quot;    # ignored, overruled by file pattern above --&gt; warning</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
+<dt>February 20, 2020 - bake-toolkit 2.57.0</dt><dd><ul>
+<li><p>Bugfix: if a file is explicitly defined in Project.meta, the flags/defines must not be overwritten even if flags/defines were defined later via a file pattern.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Files &quot;src/main.cpp&quot; # must not be complied with &quot;-abc&quot;</span>
+<span class="go">Files &quot;src/*.cpp&quot; {</span>
+<span class="go">  Flags &quot;-abc&quot;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Added: support for Ruby 2.7.x.</p></li>
+</ul>
+</dd>
+<dt>January 20, 2020 - bake-toolkit 2.56.0</dt><dd><ul class="simple">
+<li><p>Added: new cmd argument –lines &lt;start_line&gt;:&lt;end_line&gt; for bake-format tool which tells to format lines only in range between start and end lines.</p></li>
+<li><p>Added: new bake-rtext-service cmd tool, which runs the RText language protocol server and can be used by the IDE to provide the syntax highlighting, auto completion, errors annotation and model navigation.</p></li>
+<li><p>Bugfix: Removed debug output for compilation-db, accidentally added with 2.53.</p></li>
+<li><p>Bugfix: fixed an exception using scopes for adapts.</p></li>
+</ul>
+</dd>
+<dt>November 27, 2019 - bake-toolkit 2.55.1</dt><dd><ul class="simple">
+<li><p>Bugfix: If a project is directly in the workspace root, it could not be referenced in Collection.meta.</p></li>
+</ul>
+</dd>
+<dt>November 21, 2019 - bake-toolkit 2.55.0</dt><dd><ul class="simple">
+<li><p>Added: default number of compiling threads is now equal to the number of logical processors instead of hardcoded 8 (only for Ruby &gt;= 2.2).</p></li>
+<li><p>Added: possibility to overwrite bake internal defaults for toolchain commands and flags</p></li>
+<li><p>Bugfix: “remove” attribute of “Flags” now correctly supports regex</p></li>
+</ul>
+</dd>
+<dt>November 4, 2019 - bake-toolkit 2.54.3</dt><dd><ul class="simple">
+<li><p>Added: Folders in roots.bake can end with “/” now.</p></li>
+<li><p>Added: Improved Tasking error parser.</p></li>
+<li><p>Added: .gitignore files are created if not existing in “.bake” and build folders.</p></li>
+<li><p>Added: Developer feature “enforce-executable-config” added which converts a main LibraryConfig to ExecutableConfig on-the-fly.</p></li>
+</ul>
+</dd>
+<dt>October 16, 2019 - bake-toolkit 2.54.2</dt><dd><ul class="simple">
+<li><p>Added: Developer feature no-error-parser.</p></li>
+<li><p>Added: “toolchain” in metadata.</p></li>
+<li><p>Fixed: Variables now resolved in metadata.</p></li>
+<li><p>Fixed: File specific toolchain handling was broken in 2.54.1.</p></li>
+<li><p>Changed: ArtifactExtension can be used to extend ArtifactName.</p></li>
+</ul>
+</dd>
+<dt>October 14, 2019 - bake-toolkit 2.54.1</dt><dd><ul class="simple">
+<li><p>Reverted: The change from 2.54: “(Windows only) If a case mismatch is detected between Files definition in Project.meta and filesystem, the compilation will be aborted.”</p></li>
+<li><p>Added: Instead, the correct flags and defines will be used when specified at “Files” level in Project.meta. They will not be discarded anymore on case mismatch.</p></li>
+</ul>
+</dd>
+<dt>October 11, 2019 - bake-toolkit 2.54</dt><dd><ul class="simple">
+<li><p>Added: ArtifactExtension in Project.meta to configure the filename extension of the artifacts.</p></li>
+<li><p>Added: Internal developer feature “-Z metadata=&lt;json&gt;” for MISRA tooling</p></li>
+<li><p>Changed: Duplicate flags will not be removed anymore (use cases exist where they’re needed)</p></li>
+<li><p>Bugfix: (Windows only) If a case mismatch is detected between Files definition in Project.meta and filesystem, the compilation will be aborted.</p></li>
+<li><p>Added: The filename for –dot can be omitted, default is &lt;main config name&gt;.dot in main project dir.</p></li>
+<li><p>Added: –dot-project-level to write project-level-dependencies in dot files insted of config-level.</p></li>
+<li><p>Changed: The modules in dot files now have full path for better post processing (the labels stay the same).</p></li>
+</ul>
+</dd>
+<dt>July 26, 2019 - bake-toolkit 2.53</dt><dd><ul class="simple">
+<li><p>Bugfix: bakery regex did not take comments into account when parsing Project.meta.</p></li>
+<li><p>Added: “strict” attribute to match only the specified Adapt config type.</p></li>
+<li><p>Added: Option to enforce a variable to be set. If variable is unset, an error will be reported.</p></li>
+<li><p>Changed: using “libtool” and “-static -o” instead of “ar” and “r” for Clang on Mac.</p></li>
+<li><p>Changed: <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> will be escaped to <code class="docutils literal notranslate"><span class="pre">\\\&quot;</span></code> in compile_commands.json.</p></li>
+</ul>
+</dd>
+<dt>July 23, 2019 - bake-toolkit 2.52.1</dt><dd><ul class="simple">
+<li><p>Bugfix: –prebuild feature did not work well with -c/–rebuild in combination with -r.</p></li>
+</ul>
+</dd>
+<dt>July 22, 2019 - bake-toolkit 2.52.0</dt><dd><ul class="simple">
+<li><p>Added: “Scope” as additional adapt conditions.</p></li>
+<li><p>Added: all conditions like “toolchain” support list format, e.g. “GCC;CLANG”.</p></li>
+<li><p>Added: “compileOnly” annotation for “Files” which means that they shall be compiled, but not archived or linked (experimental feature, might be changed in future).</p></li>
+<li><p>Added: improved GCC compiler error parser.</p></li>
+<li><p>Cosmetic: when enforcing local paths e.g. for outputDir, “./” will be removed for nicer output.</p></li>
+</ul>
+</dd>
+<dt>March 25, 2019 - bake-toolkit 2.51.2</dt><dd><ul class="simple">
+<li><p>Added: –dotc creates the dot graph AND compiles the projects as usual (in comparison to –dot).</p></li>
+</ul>
+</dd>
+<dt>March 21, 2019 - bake-toolkit 2.51.1</dt><dd><ul class="simple">
+<li><p>Bugfix: under certain cases the same Adapt.meta could be found twice which results into a warning.</p></li>
+<li><p>Changed: if a cmd of a Set (variable) returns with !=0, the output of cmd is now printed out to get an idea why it has failed.</p></li>
+</ul>
+</dd>
+<dt>March 13, 2019 - bake-toolkit 2.51.0</dt><dd><ul class="simple">
+<li><p>Changed: refactored calculating include folders. Now it’s much faster than before! However, the order of include folders may have changed for ambiguous configurations.</p></li>
+<li><p>Changed: merge-include feature refactored after getting some feedback.</p></li>
+</ul>
+</dd>
+<dt>February 7, 2019 - bake-toolkit 2.50.0</dt><dd><ul class="simple">
+<li><p>Added: command line option “–merge-inc” which copies all include files into one temprary folder and invokes the compiler with just one include path.</p></li>
+<li><p>Added: command line option “–file-cmd” which writes all command line arguments into a file and hands it over to the compiler (with “&#64;” in gcc and dcc).</p></li>
+<li><p>Added: “adapt” supports now lists of projects/configs (additionally to wildcards), separated with “;”.</p></li>
+<li><p>Added: added Cuda support for GCC toolchain (experimental)</p></li>
+</ul>
+</dd>
+<dt>January 23, 2019 - bake-toolkit 2.49.0</dt><dd><ul class="simple">
+<li><p>Added: Support for IAR compiler.</p></li>
+</ul>
+</dd>
+<dt>November 28, 2018 - bake-toolkit 2.48.3</dt><dd><ul class="simple">
+<li><p>Bugfix: Removed accidentally added debug output which was introduced in 2.48.2.</p></li>
+</ul>
+</dd>
+<dt>November 8, 2018 - bake-toolkit 2.48.2</dt><dd><ul class="simple">
+<li><p>Bugfix: Now compatible with new QAC folder structure (problem was that user-suppressed warnings in qac.cct were not suppressed).</p></li>
+</ul>
+</dd>
+<dt>September 20, 2018 - bake-toolkit 2.48.1</dt><dd><ul class="simple">
+<li><p>Bugfix: Compiler prefix change reverted for C and CPP, only assembler still has the new ASMCompilerPrefix.</p></li>
+</ul>
+</dd>
+<dt>September 7, 2018 - bake-toolkit 2.48.0</dt><dd><ul class="simple">
+<li><p>Bugfix: Variables can be set to an empty string now</p></li>
+<li><p>Added: Compiler prefix mechanism improved, see documentation</p></li>
+</ul>
+</dd>
+<dt>July 31, 2018 - bake-toolkit 2.47.1</dt><dd><ul class="simple">
+<li><p>Bugfix: in same cases the OutputDir variables were not substituted correctly in 2.47.0.</p></li>
+</ul>
+</dd>
+<dt>July 27, 2018 - bake-toolkit 2.47.0</dt><dd><ul class="simple">
+<li><p>Added: <em>Sleep</em>, <em>MakeDir</em>, <em>Remove</em>, <em>Copy</em> and <em>Move</em> commands in Project.meta.</p></li>
+<li><p>Added: option -D to add defines via command line.</p></li>
+<li><p>Added: DCC case check with –diab-case-check for Windows. Makes sense to start the compilation again after full build was successful with this parameter.
+With this parameter the code is not compiled, only checked. It takes around the time of a compilation. Note, with GCC the check is done during compilation in
+“no time” - enhancement request ticked filed at Windriver to make that possible with Diab.</p></li>
+<li><p>Improved: Cyclic variable substitution</p></li>
+<li><p>Removed: support of Visual Studio (not Visual Studio Code)</p></li>
+<li><p>Removed: official support of Ruby 1.9</p></li>
+<li><p>Bugfix: MapFile command now working for GCC</p></li>
+<li><p>Bugfix: –incs-and-defs did not show any results in case the workspace was broken like a missing library.</p></li>
+</ul>
+</dd>
+<dt>May 18, 2018 - bake-toolkit 2.46.0</dt><dd><ul class="simple">
+<li><p>Added: Makefile command has new attribute <strong>noClean</strong>. If set to true, the target <em>clean</em> will not be executed when project is cleaned. Default: false.</p></li>
+<li><p>Added: Makefile command has new attribute <strong>changeWorkingDir</strong>. If set to false, bake stays in project’s directory instead of changing into makefile’s directory. Default: true.</p></li>
+<li><p>Added: Before executing the makefile, bake sets the environment variables $(BAKE_XX_COMMAND) and $(BAKE_XX_FLAGS), whereas XX is one of CPP, C, ASM, AR or LD.</p></li>
+</ul>
+</dd>
+<dt>May 4, 2018 - bake-toolkit 2.45.0</dt><dd><ul class="simple">
+<li><p>Changed: it is possible now to specify adapt files directly with <em>–adapt &lt;filename&gt;</em></p></li>
+<li><p>Changed: variables can be set by calling a script (see <em>Set &lt;var&gt;, cmd: &lt;script&gt;</em>). If the script fails, bake aborts now with an error instead continuing with a warning.</p></li>
+<li><p>Added: allow additional bake arguments specified per project in a bakery collection</p></li>
+<li><p>Bugfix: bakery collections can now reference a quoted project name and names with “-” or “:”</p></li>
+<li><p>Bugfix: under rare circumstances bake did not abort with an error if the main directory specified with -m does not exist</p></li>
+</ul>
+</dd>
+<dt>March 22, 2018 - bake-toolkit 2.44.1</dt><dd><ul class="simple">
+<li><p>Bugfix: in Adapt.meta “__MAIN__” in project now applies to <em>all</em> configs in the main project</p></li>
+<li><p>Changed: “–compilation-db” now generates absolute paths if “–abs-paths” is set</p></li>
+</ul>
+</dd>
+<dt>February 26, 2018 - bake-toolkit 2.44.0</dt><dd><ul class="simple">
+<li><p>Added: Case sensitivity check of C/C++ include files (on by default!), use –no-case-check to disable it</p></li>
+<li><p>Added: Variable $(Uid), a CRC32 over relative path to main project dir plus main config name.</p></li>
+<li><p>Changed: error output is NOT shifted to the end anymore (was done when compiling with “-r”)</p></li>
+</ul>
+</dd>
+<dt>February 15, 2018 - bake-toolkit 2.43.2</dt><dd><ul class="simple">
+<li><p>Bugfix: fixed prebuild feature after changes in 2.43.0</p></li>
+</ul>
+</dd>
+<dt>February 12, 2018 - bake-toolkit 2.43.1</dt><dd><ul class="simple">
+<li><p>Bugfix: exception when using file specific flags and defines fixed (bug introduced with 2.43.0)</p></li>
+</ul>
+</dd>
+<dt>February 12, 2018 - bake-toolkit 2.43.0</dt><dd><ul>
+<li><p>Bugfix: when building with “stop on first error” (-r) and an error occurs in PreSteps or PostSteps of a dependency, the error status was not correctly handled.</p></li>
+<li><p>Added: option to keep file endings for object files, which means file.cpp becomes file.cpp.o instead of file.o:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">DefaultToolchain keepObjFileEndings: true</span>
+</pre></div>
+</div>
+</li>
+<li><p>Added: the hard coded list for source file endings for a specific compiler (CPP, C, ASM) can now be overwritten, e.g.:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Compiler CPP {</span>
+<span class="go">    SrcFileEndings &quot;.cpp, .c, .cxx&quot;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
+<dt>January 12, 2018 - bake-toolkit 2.42.3</dt><dd><ul class="simple">
+<li><p>Added: command line parameter “-nb” to suppress the lines “**** Building x of y: name (config) ****”</p></li>
+<li><p>Added: ExternalLibraries with “search: false” are now also taken into account when checking if executable is outdated</p></li>
+<li><p>Added: “–adapt” accepts now comma separated values like this: “–adapt gcc,debug,bla”, which is the same as “–adapt gcc –adapt debug –adapt bla”</p></li>
+</ul>
+</dd>
+<dt>December 14, 2017 - bake-toolkit 2.42.2</dt><dd><ul class="simple">
+<li><p>Added: bakeqac can suppress unsuppressible QAC errors now (with “PRQA S &lt;num&gt;” in the same source code line)</p></li>
+<li><p>Bugfix: possible crash when using bake with the commandline tool “less”</p></li>
+</ul>
+</dd>
+<dt>December 6, 2017 - bake-toolkit 2.42.1</dt><dd><ul class="simple">
+<li><p>Added: –incs-and-defs now also prints the directory of the project</p></li>
+</ul>
+</dd>
+<dt>November 30, 2017 - bake-toolkit 2.42.0</dt><dd><ul class="simple">
+<li><p>Added: bakeqac now supports PRQA 2.2.2 and MCPP 1.5.2</p></li>
+<li><p>Added: –qacverbose to print the commandline which is used for for qacli</p></li>
+</ul>
+</dd>
+<dt>November 27, 2017 - bake-toolkit 2.41.4</dt><dd><ul class="simple">
+<li><p>Changed: bakeqac cyclomatic complexity check is now more robust against non-ASCII characters in source files</p></li>
+</ul>
+</dd>
+<dt>November 17, 2017 - bake-toolkit 2.41.3</dt><dd><ul class="simple">
+<li><p>Changed: development dependency changed from latest rake to 12.2.1 to avoid problems with Ruby 1.9.</p></li>
+</ul>
+</dd>
+<dt>November 14, 2017 - bake-toolkit 2.41.2</dt><dd><ul class="simple">
+<li><p>Bugfix: complex variable $(OutputDir,”project name”, “config name”) did not work if output folder is not default and based on other variables</p></li>
+<li><p>Changed: variable substitution speed up</p></li>
+</ul>
+</dd>
+<dt>November 14, 2017 - bake-toolkit 2.41.1</dt><dd><ul class="simple">
+<li><p>Bugfix: complex variable $(OutputDir,”project name”, “config name”) did not work at all</p></li>
+</ul>
+</dd>
+<dt>November 13, 2017 - bake-toolkit 2.41.0</dt><dd><ul class="simple">
+<li><p>Added: default and filter attributes now supported by all elements in Project.meta (except the Project element itself).</p></li>
+<li><p>Added: “-p .” now specifies the project of the current folder. Example usage: “bakeqac UnitTestBase –adapt gcc -p .”</p></li>
+<li><p>Bugfix: bakeqac does not suppress warnings anymore about mismatch between glibc and QAC.</p></li>
+</ul>
+</dd>
+<dt>October 10, 2017 - bake-toolkit 2.40.1</dt><dd><ul class="simple">
+<li><p>Added: bakeqac supports now different installation folders for QACPP and MCPP.</p></li>
+<li><p>Added: qacsteps can now be separated by “,” (e.g. “–qacstep admin,analyze,mdr”)</p></li>
+<li><p>Bugfix: spaces in roots.bake were not correctly interpreted on Linux / Mac under some circumstances.</p></li>
+</ul>
+</dd>
+<dt>October 9, 2017 - bake-toolkit 2.40.0</dt><dd><ul class="simple">
+<li><p>Workaround: glob pattern with ** don’t work with NTFS junctions. First level now manually checked (like done in bake &lt;= 2.34.4).</p></li>
+<li><p>Added: filters can have arguments, e.g. –do run=–gtest_repeat=2, which can be accessed via $(FilterArguments, run).</p></li>
+</ul>
+</dd>
+<dt>September 19, 2017 - bake-toolkit 2.39.1</dt><dd><ul class="simple">
+<li><p>Bugfix: bakeqac: cyclomatic complexity check now also works with PRQA Framework 2.2.0.</p></li>
+</ul>
+</dd>
+<dt>September 18, 2017 - bake-toolkit 2.39.0</dt><dd><ul class="simple">
+<li><p>Changed: bakeqac: now compatible with PRQA Framework 2.2.0.</p></li>
+</ul>
+</dd>
+<dt>August 8, 2017 - bake-toolkit 2.38.3</dt><dd><ul class="simple">
+<li><p>Changed: bakeqac: if qacli returns with an error, file and message filters are now also applied (but qacli errors are printed out).</p></li>
+</ul>
+</dd>
+<dt>August 7, 2017 - bake-toolkit 2.38.2</dt><dd><ul class="simple">
+<li><p>Added: variable $(QacActive) evaluates to “yes” if bakeqac is running, otherwise “no”.</p></li>
+</ul>
+</dd>
+<dt>August 3, 2017 - bake-toolkit 2.38.1</dt><dd><ul class="simple">
+<li><p>Bugfix: bakeqac: suppressions for cyclomatic complexity check may not work in certain cases.</p></li>
+</ul>
+</dd>
+<dt>July 21, 2017 - bake-toolkit 2.38.0</dt><dd><ul class="simple">
+<li><p>Bugfix: It was not possible to specify a path to the compiler including spaces.</p></li>
+<li><p>Changed: –qacnofilter splitted into –qacnomsgfilter and –qacnofilefilter.</p></li>
+<li><p>Changed: bake(ry) will exit if a specified workspace root does not exist.</p></li>
+<li><p>Cosmetic: Removed “No match for project” warning from bakery.</p></li>
+<li><p>Cosmetic: Changed info output when compiling single files with “-f”.</p></li>
+</ul>
+</dd>
+<dt>July 18, 2017 - bake-toolkit 2.37.14</dt><dd><ul class="simple">
+<li><p>Bugfix: “..” in <em>Files</em> are replaced now with “__” instead with “##” (TI compiler cannot handle this).</p></li>
+</ul>
+</dd>
+<dt>July 17, 2017 - bake-toolkit 2.37.13</dt><dd><ul class="simple">
+<li><p>Bugfix: Corrected output folder for <em>Files</em> in Project.meta with absolute paths.</p></li>
+</ul>
+</dd>
+<dt>June 28, 2017 - bake-toolkit 2.37.12</dt><dd><ul class="simple">
+<li><p>Bugfix: bakery did not work with -j &lt;num&gt; and -v &lt;num&gt;.</p></li>
+</ul>
+</dd>
+<dt>June 22, 2017 - bake-toolkit 2.37.11</dt><dd><ul class="simple">
+<li><p>Changed: bakeqac: next try to workaround QAX daemon error.</p></li>
+</ul>
+</dd>
+<dt>June 19, 2017 - bake-toolkit 2.37.10</dt><dd><ul class="simple">
+<li><p>Cosmetic: Docu update for inofficial 2.37.9 release.</p></li>
+</ul>
+</dd>
+<dt>June 13, 2017 - bake-toolkit 2.37.9 (not released officially)</dt><dd><ul class="simple">
+<li><p>Bugfix: Exception in exception handler of writing dep files.</p></li>
+</ul>
+</dd>
+<dt>May 31, 2017 - bake-toolkit 2.37.8</dt><dd><ul class="simple">
+<li><p>Added: bake handles *.cu files as c-files, so Cuda files can be compiled without renaming.</p></li>
+</ul>
+</dd>
+<dt>May 31, 2017 - bake-toolkit 2.37.7</dt><dd><ul class="simple">
+<li><p>Changed: bakeqac: terminate process and wait a little bit before killing it (for systems which support SIGTERM).</p></li>
+</ul>
+</dd>
+<dt>May 31, 2017 - bake-toolkit 2.37.6</dt><dd><ul class="simple">
+<li><p>Cosmetic: bakeqac: added more debug info in “process takes too long” workaround.</p></li>
+</ul>
+</dd>
+<dt>May 30, 2017 - bake-toolkit 2.37.5</dt><dd><ul class="simple">
+<li><p>Bugfix: bakeqac: now timeout workaround gets active as expected, but error handling was broken (ruby exception).</p></li>
+</ul>
+</dd>
+<dt>May 29, 2017 - bake-toolkit 2.37.4</dt><dd><ul class="simple">
+<li><p>Changed: bakeqac: timeout for <em>qacli</em> calls now 80% of qacretry time (except <em>qacli admin</em>, which is 60 seconds).</p></li>
+</ul>
+</dd>
+<dt>May 23, 2017 - bake-toolkit 2.37.3</dt><dd><ul class="simple">
+<li><p>Added: bakeqac: making metrics report now retried on error.</p></li>
+<li><p>Added: new complex variable $(ProjectDir,&lt;project name&gt;).</p></li>
+</ul>
+</dd>
+<dt>May 3, 2017 - bake-toolkit 2.37.2</dt><dd><ul class="simple">
+<li><p>Added: new argument to <em>Linker</em> tag in Project.meta: <em>onlyDirectDeps: false|true</em>. If set to true, the linker links only first level dependencies (no subdependencies).</p></li>
+<li><p>Added: bakeqac: made workaround introduced in 2.37.1 more robust (removing locks from qac files after killing qac process).</p></li>
+</ul>
+</dd>
+<dt>May 2, 2017 - bake-toolkit 2.37.1</dt><dd><ul class="simple">
+<li><p>Added: bakeqac: another workaround for hanging “qacli admin” call. Process will be killed after 60s and the call retried as long as the retry timer is not expired.</p></li>
+</ul>
+</dd>
+<dt>April 25, 2017 - bake-toolkit 2.37.0</dt><dd><ul class="simple">
+<li><p>Added: bakeqac: possibility to increase accepted cyclomatic complexity of functions, see documentation.</p></li>
+<li><p>Bugfix: Info output “**** Building x of y: projectName (configName) ****” is suppressed again with “-v0” - affected versions: &gt;= 2.32.0.</p></li>
+</ul>
+</dd>
+<dt>April 18, 2017 - bake-toolkit 2.36.1</dt><dd><ul class="simple">
+<li><p>Changed: bakeqac: it’s not an error anymore, if a project doesn’t consist of any files</p></li>
+</ul>
+</dd>
+<dt>April 11, 2017 - bake-toolkit 2.36.0</dt><dd><ul class="simple">
+<li><p>Added: bake can now use QAC to printout cyclomatic complexity. Use <em>–qacstep mdr</em> after regular MISRA build or from scratch <em>–qacstep “admin|analyze|mdr”</em>.</p></li>
+</ul>
+</dd>
+<dt>April 5, 2017 - bake-toolkit 2.35.3</dt><dd><ul class="simple">
+<li><p>Bugfix: added workaround for broken concurrent gem on some platforms with ruby 1.9.3.</p></li>
+</ul>
+</dd>
+<dt>March 30, 2017 - bake-toolkit 2.35.2</dt><dd><ul class="simple">
+<li><p>Bugfix: forgot to remove debug output in 2.35.1.</p></li>
+</ul>
+</dd>
+<dt>March 29, 2017 - bake-toolkit 2.35.1</dt><dd><ul class="simple">
+<li><p>Bugfix: –prebuild was broken - affected versions: &gt;= 2.33.0.</p></li>
+<li><p>Bugfix: Invalid command line arguments could have been recognized as valid, e.g. “–rebuild123” was interpreted as “–rebuild”, there was no complaint about the “123” - affected versions: &gt;= 2.34.4.</p></li>
+</ul>
+</dd>
+<dt>March 27, 2017 - bake-toolkit 2.35.0</dt><dd><ul class="simple">
+<li><p>Bugfix: Rubys IO.select() is not thread-safe by itself. It could happen, that bake hangs and the user has to press a key (due to waiting for already closed stdin stream) - affected versions: &gt;= 2.33.0.</p></li>
+<li><p>Bugfix: if no roots.bake was found, the default root (“&lt;mainProject&gt;/..”) was added to the root list even when -w options were added on command line - affected versions: &gt;= 2.26.0.</p></li>
+<li><p>Added: roots defined on command line (with -w) and entries in roots.bake can be equipped with an optional search depth setting, e.g. “-w some/folder,3”.
+This can reduce startup time of bake avoid multiple-projects-found-warnings.</p></li>
+</ul>
+</dd>
+<dt>March 16, 2017 - bake-toolkit 2.34.4</dt><dd><ul class="simple">
+<li><p>Added: CommandLine and Makefile have a new argument. If <em>independent: true</em>, they are not executed exclusively but in parallel to other projects/configs.</p></li>
+<li><p>Added: -j can now be used without space and -v with space, e.g. -j8 or -j 8, -v2 or -v 2.</p></li>
+<li><p>Internal: under the hood optimizations for parallel build.</p></li>
+</ul>
+</dd>
+<dt>March 9, 2017 - bake-toolkit 2.34.3</dt><dd><ul class="simple">
+<li><p>Changed: slightly changed thread handling (internal change).</p></li>
+</ul>
+</dd>
+<dt>March 9, 2017 - bake-toolkit 2.34.2</dt><dd><ul class="simple">
+<li><p>Changed: improved output for failed builds (exit status, bakery message).</p></li>
+<li><p>Changed: improved debug-thread output.</p></li>
+<li><p>Bugfix: killing processes on failure may not work correctly.</p></li>
+</ul>
+</dd>
+<dt>March 9, 2017 - bake-toolkit 2.34.1</dt><dd><ul class="simple">
+<li><p>Added: –debug-threads to debug multithread problems.</p></li>
+<li><p>Bugfix: Cleaned up thread data structure. I don’t think this is a real problem, but this depends on OS implementation of Ruby’s thread lib”.</p></li>
+<li><p>Bugfix: On Linux console bakery abort output corrected.</p></li>
+</ul>
+</dd>
+<dt>March 8, 2017 - bake-toolkit 2.34.0</dt><dd><ul class="simple">
+<li><p>Added: With parameter -O the output can be synchronized now for parallel build.</p></li>
+<li><p>Added: Logging which roots are checked when loading Project.metas.</p></li>
+<li><p>Bugfix: Fixed ctrl-c for bakery in some shells.</p></li>
+</ul>
+</dd>
+<dt>March 2, 2017 - bake-toolkit 2.33.0</dt><dd><ul class="simple">
+<li><p>Changed: Projects are built in parallel now (not only the files within a single project). This implies a change in the output.</p></li>
+</ul>
+</dd>
+<dt>February 27, 2017 - bake-toolkit 2.32.0</dt><dd><ul class="simple">
+<li><p>Changed: Per default configs without <em>Files</em> and <em>Steps</em> are not counted and printed out anymore (because nothing has to be done), use <em>-v2</em> to show them again.</p></li>
+<li><p>Changed: Templates used for <em>–create</em> are now closer to ESRLabs standard. Exit code corrected (was 1 instead of 0), thanks to flxo for the pull request.</p></li>
+<li><p>Changed: Promoted warning “files are compiled more than once” to error.</p></li>
+</ul>
+</dd>
+<dt>February 23, 2017 - bake-toolkit 2.31.5</dt><dd><ul class="simple">
+<li><p>Added: qac: Retry if QAX daemon cannot be reached</p></li>
+</ul>
+</dd>
+<dt>February 22, 2017 - bake-toolkit 2.31.4</dt><dd><ul class="simple">
+<li><p>Bugfix: –install-doc was broken</p></li>
+</ul>
+</dd>
+<dt>February 22, 2017 - bake-toolkit 2.31.2</dt><dd><ul class="simple">
+<li><p>Changed: Files which will be compiled are now printed out <em>before</em> the compiler is called, not afterwards anymore.</p></li>
+</ul>
+</dd>
+<dt>February 17, 2017 - bake-toolkit 2.31.1</dt><dd><ul class="simple">
+<li><p>Added: Tasking compiler support</p></li>
+</ul>
+</dd>
+<dt>February 3, 2017 - bake-toolkit 2.31.0</dt><dd><ul class="simple">
+<li><p>Added: Dry run via command line parameter –dry.</p></li>
+<li><p>Added: Support for compiler, archiver and linker prefixes, can be used for e.g. sccache.</p></li>
+<li><p>Added: “If” is now an alias for “Adapt”. To negate the conditions, use “Unless”.</p></li>
+<li><p>Added: For Adapts in Project.meta the “project” attribute is now “__THIS__” per default, which should be correct in almost every case.</p></li>
+<li><p>Cosmetic: Getting rid of warning output if paths start with “.”, e.g. IncludeDir “./local/abc”.</p></li>
+<li><p>Cosmetic: Only print the first out-of-date meta file when checking cache.</p></li>
+</ul>
+</dd>
+<dt>January 20, 2017 - bake-toolkit 2.30.0</dt><dd><ul class="simple">
+<li><p>Added: New adapt option “push_front”.</p></li>
+<li><p>Added: Project.meta and Collection.meta will be searched upwards if not found in current directory (or the directory specified with -m).</p></li>
+<li><p>Changed: –doc opens online docu per default. You can install the offline docu with –install-doc.</p></li>
+<li><p>Added: –debug prints more information when reading the cache, use this as feedback if you think caching does not work correctly.</p></li>
+</ul>
+</dd>
+<dt>January 12, 2017 - bake-toolkit 2.29.4</dt><dd><ul class="simple">
+<li><p>Added: qac: Workaround if QAC cannot handle the amount of errors and returns with != 0. The build must not be aborted, instead the printed errors should be parsed.</p></li>
+</ul>
+</dd>
+<dt>January 12, 2017 - bake-toolkit 2.29.3</dt><dd><ul class="simple">
+<li><p>Bugfix: qac: QAC bails out if modules have too many errors, added workaround and additional hint in output.</p></li>
+</ul>
+</dd>
+<dt>January 11, 2017 - bake-toolkit 2.29.3</dt><dd><ul class="simple">
+<li><p>Bugfix: Some commandline checks in combination with –file-list were outdated.</p></li>
+</ul>
+</dd>
+<dt>January 10, 2017 - bake-toolkit 2.29.2</dt><dd><ul class="simple">
+<li><p>Changed: –file-list output now written into files instead of stdout, see “bake -h”.</p></li>
+<li><p>Bugfix: adapt condition “toolchain” not evaluated correctly in all cases</p></li>
+</ul>
+</dd>
+<dt>January 4, 2017 - bake-toolkit 2.29.0</dt><dd><ul class="simple">
+<li><p>Added: CleanSteps, executed only when calling bake with “-c” or “–rebuild”.</p></li>
+<li><p>Added: Wildcard “*” is allowed for project/config names in Adapt.</p></li>
+<li><p>Bugfix: In certain circumstances an Adapt was not applied to subconfigs of the Project.meta where Adapt was defined.</p></li>
+</ul>
+</dd>
+<dt>January 4, 2017 - bake-toolkit 2.28.1</dt><dd><ul class="simple">
+<li><p>Bugfix: Build does not break anymore if “LintPolicy” is still defined in Project.meta. Now only a warning is printed out.</p></li>
+</ul>
+</dd>
+<dt>January 3, 2017 - bake-toolkit 2.28.0</dt><dd><ul class="simple">
+<li><p>Added: private flag for configs (cannot be referenced directly from outside of the project).</p></li>
+<li><p>Added: attribute “echo: off” for CommandLine and Makefile.</p></li>
+<li><p>Added: “–file-list” shows all files and headers of the projects.</p></li>
+<li><p>Removed: lint support.</p></li>
+<li><p>Bugfix: environment variables (specified with “Set”) can now be set individually for different configs.</p></li>
+<li><p>Changed: qac: again slightly modified cip workaround.</p></li>
+</ul>
+</dd>
+<dt>January 2, 2017 - bake-toolkit 2.27.0</dt><dd><ul class="simple">
+<li><p>Added: local <em>Adapt</em> with conditions (e.g. toolchain), see <a class="reference internal" href="syntax/adapt_configs.html#adapt-reference"><span class="std std-ref">Adapt configs</span></a>.</p></li>
+<li><p>Changed: qac: cip workaround slightly adapted, removed temporary debug output.</p></li>
+</ul>
+</dd>
+<dt>December 23, 2016 - bake-toolkit 2.26.1</dt><dd><ul class="simple">
+<li><p>Changed: qac: next try to add a workaround for the cip file bug.</p></li>
+<li><p>Cosmetic: fixed possible wrong message when reloading metas (“corrupt” instead of “changed”)</p></li>
+</ul>
+</dd>
+<dt>December 20, 2016 - bake-toolkit 2.26.0</dt><dd><ul class="simple">
+<li><p>Changed: before this version, “-w” command line args (which define the workspace roots) have overwritten roots.bake file. Now these roots will be
+merged. First “-w”, then roots.bake. Note: this will not break current builds.</p></li>
+</ul>
+</dd>
+<dt>December 16, 2016 - bake-toolkit 2.25.1</dt><dd><ul class="simple">
+<li><p>Bugfix: a null pointer exception could occur in 2.25.0, which happened in a complex scenario with multiple dependencies to a default config which extends another config with dependencies.
+Luckily, this bugfix goes along with a small performance improvement when loading uncached meta files.</p></li>
+</ul>
+</dd>
+<dt>December 15, 2016 - bake-toolkit 2.25.0</dt><dd><ul class="simple">
+<li><p>Changed (!): before this version, all “IncludeDir”s were evaluated prior to the “Dependency”s to calculate the include path string for the compiler. Now the line order
+is taken into account. To get the same include path string as in 2.24.x, shift all “IncludeDir”s in front of the first “Dependency”.</p></li>
+<li><p>Added: it is possible to mark an IncludeDir with “system: true”, which means that e.g. for gcc “-isystem” is used instead of “-I”. Very useful for third party libs.</p></li>
+<li><p>Bugfix: qac: adapted parser to new gcc version strings. On some machines an incorrect CCT was chosen.</p></li>
+<li><p>Bugfix: when building with “-p &lt;projectname&gt;”, bake has not only built &lt;projectname&gt;, but also all injected dependencies of &lt;projectname&gt;, which was not intended.</p></li>
+<li><p>Added: qac: additional step to generate reports, activate it manually with “–qacstep report”, see documentation.</p></li>
+<li><p>Cosmetic: Adapt.meta files are also cached now.</p></li>
+<li><p>Temporary: cip bug workaround from 2.24.2 does not work, added some debug output to get more infos - sorry for the spam - will be removed soon.</p></li>
+</ul>
+</dd>
+<dt>December 5, 2016 - bake-toolkit 2.24.3</dt><dd><ul class="simple">
+<li><p>Added: qac: if “&lt;mainConfigName&gt;Qac” is found in main project, it will be used instead of “&lt;mainConfigName&gt;”</p></li>
+<li><p>Added: First version of bake-format script, thanks to gizmomogwai</p></li>
+</ul>
+</dd>
+<dt>November 24, 2016 - bake-toolkit 2.24.2</dt><dd><ul class="simple">
+<li><p>Bugfix: qac: fixed recognition of platform for cygwin with gcc &gt;= 5.0</p></li>
+<li><p>Bugfix: qac: default folder of qacdata is now &lt;main project&gt;/.qacdata instead of &lt;working dir&gt;/.qacdata</p></li>
+<li><p>Bugfix: qac: workaround for “qacli admin”: retry up to 10 times if cip file is empty (getting compiler data)</p></li>
+</ul>
+</dd>
+<dt>November 16, 2016 - bake-toolkit 2.24.1</dt><dd><ul class="simple">
+<li><p>Bugfix: qac.cct was not appended if –cct is used.</p></li>
+<li><p>Bugfix: qac: abort if QAC_HOME is set to empty string.</p></li>
+<li><p>Bugfix: qac: improved recognition of gcc platform.</p></li>
+<li><p>Changed: improved warning if the path in IncludeDir matches to several folders (warning will be shown in verbosity level 2 and above).</p></li>
+</ul>
+</dd>
+<dt>November 7, 2016 - bake-toolkit 2.24.0</dt><dd><ul class="simple">
+<li><p>Bugfix: qac: output was not synced immediately to the console on some systems.</p></li>
+<li><p>Changed: qac: patching of cct introduced with 2.23.9 now opt-in via command line argument: –qaccctpatch.</p></li>
+<li><p>Changed: qac: default build output directory is now “build/.qac/” instead of “build/” (which does not overwrite regular build output anymore).</p></li>
+<li><p>Changed: if default build folder is used, the parent folder “build” will be also removed when the project is cleaned if the “build” folder will become empty.</p></li>
+<li><p>Added: bakeclean script to delete all .bake, .bake/../build and .bake/../build_* folders</p></li>
+<li><p>Added: prebuild feature now uses objects instead of the library if objects exist.</p></li>
+<li><p>Changed: default executable file ending on non-Windows systems now “” (except Diab and Greenhills, here it is always “.elf”).</p></li>
+</ul>
+</dd>
+<dt>October 26, 2016 - bake-toolkit 2.23.12</dt><dd><ul class="simple">
+<li><p>Bugfix: qac: now also files from .qacdata folder are filtered out.</p></li>
+<li><p>Bugfix: qac: modules were not be filtered out correctly, e.g. swcAbcd was not filtered out if swcAbc was compiled.</p></li>
+<li><p>Removed: qac: qac.rcf will not be searched anymore (most probably this feature was never used).</p></li>
+<li><p>Added: qac: qac.cct will be searched up to root; if found, the content will be appended to the original cct unless specified otherwise.</p></li>
+</ul>
+</dd>
+<dt>October 26, 2016 - bake-toolkit 2.23.9</dt><dd><ul class="simple">
+<li><p>Bugfix: qac: command line options not correctly handed over to bake (bakeqac has been aborted in this case).</p></li>
+<li><p>Bugfix: qac: On some systems some warnings were not suppressed. Added a few defines to cct which hopefully fixes this.</p></li>
+<li><p>Bugfix: qac: –qacretry did not work with –qacnofilter.</p></li>
+</ul>
+</dd>
+<dt>October 20, 2016 - bake-toolkit 2.23.8</dt><dd><ul class="simple">
+<li><p>Bugfix: qac: “License Refused” for *.c Files not treated as an error anymore, which was a problem for “–qacretry”.</p></li>
+<li><p>Changed: qac: default qacdata folder is now “.qacdata”</p></li>
+<li><p>Changed: qac: warnings are now sorted by line numbers per file</p></li>
+<li><p>Changed: qac: “–qacfilter off|on” (default on) was changed to “–qacnofilter” (if skipped, filters are active)</p></li>
+<li><p>Changed: qac: “–qacnoformat was reanmed to “–qacrawformat”</p></li>
+<li><p>Cosmetic: qac: if license retry timeout is reached, an additional info is printed.</p></li>
+<li><p>Added: qac: With –qacdoc a link to the appropriate documentation page is printed for every warning.</p></li>
+</ul>
+</dd>
+<dt>October 17, 2016 - bake-toolkit 2.23.7</dt><dd><ul class="simple">
+<li><p>Changed: renamed qac build steps from create, build and result to admin, analyze and view (the original qac names).</p></li>
+<li><p>Bugfix: qac view step might have been executed although build has been failed.</p></li>
+<li><p>Bugfix: qac view step with never executed analyze step might have been crashed.</p></li>
+<li><p>Bugfix: qac C++11 and C++14 switches were broken.</p></li>
+</ul>
+</dd>
+<dt>October 14, 2016 - bake-toolkit 2.23.6</dt><dd><ul class="simple">
+<li><p>Bugfix: qac license refused error now really shown.</p></li>
+<li><p>Changed: QAC_RCF environment variable not supported anymore. Instead a file qac.rcf will be searched upwards from bake main project folder.</p></li>
+<li><p>Changed: qac messages reformatted, MISRA rule now completely shown. For plain qac style use –qacnoformat.</p></li>
+<li><p>Added: number of qac messages are printed at the end.</p></li>
+<li><p>Added: bakeqac now supports -a &lt;color&gt; like bake.</p></li>
+<li><p>Added: with –qacretry &lt;seconds&gt; a retry timeout can be specified if license is refused, default is no retry.</p></li>
+</ul>
+</dd>
+<dt>October 14, 2016 - bake-toolkit 2.23.5</dt><dd><ul class="simple">
+<li><p>Bugfix: qac cct auto detection fixed.</p></li>
+<li><p>Bugfix: –prepro option fixed.</p></li>
+</ul>
+</dd>
+<dt>October 14, 2016 - bake-toolkit 2.23.4</dt><dd><ul class="simple">
+<li><p>Bugfix: qac during analyse step license error not detected properly.</p></li>
+</ul>
+</dd>
+<dt>October 13, 2016 - bake-toolkit 2.23.3</dt><dd><ul class="simple">
+<li><p>Bugfix: improved auto detection of cct for qac.</p></li>
+<li><p>Bugfix: print qac output in case of error.</p></li>
+<li><p>Changed: QAC_HOME can end now with a slash.</p></li>
+<li><p>Changed: qacli call now relative to QAC_HOME.</p></li>
+<li><p>Changed: qac create will now be done regardless if qacdata exists.</p></li>
+</ul>
+</dd>
+<dt>October 13, 2016 - bake-toolkit 2.23.2</dt><dd><ul class="simple">
+<li><p>Added: bakeqac, see documentation.</p></li>
+</ul>
+</dd>
+<dt>October 5, 2016 - bake-toolkit 2.22.0</dt><dd><ul class="simple">
+<li><p>Changed: when building, only the return value of the compiler is taken into account, not the result of the error parser anymore. Old behaviour can be switched on by command line argument.</p></li>
+<li><p>Bugfix: again fixed reading of dependency files, added several unittests.</p></li>
+<li><p>Internal: based on new rtext 0.9.0 and rgen 0.8.2 now.</p></li>
+</ul>
+</dd>
+<dt>September 30, 2016 - bake-toolkit 2.21.0</dt><dd><ul class="simple">
+<li><p>Changed: version and time infos are suppressed now per default. Version can be seen with –help or –version, time can be seen with –time.</p></li>
+<li><p>Changed: option –writeCC2J renamed to –compilation-db, which has the default filename compilation-db.json now.</p></li>
+<li><p>Added: option –incs-and-defs=json prints infos about includes and defines of all projects in json format.</p></li>
+</ul>
+</dd>
+<dt>September 28, 2016 - bake-toolkit 2.20.4</dt><dd><ul class="simple">
+<li><p>Bugfix: fixed auto-detected of dependency files</p></li>
+</ul>
+</dd>
+<dt>September 21, 2016 - bake-toolkit 2.20.3</dt><dd><ul class="simple">
+<li><p>Bugfix: reading dependency files was broken for TI compiler, format is now auto-detected independent from compiler version</p></li>
+</ul>
+</dd>
+<dt>September 13, 2016 - bake-toolkit 2.20.2</dt><dd><ul class="simple">
+<li><p>Bugfix: <em>prebuild</em> libs were not linked if all original sources were removed</p></li>
+</ul>
+</dd>
+<dt>September 5, 2016 - bake-toolkit 2.20.1</dt><dd><ul class="simple">
+<li><p>Added: inject feature for dependencies</p></li>
+<li><p>Added: option to generate a dot graph file</p></li>
+<li><p>Added: <em>prebuild</em> feature for distribution builds</p></li>
+<li><p>Added: commandline option <em>–build_</em> to enable the old outputdir behaviour: <em>build_</em> instead of <em>build/</em></p></li>
+<li><p>Added: printing out more information when loading Project.metas in verbosity level 3</p></li>
+<li><p>Changed: circular dependency warning moved from verbosity level 1 to 3</p></li>
+<li><p>Added: ToolchainName is now a predefined variable for Project.meta</p></li>
+<li><p>Added: –compile-only option (which is equal to the workaround -f “.”)</p></li>
+<li><p>Bugfix: –adapt commandline option accepts absolute paths now</p></li>
+<li><p>Changed: removed the <em>bundle</em> feature</p></li>
+</ul>
+</dd>
+<dt>August 12, 2016 - bake-toolkit 2.19.2</dt><dd><ul class="simple">
+<li><p>Bugfix: fixed TI linker error parser</p></li>
+</ul>
+</dd>
+<dt>August 4, 2016 - Eclipse plugin 1.7.1</dt><dd><ul class="simple">
+<li><p>Bugfix: error markers may not created correctly if projects had “^” in the name</p></li>
+</ul>
+</dd>
+<dt>August 1, 2016 - bake-toolkit 2.19.1</dt><dd><ul class="simple">
+<li><p>Bugfix: made the new “listening to raw character 0x3” more robust</p></li>
+</ul>
+</dd>
+<dt>July 28, 2016 - bake-toolkit 2.19.0</dt><dd><ul class="simple">
+<li><p>Changed: default output dir is now build/&lt;something&gt; instead of build_&lt;something&gt;</p></li>
+<li><p>Added: listening to raw character 0x3 on stdin to abort bake/bakery (needed for some Cygwin installations)</p></li>
+<li><p>Internal: switching from rgen 0.8.0 to rgen 0.8.1 (which should have no functional impact)</p></li>
+</ul>
+</dd>
+<dt>June 22, 2016 - bake-toolkit 2.18.0</dt><dd><ul>
+<li><p>Bugfix: order if linker libs fixed. For compatibility, a new command line flag “–link-2-17” to get the old behaviour was added.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Example</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Dependencies</p></td>
+<td><p>A-&gt;B-&gt;D and A-&gt;C-&gt;D</p></td>
+</tr>
+<tr class="row-odd"><td><p>New correct link order</p></td>
+<td><p>A, B, C, D</p></td>
+</tr>
+<tr class="row-even"><td><p>Old wrong link order (–link-2-17)</p></td>
+<td><p>A, B, D, C</p></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</dd>
+<dt>May 4, 2016 - bake-toolkit 2.17.4</dt><dd><ul class="simple">
+<li><p>Bugfix: bakery returned 1 for successful builds</p></li>
+<li><p>Changed: bakery now lists all failed unit tests at the end</p></li>
+</ul>
+</dd>
+<dt>April 13, 2016 - bake-toolkit 2.17.3</dt><dd><ul class="simple">
+<li><p>Bugfix: Commands injected by adapt feature were executed in wrong directory</p></li>
+<li><p>Bugfix: Added an error if two sources would result in the same object file</p></li>
+</ul>
+</dd>
+<dt>April 6, 2016 - bake-toolkit 2.17.2</dt><dd><ul class="simple">
+<li><p>Bugfix: “–link-only” option has ignored libraries from makefiles</p></li>
+</ul>
+</dd>
+<dt>March 15, 2016 - bake-toolkit 2.17.1</dt><dd><ul class="simple">
+<li><p>Bugfix: configs with inherited DefaultToolchains were not listed on command line (via “–list”)</p></li>
+<li><p>Changed: if build config name was omitted on commandline, a default config is specified and this default config has no DefaultToolchain, bake lists all possible build configs (same as “–list”)</p></li>
+<li><p>Added: warning if sources files were compiled several times for one binary</p></li>
+</ul>
+</dd>
+<dt>March 15, 2015 - Eclipse plugin 1.7.0</dt><dd><ul class="simple">
+<li><p>Bugfix: config names written in inverted commas or with special characters were not recognized by “Select bake Config” menu</p></li>
+<li><p>Removed: multi-console option, which was rarely used and not working correctly anymore with latest Eclipse version</p></li>
+<li><p>Added: option to disable/enable console scroll-lock/word-wrap when starting a build</p></li>
+<li><p>Cosmetic: config names are now displayed in “Select bake Config” in the same order as in Project.meta</p></li>
+<li><p>Cosmetic: bake console does not open automatically anymore when starting Eclipse</p></li>
+</ul>
+</dd>
+<dt>February 26, 2016 - bake-toolkit 2.16.1</dt><dd><ul class="simple">
+<li><p>Added: experimental bundle feature</p></li>
+<li><p>Changed: “–threads” now deprected, use “-j” instead</p></li>
+<li><p>Bugfix: in rare cases the cache from a copied/moved Project.meta file was reused instead of reloading the file. This could lead to errors.</p></li>
+</ul>
+</dd>
+<dt>February 11, 2016 - bake-toolkit 2.15.0</dt><dd><ul class="simple">
+<li><p>Added: multiple inheritance for configs</p></li>
+<li><p>Added: ArtifactName can be specified for libraries</p></li>
+<li><p>Added: Merged configs are printed out when running bake with –debug</p></li>
+<li><p>Added: info output if “path magic” hides local paths for IncludeDir</p></li>
+<li><p>Bugfix: fixed passing arguments from bakery to bake</p></li>
+</ul>
+</dd>
+<dt>January 14, 2016 - bake-toolkit 2.14.0</dt><dd><ul class="simple">
+<li><p>Added: possibility to change configs via command line, e.g. changing compiler, see “adapt” docu page</p></li>
+<li><p>Changed: extending configs in a Project.meta file made more generic, see “derive” docu page</p></li>
+<li><p>Changed: default order of filenames changed, now order in Project.meta has the highest priority as intended. Results of glob patterns are sorted alphabetically as before.</p></li>
+<li><p>Changed: libraries from makefiles are linked now after other libraries defined from the same config</p></li>
+<li><p>Added: IncludeDir now possible for CustomConfigs</p></li>
+<li><p>Bugfix: –abs-paths now works with –incs-and-defs</p></li>
+</ul>
+</dd>
+<dt>December 23, 2015 - bake-toolkit 2.13.1</dt><dd><ul class="simple">
+<li><p>Bugfix: merging configs was extremely slow in 2.12.2 and 2.13.0</p></li>
+</ul>
+</dd>
+<dt>December 23, 2015 - bake-toolkit 2.13.0</dt><dd><ul>
+<li><p>Bugfix: It was possible that the archiver and linker were called for –prepro and –link-only builds</p></li>
+<li><p>Added: possibility to specify minimum and maximum required bake version in Project.meta file</p></li>
+<li><p>Added: option to omit -b when executing the bakery</p></li>
+<li><p>Added: bakery now searches recursively for bake projects</p></li>
+<li><p>Changed: some commandline arguments changed, deprecated arguments still supported</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>New argument</p></th>
+<th class="head"><p>Deprecated argument</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>–do</p></td>
+<td><p>–include_filter</p></td>
+</tr>
+<tr class="row-odd"><td><p>–omit</p></td>
+<td><p>–exclude_filter</p></td>
+</tr>
+<tr class="row-even"><td><p>–show_configs</p></td>
+<td><p>–list</p></td>
+</tr>
+<tr class="row-odd"><td><p>–link-only</p></td>
+<td><p>–link_only</p></td>
+</tr>
+<tr class="row-even"><td><p>–generate-doc</p></td>
+<td><p>–docu</p></td>
+</tr>
+<tr class="row-odd"><td><p>–lint-min</p></td>
+<td><p>–lint_min</p></td>
+</tr>
+<tr class="row-even"><td><p>–lint-max</p></td>
+<td><p>–lint_max</p></td>
+</tr>
+<tr class="row-odd"><td><p>–ignore-cache</p></td>
+<td><p>–ignore_cache</p></td>
+</tr>
+<tr class="row-even"><td><p>–toolchain-info</p></td>
+<td><p>–toolchain_info</p></td>
+</tr>
+<tr class="row-odd"><td><p>–toolchain-names</p></td>
+<td><p>–toolchain_names</p></td>
+</tr>
+<tr class="row-even"><td><p>–abs-paths</p></td>
+<td><p>–show_abs_paths</p></td>
+</tr>
+<tr class="row-odd"><td><p>–no-autodir</p></td>
+<td><p>–no_autodir</p></td>
+</tr>
+<tr class="row-even"><td><p>–incs-and-defs</p></td>
+<td><p>–show_incs_and_defs</p></td>
+</tr>
+<tr class="row-odd"><td><p>–conversion-info</p></td>
+<td><p>–conversion_info</p></td>
+</tr>
+<tr class="row-even"><td><p>–doc</p></td>
+<td><p>–show_doc</p></td>
+</tr>
+<tr class="row-odd"><td><p>–license</p></td>
+<td><p>–show_license</p></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</dd>
+<dt>December 16, 2015 - bake-toolkit 2.12.2</dt><dd><ul class="simple">
+<li><p>Bugfix: extending a client config (merging) could have broken the parent config</p></li>
+<li><p>Changed: empty libraries will not be created and linked anymore</p></li>
+<li><p>Changed: added inject as alias for infix</p></li>
+</ul>
+</dd>
+<dt>November 16, 2015 - bake-toolkit 2.12.1</dt><dd><ul class="simple">
+<li><p>Bugfix: inherit and infix features may have calculated wrong relative paths</p></li>
+</ul>
+</dd>
+<dt>October 26, 2015 - Eclipse plugin 1.6.0</dt><dd><ul class="simple">
+<li><p>Added: possibility to specify folders to exclude when importing projects</p></li>
+<li><p>Bugfix: fixed exception when trying to build after starting eclipse with a closed project</p></li>
+</ul>
+</dd>
+<dt>October 14, 2015 - bake-toolkit 2.12.0</dt><dd><ul class="simple">
+<li><p>Changed: now ALL startup and exit steps are executed regardless if the previous steps were successful even if stopOnFirstError was configured</p></li>
+<li><p>Bugfix: relative paths between roots based on roots.bake were calculated incorrectly</p></li>
+</ul>
+</dd>
+<dt>October 2, 2015 - bake-toolkit 2.11.4</dt><dd><ul class="simple">
+<li><p>Bugfix: bake aborted in larger workspaces with 2.11.3 right before linking</p></li>
+</ul>
+</dd>
+<dt>September 8, 2015 - bake-toolkit 2.11.3</dt><dd><ul class="simple">
+<li><p>Bugfix: linker executed even if a dependency has an error</p></li>
+<li><p>Bugfix: now the new docu is really added to the gem</p></li>
+</ul>
+</dd>
+<dt>September 3, 2015 - bake-toolkit 2.11.2</dt><dd><ul class="simple">
+<li><p>Bugfix: all files were always be recompiled with ruby &lt; 1.9.3</p></li>
+<li><p>Changed: switched to new docu style, thanks Nico!</p></li>
+</ul>
+</dd>
+<dt>August 4, 2015 - bake-toolkit 2.11.1</dt><dd><ul class="simple">
+<li><p>Added: project dir output for conversion tool</p></li>
+<li><p>Moved: wishlist to github</p></li>
+</ul>
+</dd>
+<dt>July 31, 2015 - bake-toolkit 2.11.0</dt><dd><ul class="simple">
+<li><p>Added: new parameters for includeDir: inherit and infix</p></li>
+<li><p>Added: dependency output for conversion tool</p></li>
+<li><p>Bugfix: makefile flags where not used when cleaning the workspace</p></li>
+</ul>
+</dd>
+<dt>July 6, 2015 - bake-toolkit 2.10.3</dt><dd><ul class="simple">
+<li><p>Bugfix: Build stopped unintentionally when using -r</p></li>
+</ul>
+</dd>
+<dt>July 3, 2015 - bake-toolkit 2.10.2</dt><dd><ul class="simple">
+<li><p>Bugfix: PostSteps were unintentionally executed if a dependent step (e.g. linking) was not executed due to an error in another project (e.g. compiler error)</p></li>
+</ul>
+</dd>
+<dt>July 1, 2015 - bake-toolkit 2.10.1</dt><dd><ul class="simple">
+<li><p>Added: Possibility to add descriptions for configs which will be printed when using –show_configs</p></li>
+<li><p>Bugfix: link_only did not link only if not all sources of the main project were not built before</p></li>
+<li><p>Bugfix: Ctrl-C on command line did not work properly under Linux</p></li>
+</ul>
+</dd>
+<dt>July 1, 2015 - Eclipse plugin 1.5.1</dt><dd><ul class="simple">
+<li><p>Bugfix: AdjustIncludes broken for subfolder projects (with a “^” in the name)</p></li>
+<li><p>Bugfix: Error parser broken for subfolder projects (with a “^” in the name)</p></li>
+<li><p>Bugfix: Configs with inherited DefaultToolchain were not selectable to build</p></li>
+</ul>
+</dd>
+<dt>June 10, 2015 - bake-toolkit 2.9.2</dt><dd><ul class="simple">
+<li><p>Cosmetic: Redundant include directories are now removed before calling the compiler</p></li>
+<li><p>Bugfix: Moving cached meta files was not recognized correctly, wrong path references may have been used</p></li>
+</ul>
+</dd>
+<dt>June 8, 2015 - bake-toolkit 2.9.1</dt><dd><ul class="simple">
+<li><p>Changed: “–doc” replaced by “–show_doc” to avoid confusion</p></li>
+</ul>
+</dd>
+<dt>June 5, 2015 - bake-toolkit 2.9.0</dt><dd><ul class="simple">
+<li><p>Added: “–create” command line option to create project templates</p></li>
+<li><p>Added: “–conversion_info” command line option for bake conversion tool</p></li>
+<li><p>Cosmetic: made output clearer if “–link_only” is used for non ExecutableConfigs</p></li>
+</ul>
+</dd>
+<dt>June 5, 2015 - Eclipse plugin 1.4.5</dt><dd><ul class="simple">
+<li><p>Bugfix: input streams from bake were closed too early under Linux - console window output and AdjustCDT feature should work correctly now</p></li>
+<li><p>Added: “Link This Project Only” shortcut added</p></li>
+<li><p>Added: Files under “build_*” and “.bake” are now automatically marked as derived (not shown in “Open Resource” dialog)</p></li>
+<li><p>Changed: error message dialog of AdjustCDT now displays the end instead of the beginning of very long error messages</p></li>
+</ul>
+</dd>
+<dt>May 19, 2015 - bake-toolkit 2.8.0</dt><dd><ul class="simple">
+<li><p>Bugfix: when building a project with -p name, not only name was built, but all projects which start with the string name</p></li>
+<li><p>Added: more info why Project.meta files are reloaded</p></li>
+<li><p>Added: createVSProjects can create VS2013 projects</p></li>
+</ul>
+</dd>
+<dt>April 22, 2015 - bake-toolkit 2.7.0</dt><dd><ul class="simple">
+<li><p>Added: possibility to use Eclipse file ordering for compilation (eclipseOrder attribute for DefaultToolchain)</p></li>
+<li><p>Changed: $(:) and $(/) are now mapped to Ruby internal variables <a class="reference external" href="File::PATH_SEPARATOR">File::PATH_SEPARATOR</a> and <a class="reference external" href="File::SEPARATOR">File::SEPARATOR</a>.</p></li>
+<li><p>This fixes the result in Cygwin/MinGW environments</p></li>
+<li><p>Bugfix: cmdline files are now written even if the build step fails</p></li>
+</ul>
+</dd>
+<dt>April 14, 2015 - bake-toolkit 2.6.0</dt><dd><ul class="simple">
+<li><p>Added: validExitCodes attribute to steps (if a step has valid exit codes != 0)</p></li>
+<li><p>Added: StartupSteps and ExitSteps (always executed before and after a build)</p></li>
+</ul>
+</dd>
+<dt>April 8, 2015 - bake-toolkit 2.5.0</dt><dd><ul class="simple">
+<li><p>Added: OS dependent variable $(:), which is used for setting the PATH variable</p></li>
+</ul>
+</dd>
+<dt>March 30, 2015 - bake-toolkit 2.4.3</dt><dd><ul class="simple">
+<li><p>Added: If Project.meta files are updated, sources will only be recompiled if necessary</p></li>
+<li><p>Added: Set command in Project.meta has now an env attribute to store variables also in system environment which makes them accessible from user scripts</p></li>
+<li><p>Added: GCC_ENV toolchain (uses environment variables)</p></li>
+<li><p>Added: Improved MSVC support</p></li>
+</ul>
+</dd>
+<dt>March 16, 2015 - VS plugin 1.0.1</dt><dd><ul class="simple">
+<li><p>Added: Support for VS2013</p></li>
+</ul>
+</dd>
+<dt>March 12, 2015 - bake-toolkit 2.3.4</dt><dd><ul class="simple">
+<li><p>Changed: Clang command is now “clang” per default instead of llvm-gcc</p></li>
+<li><p>Added: CLANG_ANALYZE toolchain</p></li>
+<li><p>Added: MSVC toolchain</p></li>
+<li><p>Bugfix: some minor fixes</p></li>
+</ul>
+</dd>
+<dt>February 27, 2015 - Eclipse plugin 1.3.0</dt><dd><ul class="simple">
+<li><p>Added: bake projects with equal names can be imported now</p></li>
+</ul>
+</dd>
+<dt>February 19, 2015 - bake-toolkit 2.2.2</dt><dd><ul class="simple">
+<li><p>Changed: output dirs are now prefixed with “build_” per default</p></li>
+<li><p>Changed: introduced complex variable $(OutputDir,projectName,configName)</p></li>
+<li><p>Changed: reworked merge strategy of two configs, especially toolchain options</p></li>
+<li><p>Added: variables can be nested now</p></li>
+<li><p>Bugfix: fixed dependency header check for Unix when running Windows on a virtual machine</p></li>
+<li><p>Bugfix: variable OutputDir did not take overwritten output directory from toolchain into account</p></li>
+<li><p>Cosmetic: do not show internal pipes anymore when printing command lines</p></li>
+</ul>
+</dd>
+<dt>January 26, 2015 - bake-toolkit 2.1.1</dt><dd><ul class="simple">
+<li><p>Bugfix: dependent header file check in 2.1.0 was broken</p></li>
+<li><p>Changed: files defined via glob pattern are sorted alphabetically now</p></li>
+</ul>
+</dd>
+<dt>January 23, 2015 - bake-toolkit 2.1.0</dt><dd><ul class="simple">
+<li><p>Bugfix: fixed crash in warning output if setting variable via cmd did not work</p></li>
+<li><p>Workaround: dependent header files are now ignored on Windows if path starts with “/” and file cannot be found</p></li>
+<li><p>Changed: output of lint is now ignored, linting will only fails if it cannot be executed</p></li>
+<li><p>Changed: introduced new verbose mode -v3, shifted some output to this level</p></li>
+<li><p>Added: a dependency project can be specified with parent folders if it is ambiguous, e.g. Dependency “my/folder/proj”, config: lib</p></li>
+<li><p>Added: experimental CC2J output</p></li>
+</ul>
+</dd>
+<dt>January 23, 2015 - Eclipse plugin 1.2.1</dt><dd><ul class="simple">
+<li><p>Bugfix: importing projects with existing .(c)project files may be placed in wrong folder</p></li>
+</ul>
+</dd>
+<dt>January 15, 2015 - bake-toolkit 2.0.10</dt><dd><ul class="simple">
+<li><p>Bugfix: spaces in paths were not handled correctly in all cases</p></li>
+<li><p>Bugfix: dependency files of Keil compiler not treated correctly</p></li>
+<li><p>Added: showing why files are built in verbose mode -v2</p></li>
+<li><p>Added: whole workspace can be linted now (projects will be linted separately)</p></li>
+<li><p>Changed: removed bake-doc command, use bake –doc instead</p></li>
+<li><p>Changed: if no default project is specified, possible build configs are shown on command line again like in bake 1.x</p></li>
+</ul>
+</dd>
+<dt>January 7, 2015 - bake-toolkit 2.0.3</dt><dd><ul>
+<li><dl>
+<dt>Changed: default configuration is chosen if configuration name is omitted. This applies to command line as well as to Dependency definitions, e.g.:</dt><dd><ul>
+<li><p>Project.meta</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Dependency canDriver        # no config attribute</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Command line</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake -m bla/myProj
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To show the possible configs of a project, use the <cite>–show_configs</cite> command line option.</p>
+</div>
+</dd>
+</dl>
+</li>
+<li><p>Changed: more than one config of a project can be used in one build.</p>
+<blockquote>
+<div><p>Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Dependency canDriver, config: C1</span>
+<span class="go">Dependency canDriver, config: C2</span>
+</pre></div>
+</div>
+<p>To reference a config of the current project, omit the project name, e.g.:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Dependency config: C3</span>
+</pre></div>
+</div>
+<p>To build a single project, you can still use -p command line argument:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -p canDriver
+</pre></div>
+</div>
+<p>However, if canDriver has more than one config in the workspace, all configs will be built. To build only a single config, use a comma separator like this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -p canDriver,C1
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><dl>
+<dt>Changed: the default output folder has been changed due to the new feature of having several configs of a project in one workspace.</dt><dd><table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 36%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Old</p></th>
+<th class="head"><p>New</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Main project</p></td>
+<td><p>$(MainConfigName)</p></td>
+<td><p>$(MainConfigName)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sub Project</p></td>
+<td><p>$(MainConfigName)_$(MainProjectName)</p></td>
+<td><p>$(ConfigName)_$(MainProjectName)_$(MainConfigName)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be careful if you have something like this in Project.meta:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ExternalLibrary &quot;bspCoreZ6/$(MainConfigName)_$(MainProjectName)/src/coreZ6/startup/startupCode.o&quot;, search:false</span>
+</pre></div>
+</div>
+<p>This refers to the old output directory. Change it or if you want to support old and new bake versions,
+write a PreStep which copies the file from the new location to the old one.</p>
+</div>
+</dd>
+</dl>
+</li>
+<li><p>Changed: with -f a pattern can be specified, not only a single file. All files matching this string will be compiled.</p></li>
+<li><p>Changed: variables in Dependency definitions are not allowed anymore to avoid inconsistencies.</p></li>
+<li><p>Changed: no error will be reported anymore if makefile has no clean target.</p></li>
+<li><p>Changed: source files will now be compiled and archived ordered by the Files definition in Project.meta, not by a Eclipse-backward-compatibility-ordering.</p></li>
+<li><p>Changed: reworked some error messages, more error annotations are shown in IDEs</p></li>
+<li><p>Added: “–include_filter” and “–exclude_filter” also work for main step of CustomConfig</p></li>
+<li><p>Added: possibility to add comments in roots.bake</p></li>
+<li><p>Added: new variables CPPPath, CPath, ASMPath, ArchiverPath and LinkerPath. These variables can also be used in InternalDefines and InternalInclude files.</p></li>
+<li><p>Added: lint is not restricted to GCC toolchain anymore.</p></li>
+<li><p>Added: –docu option. Specify the docu command line in Docu tag of the (Default)Toolchain.</p></li>
+<li><p>Removed: support for Ruby 1.8. Use Ruby 1.9 or higher.</p></li>
+<li><p>Removed: dependencies to cxxproject and rake gems</p></li>
+<li><p>Removed: “-j” as default flag when calling makefiles. This must be explicitly specified.</p></li>
+<li><p>Removed: option to check for unnecessary includes</p></li>
+<li><dl>
+<dt>Removed: hardcoded TI compiler commands and flags</dt><dd><table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 69%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Old</p></th>
+<th class="head"><p>New</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Compiler command</p></td>
+<td><p>$(ti_home)/ccsv5/tools/compiler/tms470/bin/cl470</p></td>
+<td><p>ti_cl</p></td>
+</tr>
+<tr class="row-odd"><td><p>Compiler flags</p></td>
+<td><p>-mv7A8 -g –include_path=”#{ti_home}/ccsv5/tools/compiler/tms470/include”
+–diag_warning=225 -me –abi=eabi –code_state=32 –preproc_with_compile</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Archiver command</p></td>
+<td><p>$(ti_home)/ccsv5/tools/compiler/tms470/bin/ar470</p></td>
+<td><p>ti_ar</p></td>
+</tr>
+<tr class="row-odd"><td><p>Linker command</p></td>
+<td><p>$(ti_home)/ccsv5/tools/compiler/tms470/bin/cl470</p></td>
+<td><p>ti_cl</p></td>
+</tr>
+<tr class="row-even"><td><p>Linker flags</p></td>
+<td><p>-mv7A8 -g –diag_warning=225 -me –abi=eabi –code_state=32 -z
+–warn_sections -i”$(ti_home)/ccsv5/tools/compiler/tms470/lib”
+-i”$(ti_home)/ccsv5/tools/compiler/tms470/include”</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Linker lib prefix flags</p></td>
+<td><p>-lDebug/configPkg/linker.cmd</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</li>
+<li><p>Bugfix: variables in add and remove attributes of Flags now work as intended</p></li>
+<li><p>Bugfix: output folder was not created if no sources are specified for LibraryConfig and ExecutableConfig.</p></li>
+<li><p>Bugfix: “-p” was not forwarded in bakery.</p></li>
+<li><p>Cosmetic: bakery now calls bake with relative pathnames, which results in nicer outputs.</p></li>
+</ul>
+</dd>
+<dt>December 19, 2014 - Eclipse plugin 1.2.0</dt><dd><ul class="simple">
+<li><p>Bugfix: it is now ensured, that bake will be started from Eclipse working directory</p></li>
+<li><p>Bugfix: projects created with the “new bake project wizard” are now placed in the correct folder.</p></li>
+<li><p>Added: Eclipse working directory shown in bake preference dialog (important if -w option is used with relative paths)</p></li>
+<li><p>Added: Options to recreate .(c)project files when importing bake projects</p></li>
+<li><p>Changed: Eclipse configurations will be named “bake” and not “Do not use this config, use bake instead”</p></li>
+</ul>
+</dd>
+<dt>December 16, 2014 - Eclipse plugin 1.1.1</dt><dd><ul class="simple">
+<li><p>Bugfix: Adjust include and defines broken feature used wrong command line option.</p></li>
+</ul>
+</dd>
+<dt>November 7, 2014 - bake-toolkit 1.8.0, Eclipse plugin 1.1.0</dt><dd><ul class="simple">
+<li><p>Added: InternalIncludes and InternalDefines in DefaultToolchain, which are forwarded to the IDE.</p></li>
+<li><p>Changed: No default options for PC-lint in combination with GCC will be provided anymore. Use the official way, see co-gcc.lnt in PC-lint installation.</p></li>
+<li><p>Bugfix: verbose output for replacing non-existing environment variables broken.</p></li>
+</ul>
+</dd>
+<dt>November 4, 2014 - bake-toolkit 1.7.0</dt><dd><ul class="simple">
+<li><p>Added: Option to define output directory relative/absolute for each project or for all projects.</p></li>
+<li><p>Added: –set command line option to set variables</p></li>
+<li><p>Added: Optional “Description” tag for projects in Project.meta</p></li>
+<li><p>Changed: Variables in DefaultToolchain will be substituted separately for each project.</p></li>
+</ul>
+</dd>
+<dt>August 8, 2014 - bake-toolkit 1.6.3</dt><dd><ul class="simple">
+<li><p>Fixed: possible uninitialized variable could lead to crash bake</p></li>
+</ul>
+</dd>
+<dt>August 6, 2014 - bake-toolkit 1.6.2</dt><dd><ul class="simple">
+<li><p>Fixed: clear clearn- and clobber-lists at startup</p></li>
+<li><p>Fixed: Variables not substituted in ArtifactName and ArtifactNameBase</p></li>
+<li><p>Added: Cyclic variable substitution</p></li>
+</ul>
+</dd>
+<dt>August 5, 2014 - bake-toolkit 1.6.1</dt><dd><ul class="simple">
+<li><p>Added: Fixed variable substitution</p></li>
+</ul>
+</dd>
+<dt>August 1, 2014 - bake-toolkit 1.6.0</dt><dd><ul class="simple">
+<li><p>Added: The value of a variable can be the result of a command line</p></li>
+</ul>
+</dd>
+<dt>July 18, 2014 - bake-toolkit 1.5.0</dt><dd><ul class="simple">
+<li><p>Added: Dependencies can be overwritten in inherited projects</p></li>
+<li><p>Removed: defines cannot be filtered anymore via command line</p></li>
+</ul>
+</dd>
+<dt>June 6, 2014 - bake-toolkit 1.4.0</dt><dd><ul class="simple">
+<li><p>Bugfix: variables can be used in “Set” now</p></li>
+<li><p>Added: variable “MainProjectDir”</p></li>
+</ul>
+</dd>
+<dt>May 23, 2014 - bake-toolkit 1.3.0</dt><dd><ul class="simple">
+<li><p>Added: defines can be filtered now via command line</p></li>
+</ul>
+</dd>
+<dt>May 2, 2014 - bake-toolkit 1.2.1</dt><dd><ul class="simple">
+<li><p>Added: Set keyword for defining variables</p></li>
+<li><p>Changed: “executed in”-output now in separate line</p></li>
+</ul>
+</dd>
+<dt>March 14, 2014 - bake-toolkit 1.1.0</dt><dd><ul class="simple">
+<li><p>Added: Lint support</p></li>
+<li><p>Added: $(ProjectDir) variable</p></li>
+</ul>
+</dd>
+<dt>March 7, 2014 - bake-toolkit 1.0.27</dt><dd><ul class="simple">
+<li><p>Cosmetic: some pictures in documentation were missing</p></li>
+</ul>
+</dd>
+<dt>March 5, 2014 - bake-toolkit 1.0.26</dt><dd><ul class="simple">
+<li><p>Bugfix: in rare cases invalid characters from compiler output were not handled correctly</p></li>
+<li><p>Bugfix: changing workspace roots on command line now always regenerates build tree</p></li>
+<li><p>Added: Variable $(Roots) for IncludeDir directives</p></li>
+<li><p>Changed: dependency files for all compilers will be generated inclusive system headers</p></li>
+<li><p>Changed: abort earlier if main directory has no Project.meta</p></li>
+<li><p>Changed: every environment variable is expanded to an empty string if not defined</p></li>
+</ul>
+</dd>
+<dt>January 21, 2014 - bake-toolkit 1.0.25</dt><dd><ul class="simple">
+<li><p>Added: configs can now be inherited</p></li>
+<li><p>Added: command bake-doc opens bake doc</p></li>
+<li><p>Changed: dependency files for Greenhills compiler will be generated with -MD instead of -MMD</p></li>
+</ul>
+</dd>
+<dt>September 10, 2013 - bake-toolkit 1.0.24</dt><dd><ul class="simple">
+<li><p>Changed: Improved Keil linker error parser.</p></li>
+</ul>
+</dd>
+<dt>September 9, 2013 - bake-toolkit 1.0.23</dt><dd><ul class="simple">
+<li><p>Added: Keil support.</p></li>
+<li><p>Bugfix: minor fixes.</p></li>
+</ul>
+</dd>
+<dt>August 21, 2013 - bake-toolkit 1.0.22</dt><dd><ul class="simple">
+<li><p>Bugfix: Searching for project folders did not work correctly.</p></li>
+</ul>
+</dd>
+<dt>August 20, 2013 - Eclipse plugin 1.0.5.0</dt><dd><ul class="simple">
+<li><p>Bugfix: Adjust includes in CDT is working again after Java Update.</p></li>
+</ul>
+</dd>
+<dt>August 1, 2013 - bake-toolkit 1.0.21</dt><dd><ul class="simple">
+<li><p>Bugfix: projects folders which are junctions were not found anymore after the last update.</p></li>
+</ul>
+</dd>
+<dt>July 25, 2013 - bake-toolkit 1.0.20, Eclipse plugin 1.0.4.0</dt><dd><ul class="simple">
+<li><p>Added: projects can be placed more than one level below workspaces roots</p></li>
+</ul>
+</dd>
+<dt>June 21, 2013 - bake-toolkit 1.0.19</dt><dd><ul class="simple">
+<li><p>Added: support for GreenHills compiler.</p></li>
+</ul>
+</dd>
+<dt>May 29, 2013 - bake-toolkit 1.0.18</dt><dd><ul class="simple">
+<li><p>Bugfix: typo in require, which has broken bake in case sensitive file systems.</p></li>
+</ul>
+</dd>
+<dt>May 28, 2013 - bake-toolkit 1.0.17</dt><dd><ul class="simple">
+<li><p>Bugfix: error levels greater than 255 of external processes were not be recognized correctly in some cases.</p></li>
+</ul>
+</dd>
+<dt>May 16, 2013 - Eclipse plugin 1.0.2.0</dt><dd><ul class="simple">
+<li><p>Bugfix: bake did not start correctly with latest Java version installed.</p></li>
+</ul>
+</dd>
+<dt>April 22, 2013 - bake-toolkit 1.0.16</dt><dd><ul class="simple">
+<li><p>Changed: default roots of bakery are now directory of Collection.meta and it’s parent directory.</p></li>
+</ul>
+</dd>
+<dt>April 19, 2013 - bake-toolkit 1.0.15</dt><dd><ul class="simple">
+<li><p>Bugfix: bakery could not build projects with spaces in oathname.</p></li>
+</ul>
+</dd>
+<dt>April 19, 2013 - bake-toolkit 1.0.13</dt><dd><ul class="simple">
+<li><p>Bugfix: some bake options specified on bakery command line were not accepted.</p></li>
+</ul>
+</dd>
+<dt>April 17, 2013 - bake-toolkit 1.0.12</dt><dd><ul class="simple">
+<li><p>Changed: Output folders are not deleted and rebuilt if no source files are available but the archive file.</p></li>
+<li><p>Added: Option –clobber deletes .bake cache file.</p></li>
+<li><p>Added: Collections can reference collections.</p></li>
+<li><p>Added: collection names can be specified without typing “-b”</p></li>
+</ul>
+</dd>
+<dt>April 4, 2013 - bake-toolkit 1.0.11</dt><dd><ul class="simple">
+<li><p>Bugfix: Executing batch files in CommandLine on Windows were broken.</p></li>
+<li><p>April 2, 2013 - bake-toolkit 1.0.10</p></li>
+<li><p>Bugfix: options “–toolchain_names” now working as intended</p></li>
+<li><p>Bugfix: default flags for makefiles (-j) no longer ignored</p></li>
+<li><p>Changed: flags for makefiles are now defined in subtags instead in attributes to be consistent with other flag definitions</p></li>
+<li><p>Added: “..” in Files and ExcludeFiles now allowed</p></li>
+<li><p>Added: command line switch to turn off “directory magic”</p></li>
+<li><p>Added: build config can be specified without typing “-b”</p></li>
+<li><p>Cosmetic: better error output if compiler not found</p></li>
+</ul>
+</dd>
+<dt>March 22, 2013 - bake-toolkit 1.0.9</dt><dd><ul class="simple">
+<li><p>Cosmetic: Changed option –print_less to -v0 and -v to -v2. Default is -v1.</p></li>
+</ul>
+</dd>
+<dt>March 7, 2013 - bake-toolkit 1.0.8</dt><dd><ul class="simple">
+<li><p>Added: Linkerscript can be referenced from other projects</p></li>
+</ul>
+</dd>
+<dt>February 13, 2013 - bake-toolkit 1.0.7</dt><dd><ul class="simple">
+<li><p>Added: OS dependent variable $(/)</p></li>
+</ul>
+</dd>
+<dt>January 21, 2013 - bake-toolkit 1.0.6</dt><dd><ul class="simple">
+<li><p>Added: support for Visual Studio</p></li>
+</ul>
+</dd>
+<dt>January 15, 2013 - bake-toolkit 1.0.5</dt><dd><ul class="simple">
+<li><p>Changed: no indirect dependency to progressbar gem anymore</p></li>
+</ul>
+</dd>
+<dt>January 14, 2013 - bake-toolkit 1.0.4</dt><dd><ul class="simple">
+<li><p>Added: a new cache validation check.</p></li>
+</ul>
+</dd>
+<dt>January 2, 2013 - bake-toolkit 1.0.3</dt><dd><ul class="simple">
+<li><p>Bugfix: option to build a single file did not accept a filename with absolute path.</p></li>
+</ul>
+</dd>
+<dt>October 7, 2012 - bake-toolkit 1.0.2</dt><dd><ul class="simple">
+<li><p>Changed: Renamed gem from “bake” to “bake-toolkit”.</p></li>
+</ul>
+</dd>
+<dt>September 18, 2012 - bake 1.0.1</dt><dd><ul class="simple">
+<li><p>Changed: bake now based on rgen 0.6.0 and rtext 0.2.0, which are available on rubygems.</p></li>
+</ul>
+</dd>
+<dt>August 31, 2012 - bake 1.0.0</dt><dd><ul class="simple">
+<li><p>First official release</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="license.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="known_issues.html" class="btn btn-neutral float-left" title="Known Issues" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2012-2021, ESRLabs GmbH
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

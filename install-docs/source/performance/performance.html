@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Performance &mdash; bake  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Known Issues" href="../known_issues.html" />
+    <link rel="prev" title="Compilation Check" href="../tips_and_tricks/compilation_check.html" />
+    <link href="../../_static/rtd_theme_overrides.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> bake
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Start to bake</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Performance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#eclipse-vs-bake">Eclipse vs. bake</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#test-environement">Test Environement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test-results">Test Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cmake-with-unix-makefiles-vs-bake">CMake with Unix makefiles vs. bake</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Test Environement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Test Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-using-different-rubies">Performance using different rubies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Test Environement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Test Results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bake</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Performance</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/source/performance/performance.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="performance">
+<h1>Performance<a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="eclipse-vs-bake">
+<h2>Eclipse vs. bake<a class="headerlink" href="#eclipse-vs-bake" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="test-environement">
+<h3>Test Environement<a class="headerlink" href="#test-environement" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 14%" />
+<col style="width: 65%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Test-System</p></td>
+<td><p><em>CPU:</em></p>
+<p><em>RAM:</em></p>
+<p><em>OS :</em></p>
+<p><em>HDD:</em></p>
+</td>
+<td><p>Intel Xeon W3520 (4x 2.67 GHz)</p>
+<p>4 GB</p>
+<p>Windows XP</p>
+<p>Raid</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Test-Application</p></td>
+<td colspan="2"><p>~200 projects</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ruby-Version</p></td>
+<td colspan="2"><p>ruby 1.9.2</p></td>
+</tr>
+<tr class="row-even"><td><p>Tests-Runs</p></td>
+<td><p>30</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="test-results">
+<h3>Test Results<a class="headerlink" href="#test-results" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 32%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Test</p></th>
+<th class="head"><p>Eclipse 3.6.1, CDT 6</p></th>
+<th class="head"><p>bake</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Build whole workspace</p></td>
+<td><p>13:01 min</p></td>
+<td><p>7:19 min</p></td>
+</tr>
+<tr class="row-odd"><td><p>Rebuild without clean</p></td>
+<td><p>3:05 min</p></td>
+<td><p>0:50 min</p></td>
+</tr>
+<tr class="row-even"><td><p>Clean whole workspace</p></td>
+<td><p>0:41 min</p></td>
+<td><p>0:08 min</p></td>
+</tr>
+<tr class="row-odd"><td><p>Clean the cleaned workspace</p></td>
+<td><p>0:35 min</p></td>
+<td><p>0:02 min</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For the build <cite>Eclipse</cite> needs additional <cite>300 MB of RAM</cite>, in contrast <cite>bake</cite> takes up <cite>35 MB</cite> of RAM at it’s peak.</p>
+</div>
+</div>
+</div>
+<div class="section" id="cmake-with-unix-makefiles-vs-bake">
+<h2>CMake with Unix makefiles vs. bake<a class="headerlink" href="#cmake-with-unix-makefiles-vs-bake" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Test Environement<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 14%" />
+<col style="width: 65%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Test-System</p></td>
+<td><p><em>CPU:</em></p>
+<p><em>RAM:</em></p>
+<p><em>OS :</em></p>
+<p><em>HDD:</em></p>
+</td>
+<td><p>Intel Xeon W3520 (4x 2.67 GHz)</p>
+<p>4 GB</p>
+<p>Windows XP</p>
+<p>Raid</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Test-Application</p></td>
+<td colspan="2"><p>~100 projects</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ruby-Version</p></td>
+<td colspan="2"><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>Tests-Runs</p></td>
+<td><p>-</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h3>Test Results<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Build whole workspace: bake is <cite>~10%</cite> faster</p></li>
+<li><p>Build again without clean: bake is <cite>~50%</cite> faster</p></li>
+<li><p>Clean whole workspace: bake is <cite>~80%</cite> faster</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="performance-using-different-rubies">
+<h2>Performance using different rubies<a class="headerlink" href="#performance-using-different-rubies" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>Test Environement<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 14%" />
+<col style="width: 65%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Test-System</p></td>
+<td><p><em>CPU:</em></p>
+<p><em>RAM:</em></p>
+<p><em>OS :</em></p>
+<p><em>HDD:</em></p>
+</td>
+<td><p>Intel Xeon W3520 (4x 2.67 GHz)</p>
+<p>4 GB</p>
+<p>Windows XP</p>
+<p>Raid</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Test-Application</p></td>
+<td colspan="2"><p>~200 projects</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tests-Runs</p></td>
+<td><p>30</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id4">
+<h3>Test Results<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>ruby 1.8.6p398</p></th>
+<th class="head"><p>ruby 1.8.7p352</p></th>
+<th class="head"><p>ruby 1.9.2p180</p></th>
+<th class="head"><p>ruby 1.9.3p0</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Build whole workspace</p></td>
+<td><p>13:58 min</p></td>
+<td><p>8:07 min</p></td>
+<td><p>7:19 min</p></td>
+<td><p>7:28 min</p></td>
+</tr>
+<tr class="row-odd"><td><p>Build single file</p></td>
+<td><p>1,20 sec</p></td>
+<td><p>1,87 sec</p></td>
+<td><p>2,38 sec</p></td>
+<td><p>1,29 sec</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>ruby 1.8.6 uses only ONE native thread for multiple ruby threads.</p></li>
+<li><p>ruby 1.9.2 for Windows needs very long to startup for complex applications, which is fixed in 1.9.3</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../known_issues.html" class="btn btn-neutral float-right" title="Known Issues" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../tips_and_tricks/compilation_check.html" class="btn btn-neutral float-left" title="Compilation Check" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2012-2021, ESRLabs GmbH
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

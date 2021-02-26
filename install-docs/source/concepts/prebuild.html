@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Prebuild configurations for distributions &mdash; bake  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Injection and inheritance of IncludeDir and Dependency" href="inject.html" />
+    <link rel="prev" title="The link order" href="link_order.html" />
+    <link href="../../_static/rtd_theme_overrides.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> bake
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Start to bake</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="the_project_meta_file.html">The Project.meta file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="the_main_project.html">The main project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_hierarchy.html">The build hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parallel.html">Parallel build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="link_order.html">The link order</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Prebuild configurations for distributions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#typical-workflow">Typical workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inject.html">Injection and inheritance of IncludeDir and Dependency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cache.html">Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merge.html">Merge Includes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bake</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="concepts.html">Concepts</a> &raquo;</li>
+        
+      <li>Prebuild configurations for distributions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/source/concepts/prebuild.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="prebuild-configurations-for-distributions">
+<h1>Prebuild configurations for distributions<a class="headerlink" href="#prebuild-configurations-for-distributions" title="Permalink to this headline">¶</a></h1>
+<p>This is a useful feature if you want to make a part of workspace available for third party without changing the configuration.</p>
+<p>There are two major use cases:</p>
+<ul class="simple">
+<li><p>Only a few projects shall be closed source (e.g. to hide some algorithms)</p></li>
+<li><p>Only a few projects shall be open source (e.g. if a supplier has integrate a library)</p></li>
+</ul>
+<p>Both is possible with bake, but the current UI is optimized for the latter one.</p>
+<p>Add in the Project.meta the following code:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Prebuild {</span>
+<span class="go">  Except main, config: Debug</span>
+<span class="go">  Except newLib, config: Debug</span>
+<span class="go">  Except setup, config: Release</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>It is possible to specify the Prebuild tags in all configurations, not only in the main configuration. Logically, they will be merged.</p>
+<p>In the example above, no configurations will be built - except those three. The prebuild output is used directly.</p>
+<p>To reference a configuration of the same project, omit the project name, e.g.:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Except config: Base</span>
+</pre></div>
+</div>
+<p>To reference all configuration of a project, omit the config name, e.g.:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Except newLib</span>
+</pre></div>
+</div>
+<p>This prebuild behaviour must be explicitly turned on by using the following the command line argument:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">--prebuild</span>
+</pre></div>
+</div>
+<p>Note, that if objects files exist, the library will be built from existing object files (glob for *.o in appropriate build folder). If only the archive exists, the archive will be used without building it.</p>
+<div class="section" id="typical-workflow">
+<h2>Typical workflow<a class="headerlink" href="#typical-workflow" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Compiling the workspace completely without prebuild feature.</p></li>
+<li><p>Executing a distribution script which copies all relevant files to a distribution directory.
+Make sure to add all header files of prebuilt libraries if they are needed for other non-prebuilt libraries.
+You may use the dependency files in the output directory for that script.</p></li>
+<li><p>In the distribution folder use “–prebuild” when compiling the workspace.</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="inject.html" class="btn btn-neutral float-right" title="Injection and inheritance of IncludeDir and Dependency" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="link_order.html" class="btn btn-neutral float-left" title="The link order" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2012-2021, ESRLabs GmbH
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
