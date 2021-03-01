@@ -136,6 +136,7 @@ module Bake
       runOk = (ExitHelper.exit_code == 0)
     rescue Exception => e
       puts e.message
+      puts e.backtrace
     end
 
     if Bake.options.dev_features.detect { |x| x.start_with?("dep-overview=") }

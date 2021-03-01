@@ -95,7 +95,8 @@ module Bake
             end
 
             if (cache != nil)
-              cache.adapt_filenames.each do |f|
+              cache.adapt_filenames.each do |fHash|
+                f = fHash[:file]
                 fileExists = File.exists?(f)
                 puts "Cache: Checking if #{f} exists: #{fileExists}" if Bake.options.debug
                 if !fileExists

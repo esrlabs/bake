@@ -91,7 +91,7 @@ module Bake
       # check if config has to be manipulated
       @adaptConfigs.each do |cHash|
 
-        c = cHash[:configs]
+        c = cHash[:config]
 
         projSplitted    = c.project.split(";")
         confSplitted    = c.name.split(";")
@@ -254,8 +254,8 @@ module Bake
           AdaptConfig.checkSyntax(adaptConfigs, filename, true)
           adaptConfigs.each do |ac|
             ac.project = proj.name if ac.project == "__THIS__" || ac.project == ""
+            @adaptConfigs << {:config => ac, :projs => []}
           end
-          @adaptConfigs << {:configs => adaptConfigs, :projs => nil}
         end
       end
 

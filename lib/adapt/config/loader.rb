@@ -151,7 +151,7 @@ module Bake
       configs = []
       @@filenames.each_with_index do |f,i|
         loadProjMeta(f[:file], i+1).each do |c|
-          configs << {:configs => c, :projs => f[:projs]}
+          configs << {:config => c, :projs => f[:projs]}
         end
       end
 
