@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Syntax &mdash; bake  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="The Syntax of the Project.meta file" href="project_meta_syntax.html" />
+    <link rel="prev" title="Merge Includes" href="../concepts/merge.html" />
+    <link href="../../_static/rtd_theme_overrides.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> bake
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Start to bake</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="project_meta_syntax.html">The Syntax of the Project.meta file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html">Variables in Project.meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="derive_configs.html">Derive configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html">Adapt configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_adjustment.html">Auto-adjustment of paths to existing projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prefix.html">Prefix compiler, archiver and linker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment.html">Compiler settings via environment variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bake</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Syntax</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/source/syntax/syntax.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="syntax">
+<h1>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="project_meta_syntax.html">The Syntax of the Project.meta file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="project_meta_syntax.html#config-types">Config types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_meta_syntax.html#filter">Filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_meta_syntax.html#notes">Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_meta_syntax.html#syntax">Syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="variable_substitutions.html">Variables in Project.meta</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#using-variables">Using variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#user-defined-variables">User defined variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#predefined-bake-environment-variables">Predefined bake environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#nested-variables">Nested variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#complex-variables">Complex variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#mandatory-variables">Mandatory variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variable_substitutions.html#notes-and-warnings">Notes and warnings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="derive_configs.html">Derive configs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="derive_configs.html#deriving-a-config">Deriving a config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="derive_configs.html#inheritance-implications">Inheritance implications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="derive_configs.html#multiple-inheritance">Multiple inheritance</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="adapt_configs.html">Adapt configs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#from-command-line">From command line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#from-project-meta">From Project.meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#conditions-and-effectiveness">Conditions and effectiveness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#config-type">Config type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#occurrences">Occurrences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#apply-order">Apply order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#types">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#wildcards">Wildcards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#lists">Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adapt_configs.html#command-line-filter">Command line filter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="auto_adjustment.html">Auto-adjustment of paths to existing projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prefix.html">Prefix compiler, archiver and linker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="prefix.html#why">Why</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prefix.html#how-to">How to</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Compiler settings via environment variables</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="project_meta_syntax.html" class="btn btn-neutral float-right" title="The Syntax of the Project.meta file" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../concepts/merge.html" class="btn btn-neutral float-left" title="Merge Includes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2012-2021, ESRLabs GmbH
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

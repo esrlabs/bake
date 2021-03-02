@@ -1,239 +1,311 @@
-<!DOCTYPE html>
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bake 2.67.0 &#8212; bake documentation</title>
-    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>bake 2.68.0 &mdash; bake  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
     <link rel="shortcut icon" href="_static/logo_tiny_32.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Why you should use bake" href="why_bake/why_bake.html" />
-<meta charset='utf-8'>
-<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
-<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
-<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+    <link rel="next" title="Why you should use bake" href="source/why_bake/why_bake.html" />
+    <link href="_static/rtd_theme_overrides.css" rel="stylesheet" type="text/css">
 
-  </head><body>
+</head>
 
-  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#"><span><img src="_static/logo_tiny_48.png"></span>
-           </a>
-        <span class="navbar-text navbar-version pull-left"><b></b></span>
-      </div>
+<body class="wy-body-for-nav">
 
-        <div class="collapse navbar-collapse nav-collapse">
-          <ul class="nav navbar-nav">
-            
-            
-              <li class="dropdown globaltoc-container">
-  <a role="button"
-     id="dLabelGlobalToc"
-     data-toggle="dropdown"
-     data-target="#"
-     href="#">Section <b class="caret"></b></a>
-  <ul class="dropdown-menu globaltoc"
-      role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul>
-<li class="toctree-l1"><a class="reference internal" href="why_bake/why_bake.html">Why you should use bake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install/install_bake.html">Install bake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart/quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="concepts/concepts.html">Concepts</a></li>
-<li class="toctree-l1"><a class="reference internal" href="syntax/syntax.html">Syntax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commandline/commandline.html">Commandline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ide/ide_integrations.html">IDE Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="performance/performance.html">Performance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="internal/internal.html">Internal developing notes</a></li>
-</ul>
-</ul>
-</li>
-              
-                <li class="dropdown">
-  <a role="button"
-     id="dLabelLocalToc"
-     data-toggle="dropdown"
-     data-target="#"
-     href="#">SubSections <b class="caret"></b></a>
-  <ul class="dropdown-menu localtoc"
-      role="menu"
-      aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">bake 2.67.0</a><ul>
-</ul>
-</li>
-</ul>
-</ul>
-</li>
-              
-            
-            
-            
-            
-            
-          </ul>
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home" alt="Documentation Home"> bake
+          
+
+          
+          </a>
 
           
             
-<form class="navbar-form navbar-right" action="search.html" method="get">
- <div class="form-group">
-  <input type="text" name="q" class="form-control" placeholder="Search" />
- </div>
-  <input type="hidden" name="check_keywords" value="yes" />
-  <input type="hidden" name="area" value="default" />
-</form>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
           
         </div>
-    </div>
-  </div>
 
-<div class="container">
-  <div class="row">
-    <div class="body col-md-12 content" role="main">
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Start to bake</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/internal/internal.html">Internal developing notes</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
       
-  <div class="section" id="bake-2-67-0">
-<h1>bake 2.67.0<a class="headerlink" href="#bake-2-67-0" title="Permalink to this headline">¶</a></h1>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">bake</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>bake 2.68.0</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bake-2-68-0">
+<h1>bake 2.68.0<a class="headerlink" href="#bake-2-68-0" title="Permalink to this headline">¶</a></h1>
 <p>bake, building software <strong>fast</strong> and <strong>easy</strong>!</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p></p></th>
-<th class="head"><p></p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><img alt="_images/bake_tagcloud.png" src="_images/bake_tagcloud.png" />
-</td>
-<td><p><strong>Start to bake</strong></p>
+<a class="reference internal image-reference" href="_images/bake_tagcloud.png"><img alt="_images/bake_tagcloud.png" src="_images/bake_tagcloud.png" style="width: 300px;" /></a>
 <div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Start to bake</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="why_bake/why_bake.html">Why you should use bake</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="why_bake/why_bake.html#bake-design-goals">bake design goals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/why_bake/why_bake.html">Why you should use bake</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/why_bake/why_bake.html#bake-design-goals">bake design goals</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="install/install_bake.html">Install bake</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="install/install_bake.html#how-to-install-bake">How to install bake</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install/install_bake.html#known-issues">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/install/install_bake.html">Install bake</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/install/install_bake.html#how-to-install-bake">How to install bake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/install/install_bake.html#known-issues">Known Issues</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart/quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="concepts/concepts.html">Concepts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="concepts/the_project_meta_file.html">The Project.meta file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="concepts/the_main_project.html">The main project</a></li>
-<li class="toctree-l2"><a class="reference internal" href="concepts/build_hierarchy.html">The build hierarchy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="concepts/parallel.html">Parallel build</a></li>
-<li class="toctree-l2"><a class="reference internal" href="concepts/link_order.html">The link order</a></li>
-<li class="toctree-l2"><a class="reference internal" href="concepts/prebuild.html">Prebuild configurations for distributions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="concepts/inject.html">Injection and inheritance of IncludeDir and Dependency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="concepts/cache.html">Caching</a></li>
-<li class="toctree-l2"><a class="reference internal" href="concepts/merge.html">Merge Includes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/concepts/concepts.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/concepts/the_project_meta_file.html">The Project.meta file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/concepts/the_main_project.html">The main project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/concepts/build_hierarchy.html">The build hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/concepts/parallel.html">Parallel build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/concepts/link_order.html">The link order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/concepts/prebuild.html">Prebuild configurations for distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/concepts/inject.html">Injection and inheritance of IncludeDir and Dependency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/concepts/cache.html">Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/concepts/merge.html">Merge Includes</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="syntax/syntax.html">Syntax</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="syntax/project_meta_syntax.html">The Syntax of the Project.meta file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="syntax/variable_substitutions.html">Variables in Project.meta</a></li>
-<li class="toctree-l2"><a class="reference internal" href="syntax/derive_configs.html">Derive configs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="syntax/adapt_configs.html">Adapt configs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="syntax/auto_adjustment.html">Auto-adjustment of paths to existing projects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="syntax/prefix.html">Prefix compiler, archiver and linker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="syntax/environment.html">Compiler settings via environment variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/syntax/syntax.html">Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/syntax/project_meta_syntax.html">The Syntax of the Project.meta file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/syntax/variable_substitutions.html">Variables in Project.meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/syntax/derive_configs.html">Derive configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/syntax/adapt_configs.html">Adapt configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/syntax/auto_adjustment.html">Auto-adjustment of paths to existing projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/syntax/prefix.html">Prefix compiler, archiver and linker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/syntax/environment.html">Compiler settings via environment variables</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="commandline/commandline.html">Commandline</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="commandline/commandline.html#how-to-get-help">How to get help</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commandline/commandline.html#the-most-important-options">The most important options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commandline/commandline.html#examples">Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="commandline/commandline.html#roots-file-roots-bake">Roots file (roots.bake)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/commandline/commandline.html">Commandline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/commandline/commandline.html#how-to-get-help">How to get help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/commandline/commandline.html#the-most-important-options">The most important options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/commandline/commandline.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/commandline/commandline.html#roots-file-roots-bake">Roots file (roots.bake)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ide/ide_integrations.html">IDE Support</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ide/eclipse/eclipse.html">Eclipse</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ide/vsc/vsc.html">Visual Studio Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ide/ide_integrations.html#basic-integrations">Basic integrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/ide/ide_integrations.html">IDE Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/ide/eclipse/eclipse.html">Eclipse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/ide/vsc/vsc.html">Visual Studio Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/ide/ide_integrations.html#basic-integrations">Basic integrations</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks/tips_and_tricks.html">Additional features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/the_bakery.html">The Bakery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/how_to_use_bake_with_cygwin.html">How to use bake with cygwin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/the_clang.html">Clang Analyze</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/dot.html">Generating dot graphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/qac.html">QACPP for MISRA and cyclomatic complexity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/bakeclean.html">bakeclean</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/cuda.html">Cuda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/compilation_db.html">Compilation Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/compilation_check.html">Compilation Check</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/compilation_check.html#usage">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/compilation_check.html#adapt">Adapt</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/compilation_check.html#build">Build</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/tips_and_tricks.html#unnecessary-includes">Unnecessary includes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks/tips_and_tricks.html#symlinks-and-junctions">Symlinks and junctions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/tips_and_tricks/tips_and_tricks.html">Additional features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/the_bakery.html">The Bakery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/how_to_use_bake_with_cygwin.html">How to use bake with cygwin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/the_clang.html">Clang Analyze</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/dot.html">Generating dot graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/qac.html">QACPP for MISRA and cyclomatic complexity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/bakeclean.html">bakeclean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/cuda.html">Cuda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/compilation_db.html">Compilation Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/compilation_check.html">Compilation Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/compilation_check.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/compilation_check.html#adapt">Adapt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/compilation_check.html#build">Build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/tips_and_tricks.html#unnecessary-includes">Unnecessary includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/tips_and_tricks/tips_and_tricks.html#symlinks-and-junctions">Symlinks and junctions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="performance/performance.html">Performance</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="performance/performance.html#eclipse-vs-bake">Eclipse vs. bake</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance/performance.html#cmake-with-unix-makefiles-vs-bake">CMake with Unix makefiles vs. bake</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance/performance.html#performance-using-different-rubies">Performance using different rubies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/performance/performance.html">Performance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/performance/performance.html#eclipse-vs-bake">Eclipse vs. bake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/performance/performance.html#cmake-with-unix-makefiles-vs-bake">CMake with Unix makefiles vs. bake</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/performance/performance.html#performance-using-different-rubies">Performance using different rubies</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/license.html">License</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="internal/internal.html">Internal developing notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/internal/internal.html">Internal developing notes</a></li>
 </ul>
 </div>
-</td>
-</tr>
-</tbody>
-</table>
 </div>
 
 
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="source/why_bake/why_bake.html" class="btn btn-neutral float-right" title="Why you should use bake" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
     </div>
-      
-  </div>
-</div>
-<footer class="footer">
-  <div class="container">
-    <p class="pull-right">
-      <a href="#">Back to top</a>
-      
-    </p>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
     <p>
-        &copy; Copyright 2012-2018, ESRLabs AG.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.1.<br/>
+        
+        &copy; Copyright 2012-2021, ESRLabs GmbH
+
     </p>
   </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
 </footer>
-  </body>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
 </html>

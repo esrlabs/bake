@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Project.meta file &mdash; bake  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="The main project" href="the_main_project.html" />
+    <link rel="prev" title="Concepts" href="concepts.html" />
+    <link href="../../_static/rtd_theme_overrides.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> bake
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Start to bake</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="concepts.html">Concepts</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The Project.meta file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="the_main_project.html">The main project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_hierarchy.html">The build hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parallel.html">Parallel build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="link_order.html">The link order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prebuild.html">Prebuild configurations for distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inject.html">Injection and inheritance of IncludeDir and Dependency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cache.html">Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merge.html">Merge Includes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bake</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="concepts.html">Concepts</a> &raquo;</li>
+        
+      <li>The Project.meta file</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/source/concepts/the_project_meta_file.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-project-meta-file">
+<h1>The Project.meta file<a class="headerlink" href="#the-project-meta-file" title="Permalink to this headline">¶</a></h1>
+<p>The <cite>Project.meta</cite> file is bake’s configuration file.</p>
+<ul class="simple">
+<li><p>Every project has a Project.meta file in the project root directory.</p></li>
+<li><p>A Project.meta file contains one or more build configurations.</p></li>
+<li><p>A build configuration consists of toolchain settings, files to build, custom steps, etc.</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 51%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Project.meta file of Main project</p></th>
+<th class="head"><p>Project.meta file of Sub project</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Project</span> <span class="p">{</span>
+    <span class="n">ExecutableConfig</span> <span class="n">Debug</span> <span class="p">{</span>
+        <span class="n">Dependency</span> <span class="n">Sub</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Debug</span>
+        <span class="n">Files</span> <span class="s2">&quot;**/*.cpp&quot;</span>
+        <span class="n">IncludeDir</span> <span class="s2">&quot;include&quot;</span>
+        <span class="n">DefaultToolchain</span> <span class="n">GCC</span> <span class="p">{</span>
+            <span class="n">Compiler</span> <span class="n">CPP</span> <span class="p">{</span>
+                <span class="n">Flags</span> <span class="s2">&quot;-Wall&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">PostSteps</span> <span class="p">{</span>
+            <span class="n">CommandLine</span> <span class="s2">&quot;echo $(ArtifactName) built.&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Project</span> <span class="p">{</span>
+    <span class="n">LibraryConfig</span> <span class="n">Debug</span> <span class="p">{</span>
+        <span class="n">Files</span> <span class="s2">&quot;**/*.cpp&quot;</span>
+        <span class="n">IncludeDir</span> <span class="s2">&quot;include&quot;</span>
+        <span class="n">IncludeDir</span> <span class="s2">&quot;Main/include&quot;</span>
+        <span class="n">ExternalLibrarySearchPath</span> <span class="s2">&quot;lib&quot;</span>
+        <span class="n">ExternalLibrary</span> <span class="s2">&quot;a&quot;</span>
+        <span class="n">ExternalLibrary</span> <span class="s2">&quot;b&quot;</span>
+        <span class="n">Toolchain</span> <span class="p">{</span>
+            <span class="n">Compiler</span> <span class="n">CPP</span> <span class="p">{</span>
+                <span class="n">Flags</span> <span class="n">add</span><span class="p">:</span> <span class="s2">&quot;-g3&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s assume that Main and Sub are located in the same workspace root.
+To build the executable, bake can be called from the Main directory.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~/my_project$</span> bake -b Debug
+</pre></div>
+</div>
+</div></blockquote>
+<p>What happens now?</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p>Reading Project.meta of Main</p></li>
+<li><p>Reading Project.meta of dependencies (Sub)</p></li>
+<li><dl>
+<dt>Compiling sources of Sub, e.g.:</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> g++ -c -Wall -g3 -Iinclude -I../Main/include -o Debug_Main/src/xy.o src/xy.cpp
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Wall is taken from the DefaultToolchain and -g3 is added by the toolchain of the Sub project.</p></li>
+<li><p>The include path to Main is automatically adjusted.</p></li>
+<li><p>The order of includes is the same as in Project.meta.</p></li>
+<li><p>g++, -c and -I are used, because GCC was specified in the DefaultToolchain.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Archiving the library, e.g.:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> ar -rc Debug_Main/libSub.a Debug_Main/src/xy.o
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Compiling sources of Main, e.g.:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> g++ -c -Wall -Iinclude -o Debug/src/main.o src/main.cpp
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Linking executable, e.g.:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> g++ -o Debug/Main.exe Debug/src/main.o ../Sub/Debug_Main/libSub.a -L../Sub/lib -la -lb
+</pre></div>
+</div>
+<p>The library search paths and libraries are added in the specified order.</p>
+</div></blockquote>
+</li>
+<li><p>Executing the post step</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> <span class="nb">echo</span> Main.exe built.
+</pre></div>
+</div>
+<p>The variable was automatically substituted.</p>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="the_main_project.html" class="btn btn-neutral float-right" title="The main project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="concepts.html" class="btn btn-neutral float-left" title="Concepts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2012-2021, ESRLabs GmbH
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

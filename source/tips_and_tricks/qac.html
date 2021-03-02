@@ -1,0 +1,426 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>QACPP for MISRA and cyclomatic complexity &mdash; bake  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="bakeclean" href="bakeclean.html" />
+    <link rel="prev" title="Generating dot graphs" href="dot.html" />
+    <link href="../../_static/rtd_theme_overrides.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> bake
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Start to bake</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ide/ide_integrations.html">IDE Support</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tips_and_tricks.html">Additional features</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="the_bakery.html">The Bakery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to_use_bake_with_cygwin.html">How to use bake with cygwin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="the_clang.html">Clang Analyze</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dot.html">Generating dot graphs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">QACPP for MISRA and cyclomatic complexity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#without-bakeqac">Without bakeqac</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#with-bakeqac">With bakeqac</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-admin">Step 1: admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-analyze">Step 2: analyze</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-view">Step 3: view</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-report">Step 4: report</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-5-mdr">Step 5: mdr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-options">Additional options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bakeclean.html">bakeclean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda.html">Cuda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compilation_db.html">Compilation Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compilation_check.html">Compilation Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compilation_check.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compilation_check.html#adapt">Adapt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compilation_check.html#build">Build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks.html#unnecessary-includes">Unnecessary includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tips_and_tricks.html#symlinks-and-junctions">Symlinks and junctions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">bake</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="tips_and_tricks.html">Additional features</a> &raquo;</li>
+        
+      <li>QACPP for MISRA and cyclomatic complexity</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/source/tips_and_tricks/qac.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="qacpp-for-misra-and-cyclomatic-complexity">
+<h1>QACPP for MISRA and cyclomatic complexity<a class="headerlink" href="#qacpp-for-misra-and-cyclomatic-complexity" title="Permalink to this headline">¶</a></h1>
+<p>bakeqac is a convenience wrapper for QACPP with some nice features.</p>
+<div class="section" id="without-bakeqac">
+<h2>Without bakeqac<a class="headerlink" href="#without-bakeqac" title="Permalink to this headline">¶</a></h2>
+<p>QACPP can be called directly from command line:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">qacli admin --qaf-project-config --qaf-project qacdata --cct &lt;cct&gt; --rcf &lt;rcf&gt; --acf &lt;acf&gt;</span>
+<span class="go">qacli analyze -P qacdata -b &lt;bake call&gt;</span>
+<span class="go">qacli view -P qacdata -m STDOUT</span>
+<span class="go">qacli report -P qacdata -t SUR # or -t RCR, which generates reports of MISRA warnings</span>
+<span class="go">qacli report -P qacdata -t MDR # generates report of cyclomatic complexity</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The first command creates the qac project database.</p></li>
+<li><p>The second command builds and analyzes the files.</p></li>
+<li><p>The third command prints out the result unfiltered.</p></li>
+<li><p>The forth and fifth commands generate reports. You may replace the python scripts in PRQA to adapt the output.</p></li>
+</ul>
+<p>Please note, that “view” is not necessary to generate the reports.</p>
+</div>
+<div class="section" id="with-bakeqac">
+<h2>With bakeqac<a class="headerlink" href="#with-bakeqac" title="Permalink to this headline">¶</a></h2>
+<p>Instead of writing</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bake &lt;options&gt;</span>
+</pre></div>
+</div>
+<p>for regular build, simply write:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt;</span>
+</pre></div>
+</div>
+<p>bakeqac will automatically do the first three steps mentioned above. If one of these steps fails, the consecutive steps will be dismissed.</p>
+<p>You can also choose certain steps (can be combined with “,”):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacstep admin,analyze,view,report,mdr</span>
+<span class="go">bakeqac &lt;options&gt; --qacstep admin</span>
+<span class="go">etc.</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<a class="reference internal image-reference" href="../../_images/misra.png"><img alt="../../_images/misra.png" src="../../_images/misra.png" style="width: 1942.0px; height: 944.0px;" /></a>
+</div>
+<div class="section" id="step-1-admin">
+<h2>Step 1: admin<a class="headerlink" href="#step-1-admin" title="Permalink to this headline">¶</a></h2>
+<p>You have to set the environment variable QAC_HOME, e.g. to <em>c:\tools\prqa\PRQA-Framework-2.1.0</em>.
+MCPP has to installed next to <em>PRQA-Framework-2.x.x</em> (in this case MCPP_HOME is set automatically to this directory).
+Alternatively set the MCPP_HOME variable explicitly when MCPP is installed somewhere else.</p>
+<p>If not specified otherwise, cct, rcf and acf will be automatically chosen.</p>
+<ul>
+<li><p>Configuration compiler template (cct): Only GCC is supported. bakeqac tries to get the platform and the GCC version and calculates the path to the right cct file. To overwrite this behaviour, specify one or more ccts:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --cct &lt;first&gt; --cct &lt;second&gt;</span>
+</pre></div>
+</div>
+<p>Alternatively, you can add</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --c++11</span>
+<span class="go">bakeqac &lt;options&gt; --c++14</span>
+</pre></div>
+</div>
+<p>to enforce bakeqac choosing the C++11 or C++14 toolchain.</p>
+<p>If –cct is not used, bakeqac uses a built-in cct file as mentioned above. Additionally, it searched for a file named qac.cct up to root and appends the content to the original cct file.
+This may be used to add additional configuration parameters which are compiler independent, e.q. “-n 1234” suppresses warning 1234.</p>
+</li>
+<li><p>Rule configuration file (rcf): Can be specified with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --rcf &lt;rcf&gt;</span>
+</pre></div>
+</div>
+<p>If not specified, bakeqac uses $(MCPP_HOME)/config/rcf/mcpp-1_5_1-en_US.rcf.</p>
+</li>
+<li><p>Analysis configuration file (acf): Can be specified with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --acf &lt;acf&gt;</span>
+</pre></div>
+</div>
+<p>If not specified, $(QAC_HOME)/config/acf/default.acf will be used.</p>
+</li>
+<li><p>You can also specify the qacdata folder, default is <em>.qacdata</em>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacdata anotherFolder</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="step-2-analyze">
+<h2>Step 2: analyze<a class="headerlink" href="#step-2-analyze" title="Permalink to this headline">¶</a></h2>
+<p>This is the main step. Use exactly the same options for bakeqac as for bake. A few things have to be mentioned:</p>
+<ul class="simple">
+<li><p><em>–compile-only</em> will be automatically added</p></li>
+<li><p><em>–rebuild</em> will be automatically added</p></li>
+</ul>
+<p>The output will be filtered per default (warnings) . To get unfiltered output, write:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacnomsgfilter</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-3-view">
+<h2>Step 3: view<a class="headerlink" href="#step-3-view" title="Permalink to this headline">¶</a></h2>
+<p>Results are also filtered in this step if not specified otherwise:</p>
+<ul class="simple">
+<li><p>Only results from compiled bake projects will be shown (which does not apply to e.g. compiler libraries). To narrow the results, use the <em>-p</em> option.</p></li>
+<li><p>Files from subfolders test and mock will be filtered out.</p></li>
+<li><p>Files from projects gtest and gmock will be filtered out.</p></li>
+</ul>
+<p>To shall ALL files:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacnofilefilter</span>
+</pre></div>
+</div>
+<p>bakeqac slightly reformats the output (originally the violated MISRA rule numbers are printed out incomplete). To switch back to raw format, use:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacrawformat</span>
+</pre></div>
+</div>
+<p>To get additional links to the appropriate documentation pages use:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacdoc</span>
+</pre></div>
+</div>
+<p>Colored output is also supported similar to bake:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; -a &lt;color_scheme&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-4-report">
+<h2>Step 4: report<a class="headerlink" href="#step-4-report" title="Permalink to this headline">¶</a></h2>
+<p>Reports about the warnings and suppressed warnings are be generated.</p>
+</div>
+<div class="section" id="step-5-mdr">
+<h2>Step 5: mdr<a class="headerlink" href="#step-5-mdr" title="Permalink to this headline">¶</a></h2>
+<p>Reports about cyclomatic complexity of functions.</p>
+<p>Per default, every function with cyclomatic complexity &gt; 10 produces a warning. To suppress this warning, the code can be annotated:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">// METRIC STCYC 20</span>
+<span class="go">int func()</span>
+<span class="go">{</span>
+<span class="go">    // complex function</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>In the example above the complexity can be up to 20 without a warning.
+The suppression syntax is “METRIC STCYC &lt;accepted complexity&gt;” and must be placed above the function.</p>
+<p>STCYC is the name of this metric in QAC.</p>
+<p>In case of a warning or if the accepted complexity is changed, an additional info is printed out, see example output below:</p>
+<img alt="../../_images/cyclo.png" src="../../_images/cyclo.png" />
+</div>
+<div class="section" id="additional-options">
+<h2>Additional options<a class="headerlink" href="#additional-options" title="Permalink to this headline">¶</a></h2>
+<p>QACPP needs a license. If floating licenses are not available, bakeqac can retry to checkout them:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacretry &lt;seconds&gt;</span>
+</pre></div>
+</div>
+<p>Steps “analyze” and “view” are retried until timeout is reached.</p>
+</div>
+<div class="section" id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+<p>If “&lt;mainConfigName&gt;Qac” is found in main project, it will be used instead of “&lt;mainConfigName&gt;. This is useful if the unit test has to be built different to MISRA.</p>
+<p>bakeqac can suppress unsuppressible errors with “PRQA S &lt;num&gt;” syntax in the same line. Currently the affected error numbers are:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">[&quot;0019&quot;, &quot;0020&quot;, &quot;0031&quot;, &quot;0034&quot;, &quot;0035&quot;, &quot;0036&quot;, &quot;0061&quot;, &quot;0098&quot;, &quot;0099&quot;, &quot;0224&quot;,</span>
+<span class="go"> &quot;0622&quot;, &quot;0800&quot;, &quot;0801&quot;, &quot;0802&quot;, &quot;0996&quot;, &quot;1950&quot;, &quot;1951&quot;, &quot;1962&quot;, &quot;1963&quot;, &quot;1964&quot;,</span>
+<span class="go"> &quot;1965&quot;, &quot;1966&quot;, &quot;1967&quot;, &quot;1968&quot;, &quot;1969&quot;, &quot;1970&quot;, &quot;1971&quot;, &quot;1972&quot;, &quot;1973&quot;, &quot;1974&quot;,</span>
+<span class="go"> &quot;1975&quot;, &quot;1976&quot;, &quot;1977&quot;, &quot;1978&quot;, &quot;1979&quot;, &quot;1980&quot;, &quot;1982&quot;, &quot;1984&quot;, &quot;1985&quot;, &quot;1986&quot;,</span>
+<span class="go"> &quot;1987&quot;, &quot;1989&quot;, &quot;1990&quot;, &quot;1991&quot;, &quot;3104&quot;, &quot;0014&quot;, &quot;0015&quot;, &quot;0016&quot;, &quot;0021&quot;, &quot;0022&quot;,</span>
+<span class="go"> &quot;0028&quot;, &quot;0032&quot;, &quot;0039&quot;, &quot;0043&quot;, &quot;0045&quot;, &quot;0046&quot;, &quot;0050&quot;, &quot;0052&quot;, &quot;0053&quot;, &quot;0054&quot;,</span>
+<span class="go"> &quot;0058&quot;, &quot;0059&quot;, &quot;0079&quot;, &quot;0083&quot;, &quot;0101&quot;, &quot;0133&quot;, &quot;0150&quot;, &quot;0165&quot;, &quot;0170&quot;, &quot;0174&quot;,</span>
+<span class="go"> &quot;0175&quot;, &quot;0177&quot;, &quot;0200&quot;, &quot;0201&quot;, &quot;0208&quot;, &quot;0217&quot;, &quot;0231&quot;, &quot;0246&quot;, &quot;0248&quot;, &quot;0251&quot;,</span>
+<span class="go"> &quot;0253&quot;, &quot;0255&quot;, &quot;0257&quot;, &quot;0271&quot;, &quot;0276&quot;, &quot;0278&quot;, &quot;0279&quot;, &quot;0282&quot;, &quot;0284&quot;, &quot;0285&quot;,</span>
+<span class="go"> &quot;0286&quot;, &quot;0287&quot;, &quot;0307&quot;, &quot;0313&quot;, &quot;0320&quot;, &quot;0321&quot;, &quot;0322&quot;, &quot;0323&quot;, &quot;0333&quot;, &quot;0334&quot;,</span>
+<span class="go"> &quot;0335&quot;, &quot;0336&quot;, &quot;0339&quot;, &quot;0400&quot;, &quot;0401&quot;, &quot;0403&quot;, &quot;0404&quot;, &quot;0405&quot;, &quot;0415&quot;, &quot;0424&quot;,</span>
+<span class="go"> &quot;0429&quot;, &quot;0439&quot;, &quot;0440&quot;, &quot;0441&quot;, &quot;0445&quot;, &quot;0448&quot;, &quot;0450&quot;, &quot;0453&quot;, &quot;0454&quot;, &quot;0455&quot;,</span>
+<span class="go"> &quot;0456&quot;, &quot;0457&quot;, &quot;0458&quot;, &quot;0459&quot;, &quot;0469&quot;, &quot;0481&quot;, &quot;0482&quot;, &quot;0483&quot;, &quot;0484&quot;, &quot;0491&quot;,</span>
+<span class="go"> &quot;0492&quot;, &quot;0493&quot;, &quot;0494&quot;, &quot;0496&quot;, &quot;0497&quot;, &quot;0498&quot;, &quot;0600&quot;, &quot;0601&quot;, &quot;0602&quot;, &quot;0607&quot;,</span>
+<span class="go"> &quot;0608&quot;, &quot;0611&quot;, &quot;0616&quot;, &quot;0617&quot;, &quot;0619&quot;, &quot;0620&quot;, &quot;0621&quot;, &quot;0627&quot;, &quot;0631&quot;, &quot;0632&quot;]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="bakeclean.html" class="btn btn-neutral float-right" title="bakeclean" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dot.html" class="btn btn-neutral float-left" title="Generating dot graphs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2012-2021, ESRLabs GmbH
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

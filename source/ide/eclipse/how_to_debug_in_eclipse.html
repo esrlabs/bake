@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to debug in Eclipse &mdash; bake  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/logo_tiny_32.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Visual Studio Code" href="../vsc/vsc.html" />
+    <link rel="prev" title="How to create a new project in Eclipse" href="how_to_create_a_new_project_in_eclipse.html" />
+    <link href="../../../_static/rtd_theme_overrides.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> bake
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Start to bake</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../why_bake/why_bake.html">Why you should use bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/install_bake.html">Install bake</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart/quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concepts/concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../syntax/syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commandline/commandline.html">Commandline</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ide_integrations.html">IDE Support</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="eclipse.html">Eclipse</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="how_to_install_eclipse_plugin.html">How to install bake Eclipse integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_to_use_bake_in_eclipse.html">How to use bake in Eclipse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_to_convert_existing_cdt_workspace.html">How to convert existing CDT workspaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_to_create_a_workspace_in_eclipse.html">How to create a workspace in Eclipse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="how_to_create_a_new_project_in_eclipse.html">How to create a new project in Eclipse</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">How to debug in Eclipse</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#compile-with-debug-information">1. Compile with debug information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-debug-configuration-for-a-c-application">2. Create a debug configuration for a C++ application</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-path-mapping">3. Add path mapping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#now-you-can-debug-your-code">4. Now you can debug your code</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="eclipse.html#syntax-highlighting">Syntax highlighting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eclipse.html#key-bindings">Key bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../vsc/vsc.html">Visual Studio Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ide_integrations.html#basic-integrations">Basic integrations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tips_and_tricks/tips_and_tricks.html">Additional features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../performance/performance.html">Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../known_issues.html">Known Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../internal/internal.html">Internal developing notes</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">bake</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../ide_integrations.html">IDE Support</a> &raquo;</li>
+        
+          <li><a href="eclipse.html">Eclipse</a> &raquo;</li>
+        
+      <li>How to debug in Eclipse</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/source/ide/eclipse/how_to_debug_in_eclipse.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-debug-in-eclipse">
+<h1>How to debug in Eclipse<a class="headerlink" href="#how-to-debug-in-eclipse" title="Permalink to this headline">¶</a></h1>
+<p>The following example is made with Eclipse Mars, <strong>Cygwin</strong>, <strong>gcc</strong> and <strong>gdb</strong>. However, the same applies to all other compilers and
+environments, too.</p>
+<div class="section" id="compile-with-debug-information">
+<h2>1. Compile with debug information<a class="headerlink" href="#compile-with-debug-information" title="Permalink to this headline">¶</a></h2>
+<p>Don’t forget this. Otherwise sources symbols cannot not mapped.</p>
+<img alt="../../../_images/debug_flag.png" src="../../../_images/debug_flag.png" />
+</div>
+<div class="section" id="create-a-debug-configuration-for-a-c-application">
+<h2>2. Create a debug configuration for a C++ application<a class="headerlink" href="#create-a-debug-configuration-for-a-c-application" title="Permalink to this headline">¶</a></h2>
+<p>This options can be found under Run-&gt;Debug Configurations… or click on the arrow next to the green spider.</p>
+<img alt="../../../_images/debug_app.png" src="../../../_images/debug_app.png" />
+<div class="line-block">
+<div class="line">Choose a suitable name and the executable.</div>
+</div>
+</div>
+<div class="section" id="add-path-mapping">
+<h2>3. Add path mapping<a class="headerlink" href="#add-path-mapping" title="Permalink to this headline">¶</a></h2>
+<img alt="../../../_images/debug_path.png" src="../../../_images/debug_path.png" />
+<img alt="../../../_images/debug_map.png" src="../../../_images/debug_map.png" />
+<div class="line-block">
+<div class="line">Note that this must be done if the compiler uses different paths than Eclipse. In this example I have used gcc under Cygwin,</div>
+<div class="line">which typically uses “/cygdrive/c” for “c:\”. I always mount “c:\” to “/c”.</div>
+<div class="line"><br /></div>
+<div class="line">Also note, that my Eclipse changes “/c” to “\c” in the dialog box automatically, but it works nevertheless.</div>
+</div>
+</div>
+<div class="section" id="now-you-can-debug-your-code">
+<h2>4. Now you can debug your code<a class="headerlink" href="#now-you-can-debug-your-code" title="Permalink to this headline">¶</a></h2>
+<img alt="../../../_images/debug_debug.png" src="../../../_images/debug_debug.png" />
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../vsc/vsc.html" class="btn btn-neutral float-right" title="Visual Studio Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="how_to_create_a_new_project_in_eclipse.html" class="btn btn-neutral float-left" title="How to create a new project in Eclipse" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2012-2021, ESRLabs GmbH
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
