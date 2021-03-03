@@ -2,9 +2,9 @@ Changelog
 =========
 
 March 2, 2021 - bake-toolkit 2.68.0
-    * Enhance **--abs-paths** so it affects not only error messages but also sources, objects, includes, library and executable names.
-    * Add project filter to adapt-command-line-option, e.g. "--adapt coverage[lib1,lib2,safety*]"
-    * Add array syntax for *CommandLine* to wrap very long lines.
+    * Enhance ``--abs-paths`` so it affects not only error messages but also sources, objects, includes, library and executable names.
+    * Add project filter to adapt-command-line-option, e.g. ``--adapt coverage[lib1,lib2,safety*]``
+    * Add array syntax for *CommandLine* in Project.meta to wrap very long lines.
     * Switch theme of documentation from Bootstrap to ReadTheDocs.
 
 January 7, 2021 - bake-toolkit 2.67.0
