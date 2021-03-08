@@ -1,6 +1,9 @@
 Changelog
 =========
 
+March 8, 2021 - bake-toolkit 2.68.1
+    * Add support/workaround for latest ARM GCC which writes ``<drive letter>\:\some\folder`` into dependency files on Windows systems (note the additional ``\`` sign).
+
 March 2, 2021 - bake-toolkit 2.68.0
     * Enhance ``--abs-paths`` so it affects not only error messages but also sources, objects, includes, library and executable names.
     * Add project filter to adapt-command-line-option, e.g. ``--adapt coverage[lib1,lib2,safety*]``
