@@ -2,12 +2,12 @@ The Syntax of the Project.meta file
 ===================================
 
 Config types
-************
+------------
 
 Three config types exist: ExecutableConfig, LibraryConfig and CustomConfig. Some elements are only valid for specific types.
 
 Filter
-******
+------
 
 Every element (except the Project element) in Project.meta has two attributes:
 
@@ -32,7 +32,7 @@ The executable is not executed by default unless "run" is specified on command l
     bake ... --do run
 
 Notes
-*****
+-----
 
 - Specify the paths always relative to the current project root.
 - Keep the variable substitution in Project.meta in mind.
@@ -40,7 +40,7 @@ Notes
 - Use hash marks (#) for comments.
 
 Syntax
-******
+------
 
 .. parsed-literal::
 
@@ -163,7 +163,7 @@ Syntax
 .. _project:
 
 Project
--------
++++++++
 
 | A bake project is very similar to a project in Eclipse, Visual Studio, etc.
 | The name of the project is the directory name of the Project.meta file.
@@ -173,7 +173,7 @@ Project
 .. _defaultConfig:
 
 default (Project)
------------------
++++++++++++++++++
 
 Attribute of :ref:`project`.
 
@@ -191,7 +191,7 @@ Examples::
 .. _description:
 
 Description
------------
++++++++++++
 
 Description of the project or config.
 
@@ -200,7 +200,7 @@ Description of the project or config.
 .. _requiredBakeVersion:
 
 RequiredBakeVersion
--------------------
++++++++++++++++++++
 
 | If specified, the build will be aborted if bake version is lower than mininum or greater than maximum.
 | It is possible to define only minimum, only maximum or both version thresholds.
@@ -211,7 +211,7 @@ RequiredBakeVersion
 .. _responsible:
 
 Responsible
------------
++++++++++++
 
 Specify all responsible persons of the project.
 
@@ -220,7 +220,7 @@ Specify all responsible persons of the project.
 .. _person:
 
 Person
-------
+++++++
 
 Person who is responsible for the project.
 
@@ -229,7 +229,7 @@ Person who is responsible for the project.
 .. _email:
 
 email
------
++++++
 
 Attribute of :ref:`person`.
 
@@ -240,7 +240,7 @@ Use always double quotes (") for the email address.
 .. _executableConfig:
 
 ExecutableConfig
-----------------
+++++++++++++++++
 
 This is usually the main config of an application.
 
@@ -250,7 +250,7 @@ This is usually the main config of an application.
 .. _libraryConfig:
 
 LibraryConfig
--------------
++++++++++++++
 
 This config is used for a source library. The library will be linked automatically to the executable.
 
@@ -259,7 +259,7 @@ This config is used for a source library. The library will be linked automatical
 .. _customConfig:
 
 CustomConfig
-------------
+++++++++++++
 
 | This config is used for special projects, e.g. for Makefile projects.
 | It's valid to leave a CustomConfig completely empty - nothing will be done in that case.
@@ -269,7 +269,7 @@ CustomConfig
 .. _extends:
 
 extends
--------
++++++++
 
 Attribute of :ref:`executableConfig`, :ref:`libraryConfig` or :ref:`customConfig`.
 
@@ -280,7 +280,7 @@ Inherit settings from parent config(s). For more information see docu page :doc:
 .. _mergeInc:
 
 mergeInc
---------
+++++++++
 
 Attribute of :ref:`executableConfig`, :ref:`libraryConfig` or :ref:`customConfig`.
 
@@ -296,7 +296,7 @@ See also :doc:`../concepts/merge`.
 .. _private:
 
 private
--------
++++++++
 
 Attribute of :ref:`executableConfig`, :ref:`libraryConfig` or :ref:`customConfig`.
 
@@ -307,7 +307,7 @@ If true, the config cannot be referenced directly outside of this project.
 .. _includeDir:
 
 IncludeDir
-----------
+++++++++++
 
 Specifies the include directories for the assembler, C and C++ compiler.
 
@@ -330,7 +330,7 @@ Use always "/" and not "\\".
 .. _inherit:
 
 inherit
--------
++++++++
 
 Attribute of :ref:`includeDir`.
 
@@ -341,7 +341,7 @@ Inherits the include to all projects, which depend on this project.
 .. _inject:
 
 inject
-------
+++++++
 
 Attribute of :ref:`includeDir` or :ref:`dependency`.
 
@@ -354,7 +354,7 @@ Avoid to inject dependencies, it will get a mess.
 .. _system:
 
 system
-------
+++++++
 
 Attribute of :ref:`includeDir`.
 
@@ -367,7 +367,7 @@ Attribute of :ref:`includeDir`.
 .. _set:
 
 Set
----
++++
 
 | Sets a variable for this and all dependent projects.
 | The variable can be a simple value or the result of a cmd, e.g. "cat myVar.txt".
@@ -377,7 +377,7 @@ Set
 .. _env:
 
 env
----
++++
 
 Attribute of :ref:`set`.
 
@@ -388,7 +388,7 @@ Stores the variable also in system environment, which makes it available in ever
 .. _dependency:
 
 Dependency
-----------
+++++++++++
 
 | Specifies another project to be built before this project.
 | The archives, linker libs and search paths are inherited from this project automatically.
@@ -405,7 +405,7 @@ Dependency
 .. _configDependency:
 
 config (Dependency)
--------------------
++++++++++++++++++++
 
 Attribute of :ref:`dependency`.
 
@@ -417,7 +417,7 @@ Config name of the dependent project.
 .. _externalLibrary:
 
 ExternalLibrary
----------------
++++++++++++++++
 
 | Every config can specify libs which have to be linked to the executable.
 | It's possible to add a path, e.g.:
@@ -430,7 +430,7 @@ ExternalLibrary
 .. _searchExternalLibrary:
 
 search
-------
+++++++
 
 Attribute of :ref:`externalLibrary`.
 
@@ -444,7 +444,7 @@ Attribute of :ref:`externalLibrary`.
 .. _userLibrary:
 
 UserLibrary
------------
++++++++++++
 
 | A user library will be linked *before* any other libraries or objects to the executable.
 | It is also possible to specify an object file.
@@ -459,7 +459,7 @@ UserLibrary
 .. _externalLibrarySearchPath:
 
 ExternalLibrarySearchPath
--------------------------
++++++++++++++++++++++++++
 
 | The linker looks for libraries in search paths.
 | Search paths can be defined implicitly by ExternalLibrary/UserLibrary or explicitly by this tag.
@@ -469,7 +469,7 @@ ExternalLibrarySearchPath
 .. _preSteps:
 
 PreSteps
---------
+++++++++
 
 | PreSteps are executed before compiling files of the config.
 | The number of steps is not limited.
@@ -480,7 +480,7 @@ PreSteps
 .. _postSteps:
 
 PostSteps
----------
++++++++++
 
 | PostSteps are executed after the main task of the project, e.g. linking an executable.
 | The number of steps is not limited.
@@ -491,7 +491,7 @@ PostSteps
 .. _startupSteps:
 
 StartupSteps
-------------
+++++++++++++
 
 | StartupSteps of ALL configs are executed before building the first config.
 | The number of steps is not limited.
@@ -501,7 +501,7 @@ StartupSteps
 .. _exitSteps:
 
 ExitSteps
----------
++++++++++
 
 | ExitSteps of ALL configs are executed after building complete workspace even if the build has failed.
 | The number of steps is not limited.
@@ -511,7 +511,7 @@ ExitSteps
 .. _cleanSteps:
 
 CleanSteps
-----------
+++++++++++
 
 | CleanSteps are executed when calling bake with "-c" or "--rebuild".
 | The number of steps is not limited.
@@ -526,7 +526,7 @@ CleanSteps
 .. _makefile:
 
 Makefile
---------
+++++++++
 
 Makefile to be started, e.g.: *Makefile "subDir/makefile"*
 
@@ -538,7 +538,7 @@ whereas XX is one of CPP, C, ASM, AR or LD.
 .. _makefileLib:
 
 lib
----
++++
 
 Attribute of :ref:`makefile`.
 
@@ -549,7 +549,7 @@ If the result of the makefile is a library which shall be linked to the executab
 .. _makefileTarget:
 
 target
-------
+++++++
 
 Attribute of :ref:`makefile`.
 
@@ -560,7 +560,7 @@ The target of the makefile.
 .. _makefilePathTo:
 
 pathTo
-------
+++++++
 
 Attribute of :ref:`makefile`.
 
@@ -578,7 +578,7 @@ Attribute of :ref:`makefile`.
 .. _makefileNoClean:
 
 noClean
--------
++++++++
 
 Attribute of :ref:`makefile`.
 
@@ -589,7 +589,7 @@ If project is cleaned (e.g. with command line argument -c), the target "clean" w
 .. _makefileChangeWorkingDir:
 
 changeWorkingDir
-----------------
+++++++++++++++++
 
 Attribute of :ref:`makefile`.
 
@@ -600,7 +600,7 @@ If set to false, the working directory will be the project directory instead of 
 .. _echoNonFileUtils:
 
 echo (CommandLine, Makefile, Sleep)
------------------------------------
++++++++++++++++++++++++++++++++++++
 
 Attribute of :ref:`makefile`, :ref:`commandLine` and :ref:`sleep`.
 
@@ -611,7 +611,7 @@ Attribute of :ref:`makefile`, :ref:`commandLine` and :ref:`sleep`.
 .. _independent:
 
 independent
------------
++++++++++++
 
 Attribute of :ref:`makefile`, :ref:`commandLine` and :ref:`sleep`.
 
@@ -623,7 +623,7 @@ Attribute of :ref:`makefile`, :ref:`commandLine` and :ref:`sleep`.
 .. _validExitCodes:
 
 validExitCodes
---------------
+++++++++++++++
 
 Attribute of :ref:`makefile` and :ref:`commandLine`.
 
@@ -635,7 +635,7 @@ Attribute of :ref:`makefile` and :ref:`commandLine`.
 .. _makefileFlags:
 
 Flags (makefile)
-----------------
+++++++++++++++++
 
 Additional makefile flags.
 
@@ -644,7 +644,7 @@ Additional makefile flags.
 .. _commandLine:
 
 CommandLine
------------
++++++++++++
 
 A command to execute, e.g.:
 
@@ -668,7 +668,7 @@ The array is internally joined to an string again with spaces in between.
 .. _sleep:
 
 Sleep
------
++++++
 
 Sleep in seconds, floats are allowed.
 
@@ -677,7 +677,7 @@ Sleep in seconds, floats are allowed.
 .. _makeDir:
 
 MakeDir
--------
++++++++
 
 A file or folder will be created.
 
@@ -686,7 +686,7 @@ A file or folder will be created.
 .. _remove:
 
 Remove
-------
+++++++
 
 A file or folder will be removed.
 
@@ -695,7 +695,7 @@ A file or folder will be removed.
 .. _touch:
 
 Touch
------
++++++
 
 A file or folder will be touched.
 
@@ -704,7 +704,7 @@ A file or folder will be touched.
 .. _copy:
 
 Copy
-----
+++++
 
 A file or folder will be moved.
 
@@ -713,7 +713,7 @@ A file or folder will be moved.
 .. _move:
 
 Move
-----
+++++
 
 A file or folder will be copied.
 
@@ -723,7 +723,7 @@ A file or folder will be copied.
 .. _echoFileUtils:
 
 echo (MakeDir, Remove, Touch, Copy, Move)
------------------------------------------
++++++++++++++++++++++++++++++++++++++++++
 
 Attribute of :ref:`makeDir`, :ref:`remove`, :ref:`touch`, :ref:`copy` and :ref:`move`.
 
@@ -734,7 +734,7 @@ Attribute of :ref:`makeDir`, :ref:`remove`, :ref:`touch`, :ref:`copy` and :ref:`
 .. _defaultToolchain:
 
 DefaultToolchain
-----------------
+++++++++++++++++
 
 | Settings which are valid for all configs unless they will be overwritten.
 | The attribute "basedOn" specifies the basic toolchain configuration provided by bake, e.g. "GCC", "Diab", etc.
@@ -744,7 +744,7 @@ DefaultToolchain
 .. _toolchain:
 
 Toolchain
----------
++++++++++
 
 Toolchain settings for a specific config.'
 
@@ -753,7 +753,7 @@ Toolchain settings for a specific config.'
 .. _outputdir:
 
 outputdir
----------
++++++++++
 
 Attribute of :ref:`defaultToolchain` and :ref:`toolchain`.
 
@@ -772,7 +772,7 @@ Attribute of :ref:`defaultToolchain` and :ref:`toolchain`.
 .. _outputdirPostfix:
 
 outputdirPostfix
-----------------
+++++++++++++++++
 
 Attribute of :ref:`defaultToolchain` and :ref:`toolchain`.
 
@@ -785,7 +785,7 @@ Attribute of :ref:`defaultToolchain` and :ref:`toolchain`.
 .. _eclipseOrder:
 
 eclipseOrder
-------------
+++++++++++++
 
 Attribute of :ref:`defaultToolchain`.
 
@@ -800,7 +800,7 @@ Attribute of :ref:`defaultToolchain`.
 .. _compiler:
 
 Compiler
---------
+++++++++
 
 Flags and defines can be specified independently for each compiler type (ASM, CPP, C).
 
@@ -809,7 +809,7 @@ Flags and defines can be specified independently for each compiler type (ASM, CP
 .. _archiver:
 
 Archiver
---------
+++++++++
 
 Settings for the archiver.
 
@@ -818,7 +818,7 @@ Settings for the archiver.
 .. _linker:
 
 Linker
-------
+++++++
 
 Settings for the linker.
 
@@ -827,7 +827,7 @@ Settings for the linker.
 .. _docu:
 
 Docu
-----
+++++
 
 Command to build the documentation. e.g.: *doxygen main.cfg*
 
@@ -836,7 +836,7 @@ Command to build the documentation. e.g.: *doxygen main.cfg*
 .. _command:
 
 command
--------
++++++++
 
 Attribute of :ref:`compiler`, :ref:`archiver`, :ref:`linker`.
 
@@ -847,7 +847,7 @@ Changes the predefined command, e.g. "gcc".
 .. _prefix:
 
 prefix
-------
+++++++
 
 Attribute of :ref:`compiler`, :ref:`archiver`, :ref:`linker`.
 
@@ -860,7 +860,7 @@ Attribute of :ref:`compiler`, :ref:`archiver`, :ref:`linker`.
 .. _keepObjFileEndings:
 
 keepObjFileEndings
-------------------
+++++++++++++++++++
 
 Attribute of :ref:`compiler`.
 
@@ -871,7 +871,7 @@ If false, the original source file endings will be cut off (e.g. file1.cpp to fi
 .. _srcFileEndings:
 
 SrcFileEndings
---------------
+++++++++++++++
 
 List of all source file endings with dot and comma separated which are handled by this CPP, C or ASM compiler,
 e.g. ".cpp, .c, .cxx". The list must not be empty.
@@ -881,7 +881,7 @@ e.g. ".cpp, .c, .cxx". The list must not be empty.
 .. _onlyDirectDeps:
 
 onlyDirectDeps
---------------
+++++++++++++++
 
 Attribute of :ref:`linker`.
 
@@ -892,7 +892,7 @@ If set to true, only first level libraries will be linked (not sub-dependencies 
 .. _cuda:
 
 cuda
-----
+++++
 
 Attribute of :ref:`compiler`.
 
@@ -904,7 +904,7 @@ Attribute of :ref:`compiler`.
 .. _defaultFlags:
 
 Flags (DefaultToolchain)
-------------------------
+++++++++++++++++++++++++
 
 Default flags.
 
@@ -913,7 +913,7 @@ Default flags.
 .. _toolchainFlags:
 
 Flags (Toolchain)
------------------
++++++++++++++++++
 
 Flags from the DefaultToolchain can be overwritten, extended or (partly) removed.
 
@@ -936,7 +936,7 @@ Flags from the DefaultToolchain can be overwritten, extended or (partly) removed
 .. _filesFlags:
 
 Flags (Files)
--------------
++++++++++++++
 
 Flags from the Toolchain can be overwritten, extended or (partly) removed, see above.
 
@@ -945,7 +945,7 @@ Flags from the Toolchain can be overwritten, extended or (partly) removed, see a
 .. _defaultDefine:
 
 Define (DefaultToolchain)
--------------------------
++++++++++++++++++++++++++
 
 Defines which are valid for all files.
 
@@ -954,7 +954,7 @@ Defines which are valid for all files.
 .. _toolchainDefine:
 
 Flags (Toolchain)
------------------
++++++++++++++++++
 
 Defines which are valid for the files of this config.
 
@@ -963,7 +963,7 @@ Defines which are valid for the files of this config.
 .. _filesDefine:
 
 Define (Files)
---------------
+++++++++++++++
 
 Defines which are valid only for these specific files.
 
@@ -972,7 +972,7 @@ Defines which are valid only for these specific files.
 .. _libPrefixFlags:
 
 LibPrefixFlags
---------------
+++++++++++++++
 
 Linker libs can be prefixed if needed, e.g. with "-Wl,--whole-archive".
 
@@ -981,7 +981,7 @@ Linker libs can be prefixed if needed, e.g. with "-Wl,--whole-archive".
 .. _libPostfixFlags:
 
 LibPostfixFlags
----------------
++++++++++++++++
 
 Linker libs can be postfixed if needed, e.g. with "-Wl,--no-whole-archive".
 
@@ -990,7 +990,7 @@ Linker libs can be postfixed if needed, e.g. with "-Wl,--no-whole-archive".
 .. _internalDefines:
 
 InternalDefines
----------------
++++++++++++++++
 
 | File with list of compiler internal defines.
 | One define per line.
@@ -1001,7 +1001,7 @@ InternalDefines
 .. _internalIncludes:
 
 InternalIncludes
-----------------
+++++++++++++++++
 
 | File with list of compiler internal include folders.
 | One folder per line.
@@ -1012,7 +1012,7 @@ InternalIncludes
 .. _files:
 
 Files
------
++++++
 
 | Specifies the files to build.
 | It's valid to specify a single file, e.g.
@@ -1027,7 +1027,7 @@ Files
 .. _excludeFiles:
 
 ExcludeFiles
-------------
+++++++++++++
 
 | Used to ignore files or directories.
 | ExcludeFiles has higher priority than Files.
@@ -1037,7 +1037,7 @@ ExcludeFiles
 .. _compileOnly:
 
 compileOnly
------------
++++++++++++
 
 Attribute of :ref:`files`.
 
@@ -1048,7 +1048,7 @@ If set to true, the files will not be archived or linked.
 .. _linkDirectly:
 
 linkDirectly
-------------
+++++++++++++
 
 Attribute of :ref:`files`.
 
@@ -1059,7 +1059,7 @@ If set to true, the files will not be archived but linked directly to the execut
 .. _prebuild:
 
 Prebuild
---------
+++++++++
 
 | If defined, all configs of the workspace will be skipped per default.
 | Must be activated by the commandline option "--prebuild".
@@ -1069,7 +1069,7 @@ Prebuild
 .. _except:
 
 Except
-------
+++++++
 
 Defines a project which shall not be skipped. If project name is omitted, the current project is used.
 
@@ -1078,7 +1078,7 @@ Defines a project which shall not be skipped. If project name is omitted, the cu
 .. _configExcept:
 
 config (Except)
----------------
++++++++++++++++
 
 Attribute of :ref:`except`.
 
@@ -1089,7 +1089,7 @@ Defines a config which shall not be skipped. If omitted, all configs of the appr
 .. _compilationDB:
 
 CompilationDB
--------------
++++++++++++++
 
 | Generates a compilation database in json.
 | Example:
@@ -1100,7 +1100,7 @@ CompilationDB
 .. _compilationCheck:
 
 CompilationCheck
-----------------
+++++++++++++++++
 
 | Checks if files are included or excluded in build.
 | Priority if files are mentioned multiple times: ignore > exclude > include.
@@ -1114,7 +1114,7 @@ CompilationCheck
 .. _linkerScript:
 
 LinkerScript
-------------
+++++++++++++
 
 Specifies the name including path of the linker script.
 
@@ -1123,7 +1123,7 @@ Specifies the name including path of the linker script.
 .. _mapFile:
 
 MapFile
--------
++++++++
 
 | A mapfile will be written by the linker.
 | If name attribute is omitted, the mapfile will be "$(OutputDir)/$(ArtifactNameBase).map".
@@ -1133,7 +1133,7 @@ MapFile
 .. _artifactName:
 
 ArtifactName
-------------
+++++++++++++
 
 | The artifact name inclusive file ending.
 | The artifact will be placed in the output directory.
@@ -1143,7 +1143,7 @@ ArtifactName
 .. _artifactExtension:
 
 ArtifactExtension
------------------
++++++++++++++++++
 
 | The artifact extension, e.g. "exe".
 | If ArtifactName is also specified, ArtifactExtension has no effect.

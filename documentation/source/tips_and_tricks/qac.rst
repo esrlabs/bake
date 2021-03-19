@@ -1,10 +1,10 @@
 QACPP for MISRA and cyclomatic complexity
-*****************************************
+=========================================
 
 bakeqac is a convenience wrapper for QACPP with some nice features.
 
 Without bakeqac
-===============
+---------------
 
 QACPP can be called directly from command line:
 
@@ -24,7 +24,7 @@ QACPP can be called directly from command line:
 Please note, that "view" is not necessary to generate the reports.
 
 With bakeqac
-============
+------------
 
 Instead of writing
 
@@ -54,7 +54,7 @@ Example output:
     :scale: 100 %
 
 Step 1: admin
-=============
+-------------
 
 You have to set the environment variable QAC_HOME, e.g. to *c:\\tools\\prqa\\PRQA-Framework-2.1.0*.
 MCPP has to installed next to *PRQA-Framework-2.x.x* (in this case MCPP_HOME is set automatically to this directory).
@@ -104,7 +104,7 @@ If not specified otherwise, cct, rcf and acf will be automatically chosen.
 
 
 Step 2: analyze
-===============
+---------------
 
 This is the main step. Use exactly the same options for bakeqac as for bake. A few things have to be mentioned:
 
@@ -118,7 +118,7 @@ The output will be filtered per default (warnings) . To get unfiltered output, w
     bakeqac <options> --qacnomsgfilter
 
 Step 3: view
-============
+------------
 
 Results are also filtered in this step if not specified otherwise:
 
@@ -152,12 +152,12 @@ Colored output is also supported similar to bake:
     bakeqac <options> -a <color_scheme>
 
 Step 4: report
-==============
+--------------
 
 Reports about the warnings and suppressed warnings are be generated.
 
 Step 5: mdr
-===========
+-----------
 
 Reports about cyclomatic complexity of functions.
 
@@ -181,7 +181,7 @@ In case of a warning or if the accepted complexity is changed, an additional inf
 .. image:: ../../_static/cyclo.png
 
 Additional options
-==================
+------------------
 
 QACPP needs a license. If floating licenses are not available, bakeqac can retry to checkout them:
 
@@ -192,7 +192,7 @@ QACPP needs a license. If floating licenses are not available, bakeqac can retry
 Steps "analyze" and "view" are retried until timeout is reached.
 
 Notes
-=====
+-----
 
 If "<mainConfigName>Qac" is found in main project, it will be used instead of "<mainConfigName>. This is useful if the unit test has to be built different to MISRA.
 

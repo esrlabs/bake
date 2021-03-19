@@ -1,5 +1,5 @@
 Generating dot graphs
-*********************
+=====================
 
 In larger workspaces it's often hard to understand the dependency structure. With bake you can generate a dot file (see http://www.graphviz.org):
 

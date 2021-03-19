@@ -1,10 +1,10 @@
 Compilation Check
-*****************
+=================
 
 To ensure that files are included in or excluded from the build, use CompilationCheck.
 
 Usage
-*****
+-----
 
 .. code-block:: console
 
@@ -46,7 +46,7 @@ If a check fails, bake will print out a warning, e.g.:
   Warning: file not included in build: src/anotherFile.cpp
 
 Adapt
-*****
+-----
 
 The typical use case is to include files in a general Adapt.meta file and to ignore them locally in a Project.meta file, e.g.:
 
@@ -72,7 +72,7 @@ The typical use case is to include files in a general Adapt.meta file and to ign
   bake UnitTestBase --adapt ccheck ...
 
 Build
-*****
+-----
 
 The check is only executed for full builds (inclusive --rebuild).
 

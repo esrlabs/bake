@@ -1,5 +1,5 @@
 Caching
-*******
+=======
 
 The project information will be cached here: <project folder>/.bake/\*.cache.
 There is one cache file for each Project.meta.

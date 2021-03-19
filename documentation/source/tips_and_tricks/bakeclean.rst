@@ -1,5 +1,5 @@
 bakeclean
-*********
+=========
 
 With bakeclean you can cleanup your workspace from .bake, .bake/../build and .bake/../build_* folders.
 

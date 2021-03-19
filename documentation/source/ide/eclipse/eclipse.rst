@@ -12,13 +12,13 @@ Eclipse
     how_to_debug_in_eclipse
 
 Syntax highlighting
-*******************
+-------------------
 
 To enable syntax highlighting for the Project.meta files in Eclipse, install the "rtext_eclipse_plugin" (Help->Install New Software...) and associate ".meta" files with the rtext editor (Window->Preferences, File Associations page).
 An update site for Eclipse (needed for installation) will be provided soon. For now, you can download it manually at github.
 
 Key bindings
-************
+------------
 
 It is possible to bind the bake commands to keys:
 

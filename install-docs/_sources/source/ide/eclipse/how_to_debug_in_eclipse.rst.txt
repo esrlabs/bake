@@ -5,14 +5,14 @@ The following example is made with Eclipse Mars, **Cygwin**, **gcc** and **gdb**
 environments, too.
 
 1. Compile with debug information
-*********************************
+---------------------------------
 
 Don't forget this. Otherwise sources symbols cannot not mapped.
 
 .. image:: ../../../_static/debug_flag.png
 
 2. Create a debug configuration for a C++ application
-*****************************************************
+-----------------------------------------------------
 
 This options can be found under Run->Debug Configurations... or click on the arrow next to the green spider.
 
@@ -21,7 +21,7 @@ This options can be found under Run->Debug Configurations... or click on the arr
 |  Choose a suitable name and the executable.
 
 3. Add path mapping
-*******************
+-------------------
 
 .. image:: ../../../_static/debug_path.png
 
@@ -33,6 +33,6 @@ This options can be found under Run->Debug Configurations... or click on the arr
 |  Also note, that my Eclipse changes "/c" to "\\c" in the dialog box automatically, but it works nevertheless.
 
 4. Now you can debug your code
-******************************
+------------------------------
 
 .. image:: ../../../_static/debug_debug.png

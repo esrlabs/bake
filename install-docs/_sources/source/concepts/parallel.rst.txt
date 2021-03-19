@@ -1,5 +1,5 @@
 Parallel build
-******************************************************
+==============
 
 Files within a project will be built in parallel. The number of threads can be defined on command line via the "-j" parameter. "-j8" is the default for Ruby <= 2.1, else number of logical processors.
 

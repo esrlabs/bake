@@ -1,5 +1,5 @@
 Merge Includes
-**************
+==============
 
 Some projects might compile faster if header files are copied into one folder.
 

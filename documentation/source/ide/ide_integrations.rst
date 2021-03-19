@@ -13,7 +13,7 @@ The integration for eclipse is the one that is most used and best documented.
    :target: eclipse/eclipse.html
 
 Basic integrations
-******************
+------------------
 
 The following integrations lack in features, documentation and
 maturity compared to the above integrations. Still they provide you

@@ -15,7 +15,7 @@ To build a project, you have to specify
     * the (sub)project to build if applicable
 
 Advantages
-**********
+----------
 
  * Reducing the number of build configurations (toolchain settings like debug or release flags can be set outside of the project)
  * Most projects do not have any compiler definitions anymore
@@ -35,7 +35,7 @@ Project.meta of Main (Debug and Release)         Project.meta of Sub (only one b
     A main project must have a DefaultToolchain - but it's allowed to leave that definition empty.
 
 Output directory
-****************
+----------------
 
 A project in a specific build configuration can be built in different contexts.
 That's why the output directory of a project cannot be simply the build configuration name of the project, to avoid inconsistencies.

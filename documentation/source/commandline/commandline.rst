@@ -2,14 +2,14 @@ Commandline
 ===========
 
 How to get help
-***************
+---------------
 
 .. code-block:: console
 
     User@Host:~$ bake -h
 
 The most important options
-**************************
+--------------------------
 
 #. *-b* the build configuration name
 
@@ -22,10 +22,10 @@ The most important options
     All configs of the project will be built, which is usually just one config, but if you have more than one config of the project in the workspace, use a comma separator.
 
 Examples
-********
+--------
 
 Building an application
------------------------
++++++++++++++++++++++++
 
 .. code-block:: console
 
@@ -40,14 +40,14 @@ Building an application
         User@Host:~$ bake Debug
 
 Building from within an arbitrary directory
--------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++
 
 .. code-block:: console
 
     User@Host:~$ bake Debug -m w:/root/mainProj
 
 Building just one specific project
-----------------------------------
+++++++++++++++++++++++++++++++++++
 Assuming the project name to build s myProj.
 
 .. code-block:: console
@@ -55,7 +55,7 @@ Assuming the project name to build s myProj.
     User@Host:~$ bake Debug -m w:/root1/myProj -p myProj
 
 Building specific projects with different roots
------------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++++
 Assuming mainProj has several configs really included in the build (which is uncommon), you can choose one of the configs.
 
 
@@ -65,7 +65,7 @@ Assuming mainProj has several configs really included in the build (which is unc
 
 
 Building a project which has more than one root
------------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++++
 Assuming code has been checked out into two roots, the console supports ansi colors, you want to stop on first error and build only the project bspAbc.
 
 .. code-block:: console
@@ -73,7 +73,7 @@ Assuming code has been checked out into two roots, the console supports ansi col
     User@Host:~$ bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc
 
 Search depth
-------------
+++++++++++++
 
 Projects and Adaptions are searched recursively within the roots. Specify the maximum search depth like this:
 
@@ -89,14 +89,14 @@ In this example the following folders are checked:
     - w:/root2/libA/Project.meta
 
 Clean a project(s)
-------------------
+++++++++++++++++++
 
 .. code-block:: console
 
     User@Host:~$ bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc -c
 
 Build a single file(s)
-----------------------
+++++++++++++++++++++++
 .. code-block:: console
 
     User@Host:~$ bake Debug -p bspAbc -f main.cpp
@@ -108,7 +108,7 @@ Build a single file(s)
 
 
 Roots file (roots.bake)
-***********************
+-----------------------
 
 If a workspace has many roots, it's cumbersome to specify all root folders with -w.
 Instead, you can write them into a file. This file can be also specified with -w:

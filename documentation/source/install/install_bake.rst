@@ -9,7 +9,7 @@ bake and its depedencies can be found on `rubygems <https://rubygems.org/gems/ba
     The actual name of the bake gem is `bake-toolkit <https://rubygems.org/gems/bake-toolkit/>`_.
 
 How to install bake
-*******************
+-------------------
 Installing bake is very easy!
 
 #. Make sure you have installed `Ruby <https://www.ruby-lang.org/en/>`_ **>= 2.0**.
@@ -56,10 +56,10 @@ Installing bake is very easy!
 
 
 Known Issues
-************
+------------
 
 The installation does not start
--------------------------------
++++++++++++++++++++++++++++++++
 **Issue:**
 The installation of the bake gem does not start.
 (This is often caused by a password-protected internal proxy.)
@@ -72,7 +72,7 @@ The installation of the bake gem does not start.
 
 
 Invalid Language Settings
--------------------------
++++++++++++++++++++++++++
 *Issue:**
 The error parsers in bake assume English language.
 
@@ -91,7 +91,7 @@ Example:
     Depending on the system and the compiler the way how to change the language might be different.
 
 Error Message During the installation
--------------------------------------
++++++++++++++++++++++++++++++++++++++
 **Issue:**
 Ruby throws an error during the installation.
 

@@ -1,10 +1,10 @@
 Injection and inheritance of IncludeDir and Dependency
-******************************************************
+======================================================
 
 It is possible to inject and inherit "includes" and inject "dependencies".
 
 Inherit IncludeDir
-==================
+------------------
 
 .. code-block:: console
 
@@ -29,7 +29,7 @@ This is typically used to make include directories available to upper levels, e.
     }
 
 Inject IncludeDir
-=================
+-----------------
 
 .. code-block:: console
 
@@ -44,7 +44,7 @@ Inject IncludeDir
 "back" is used if the lower levels do not know by themselves what to include. So this has to be configured from the outside, typically in the main project.
 
 Inject Dependency
-=================
+-----------------
 
 .. code-block:: console
 

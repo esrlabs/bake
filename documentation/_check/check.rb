@@ -10,7 +10,8 @@ module Check
       "+"  => 3,
       "~"  => 4,
       "^"  => 5,
-      "\"" => 6
+      "\"" => 6,
+      "*" => 7
     }
     @@levels_inverted = @@levels.invert
     @@all_levels = Regexp.escape(@@levels.keys.join)

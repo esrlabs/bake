@@ -1,5 +1,5 @@
 Clang Analyze
-*************
+=============
 
 bake can be easily used to analyze source files with Clang. It works simliar to regular compiling, but instead of
 invoking the compiler, the Clang Analyzer will be called.
