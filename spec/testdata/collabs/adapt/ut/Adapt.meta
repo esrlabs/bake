@@ -1,0 +1,8 @@
+Adapt {
+
+  CustomConfig __ALL__, project: __ALL__, type: extend {
+    CommandLine "echo $(ProjectName)_$(ConfigName)", echo: off
+    DefaultToolchain GCC
+  }
+  
+}

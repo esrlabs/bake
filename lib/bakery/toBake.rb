@@ -30,7 +30,7 @@ module Bake
     toBuildPattern = []
     @options.roots.each do |root|
       col.project.each do |p|
-        projs = Root.search_to_depth(root.dir,p.name + "/Project.meta", root.depth)
+        projs = Root.search_to_depth(root.dir,p.name + "/Project.meta", root.depth).map { |p| Pathname.new(p).cleanpath }
         if File.basename(root.dir) == p.name && File.exist?(root.dir + "/Project.meta")
           projs << root.dir + "/Project.meta"
         end

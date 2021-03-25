@@ -80,6 +80,7 @@ module Bake
     end
 
     def self.search_to_depth(root, baseName, depth)
+      return Dir.glob(baseName) if File.is_absolute?(baseName)
       if not File.exist?(root)
         Bake.formatter.printError("Root #{root} does not exist.")
         ExitHelper.exit(1)

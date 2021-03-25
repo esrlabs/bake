@@ -1,0 +1,9 @@
+Collection test1 {
+  Project "../modules/lib2", config: "test1"
+  Project "lib3", config: "test2"
+}
+
+Collection test2 {
+  Project "ABS/spec/testdata/../testdata/collabs/modules/lib1", config: "test1"
+  Project "ABS/spec/testdata/collabs/modules/lib1", config: "test1"
+}
