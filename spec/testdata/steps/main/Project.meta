@@ -34,4 +34,31 @@ Project {
     DefaultToolchain GCC
   }
 
+  CustomConfig test4 {
+    PreSteps {
+        MakeDir "test/x/y"
+        MakeDir "test/y"
+        MakeDir "test/z"
+        Touch   "test/x/a.txt"
+        Touch   "test/x/y/b.txt"
+        Copy    "test/x/**/*.txt", to: "test/y"
+        Copy    "test/x/*", to: "test/z"
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test5 {
+    PreSteps {
+        MakeDir
+    }
+    DefaultToolchain GCC
+  }
+
+  CustomConfig test6 {
+    PreSteps {
+        Copy "abc"
+    }
+    DefaultToolchain GCC
+  }
+
 }

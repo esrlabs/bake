@@ -706,7 +706,13 @@ A file or folder will be touched.
 Copy
 ++++
 
-A file or folder will be moved.
+A file or folder will be moved. Wildcards are supported. Examples:
+
+.. code-block:: console
+
+    Copy file1, to: file2
+    Copy "x/y/*.txt", to: "a/b"
+    Copy "source/*", to: target
 
 *Mandatory: no, quantity: 0..n, default: -*
 
@@ -715,7 +721,13 @@ A file or folder will be moved.
 Move
 ++++
 
-A file or folder will be copied.
+A file or folder will be copied. Wildcards are supported. Examples:
+
+.. code-block:: console
+
+    Move file1, to: file2
+    Move "x/y/*.txt", to: "a/b"
+    Move "source/*", to: target
 
 *Mandatory: no, quantity: 0..n, default: -*
 

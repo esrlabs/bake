@@ -11,6 +11,13 @@ module Bake
         @type = type
         @projectDir = projectDir
         @echo = (config.echo != "off")
+        if !@arg1 || @arg1.empty?
+          Bake.formatter.printError("Error: source of file-step must not be empty")
+          ExitHelper.exit(1)
+        elsif [:copy, :move].include?(@type) && (!@arg2 || @arg2.empty?)
+          Bake.formatter.printError("Error: target of file-step must not be empty")
+          ExitHelper.exit(1)
+        end
       end
 
       def run
@@ -20,10 +27,10 @@ module Bake
             FileUtils.touch(@arg1)
           elsif @type == :move
             puts "Moving #{@arg1} to #{@arg2}" if @echo
-            FileUtils.mv(@arg1, @arg2)
+            Dir.glob(@arg1).each {|f| FileUtils.mv(f, @arg2)}
           elsif @type == :copy
             puts "Copying #{@arg1} to #{@arg2}" if @echo
-            FileUtils.cp_r(@arg1, @arg2)
+            Dir.glob(@arg1).each {|f| FileUtils.cp_r(f, @arg2)}
           elsif @type == :remove
             puts "Removing #{@arg1}" if @echo
             FileUtils.rm_rf(@arg1)

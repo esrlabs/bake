@@ -61,6 +61,27 @@ describe "Fileutil" do
     expect($mystring.include?("Making")).to be == true
   end
 
+  it 'wildcards' do
+    Bake.startBake("steps/main", ["test4"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect(File.exist?("spec/testdata/steps/main/test/y/a.txt")).to be == true
+    expect(File.exist?("spec/testdata/steps/main/test/y/b.txt")).to be == true
+    expect(File.exist?("spec/testdata/steps/main/test/z/a.txt")).to be == true
+    expect(File.exist?("spec/testdata/steps/main/test/z/y/b.txt")).to be == true
+  end
+
+  it 'no source' do
+    Bake.startBake("steps/main", ["test5"])
+    expect(ExitHelper.exit_code).to be > 0
+    expect($mystring.include?("source of file-step must not be empty")).to be == true
+  end
+    
+  it 'no target' do
+    Bake.startBake("steps/main", ["test6"])
+    expect(ExitHelper.exit_code).to be > 0
+    expect($mystring.include?("target of file-step must not be empty")).to be == true
+  end
+
 end
 
 end
