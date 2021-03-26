@@ -10,7 +10,7 @@ variables in your Project.meta file. Every environment and predefined variable c
 If a variable is not found at all, it will be set to an empty string (see below how to change that default behaviour).
 
 Using variables
-***************
+---------------
 
 Variables can be used using the following syntax:
 
@@ -26,7 +26,7 @@ something like this:
    IncludeDir "$(ABC)"
 
 User defined variables
-**********************
+----------------------
 
 There are two ways to create user defined variables.
 
@@ -46,7 +46,7 @@ There are two ways to create user defined variables.
 In the latter one the variable is set to the output of the command.
 
 Predefined bake environment variables
-*************************************
+-------------------------------------
 
 ========================================    ===============================================     ========================================
 Variable                                    Description                                         Example
@@ -117,12 +117,12 @@ Variable                                    Description                         
 ========================================    ===============================================     ========================================
 
 Environment variables
-*********************
+---------------------
 
 Usually used if system dependent stuff is needed like path to a specific tool etc.
 
 Nested variables
-****************
+----------------
 It is also possible to nest variables.
 
 Example:
@@ -133,7 +133,7 @@ Example:
 
 
 Complex variables
-*****************
+-----------------
 
 bake supports three complex variables:
 
@@ -164,7 +164,7 @@ Example:
 - result: 2
 
 Mandatory variables
-*******************
+-------------------
 
 If a variable is not found at all, it will be set to an empty string.
 This can be changed to an error with a "!" sign:
@@ -182,7 +182,7 @@ For convenience, the "!" can be used on every parameter (which means exactly the
     $(OutputDir, application, Debug!)
 
 Notes and warnings
-******************
+------------------
 
 Equal variables in the main config:
 

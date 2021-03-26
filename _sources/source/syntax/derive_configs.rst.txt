@@ -4,7 +4,7 @@ Derive configs
 bake supports deriving configs, which allows you to put repetetive settings in a base config.
 
 Deriving a config
-*****************
+-----------------
 
 Derving a config in bake is pretty straight forward, and looks like this:
 
@@ -23,7 +23,7 @@ Derving a config in bake is pretty straight forward, and looks like this:
 
 
 Inheritance implications
-************************
+------------------------
 
 In general it is very easy.
 
@@ -80,7 +80,7 @@ results implicitly in:
 
 
 Multiple inheritance
-********************
+--------------------
 
 It is possible to derive from several projects:
 

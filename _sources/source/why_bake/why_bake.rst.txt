@@ -5,7 +5,7 @@ Whether you should use bake is entirely up to you,
 just take 2 minutes and have a look at our design goals and see if they fit what you are looking for.
 
 bake design goals
-******************
+-----------------
 
 .. table::
     :widths: 30, 70

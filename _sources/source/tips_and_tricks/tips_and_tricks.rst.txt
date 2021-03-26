@@ -15,7 +15,7 @@ Additional features
     compilation_check
 
 Unnecessary includes
-********************
+--------------------
 
 If a library or executable is successfully build with "-v", unnecessary includes are printed out:
 
@@ -28,7 +28,7 @@ This features depends on the compiler dependency files. For projects with assemb
 However, remove the IncludeDir statements from the Project.meta and check it out.
 
 Symlinks and junctions
-**********************
+----------------------
 
 It is possible to use symlinks (Linux) or junctions (Windows) when working with git. Best practice:
     * Link all used projects into _one_ directory (e.g. from application repository and basis software repository).

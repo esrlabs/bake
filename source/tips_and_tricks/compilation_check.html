@@ -104,10 +104,12 @@
 <li class="toctree-l2"><a class="reference internal" href="bakeclean.html">bakeclean</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cuda.html">Cuda</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compilation_db.html">Compilation Database</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Compilation Check</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#adapt">Adapt</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#build">Build</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Compilation Check</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adapt">Adapt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build">Build</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="tips_and_tricks.html#unnecessary-includes">Unnecessary includes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tips_and_tricks.html#symlinks-and-junctions">Symlinks and junctions</a></li>
 </ul>
@@ -189,9 +191,8 @@
   <div class="section" id="compilation-check">
 <h1>Compilation Check<a class="headerlink" href="#compilation-check" title="Permalink to this headline">¶</a></h1>
 <p>To ensure that files are included in or excluded from the build, use CompilationCheck.</p>
-</div>
 <div class="section" id="usage">
-<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ExecutableConfig {</span>
 <span class="go">  ...</span>
 <span class="go">  CompilationCheck include: &quot;{src,include}/**/*&quot;, ignore: &quot;include/internal/*&quot;, exclude: &quot;src/test.cpp&quot;</span>
@@ -225,7 +226,7 @@
 </div>
 </div>
 <div class="section" id="adapt">
-<h1>Adapt<a class="headerlink" href="#adapt" title="Permalink to this headline">¶</a></h1>
+<h2>Adapt<a class="headerlink" href="#adapt" title="Permalink to this headline">¶</a></h2>
 <p>The typical use case is to include files in a general Adapt.meta file and to ignore them locally in a Project.meta file, e.g.:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> in ccheck/Adapt.meta
 <span class="go">Adapt {</span>
@@ -249,7 +250,7 @@
 </div>
 </div>
 <div class="section" id="build">
-<h1>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h1>
+<h2>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h2>
 <p>The check is only executed for full builds (inclusive –rebuild).</p>
 <p>It is not be executed for:</p>
 <ul class="simple">
@@ -260,6 +261,7 @@
 <li><p>clean</p></li>
 <li><p>preprocessor</p></li>
 </ul>
+</div>
 </div>
 
 

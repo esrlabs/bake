@@ -9,7 +9,7 @@ Using bake in Eclipse is very similar compared to the :any:`CDT build mechanism 
     The `.cprojec`t and `.project` files shall not be committed to your source control.
 
 Import
-******
+------
 
 If you have a workspace with no `.cproject` and `.project` files, but `Project.meta` files, you can import them to Eclipse.
 You can also use the importer to import single projects.

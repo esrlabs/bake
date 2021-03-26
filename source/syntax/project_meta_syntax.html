@@ -789,7 +789,11 @@ unreadable, use an array to split the string, e.g.</p>
 </div>
 <div class="section" id="remove">
 <span id="id34"></span><h3>Remove<a class="headerlink" href="#remove" title="Permalink to this headline">¶</a></h3>
-<p>A file or folder will be removed.</p>
+<p>A file or folder will be removed. Wildcards are supported. Examples:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Remove file1</span>
+<span class="go">Remove &quot;x/y/*.txt&quot;</span>
+</pre></div>
+</div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
 <div class="section" id="touch">
@@ -799,12 +803,22 @@ unreadable, use an array to split the string, e.g.</p>
 </div>
 <div class="section" id="copy">
 <span id="id36"></span><h3>Copy<a class="headerlink" href="#copy" title="Permalink to this headline">¶</a></h3>
-<p>A file or folder will be moved.</p>
+<p>A file or folder will be moved. Wildcards are supported. Examples:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Copy file1, to: file2</span>
+<span class="go">Copy &quot;x/y/*.txt&quot;, to: &quot;a/b&quot;</span>
+<span class="go">Copy &quot;source/*&quot;, to: target</span>
+</pre></div>
+</div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
 <div class="section" id="move">
 <span id="id37"></span><h3>Move<a class="headerlink" href="#move" title="Permalink to this headline">¶</a></h3>
-<p>A file or folder will be copied.</p>
+<p>A file or folder will be copied. Wildcards are supported. Examples:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Move file1, to: file2</span>
+<span class="go">Move &quot;x/y/*.txt&quot;, to: &quot;a/b&quot;</span>
+<span class="go">Move &quot;source/*&quot;, to: target</span>
+</pre></div>
+</div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
 </div>
 <div class="section" id="echo-makedir-remove-touch-copy-move">
