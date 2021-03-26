@@ -33,7 +33,7 @@ module Bake
             Dir.glob(@arg1).each {|f| FileUtils.cp_r(f, @arg2)}
           elsif @type == :remove
             puts "Removing #{@arg1}" if @echo
-            FileUtils.rm_rf(@arg1)
+            Dir.glob(@arg1).each {|f| FileUtils.rm_rf(f)}
           elsif @type == :makedir
             puts "Making #{@arg1}" if @echo
             FileUtils.mkdir_p(@arg1)

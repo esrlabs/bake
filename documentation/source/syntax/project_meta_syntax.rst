@@ -688,7 +688,12 @@ A file or folder will be created.
 Remove
 ++++++
 
-A file or folder will be removed.
+A file or folder will be removed. Wildcards are supported. Examples:
+
+.. code-block:: console
+
+    Remove file1
+    Remove "x/y/*.txt"
 
 *Mandatory: no, quantity: 0..n, default: -*
 

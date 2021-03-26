@@ -47,6 +47,13 @@ Project {
     DefaultToolchain GCC
   }
 
+  CustomConfig test4a, extends: test4 {
+    PreSteps {
+        Remove "test/z/**/*.txt"
+    }
+    DefaultToolchain GCC
+  }
+  
   CustomConfig test5 {
     PreSteps {
         MakeDir

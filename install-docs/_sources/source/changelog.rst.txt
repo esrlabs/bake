@@ -1,6 +1,12 @@
 Changelog
 =========
 
+March 26, 2021 - bake-toolkit 2.69.0
+    * Add wildcard support for ``Copy``, ``Move`` and ``Remove`` commands in Project.meta.
+    * Add support for absolute paths in Collection.meta.
+    * Normalize paths in in Collection.meta (e.g. resolving ``..``). This also prevents that the same config is built multiple times
+      if the path points to the same project from different workspace roots.
+
 March 8, 2021 - bake-toolkit 2.68.1
     * Add support/workaround for latest ARM GCC which writes ``<drive letter>\:\some\folder`` into dependency files on Windows systems (note the additional ``\`` sign).
 

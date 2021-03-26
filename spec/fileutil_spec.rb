@@ -61,7 +61,7 @@ describe "Fileutil" do
     expect($mystring.include?("Making")).to be == true
   end
 
-  it 'wildcards' do
+  it 'wildcards copy' do
     Bake.startBake("steps/main", ["test4"])
     expect(ExitHelper.exit_code).to be == 0
     expect(File.exist?("spec/testdata/steps/main/test/y/a.txt")).to be == true
@@ -70,6 +70,15 @@ describe "Fileutil" do
     expect(File.exist?("spec/testdata/steps/main/test/z/y/b.txt")).to be == true
   end
 
+  it 'wildcards remove' do
+    Bake.startBake("steps/main", ["test4a"])
+    expect(ExitHelper.exit_code).to be == 0
+    expect(File.exist?("spec/testdata/steps/main/test/y/a.txt")).to be == true
+    expect(File.exist?("spec/testdata/steps/main/test/y/b.txt")).to be == true
+    expect(File.exist?("spec/testdata/steps/main/test/z/a.txt")).to be == false
+    expect(File.exist?("spec/testdata/steps/main/test/z/y/b.txt")).to be == false
+  end
+  
   it 'no source' do
     Bake.startBake("steps/main", ["test5"])
     expect(ExitHelper.exit_code).to be > 0
