@@ -1,6 +1,10 @@
 Changelog
 =========
 
+April 15, 2021 - bake-toolkit 2.70.0
+    * Add ``args_end`` attribute to Collection.meta, which appends parameters at the end of the bake calls after the additional arguments from command line.
+    * Print a warning if an ``Adapt`` with toolchain condition shall be applied to configs which don't have a toolchain defined (yet).
+
 March 26, 2021 - bake-toolkit 2.69.0
     * Add wildcard support for ``Copy``, ``Move`` and ``Remove`` commands in Project.meta.
     * Add support for absolute paths in Collection.meta.

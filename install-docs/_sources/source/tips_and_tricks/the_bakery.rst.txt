@@ -48,7 +48,7 @@ Note: use hash marks (#) for comments.
 
 
     :ref:`collection` <name> {
-      :ref:`Project <projectCollection>` <name>, config: <name>, args: <arguments>
+      :ref:`Project <projectCollection>` <name>, config: <name>, args: <arguments>, args_end: <arguments>
       :ref:`exclude` <name>, config: <name>
       :ref:`excludeDir` <name>
       :ref:`subCollection` <name>
@@ -69,6 +69,24 @@ Project
 +++++++
 
 Specify the projects with it's configs to build. It is possible to use "*" as wildcards.
+
+It is possible to define arguments which are added to the bake calls.
+
+    - ``args`` adds arguments before the command line arguments
+    - ``args_end`` adds arguments after the command line arguments
+
+This means
+
+.. code-block:: text
+
+    bakery ... <cmd_args>
+
+results in:
+
+.. code-block:: text
+
+    bake ... <args> <cmd_args> <args_end>
+
 
 *Mandatory: yes, quantity: 1..n, default: -*
 
