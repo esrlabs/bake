@@ -143,6 +143,9 @@ module Bake
                 if !configHash.has_key?(name)
                   return adaptHash[name].any?{|ah| ah.match("")}
                 end
+                if name == "toolchain" && configHash[name] == [""]
+                  Bake.formatter.printWarning("Trying to adapt '#{config.name}' with 'toolchain == #{c.parent.toolchain}', but toolchain is not defined yet", c)
+                end
                 adaptHash[name].any? { |ah| configHash[name].any?{|ch| ah.match(ch)}}
               }
   
