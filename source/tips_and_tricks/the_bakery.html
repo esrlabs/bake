@@ -230,7 +230,7 @@ The most important options are the collection name (<em>-b</em>) and the collect
 <h2>Syntax of Collection.meta<a class="headerlink" href="#syntax-of-collection-meta" title="Permalink to this headline">¶</a></h2>
 <p>Note: use hash marks (#) for comments.</p>
 <pre class="literal-block"><a class="reference internal" href="#collection"><span class="std std-ref">Collection</span></a> &lt;name&gt; {
-  <a class="reference internal" href="#projectcollection"><span class="std std-ref">Project</span></a> &lt;name&gt;, config: &lt;name&gt;, args: &lt;arguments&gt;
+  <a class="reference internal" href="#projectcollection"><span class="std std-ref">Project</span></a> &lt;name&gt;, config: &lt;name&gt;, args: &lt;arguments&gt;, args_end: &lt;arguments&gt;
   <a class="reference internal" href="#exclude"><span class="std std-ref">Exclude</span></a> &lt;name&gt;, config: &lt;name&gt;
   <a class="reference internal" href="#excludedir"><span class="std std-ref">ExcludeDir</span></a> &lt;name&gt;
   <a class="reference internal" href="#subcollection"><span class="std std-ref">SubCollection</span></a> &lt;name&gt;
@@ -243,6 +243,21 @@ The most important options are the collection name (<em>-b</em>) and the collect
 <div class="section" id="project">
 <span id="projectcollection"></span><h3>Project<a class="headerlink" href="#project" title="Permalink to this headline">¶</a></h3>
 <p>Specify the projects with it’s configs to build. It is possible to use “*” as wildcards.</p>
+<p>It is possible to define arguments which are added to the bake calls.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code> adds arguments before the command line arguments</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args_end</span></code> adds arguments after the command line arguments</p></li>
+</ul>
+</div></blockquote>
+<p>This means</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>bakery ... &lt;cmd_args&gt;
+</pre></div>
+</div>
+<p>results in:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>bake ... &lt;args&gt; &lt;cmd_args&gt; &lt;args_end&gt;
+</pre></div>
+</div>
 <p><em>Mandatory: yes, quantity: 1..n, default: -</em></p>
 </div>
 <div class="section" id="exclude">

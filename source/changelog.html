@@ -171,6 +171,11 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <dl>
+<dt>April 15, 2021 - bake-toolkit 2.70.0</dt><dd><ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">args_end</span></code> attribute to Collection.meta, which appends parameters at the end of the bake calls after the additional arguments from command line.</p></li>
+<li><p>Print a warning if an <code class="docutils literal notranslate"><span class="pre">Adapt</span></code> with toolchain condition shall be applied to configs which don’t have a toolchain defined (yet).</p></li>
+</ul>
+</dd>
 <dt>March 26, 2021 - bake-toolkit 2.69.0</dt><dd><ul class="simple">
 <li><p>Add wildcard support for <code class="docutils literal notranslate"><span class="pre">Copy</span></code>, <code class="docutils literal notranslate"><span class="pre">Move</span></code> and <code class="docutils literal notranslate"><span class="pre">Remove</span></code> commands in Project.meta.</p></li>
 <li><p>Add support for absolute paths in Collection.meta.</p></li>
