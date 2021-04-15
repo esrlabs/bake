@@ -1,11 +1,12 @@
 module Bake
 
   class BuildPattern
-    attr_reader :proj, :conf, :args, :coll_p
-    def initialize(proj, conf, args, coll_p)
+    attr_reader :proj, :conf, :args, :args_end, :coll_p
+    def initialize(proj, conf, args, args_end, coll_p)
       @proj = proj
       @conf = conf
       @args = args
+      @args_end = args_end
       @coll_p = coll_p
     end
     def getId

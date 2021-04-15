@@ -1,3 +1,3 @@
 Collection test {
-  Project "main", config: "test_ok", args: "--dotc build/test.dot"
+  Project "main", config: "test_ok", args: "-D someDefine", args_end: "-D someOtherDefine"
 }

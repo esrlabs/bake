@@ -38,7 +38,7 @@ module Bake
           Bake.formatter.printWarning("pattern does not match any project: #{p.name}", p)
         end
         projs.each do |f|
-          toBuildPattern << BuildPattern.new(f, "^"+p.config.gsub("*","(\\w*)")+"$", p.args, p)
+          toBuildPattern << BuildPattern.new(f, "^"+p.config.gsub("*","(\\w*)")+"$", p.args, p.args_end, p)
         end
       end
     end
@@ -51,7 +51,7 @@ module Bake
         res = c.gsub(/#.*/,"").match("\\s*(Library|Executable|Custom){1}Config\\s*\"?([\\w:-]*)\"?")
         if res
           if res[2].match(bp.conf) != nil
-            toBuild << BuildPattern.new(bp.proj, res[2], bp.args, nil)
+            toBuild << BuildPattern.new(bp.proj, res[2], bp.args, bp.args_end, nil)
             bp.coll_p.found
           end
         end

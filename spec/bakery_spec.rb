@@ -185,6 +185,12 @@ describe "bakery" do
     expect(str.include?("1 of 1 builds ok")).to be == true
   end
 
+  it 'args before cmd, args_end after cmd' do
+    str = `ruby bin/bakery -m spec/testdata/simple/main test -D cmdDefine`
+    puts str
+    expect(str.include?("-D someDefine -D cmdDefine -D someOtherDefine")).to be == true
+  end
+
 end
 
 end
