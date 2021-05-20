@@ -767,9 +767,9 @@ Toolchain settings for a specific config.'
 
 *Mandatory: no, quantity: 0..1, default: the DefaultToolchain settings from the main config*
 
-.. _outputdir:
+.. _outputDir:
 
-outputdir
+outputDir
 +++++++++
 
 Attribute of :ref:`defaultToolchain` and :ref:`toolchain`.
@@ -786,9 +786,9 @@ Attribute of :ref:`defaultToolchain` and :ref:`toolchain`.
 | *default for main config: <project root>/build/<configName>,*
 | *default for every other config: <project root>/build/<configName>_<mainProjectName>_<mainConfigName>*
 
-.. _outputdirPostfix:
+.. _outputDirPostfix:
 
-outputdirPostfix
+outputDirPostfix
 ++++++++++++++++
 
 Attribute of :ref:`defaultToolchain` and :ref:`toolchain`.

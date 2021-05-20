@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>The Project.meta file &mdash; bake  documentation</title>
   
@@ -18,7 +18,10 @@
   
     <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
   
+
   
+  
+
   
 
   
@@ -31,7 +34,6 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -55,7 +57,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> bake
+            <a href="../../index.html" class="icon icon-home"> bake
           
 
           
@@ -154,6 +156,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -167,7 +171,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../../_sources/source/concepts/the_project_meta_file.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -243,7 +247,7 @@
 <p>Let’s assume that Main and Sub are located in the same workspace root.
 To build the executable, bake can be called from the Main directory.</p>
 <blockquote>
-<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~/my_project$</span> bake -b Debug
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~/my_project$ </span>bake -b Debug
 </pre></div>
 </div>
 </div></blockquote>
@@ -253,7 +257,7 @@ To build the executable, bake can be called from the Main directory.</p>
 <li><p>Reading Project.meta of Main</p></li>
 <li><p>Reading Project.meta of dependencies (Sub)</p></li>
 <li><dl>
-<dt>Compiling sources of Sub, e.g.:</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> g++ -c -Wall -g3 -Iinclude -I../Main/include -o Debug_Main/src/xy.o src/xy.cpp
+<dt>Compiling sources of Sub, e.g.:</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>g++ -c -Wall -g3 -Iinclude -I../Main/include -o Debug_Main/src/xy.o src/xy.cpp
 </pre></div>
 </div>
 <ul class="simple">
@@ -267,21 +271,21 @@ To build the executable, bake can be called from the Main directory.</p>
 </li>
 <li><p>Archiving the library, e.g.:</p>
 <blockquote>
-<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> ar -rc Debug_Main/libSub.a Debug_Main/src/xy.o
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>ar -rc Debug_Main/libSub.a Debug_Main/src/xy.o
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>Compiling sources of Main, e.g.:</p>
 <blockquote>
-<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> g++ -c -Wall -Iinclude -o Debug/src/main.o src/main.cpp
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>g++ -c -Wall -Iinclude -o Debug/src/main.o src/main.cpp
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 <li><p>Linking executable, e.g.:</p>
 <blockquote>
-<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> g++ -o Debug/Main.exe Debug/src/main.o ../Sub/Debug_Main/libSub.a -L../Sub/lib -la -lb
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>g++ -o Debug/Main.exe Debug/src/main.o ../Sub/Debug_Main/libSub.a -L../Sub/lib -la -lb
 </pre></div>
 </div>
 <p>The library search paths and libraries are added in the specified order.</p>
@@ -289,7 +293,7 @@ To build the executable, bake can be called from the Main directory.</p>
 </li>
 <li><p>Executing the post step</p>
 <blockquote>
-<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> <span class="nb">echo</span> Main.exe built.
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span><span class="nb">echo</span> Main.exe built.
 </pre></div>
 </div>
 <p>The variable was automatically substituted.</p>
@@ -304,37 +308,29 @@ To build the executable, bake can be called from the Main directory.</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="the_main_project.html" class="btn btn-neutral float-right" title="The main project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="concepts.html" class="btn btn-neutral float-left" title="Concepts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="the_main_project.html" class="btn btn-neutral float-right" title="The main project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="concepts.html" class="btn btn-neutral float-left" title="Concepts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2012-2021, ESRLabs GmbH
+        &#169; Copyright 2012-2021, ESRLabs GmbH.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

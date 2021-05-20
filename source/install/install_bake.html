@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Install bake &mdash; bake  documentation</title>
   
@@ -18,7 +18,10 @@
   
     <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
   
+
   
+  
+
   
 
   
@@ -31,7 +34,6 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -55,7 +57,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> bake
+            <a href="../../index.html" class="icon icon-home"> bake
           
 
           
@@ -152,6 +154,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -163,7 +167,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../../_sources/source/install/install_bake.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -192,17 +196,17 @@ bake and its depedencies can be found on <a class="reference external" href="htt
 <li><p>Make sure you have installed <a class="reference external" href="https://www.ruby-lang.org/en/">Ruby</a> <strong>&gt;= 2.0</strong>.</p></li>
 <li><p>Install the bake gem.</p>
 <blockquote>
-<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> gem install bake-toolkit
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>gem install bake-toolkit
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 </ol>
 <p><strong>Example:</strong></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> ruby -v                    <span class="c1"># (Check if an appropriate ruby version is installed)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>ruby -v                    <span class="c1"># (Check if an appropriate ruby version is installed)</span>
 <span class="go">ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0]</span>
 
-<span class="gp">User@Host:~$</span> gem install bake-toolkit   <span class="c1"># (Install the bake gem)</span>
+<span class="gp">User@Host:~$ </span>gem install bake-toolkit   <span class="c1"># (Install the bake gem)</span>
 <span class="go">Fetching: highline-1.6.15.gem (100%)</span>
 <span class="go">Fetching: colored-1.2.gem (100%)</span>
 <span class="go">Fetching: progressbar-0.11.0.gem (100%)</span>
@@ -276,7 +280,7 @@ Usually you will see an error like this:</p>
 </div></blockquote>
 <p>This is a ruby bug. However, the gems were installed correctly. You can avoid building the documentation by installing bake like this:</p>
 <blockquote>
-<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> gem install bake-toolkit --no-rdoc --no-ri
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>gem install bake-toolkit --no-rdoc --no-ri
 </pre></div>
 </div>
 </div></blockquote>
@@ -289,37 +293,29 @@ Usually you will see an error like this:</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../quickstart/quickstart.html" class="btn btn-neutral float-right" title="Quickstart" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../why_bake/why_bake.html" class="btn btn-neutral float-left" title="Why you should use bake" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="../quickstart/quickstart.html" class="btn btn-neutral float-right" title="Quickstart" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../why_bake/why_bake.html" class="btn btn-neutral float-left" title="Why you should use bake" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2012-2021, ESRLabs GmbH
+        &#169; Copyright 2012-2021, ESRLabs GmbH.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
