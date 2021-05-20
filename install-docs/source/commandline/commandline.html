@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Commandline &mdash; bake  documentation</title>
   
@@ -18,7 +18,10 @@
   
     <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
   
+
   
+  
+
   
 
   
@@ -31,7 +34,6 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -55,7 +57,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> bake
+            <a href="../../index.html" class="icon icon-home"> bake
           
 
           
@@ -159,6 +161,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -170,7 +174,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../../_sources/source/commandline/commandline.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -188,7 +192,7 @@
 <h1>Commandline<a class="headerlink" href="#commandline" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="how-to-get-help">
 <h2>How to get help<a class="headerlink" href="#how-to-get-help" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake -h
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake -h
 </pre></div>
 </div>
 </div>
@@ -208,48 +212,48 @@
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="building-an-application">
 <h3>Building an application<a class="headerlink" href="#building-an-application" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake -b Debug
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake -b Debug
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>It is possible to omit <em>-b</em>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake Debug
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="building-from-within-an-arbitrary-directory">
 <h3>Building from within an arbitrary directory<a class="headerlink" href="#building-from-within-an-arbitrary-directory" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root/mainProj
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake Debug -m w:/root/mainProj
 </pre></div>
 </div>
 </div>
 <div class="section" id="building-just-one-specific-project">
 <h3>Building just one specific project<a class="headerlink" href="#building-just-one-specific-project" title="Permalink to this headline">¶</a></h3>
 <p>Assuming the project name to build s myProj.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -p myProj
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake Debug -m w:/root1/myProj -p myProj
 </pre></div>
 </div>
 </div>
 <div class="section" id="building-specific-projects-with-different-roots">
 <h3>Building specific projects with different roots<a class="headerlink" href="#building-specific-projects-with-different-roots" title="Permalink to this headline">¶</a></h3>
 <p>Assuming mainProj has several configs really included in the build (which is uncommon), you can choose one of the configs.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -p myProj,abc
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake Debug -m w:/root1/myProj -p myProj,abc
 </pre></div>
 </div>
 </div>
 <div class="section" id="building-a-project-which-has-more-than-one-root">
 <h3>Building a project which has more than one root<a class="headerlink" href="#building-a-project-which-has-more-than-one-root" title="Permalink to this headline">¶</a></h3>
 <p>Assuming code has been checked out into two roots, the console supports ansi colors, you want to stop on first error and build only the project bspAbc.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc
 </pre></div>
 </div>
 </div>
 <div class="section" id="search-depth">
 <h3>Search depth<a class="headerlink" href="#search-depth" title="Permalink to this headline">¶</a></h3>
 <p>Projects and Adaptions are searched recursively within the roots. Specify the maximum search depth like this:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1,3 -w w:/root2/libA,0 -r -a black -p bspAbc
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake Debug -m w:/root1/myProj -w w:/root1,3 -w w:/root2/libA,0 -r -a black -p bspAbc
 </pre></div>
 </div>
 <dl class="simple">
@@ -265,14 +269,14 @@
 </div>
 <div class="section" id="clean-a-project-s">
 <h3>Clean a project(s)<a class="headerlink" href="#clean-a-project-s" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc -c
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake Debug -m w:/root1/myProj -w w:/root1 -w w:/root2 -r -a black -p bspAbc -c
 </pre></div>
 </div>
 </div>
 <div class="section" id="build-a-single-file-s">
 <h3>Build a single file(s)<a class="headerlink" href="#build-a-single-file-s" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug -p bspAbc -f main.cpp
-<span class="gp">User@Host:~$</span> bake Debug -f .asm
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake Debug -p bspAbc -f main.cpp
+<span class="gp">User@Host:~$ </span>bake Debug -f .asm
 </pre></div>
 </div>
 <div class="admonition note">
@@ -285,7 +289,7 @@
 <h2>Roots file (roots.bake)<a class="headerlink" href="#roots-file-roots-bake" title="Permalink to this headline">¶</a></h2>
 <p>If a workspace has many roots, it’s cumbersome to specify all root folders with -w.
 Instead, you can write them into a file. This file can be also specified with -w:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$</span> bake Debug ... -w myRootsFile.txt
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake Debug ... -w myRootsFile.txt
 </pre></div>
 </div>
 <p>The content of the file is simply one root per line, e.g.:</p>
@@ -312,37 +316,29 @@ Instead, you can write them into a file. This file can be also specified with -w
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../ide/ide_integrations.html" class="btn btn-neutral float-right" title="IDE Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../syntax/environment.html" class="btn btn-neutral float-left" title="Compiler settings via environment variables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="../ide/ide_integrations.html" class="btn btn-neutral float-right" title="IDE Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../syntax/environment.html" class="btn btn-neutral float-left" title="Compiler settings via environment variables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2012-2021, ESRLabs GmbH
+        &#169; Copyright 2012-2021, ESRLabs GmbH.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
