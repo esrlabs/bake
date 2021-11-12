@@ -31,6 +31,15 @@ describe "File TCS" do
     expect(ExitHelper.exit_code).to be == 0
   end
 
+  it 'before glob with abs path' do
+    Bake.startBake("ftc/main", ["test_2", "-v2", "--abs-paths"])
+    expect(($mystring.include?"a1.d -DA -o")).to be == true
+    expect(($mystring.include?"a2.d -DB -o")).to be == true
+    expect(($mystring.include?"a3.d -DB -o")).to be == true
+    expect(($mystring.include?"a4.d -DB -o")).to be == true
+    expect(ExitHelper.exit_code).to be == 0
+  end
+
   it 'different glob' do
     Bake.startBake("ftc/main", ["test_3", "-v2"])
     expect(($mystring.include?"a1.d -o")).to be == true

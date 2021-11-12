@@ -586,8 +586,9 @@ module Bake
           end
           res.each do |f|
             singleFile = res.length == 1 && res[0] == pr
-            if ((!@fileTcs.has_key?(f)) || singleFile)
-              @fileTcs[f] = icf
+            fTcs = (Bake.options.consoleOutput_fullnames ? File.expand_path(f, @projectDir) : f)
+            if ((!@fileTcs.has_key?(fTcs)) || singleFile)
+              @fileTcs[fTcs] = icf
             end
             if source_files.include?(f) || exclude_files.include?(f)
               if (singleFile)
@@ -780,11 +781,6 @@ module Bake
           @flag_array[type] = getFlags(@block.tcs[:COMPILER][type])
         end
       end
-
-      def tcs4source(source)
-        @fileTcs[source] || @block.tcs
-      end
-
 
     end
 

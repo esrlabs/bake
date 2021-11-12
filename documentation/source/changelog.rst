@@ -1,6 +1,9 @@
 Changelog
 =========
 
+December 8, 2021 - bake-toolkit 2.70.1
+    * Fix handling of file specific flags and defines in combination with the command line argument ``--abs-paths``.
+
 April 15, 2021 - bake-toolkit 2.70.0
     * Add ``args_end`` attribute to Collection.meta, which appends parameters at the end of the bake calls after the additional arguments from command line.
     * Print a warning if an ``Adapt`` with toolchain condition shall be applied to configs which don't have a toolchain defined (yet).
