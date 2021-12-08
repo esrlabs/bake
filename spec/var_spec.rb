@@ -169,10 +169,10 @@ describe "VarSubst" do
     Bake.startBake("cache/main", ["testPaths", "-v", "2"])
 
     if not Utils::OS.windows?
-      expect($mystring.scan("/usr/bin").count + $mystring.scan("/ruby").count).to be >= 5
+      expect($mystring.lower scan("/usr/bin").count + $mystring.scan("uby").count).to be >= 5
     else
-      expect($mystring.scan("uby").count).to be == 2 # assuming Ruby/ruby is is a ruby dir
-      expect($mystring.scan("bin").count).to be >= 3 # assuming that gcc in in a bin dir
+      expect($mystring.scan("uby").count).to be == 2 # assuming Ruby/ruby is in a ruby dir
+      expect($mystring.scan("bin").count).to be >= 3 # assuming that gcc is in a bin dir
     end
   end
 

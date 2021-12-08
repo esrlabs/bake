@@ -75,7 +75,7 @@ task :spec do
   puts 'Please run test:spec'
 end
 
-task :travis do
+task :gh_action_test do
   ENV["CI_RUNNING"] = "YES"
   if RUBY_VERSION.start_with?("2.4")
     ENV["COVERAGE_RUNNING"] = "YES"
@@ -88,10 +88,4 @@ task :travis do
     Rake::Task["coveralls:push"].invoke
   rescue Exception
   end
-end
-
-task :appveyor do
-  ENV["CI_RUNNING"] = "YES"
-  ENV["COVERAGE_RUNNING"] = "NO"
-  Rake::Task["test:spec"].invoke
 end

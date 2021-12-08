@@ -31,5 +31,8 @@ jobs:
              gem install e2mmap          -v 0.1.0  --no-document
              gem install colored         -v 1.2    --no-document
              gem install rspec           -v 3.10.0 --no-document
-      - run: rake travis
- 
+      - run: rake gh_action_test
+      - if ${{matrix.os == 'ubuntu' && matrix.ruby == '2.4'}}
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ github.token }}
