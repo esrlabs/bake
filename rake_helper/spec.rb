@@ -13,13 +13,7 @@ if defined?(RUBY_ENGINE) && RUBY_ENGINE == "ruby" && RUBY_VERSION >= "2.0"
   end
 end
 
-begin
-  require 'coveralls/rake/task'
-  Coveralls::RakeTask.new
-rescue LoadError
-end
-
-SPEC_PATTERN ='spec/**/*_spec.rb'
+SPEC_PATTERN ='spec/**/cache_spec.rb'
 
 puts "Creating dummy libs"
 `gcc -r -c rake_helper/dummy.c -o rake_helper/dummy.a`
@@ -77,15 +71,11 @@ end
 
 task :gh_action_test do
   ENV["CI_RUNNING"] = "YES"
-  if RUBY_VERSION.start_with?("2.4")
+  if RUBY_VERSION.start_with?("2.4") && RbConfig::CONFIG['host_os'].include?("/linux/")
     ENV["COVERAGE_RUNNING"] = "YES"
   else
     ENV["COVERAGE_RUNNING"] = "NO"
   end
 
   Rake::Task["test:spec"].invoke
-  begin
-    Rake::Task["coveralls:push"].invoke
-  rescue Exception
-  end
 end

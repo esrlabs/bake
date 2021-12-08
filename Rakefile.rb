@@ -1,5 +1,5 @@
-gem "coveralls", "=0.8.23"
-gem "simplecov", "=0.16.1"
+gem "simplecov", "=0.21.2"
+gem "simplecov-lcov", "=0.8.0"
 gem "rspec",     "=3.10.0"
 
 require 'rake'
