@@ -71,7 +71,7 @@ end
 
 task :gh_action_test do
   ENV["CI_RUNNING"] = "YES"
-  if RUBY_VERSION.start_with?("2.4") && RbConfig::CONFIG['host_os'].include?("/linux/")
+  if RUBY_VERSION.start_with?("2.7") && RbConfig::CONFIG['host_os'].include?("/linux/")
     ENV["COVERAGE_RUNNING"] = "YES"
   else
     ENV["COVERAGE_RUNNING"] = "NO"

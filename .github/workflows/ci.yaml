@@ -21,8 +21,6 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
       - run: |
              gem install docile          -v 1.3.5  --no-document 
-             gem install simplecov       -v 0.21.2 --no-document
-             gem install simplecov-lcov  -v 0.8.0 --no-document
              gem install rtext           -v 0.9.0  --no-document
              gem install rgen            -v 0.8.2  --no-document
              gem install highline        -v 1.7.8  --no-document
@@ -31,8 +29,12 @@ jobs:
              gem install e2mmap          -v 0.1.0  --no-document
              gem install colored         -v 1.2    --no-document
              gem install rspec           -v 3.10.0 --no-document
+      - if: ${{matrix.os == 'ubuntu' && matrix.ruby == '2.7'}}
+        run: |
+             gem install simplecov       -v 0.21.2 --no-document
+             gem install simplecov-lcov  -v 0.8.0 --no-document
       - run: rake gh_action_test
-      - if: ${{matrix.os == 'ubuntu' && matrix.ruby == '2.4'}}
+      - if: ${{matrix.os == 'ubuntu' && matrix.ruby == '2.7'}}
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
