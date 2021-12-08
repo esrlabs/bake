@@ -13,7 +13,7 @@ if defined?(RUBY_ENGINE) && RUBY_ENGINE == "ruby" && RUBY_VERSION >= "2.0"
   end
 end
 
-SPEC_PATTERN ='spec/**/cache_spec.rb'
+SPEC_PATTERN ='spec/**/*_spec.rb'
 
 puts "Creating dummy libs"
 `gcc -r -c rake_helper/dummy.c -o rake_helper/dummy.a`
