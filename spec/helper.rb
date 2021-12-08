@@ -12,6 +12,10 @@ end
 
 begin
   if Bake.coverageRunning?
+    gem "simplecov", "=0.21.2"
+    gem "simplecov-lcov", "=0.8.0"
+    gem "rspec",     "=3.10.0"
+
     require 'simplecov'
     require 'simplecov-lcov'
 
