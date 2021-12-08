@@ -1,4 +1,4 @@
-name: Matrix Testing
+name: Unit test
 
 on:
   push:
@@ -13,11 +13,23 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu, macos, windows]
-        ruby: [2.5, 2.6, 2.7]
+        ruby: [2.4, 2.5, 2.6, 2.7]
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@477b21f02be01bcb8030d50f37cfec92bfa615b6
         with:
           ruby-version: ${{ matrix.ruby }}
-      - run: gem install coveralls
-      - run: rake test:spec
+      - run: |
+             gem install docile          -v 1.3.5  --no-document 
+             gem install coveralls       -v 0.8.23 --no-document --conservative 
+             gem install simplecov       -v 0.14.1 --no-document
+             gem install rtext           -v 0.9.0  --no-document
+             gem install rgen            -v 0.8.2  --no-document
+             gem install highline        -v 1.7.8  --no-document
+             gem install concurrent-ruby -v 1.0.5  --no-document
+             gem install thwait          -v 0.1.0  --no-document
+             gem install e2mmap          -v 0.1.0  --no-document
+             gem install colored         -v 1.2    --no-document
+             gem install rspec           -v 3.10.0 --no-document
+      - run: rake travis
+ 
