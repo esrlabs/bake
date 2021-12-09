@@ -3,8 +3,6 @@ bake
 
 bake is used to build software **fast** and **easy**.
 
-Coveralls: [![Coverage Status](https://coveralls.io/repos/github/esrlabs/bake/badge.svg?branch=master)](https://coveralls.io/github/esrlabs/bake?branch=master)
-
 ## Build tool for C++ projects.
 
 Key features

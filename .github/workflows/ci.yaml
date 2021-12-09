@@ -12,8 +12,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu, macos, windows]
+        os: [ubuntu]
         ruby: [2.4, 2.5, 2.6, 2.7]
+        include:
+          - os: macos
+            ruby 2.7
+          - os: windows
+            ruby 2.4
+          - os: windows
+            ruby 2.7
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@477b21f02be01bcb8030d50f37cfec92bfa615b6
