@@ -1,10 +1,7 @@
 $:.unshift(File.dirname(__FILE__)+"/")
 
 require "lib/common/version"
-
-include FileUtils
-
-#YAML::ENGINE.yamler = 'syck'
+require "fileutils"
 
 PKG_VERSION = Bake::Version.number
 PKG_FILES = Dir[
