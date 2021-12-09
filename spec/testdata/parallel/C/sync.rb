@@ -36,12 +36,10 @@ end
 
 if output.include?"a1" or output.include?"a2" or output.include?"c1" or output.include?"c2" or output.include?"c3" or output.include?"/test/"
   step = 1;
-elsif output.include?"a3" or output.include?"b1" or output.include?"b2"
+elsif output.include?"a3" or output.include?"b1" or output.include?"b2" or output.include?"libA"
   step = 2;
-elsif output.include?"libA"
-  step = 3;
 elsif output.include?"b3" or output.include?"libB"
-  step = 4;
+  step = 3;
 end
 
 # puts "  #{output} - #{dep ? dep : "n/a"} - #{step}"
@@ -50,7 +48,6 @@ File.open(dep, 'wb') do |f|
   f.puts("abc: def")
 end if dep
 FileUtils.touch output if output
-
 
 begin
   x = File.read("../step.txt")

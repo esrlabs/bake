@@ -28,25 +28,28 @@ describe "Parallel" do
     Bake.setStep(1)
     t = Thread.new() {
       inc = proc {|e| $mystring.include?(e) }
-
-      sleep 5
       checks = []
-      checks << ["a1.cpp", "a2.cpp", "a3.cpp", "b1.cpp", "b2.cpp", "b3.cpp", "c1.cpp", "c2.cpp", "c3.cpp"].all?(&inc)
+
+      begin
+        sleep 0.1
+        res = ["a1.cpp", "a2.cpp", "a3.cpp", "b1.cpp", "b2.cpp", "b3.cpp", "c1.cpp", "c2.cpp", "c3.cpp"].all?(&inc)
+      end while !res
+      sleep 1
       checks << ["libA", "libB", "Linking"].none?(&inc)
 
-
       Bake.setStep(2)
-      sleep 5
-      checks << ["libA"].all?(&inc)
+      begin
+        sleep 0.1
+        res = ["libA"].all?(&inc)
+      end while !res
+      sleep 1
       checks << ["libB", "Linking"].none?(&inc)
 
       Bake.setStep(3)
-      sleep 5
-      checks << ["libB", "Linking"].none?(&inc)
-
-      Bake.setStep(4)
-      sleep 5
-      checks << ["libB", "Linking"].all?(&inc)
+      begin
+        sleep 0.1
+        res = ["libB", "Linking"].all?(&inc)
+      end while !res
 
       checks
     }
@@ -68,25 +71,24 @@ describe "Parallel" do
     Bake.setStep(1)
     t = Thread.new() {
       inc = proc {|e| $mystring.include?(e) }
+      checks = []
 
       sleep 5
-      checks = []
       checks << ["c1.cpp", "c2.cpp", "c3.cpp", "libA", "libB", "Linking"].none?(&inc)
 
-
       Bake.setStep(2)
-      sleep 5
-      checks << ["libA"].all?(&inc)
+      begin
+        sleep 0.1
+        res = ["c1.cpp", "c2.cpp", "c3.cpp", "libA"].all?(&inc)
+      end while !res
+      sleep 1
       checks << ["libB", "Linking"].none?(&inc)
 
       Bake.setStep(3)
-      sleep 5
-      checks << ["c1.cpp", "c2.cpp", "c3.cpp"].all?(&inc)
-      checks << ["libB", "Linking"].none?(&inc)
-
-      Bake.setStep(4)
-      sleep 5
-      checks << ["libB", "Linking"].all?(&inc)
+      begin
+        sleep 0.1
+        res = ["libB", "Linking"].all?(&inc)
+      end while !res
 
       checks
     }
