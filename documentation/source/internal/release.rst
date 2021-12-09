@@ -11,10 +11,10 @@ git code and test
 
 - Develop features and fixes
 - Increment version (in version.rb and index.rst)
-- Create documentation in "documentation" folder with "make html && ./fixBootstrap.sh"
+- Create documentation in "documentation" folder with "make html"
 - Adapt unittest, run with "rake test:spec"
 - Commit
-- Check on Travis CI and Appveyor if all builds are green
+- Check Github Actions if all builds are green
 - Tag repository
 - Push commits and tags
 
