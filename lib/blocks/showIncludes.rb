@@ -22,7 +22,7 @@ module Bake
           print projName
           incs = []
           blocks.each do |block|
-            if Bake.options.consoleOutput_fullnames
+            if Bake.options.abs_path_in
               incs += block.include_list.map { |i| File.expand_path(i, block.projectDir)  }
             else
               incs += block.include_list
@@ -103,7 +103,7 @@ module Bake
             block.calcIncludes
             block.calcDefines
             block.calcFlags 
-            if Bake.options.consoleOutput_fullnames
+            if Bake.options.abs_path_in
               blockIncs += block.include_list.map { |i| File.expand_path(i, block.projectDir)  }
             else
               blockIncs += block.include_list

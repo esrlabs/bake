@@ -254,7 +254,7 @@ module Bake
         if Bake.options.cc2j_filename
           cmdJson = cmd.is_a?(Array) ? cmd.join(' ') : cmd
           srcFilePath = source
-          if Bake.options.consoleOutput_fullnames
+          if Bake.options.abs_path_in
             srcFilePath = File.join(@projectDir, srcFilePath) if !File.is_absolute?(srcFilePath)
             cmdJson[source] = srcFilePath
           end
@@ -529,7 +529,7 @@ module Bake
           if not type.nil?
             object = get_object_file(source)
 
-            if Bake.options.consoleOutput_fullnames
+            if Bake.options.abs_path_in
               object = File.expand_path(object, @projectDir)
               source = File.expand_path(source, @projectDir)
             end
@@ -586,7 +586,7 @@ module Bake
           end
           res.each do |f|
             singleFile = res.length == 1 && res[0] == pr
-            fTcs = (Bake.options.consoleOutput_fullnames ? File.expand_path(f, @projectDir) : f)
+            fTcs = (Bake.options.abs_path_in ? File.expand_path(f, @projectDir) : f)
             if ((!@fileTcs.has_key?(fTcs)) || singleFile)
               @fileTcs[fTcs] = icf
             end
@@ -642,7 +642,7 @@ module Bake
         block.bes.each do |be|
           if Metamodel::IncludeDir === be
             if be.inherit == true || block == @block
-              if Bake.options.consoleOutput_fullnames
+              if Bake.options.abs_path_in
                 mappedInc = be.name
               else
                 mappedInc = File.rel_from_to_project(@projectDir,be.name,false)

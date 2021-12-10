@@ -136,7 +136,7 @@ module Bake
               end
 
               console_output = x[0]
-              console_output = console_output_full if Bake.options.consoleOutput_fullnames
+              console_output = console_output_full if Bake.options.abs_path_out
 
               ret = error_descs.any? { |e| e.severity == ErrorParser::SEVERITY_ERROR }
 

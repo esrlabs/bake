@@ -22,7 +22,7 @@ module Bake
     attr_reader :vars, :include_filter_args # map
     attr_reader :verbose
     attr_reader :filelist # set
-    attr_reader :consoleOutput_fullnames
+    attr_reader :abs_path_in, :abs_path_out
     attr_reader :roots # Root array
     attr_reader :diabCaseCheck
     attr_reader :defines
@@ -50,7 +50,8 @@ module Bake
       @analyze = false
       @eclipseOrder = false
       @showConfigs = false
-      @consoleOutput_fullnames = false
+      @abs_path_in = false
+      @abs_path_out = false
       @prepro = false
       @stopOnFirstError = false
       @verbose = 1
@@ -141,7 +142,9 @@ module Bake
       add_option(["--dot-project-level",                         ], lambda { @dot = true; @dotShowProjOnly = true        })
       add_option(["--do",                 "--include_filter"     ], lambda { |x| set_filter(x)                           })
       add_option(["--omit",               "--exclude_filter"     ], lambda { |x| @exclude_filter << x                    })
-      add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @consoleOutput_fullnames = true         })
+      add_option(["--abs-paths",          "--show_abs_paths"     ], lambda {     @abs_path_in = @abs_path_out = true     })
+      add_option(["--abs-paths-in",       "--show_abs_paths"     ], lambda {     @abs_path_in = true                     })
+      add_option(["--abs-paths-out",      "--show_abs_paths"     ], lambda {     @abs_path_out = true                    })
       add_option(["--prebuild"                                   ], lambda {     @prebuild = true                        })
       add_option(["--Wparse"                                     ], lambda {     @wparse = true                          })
 

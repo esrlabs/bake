@@ -34,7 +34,7 @@ module Bake
           baseFilename += ".#{@config.artifactExtension.name}"
         end
         @archive_name ||= File.join([@block.output_dir, baseFilename])
-        if Bake.options.consoleOutput_fullnames
+        if Bake.options.abs_path_in
           @archive_name = File.expand_path(@archive_name, @projectDir)
         end
         return @archive_name
