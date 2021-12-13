@@ -3,8 +3,8 @@ How to release
 
 Prerequisites
 -------------
-- pip install sphinx
-- pip install sphinx_bootstrap_theme
+- In documentation folder:
+  pip install -r requirements.txt
 
 git code and test
 -----------------

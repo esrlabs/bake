@@ -190,8 +190,8 @@
 <div class="section" id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>pip install sphinx</p></li>
-<li><p>pip install sphinx_bootstrap_theme</p></li>
+<li><p>In documentation folder:
+pip install -r requirements.txt</p></li>
 </ul>
 </div>
 <div class="section" id="git-code-and-test">
@@ -199,10 +199,10 @@
 <ul class="simple">
 <li><p>Develop features and fixes</p></li>
 <li><p>Increment version (in version.rb and index.rst)</p></li>
-<li><p>Create documentation in “documentation” folder with “make html &amp;&amp; ./fixBootstrap.sh”</p></li>
+<li><p>Create documentation in “documentation” folder with “make html”</p></li>
 <li><p>Adapt unittest, run with “rake test:spec”</p></li>
 <li><p>Commit</p></li>
-<li><p>Check on Travis CI and Appveyor if all builds are green</p></li>
+<li><p>Check Github Actions if all builds are green</p></li>
 <li><p>Tag repository</p></li>
 <li><p>Push commits and tags</p></li>
 </ul>
