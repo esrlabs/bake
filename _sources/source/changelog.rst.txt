@@ -1,6 +1,9 @@
 Changelog
 =========
 
+December 13, 2021 - bake-toolkit 2.71.0
+    * Add ``--abs-paths-in`` for compiler command lines and `--abs-paths-out`` for compiler output. This splits the still existing `--abs-paths``.
+
 December 8, 2021 - bake-toolkit 2.70.1
     * Fix handling of file specific flags and defines in combination with the command line argument ``--abs-paths``.
 
