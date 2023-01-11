@@ -1,7 +1,7 @@
 Changelog
 =========
 
-January 11, 2022 - bake-toolkit 2.71.1
+January 11, 2023 - bake-toolkit 2.71.1
     * Changed all deprecated functions ``File.exists`` to ``File.exist``
 
 December 13, 2021 - bake-toolkit 2.71.0
