@@ -70,7 +70,7 @@ module Bake
         end
         Bake.options.adapt.each do |a|
           adaptBaseName = File.expand_path(a.gsub(/\(.*\)/,"") + "/Adapt.meta")
-          potentialAdapts << adaptBaseName  if File.exists?adaptBaseName
+          potentialAdapts << adaptBaseName  if File.exist?adaptBaseName
         end
         potentialAdapts.concat(Root.search_to_depth(r, "Adapt.meta", root.depth))
       end

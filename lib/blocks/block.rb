@@ -142,14 +142,14 @@ module Bake
           Bake.formatter.printInfo("\"#{d}\" uses path magic in IncludeDir, please use a Dependency to \"#{inc[0]}\" instead", elem) if warnIfLocal
         end
 
-        if File.exists?(@projectDir + "/" + d) # prio 2: local, e.g. "include"
+        if File.exist?(@projectDir + "/" + d) # prio 2: local, e.g. "include"
           res << d
         end
 
         # prio 3: check if dir exists without Project.meta entry
         Bake.options.roots.each do |r|
           absIncDir = r.dir+"/"+d
-          if File.exists?(absIncDir)
+          if File.exist?(absIncDir)
             res << File.rel_from_to_project(@projectDir,absIncDir,false)
             Bake.formatter.printInfo("\"#{d}\" uses path magic in IncludeDir, please create a Project.meta in \"#{absIncDir}\" or upwards and use a Dependency instead", elem) if warnIfLocal && res.length == 1
           end

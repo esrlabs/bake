@@ -77,25 +77,25 @@ module Bake
         return "because linkOnly was specified" if Bake.options.linkOnly
 
         # exe
-        return "because executable does not exist" if not File.exists?(@exe_name)
+        return "because executable does not exist" if not File.exist?(@exe_name)
 
         eTime = File.mtime(@exe_name)
 
         # linkerscript
         if @linker_script
-          return "because linker script does not exist - will most probably result in an error" if not File.exists?(@linker_script)
+          return "because linker script does not exist - will most probably result in an error" if not File.exist?(@linker_script)
           return "because linker script is newer than executable" if eTime < File.mtime(@linker_script)
         end
 
         # sources
         @compileBlock.objects.each do |obj|
-          return "because object #{obj} does not exist" if not File.exists?(obj)
+          return "because object #{obj} does not exist" if not File.exist?(obj)
           return "because object #{obj} is newer than executable" if eTime < File.mtime(obj)
         end if @compileBlock
 
         # libs
         libs.each do |lib|
-          return "because library #{lib} does not exist" if not File.exists?(lib)
+          return "because library #{lib} does not exist" if not File.exist?(lib)
           return "because library #{lib} is newer than executable" if eTime < File.mtime(lib)
         end
         false
