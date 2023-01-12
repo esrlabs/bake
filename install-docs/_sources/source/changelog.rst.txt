@@ -2,7 +2,7 @@ Changelog
 =========
 
 January 11, 2023 - bake-toolkit 2.72.0
-    * Changed all deprecated functions ``File.exists`` to ``File.exist``, adding compatibility to Ruby 3.0, 3.1 and 3.2.
+    * Change all deprecated functions ``File.exists`` to ``File.exist``for compatibility to Ruby 3.2.
 
 December 13, 2021 - bake-toolkit 2.71.0
     * Add ``--abs-paths-in`` for compiler command lines and ``--abs-paths-out`` for compiler output. This splits the still existing ``--abs-paths``.
