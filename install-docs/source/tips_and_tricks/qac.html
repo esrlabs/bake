@@ -1,43 +1,22 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>QACPP for MISRA and cyclomatic complexity &mdash; bake  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-
-  
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
-  
-
-  
-  
-
-  
-
-  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="bakeclean" href="bakeclean.html" />
@@ -46,29 +25,13 @@
 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> bake
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,19 +39,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Start to bake</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Start to bake</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
@@ -131,78 +83,36 @@
 <li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">bake</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content style-external-links">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="tips_and_tricks.html">Additional features</a> &raquo;</li>
-        
       <li>QACPP for MISRA and cyclomatic complexity</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/source/tips_and_tricks/qac.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="qacpp-for-misra-and-cyclomatic-complexity">
-<h1>QACPP for MISRA and cyclomatic complexity<a class="headerlink" href="#qacpp-for-misra-and-cyclomatic-complexity" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="qacpp-for-misra-and-cyclomatic-complexity">
+<h1>QACPP for MISRA and cyclomatic complexity<a class="headerlink" href="#qacpp-for-misra-and-cyclomatic-complexity" title="Permalink to this headline"></a></h1>
 <p>bakeqac is a convenience wrapper for QACPP with some nice features.</p>
-<div class="section" id="without-bakeqac">
-<h2>Without bakeqac<a class="headerlink" href="#without-bakeqac" title="Permalink to this headline">¶</a></h2>
+<section id="without-bakeqac">
+<h2>Without bakeqac<a class="headerlink" href="#without-bakeqac" title="Permalink to this headline"></a></h2>
 <p>QACPP can be called directly from command line:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">qacli admin --qaf-project-config --qaf-project qacdata --cct &lt;cct&gt; --rcf &lt;rcf&gt; --acf &lt;acf&gt;</span>
 <span class="go">qacli analyze -P qacdata -b &lt;bake call&gt;</span>
@@ -218,9 +128,9 @@
 <li><p>The forth and fifth commands generate reports. You may replace the python scripts in PRQA to adapt the output.</p></li>
 </ul>
 <p>Please note, that “view” is not necessary to generate the reports.</p>
-</div>
-<div class="section" id="with-bakeqac">
-<h2>With bakeqac<a class="headerlink" href="#with-bakeqac" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="with-bakeqac">
+<h2>With bakeqac<a class="headerlink" href="#with-bakeqac" title="Permalink to this headline"></a></h2>
 <p>Instead of writing</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bake &lt;options&gt;</span>
 </pre></div>
@@ -238,9 +148,9 @@
 </div>
 <p>Example output:</p>
 <a class="reference internal image-reference" href="../../_images/misra.png"><img alt="../../_images/misra.png" src="../../_images/misra.png" style="width: 1942.0px; height: 944.0px;" /></a>
-</div>
-<div class="section" id="step-1-admin">
-<h2>Step 1: admin<a class="headerlink" href="#step-1-admin" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="step-1-admin">
+<h2>Step 1: admin<a class="headerlink" href="#step-1-admin" title="Permalink to this headline"></a></h2>
 <p>You have to set the environment variable QAC_HOME, e.g. to <em>c:\tools\prqa\PRQA-Framework-2.1.0</em>.
 MCPP has to installed next to <em>PRQA-Framework-2.x.x</em> (in this case MCPP_HOME is set automatically to this directory).
 Alternatively set the MCPP_HOME variable explicitly when MCPP is installed somewhere else.</p>
@@ -277,9 +187,9 @@ This may be used to add additional configuration parameters which are compiler i
 </div>
 </li>
 </ul>
-</div>
-<div class="section" id="step-2-analyze">
-<h2>Step 2: analyze<a class="headerlink" href="#step-2-analyze" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="step-2-analyze">
+<h2>Step 2: analyze<a class="headerlink" href="#step-2-analyze" title="Permalink to this headline"></a></h2>
 <p>This is the main step. Use exactly the same options for bakeqac as for bake. A few things have to be mentioned:</p>
 <ul class="simple">
 <li><p><em>–compile-only</em> will be automatically added</p></li>
@@ -289,9 +199,9 @@ This may be used to add additional configuration parameters which are compiler i
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacnomsgfilter</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="step-3-view">
-<h2>Step 3: view<a class="headerlink" href="#step-3-view" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="step-3-view">
+<h2>Step 3: view<a class="headerlink" href="#step-3-view" title="Permalink to this headline"></a></h2>
 <p>Results are also filtered in this step if not specified otherwise:</p>
 <ul class="simple">
 <li><p>Only results from compiled bake projects will be shown (which does not apply to e.g. compiler libraries). To narrow the results, use the <em>-p</em> option.</p></li>
@@ -314,13 +224,13 @@ This may be used to add additional configuration parameters which are compiler i
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; -a &lt;color_scheme&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="step-4-report">
-<h2>Step 4: report<a class="headerlink" href="#step-4-report" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="step-4-report">
+<h2>Step 4: report<a class="headerlink" href="#step-4-report" title="Permalink to this headline"></a></h2>
 <p>Reports about the warnings and suppressed warnings are be generated.</p>
-</div>
-<div class="section" id="step-5-mdr">
-<h2>Step 5: mdr<a class="headerlink" href="#step-5-mdr" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="step-5-mdr">
+<h2>Step 5: mdr<a class="headerlink" href="#step-5-mdr" title="Permalink to this headline"></a></h2>
 <p>Reports about cyclomatic complexity of functions.</p>
 <p>Per default, every function with cyclomatic complexity &gt; 10 produces a warning. To suppress this warning, the code can be annotated:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">// METRIC STCYC 20</span>
@@ -335,17 +245,17 @@ The suppression syntax is “METRIC STCYC &lt;accepted complexity&gt;” and mus
 <p>STCYC is the name of this metric in QAC.</p>
 <p>In case of a warning or if the accepted complexity is changed, an additional info is printed out, see example output below:</p>
 <img alt="../../_images/cyclo.png" src="../../_images/cyclo.png" />
-</div>
-<div class="section" id="additional-options">
-<h2>Additional options<a class="headerlink" href="#additional-options" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="additional-options">
+<h2>Additional options<a class="headerlink" href="#additional-options" title="Permalink to this headline"></a></h2>
 <p>QACPP needs a license. If floating licenses are not available, bakeqac can retry to checkout them:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bakeqac &lt;options&gt; --qacretry &lt;seconds&gt;</span>
 </pre></div>
 </div>
 <p>Steps “analyze” and “view” are retried until timeout is reached.</p>
-</div>
-<div class="section" id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline"></a></h2>
 <p>If “&lt;mainConfigName&gt;Qac” is found in main project, it will be used instead of “&lt;mainConfigName&gt;. This is useful if the unit test has to be built different to MISRA.</p>
 <p>bakeqac can suppress unsuppressible errors with “PRQA S &lt;num&gt;” syntax in the same line. Currently the affected error numbers are:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">[&quot;0019&quot;, &quot;0020&quot;, &quot;0031&quot;, &quot;0034&quot;, &quot;0035&quot;, &quot;0036&quot;, &quot;0061&quot;, &quot;0098&quot;, &quot;0099&quot;, &quot;0224&quot;,</span>
@@ -365,55 +275,38 @@ The suppression syntax is “METRIC STCYC &lt;accepted complexity&gt;” and mus
 <span class="go"> &quot;0608&quot;, &quot;0611&quot;, &quot;0616&quot;, &quot;0617&quot;, &quot;0619&quot;, &quot;0620&quot;, &quot;0621&quot;, &quot;0627&quot;, &quot;0631&quot;, &quot;0632&quot;]</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="bakeclean.html" class="btn btn-neutral float-right" title="bakeclean" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="dot.html" class="btn btn-neutral float-left" title="Generating dot graphs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bakeclean.html" class="btn btn-neutral float-right" title="bakeclean" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2012-2021, ESRLabs GmbH.
-
-    </p>
+    <p>&#169; Copyright 2012-2021, ESRLabs GmbH.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
