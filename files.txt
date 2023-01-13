@@ -219,6 +219,7 @@
 ./_static/SelectImport.png
 ./_static/SelectNew.png
 ./_static/TrustMe.png
+./_static/underscore-1.13.1.js
 ./_static/underscore-1.3.1.js
 ./_static/underscore.js
 ./_static/vim.png

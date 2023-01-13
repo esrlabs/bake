@@ -1,43 +1,22 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Adapt configs &mdash; bake  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-
-  
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
-  
-
-  
-  
-
-  
-
-  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Auto-adjustment of paths to existing projects" href="auto_adjustment.html" />
@@ -46,29 +25,13 @@
 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> bake
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,19 +39,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Start to bake</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Start to bake</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
@@ -139,86 +91,44 @@
 <li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">bake</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content style-external-links">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="syntax.html">Syntax</a> &raquo;</li>
-        
       <li>Adapt configs</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/source/syntax/adapt_configs.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="adapt-configs">
-<span id="adapt-reference"></span><h1>Adapt configs<a class="headerlink" href="#adapt-configs" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+             
+  <section id="adapt-configs">
+<span id="adapt-reference"></span><h1>Adapt configs<a class="headerlink" href="#adapt-configs" title="Permalink to this headline"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
 <p>There are two major use cases:</p>
 <ul class="simple">
 <li><p>Changing the configs from outside, e.g. injecting a toolchain.</p></li>
 <li><p>Changing the configs depending on variables like the operating system.</p></li>
 </ul>
 <p>Both is possible with the <em>Adapt</em> feature.</p>
-</div>
-<div class="section" id="from-command-line">
-<h2>From command line<a class="headerlink" href="#from-command-line" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="from-command-line">
+<h2>From command line<a class="headerlink" href="#from-command-line" title="Permalink to this headline"></a></h2>
 <p>If you want to manipulate existing configs without changing them, you can “adapt” them via command line.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake <span class="nb">test</span> --adapt abc/def
 </pre></div>
@@ -254,9 +164,9 @@
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake <span class="nb">test</span> --adapt abc,xy
 </pre></div>
 </div>
-</div>
-<div class="section" id="from-project-meta">
-<h2>From Project.meta<a class="headerlink" href="#from-project-meta" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="from-project-meta">
+<h2>From Project.meta<a class="headerlink" href="#from-project-meta" title="Permalink to this headline"></a></h2>
 <p>You can do the same within the Project.meta:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Project {
   ...
@@ -269,12 +179,12 @@ Adapt {
 }
 </pre></div>
 </div>
-</div>
-<div class="section" id="conditions-and-effectiveness">
-<h2>Conditions and effectiveness<a class="headerlink" href="#conditions-and-effectiveness" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="conditions-and-effectiveness">
+<h2>Conditions and effectiveness<a class="headerlink" href="#conditions-and-effectiveness" title="Permalink to this headline"></a></h2>
 <p>Be aware, these are two different things but look very similar.</p>
-<div class="section" id="condition">
-<h3>Condition<a class="headerlink" href="#condition" title="Permalink to this headline">¶</a></h3>
+<section id="condition">
+<h3>Condition<a class="headerlink" href="#condition" title="Permalink to this headline"></a></h3>
 <p>An <em>Adapt</em> can have up to four attributes:</p>
 <ul class="simple">
 <li><p><strong>toolchain</strong>: e.g. GCC</p></li>
@@ -319,9 +229,9 @@ Adapt {
 </pre></div>
 </div>
 <p>The adapt block in the example above will be applied if the toolchain is not GCC AND if the OS is not Windows, e.g. for GCC on Linux or Diab Compiler on Mac.</p>
-</div>
-<div class="section" id="effectiveness">
-<h3>Effectiveness<a class="headerlink" href="#effectiveness" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="effectiveness">
+<h3>Effectiveness<a class="headerlink" href="#effectiveness" title="Permalink to this headline"></a></h3>
 <p>The <em>Adapt</em> configs can be applied to all configs from regular build. This can be controlled by the config names and the project attributes.
 Remember the example from the beginning?</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt {
@@ -347,10 +257,10 @@ Remember the example from the beginning?</p>
 </pre></div>
 </div>
 <p>It is possible to mix the keywords with reals project or config names.</p>
-</div>
-</div>
-<div class="section" id="config-type">
-<h2>Config type<a class="headerlink" href="#config-type" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="config-type">
+<h2>Config type<a class="headerlink" href="#config-type" title="Permalink to this headline"></a></h2>
 <p>In most cases the type of the config does not matter. To adapt an attribute or element, the only important thing is that it’s valid in the config of the project AND in the config of the adapt file.</p>
 <p>E.g. to adapt a Dependency, the config type is not relevant, Dependency is valid in both cases.</p>
 <p>To adapt the ArtifactName, which is exclusively useable in ExecutableConfigs, you need in both cases an ExecutableConfig.</p>
@@ -361,9 +271,9 @@ Remember the example from the beginning?</p>
   }
 </pre></div>
 </div>
-</div>
-<div class="section" id="occurrences">
-<h2>Occurrences<a class="headerlink" href="#occurrences" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="occurrences">
+<h2>Occurrences<a class="headerlink" href="#occurrences" title="Permalink to this headline"></a></h2>
 <p>You can specify more configs in one <em>Adapt</em> and you can specify more than one Adapt.meta file:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt {
   ExecutableConfig ..., project: ..., type: ... {
@@ -382,9 +292,9 @@ Remember the example from the beginning?</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">User@Host:~$ </span>bake <span class="nb">test</span> --adapt abc --adapt xy
 </pre></div>
 </div>
-</div>
-<div class="section" id="apply-order">
-<h2>Apply order<a class="headerlink" href="#apply-order" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="apply-order">
+<h2>Apply order<a class="headerlink" href="#apply-order" title="Permalink to this headline"></a></h2>
 <p>The <em>Adapt</em> configs will be applied in the order in which they were parsed. First the Adapt.metas referenced from the command line are read. Then the Project.metas are read
 one by one as usual. If an <em>Adapt</em> is found, it will be appended to the list of <em>Adapts</em>. Note, <em>Adapts</em> will be applied immediately when a Project.meta is read.</p>
 <p>If you inject a Toolchain from outside, e.g. “–adapt gcc”, you can use the toolchain info for local <em>Adapts</em>:</p>
@@ -396,9 +306,9 @@ Adapt toolchain: GCC {
 }
 </pre></div>
 </div>
-</div>
-<div class="section" id="types">
-<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline"></a></h2>
 <p>It is possible to specify the type of adaption:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ExecutableConfig ..., type: replace
 </pre></div>
@@ -410,12 +320,12 @@ Adapt toolchain: GCC {
 <li><p><strong>extend</strong></p></li>
 <li><p><strong>push_front</strong></p></li>
 </ul>
-<div class="section" id="type-extend">
-<h3>Type: extend<a class="headerlink" href="#type-extend" title="Permalink to this headline">¶</a></h3>
+<section id="type-extend">
+<h3>Type: extend<a class="headerlink" href="#type-extend" title="Permalink to this headline"></a></h3>
 <p>This works exactly like for <a class="reference internal" href="derive_configs.html"><span class="doc">Derive configs</span></a>.</p>
-</div>
-<div class="section" id="type-push-front">
-<h3>Type: push_front<a class="headerlink" href="#type-push-front" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="type-push-front">
+<h3>Type: push_front<a class="headerlink" href="#type-push-front" title="Permalink to this headline"></a></h3>
 <p>This works like extend, but elements which can be contained multiple times are pushed to front.</p>
 <p>Example project config:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Project {
@@ -433,9 +343,9 @@ Adapt ... {
 </pre></div>
 </div>
 <p>The resulting include path order will be “-Imock -Iabc”.</p>
-</div>
-<div class="section" id="type-remove">
-<h3>Type: remove<a class="headerlink" href="#type-remove" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="type-remove">
+<h3>Type: remove<a class="headerlink" href="#type-remove" title="Permalink to this headline"></a></h3>
 <p>If parent elements can be found which matches to the child elements, they will be removed.</p>
 <p>Example project config:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ExecutableConfig test {
@@ -461,9 +371,9 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
 }
 </pre></div>
 </div>
-</div>
-<div class="section" id="type-replace">
-<h3>Type: replace<a class="headerlink" href="#type-replace" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="type-replace">
+<h3>Type: replace<a class="headerlink" href="#type-replace" title="Permalink to this headline"></a></h3>
 <p>This is for convenience. “replace” will remove all elements with the same type and extends the configs.</p>
 <p>Example:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ExecutableConfig __ALL__, project: __ALL__, type: replace {
@@ -475,10 +385,10 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
 </pre></div>
 </div>
 <p>This removes all “Files” and the “DefaultToolchain” from the original config regardless their attributes and replaces them by the elements of the <em>Adapt</em> config.</p>
-</div>
-</div>
-<div class="section" id="wildcards">
-<h2>Wildcards<a class="headerlink" href="#wildcards" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="wildcards">
+<h2>Wildcards<a class="headerlink" href="#wildcards" title="Permalink to this headline"></a></h2>
 <p>The “*” wildcard is allowed:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt mainProject: HERE, mainConfig: HERE ... {
   Scope fasel, value: HERE
@@ -494,9 +404,9 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
 }
 </pre></div>
 </div>
-</div>
-<div class="section" id="lists">
-<h2>Lists<a class="headerlink" href="#lists" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="lists">
+<h2>Lists<a class="headerlink" href="#lists" title="Permalink to this headline"></a></h2>
 <p>Additionally to the wildcards, a list of projects/configs can be specified separated with “;”.</p>
 <p>Example:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Adapt mainProject: &quot;projA;projB&quot;, mainConfig: &quot;UnitTest*;SomeOther&quot; ... {
@@ -514,9 +424,9 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
 }
 </pre></div>
 </div>
-</div>
-<div class="section" id="command-line-filter">
-<h2>Command line filter<a class="headerlink" href="#command-line-filter" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="command-line-filter">
+<h2>Command line filter<a class="headerlink" href="#command-line-filter" title="Permalink to this headline"></a></h2>
 <p>To apply adapt files to specific projects only, the usage can be restricted with square brackets:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>--adapt abc[libraryA;libraryB]
 </pre></div>
@@ -526,55 +436,38 @@ ExecutableConfig __ALL__, project: __ALL__, type: remove {
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>--adapt abc[__MAIN__;*driver],xy/Adapt.meta[*can*;*lin*]
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="auto_adjustment.html" class="btn btn-neutral float-right" title="Auto-adjustment of paths to existing projects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="derive_configs.html" class="btn btn-neutral float-left" title="Derive configs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="auto_adjustment.html" class="btn btn-neutral float-right" title="Auto-adjustment of paths to existing projects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2012-2021, ESRLabs GmbH.
-
-    </p>
+    <p>&#169; Copyright 2012-2021, ESRLabs GmbH.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

@@ -1,43 +1,22 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>The Syntax of the Project.meta file &mdash; bake  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-
-  
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../../_static/logo_tiny_32.ico"/>
-  
-
-  
-  
-
-  
-
-  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Variables in Project.meta" href="variable_substitutions.html" />
@@ -46,29 +25,13 @@
 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> bake
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,19 +39,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Start to bake</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Start to bake</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../why_bake/why_bake.html">Why you should use bake</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install/install_bake.html">Install bake</a></li>
@@ -210,81 +162,39 @@
 <li class="toctree-l1"><a class="reference internal" href="../internal/internal.html">Internal developing notes</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">bake</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content style-external-links">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="syntax.html">Syntax</a> &raquo;</li>
-        
       <li>The Syntax of the Project.meta file</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/source/syntax/project_meta_syntax.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="the-syntax-of-the-project-meta-file">
-<h1>The Syntax of the Project.meta file<a class="headerlink" href="#the-syntax-of-the-project-meta-file" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="config-types">
-<h2>Config types<a class="headerlink" href="#config-types" title="Permalink to this headline">¶</a></h2>
+             
+  <section id="the-syntax-of-the-project-meta-file">
+<h1>The Syntax of the Project.meta file<a class="headerlink" href="#the-syntax-of-the-project-meta-file" title="Permalink to this headline"></a></h1>
+<section id="config-types">
+<h2>Config types<a class="headerlink" href="#config-types" title="Permalink to this headline"></a></h2>
 <p>Three config types exist: ExecutableConfig, LibraryConfig and CustomConfig. Some elements are only valid for specific types.</p>
-</div>
-<div class="section" id="filter">
-<h2>Filter<a class="headerlink" href="#filter" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="filter">
+<h2>Filter<a class="headerlink" href="#filter" title="Permalink to this headline"></a></h2>
 <p>Every element (except the Project element) in Project.meta has two attributes:</p>
 <ul class="simple">
 <li><p>default: if set to “off”, this element is not taken into account. Default is “on”.</p></li>
@@ -305,18 +215,18 @@
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bake ... --do run</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Specify the paths always relative to the current project root.</p></li>
 <li><p>Keep the variable substitution in Project.meta in mind.</p></li>
-<li><p>Use double quotes (“) if the strings have spaces or slashes.</p></li>
+<li><p>Use double quotes (”) if the strings have spaces or slashes.</p></li>
 <li><p>Use hash marks (#) for comments.</p></li>
 </ul>
-</div>
-<div class="section" id="syntax">
-<h2>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="syntax">
+<h2>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline"></a></h2>
 <pre class="literal-block"><a class="reference internal" href="#project"><span class="std std-ref">Project</span></a> <a class="reference internal" href="#defaultconfig"><span class="std std-ref">default</span></a>: &lt;name&gt; {
 
   <a class="reference internal" href="#description"><span class="std std-ref">Description</span></a> &lt;text&gt;
@@ -432,16 +342,16 @@
 Adapt toolchain: &lt;name&gt;, os: &lt;name&gt;, mainProject: &lt;name&gt;, mainConfig: &lt;name&gt; {
   # See Adapt documention for details.
 }</pre>
-<div class="section" id="project">
-<span id="id1"></span><h3>Project<a class="headerlink" href="#project" title="Permalink to this headline">¶</a></h3>
+<section id="project">
+<span id="id1"></span><h3>Project<a class="headerlink" href="#project" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">A bake project is very similar to a project in Eclipse, Visual Studio, etc.</div>
 <div class="line">The name of the project is the directory name of the Project.meta file.</div>
 </div>
 <p><em>Mandatory: yes, quantity: 1, default: -</em></p>
-</div>
-<div class="section" id="default-project">
-<span id="defaultconfig"></span><h3>default (Project)<a class="headerlink" href="#default-project" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="default-project">
+<span id="defaultconfig"></span><h3>default (Project)<a class="headerlink" href="#default-project" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#project"><span class="std std-ref">Project</span></a>.</p>
 <p>Default configuration which is used if not explicitly specified on command line or Dependency definition.</p>
 <p>Examples:</p>
@@ -452,63 +362,63 @@ Adapt toolchain: &lt;name&gt;, os: &lt;name&gt;, mainProject: &lt;name&gt;, main
 </pre></div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="description">
-<span id="id2"></span><h3>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="description">
+<span id="id2"></span><h3>Description<a class="headerlink" href="#description" title="Permalink to this headline"></a></h3>
 <p>Description of the project or config.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="requiredbakeversion">
-<span id="id3"></span><h3>RequiredBakeVersion<a class="headerlink" href="#requiredbakeversion" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="requiredbakeversion">
+<span id="id3"></span><h3>RequiredBakeVersion<a class="headerlink" href="#requiredbakeversion" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">If specified, the build will be aborted if bake version is lower than mininum or greater than maximum.</div>
 <div class="line">It is possible to define only minimum, only maximum or both version thresholds.</div>
 <div class="line">Minor and patch version numbers are optional.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="responsible">
-<span id="id4"></span><h3>Responsible<a class="headerlink" href="#responsible" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="responsible">
+<span id="id4"></span><h3>Responsible<a class="headerlink" href="#responsible" title="Permalink to this headline"></a></h3>
 <p>Specify all responsible persons of the project.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="person">
-<span id="id5"></span><h3>Person<a class="headerlink" href="#person" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="person">
+<span id="id5"></span><h3>Person<a class="headerlink" href="#person" title="Permalink to this headline"></a></h3>
 <p>Person who is responsible for the project.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="email">
-<span id="id6"></span><h3>email<a class="headerlink" href="#email" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="email">
+<span id="id6"></span><h3>email<a class="headerlink" href="#email" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#person"><span class="std std-ref">Person</span></a>.</p>
-<p>Use always double quotes (“) for the email address.</p>
+<p>Use always double quotes (”) for the email address.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="executableconfig">
-<span id="id7"></span><h3>ExecutableConfig<a class="headerlink" href="#executableconfig" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="executableconfig">
+<span id="id7"></span><h3>ExecutableConfig<a class="headerlink" href="#executableconfig" title="Permalink to this headline"></a></h3>
 <p>This is usually the main config of an application.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="libraryconfig">
-<span id="id8"></span><h3>LibraryConfig<a class="headerlink" href="#libraryconfig" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="libraryconfig">
+<span id="id8"></span><h3>LibraryConfig<a class="headerlink" href="#libraryconfig" title="Permalink to this headline"></a></h3>
 <p>This config is used for a source library. The library will be linked automatically to the executable.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="customconfig">
-<span id="id9"></span><h3>CustomConfig<a class="headerlink" href="#customconfig" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="customconfig">
+<span id="id9"></span><h3>CustomConfig<a class="headerlink" href="#customconfig" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">This config is used for special projects, e.g. for Makefile projects.</div>
 <div class="line">It’s valid to leave a CustomConfig completely empty - nothing will be done in that case.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="extends">
-<span id="id10"></span><h3>extends<a class="headerlink" href="#extends" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="extends">
+<span id="id10"></span><h3>extends<a class="headerlink" href="#extends" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#executableconfig"><span class="std std-ref">ExecutableConfig</span></a>, <a class="reference internal" href="#libraryconfig"><span class="std std-ref">LibraryConfig</span></a> or <a class="reference internal" href="#customconfig"><span class="std std-ref">CustomConfig</span></a>.</p>
 <p>Inherit settings from parent config(s). For more information see docu page <a class="reference internal" href="derive_configs.html"><span class="doc">Derive configs</span></a>.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="mergeinc">
-<span id="id11"></span><h3>mergeInc<a class="headerlink" href="#mergeinc" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mergeinc">
+<span id="id11"></span><h3>mergeInc<a class="headerlink" href="#mergeinc" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#executableconfig"><span class="std std-ref">ExecutableConfig</span></a>, <a class="reference internal" href="#libraryconfig"><span class="std std-ref">LibraryConfig</span></a> or <a class="reference internal" href="#customconfig"><span class="std std-ref">CustomConfig</span></a>.</p>
 <div class="line-block">
 <div class="line">If set to “no”, the IncludeDirs will NEVER be merged.</div>
@@ -518,15 +428,15 @@ Adapt toolchain: &lt;name&gt;, os: &lt;name&gt;, mainProject: &lt;name&gt;, main
 </div>
 <p>See also <a class="reference internal" href="../concepts/merge.html"><span class="doc">Merge Includes</span></a>.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: &lt;unset&gt;</em></p>
-</div>
-<div class="section" id="private">
-<span id="id12"></span><h3>private<a class="headerlink" href="#private" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="private">
+<span id="id12"></span><h3>private<a class="headerlink" href="#private" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#executableconfig"><span class="std std-ref">ExecutableConfig</span></a>, <a class="reference internal" href="#libraryconfig"><span class="std std-ref">LibraryConfig</span></a> or <a class="reference internal" href="#customconfig"><span class="std std-ref">CustomConfig</span></a>.</p>
 <p>If true, the config cannot be referenced directly outside of this project.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="includedir">
-<span id="id13"></span><h3>IncludeDir<a class="headerlink" href="#includedir" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="includedir">
+<span id="id13"></span><h3>IncludeDir<a class="headerlink" href="#includedir" title="Permalink to this headline"></a></h3>
 <p>Specifies the include directories for the assembler, C and C++ compiler.</p>
 <p>Use always relative paths, not absolute paths due to portability.</p>
 <p>Use always “/” and not “\”.</p>
@@ -543,22 +453,22 @@ Adapt toolchain: &lt;name&gt;, os: &lt;name&gt;, mainProject: &lt;name&gt;, main
 <div class="line"><em>IncludeDir “generated/include”</em></div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="inherit">
-<span id="id14"></span><h3>inherit<a class="headerlink" href="#inherit" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="inherit">
+<span id="id14"></span><h3>inherit<a class="headerlink" href="#inherit" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#includedir"><span class="std std-ref">IncludeDir</span></a>.</p>
 <p>Inherits the include to all projects, which depend on this project.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="inject">
-<span id="id15"></span><h3>inject<a class="headerlink" href="#inject" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="inject">
+<span id="id15"></span><h3>inject<a class="headerlink" href="#inject" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#includedir"><span class="std std-ref">IncludeDir</span></a> or <a class="reference internal" href="#dependency"><span class="std std-ref">Dependency</span></a>.</p>
 <p>Injects the element to all childs, either at the front (e.g. for mocking code) or at the back.</p>
 <p>Avoid to inject dependencies, it will get a mess.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="system">
-<span id="id16"></span><h3>system<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="system">
+<span id="id16"></span><h3>system<a class="headerlink" href="#system" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#includedir"><span class="std std-ref">IncludeDir</span></a>.</p>
 <div class="line-block">
 <div class="line">If supported from the compiler, the system include flag will be used instead of the normal include flag.</div>
@@ -566,23 +476,23 @@ Adapt toolchain: &lt;name&gt;, os: &lt;name&gt;, mainProject: &lt;name&gt;, main
 <div class="line">Note: system include definition overrules normal include definition if both are defined.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="set">
-<span id="id17"></span><h3>Set<a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="set">
+<span id="id17"></span><h3>Set<a class="headerlink" href="#set" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">Sets a variable for this and all dependent projects.</div>
 <div class="line">The variable can be a simple value or the result of a cmd, e.g. “cat myVar.txt”.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="env">
-<span id="id18"></span><h3>env<a class="headerlink" href="#env" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="env">
+<span id="id18"></span><h3>env<a class="headerlink" href="#env" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#set"><span class="std std-ref">Set</span></a>.</p>
 <p>Stores the variable also in system environment, which makes it available in everything which is executed by bake, e.g. in Pre- and PostSteps.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="dependency">
-<span id="id19"></span><h3>Dependency<a class="headerlink" href="#dependency" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="dependency">
+<span id="id19"></span><h3>Dependency<a class="headerlink" href="#dependency" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">Specifies another project to be built before this project.</div>
 <div class="line">The archives, linker libs and search paths are inherited from this project automatically.</div>
@@ -597,15 +507,15 @@ Adapt toolchain: &lt;name&gt;, os: &lt;name&gt;, mainProject: &lt;name&gt;, main
 <div class="line"><em>Dependency “my/folder/proj”</em></div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="config-dependency">
-<span id="configdependency"></span><h3>config (Dependency)<a class="headerlink" href="#config-dependency" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="config-dependency">
+<span id="configdependency"></span><h3>config (Dependency)<a class="headerlink" href="#config-dependency" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#dependency"><span class="std std-ref">Dependency</span></a>.</p>
 <p>Config name of the dependent project.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: &lt;default config of the dependent project&gt;</em></p>
-</div>
-<div class="section" id="externallibrary">
-<span id="id20"></span><h3>ExternalLibrary<a class="headerlink" href="#externallibrary" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="externallibrary">
+<span id="id20"></span><h3>ExternalLibrary<a class="headerlink" href="#externallibrary" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">Every config can specify libs which have to be linked to the executable.</div>
 <div class="line">It’s possible to add a path, e.g.:</div>
@@ -614,9 +524,9 @@ Adapt toolchain: &lt;name&gt;, os: &lt;name&gt;, mainProject: &lt;name&gt;, main
 <div class="line">Note, that the linker will look for “libab.a”.’</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="search">
-<span id="searchexternallibrary"></span><h3>search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="search">
+<span id="searchexternallibrary"></span><h3>search<a class="headerlink" href="#search" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#externallibrary"><span class="std std-ref">ExternalLibrary</span></a>.</p>
 <div class="line-block">
 <div class="line">If the attribute “search: false” is specified, the lib will not be searched but linked with the full name, e.g.</div>
@@ -625,9 +535,9 @@ Adapt toolchain: &lt;name&gt;, os: &lt;name&gt;, mainProject: &lt;name&gt;, main
 <div class="line">It’s also possible to specify an object file when using “search: false”.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="userlibrary">
-<span id="id21"></span><h3>UserLibrary<a class="headerlink" href="#userlibrary" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="userlibrary">
+<span id="id21"></span><h3>UserLibrary<a class="headerlink" href="#userlibrary" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">A user library will be linked <em>before</em> any other libraries or objects to the executable.</div>
 <div class="line">It is also possible to specify an object file.</div>
@@ -638,79 +548,79 @@ Adapt toolchain: &lt;name&gt;, os: &lt;name&gt;, mainProject: &lt;name&gt;, main
 <div class="line">“xy/z” will be added as an ExternalLibrarySearchPath.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="externallibrarysearchpath">
-<span id="id22"></span><h3>ExternalLibrarySearchPath<a class="headerlink" href="#externallibrarysearchpath" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="externallibrarysearchpath">
+<span id="id22"></span><h3>ExternalLibrarySearchPath<a class="headerlink" href="#externallibrarysearchpath" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">The linker looks for libraries in search paths.</div>
 <div class="line">Search paths can be defined implicitly by ExternalLibrary/UserLibrary or explicitly by this tag.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="presteps">
-<span id="id23"></span><h3>PreSteps<a class="headerlink" href="#presteps" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="presteps">
+<span id="id23"></span><h3>PreSteps<a class="headerlink" href="#presteps" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">PreSteps are executed before compiling files of the config.</div>
 <div class="line">The number of steps is not limited.</div>
 <div class="line">If a step fails, all further steps of the config will be skipped.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="poststeps">
-<span id="id24"></span><h3>PostSteps<a class="headerlink" href="#poststeps" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="poststeps">
+<span id="id24"></span><h3>PostSteps<a class="headerlink" href="#poststeps" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">PostSteps are executed after the main task of the project, e.g. linking an executable.</div>
 <div class="line">The number of steps is not limited.</div>
 <div class="line">If a step fails, all further steps of the config will be skipped.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="startupsteps">
-<span id="id25"></span><h3>StartupSteps<a class="headerlink" href="#startupsteps" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="startupsteps">
+<span id="id25"></span><h3>StartupSteps<a class="headerlink" href="#startupsteps" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">StartupSteps of ALL configs are executed before building the first config.</div>
 <div class="line">The number of steps is not limited.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="exitsteps">
-<span id="id26"></span><h3>ExitSteps<a class="headerlink" href="#exitsteps" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="exitsteps">
+<span id="id26"></span><h3>ExitSteps<a class="headerlink" href="#exitsteps" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">ExitSteps of ALL configs are executed after building complete workspace even if the build has failed.</div>
 <div class="line">The number of steps is not limited.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="cleansteps">
-<span id="id27"></span><h3>CleanSteps<a class="headerlink" href="#cleansteps" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cleansteps">
+<span id="id27"></span><h3>CleanSteps<a class="headerlink" href="#cleansteps" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">CleanSteps are executed when calling bake with “-c” or “–rebuild”.</div>
 <div class="line">The number of steps is not limited.</div>
 <div class="line">If a step fails, all further steps will be skipped.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="makefile">
-<span id="id28"></span><h3>Makefile<a class="headerlink" href="#makefile" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="makefile">
+<span id="id28"></span><h3>Makefile<a class="headerlink" href="#makefile" title="Permalink to this headline"></a></h3>
 <p>Makefile to be started, e.g.: <em>Makefile “subDir/makefile”</em></p>
 <p>Before executing the makefile, bake sets the environment variables $(BAKE_XX_COMMAND) and $(BAKE_XX_FLAGS),
 whereas XX is one of CPP, C, ASM, AR or LD.</p>
 <p><em>Mandatory: no, quantity in steps: 0..n, quantity in CustomConfig: 0..1, default: -</em></p>
-</div>
-<div class="section" id="lib">
-<span id="makefilelib"></span><h3>lib<a class="headerlink" href="#lib" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="lib">
+<span id="makefilelib"></span><h3>lib<a class="headerlink" href="#lib" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>.</p>
 <p>If the result of the makefile is a library which shall be linked to the executable, name it here.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="target">
-<span id="makefiletarget"></span><h3>target<a class="headerlink" href="#target" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="target">
+<span id="makefiletarget"></span><h3>target<a class="headerlink" href="#target" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>.</p>
 <p>The target of the makefile.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: all</em></p>
-</div>
-<div class="section" id="pathto">
-<span id="makefilepathto"></span><h3>pathTo<a class="headerlink" href="#pathto" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="pathto">
+<span id="makefilepathto"></span><h3>pathTo<a class="headerlink" href="#pathto" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>.</p>
 <div class="line-block">
 <div class="line">Comma separated list, e.g. “common, abc, xy”.</div>
@@ -723,50 +633,50 @@ whereas XX is one of CPP, C, ASM, AR or LD.</p>
 <div class="line">usage in makefile: <em>gcc -I$../../$(PATH_TO_common)common/include …</em></div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="noclean">
-<span id="makefilenoclean"></span><h3>noClean<a class="headerlink" href="#noclean" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="noclean">
+<span id="makefilenoclean"></span><h3>noClean<a class="headerlink" href="#noclean" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>.</p>
 <p>If project is cleaned (e.g. with command line argument -c), the target “clean” will be executed unless noClean is set to true.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="changeworkingdir">
-<span id="makefilechangeworkingdir"></span><h3>changeWorkingDir<a class="headerlink" href="#changeworkingdir" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="changeworkingdir">
+<span id="makefilechangeworkingdir"></span><h3>changeWorkingDir<a class="headerlink" href="#changeworkingdir" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>.</p>
 <p>If set to false, the working directory will be the project directory instead of the makefile directory.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: true</em></p>
-</div>
-<div class="section" id="echo-commandline-makefile-sleep">
-<span id="echononfileutils"></span><h3>echo (CommandLine, Makefile, Sleep)<a class="headerlink" href="#echo-commandline-makefile-sleep" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="echo-commandline-makefile-sleep">
+<span id="echononfileutils"></span><h3>echo (CommandLine, Makefile, Sleep)<a class="headerlink" href="#echo-commandline-makefile-sleep" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>, <a class="reference internal" href="#commandline"><span class="std std-ref">CommandLine</span></a> and <a class="reference internal" href="#sleep"><span class="std std-ref">Sleep</span></a>.</p>
 <p>“on” means the command line is shown in output, “off” means the command line is not shown.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: on</em></p>
-</div>
-<div class="section" id="independent">
-<span id="id29"></span><h3>independent<a class="headerlink" href="#independent" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="independent">
+<span id="id29"></span><h3>independent<a class="headerlink" href="#independent" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a>, <a class="reference internal" href="#commandline"><span class="std std-ref">CommandLine</span></a> and <a class="reference internal" href="#sleep"><span class="std std-ref">Sleep</span></a>.</p>
 <div class="line-block">
 <div class="line">“true” means the step can be built in parallel to other projects.</div>
 <div class="line">“false” means everything before must be completed, the step runs exclusively.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="validexitcodes">
-<span id="id30"></span><h3>validExitCodes<a class="headerlink" href="#validexitcodes" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="validexitcodes">
+<span id="id30"></span><h3>validExitCodes<a class="headerlink" href="#validexitcodes" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#makefile"><span class="std std-ref">Makefile</span></a> and <a class="reference internal" href="#commandline"><span class="std std-ref">CommandLine</span></a>.</p>
 <div class="line-block">
 <div class="line">Define it as an array, e.g.:</div>
 <div class="line"><em>…, validExitCodes: [200,201,202]</em></div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: [0]</em></p>
-</div>
-<div class="section" id="flags-makefile">
-<span id="makefileflags"></span><h3>Flags (makefile)<a class="headerlink" href="#flags-makefile" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="flags-makefile">
+<span id="makefileflags"></span><h3>Flags (makefile)<a class="headerlink" href="#flags-makefile" title="Permalink to this headline"></a></h3>
 <p>Additional makefile flags.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -j</em></p>
-</div>
-<div class="section" id="commandline">
-<span id="id31"></span><h3>CommandLine<a class="headerlink" href="#commandline" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="commandline">
+<span id="id31"></span><h3>CommandLine<a class="headerlink" href="#commandline" title="Permalink to this headline"></a></h3>
 <p>A command to execute, e.g.:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">CommandLine &quot;ddump -Ruv -y 0xFFFFF -oRelease/application.bin Release/application.elf&quot;</span>
 <span class="go">CommandLine &quot;echo Hello world!&quot;</span>
@@ -780,33 +690,33 @@ unreadable, use an array to split the string, e.g.</p>
 </div>
 <p>The array is internally joined to an string again with spaces in between.</p>
 <p><em>Mandatory: no, quantity in steps: 0..n, quantity in CustomConfig: 0..1, default: -</em></p>
-</div>
-<div class="section" id="sleep">
-<span id="id32"></span><h3>Sleep<a class="headerlink" href="#sleep" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sleep">
+<span id="id32"></span><h3>Sleep<a class="headerlink" href="#sleep" title="Permalink to this headline"></a></h3>
 <p>Sleep in seconds, floats are allowed.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: 0.0</em></p>
-</div>
-<div class="section" id="makedir">
-<span id="id33"></span><h3>MakeDir<a class="headerlink" href="#makedir" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="makedir">
+<span id="id33"></span><h3>MakeDir<a class="headerlink" href="#makedir" title="Permalink to this headline"></a></h3>
 <p>A file or folder will be created.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="remove">
-<span id="id34"></span><h3>Remove<a class="headerlink" href="#remove" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="remove">
+<span id="id34"></span><h3>Remove<a class="headerlink" href="#remove" title="Permalink to this headline"></a></h3>
 <p>A file or folder will be removed. Wildcards are supported. Examples:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Remove file1</span>
 <span class="go">Remove &quot;x/y/*.txt&quot;</span>
 </pre></div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="touch">
-<span id="id35"></span><h3>Touch<a class="headerlink" href="#touch" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="touch">
+<span id="id35"></span><h3>Touch<a class="headerlink" href="#touch" title="Permalink to this headline"></a></h3>
 <p>A file or folder will be touched.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="copy">
-<span id="id36"></span><h3>Copy<a class="headerlink" href="#copy" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="copy">
+<span id="id36"></span><h3>Copy<a class="headerlink" href="#copy" title="Permalink to this headline"></a></h3>
 <p>A file or folder will be moved. Wildcards are supported. Examples:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Copy file1, to: file2</span>
 <span class="go">Copy &quot;x/y/*.txt&quot;, to: &quot;a/b&quot;</span>
@@ -814,9 +724,9 @@ unreadable, use an array to split the string, e.g.</p>
 </pre></div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="move">
-<span id="id37"></span><h3>Move<a class="headerlink" href="#move" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="move">
+<span id="id37"></span><h3>Move<a class="headerlink" href="#move" title="Permalink to this headline"></a></h3>
 <p>A file or folder will be copied. Wildcards are supported. Examples:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Move file1, to: file2</span>
 <span class="go">Move &quot;x/y/*.txt&quot;, to: &quot;a/b&quot;</span>
@@ -824,28 +734,28 @@ unreadable, use an array to split the string, e.g.</p>
 </pre></div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="echo-makedir-remove-touch-copy-move">
-<span id="echofileutils"></span><h3>echo (MakeDir, Remove, Touch, Copy, Move)<a class="headerlink" href="#echo-makedir-remove-touch-copy-move" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="echo-makedir-remove-touch-copy-move">
+<span id="echofileutils"></span><h3>echo (MakeDir, Remove, Touch, Copy, Move)<a class="headerlink" href="#echo-makedir-remove-touch-copy-move" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#makedir"><span class="std std-ref">MakeDir</span></a>, <a class="reference internal" href="#remove"><span class="std std-ref">Remove</span></a>, <a class="reference internal" href="#touch"><span class="std std-ref">Touch</span></a>, <a class="reference internal" href="#copy"><span class="std std-ref">Copy</span></a> and <a class="reference internal" href="#move"><span class="std std-ref">Move</span></a>.</p>
 <p>“on” means a debug output is shown.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: on</em></p>
-</div>
-<div class="section" id="defaulttoolchain">
-<span id="id38"></span><h3>DefaultToolchain<a class="headerlink" href="#defaulttoolchain" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="defaulttoolchain">
+<span id="id38"></span><h3>DefaultToolchain<a class="headerlink" href="#defaulttoolchain" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">Settings which are valid for all configs unless they will be overwritten.</div>
 <div class="line">The attribute “basedOn” specifies the basic toolchain configuration provided by bake, e.g. “GCC”, “Diab”, etc.</div>
 </div>
 <p><em>Mandatory: in main config, quantity: 1, default: -</em></p>
-</div>
-<div class="section" id="toolchain">
-<span id="id39"></span><h3>Toolchain<a class="headerlink" href="#toolchain" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="toolchain">
+<span id="id39"></span><h3>Toolchain<a class="headerlink" href="#toolchain" title="Permalink to this headline"></a></h3>
 <p>Toolchain settings for a specific config.’</p>
 <p><em>Mandatory: no, quantity: 0..1, default: the DefaultToolchain settings from the main config</em></p>
-</div>
-<div class="section" id="outputdir">
-<span id="id40"></span><h3>outputDir<a class="headerlink" href="#outputdir" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="outputdir">
+<span id="id40"></span><h3>outputDir<a class="headerlink" href="#outputdir" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#defaulttoolchain"><span class="std std-ref">DefaultToolchain</span></a> and <a class="reference internal" href="#toolchain"><span class="std std-ref">Toolchain</span></a>.</p>
 <div class="line-block">
 <div class="line">Specifies the output folder.</div>
@@ -862,9 +772,9 @@ unreadable, use an array to split the string, e.g.</p>
 <div class="line"><em>default for main config: &lt;project root&gt;/build/&lt;configName&gt;,</em></div>
 <div class="line"><em>default for every other config: &lt;project root&gt;/build/&lt;configName&gt;_&lt;mainProjectName&gt;_&lt;mainConfigName&gt;</em></div>
 </div>
-</div>
-<div class="section" id="outputdirpostfix">
-<span id="id41"></span><h3>outputDirPostfix<a class="headerlink" href="#outputdirpostfix" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="outputdirpostfix">
+<span id="id41"></span><h3>outputDirPostfix<a class="headerlink" href="#outputdirpostfix" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#defaulttoolchain"><span class="std std-ref">DefaultToolchain</span></a> and <a class="reference internal" href="#toolchain"><span class="std std-ref">Toolchain</span></a>.</p>
 <div class="line-block">
 <div class="line">Specifies a postfix for the output folder.</div>
@@ -873,9 +783,9 @@ unreadable, use an array to split the string, e.g.</p>
 <div class="line">It’s intended to be used by special builds like MISRA checks.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1,, default: -</em></p>
-</div>
-<div class="section" id="eclipseorder">
-<span id="id42"></span><h3>eclipseOrder<a class="headerlink" href="#eclipseorder" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="eclipseorder">
+<span id="id42"></span><h3>eclipseOrder<a class="headerlink" href="#eclipseorder" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#defaulttoolchain"><span class="std std-ref">DefaultToolchain</span></a>.</p>
 <div class="line-block">
 <div class="line">If not specified or false, all files are compiled in order of appearance in Project.meta.</div>
@@ -886,35 +796,35 @@ unreadable, use an array to split the string, e.g.</p>
 <div class="line">This is only used for backward compatibility. Will be removed in future.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="compiler">
-<span id="id43"></span><h3>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="compiler">
+<span id="id43"></span><h3>Compiler<a class="headerlink" href="#compiler" title="Permalink to this headline"></a></h3>
 <p>Flags and defines can be specified independently for each compiler type (ASM, CPP, C).</p>
 <p><em>Mandatory: no, quantity: 0..3, default: -</em></p>
-</div>
-<div class="section" id="archiver">
-<span id="id44"></span><h3>Archiver<a class="headerlink" href="#archiver" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="archiver">
+<span id="id44"></span><h3>Archiver<a class="headerlink" href="#archiver" title="Permalink to this headline"></a></h3>
 <p>Settings for the archiver.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="linker">
-<span id="id45"></span><h3>Linker<a class="headerlink" href="#linker" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="linker">
+<span id="id45"></span><h3>Linker<a class="headerlink" href="#linker" title="Permalink to this headline"></a></h3>
 <p>Settings for the linker.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="docu">
-<span id="id46"></span><h3>Docu<a class="headerlink" href="#docu" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="docu">
+<span id="id46"></span><h3>Docu<a class="headerlink" href="#docu" title="Permalink to this headline"></a></h3>
 <p>Command to build the documentation. e.g.: <em>doxygen main.cfg</em></p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="command">
-<span id="id47"></span><h3>command<a class="headerlink" href="#command" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="command">
+<span id="id47"></span><h3>command<a class="headerlink" href="#command" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>, <a class="reference internal" href="#archiver"><span class="std std-ref">Archiver</span></a>, <a class="reference internal" href="#linker"><span class="std std-ref">Linker</span></a>.</p>
 <p>Changes the predefined command, e.g. “gcc”.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="prefix">
-<span id="id48"></span><h3>prefix<a class="headerlink" href="#prefix" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="prefix">
+<span id="id48"></span><h3>prefix<a class="headerlink" href="#prefix" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>, <a class="reference internal" href="#archiver"><span class="std std-ref">Archiver</span></a>, <a class="reference internal" href="#linker"><span class="std std-ref">Linker</span></a>.</p>
 <div class="line-block">
 <div class="line">Wrapper for the command, e.g. a (s)ccache.</div>
@@ -922,41 +832,41 @@ unreadable, use an array to split the string, e.g.</p>
 <div class="line">You can use the adapt feature to set the variable or overwrite the prefix.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: $(CompilerPrefix), $(ArchiverPrefix) or $(LinkerPrefix)</em></p>
-</div>
-<div class="section" id="keepobjfileendings">
-<span id="id49"></span><h3>keepObjFileEndings<a class="headerlink" href="#keepobjfileendings" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="keepobjfileendings">
+<span id="id49"></span><h3>keepObjFileEndings<a class="headerlink" href="#keepobjfileendings" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>.</p>
 <p>If false, the original source file endings will be cut off (e.g. file1.cpp to file1.o), otherwise kept (file1.cpp.o).</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="srcfileendings">
-<span id="id50"></span><h3>SrcFileEndings<a class="headerlink" href="#srcfileendings" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="srcfileendings">
+<span id="id50"></span><h3>SrcFileEndings<a class="headerlink" href="#srcfileendings" title="Permalink to this headline"></a></h3>
 <p>List of all source file endings with dot and comma separated which are handled by this CPP, C or ASM compiler,
 e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="onlydirectdeps">
-<span id="id51"></span><h3>onlyDirectDeps<a class="headerlink" href="#onlydirectdeps" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="onlydirectdeps">
+<span id="id51"></span><h3>onlyDirectDeps<a class="headerlink" href="#onlydirectdeps" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#linker"><span class="std std-ref">Linker</span></a>.</p>
 <p>If set to true, only first level libraries will be linked (not sub-dependencies from dependencies).</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="cuda">
-<span id="id52"></span><h3>cuda<a class="headerlink" href="#cuda" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cuda">
+<span id="id52"></span><h3>cuda<a class="headerlink" href="#cuda" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#compiler"><span class="std std-ref">Compiler</span></a>.</p>
 <div class="line-block">
 <div class="line">Enables Cuda hack.</div>
 <div class="line">Adds some prefixes in front of dependency flags.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="flags-defaulttoolchain">
-<span id="defaultflags"></span><h3>Flags (DefaultToolchain)<a class="headerlink" href="#flags-defaulttoolchain" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="flags-defaulttoolchain">
+<span id="defaultflags"></span><h3>Flags (DefaultToolchain)<a class="headerlink" href="#flags-defaulttoolchain" title="Permalink to this headline"></a></h3>
 <p>Default flags.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="flags-toolchain">
-<span id="toolchainflags"></span><h3>Flags (Toolchain)<a class="headerlink" href="#flags-toolchain" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="flags-toolchain">
+<span id="toolchainflags"></span><h3>Flags (Toolchain)<a class="headerlink" href="#flags-toolchain" title="Permalink to this headline"></a></h3>
 <p>Flags from the DefaultToolchain can be overwritten, extended or (partly) removed.</p>
 <div class="line-block">
 <div class="line">For removing flags use plain strings or regular expressions which can be interpreted by ruby (both is checked).</div>
@@ -975,57 +885,57 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <div class="line">An inherited flag string “-abc -g3 -xy” will end up in “-abc -xy”.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: Flags from DefaultToolchain”</em></p>
-</div>
-<div class="section" id="flags-files">
-<span id="filesflags"></span><h3>Flags (Files)<a class="headerlink" href="#flags-files" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="flags-files">
+<span id="filesflags"></span><h3>Flags (Files)<a class="headerlink" href="#flags-files" title="Permalink to this headline"></a></h3>
 <p>Flags from the Toolchain can be overwritten, extended or (partly) removed, see above.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="define-defaulttoolchain">
-<span id="defaultdefine"></span><h3>Define (DefaultToolchain)<a class="headerlink" href="#define-defaulttoolchain" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="define-defaulttoolchain">
+<span id="defaultdefine"></span><h3>Define (DefaultToolchain)<a class="headerlink" href="#define-defaulttoolchain" title="Permalink to this headline"></a></h3>
 <p>Defines which are valid for all files.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="toolchaindefine">
-<span id="id53"></span><h3>Flags (Toolchain)<a class="headerlink" href="#toolchaindefine" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="toolchaindefine">
+<span id="id53"></span><h3>Flags (Toolchain)<a class="headerlink" href="#toolchaindefine" title="Permalink to this headline"></a></h3>
 <p>Defines which are valid for the files of this config.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="define-files">
-<span id="filesdefine"></span><h3>Define (Files)<a class="headerlink" href="#define-files" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="define-files">
+<span id="filesdefine"></span><h3>Define (Files)<a class="headerlink" href="#define-files" title="Permalink to this headline"></a></h3>
 <p>Defines which are valid only for these specific files.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="libprefixflags">
-<span id="id54"></span><h3>LibPrefixFlags<a class="headerlink" href="#libprefixflags" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="libprefixflags">
+<span id="id54"></span><h3>LibPrefixFlags<a class="headerlink" href="#libprefixflags" title="Permalink to this headline"></a></h3>
 <p>Linker libs can be prefixed if needed, e.g. with “-Wl,–whole-archive”.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="libpostfixflags">
-<span id="id55"></span><h3>LibPostfixFlags<a class="headerlink" href="#libpostfixflags" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="libpostfixflags">
+<span id="id55"></span><h3>LibPostfixFlags<a class="headerlink" href="#libpostfixflags" title="Permalink to this headline"></a></h3>
 <p>Linker libs can be postfixed if needed, e.g. with “-Wl,–no-whole-archive”.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="internaldefines">
-<span id="id56"></span><h3>InternalDefines<a class="headerlink" href="#internaldefines" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="internaldefines">
+<span id="id56"></span><h3>InternalDefines<a class="headerlink" href="#internaldefines" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">File with list of compiler internal defines.</div>
 <div class="line">One define per line.</div>
 <div class="line">Empty lines and comments with # are allowed.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="internalincludes">
-<span id="id57"></span><h3>InternalIncludes<a class="headerlink" href="#internalincludes" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="internalincludes">
+<span id="id57"></span><h3>InternalIncludes<a class="headerlink" href="#internalincludes" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">File with list of compiler internal include folders.</div>
 <div class="line">One folder per line.</div>
 <div class="line">Empty lines and comments with # are allowed.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="files">
-<span id="id58"></span><h3>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="files">
+<span id="id58"></span><h3>Files<a class="headerlink" href="#files" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">Specifies the files to build.</div>
 <div class="line">It’s valid to specify a single file, e.g.</div>
@@ -1036,57 +946,57 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <div class="line">Note: “..” is not allowed in the file path. All files must be located within the project.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="excludefiles">
-<span id="id59"></span><h3>ExcludeFiles<a class="headerlink" href="#excludefiles" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="excludefiles">
+<span id="id59"></span><h3>ExcludeFiles<a class="headerlink" href="#excludefiles" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">Used to ignore files or directories.</div>
 <div class="line">ExcludeFiles has higher priority than Files.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="compileonly">
-<span id="id60"></span><h3>compileOnly<a class="headerlink" href="#compileonly" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="compileonly">
+<span id="id60"></span><h3>compileOnly<a class="headerlink" href="#compileonly" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#files"><span class="std std-ref">Files</span></a>.</p>
 <p>If set to true, the files will not be archived or linked.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="linkdirectly">
-<span id="id61"></span><h3>linkDirectly<a class="headerlink" href="#linkdirectly" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="linkdirectly">
+<span id="id61"></span><h3>linkDirectly<a class="headerlink" href="#linkdirectly" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#files"><span class="std std-ref">Files</span></a>.</p>
 <p>If set to true, the files will not be archived but linked directly to the executable.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: false</em></p>
-</div>
-<div class="section" id="prebuild">
-<span id="id62"></span><h3>Prebuild<a class="headerlink" href="#prebuild" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="prebuild">
+<span id="id62"></span><h3>Prebuild<a class="headerlink" href="#prebuild" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">If defined, all configs of the workspace will be skipped per default.</div>
 <div class="line">Must be activated by the commandline option “–prebuild”.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: No project/config is skipped</em></p>
-</div>
-<div class="section" id="except">
-<span id="id63"></span><h3>Except<a class="headerlink" href="#except" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="except">
+<span id="id63"></span><h3>Except<a class="headerlink" href="#except" title="Permalink to this headline"></a></h3>
 <p>Defines a project which shall not be skipped. If project name is omitted, the current project is used.</p>
 <p><em>Mandatory: no, quantity: 0..n, default: Every project is skipped</em></p>
-</div>
-<div class="section" id="config-except">
-<span id="configexcept"></span><h3>config (Except)<a class="headerlink" href="#config-except" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="config-except">
+<span id="configexcept"></span><h3>config (Except)<a class="headerlink" href="#config-except" title="Permalink to this headline"></a></h3>
 <p>Attribute of <a class="reference internal" href="#except"><span class="std std-ref">Except</span></a>.</p>
 <p>Defines a config which shall not be skipped. If omitted, all configs of the appropriate project are not skipped.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: Every config is skipped</em></p>
-</div>
-<div class="section" id="compilationdb">
-<span id="id64"></span><h3>CompilationDB<a class="headerlink" href="#compilationdb" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="compilationdb">
+<span id="id64"></span><h3>CompilationDB<a class="headerlink" href="#compilationdb" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">Generates a compilation database in json.</div>
 <div class="line">Example:</div>
 <div class="line"><em>CompilationDB “$(ProjectDir)/db.json”</em></div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: None. If CompilationDB is specified without an explicit filename, $(WorkspaceDir)/compile_commands.json is used.</em></p>
-</div>
-<div class="section" id="compilationcheck">
-<span id="id65"></span><h3>CompilationCheck<a class="headerlink" href="#compilationcheck" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="compilationcheck">
+<span id="id65"></span><h3>CompilationCheck<a class="headerlink" href="#compilationcheck" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">Checks if files are included or excluded in build.</div>
 <div class="line">Priority if files are mentioned multiple times: ignore &gt; exclude &gt; include.</div>
@@ -1096,85 +1006,68 @@ e.g. “.cpp, .c, .cxx”. The list must not be empty.</p>
 <div class="line"><em>CompilationCheck include: “$(ProjectDir, anotherLib)/src/important”</em></div>
 </div>
 <p><em>Mandatory: no, quantity: 0..n, default: -</em></p>
-</div>
-<div class="section" id="linkerscript">
-<span id="id66"></span><h3>LinkerScript<a class="headerlink" href="#linkerscript" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="linkerscript">
+<span id="id66"></span><h3>LinkerScript<a class="headerlink" href="#linkerscript" title="Permalink to this headline"></a></h3>
 <p>Specifies the name including path of the linker script.</p>
 <p><em>Mandatory: no, quantity: 0..1, default: -</em></p>
-</div>
-<div class="section" id="mapfile">
-<span id="id67"></span><h3>MapFile<a class="headerlink" href="#mapfile" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mapfile">
+<span id="id67"></span><h3>MapFile<a class="headerlink" href="#mapfile" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">A mapfile will be written by the linker.</div>
 <div class="line">If name attribute is omitted, the mapfile will be “$(OutputDir)/$(ArtifactNameBase).map”.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: No mapfile will be written</em></p>
-</div>
-<div class="section" id="artifactname">
-<span id="id68"></span><h3>ArtifactName<a class="headerlink" href="#artifactname" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="artifactname">
+<span id="id68"></span><h3>ArtifactName<a class="headerlink" href="#artifactname" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">The artifact name inclusive file ending.</div>
 <div class="line">The artifact will be placed in the output directory.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default executable: project name + toolchain dependent file ending, default library: ‘lib’ + project name + ‘.a’</em></p>
-</div>
-<div class="section" id="artifactextension">
-<span id="id69"></span><h3>ArtifactExtension<a class="headerlink" href="#artifactextension" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="artifactextension">
+<span id="id69"></span><h3>ArtifactExtension<a class="headerlink" href="#artifactextension" title="Permalink to this headline"></a></h3>
 <div class="line-block">
 <div class="line">The artifact extension, e.g. “exe”.</div>
 <div class="line">If ArtifactName is also specified, ArtifactExtension has no effect.</div>
 </div>
 <p><em>Mandatory: no, quantity: 0..1, default: toolchain dependent file ending</em></p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="variable_substitutions.html" class="btn btn-neutral float-right" title="Variables in Project.meta" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="syntax.html" class="btn btn-neutral float-left" title="Syntax" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="variable_substitutions.html" class="btn btn-neutral float-right" title="Variables in Project.meta" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2012-2021, ESRLabs GmbH.
-
-    </p>
+    <p>&#169; Copyright 2012-2021, ESRLabs GmbH.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
