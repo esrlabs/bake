@@ -75,7 +75,7 @@ module Bake
     end
 
     def self.checkFile(name)
-      if File.exists?(name)
+      if File.exist?(name)
         puts "#{name} already exists"
         ExitHelper.exit(1)
       end

@@ -1,7 +1,7 @@
 module Bake
 
   def self.findDirOfFileToRoot(dir, filename)
-    if !File.exists?(dir)
+    if !File.exist?(dir)
       Bake.formatter.printError("Error: #{dir} does not exist")
       ExitHelper.exit(1)
     end

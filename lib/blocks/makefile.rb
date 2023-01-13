@@ -83,7 +83,7 @@ module Bake
             else
               Bake.options.roots.each do |r|
                 absIncDir = r.dir+"/"+nameOfP
-                if File.exists?(absIncDir)
+                if File.exist?(absIncDir)
                   dirOfP = absIncDir
                   break
                 end

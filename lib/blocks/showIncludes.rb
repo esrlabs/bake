@@ -49,7 +49,7 @@ module Bake
 
             iname = mainBlock.convPath(iinc)
             if iname != ""
-              if not File.exists?(iname)
+              if not File.exist?(iname)
                 Bake.formatter.printError("InternalIncludes file #{iname} does not exist", iinc)
                 ExitHelper.exit(1)
               end
@@ -74,7 +74,7 @@ module Bake
             if (c.internalDefines)
               dname = mainBlock.convPath(c.internalDefines)
               if dname != ""
-                if not File.exists?(dname)
+                if not File.exist?(dname)
                   Bake.formatter.printError("InternalDefines file #{dname} does not exist", c.internalDefines)
                   ExitHelper.exit(1)
                 end

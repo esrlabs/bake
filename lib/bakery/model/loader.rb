@@ -26,7 +26,7 @@ module Bake
 
       sumErrors = 0
 
-      if not File.exists?filename
+      if not File.exist?filename
         Bake.formatter.printError("Error: #{filename} does not exist")
         ExitHelper.exit(1)
       end

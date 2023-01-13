@@ -52,13 +52,13 @@ module Bake
         Dir.mutex.synchronize do
           Dir.chdir(@projectDir) do
             # lib
-            return "because library does not exist" if not File.exists?(@archive_name)
+            return "because library does not exist" if not File.exist?(@archive_name)
 
             aTime = File.mtime(@archive_name)
 
             # sources
             @objects.each do |obj|
-              return "because object #{obj} does not exist" if not File.exists?(obj)
+              return "because object #{obj} does not exist" if not File.exist?(obj)
               return "because object #{obj} is newer than executable" if aTime < File.mtime(obj)
             end
           end
@@ -87,7 +87,7 @@ module Bake
               @objects.concat(Dir.glob_dir("#{@block.output_dir}/**/*#{e}", @projectDir))
             end
             if @objects.empty?
-              if !File.exists?(File.expand_path(@archive_name, @projectDir))
+              if !File.exist?(File.expand_path(@archive_name, @projectDir))
                 SyncOut.mutex.synchronize do
                   puts "No object files, library won't be created" if Bake.options.verbose >= 2
                 end

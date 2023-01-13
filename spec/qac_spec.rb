@@ -18,10 +18,10 @@ module Bake
 
 
   def self.hideRcf()
-    FileUtils.mv(Bake::VISIBLE_RCF, Bake::HIDDEN_RCF) if File.exists?(Bake::VISIBLE_RCF)
+    FileUtils.mv(Bake::VISIBLE_RCF, Bake::HIDDEN_RCF) if File.exist?(Bake::VISIBLE_RCF)
   end
   def self.showRcf2()
-    FileUtils.mv(Bake::HIDDEN_RCF2, Bake::VISIBLE_RCF2) if File.exists?(Bake::HIDDEN_RCF2)
+    FileUtils.mv(Bake::HIDDEN_RCF2, Bake::VISIBLE_RCF2) if File.exist?(Bake::HIDDEN_RCF2)
   end
 
   def self.startBakeqac(proj, opt)
@@ -75,8 +75,8 @@ module Bake
 describe "Qac" do
 
   after(:each) do
-    FileUtils.mv(Bake::HIDDEN_RCF, Bake::VISIBLE_RCF) if File.exists?(Bake::HIDDEN_RCF)
-    FileUtils.mv(Bake::VISIBLE_RCF2, Bake::HIDDEN_RCF2) if File.exists?(Bake::VISIBLE_RCF2)
+    FileUtils.mv(Bake::HIDDEN_RCF, Bake::VISIBLE_RCF) if File.exist?(Bake::HIDDEN_RCF)
+    FileUtils.mv(Bake::VISIBLE_RCF2, Bake::HIDDEN_RCF2) if File.exist?(Bake::VISIBLE_RCF2)
     ENV.delete("MCPP_HOME")
   end
 

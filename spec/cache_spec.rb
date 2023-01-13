@@ -44,8 +44,8 @@ describe "Caching" do
     expect($mystring.split("Loading and caching").length).to be == 7
     expect($mystring.split("Loading cached").length).to be == 3
     expect($mystring.split("Info: cache is up-to-date, loading cached meta information").length).to be == 2
-    expect(File.exists?("spec/testdata/cache/main/.bake/Project.meta.cache")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/.bake/Project.meta.test.cache")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/.bake/Project.meta.cache")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/.bake/Project.meta.test.cache")).to be == true
   end
 
   it 'debug cache checks' do

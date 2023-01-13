@@ -246,7 +246,7 @@ end
     if not RUBY_PLATFORM =~ /darwin/
       Bake.startBake("adapt/main", ["test_lin0", "--rebuild", "-v2", "--adapt", "lin_remove_ok"])
       expect($mystring.include?(".dld")).to be == false
-      expect(File.exists?("spec/testdata/adapt/main/build/test_lin0/main"+Bake::Toolchain.outputEnding)).to be == true
+      expect(File.exist?("spec/testdata/adapt/main/build/test_lin0/main"+Bake::Toolchain.outputEnding)).to be == true
     end
   end
 
@@ -254,7 +254,7 @@ end
     if not RUBY_PLATFORM =~ /darwin/
       Bake.startBake("adapt/main", ["test_lin1", "--rebuild", "-v2", "--adapt", "lin_remove_ok"])
        expect($mystring.include?(".dld")).to be == false
-       expect(File.exists?("spec/testdata/adapt/main/build/test_lin1/main"+Bake::Toolchain.outputEnding)).to be == true
+       expect(File.exist?("spec/testdata/adapt/main/build/test_lin1/main"+Bake::Toolchain.outputEnding)).to be == true
     end
   end
 

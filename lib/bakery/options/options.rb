@@ -67,7 +67,7 @@ module Bake
     end
 
     def check_valid_dir(dir)
-     if not File.exists?(dir)
+     if not File.exist?(dir)
         Bake.formatter.printError("Error: Directory #{dir} does not exist")
         ExitHelper.exit(1)
       end

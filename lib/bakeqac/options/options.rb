@@ -103,7 +103,7 @@ module Bake
     end
 
     def check_valid_dir(dir)
-     if not File.exists?(dir)
+     if not File.exist?(dir)
         Bake.formatter.printError("Error: Directory #{dir} does not exist")
         ExitHelper.exit(1)
       end
@@ -251,16 +251,16 @@ module Bake
       end
 
       @cct.each do |cct|
-        if !File.exists?(cct)
+        if !File.exist?(cct)
           Bake.formatter.printError("Error: cct file not found: #{cct}")
           ExitHelper.exit(1)
         end
       end
-      if !File.exists?(@acf)
+      if !File.exist?(@acf)
         Bake.formatter.printError("Error: acf file not found: #{@acf}")
         ExitHelper.exit(1)
       end
-      if !File.exists?(@rcf)
+      if !File.exist?(@rcf)
         Bake.formatter.printError("Error: rcf file not found: #{@rcf}")
         ExitHelper.exit(1)
       end

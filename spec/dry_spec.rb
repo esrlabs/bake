@@ -18,13 +18,13 @@ describe "Dry" do
 
   it 'dry cache' do
     Bake.startBake("make/main", ["test", "--dry"])
-    expect(File.exists?("spec/testdata/make/main/.bake/Project.meta.test.cache")).to be == false
-    expect(File.exists?("spec/testdata/make/main/.bake/Project.meta.cache")).to be == false
-    expect(File.exists?("spec/testdata/make/main/.bake")).to be == false
+    expect(File.exist?("spec/testdata/make/main/.bake/Project.meta.test.cache")).to be == false
+    expect(File.exist?("spec/testdata/make/main/.bake/Project.meta.cache")).to be == false
+    expect(File.exist?("spec/testdata/make/main/.bake")).to be == false
     Bake.startBake("make/main", ["test"])
-    expect(File.exists?("spec/testdata/make/main/.bake/Project.meta.test.cache")).to be == true
-    expect(File.exists?("spec/testdata/make/main/.bake/Project.meta.cache")).to be == true
-    expect(File.exists?("spec/testdata/make/main/.bake")).to be == true
+    expect(File.exist?("spec/testdata/make/main/.bake/Project.meta.test.cache")).to be == true
+    expect(File.exist?("spec/testdata/make/main/.bake/Project.meta.cache")).to be == true
+    expect(File.exist?("spec/testdata/make/main/.bake")).to be == true
   end
 
   #######################################################################
@@ -32,10 +32,10 @@ describe "Dry" do
   it 'dry make when cleaned' do
     Bake.startBake("make/main", ["test", "--dry"])
 
-    expect(File.exists?("spec/testdata/make/main/obj/main.o")).to be == false
-    expect(File.exists?("spec/testdata/make/main/obj/main2.o")).to be == false
-    expect(File.exists?("spec/testdata/make/main/obj")).to be == false
-    expect(File.exists?("spec/testdata/make/main/project.exe")).to be == false
+    expect(File.exist?("spec/testdata/make/main/obj/main.o")).to be == false
+    expect(File.exist?("spec/testdata/make/main/obj/main2.o")).to be == false
+    expect(File.exist?("spec/testdata/make/main/obj")).to be == false
+    expect(File.exist?("spec/testdata/make/main/project.exe")).to be == false
 
     expect($mystring.include?("make all")).to be == true
     expect($mystring.include?("gcc -c")).to be == false
@@ -48,10 +48,10 @@ describe "Dry" do
     $mystring.clear
     Bake.startBake("make/main", ["test", "--dry"])
 
-    expect(File.exists?("spec/testdata/make/main/obj/main.o")).to be == true
-    expect(File.exists?("spec/testdata/make/main/obj/main2.o")).to be == true
-    expect(File.exists?("spec/testdata/make/main/obj")).to be == true
-    expect(File.exists?("spec/testdata/make/main/project.exe")).to be == true
+    expect(File.exist?("spec/testdata/make/main/obj/main.o")).to be == true
+    expect(File.exist?("spec/testdata/make/main/obj/main2.o")).to be == true
+    expect(File.exist?("spec/testdata/make/main/obj")).to be == true
+    expect(File.exist?("spec/testdata/make/main/project.exe")).to be == true
 
     expect($mystring.split("make all").length).to be == 2
     expect($mystring.split("main2.c").length).to be == 1
@@ -62,10 +62,10 @@ describe "Dry" do
   it 'dry make clean when cleaned' do
     Bake.startBake("make/main", ["test", "-c", "--dry"])
 
-    expect(File.exists?("spec/testdata/make/main/obj/main.o")).to be == false
-    expect(File.exists?("spec/testdata/make/main/obj/main2.o")).to be == false
-    expect(File.exists?("spec/testdata/make/main/obj")).to be == false
-    expect(File.exists?("spec/testdata/make/main/project.exe")).to be == false
+    expect(File.exist?("spec/testdata/make/main/obj/main.o")).to be == false
+    expect(File.exist?("spec/testdata/make/main/obj/main2.o")).to be == false
+    expect(File.exist?("spec/testdata/make/main/obj")).to be == false
+    expect(File.exist?("spec/testdata/make/main/project.exe")).to be == false
 
     expect($mystring.split("make clean").length).to be == 2
     expect($mystring.split("Cleaning done.").length).to be == 2
@@ -77,10 +77,10 @@ describe "Dry" do
     $mystring.clear
     Bake.startBake("make/main", ["test", "-c", "--dry", "-v2"])
 
-    expect(File.exists?("spec/testdata/make/main/obj/main.o")).to be == true
-    expect(File.exists?("spec/testdata/make/main/obj/main2.o")).to be == true
-    expect(File.exists?("spec/testdata/make/main/obj")).to be == true
-    expect(File.exists?("spec/testdata/make/main/project.exe")).to be == true
+    expect(File.exist?("spec/testdata/make/main/obj/main.o")).to be == true
+    expect(File.exist?("spec/testdata/make/main/obj/main2.o")).to be == true
+    expect(File.exist?("spec/testdata/make/main/obj")).to be == true
+    expect(File.exist?("spec/testdata/make/main/project.exe")).to be == true
 
     expect($mystring.split("make clean").length).to be == 2
     expect($mystring.split("Cleaning done.").length).to be == 2
@@ -92,16 +92,16 @@ describe "Dry" do
   it 'dry compiler lib exe cmd when cleaned' do
     Bake.startBake("simple/main", ["test_ok", "--dry"])
 
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding+".cmdline")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.cmdline")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.d")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.d.bake")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.o")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build")).to be == false
-    expect(File.exists?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a")).to be == false
-    expect(File.exists?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a.cmdline")).to be == false
-    expect(File.exists?("spec/testdata/simple/lib/build")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding+".cmdline")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.cmdline")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.d")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.d.bake")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.o")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build")).to be == false
+    expect(File.exist?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a")).to be == false
+    expect(File.exist?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a.cmdline")).to be == false
+    expect(File.exist?("spec/testdata/simple/lib/build")).to be == false
 
     expect($mystring.include?("Compiling lib (test_ok): src/y.cpp")).to be == true
     expect($mystring.include?("Creating  lib (test_ok): build/test_ok_main_test_ok/liblib.a")).to be == true
@@ -119,16 +119,16 @@ describe "Dry" do
     $mystring.clear
     Bake.startBake("simple/main", ["test_ok", "--dry"])
 
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding+".cmdline")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.cmdline")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.d")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.d.bake")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.o")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build")).to be == true
-    expect(File.exists?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a")).to be == true
-    expect(File.exists?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a.cmdline")).to be == true
-    expect(File.exists?("spec/testdata/simple/lib/build")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding+".cmdline")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.cmdline")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.d")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.d.bake")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.o")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build")).to be == true
+    expect(File.exist?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a")).to be == true
+    expect(File.exist?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a.cmdline")).to be == true
+    expect(File.exist?("spec/testdata/simple/lib/build")).to be == true
 
     expect($mystring.include?("Compiling src/y.cpp")).to be == false
     expect($mystring.include?("Creating build/test_ok_main_test_ok/liblib.a")).to be == false
@@ -144,16 +144,16 @@ describe "Dry" do
   it 'dry compiler exe lib cmd clean when cleaned' do
     Bake.startBake("simple/main", ["test_ok", "-c", "--dry", "-v2"])
 
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding+".cmdline")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.cmdline")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.d")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.d.bake")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.o")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build")).to be == false
-    expect(File.exists?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a")).to be == false
-    expect(File.exists?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a.cmdline")).to be == false
-    expect(File.exists?("spec/testdata/simple/lib/build")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding+".cmdline")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.cmdline")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.d")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.d.bake")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.o")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build")).to be == false
+    expect(File.exist?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a")).to be == false
+    expect(File.exist?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a.cmdline")).to be == false
+    expect(File.exist?("spec/testdata/simple/lib/build")).to be == false
 
     expect($mystring.split("Deleting folder build/test_ok_main_test_ok").length).to be == 1
     expect($mystring.split("Deleting folder build").length).to be == 1
@@ -170,16 +170,16 @@ describe "Dry" do
     $mystring.clear
     Bake.startBake("simple/main", ["test_ok", "-c", "--dry", "-v2"])
 
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding+".cmdline")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.cmdline")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.d")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.d.bake")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/src/x.o")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build")).to be == true
-    expect(File.exists?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a")).to be == true
-    expect(File.exists?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a.cmdline")).to be == true
-    expect(File.exists?("spec/testdata/simple/lib/build")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding+".cmdline")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.cmdline")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.d")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.d.bake")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/src/x.o")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build")).to be == true
+    expect(File.exist?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a")).to be == true
+    expect(File.exist?("spec/testdata/simple/lib/build/test_ok_main_test_ok/liblib.a.cmdline")).to be == true
+    expect(File.exist?("spec/testdata/simple/lib/build")).to be == true
 
     expect($mystring.split("Deleting folder build/test_ok_main_test_ok").length).to be == 2
     expect($mystring.split("Deleting folder build").length).to be == 3

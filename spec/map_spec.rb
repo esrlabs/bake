@@ -18,9 +18,9 @@ describe "GCC MapFile" do
     expect($mystring.include?("Building done.")).to be == true#
     expect(ExitHelper.exit_code).to be == 0
 
-    expect(File.exists?("spec/testdata/map/main/build/test/out.exe")).to be == true
-    expect(File.exists?("spec/testdata/map/main/build/test/out.exe.cmdline")).to be == true
-    expect(File.exists?("spec/testdata/map/main/build/test/out.map")).to be == true
+    expect(File.exist?("spec/testdata/map/main/build/test/out.exe")).to be == true
+    expect(File.exist?("spec/testdata/map/main/build/test/out.exe.cmdline")).to be == true
+    expect(File.exist?("spec/testdata/map/main/build/test/out.map")).to be == true
 
     size = File.size?("spec/testdata/map/main/build/test/out.map")
 

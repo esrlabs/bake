@@ -15,7 +15,7 @@ module Bake
       end
 
       def check_config_file()
-        if File.exists?(@config.file_name) and File.mtime(@config.file_name) > @config_date
+        if File.exist?(@config.file_name) and File.mtime(@config.file_name) > @config_date
           begin
             FileUtils.touch(@config.file_name) if !Bake.options.dry
           rescue Exception=>e
@@ -30,7 +30,7 @@ module Bake
         return if Bake.options.dry
         filename = File.expand_path(filename, @projectDir)
         begin
-          if File.exists?(filename)
+          if File.exist?(filename)
             FileUtils.rm(filename)
           else
             FileUtils::mkdir_p(File.dirname(filename))

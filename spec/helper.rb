@@ -83,12 +83,16 @@ module Bake
   end
 
   def self.startBakeWithChangeDir(proj, opt)
-    Dir.chdir("spec/testdata/#{proj}") do
+    oldDir = Dir.pwd
+    Dir.chdir("spec/testdata/#{proj}")
+    begin
       Bake.options = Options.new([].concat(opt))
       Bake.options.parse_options()
       tocxx = Bake::ToCxx.new
       tocxx.doit()
       Bake::cleanup
+    ensure
+      Dir.chdir(oldDir)
     end
   end
 

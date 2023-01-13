@@ -64,7 +64,7 @@ module Bake
               puts "Cache: Checking if referenced configs are up to date..." if Bake.options.debug
               cache.referencedConfigs.each do |pname,configs|
                 configs.each do |config|
-                  fileExists = File.exists?(config.file_name)
+                  fileExists = File.exist?(config.file_name)
                   puts "Cache: Checking if #{config.file_name} exists: #{fileExists}" if Bake.options.debug
                   if not fileExists
                     Bake.options.nocache = true
@@ -97,7 +97,7 @@ module Bake
             if (cache != nil)
               cache.adapt_filenames.each do |fHash|
                 f = fHash[:file]
-                fileExists = File.exists?(f)
+                fileExists = File.exist?(f)
                 puts "Cache: Checking if #{f} exists: #{fileExists}" if Bake.options.debug
                 if !fileExists
                   Bake.formatter.printInfo("Info: #{f} does not exist anymore, reloading meta information")

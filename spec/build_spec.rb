@@ -13,15 +13,15 @@ module Bake
 describe "Building" do
 
   it 'search Project.meta' do
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == false
     Bake.startBake("simple/main/src", ["test_ok"])
     expect(ExitHelper.exit_code).to be == 0
     expect($mystring.include?("Building done")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok/main"+Bake::Toolchain.outputEnding)).to be == true
   end
 
   it 'sameObj' do
-    expect(File.exists?("spec/testdata/sameObj/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/sameObj/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
 
     Bake.startBake("sameObj/main", ["test"])
 
@@ -30,11 +30,11 @@ describe "Building" do
   end
 
   it 'workspace' do
-    expect(File.exists?("spec/testdata/cache/main/build_test/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build_test/main"+Bake::Toolchain.outputEnding)).to be == false
 
     Bake.startBake("cache/main", ["-b", "test", "-v2", "--build_"])
 
-    expect(File.exists?("spec/testdata/cache/main/build_test/main"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build_test/main"+Bake::Toolchain.outputEnding)).to be == true
 
     expect($mystring.split("PREMAIN").length).to be == 3
     expect($mystring.split("POSTMAIN").length).to be == 3
@@ -43,31 +43,31 @@ describe "Building" do
   end
 
   it 'single lib' do
-    expect(File.exists?("spec/testdata/cache/main/build_test/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build_test/main"+Bake::Toolchain.outputEnding)).to be == false
 
     Bake.startBake("cache/main", ["-p", "lib1", "-b", "test", "--build_"])
 
-    expect(File.exists?("spec/testdata/cache/lib1/build_testsub_main_test/this.name")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build_test/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build_testsub_main_test/this.name")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build_test/main"+Bake::Toolchain.outputEnding)).to be == false
 
     expect($mystring.split("PRELIB1").length).to be == 3
     expect($mystring.split("POSTLIB1").length).to be == 3
   end
 
   it 'single exe should fail' do
-    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/src/lib1.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/testsub_main_test/this.name")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/testsub_main_test/src/lib1.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/testsub_main_test/this.name")).to be == false
 
-    expect(File.exists?("spec/testdata/cache/main/build/test/src/main.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/test/src/main.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
 
     Bake.startBakeWithChangeDir("cache/main", ["-p", ".", "-b", "test"])
 
-    expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test/src/lib1.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testsub_main_test/src/lib1.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == false
 
-    expect(File.exists?("spec/testdata/cache/main/build/test/src/main.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/test/src/main.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
 
     expect($mystring.split("PREMAIN").length).to be == 3
     expect($mystring.split("POSTMAIN").length).to be == 1 # means not executed cause exe build failed
@@ -76,13 +76,13 @@ describe "Building" do
   end
 
   it 'single file' do
-    expect(File.exists?("spec/testdata/cache/main/build/test/src/main.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/test/src/main.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
 
     Bake.startBake("cache/main", ["-b", "test", "-f", "src/main.cpp"])
 
-    expect(File.exists?("spec/testdata/cache/main/build/test/src/main.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/test/src/main.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
 
     expect(ExitHelper.exit_code).to be == 0
   end
@@ -90,55 +90,55 @@ describe "Building" do
   it 'clean single file' do
     Bake.startBake("cache/main", ["-b", "test"])
 
-    expect(File.exists?("spec/testdata/cache/main/build/test/src/main.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/test/src/main.d")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test/src/main.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test/src/main.d")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == true
 
     Bake.startBake("cache/main", ["-b", "test", "-f", "src/main.cpp", "-c"])
 
-    expect(File.exists?("spec/testdata/cache/main/build/test/src/main.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/test/src/main.d")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test/src/main.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/test/src/main.d")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == true
 
     expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'multiple file 1' do
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
 
     Bake.startBake("cache/main", ["-b", "testMultiFile", "-f", "src/multi.cpp"])
 
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == true
 
     Bake.startBake("cache/main", ["-b", "testMultiFile", "-f", "src/multi.cpp", "-c"])
 
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
 
     expect(ExitHelper.exit_code).to be == 0
   end
 
   it 'multiple file 2' do
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
 
     Bake.startBake("cache/main", ["-b", "testMultiFile", "-f", "multi.cpp"])
 
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == true
 
     Bake.startBake("cache/main", ["-b", "testMultiFile", "-f", "multi.cpp", "-c"])
 
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFile/src/x/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFile/src/multi.o")).to be == false
 
     expect(ExitHelper.exit_code).to be == 0
   end
@@ -146,17 +146,17 @@ describe "Building" do
   it 'clean single lib' do
     Bake.startBake("cache/main", ["-b", "test"])
 
-    expect(File.exists?("spec/testdata/cache/main/build/test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testsub_main_test")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == true
 
     Bake.startBake("cache/main", ["-b", "test", "-p", "lib1", "-c"])
 
-    expect(File.exists?("spec/testdata/cache/main/build/test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testsub_main_test")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == true
 
     expect(ExitHelper.exit_code).to be == 0
   end
@@ -164,17 +164,17 @@ describe "Building" do
   it 'clean single lib' do
     Bake.startBake("cache/main", ["-b", "test"])
 
-    expect(File.exists?("spec/testdata/cache/main/build/test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testsub_main_test")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == true
 
     Bake.startBakeWithChangeDir("cache/main", ["-b", "test","-p", ".", "-c"])
 
-    expect(File.exists?("spec/testdata/cache/main/build/test")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/test")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testsub_main_test")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testsub_main_test/this.name")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/test/main"+Bake::Toolchain.outputEnding)).to be == false
 
     expect(ExitHelper.exit_code).to be == 0
   end
@@ -182,25 +182,25 @@ describe "Building" do
   it 'clobber' do
     Bake.startBake("cache/main", ["-b", "test"])
 
-    expect(File.exists?("spec/testdata/cache/main/.bake")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/.bake")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/.bake")).to be == true
 
     Bake.startBake("cache/main", ["-b", "test", "--clobber"])
 
-    expect(File.exists?("spec/testdata/cache/main/.bake")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/.bake")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/.bake")).to be == false
   end
 
   it 'clobber project only' do
     Bake.startBake("cache/main", ["-b", "test", "-p", "lib1"])
 
-    expect(File.exists?("spec/testdata/cache/main/.bake")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/.bake")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/.bake")).to be == true
 
     Bake.startBake("cache/main", ["-b", "test", "-p", "lib1", "--clobber"])
 
-    expect(File.exists?("spec/testdata/cache/main/.bake")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/.bake")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/.bake")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/.bake")).to be == false
   end
 
 
@@ -319,38 +319,38 @@ describe "Building" do
   end
 
   it 'compileOnly' do
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/liblib1.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/lib1.a")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/liblib1.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/lib1.a")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/main"+Bake::Toolchain.outputEnding)).to be == false
 
     Bake.startBake("cache/main", ["-b", "testMultiFileExe", "--compile-only"])
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/lib1.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/liblib1.a")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/lib1.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/liblib1.a")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/main"+Bake::Toolchain.outputEnding)).to be == false
     expect(ExitHelper.exit_code).to be == 0
 
     Bake.startBake("cache/main", ["-b", "testMultiFileExe", "-f", "multi.cpp", "-c"])
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/liblib1.o")).to be == false
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/lib1.a")).to be == false
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/main"+Bake::Toolchain.outputEnding)).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/liblib1.o")).to be == false
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/lib1.a")).to be == false
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/main"+Bake::Toolchain.outputEnding)).to be == false
     expect(ExitHelper.exit_code).to be == 0
 
     Bake.startBake("cache/main", ["-b", "testMultiFileExe"])
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/lib1.o")).to be == true
-    expect(File.exists?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/liblib1.a")).to be == true
-    expect(File.exists?("spec/testdata/cache/main/build/testMultiFileExe/main"+Bake::Toolchain.outputEnding)).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/src/multi.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/src/x/multi.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/multi.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/src/lib1.o")).to be == true
+    expect(File.exist?("spec/testdata/cache/lib1/build/testMultiFile_main_testMultiFileExe/liblib1.a")).to be == true
+    expect(File.exist?("spec/testdata/cache/main/build/testMultiFileExe/main"+Bake::Toolchain.outputEnding)).to be == true
     expect(ExitHelper.exit_code).to be == 0
   end
 
@@ -367,24 +367,24 @@ describe "Building" do
   it 'clean build dir if only one project was build' do
     Bake.startBake("simple/main", ["test_ok"])
     expect(ExitHelper.exit_code).to be == 0
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok2")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok2")).to be == false
 
     Bake.startBake("simple/main", ["test_ok2"])
     expect(ExitHelper.exit_code).to be == 0
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok")).to be == true
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok2")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok2")).to be == true
 
     Bake.startBake("simple/main", ["test_ok", "-c"])
     expect(ExitHelper.exit_code).to be == 0
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok2")).to be == true
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok2")).to be == true
 
     Bake.startBake("simple/main", ["test_ok2", "-c"])
     expect(ExitHelper.exit_code).to be == 0
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build/test_ok2")).to be == false
-    expect(File.exists?("spec/testdata/simple/main/build")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build/test_ok2")).to be == false
+    expect(File.exist?("spec/testdata/simple/main/build")).to be == false
   end
 
   it 'ambigious include dir' do
